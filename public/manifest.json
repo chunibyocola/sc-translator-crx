@@ -1,0 +1,41 @@
+{
+  "short_name": "ScTranslator",
+  "name": "ScTranslator",
+  "version": "1.0.0",
+  "description": "A simple but powerful translate extension. Based on Google Translate.",
+  "icons": {
+    "16": "image/icon-16.png",
+    "48": "image/icon-48.png",
+    "128": "image/icon-128.png"
+  },
+  "manifest_version": 2,
+  "homepage_url": "https://github.com/chunibyocola/sc-translator-crx",
+  "background": {
+    "scripts": ["/static/js/background.js"]
+  },
+  "browser_action": {
+    "default_title": "ScTranslator",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
+  "permissions": [
+    "https://translate.google.com/*",
+    "https://translate.google.cn/*",
+    "tabs",
+    "storage",
+    "contextMenus"
+  ],
+  "content_scripts" : [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "css": ["/static/css/content.css"],
+      "js": ["/static/js/content.js"]
+    }
+  ],
+  "web_accessible_resources":[
+  ],
+  "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'"
+}

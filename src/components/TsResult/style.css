@@ -1,0 +1,102 @@
+.ts-result {
+    background-color: #ffffff;
+    height: fit-content;
+    width: 100%;
+    margin-bottom: 3px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    padding: 10px 10px 0px 10px;
+    word-break: break-all;
+    font-size: 14px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+.ts-result::-webkit-scrollbar{
+    width:4px;
+}
+.ts-result::-webkit-scrollbar-track{
+    background: rgb(239, 239, 239);
+    border-radius:2px;
+}
+.ts-result::-webkit-scrollbar-thumb{
+    background: #bfbfbf;
+    border-radius:20px;
+}
+.ts-result::-webkit-scrollbar-thumb:hover{
+    background: #999;
+}
+.tss-result {
+    margin-bottom: 10px;
+}
+.tss-result span {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.tss-result .ts-iconfont {
+    cursor: pointer;
+    vertical-align: middle;
+}
+.tss-origin-text {
+    margin-top: 10px;
+}
+.tss-origin-text .tss-origin-raw {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    max-width: 190px;
+}
+.tss-origin-text .ts-iconfont {
+    cursor: pointer;
+    vertical-align: middle;
+}
+.ts-via {
+    position: relative;
+    border-top: 1px solid #ddd;
+    margin-top: 10px;
+    text-align: right;
+    color: #bbb;
+    height: 25px;
+    line-height: 23px;
+}
+.ts-via-website {
+    margin-left: 5px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+.ts-via-website:hover {
+    color: red;
+}
+.ts-via-triangle-up {
+    font-size: 20px !important;
+    cursor: pointer;
+    color: #666;
+    position: absolute;
+    right: -3px;
+    top: 1px;
+}
+.ts-via-triangle-up-check {
+    transform: rotate(180deg);
+}
+.ts-via-selection {
+    max-width: 200px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    right: 15px;
+    background-color: #fff;
+    border: 1px solid #666;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.ts-via-selection-item {
+    text-align: center;
+    cursor: pointer;
+    padding: 3px 5px;
+}
+.ts-via-selection-item:hover {
+    background-color: #eee;
+    color: #999;
+}

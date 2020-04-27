@@ -1,0 +1,45 @@
+.ts-language-selection {
+    text-align: center;
+    padding: 0px 5px 5px 5px;
+}
+.ts-select-box {
+    position: relative;
+    width: 100px;
+    display: inline-block;
+}
+.ts-select-box::before {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "\00a0";
+    position: absolute;
+    transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+    pointer-events: none;
+}
+.ts-select-box:hover::before {
+    border-bottom-width: 2px;
+}
+.ts-fromAndTo {
+    font-size: 12px;
+    color: #999;
+}
+.ts-lselect {
+    width: 100%;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+    padding: 5px 11px 5px 0px;
+}
+.ts-lselect:focus {
+    background-color: #ddd;
+}
+.ts-lselect option {
+    background-color: #fff;
+}
+.ts-lselect-swrap {
+    font-size: 20px;
+    margin: 5px;
+    cursor: pointer;
+}

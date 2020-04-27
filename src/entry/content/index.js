@@ -1,0 +1,38 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TsBtn from '../../components/TsBtn';
+import TsHistory from '../../components/TsHistory';
+import ResultBox from '../../components/ResultBox';
+
+import {Provider} from 'react-redux';
+import store from '../../redux/store';
+
+import {initTranslation} from '../../redux/init';
+import {initOptions} from '../../public/options';
+import {getLocalStorage, onExtensionMessage} from '../../public/chrome-call';
+import defaultOptions from '../../constants/defaultOptions';
+
+const init = (options) => {
+  initOptions(options);
+
+  initTranslation(options);
+
+  const app = document.createElement('div');
+  app.id = 'sc-translator-root';
+
+  document.body.appendChild(app);
+  ReactDOM.render(
+    <Provider store={store}>
+      <TsBtn />
+      <TsHistory />
+      <ResultBox />
+    </Provider>, 
+    app
+  );
+};
+
+getLocalStorage(defaultOptions, init);
+
+onExtensionMessage((request, sender, sendResponse) => {
+  if (request === 'Are you enabled?') sendResponse('Yes!');
+});

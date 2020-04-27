@@ -1,0 +1,71 @@
+.options {
+    width: 800px;
+    margin: 0 auto;
+}
+.opt-item {
+    font-size: 18px;
+    padding: 10px;
+}
+.opt-item label {
+    cursor: pointer;
+}
+.default-select {
+    margin-top: 10px;
+    margin-left: 30px;
+}
+.default-select select {
+    width: 150px;
+    margin-left: 10px;
+}
+.host-list {
+    border: 1px solid #999;
+    width: 400px;
+    padding: 5px;
+}
+.host-list-add {
+    display: flex;
+    margin-bottom: 3px;
+}
+.host-list-add input {
+    flex: 1;
+}
+.host-list-add button {
+    width: 50px;
+}
+.host-list-box {
+    height: 150px;
+    overflow-y: auto;
+}
+.host-list-item {
+    cursor: pointer;
+    display: flex;
+    padding: 5px;
+}
+.host-list-item:hover {
+    background-color: rgb(221,221,221, 0.2);
+}
+.host-list-item:not(:last-child) {
+    border-bottom: 1px solid #999;
+}
+.host-list-item input {
+    flex: 1;
+}
+.host-list-item span {
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 8;
+}
+.host-list-menu {
+    margin-top: 3px;
+    border-top: 1px solid #999;
+    padding-top: 3px;
+}
+.host-list-menu input {
+    margin-left: 10px;
+    margin-right: 20px;
+}
+.host-list-menu button {
+    width: 50px;
+}

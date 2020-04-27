@@ -1,0 +1,19 @@
+.ts-btn {
+    user-select: none;
+    border-radius: 5px;
+    width: fit-content;
+    border: 1px solid rgb(187, 187, 187);
+    padding: 3px;
+    box-shadow: rgb(221, 221, 221, 0.3) 1px 1px 1px;
+    cursor: pointer;
+    color: #999;
+    background-color: white;
+    position: fixed;
+    z-index: 999;
+    top: 0px;
+    left: 0px;
+}
+.ts-btn .ts-iconfont {
+    display: block;
+    font-size: 16px;
+}

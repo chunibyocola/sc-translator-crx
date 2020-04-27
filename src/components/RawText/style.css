@@ -1,0 +1,13 @@
+.ts-raw-text {
+    margin: 5px auto;
+}
+.ts-rt-text {
+    border: none;
+    font-size: 16px;
+    display: block;
+    width: -webkit-fill-available;
+    resize: vertical;
+    min-height: 38px;
+    max-height: 150px;
+    border-radius: 5px 5px 0px 5px;
+}

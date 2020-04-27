@@ -1,0 +1,41 @@
+#container {
+  border-radius: 3px;
+  width: 250px;
+  height: fit-content;
+  background-color: #eee;
+  padding-bottom: 2px;
+}
+.title {
+  position: relative;
+  background-color: #555;
+  height: 30px;
+  line-height: 30px;
+  color: #ccc;
+}
+.title-logo {
+  font-size: 16px;
+  margin-left: 5px;
+}
+.title-icons {
+  position: absolute;
+  right: 5px;
+  top: -1px;
+}
+.title-icons .ts-iconfont {
+  font-size: 20px !important;
+  cursor: pointer;
+}
+.title-icons .ts-iconfont:hover {
+  color: #fff;
+}
+.title-icons-enable {
+  color: #eee;
+}
+.title-icons-disable {
+  color: #999;
+}
+.content {
+  margin: 0 auto;
+  height: fit-content;
+  width: 240px;
+}
