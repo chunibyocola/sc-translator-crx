@@ -1,7 +1,8 @@
 {
   "short_name": "ScTranslator",
-  "name": "ScTranslator",
-  "version": "1.0.0",
+  "name": "__MSG_extName__",
+  "default_locale": "en",
+  "version": "1.1.0",
   "description": "A simple but powerful translate extension. Based on Google Translate.",
   "icons": {
     "16": "image/icon-16.png",
@@ -14,7 +15,7 @@
     "scripts": ["/static/js/background.js"]
   },
   "browser_action": {
-    "default_title": "ScTranslator",
+    "default_title": "__MSG_extName__",
     "default_popup": "popup.html"
   },
   "options_page": "options.html",

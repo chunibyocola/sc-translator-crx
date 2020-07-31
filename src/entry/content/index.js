@@ -8,9 +8,11 @@ import {Provider} from 'react-redux';
 import store from '../../redux/store';
 
 import {initTranslation} from '../../redux/init';
-import {initOptions} from '../../public/options';
+import {initOptions, listenOptionsChange} from '../../public/options';
 import {getLocalStorage, onExtensionMessage} from '../../public/chrome-call';
 import defaultOptions from '../../constants/defaultOptions';
+
+import '../../styles/global.css';
 
 const init = (options) => {
   initOptions(options);
@@ -19,6 +21,11 @@ const init = (options) => {
 
   const app = document.createElement('div');
   app.id = 'sc-translator-root';
+  app.className = options.darkMode ? 'dark' : 'light';
+
+  listenOptionsChange(['darkMode'], (opts) => {
+    app.className = opts.darkMode ? 'dark' : 'light';
+  });
 
   document.body.appendChild(app);
   ReactDOM.render(

@@ -1,16 +1,17 @@
-#container {
+.container {
+  transition: all 0.2s ease-in-out;
   border-radius: 3px;
   width: 250px;
   height: fit-content;
-  background-color: #eee;
+  background: var(--bg-total);
   padding-bottom: 2px;
 }
 .title {
   position: relative;
-  background-color: #555;
+  background: var(--bg-title);
   height: 30px;
   line-height: 30px;
-  color: #ccc;
+  color: var(--text-title);
 }
 .title-logo {
   font-size: 16px;
@@ -38,4 +39,5 @@
   margin: 0 auto;
   height: fit-content;
   width: 240px;
+  color: var(--text-normal);
 }

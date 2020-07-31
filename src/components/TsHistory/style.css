@@ -1,4 +1,5 @@
 .ts-history {
+    font-size: 13px;
     z-index: 100000;
     user-select: none;
     position: fixed;
@@ -6,7 +7,8 @@
     left: -1px;
     height: 100%;
     width: 200px;
-    background-color: #eee;
+    background: var(--history-bg);
+    color: var(--text-normal);
     transform: translate3d(-100%, 0px, 0px);
     transition: transform 0.2s ease 0s;
     padding-top: 40px;
@@ -39,6 +41,7 @@
     background-color: #fff;
     box-shadow: rgba(182, 187, 179, 0.6) 1px 1px 1px 1px;
     transition: right 0.25s ease-in 0.2s, opacity 0.35s ease-in 0.2s;
+    color: #000;
 }
 .tsh-unfold .tsh-unfold-text {
     display: inline-block;
@@ -51,17 +54,18 @@
     top: 0px;
     left: 0px;
     color: #eee;
-    height: 40px;
     width: 100%;
-    line-height: 30px;
     background-color: #222;
-    padding: 5px;
+    padding: 10px 5px;
+    min-height: 40px;
     box-sizing: border-box;
 }
 .ts-history-content {
     overflow-y: auto;
     height: 100%;
     width: 100%;
+    box-sizing: border-box;
+    border-right: var(--history-content-border-right);
 }
 .ts-history-content::-webkit-scrollbar{
     width:4px;
@@ -81,24 +85,24 @@
     margin: 20px;
 }
 .ts-history-item {
+    display: flex;
     width: 100%;
     height: 50px;
     overflow: hidden;
     font-size: 14px;
 }
 .ts-history-item:hover {
-    background-color: #ddd;
+    background: var(--history-item-hover-bg);
 }
 .tshi-content {
+    color: var(--text-normal);
     box-sizing: border-box;
     padding-left: 5px;
-    float: left;
     width: 150px;
     cursor: pointer;
     height: 50px;
 }
 .tshi-content-text {
-    color: #555;
     height: 25px;
     line-height: 25px;
     overflow: hidden;
@@ -106,7 +110,6 @@
     white-space: nowrap;
 }
 .tshi-content-result {
-    color: #777;
     height: 25px;
     line-height: 25px;
     overflow: hidden;
@@ -114,17 +117,17 @@
     white-space: nowrap;
 }
 .tshi-icons {
+    justify-content: center;
+    align-items: center;
+    display: flex;
     height: 50px;
     width: 50px;
-    margin-left: 145px;
-    line-height: 50px;
-    text-align: center;
     color: #eee;
 }
 .tshi-icons .ts-iconfont {
     color: #555;
     border-radius: 50%;
-    background-color: #ccc;
+    background: #ccc;
     padding: 3px;
     font-size: 15px !important;
     cursor: pointer;

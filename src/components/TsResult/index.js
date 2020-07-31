@@ -1,11 +1,10 @@
 import React, {Fragment} from 'react';
 import IconFont from '../IconFont';
 import Via from './Via';
-import {getContentText} from '../../public/localization';
+import {getI18nMessage} from '../../public/chrome-call';
 import {LANG_EN} from '../../constants/langCode';
+import {resultToString} from '../../public/utils';
 import './style.css';
-
-const resultToString = result => result.reduce((t, c) => (t + c), '');
 
 const TsResult = ({resultObj, status, sourceChange, readText, source, disableSourceChange}) => {
     const {text, result, dict, phonetic, from, to} = resultObj;
@@ -15,7 +14,7 @@ const TsResult = ({resultObj, status, sourceChange, readText, source, disableSou
         <div className='ts-result'>
             {
                 requesting?
-                    'Requesting...':
+                    getI18nMessage('wordRequesting'):
                     requestEnd?
                         err?
                             errCode:
@@ -52,7 +51,7 @@ const TsResult = ({resultObj, status, sourceChange, readText, source, disableSou
                                     </div>
                                 }
                             </Fragment>:
-                        `${getContentText('translateAfterInput')}`
+                        `${getI18nMessage('contentTranslateAfterInput')}`
             }
             <Via sourceChange={sourceChange} source={source} disableSourceChange={disableSourceChange} />
         </div>

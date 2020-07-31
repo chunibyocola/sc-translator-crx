@@ -1,5 +1,5 @@
 .ts-result {
-    background-color: #ffffff;
+    background: var(--bg-content);
     height: fit-content;
     width: 100%;
     margin-bottom: 3px;
@@ -53,50 +53,25 @@
     vertical-align: middle;
 }
 .ts-via {
+    padding: 2px 0px;
     position: relative;
     border-top: 1px solid #ddd;
     margin-top: 10px;
     text-align: right;
     color: #bbb;
-    height: 25px;
-    line-height: 23px;
 }
-.ts-via-website {
-    margin-left: 5px;
-    margin-right: 15px;
-    cursor: pointer;
+.ts-via-select {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--text-normal);
+    margin-left: 10px;
+    width: 150px;
 }
-.ts-via-website:hover {
-    color: red;
+.ts-via-select:focus {
+    background: var(--select-bg-focus);
 }
-.ts-via-triangle-up {
-    font-size: 20px !important;
-    cursor: pointer;
-    color: #666;
-    position: absolute;
-    right: -3px;
-    top: 1px;
-}
-.ts-via-triangle-up-check {
-    transform: rotate(180deg);
-}
-.ts-via-selection {
-    max-width: 200px;
-    box-sizing: border-box;
-    position: absolute;
-    bottom: 0;
-    right: 15px;
-    background-color: #fff;
-    border: 1px solid #666;
-    border-radius: 5px;
-    overflow: hidden;
-}
-.ts-via-selection-item {
-    text-align: center;
-    cursor: pointer;
-    padding: 3px 5px;
-}
-.ts-via-selection-item:hover {
-    background-color: #eee;
-    color: #999;
+.ts-via-select option {
+    background: #fff;
+    color: #000;
 }

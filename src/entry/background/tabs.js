@@ -40,20 +40,20 @@ const updateBadge = async (host) => {
     isTranslateEnabled = await updateIsTranslateEnabled(host);
 
     chrome.browserAction.setBadgeText({
-        text: isContentScriptEnabled && isTranslateEnabled? '': 'off'
+        text: isContentScriptEnabled && isTranslateEnabled ? '' : 'off'
     });
 };
 
 getLocalStorage(['translateBlackListMode', 'translateHostList'], (data) => {
-    if (data.translateBlackListMode) blackMode = data.translateBlackListMode;
-    if (data.translateHostList) hostList = data.translateHostList;
+    'translateBlackListMode' in data && (blackMode = data.translateBlackListMode);
+    'translateHostList' in data && (hostList = data.translateHostList);
 
     updateBadge();
 });
 
 listenOptionsChange(['translateBlackListMode', 'translateHostList'], (changes) => {
-    changes.translateBlackListMode && (blackMode = changes.translateBlackListMode);
-    changes.translateHostList && (hostList = changes.translateHostList);
+    'translateBlackListMode' in changes && (blackMode = changes.translateBlackListMode);
+    'translateHostList' in changes && (hostList = changes.translateHostList);
 
     updateBadge();
 });

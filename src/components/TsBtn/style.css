@@ -6,8 +6,8 @@
     padding: 3px;
     box-shadow: rgb(221, 221, 221, 0.3) 1px 1px 1px;
     cursor: pointer;
-    color: #999;
-    background-color: white;
+    color: var(--text-normal);
+    background: var(--bg-content);
     position: fixed;
     z-index: 999;
     top: 0px;

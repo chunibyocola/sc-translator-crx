@@ -35,3 +35,7 @@ export const queryTabs = (queryInfo, cb) => {
 export const sendMessageToTab = (tabId, msg, cb = undefined) => {
     chrome.tabs.sendMessage(tabId, msg, cb);
 };
+
+export const getI18nMessage = (messageName) => {
+    return chrome.i18n.getMessage(messageName);
+};

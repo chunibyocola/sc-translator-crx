@@ -14,7 +14,7 @@ import {sendTranslate, sendAudio} from '../../public/send';
 import TsResult from '../TsResult';
 import LanguageSelection from '../LanguageSelection';
 import RawText from '../RawText';
-import {getContentText} from '../../public/localization';
+import {getI18nMessage} from '../../public/chrome-call';
 import IconFont from '../IconFont';
 import './style.css';
 
@@ -237,7 +237,7 @@ const ResultBox = () => {
                 className='ts-rb-head'
                 onMouseDown={e => drag(e)}
             >
-                <div className='tsrbh-title'>{getContentText('result')}</div>
+                <div className='tsrbh-title'>{getI18nMessage('contentResult')}</div>
                 <span 
                     className='tsrbh-icons'
                 >

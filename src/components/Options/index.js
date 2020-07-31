@@ -1,10 +1,9 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import defaultOptions from '../../constants/defaultOptions';
 import translateSource from '../../constants/translateSource';
 import langCode, {userLangs} from '../../constants/langCode';
-import {setLocalStorage} from '../../public/chrome-call';
+import {setLocalStorage, getI18nMessage} from '../../public/chrome-call';
 import {useOptions} from '../../public/react-use';
-import {optionsText} from '../../constants/localization';
 import HostList from './HostList';
 import './style.css';
 
@@ -19,8 +18,16 @@ const Options = () => {
         translateBlackListMode,
         translateHostList,
         historyBlackListMode,
-        historyHostList
+        historyHostList,
+        darkMode
     } = useOptions(Object.keys(defaultOptions));
+
+    useEffect(
+        () => {
+            document.body.className = `${darkMode ? 'dark' : 'light'}`;
+        },
+        [darkMode]
+    );
 
     const handleToggleClick = useCallback(
         (key, value) => {
@@ -54,19 +61,20 @@ const Options = () => {
 
     return (
         <div className='options'>
-            <h2>{optionsText.title[userLanguage]}</h2>
-            <h3>{optionsText.translate[userLanguage]}</h3>
+            <h2>{getI18nMessage('optionsTitle')}</h2>
+            <h3>{getI18nMessage('optionsTheme')}</h3>
             <div className='opt-item'>
-                {optionsText.language[userLanguage]}
-                <select
-                    value={userLanguage}
-                    onChange={(e) => handleSelectChange('userLanguage', e)}
-                >
-                    {userLangs.map(v => (
-                        <option key={v.code} value={v.code}>{v.name}</option>
-                    ))}
-                </select>
+                <input
+                    id='dark-mode-checkbox'
+                    type='checkbox'
+                    checked={darkMode}
+                    onClick={() => handleToggleClick('darkMode', !darkMode)}
+                />
+                <label for='dark-mode-checkbox'>
+                    {getI18nMessage('optionsDarkMode')}
+                </label>
             </div>
+            <h3>{getI18nMessage('optionsTranslate')}</h3>
             <div className='opt-item'>
                 <input
                     id='context-menus-checkbox'
@@ -75,13 +83,24 @@ const Options = () => {
                     onClick={() => handleToggleClick('enableContextMenus', !enableContextMenus)}
                 />
                 <label for='context-menus-checkbox'>
-                    {optionsText.enableContextMenus[userLanguage]}
+                    {getI18nMessage('optionsEnableContextMenus')}
                 </label>
             </div>
             <div className='opt-item'>
-                {optionsText.defaultTranslateOptions[userLanguage]}
+                {getI18nMessage('optionsDefaultTranslateOptions')}
                 <div className='default-select'>
-                    {optionsText.source[userLanguage]}
+                    {getI18nMessage('optionsLanguage')}
+                    <select
+                        value={userLanguage}
+                        onChange={(e) => handleSelectChange('userLanguage', e)}
+                    >
+                        {userLangs.map(v => (
+                            <option key={v.code} value={v.code}>{v.name}</option>
+                        ))}
+                    </select>
+                </div>
+                <div className='default-select'>
+                    {getI18nMessage('optionsSource')}
                     <select
                         value={defaultTranslateSource}
                         onChange={e => handleSelectChange('defaultTranslateSource', e)}
@@ -92,7 +111,7 @@ const Options = () => {
                     </select>
                 </div>
                 <div className='default-select'>
-                    {optionsText.from[userLanguage]}
+                    {getI18nMessage('optionsFrom')}
                     <select
                         value={defaultTranslateFrom}
                         onChange={e => handleSelectChange('defaultTranslateFrom', e)}
@@ -103,7 +122,7 @@ const Options = () => {
                     </select>
                 </div>
                 <div className='default-select'>
-                    {optionsText.to[userLanguage]}
+                    {getI18nMessage('optionsTo')}
                     <select
                         value={defaultTranslateTo}
                         onChange={e => handleSelectChange('defaultTranslateTo', e)}
@@ -122,7 +141,7 @@ const Options = () => {
                     onClick={() => handleToggleClick('translateDirectly', !translateDirectly)}
                 />
                 <label for='translate-directly-checkbox'>
-                    {optionsText.translateDirectly[userLanguage]}
+                    {getI18nMessage('optionsTranslateDirectly')}
                 </label>
             </div>
             <div className='opt-item'>
@@ -133,7 +152,7 @@ const Options = () => {
                     onClick={() => handleToggleClick('translateBlackListMode', !translateBlackListMode)}
                 />
                 <label for='translate-black-list-mode-checkbox'>
-                    {optionsText.translateBlackListMode[userLanguage]}
+                    {getI18nMessage('optionsTranslateBlackListMode')}
                 </label>
             </div>
             <div className='opt-item'>
@@ -142,7 +161,7 @@ const Options = () => {
                     updateList={handleTranslateHostListUpdate}
                 />
             </div>
-            <h3>{optionsText.history[userLanguage]}</h3>
+            <h3>{getI18nMessage('optionsHistory')}</h3>
             <div className='opt-item'>
                 <input
                     id='history-black-list-mode-checkbox'
@@ -151,7 +170,7 @@ const Options = () => {
                     onClick={() => handleToggleClick('historyBlackListMode', !historyBlackListMode)}
                 />
                 <label for='history-black-list-mode-checkbox'>
-                    {optionsText.historyBlackListMode[userLanguage]}
+                    {getI18nMessage('optionsHistoryBlackListMode')}
                 </label>
             </div>
             <div className='opt-item'>
@@ -160,7 +179,7 @@ const Options = () => {
                     updateList={handleHistoryHostListUpdate}
                 />
             </div>
-            <h3>{optionsText.moreFeaturesOrBugReports[userLanguage]}</h3>
+            <h3>{getI18nMessage('optionsMoreFeaturesOrBugReports')}</h3>
             <div className='opt-item'>
                 <a
                     target='_blank'

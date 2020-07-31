@@ -1,0 +1,98 @@
+{
+    "extName": {
+        "message": "Sc翻译"
+    },
+    "optionsTitle": {
+        "message": "常规选项"
+    },
+    "optionsTranslate": {
+        "message": "翻译"
+    },
+    "optionsHistory": {
+        "message": "翻译历史"
+    },
+    "optionsLanguage": {
+        "message": "语言"
+    },
+    "optionsEnableContextMenus": {
+        "message": "启用右键菜单"
+    },
+    "optionsDefaultTranslateOptions": {
+        "message": "默认翻译选项："
+    },
+    "optionsSource": {
+        "message": "源"
+    },
+    "optionsFrom": {
+        "message": "从"
+    },
+    "optionsTo": {
+        "message": "到"
+    },
+    "optionsTranslateDirectly": {
+        "message": "直接翻译"
+    },
+    "optionsTranslateBlackListMode": {
+        "message": "黑名单模式"
+    },
+    "optionsEnableHistory": {
+        "message": "启用翻译历史"
+    },
+    "optionsHistoryBlackListMode": {
+        "message": "黑名单模式"
+    },
+    "optionsMoreFeaturesOrBugReports": {
+        "message": "更多功能或错误报告"
+    },
+    "optionsTheme": {
+        "message": "主题"
+    },
+    "optionsDarkMode": {
+        "message": "黑夜模式"
+    },
+    "contentInputHere": {
+        "message": "在此输入"
+    },
+    "contentTranslateAfterInput": {
+        "message": "输入后翻译"
+    },
+    "contentResult": {
+        "message": "结果"
+    },
+    "contentHistoryTitle": {
+        "message": "翻译历史"
+    },
+    "contentNoRecord": {
+        "message": "无记录"
+    },
+    "popupEnableTranslate": {
+        "message": "在此网站启用翻译"
+    },
+    "popupDisableTranslate": {
+        "message": "在此网站禁用翻译"
+    },
+    "popupEnableHistory": {
+        "message": "在此网站启用历史"
+    },
+    "popupDisableHistory": {
+        "message": "在此网站禁用历史"
+    },
+    "popupNotAvailable": {
+        "message": "在此网站不可用"
+    },
+    "popupOpenOptionsPage": {
+        "message": "打开选项页面"
+    },
+    "popupEnableDarkMode": {
+        "message": "启用黑夜模式"
+    },
+    "popupDisableDarkMode": {
+        "message": "禁用黑夜模式"
+    },
+    "wordTranslate": {
+        "message": "翻译"
+    },
+    "wordRequesting": {
+        "message": "正在请求……"
+    }
+}

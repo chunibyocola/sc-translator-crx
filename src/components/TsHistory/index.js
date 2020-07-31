@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux';
 import TsHistoryItem from './TsHistoryItem';
 import IconFont from '../IconFont';
 import {useIsEnable} from '../../public/react-use';
-import {getContentText} from '../../public/localization';
+import {getI18nMessage} from '../../public/chrome-call';
 import './style.css';
 
 const TsHistory = () => {
@@ -44,7 +44,7 @@ const TsHistory = () => {
                 <span className='tsh-unfold-text'>ScTranslator</span>
             </div>
             <div className='ts-history-head'>
-                {getContentText('historyTitle')}
+                {getI18nMessage('contentHistoryTitle')}
                 <div
                     className={`tshh-icons ${pinning? 'tshh-icons-check': ''}`}
                     onClick={() => setPinning(!pinning)}
@@ -58,7 +58,7 @@ const TsHistory = () => {
                 {
                     tsHistoryState.length === 0?
                         (<div className='ts-history-norecord'>
-                            {getContentText('noRecord')}
+                            {getI18nMessage('contentNoRecord')}
                         </div>):
                         tsHistoryState.map(
                             (v, i) => (

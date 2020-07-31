@@ -1,0 +1,98 @@
+{
+    "extName": {
+        "message": "Sc翻訳"
+    },
+    "optionsTitle": {
+        "message": "オプション"
+    },
+    "optionsTranslate": {
+        "message": "翻訳"
+    },
+    "optionsHistory": {
+        "message": "翻訳記録"
+    },
+    "optionsLanguage": {
+        "message": "言語"
+    },
+    "optionsEnableContextMenus": {
+        "message": "コンテキストメニューを有効にする"
+    },
+    "optionsDefaultTranslateOptions": {
+        "message": "デフォルトの翻訳オプション："
+    },
+    "optionsSource": {
+        "message": "ソース"
+    },
+    "optionsFrom": {
+        "message": "から"
+    },
+    "optionsTo": {
+        "message": "へ"
+    },
+    "optionsTranslateDirectly": {
+        "message": "直接翻訳する"
+    },
+    "optionsTranslateBlackListMode": {
+        "message": "ブラックリストモード"
+    },
+    "optionsEnableHistory": {
+        "message": "翻訳記録を有効にする"
+    },
+    "optionsHistoryBlackListMode": {
+        "message": "ブラックリストモード"
+    },
+    "optionsMoreFeaturesOrBugReports": {
+        "message": "その他の機能またはバグレポート"
+    },
+    "optionsTheme": {
+        "message": "テーマ"
+    },
+    "optionsDarkMode": {
+        "message": "ダークモード"
+    },
+    "contentInputHere": {
+        "message": "ここに入力"
+    },
+    "contentTranslateAfterInput": {
+        "message": "入力後に翻訳"
+    },
+    "contentResult": {
+        "message": "結果"
+    },
+    "contentHistoryTitle": {
+        "message": "翻訳記録"
+    },
+    "contentNoRecord": {
+        "message": "記録なし"
+    },
+    "popupEnableTranslate": {
+        "message": "このサイトで翻訳を有効にする"
+    },
+    "popupDisableTranslate": {
+        "message": "このサイトで翻訳を無効にする"
+    },
+    "popupEnableHistory": {
+        "message": "このサイトで記録を有効にする"
+    },
+    "popupDisableHistory": {
+        "message": "このサイトで記録を無効にする"
+    },
+    "popupNotAvailable": {
+        "message": "このサイトでは利用できません"
+    },
+    "popupOpenOptionsPage": {
+        "message": "オプションページを開く"
+    },
+    "popupEnableDarkMode": {
+        "message": "ダークモードを有効にする"
+    },
+    "popupDisableDarkMode": {
+        "message": "ダークモードを無効にする"
+    },
+    "wordTranslate": {
+        "message": "翻訳"
+    },
+    "wordRequesting": {
+        "message": "ローディング......"
+    }
+}

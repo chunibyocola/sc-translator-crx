@@ -14,7 +14,7 @@
     content: "\00a0";
     position: absolute;
     transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+    border-bottom: var(--select-border-bottom);
     pointer-events: none;
 }
 .ts-select-box:hover::before {
@@ -25,18 +25,20 @@
     color: #999;
 }
 .ts-lselect {
+    color: var(--text-normal);
     width: 100%;
     border: 0;
-    background-color: transparent;
+    background: transparent;
     cursor: pointer;
     outline: none;
     padding: 5px 11px 5px 0px;
 }
 .ts-lselect:focus {
-    background-color: #ddd;
+    background: var(--select-bg-focus);
 }
 .ts-lselect option {
-    background-color: #fff;
+    background: #fff;
+    color: #000;
 }
 .ts-lselect-swrap {
     font-size: 20px;

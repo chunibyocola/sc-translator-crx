@@ -14,7 +14,7 @@ import TsResult from '../TsResult';
 import {openOptionsPage, setLocalStorage} from '../../public/chrome-call';
 import {useOptions, useIsEnable} from '../../public/react-use';
 import {getCurrentTabHost, getIsContentScriptEnabled, getCurrentTab} from '../../public/utils';
-import {getPopupText} from '../../public/localization';
+import {getI18nMessage} from '../../public/chrome-call';
 import './style.css';
 
 const Popup = () => {
@@ -27,12 +27,14 @@ const Popup = () => {
         translateBlackListMode,
         translateHostList,
         historyBlackListMode,
-        historyHostList
+        historyHostList,
+        darkMode
     } = useOptions([
         'translateBlackListMode',
         'translateHostList',
         'historyBlackListMode',
-        'historyHostList'
+        'historyHostList',
+        'darkMode'
     ]);
 
     const {
@@ -46,6 +48,13 @@ const Popup = () => {
     const translationState = useSelector(state => state.translationState);
 
     const dispatch = useDispatch();
+
+    const handleDarkModeToggle = useCallback(
+        (daMode) => {
+            setLocalStorage({'darkMode': !daMode});
+        },
+        []
+    )
 
     const handleIsEnableToggle = useCallback(
         (list, bMode, isEnable, key) => {
@@ -127,10 +136,16 @@ const Popup = () => {
     );
 
     return (
-        <div id="container">
+        <div id="sc-translator-root" className={`container ${darkMode ? 'dark' : 'light'}`}>
             <div className="title">
                 <div className='title-logo'>ScTranslator</div>
                 <div className='title-icons'>
+                    <IconFont
+                        iconName={darkMode ? '#icon-IoMdMoon' : '#icon-IoMdSunny'}
+                        className='title-icons-enable'
+                        onClick={() => handleDarkModeToggle(darkMode)}
+                        title={darkMode ? getI18nMessage('popupDisableDarkMode') : getI18nMessage('popupEnableDarkMode')}
+                    />
                     <IconFont
                         iconName='#icon-MdTranslate'
                         className={`${isEnableTranslate && isContentScriptEnabled? 'title-icons-enable': 'title-icons-disable'}`}
@@ -140,7 +155,7 @@ const Popup = () => {
                             isEnableTranslate,
                             'translateHostList'
                         )}
-                        title={isContentScriptEnabled? isEnableTranslate? getPopupText('disableTranslate'): getPopupText('enableTranslate'): getPopupText('notAvailable')}
+                        title={isContentScriptEnabled? isEnableTranslate? getI18nMessage('popupDisableTranslate'): getI18nMessage('popupEnableTranslate'): getI18nMessage('popupNotAvailable')}
                     />
                     <IconFont
                         iconName='#icon-MdHistory'
@@ -151,13 +166,13 @@ const Popup = () => {
                             isEnableHistory,
                             'historyHostList'
                         )}
-                        title={isContentScriptEnabled? isEnableHistory? getPopupText('disableHistory'): getPopupText('enableHistory'): getPopupText('notAvailable')}
+                        title={isContentScriptEnabled? isEnableHistory? getI18nMessage('popupDisableHistory'): getI18nMessage('popupEnableHistory'): getI18nMessage('popupNotAvailable')}
                     />
                     <IconFont
                         iconName='#icon-MdSettings'
                         className='title-icons-enable'
                         onClick={openOptionsPage}
-                        title={getPopupText('openOptionsPage')}
+                        title={getI18nMessage('popupOpenOptionsPage')}
                     />
                 </div>
             </div>

@@ -1,0 +1,98 @@
+{
+    "extName": {
+        "message": "Sc翻譯"
+    },
+    "optionsTitle": {
+        "message": "常規選項"
+    },
+    "optionsTranslate": {
+        "message": "翻譯"
+    },
+    "optionsHistory": {
+        "message": "翻譯歷史"
+    },
+    "optionsLanguage": {
+        "message": "語言"
+    },
+    "optionsEnableContextMenus": {
+        "message": "啟用右鍵菜單"
+    },
+    "optionsDefaultTranslateOptions": {
+        "message": "默認翻譯選項："
+    },
+    "optionsSource": {
+        "message": "源"
+    },
+    "optionsFrom": {
+        "message": "從"
+    },
+    "optionsTo": {
+        "message": "到"
+    },
+    "optionsTranslateDirectly": {
+        "message": "直接翻譯"
+    },
+    "optionsTranslateBlackListMode": {
+        "message": "黑名單模式"
+    },
+    "optionsEnableHistory": {
+        "message": "啟用翻譯歷史"
+    },
+    "optionsHistoryBlackListMode": {
+        "message": "黑名單模式"
+    },
+    "optionsMoreFeaturesOrBugReports": {
+        "message": "更多功能或錯誤報告"
+    },
+    "optionsTheme": {
+        "message": "主題"
+    },
+    "optionsDarkMode": {
+        "message": "黑夜模式"
+    },
+    "contentInputHere": {
+        "message": "在此輸入"
+    },
+    "contentTranslateAfterInput": {
+        "message": "輸入後翻譯"
+    },
+    "contentResult": {
+        "message": "結果"
+    },
+    "contentHistoryTitle": {
+        "message": "翻譯歷史"
+    },
+    "contentNoRecord": {
+        "message": "無記錄"
+    },
+    "popupEnableTranslate": {
+        "message": "在此網站啟用翻譯"
+    },
+    "popupDisableTranslate": {
+        "message": "在此網站禁用翻譯"
+    },
+    "popupEnableHistory": {
+        "message": "在此網站啟用歷史"
+    },
+    "popupDisableHistory": {
+        "message": "在此網站禁用歷史"
+    },
+    "popupNotAvailable": {
+        "message": "在此網站不可用"
+    },
+    "popupOpenOptionsPage": {
+        "message": "打開選項頁面"
+    },
+    "popupEnableDarkMode": {
+        "message": "啟用黑夜模式"
+    },
+    "popupDisableDarkMode": {
+        "message": "禁用黑夜模式"
+    },
+    "wordTranslate": {
+        "message": "翻譯"
+    },
+    "wordRequesting": {
+        "message": "正在請求……"
+    }
+}

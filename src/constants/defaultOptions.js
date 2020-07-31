@@ -11,7 +11,8 @@ const defaultOptions = {
     translateBlackListMode: true,
     translateHostList: [],
     historyBlackListMode: false,
-    historyHostList: []
+    historyHostList: [],
+    darkMode: false
 };
 
 export default defaultOptions;

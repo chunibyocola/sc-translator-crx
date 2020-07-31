@@ -2,11 +2,10 @@ import React, {useCallback, useRef} from 'react';
 import {removeHistory} from '../../redux/actions/tsHistoryActions';
 import {showTsResultWithResultObject} from '../../redux/actions/tsResultActions';
 import {setSelecting} from '../../public/utils/getSelection';
+import {resultToString} from '../../public/utils';
 import {useDispatch} from 'react-redux';
 import IconFont from '../IconFont';
 import {sendAudio} from '../../public/send';
-
-const resultToStr = arr => arr.reduce((t, c) => (t + ' ' + c), '').slice(1);
 
 const TsHistoryItem = ({result, index}) => {
     const itemEle = useRef(null);
@@ -53,7 +52,7 @@ const TsHistoryItem = ({result, index}) => {
                     {result.text}
                 </div>
                 <div className='tshi-content-result'>
-                    {resultToStr(result.result)}
+                    {resultToString(result.result)}
                 </div>
             </div>
             <div className='tshi-icons'>

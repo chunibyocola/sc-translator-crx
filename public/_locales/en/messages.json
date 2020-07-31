@@ -1,0 +1,98 @@
+{
+    "extName": {
+        "message": "ScTranslator"
+    },
+    "optionsTitle": {
+        "message": "Options"
+    },
+    "optionsTranslate": {
+        "message": "Translate"
+    },
+    "optionsHistory": {
+        "message": "History"
+    },
+    "optionsLanguage": {
+        "message": "Language"
+    },
+    "optionsEnableContextMenus": {
+        "message": "Enable context menus"
+    },
+    "optionsDefaultTranslateOptions": {
+        "message": "Default translate options:"
+    },
+    "optionsSource": {
+        "message": "source"
+    },
+    "optionsFrom": {
+        "message": "from"
+    },
+    "optionsTo": {
+        "message": "to"
+    },
+    "optionsTranslateDirectly": {
+        "message": "Translate directly"
+    },
+    "optionsTranslateBlackListMode": {
+        "message": "Black list mode"
+    },
+    "optionsEnableHistory": {
+        "message": "Enable history function"
+    },
+    "optionsHistoryBlackListMode": {
+        "message": "Black list mode"
+    },
+    "optionsMoreFeaturesOrBugReports": {
+        "message": "More features or bug reports"
+    },
+    "optionsTheme": {
+        "message": "Theme"
+    },
+    "optionsDarkMode": {
+        "message": "Dark Mode"
+    },
+    "contentInputHere": {
+        "message": "Input here"
+    },
+    "contentTranslateAfterInput": {
+        "message": "Translate after input"
+    },
+    "contentResult": {
+        "message": "Result"
+    },
+    "contentHistoryTitle": {
+        "message": "History"
+    },
+    "contentNoRecord": {
+        "message": "No record"
+    },
+    "popupEnableTranslate": {
+        "message": "Enable translate on this website"
+    },
+    "popupDisableTranslate": {
+        "message": "Disable translate on this website"
+    },
+    "popupEnableHistory": {
+        "message": "Enable history on this website"
+    },
+    "popupDisableHistory": {
+        "message": "Disable history on this website"
+    },
+    "popupNotAvailable": {
+        "message": "Not available on this site"
+    },
+    "popupOpenOptionsPage": {
+        "message": "Open options page"
+    },
+    "popupEnableDarkMode": {
+        "message": "Enable dark mode"
+    },
+    "popupDisableDarkMode": {
+        "message": "Disable dark mode"
+    },
+    "wordTranslate": {
+        "message": "Translate"
+    },
+    "wordRequesting": {
+        "message": "Requesting..."
+    }
+}

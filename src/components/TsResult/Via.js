@@ -1,46 +1,36 @@
-import React, {useState} from 'react';
+import React, {useCallback} from 'react';
 import translateSource from '../../constants/translateSource';
-import IconFont from '../IconFont';
 
 const Via = ({sourceChange, source, disableSourceChange}) => {
-    const [showSelection, setShowSelection] = useState(false);
+    const handleSelectChange = useCallback(
+        (e) => {
+            const ele =  e.target;
+            const curValue = ele.options[ele.selectedIndex].value;
+            sourceChange(curValue);
+        },
+        [sourceChange]
+    );
+
     return (
         <div
             className='ts-via'
-            onMouseLeave={() => {
-                if (showSelection) setShowSelection(false);
-            }}
         >
             <span>
                 via
-                <span className='ts-via-website'>
-                    {translateSource.find(v => v.source === source)?.url}
-                </span>
-                <IconFont
-                    iconName='#icon-MdArrowDropUp'
-                    className={`ts-via-triangle-up ${showSelection? 'ts-via-triangle-up-check': ''}`}
-                    style={{display: disableSourceChange? 'none': 'block'}}
-                    onClick={() => setShowSelection(!showSelection)}
-                />
+                <select
+                    className='ts-via-select'
+                    value={source}
+                    disabled={disableSourceChange}
+                    onChange={handleSelectChange}
+                >
+                    {translateSource.map(v => (
+                        <option key={v.source} value={v.source}>
+                            {v.url}
+                        </option>
+                    ))}
+                </select>
             </span>
-            <div
-                className='ts-via-selection'
-                style={{display: showSelection? 'block': 'none'}}
-            >
-                {translateSource.map((v) => v.source !== source? (
-                    <div
-                        key={v.source}
-                        className='ts-via-selection-item'
-                        onClick={() => {
-                            if (disableSourceChange) return;
-                            sourceChange(v.source);
-                            setShowSelection(false);
-                        }}
-                    >
-                        {v.url}
-                    </div>
-                ): '')}
-            </div>
+            
         </div>
     )
 };

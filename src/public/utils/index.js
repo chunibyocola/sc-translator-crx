@@ -1,5 +1,7 @@
 import {queryTabs, sendMessageToTab} from '../chrome-call';
 
+export const resultToString = result => result.reduce((t, c) => (t + c), '');
+
 export const getCurrentTab = (cb) => {
     queryTabs({active: true, lastFocusedWindow: true}, tabs => cb(tabs[0]));
 };

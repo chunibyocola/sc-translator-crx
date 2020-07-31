@@ -1,5 +1,5 @@
 import React, {useRef, useCallback, useState, useEffect} from 'react';
-import {getContentText} from '../../public/localization';
+import {getI18nMessage} from '../../public/chrome-call';
 import './style.css';
 
 let timeout = null;
@@ -47,7 +47,7 @@ const RawText = ({defaultValue, rawTextTranslate}) => {
         <div className='ts-raw-text'>
             <textarea
                 defaultValue={defaultValue}
-                placeholder={getContentText('inputHere')}
+                placeholder={getI18nMessage('contentInputHere')}
                 onChange={debounce(handleRtTextChange, 500)}
                 ref={textareaEl}
                 className='ts-rt-text'
