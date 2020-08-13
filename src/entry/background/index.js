@@ -3,3 +3,4 @@ import './install';
 import './on-message';
 import './audio';
 import './tabs';
+import './commands';

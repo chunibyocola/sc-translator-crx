@@ -4,29 +4,29 @@ import {
     showTsResultWithOutResultObject,
     hideTsResult
 } from '../../redux/actions/tsResultActions';
-import getSelection from '../../public/utils/getSelection';
+import getSelection, { getSelectedText } from '../../public/utils/get-selection';
 import {useOptions, useOnExtensionMessage, useIsEnable} from '../../public/react-use';
-import {SCTS_CONTEXT_MENUS_CLICKED} from '../../constants/chromeSendMessageTypes';
+import {
+    SCTS_CONTEXT_MENUS_CLICKED,
+    SCTS_TRANSLATE_COMMAND_KEY_PRESSED,
+    SCTS_AUDIO_COMMAND_KEY_PRESSED
+} from '../../constants/chromeSendMessageTypes';
 import IconFont from '../IconFont';
 import './style.css';
+import { sendAudio } from '../../public/send';
 
-let timeout = null;
-const debounce = (cb, time) => {
-    return () => {
-        if (timeout) clearTimeout(timeout);
-        timeout = setTimeout(cb, time);
-    };
-};
+const initText = '';
+const initPos = { x: 5, y: 5 };
 
 const TsBtn = () => {
     const [showBtn, setShowBtn] = useState(false);
-    const [pos, setPos] = useState({x: 0, y: 0});
-    const [text, setText] = useState('text');
+    const [pos, setPos] = useState(initPos);
+    const [text, setText] = useState(initText);
 
-    const posRef = useRef({x: 0, y: 0});
+    const posRef = useRef(initPos);
     const btnEle = useRef(null);
 
-    const {translateDirectly} = useOptions(['translateDirectly']);
+    const { translateDirectly, showButtonAfterSelect } = useOptions(['translateDirectly', 'showButtonAfterSelect']);
     const isEnableTranslate = useIsEnable('translate', window.location.host);
     const chromeMsg = useOnExtensionMessage();
 
@@ -56,34 +56,25 @@ const TsBtn = () => {
     );
 
     const selectCb = useCallback(
-        (selectObj) => {
+        ({ text, pos }) => {
             if (!isEnableTranslate) return;
 
             if (translateDirectly) {
-                // double click will call two times
-                // use debounce to avoid it
-                debounce(
-                    () => {
-                        dispatch(showTsResultWithOutResultObject(
-                            selectObj.text,
-                            {
-                                x: selectObj.pos.x += 5,
-                                y: selectObj.pos.y += 5
-                            }
-                        ));
-                    },
-                    500
-                )();
+                dispatch(showTsResultWithOutResultObject(
+                    text,
+                    {　x: pos.x += 5,y: pos.y += 5　}
+                ));
+
                 return;
             }
 
-            setText(selectObj.text);
-            setShowBtn(true);
-            handleSetPos(selectObj.pos);
+            setText(text);
+            handleSetPos(pos);
+            showButtonAfterSelect && setShowBtn(true);
 
             dispatch(hideTsResult());
         },
-        [dispatch, handleSetPos, translateDirectly, isEnableTranslate]
+        [dispatch, handleSetPos, translateDirectly, isEnableTranslate, showButtonAfterSelect]
     );
 
     const unselectCb = useCallback(
@@ -97,6 +88,8 @@ const TsBtn = () => {
 
     useEffect(
         () => {
+            if (!isEnableTranslate) return;
+
             if (chromeMsg?.type === SCTS_CONTEXT_MENUS_CLICKED) {
                 setShowBtn(false);
 
@@ -105,13 +98,28 @@ const TsBtn = () => {
                     posRef.current
                 ));
             }
+            else if (chromeMsg?.type === SCTS_TRANSLATE_COMMAND_KEY_PRESSED) {
+                setShowBtn(false);
+
+                const text = getSelectedText();
+                text && dispatch(showTsResultWithOutResultObject(
+                    text,
+                    posRef.current
+                ));
+            }
+            else if (chromeMsg?.type === SCTS_AUDIO_COMMAND_KEY_PRESSED) {
+                const text = getSelectedText();
+                text && sendAudio(text, {});
+            }
         },
-        [chromeMsg, dispatch]
+        [chromeMsg, isEnableTranslate, dispatch]
     );
 
     useEffect(
         () => {
-            getSelection(selectCb, unselectCb);
+            const unsubscribe = getSelection(selectCb, unselectCb);
+
+            return unsubscribe;
         },
         [selectCb, unselectCb]
     );

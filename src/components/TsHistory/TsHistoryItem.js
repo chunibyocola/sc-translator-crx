@@ -1,7 +1,6 @@
 import React, {useCallback, useRef} from 'react';
 import {removeHistory} from '../../redux/actions/tsHistoryActions';
 import {showTsResultWithResultObject} from '../../redux/actions/tsResultActions';
-import {setSelecting} from '../../public/utils/getSelection';
 import {resultToString} from '../../public/utils';
 import {useDispatch} from 'react-redux';
 import IconFont from '../IconFont';
@@ -34,8 +33,6 @@ const TsHistoryItem = ({result, index}) => {
                 x: 205,
                 y: ele.offsetTop - ele.parentNode.scrollTop
             }));
-
-            setSelecting();
         },
         [dispatch, result]
     );

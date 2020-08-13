@@ -9,7 +9,7 @@ export const sendTranslate = (text, {source, from, to}, cb = undefined) => {
     chromeSendMessage(action, cb);
 };
 
-export const sendAudio = (text, {source, from}) => {
+export const sendAudio = (text, {source = '', from = ''}) => {
     const action = {
         type: types.SCTS_AUDIO,
         payload: packData(text, {source, from})

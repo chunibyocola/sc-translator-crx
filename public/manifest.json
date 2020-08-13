@@ -2,8 +2,8 @@
   "short_name": "ScTranslator",
   "name": "__MSG_extName__",
   "default_locale": "en",
-  "version": "1.1.0",
-  "description": "A simple but powerful translate extension. Based on Google Translate.",
+  "version": "1.2.0",
+  "description": "__MSG_extDescription__",
   "icons": {
     "16": "image/icon-16.png",
     "48": "image/icon-48.png",
@@ -19,6 +19,20 @@
     "default_popup": "popup.html"
   },
   "options_page": "options.html",
+  "commands": {
+    "sc-translate": {
+      "suggested_key": {
+        "default": "Alt+Z"
+      },
+      "description": "__MSG_extTranslateCommandDescription__"
+    },
+    "sc-audio": {
+      "suggested_key": {
+        "default": "Alt+X"
+      },
+      "description": "__MSG_extListenCommandDescription__"
+    }
+  },
   "permissions": [
     "https://translate.google.com/*",
     "https://translate.google.cn/*",

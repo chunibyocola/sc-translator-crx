@@ -82,6 +82,11 @@ const tsResultState = (state = initState, action) => {
                 requestEnd: true,
                 requesting: false
             };
+        case types.SET_TS_RESULT_POSITION:
+            return {
+                ...state,
+                pos: payload
+            };
         default:
             return state;
     }

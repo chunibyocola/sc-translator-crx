@@ -8,13 +8,13 @@ import {
 import './style.css';
 
 const LanguageSelection = ({selectionChange, disableSelect}) => {
-    const {from, to} = useSelector(state => state.translationState);
+    const { source, from, to } = useSelector(state => state.translationState);
 
     const dispatch = useDispatch();
 
     return (
         <div className='ts-language-selection'>
-            <LSelect onChange={selectionChange} disableSelect={disableSelect} from />
+            <LSelect onChange={selectionChange} disableSelect={disableSelect} source={source} from />
             <span
                 className='ts-lselect-swrap'
                 onClick={() => {
@@ -26,7 +26,7 @@ const LanguageSelection = ({selectionChange, disableSelect}) => {
             >
                 <IconFont iconName='#icon-MdSwap' />
             </span>
-            <LSelect onChange={selectionChange} disableSelect={disableSelect} />
+            <LSelect onChange={selectionChange} disableSelect={disableSelect} source={source} />
         </div>
     );
 };

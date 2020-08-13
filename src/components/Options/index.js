@@ -1,11 +1,13 @@
 import React, {useCallback, useEffect} from 'react';
 import defaultOptions from '../../constants/defaultOptions';
-import translateSource from '../../constants/translateSource';
-import langCode, {userLangs} from '../../constants/langCode';
+import { audioSource, translateSource } from '../../constants/translateSource';
+import {userLangs, langCode} from '../../constants/langCode';
 import {setLocalStorage, getI18nMessage} from '../../public/chrome-call';
 import {useOptions} from '../../public/react-use';
 import HostList from './HostList';
 import './style.css';
+import DefaultSelect from './DefaultSelect';
+import OptionToggle from './OptionToggle';
 
 const Options = () => {
     const {
@@ -19,164 +21,130 @@ const Options = () => {
         translateHostList,
         historyBlackListMode,
         historyHostList,
-        darkMode
+        darkMode,
+        showButtonAfterSelect,
+        defaultAudioSource
     } = useOptions(Object.keys(defaultOptions));
 
-    useEffect(
-        () => {
-            document.body.className = `${darkMode ? 'dark' : 'light'}`;
-        },
-        [darkMode]
-    );
+    useEffect(() => { document.body.className = `${darkMode ? 'dark' : 'light'}`; }, [darkMode]);
 
-    const handleToggleClick = useCallback(
-        (key, value) => {
-            setLocalStorage({[key]: value})
-        },
-        []
-    );
-
-    const handleSelectChange = useCallback(
-        (key, e) => {
-            const ele =  e.target;
-            const curValue = ele.options[ele.selectedIndex].value;
-            setLocalStorage({[key]: curValue});
-        },
-        []
-    );
-
-    const handleHistoryHostListUpdate  = useCallback(
-        (list) => {
-            setLocalStorage({'historyHostList': list});
-        },
-        []
-    );
-
-    const handleTranslateHostListUpdate  = useCallback(
-        (list) => {
-            setLocalStorage({'translateHostList': list});
-        },
-        []
-    );
+    const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
 
     return (
         <div className='options'>
             <h2>{getI18nMessage('optionsTitle')}</h2>
             <h3>{getI18nMessage('optionsTheme')}</h3>
             <div className='opt-item'>
-                <input
+                <OptionToggle
                     id='dark-mode-checkbox'
-                    type='checkbox'
+                    message='optionsDarkMode'
                     checked={darkMode}
-                    onClick={() => handleToggleClick('darkMode', !darkMode)}
+                    onClick={() => updateStorage('darkMode', !darkMode)}
                 />
-                <label for='dark-mode-checkbox'>
-                    {getI18nMessage('optionsDarkMode')}
-                </label>
+            </div>
+            <h3>{getI18nMessage('optionsAudio')}</h3>
+            <div className='opt-item'>
+                {getI18nMessage('optionsDefaultAudioOptions')}
+                <DefaultSelect
+                    message='optionsSource'
+                    value={defaultAudioSource}
+                    onChange={value => updateStorage('defaultAudioSource', value)}
+                    options={audioSource}
+                    optionValue='source'
+                    optionLabel='url'
+                />
             </div>
             <h3>{getI18nMessage('optionsTranslate')}</h3>
             <div className='opt-item'>
-                <input
+                <OptionToggle
                     id='context-menus-checkbox'
-                    type='checkbox'
+                    message='optionsEnableContextMenus'
                     checked={enableContextMenus}
-                    onClick={() => handleToggleClick('enableContextMenus', !enableContextMenus)}
+                    onClick={() => updateStorage('enableContextMenus', !enableContextMenus)}
                 />
-                <label for='context-menus-checkbox'>
-                    {getI18nMessage('optionsEnableContextMenus')}
-                </label>
+            </div>
+            <div className='opt-item'>
+                <OptionToggle
+                    id='show-button-after-select-checkbox'
+                    message='optionsShowButtonAfterSelect'
+                    checked={showButtonAfterSelect}
+                    onClick={() => updateStorage('showButtonAfterSelect', !showButtonAfterSelect)}
+                />
             </div>
             <div className='opt-item'>
                 {getI18nMessage('optionsDefaultTranslateOptions')}
-                <div className='default-select'>
-                    {getI18nMessage('optionsLanguage')}
-                    <select
-                        value={userLanguage}
-                        onChange={(e) => handleSelectChange('userLanguage', e)}
-                    >
-                        {userLangs.map(v => (
-                            <option key={v.code} value={v.code}>{v.name}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className='default-select'>
-                    {getI18nMessage('optionsSource')}
-                    <select
-                        value={defaultTranslateSource}
-                        onChange={e => handleSelectChange('defaultTranslateSource', e)}
-                    >
-                        {translateSource.map(v => (
-                            <option value={v.source} key={v.source}>{v.url}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className='default-select'>
-                    {getI18nMessage('optionsFrom')}
-                    <select
-                        value={defaultTranslateFrom}
-                        onChange={e => handleSelectChange('defaultTranslateFrom', e)}
-                    >
-                        {langCode[userLanguage].map(v => (
-                            <option value={v.code} key={v.code}>{v.name}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className='default-select'>
-                    {getI18nMessage('optionsTo')}
-                    <select
-                        value={defaultTranslateTo}
-                        onChange={e => handleSelectChange('defaultTranslateTo', e)}
-                    >
-                        {langCode[userLanguage].map(v => (
-                            <option value={v.code} key={v.code}>{v.name}</option>
-                        ))}
-                    </select>
-                </div>
+                <DefaultSelect
+                    message='optionsLanguage'
+                    value={userLanguage}
+                    onChange={value => updateStorage('userLanguage', value)}
+                    options={userLangs}
+                    optionValue='code'
+                    optionLabel='name'
+                />
+                <DefaultSelect
+                    message='optionsSource'
+                    value={defaultTranslateSource}
+                    onChange={value => {
+                        updateStorage('defaultTranslateSource', value);
+                        updateStorage('defaultTranslateFrom', '');
+                        updateStorage('defaultTranslateTo', '');
+                    }}
+                    options={translateSource}
+                    optionValue='source'
+                    optionLabel='url'
+                />
+                <DefaultSelect
+                    message='optionsFrom'
+                    value={defaultTranslateFrom}
+                    onChange={value => updateStorage('defaultTranslateFrom', value)}
+                    options={langCode[defaultTranslateSource][userLanguage]}
+                    optionValue='code'
+                    optionLabel='name'
+                />
+                <DefaultSelect
+                    message='optionsTo'
+                    value={defaultTranslateTo}
+                    onChange={value => updateStorage('defaultTranslateTo', value)}
+                    options={langCode[defaultTranslateSource][userLanguage]}
+                    optionValue='code'
+                    optionLabel='name'
+                />
             </div>
             <div className='opt-item'>
-                <input
+                <OptionToggle
                     id='translate-directly-checkbox'
-                    type='checkbox'
+                    message='optionsTranslateDirectly'
                     checked={translateDirectly}
-                    onClick={() => handleToggleClick('translateDirectly', !translateDirectly)}
+                    onClick={() => updateStorage('translateDirectly', !translateDirectly)}
                 />
-                <label for='translate-directly-checkbox'>
-                    {getI18nMessage('optionsTranslateDirectly')}
-                </label>
             </div>
             <div className='opt-item'>
-                <input
+                <OptionToggle
                     id='translate-black-list-mode-checkbox'
-                    type='checkbox'
+                    message='optionsTranslateBlackListMode'
                     checked={translateBlackListMode}
-                    onClick={() => handleToggleClick('translateBlackListMode', !translateBlackListMode)}
+                    onClick={() => updateStorage('translateBlackListMode', !translateBlackListMode)}
                 />
-                <label for='translate-black-list-mode-checkbox'>
-                    {getI18nMessage('optionsTranslateBlackListMode')}
-                </label>
             </div>
             <div className='opt-item'>
                 <HostList
                     list={translateHostList}
-                    updateList={handleTranslateHostListUpdate}
+                    updateList={list => updateStorage('translateHostList', list)}
                 />
             </div>
             <h3>{getI18nMessage('optionsHistory')}</h3>
             <div className='opt-item'>
-                <input
+                <OptionToggle
                     id='history-black-list-mode-checkbox'
-                    type='checkbox'
+                    message='optionsHistoryBlackListMode'
                     checked={historyBlackListMode}
-                    onClick={() => handleToggleClick('historyBlackListMode', !historyBlackListMode)}
+                    onClick={() => updateStorage('historyBlackListMode', !historyBlackListMode)}
                 />
-                <label for='history-black-list-mode-checkbox'>
-                    {getI18nMessage('optionsHistoryBlackListMode')}
-                </label>
             </div>
             <div className='opt-item'>
                 <HostList
                     list={historyHostList}
-                    updateList={handleHistoryHostListUpdate}
+                    updateList={list => updateStorage('historyHostList', list)}
                 />
             </div>
             <h3>{getI18nMessage('optionsMoreFeaturesOrBugReports')}</h3>

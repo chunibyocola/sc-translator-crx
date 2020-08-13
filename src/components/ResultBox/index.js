@@ -5,11 +5,11 @@ import {
     showTsResult,
     finishRequest,
     showTsResultWithText,
-    errorRequest
+    errorRequest,
+    setTsResultPosition
 } from '../../redux/actions/tsResultActions';
 import {addHistory} from '../../redux/actions/tsHistoryActions';
-import {translationSetSource} from '../../redux/actions/translationActions';
-import {setSelecting} from '../../public/utils/getSelection';
+import { translationUpdate } from '../../redux/actions/translationActions';
 import {sendTranslate, sendAudio} from '../../public/send';
 import TsResult from '../TsResult';
 import LanguageSelection from '../LanguageSelection';
@@ -19,6 +19,32 @@ import IconFont from '../IconFont';
 import './style.css';
 
 const resultBoxMargin = 5;
+const initPos = { x: 0, y: 0 };
+
+const drag = (element, currentPosition, mouseMoveCallback, mouseUpCallback) => {
+    const originX = element.clientX;
+    const originY = element.clientY;
+    const tempX = currentPosition.x;
+    const tempY = currentPosition.y;
+    let newX = tempX;
+    let newY = tempY;
+    document.onselectstart = () => { return false; };
+    document.onmousemove = function (ev) {
+        const nowX = ev.clientX;
+        const nowY = ev.clientY;
+        const diffX = originX - nowX;
+        const diffY = originY - nowY;
+        newX = tempX - diffX;
+        newY = tempY - diffY;
+        mouseMoveCallback({x: newX, y: newY});
+    };
+    document.onmouseup = function () {
+        document.onmousemove = null;
+        document.onmouseup = null;
+        document.onselectstart = () => { return true; };
+        mouseUpCallback({x: newX, y: newY});
+    };
+};
 
 const ResultBox = () => {
     const {
@@ -35,29 +61,33 @@ const ResultBox = () => {
     const tsHistoryState = useSelector(state => state.tsHistoryState);
     const translationState = useSelector(state => state.translationState);
     
-    const [initPos, setInitPos] = useState({x: 0, y: 0});
     const [pinning, setPinning] = useState(false);
-    const [pinPos, setPinPos] = useState({x: 0, y: 0});
+    const [pinPos, setPinPos] = useState(initPos);
     const [showRtAndLs, setShowRtAndLs] = useState(false); 
 
+    const pinPosRef = useRef(initPos);
     const rbEle = useRef(null);
-    const pinPosRef = useRef({x: 0, y: 0});
 
     const dispatch = useDispatch();
 
-    const goPinning = useCallback(
-            (pos) => {
-            if (!pinning) {
-                setPinPos(pos);
-                pinPosRef.current = pos;
-            }
-            else {
-                setSelecting();
+    const pinningToggle = useCallback(
+        () => {
+            if (pinning) {
+                dispatch(setTsResultPosition(pinPosRef.current));
                 dispatch(showTsResult());
             }
+
             setPinning(!pinning);
         },
         [dispatch, pinning]
+    );
+
+    const changePinPos = useCallback(
+        (pos) => {
+            setPinPos(pos);
+            pinPosRef.current = pos;
+        },
+        []
     );
 
     const handlePosChange = useCallback(
@@ -75,39 +105,9 @@ const ResultBox = () => {
             if (rbR > dW) x = dW - resultBoxMargin - rbW;
             if (rbB > dH) y = dH - resultBoxMargin - rbH;
             if (y < resultBoxMargin) y = resultBoxMargin;
-            setPinPos({x, y});
-            pinPosRef.current = {x, y};
+            changePinPos({x, y});
         },
-        []
-    );
-
-    const drag = useCallback(
-        (e) => {
-            const originX = e.clientX;
-            const originY = e.clientY;
-            const tempX = pinPosRef.current.x;
-            const tempY = pinPosRef.current.y;
-            let newX = tempX;
-            let newY = tempY;
-            document.onselectstart = () => { return false; };
-            document.onmousemove = function (ev) {
-                const nowX = ev.clientX;
-                const nowY = ev.clientY;
-                const diffX = originX - nowX;
-                const diffY = originY - nowY;
-                newX = tempX - diffX;
-                newY = tempY - diffY;
-                setPinPos({x: newX, y: newY});
-                pinPosRef.current = {x: newX, y: newY};
-            };
-            document.onmouseup = function () {
-                document.onmousemove = null;
-                document.onmouseup = null;
-                document.onselectstart = () => { return true; };
-                handlePosChange({x: newX, y: newY});
-            };
-        },
-        [handlePosChange]
+        [changePinPos]
     );
 
     const handleTranslate = useCallback(
@@ -140,19 +140,19 @@ const ResultBox = () => {
     const handleSourceChange = useCallback(
         (source) => {
             if (source !== translationState.source) {
-                dispatch(translationSetSource(source));
+                const newTranslation = { source, from: '', to: '' };
+                dispatch(translationUpdate(source, '', ''));
                 if (resultObj.text) {
-                    const tempTranslation = {...translationState, source};
-                    const tempResultObj = handleGetResultObjFromHistory(resultObj.text, tempTranslation);
+                    const tempResultObj = handleGetResultObjFromHistory(resultObj.text, newTranslation);
                     if (tempResultObj) {
                         dispatch(finishRequest(tempResultObj));
                         return;
                     }
-                    handleTranslate(resultObj.text, {...translationState, source});
+                    handleTranslate(resultObj.text, newTranslation);
                 }
             }
         },
-        [dispatch, translationState, resultObj.text, handleTranslate, handleGetResultObjFromHistory]
+        [dispatch, translationState.source, resultObj.text, handleTranslate, handleGetResultObjFromHistory]
     );
 
     const handleReadText = useCallback(
@@ -186,17 +186,9 @@ const ResultBox = () => {
 
     useEffect(
         () => {
-            if (!show && !pinning) setInitPos({x: 0, y: 0});
-            if (show && (pos.x !== initPos.x || pos.y !== initPos.y)) {
-                setInitPos(pos);
-                if (!pinning) {
-                    setPinPos(pos);
-                    pinPosRef.current = pos;
-                    handlePosChange(pos);
-                }
-            }
+            !pinning && changePinPos(pos);
         },
-        [pos, initPos.x, initPos.y, pinning, show, handlePosChange]
+        [pos, pinning, changePinPos]
     );
 
     useEffect(
@@ -235,7 +227,7 @@ const ResultBox = () => {
         >
             <div
                 className='ts-rb-head'
-                onMouseDown={e => drag(e)}
+                onMouseDown={(e) => drag(e, pinPos, changePinPos, handlePosChange)}
             >
                 <div className='tsrbh-title'>{getI18nMessage('contentResult')}</div>
                 <span 
@@ -252,7 +244,7 @@ const ResultBox = () => {
                     />
                     <IconFont
                         iconName='#icon-GoPin'
-                        onClick={() => goPinning(pinPos)}
+                        onClick={pinningToggle}
                         className={`${pinning? 'tsrbhr-pin-check': ''}`}
                     />
                 </span>

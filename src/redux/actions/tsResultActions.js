@@ -45,3 +45,8 @@ export const hideTsResult = () => ({
 export const startRequest = () => ({
     type: types.START_REQUEST
 });
+
+export const setTsResultPosition = (pos) => ({
+    type: types.SET_TS_RESULT_POSITION,
+    payload: pos
+});

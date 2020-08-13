@@ -5,10 +5,10 @@ import {
     translationSetTo
 } from '../../redux/actions/translationActions';
 import {getLocalStorage} from '../../public/chrome-call';
-import langCode from '../../constants/langCode';
+import { langCode } from '../../constants/langCode';
 import {LANG_EN} from '../../constants/langCode';
 
-const LSelect = ({from, onChange, disableSelect}) => {
+const LSelect = ({ from, onChange, disableSelect, source }) => {
     const [userLang, setUserLang] = useState(LANG_EN);
 
     const translationState = useSelector(state => state.translationState);
@@ -50,7 +50,7 @@ const LSelect = ({from, onChange, disableSelect}) => {
                 disabled={disableSelect}
             >
                 {
-                    langCode[userLang].map((v) => (
+                    langCode[source][userLang].map((v) => (
                         <option
                             key={v.code}
                             value={v.code}

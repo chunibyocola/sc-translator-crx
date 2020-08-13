@@ -1,7 +1,7 @@
 import React, {useCallback, useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import LanguageSelection from '../LanguageSelection';
-import {translationSetSource} from '../../redux/actions/translationActions';
+import { translationUpdate } from '../../redux/actions/translationActions';
 import {
     startRequest,
     finishRequest,
@@ -90,9 +90,9 @@ const Popup = () => {
     const handleSourceChange = useCallback(
         (source) => {
             if (source !== translationState.source) {
-                dispatch(translationSetSource(source));
+                dispatch(translationUpdate(source, '', ''));
                 if (resultObj.text) {
-                    handleTranslate(resultObj.text, {...translationState, source});
+                    handleTranslate(resultObj.text, { source, from: '', to: '' });
                 }
             }
         },
@@ -138,7 +138,7 @@ const Popup = () => {
     return (
         <div id="sc-translator-root" className={`container ${darkMode ? 'dark' : 'light'}`}>
             <div className="title">
-                <div className='title-logo'>ScTranslator</div>
+                <div className='title-logo'>{getI18nMessage('extName')}</div>
                 <div className='title-icons'>
                     <IconFont
                         iconName={darkMode ? '#icon-IoMdMoon' : '#icon-IoMdSunny'}

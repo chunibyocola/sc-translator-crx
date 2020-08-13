@@ -1,34 +1,36 @@
 let lastSelectionText = '';
-let selecting = false;
 
-export const setSelecting = () => selecting = true;
-
-const getSelection = (selectCb, unselectCb) => {
-    window.onmouseup = (e) => {
+const getSelection = (selectCallback, unselectCallback) => {
+    const onMouseUp = (e) => {
         setTimeout(() => {
             const text = getSelectedText();
 
-            if (!text || text === lastSelectionText) return;
-
+            if (!text || lastSelectionText === text) return;
             lastSelectionText = text;
-            selecting = true;
-            selectCb({
+
+            selectCallback({
                 pos: {x: e.clientX, y: e.clientY},
                 text
             });
         }, 0);
         
     };
-    window.onmousedown = () => {
-        if (selecting) {
-            lastSelectionText = '';
-            selecting = false;
-            unselectCb();
-        }
-    }
+    
+    const onMouseDown = () => {
+        lastSelectionText = '';
+        unselectCallback();
+    };
+
+    window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('mousedown', onMouseDown);
+
+    return () => {
+        window.removeEventListener('mouseup', onMouseUp);
+        window.removeEventListener('mousedown', onMouseDown);
+    };
 };
 
-const getSelectedText = () => {
+export const getSelectedText = () => {
     let text = '';
 
     if (window.getSelection) text = window.getSelection().toString();

@@ -1,20 +1,10 @@
-import {listenOptionsChange} from '../../public/options';
-import {SCTS_CONTEXT_MENUS_CLICKED} from '../../constants/chromeSendMessageTypes';
-import {getI18nMessage} from '../../public/chrome-call';
+import { listenOptionsChange } from '../../public/options';
+import { SCTS_CONTEXT_MENUS_CLICKED } from '../../constants/chromeSendMessageTypes';
+import { getI18nMessage, getLocalStorage } from '../../public/chrome-call';
 
 /* global chrome */
 
 let contextMenusCreated = false;
-
-export const initContextMenus = (userLang) => {
-    chrome.contextMenus.create({
-        id: 'sc-translator-context-menu',
-        title: `${getI18nMessage('wordTranslate')} "%s"`,
-        contexts: ['selection']
-    });
-
-    contextMenusCreated = true;
-};
 
 const createContextMenus = () => {
     if (contextMenusCreated) return;
@@ -49,3 +39,5 @@ chrome.contextMenus.onClicked.addListener(({selectionText}, tab) => {
         {type: SCTS_CONTEXT_MENUS_CLICKED, payload: {selectionText}}
     );
 });
+
+getLocalStorage('enableContextMenus', options => options.enableContextMenus && createContextMenus());

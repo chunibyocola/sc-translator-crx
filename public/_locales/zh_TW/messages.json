@@ -2,6 +2,15 @@
     "extName": {
         "message": "Sc翻譯"
     },
+    "extDescription": {
+        "message": "一個簡單但強大的翻譯擴展。基於 Google 翻譯和 Bing 翻譯。"
+    },
+    "extTranslateCommandDescription": {
+        "message": "翻譯您選擇的文字"
+    },
+    "extListenCommandDescription": {
+        "message": "讀讀您選擇的文字"
+    },
     "optionsTitle": {
         "message": "常規選項"
     },
@@ -49,6 +58,15 @@
     },
     "optionsDarkMode": {
         "message": "黑夜模式"
+    },
+    "optionsShowButtonAfterSelect": {
+        "message": "選擇文本後展示按鈕"
+    },
+    "optionsAudio": {
+        "message": "朗讀"
+    },
+    "optionsDefaultAudioOptions": {
+        "message": "默認朗讀設置："
     },
     "contentInputHere": {
         "message": "在此輸入"

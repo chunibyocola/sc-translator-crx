@@ -2,6 +2,15 @@
     "extName": {
         "message": "Sc翻訳"
     },
+    "extDescription": {
+        "message": "シンプルだが強力な翻訳拡張機能。 Google 翻訳と Bing 翻訳に基づいています。"
+    },
+    "extTranslateCommandDescription": {
+        "message": "選択したテキストを翻訳する"
+    },
+    "extListenCommandDescription": {
+        "message": "選択したテキストを聞く"
+    },
     "optionsTitle": {
         "message": "オプション"
     },
@@ -49,6 +58,15 @@
     },
     "optionsDarkMode": {
         "message": "ダークモード"
+    },
+    "optionsShowButtonAfterSelect": {
+        "message": "テキストを選択した後にボタンを表示"
+    },
+    "optionsAudio": {
+        "message": "音声"
+    },
+    "optionsDefaultAudioOptions": {
+        "message": "デフォルトの音声オプション："
     },
     "contentInputHere": {
         "message": "ここに入力"

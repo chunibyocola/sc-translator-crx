@@ -2,6 +2,15 @@
     "extName": {
         "message": "ScTranslator"
     },
+    "extDescription": {
+        "message": "A simple but powerful translate extension. Base on Google translate and Bing translate."
+    },
+    "extTranslateCommandDescription": {
+        "message": "Translate the text you select"
+    },
+    "extListenCommandDescription": {
+        "message": "Listen the text you select"
+    },
     "optionsTitle": {
         "message": "Options"
     },
@@ -49,6 +58,15 @@
     },
     "optionsDarkMode": {
         "message": "Dark Mode"
+    },
+    "optionsShowButtonAfterSelect": {
+        "message": "Show button after select text"
+    },
+    "optionsAudio": {
+        "message": "Audio"
+    },
+    "optionsDefaultAudioOptions": {
+        "message": "Default audio options:"
     },
     "contentInputHere": {
         "message": "Input here"

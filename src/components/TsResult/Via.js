@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import translateSource from '../../constants/translateSource';
+import { translateSource } from '../../constants/translateSource';
 
 const Via = ({sourceChange, source, disableSourceChange}) => {
     const handleSelectChange = useCallback(
