@@ -27,7 +27,7 @@
         "message": "啟用右鍵菜單"
     },
     "optionsDefaultTranslateOptions": {
-        "message": "默認翻譯選項："
+        "message": "默認翻譯選項"
     },
     "optionsSource": {
         "message": "源"
@@ -66,7 +66,16 @@
         "message": "朗讀"
     },
     "optionsDefaultAudioOptions": {
-        "message": "默認朗讀設置："
+        "message": "默認朗讀選項"
+    },
+    "optionsTranslateWithKeyPress": {
+        "message": "按住 Ctrl 鍵並選擇文本後翻譯"
+    },
+    "optionsInWebPage": {
+        "message": "在網頁中"
+    },
+    "optionsDomainfilter": {
+        "message": "功能變數名稱篩選"
     },
     "contentInputHere": {
         "message": "在此輸入"
@@ -112,5 +121,17 @@
     },
     "wordRequesting": {
         "message": "正在請求……"
+    },
+    "errorCode_CONNECTION_TIMED_OUT": {
+        "message": "錯誤：連接超時。"
+    },
+    "errorCode_RESULT_ERROR": {
+        "message": "錯誤：服務器返回了一個意外的結果。"
+    },
+    "errorCode_LANGUAGE_NOT_SOPPORTED": {
+        "message": "錯誤：當前翻譯源不支持這種語言。"
+    },
+    "errorCode_NO_RESULT": {
+        "message": "錯誤：無翻譯結果。"
     }
 }

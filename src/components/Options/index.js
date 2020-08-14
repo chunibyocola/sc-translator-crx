@@ -23,7 +23,8 @@ const Options = () => {
         historyHostList,
         darkMode,
         showButtonAfterSelect,
-        defaultAudioSource
+        defaultAudioSource,
+        translateWithKeyPress
     } = useOptions(Object.keys(defaultOptions));
 
     useEffect(() => { document.body.className = `${darkMode ? 'dark' : 'light'}`; }, [darkMode]);
@@ -45,72 +46,38 @@ const Options = () => {
             <h3>{getI18nMessage('optionsAudio')}</h3>
             <div className='opt-item'>
                 {getI18nMessage('optionsDefaultAudioOptions')}
-                <DefaultSelect
-                    message='optionsSource'
-                    value={defaultAudioSource}
-                    onChange={value => updateStorage('defaultAudioSource', value)}
-                    options={audioSource}
-                    optionValue='source'
-                    optionLabel='url'
-                />
+                <div className='child-mt10-ml30'>
+                    <DefaultSelect
+                        message='optionsSource'
+                        value={defaultAudioSource}
+                        onChange={value => updateStorage('defaultAudioSource', value)}
+                        options={audioSource}
+                        optionValue='source'
+                        optionLabel='url'
+                    />
+                </div>
             </div>
             <h3>{getI18nMessage('optionsTranslate')}</h3>
-            <div className='opt-item'>
+            <div className='opt-item child-mt10-ml30'>
+                {getI18nMessage('optionsInWebPage')}
+                <OptionToggle
+                    id='translate-with-key-press-checkbox'
+                    message='optionsTranslateWithKeyPress'
+                    checked={translateWithKeyPress}
+                    onClick={() => updateStorage('translateWithKeyPress', !translateWithKeyPress)}
+                />
                 <OptionToggle
                     id='context-menus-checkbox'
                     message='optionsEnableContextMenus'
                     checked={enableContextMenus}
                     onClick={() => updateStorage('enableContextMenus', !enableContextMenus)}
                 />
-            </div>
-            <div className='opt-item'>
                 <OptionToggle
                     id='show-button-after-select-checkbox'
                     message='optionsShowButtonAfterSelect'
                     checked={showButtonAfterSelect}
                     onClick={() => updateStorage('showButtonAfterSelect', !showButtonAfterSelect)}
                 />
-            </div>
-            <div className='opt-item'>
-                {getI18nMessage('optionsDefaultTranslateOptions')}
-                <DefaultSelect
-                    message='optionsLanguage'
-                    value={userLanguage}
-                    onChange={value => updateStorage('userLanguage', value)}
-                    options={userLangs}
-                    optionValue='code'
-                    optionLabel='name'
-                />
-                <DefaultSelect
-                    message='optionsSource'
-                    value={defaultTranslateSource}
-                    onChange={value => {
-                        updateStorage('defaultTranslateSource', value);
-                        updateStorage('defaultTranslateFrom', '');
-                        updateStorage('defaultTranslateTo', '');
-                    }}
-                    options={translateSource}
-                    optionValue='source'
-                    optionLabel='url'
-                />
-                <DefaultSelect
-                    message='optionsFrom'
-                    value={defaultTranslateFrom}
-                    onChange={value => updateStorage('defaultTranslateFrom', value)}
-                    options={langCode[defaultTranslateSource][userLanguage]}
-                    optionValue='code'
-                    optionLabel='name'
-                />
-                <DefaultSelect
-                    message='optionsTo'
-                    value={defaultTranslateTo}
-                    onChange={value => updateStorage('defaultTranslateTo', value)}
-                    options={langCode[defaultTranslateSource][userLanguage]}
-                    optionValue='code'
-                    optionLabel='name'
-                />
-            </div>
-            <div className='opt-item'>
                 <OptionToggle
                     id='translate-directly-checkbox'
                     message='optionsTranslateDirectly'
@@ -119,33 +86,76 @@ const Options = () => {
                 />
             </div>
             <div className='opt-item'>
-                <OptionToggle
-                    id='translate-black-list-mode-checkbox'
-                    message='optionsTranslateBlackListMode'
-                    checked={translateBlackListMode}
-                    onClick={() => updateStorage('translateBlackListMode', !translateBlackListMode)}
-                />
+                {getI18nMessage('optionsDefaultTranslateOptions')}
+                <div className='child-mt10-ml30'>
+                    <DefaultSelect
+                        message='optionsLanguage'
+                        value={userLanguage}
+                        onChange={value => updateStorage('userLanguage', value)}
+                        options={userLangs}
+                        optionValue='code'
+                        optionLabel='name'
+                    />
+                    <DefaultSelect
+                        message='optionsSource'
+                        value={defaultTranslateSource}
+                        onChange={value => {
+                            updateStorage('defaultTranslateSource', value);
+                            updateStorage('defaultTranslateFrom', '');
+                            updateStorage('defaultTranslateTo', '');
+                        }}
+                        options={translateSource}
+                        optionValue='source'
+                        optionLabel='url'
+                    />
+                    <DefaultSelect
+                        message='optionsFrom'
+                        value={defaultTranslateFrom}
+                        onChange={value => updateStorage('defaultTranslateFrom', value)}
+                        options={langCode[defaultTranslateSource][userLanguage]}
+                        optionValue='code'
+                        optionLabel='name'
+                    />
+                    <DefaultSelect
+                        message='optionsTo'
+                        value={defaultTranslateTo}
+                        onChange={value => updateStorage('defaultTranslateTo', value)}
+                        options={langCode[defaultTranslateSource][userLanguage]}
+                        optionValue='code'
+                        optionLabel='name'
+                    />
+                </div>
             </div>
             <div className='opt-item'>
-                <HostList
-                    list={translateHostList}
-                    updateList={list => updateStorage('translateHostList', list)}
-                />
+                {getI18nMessage('optionsDomainfilter')}
+                <div className='child-mt10-ml30'>
+                    <OptionToggle
+                        id='translate-black-list-mode-checkbox'
+                        message='optionsTranslateBlackListMode'
+                        checked={translateBlackListMode}
+                        onClick={() => updateStorage('translateBlackListMode', !translateBlackListMode)}
+                    />
+                    <HostList
+                        list={translateHostList}
+                        updateList={list => updateStorage('translateHostList', list)}
+                    />
+                </div>
             </div>
             <h3>{getI18nMessage('optionsHistory')}</h3>
             <div className='opt-item'>
-                <OptionToggle
-                    id='history-black-list-mode-checkbox'
-                    message='optionsHistoryBlackListMode'
-                    checked={historyBlackListMode}
-                    onClick={() => updateStorage('historyBlackListMode', !historyBlackListMode)}
-                />
-            </div>
-            <div className='opt-item'>
-                <HostList
-                    list={historyHostList}
-                    updateList={list => updateStorage('historyHostList', list)}
-                />
+                {getI18nMessage('optionsDomainfilter')}
+                <div className='child-mt10-ml30'>
+                    <OptionToggle
+                        id='history-black-list-mode-checkbox'
+                        message='optionsHistoryBlackListMode'
+                        checked={historyBlackListMode}
+                        onClick={() => updateStorage('historyBlackListMode', !historyBlackListMode)}
+                    />
+                    <HostList
+                        list={historyHostList}
+                        updateList={list => updateStorage('historyHostList', list)}
+                    />
+                </div>
             </div>
             <h3>{getI18nMessage('optionsMoreFeaturesOrBugReports')}</h3>
             <div className='opt-item'>

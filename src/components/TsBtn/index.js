@@ -25,8 +25,9 @@ const TsBtn = () => {
 
     const posRef = useRef(initPos);
     const btnEle = useRef(null);
+    const ctrlPressing = useRef(false);
 
-    const { translateDirectly, showButtonAfterSelect } = useOptions(['translateDirectly', 'showButtonAfterSelect']);
+    const { translateDirectly, showButtonAfterSelect, translateWithKeyPress } = useOptions(['translateDirectly', 'showButtonAfterSelect', 'translateWithKeyPress']);
     const isEnableTranslate = useIsEnable('translate', window.location.host);
     const chromeMsg = useOnExtensionMessage();
 
@@ -59,22 +60,20 @@ const TsBtn = () => {
         ({ text, pos }) => {
             if (!isEnableTranslate) return;
 
-            if (translateDirectly) {
-                dispatch(showTsResultWithOutResultObject(
-                    text,
-                    {　x: pos.x += 5,y: pos.y += 5　}
-                ));
+            handleSetPos(pos);
+
+            if ((translateWithKeyPress && ctrlPressing.current) || translateDirectly) {
+                dispatch(showTsResultWithOutResultObject(text, posRef.current));
 
                 return;
             }
 
             setText(text);
-            handleSetPos(pos);
             showButtonAfterSelect && setShowBtn(true);
 
             dispatch(hideTsResult());
         },
-        [dispatch, handleSetPos, translateDirectly, isEnableTranslate, showButtonAfterSelect]
+        [dispatch, handleSetPos, translateDirectly, isEnableTranslate, showButtonAfterSelect, translateWithKeyPress]
     );
 
     const unselectCb = useCallback(
@@ -84,6 +83,28 @@ const TsBtn = () => {
             dispatch(hideTsResult());
         },
         [dispatch]
+    );
+
+    useEffect(
+        () => {
+            if (!translateWithKeyPress) return;
+
+            const onKeyDown = (e) => {
+                e.key === 'Control' && !ctrlPressing.current && (ctrlPressing.current = true);
+            };
+            const onKeyUp = (e) => {
+                e.key === 'Control' && ctrlPressing.current && (ctrlPressing.current = false);
+            };
+
+            window.addEventListener('keydown', onKeyDown);
+            window.addEventListener('keyup', onKeyUp);
+
+            return () => {
+                window.removeEventListener('keydown', onKeyDown);
+                window.removeEventListener('keyup', onKeyUp);
+            }
+        },
+        [translateWithKeyPress]
     );
 
     useEffect(

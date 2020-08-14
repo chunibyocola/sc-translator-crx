@@ -27,7 +27,7 @@
         "message": "启用右键菜单"
     },
     "optionsDefaultTranslateOptions": {
-        "message": "默认翻译选项："
+        "message": "默认翻译选项"
     },
     "optionsSource": {
         "message": "源"
@@ -66,7 +66,16 @@
         "message": "朗读"
     },
     "optionsDefaultAudioOptions": {
-        "message": "默认朗读设置："
+        "message": "默认朗读选项"
+    },
+    "optionsTranslateWithKeyPress": {
+        "message": "按住 Ctrl 键并选择文本后翻译"
+    },
+    "optionsInWebPage": {
+        "message": "在网页中"
+    },
+    "optionsDomainfilter": {
+        "message": "域名筛选"
     },
     "contentInputHere": {
         "message": "在此输入"
@@ -112,5 +121,17 @@
     },
     "wordRequesting": {
         "message": "正在请求……"
+    },
+    "errorCode_CONNECTION_TIMED_OUT": {
+        "message": "错误：连接超时。"
+    },
+    "errorCode_RESULT_ERROR": {
+        "message": "错误：服务器返回了一个意外的结果。"
+    },
+    "errorCode_LANGUAGE_NOT_SOPPORTED": {
+        "message": "错误：当前翻译源不支持这种语言。"
+    },
+    "errorCode_NO_RESULT": {
+        "message": "错误：无翻译结果。"
     }
 }

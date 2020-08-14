@@ -9,6 +9,9 @@ body {
 h2 {
   margin-block-start: 0;
 }
+a:hover, a:active {
+  box-shadow: none;
+}
 .dark {
   color: hsla(0, 0%, 100%, 0.88);
   background: #282c35;
@@ -16,4 +19,10 @@ h2 {
 .light {
   color: #666;
   background: #fff;
+}
+.dark a {
+  color: #ffa7c4;
+}
+.light a {
+  color: #d23669;
 }

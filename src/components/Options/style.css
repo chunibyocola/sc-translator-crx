@@ -6,12 +6,12 @@
     font-size: 18px;
     padding: 10px;
 }
-.opt-item label {
-    cursor: pointer;
-}
-.default-select {
+.child-mt10-ml30>* {
     margin-top: 10px;
     margin-left: 30px;
+}
+.opt-item label {
+    cursor: pointer;
 }
 .default-select select {
     width: 150px;

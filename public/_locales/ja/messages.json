@@ -27,7 +27,7 @@
         "message": "コンテキストメニューを有効にする"
     },
     "optionsDefaultTranslateOptions": {
-        "message": "デフォルトの翻訳オプション："
+        "message": "デフォルトの翻訳オプション"
     },
     "optionsSource": {
         "message": "ソース"
@@ -66,7 +66,16 @@
         "message": "音声"
     },
     "optionsDefaultAudioOptions": {
-        "message": "デフォルトの音声オプション："
+        "message": "デフォルトの音声オプション"
+    },
+    "optionsTranslateWithKeyPress": {
+        "message": "「Ctrl」キーを押してテキストを選択した後に翻訳する"
+    },
+    "optionsInWebPage": {
+        "message": "ウェブページ内"
+    },
+    "optionsDomainfilter": {
+        "message": "ドメイン名フィルター"
     },
     "contentInputHere": {
         "message": "ここに入力"
@@ -112,5 +121,17 @@
     },
     "wordRequesting": {
         "message": "ローディング......"
+    },
+    "errorCode_CONNECTION_TIMED_OUT": {
+        "message": "エラー：接続がタイムアウトしました。"
+    },
+    "errorCode_RESULT_ERROR": {
+        "message": "エラー：サーバーが予期しない結果を返しました。"
+    },
+    "errorCode_LANGUAGE_NOT_SOPPORTED": {
+        "message": "エラー：翻訳ソースはこの言語をサポートしていません。"
+    },
+    "errorCode_NO_RESULT": {
+        "message": "エラー：翻訳結果はありません。"
     }
 }

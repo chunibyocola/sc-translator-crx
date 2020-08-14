@@ -17,7 +17,7 @@ const TsResult = ({resultObj, status, sourceChange, readText, source, disableSou
                     getI18nMessage('wordRequesting'):
                     requestEnd?
                         err?
-                            errCode:
+                            getI18nMessage(`errorCode_${errCode}`):
                             <Fragment>
                                 <div className='tss-result'>
                                     <span>

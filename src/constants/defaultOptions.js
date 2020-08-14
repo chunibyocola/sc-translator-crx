@@ -14,7 +14,8 @@ const defaultOptions = {
     historyHostList: [],
     darkMode: false,
     showButtonAfterSelect: true,
-    defaultAudioSource: GOOGLE_COM
+    defaultAudioSource: GOOGLE_COM,
+    translateWithKeyPress: false
 };
 
 export default defaultOptions;

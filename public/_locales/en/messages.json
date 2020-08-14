@@ -27,7 +27,7 @@
         "message": "Enable context menus"
     },
     "optionsDefaultTranslateOptions": {
-        "message": "Default translate options:"
+        "message": "Default translate options"
     },
     "optionsSource": {
         "message": "source"
@@ -66,7 +66,16 @@
         "message": "Audio"
     },
     "optionsDefaultAudioOptions": {
-        "message": "Default audio options:"
+        "message": "Default audio options"
+    },
+    "optionsTranslateWithKeyPress": {
+        "message": "Press \"Ctrl\" key and select text to translate"
+    },
+    "optionsInWebPage": {
+        "message": "In web page"
+    },
+    "optionsDomainfilter": {
+        "message": "Domain name filtering"
     },
     "contentInputHere": {
         "message": "Input here"
@@ -112,5 +121,17 @@
     },
     "wordRequesting": {
         "message": "Requesting..."
+    },
+    "errorCode_CONNECTION_TIMED_OUT": {
+        "message": "Error: Connection timed out."
+    },
+    "errorCode_RESULT_ERROR": {
+        "message": "Error: Server return an unexpected result."
+    },
+    "errorCode_LANGUAGE_NOT_SOPPORTED": {
+        "message": "Error: The translate source doesn't support this language."
+    },
+    "errorCode_NO_RESULT": {
+        "message": "Error: No translate result."
     }
 }

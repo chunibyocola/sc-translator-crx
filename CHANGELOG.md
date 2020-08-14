@@ -1,3 +1,7 @@
+# 1.2.1
+- Add press "Ctrl" key and select text to translate.
+- Optimize accurate representation of translate error.
+- Optimize options page.
 # 1.2.0
 - Add "translate" keyboard shortcut (default: Alt + Z).
 - Add option "show button after select".
