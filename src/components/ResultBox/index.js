@@ -186,9 +186,9 @@ const ResultBox = () => {
 
     useEffect(
         () => {
-            !pinning && changePinPos(pos);
+            !pinning && handlePosChange(pos);
         },
-        [pos, pinning, changePinPos]
+        [pos, pinning, handlePosChange]
     );
 
     useEffect(

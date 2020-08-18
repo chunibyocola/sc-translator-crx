@@ -11,6 +11,12 @@ audioPlayer.addEventListener('ended', () => {
 });
 
 export const playAudio = (srcList) => {
+    if (!Array.isArray(srcList)) {
+        audioPlayer.src = srcList;
+        audioPlayer.play();
+        return;
+    }
+
     if (1 > srcList.length) return;
 
     audioSrcList = srcList;

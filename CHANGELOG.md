@@ -1,3 +1,5 @@
+# 1.2.2
+- Add audio source "bing.com"
 # 1.2.1
 - Add press "Ctrl" key and select text to translate.
 - Optimize accurate representation of translate error.
