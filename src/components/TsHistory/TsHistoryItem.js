@@ -1,6 +1,7 @@
 import React, {useCallback, useRef} from 'react';
 import {removeHistory} from '../../redux/actions/tsHistoryActions';
-import {showTsResultWithResultObject} from '../../redux/actions/tsResultActions';
+import {requestTsResultWithResultObject} from '../../redux/actions/tsResultActions';
+import { setResultBoxShowAndPosition } from '../../redux/actions/resultBoxActions';
 import {resultToString} from '../../public/utils';
 import {useDispatch} from 'react-redux';
 import IconFont from '../IconFont';
@@ -29,10 +30,11 @@ const TsHistoryItem = ({result, index}) => {
         () => {
             const ele = itemEle.current;
 
-            dispatch(showTsResultWithResultObject(result, {
+            dispatch(setResultBoxShowAndPosition({
                 x: 205,
                 y: ele.offsetTop - ele.parentNode.scrollTop
             }));
+            dispatch(requestTsResultWithResultObject(result));
         },
         [dispatch, result]
     );

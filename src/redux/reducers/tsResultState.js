@@ -5,8 +5,6 @@ const initState = {
     requesting: false,
     err: false,
     errCode: '',
-    show: false,
-    pos: {x: 0, y: 0},
     resultObj: {},
     withResultObj: false,
     text: ''
@@ -15,50 +13,35 @@ const initState = {
 const tsResultState = (state = initState, action) => {
     const {type, payload} = action;
     switch (type) {
-        case types.SHOW_TS_RESULT_WITHOUT_RESULT_OBJECT:
+        case types.REQUEST_TS_RESULT_WITHOUT_RESULT_OBJECT:
             return {
                 ...state,
                 requestEnd: false,
                 requesting: false,
                 err: false,
-                show: true,
                 withResultObj: false,
-                pos: payload.pos,
                 text: payload.text,
                 resultObj: {}
             };
-        case types.SHOW_TS_RESULT_WITH_TEXT:
+        case types.REQUEST_TS_RESULT_WITH_TEXT:
             return {
                 ...state,
                 requestEnd: false,
                 requesting: false,
                 err: false,
-                show: true,
                 withResultObj: false,
                 text: payload.text,
                 resultObj: {}
             };
-        case types.SHOW_TS_RESULT_WITH_RESULT_OBJECT:
+        case types.REQUEST_TS_RESULT_WITH_RESULT_OBJECT:
             return {
                 ...state,
                 requestEnd: true,
                 requesting: false,
                 err: false,
-                show: true,
                 withResultObj: true,
                 text: payload.text,
-                pos: payload.pos,
                 resultObj: payload.resultObj
-            };
-        case types.SHOW_TS_RESULT:
-            return {
-                ...state,
-                show: true
-            };
-        case types.HIDE_TS_RESULT:
-            return {
-                ...state,
-                show: false
             };
         case types.START_REQUEST:
             return {
@@ -81,11 +64,6 @@ const tsResultState = (state = initState, action) => {
                 errCode: payload,
                 requestEnd: true,
                 requesting: false
-            };
-        case types.SET_TS_RESULT_POSITION:
-            return {
-                ...state,
-                pos: payload
             };
         default:
             return state;

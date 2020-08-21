@@ -1,9 +1,12 @@
 import React, {useState, useEffect, useCallback, useRef} from 'react';
 import {useDispatch} from 'react-redux';
 import {
-    showTsResultWithOutResultObject,
-    hideTsResult
+    requestTsResultWithOutResultObject,
 } from '../../redux/actions/tsResultActions';
+import {
+    setResultBoxShowAndPosition,
+    hideResultBox
+} from '../../redux/actions/resultBoxActions';
 import getSelection, { getSelectedText } from '../../public/utils/get-selection';
 import {useOptions, useOnExtensionMessage, useIsEnable} from '../../public/react-use';
 import {
@@ -32,6 +35,14 @@ const TsBtn = () => {
     const chromeMsg = useOnExtensionMessage();
 
     const dispatch = useDispatch();
+
+    const handleForwardTranslate = useCallback(
+        (text, pos) => {
+            dispatch(setResultBoxShowAndPosition(pos));
+            dispatch(requestTsResultWithOutResultObject(text));
+        },
+        [dispatch]
+    );
 
     const handleSetPos = useCallback(
         ({x, y}) => {
@@ -63,7 +74,7 @@ const TsBtn = () => {
             handleSetPos(pos);
 
             if ((translateWithKeyPress && ctrlPressing.current) || translateDirectly) {
-                dispatch(showTsResultWithOutResultObject(text, posRef.current));
+                handleForwardTranslate(text, posRef.current);
 
                 return;
             }
@@ -71,16 +82,16 @@ const TsBtn = () => {
             setText(text);
             showButtonAfterSelect && setShowBtn(true);
 
-            dispatch(hideTsResult());
+            dispatch(hideResultBox());
         },
-        [dispatch, handleSetPos, translateDirectly, isEnableTranslate, showButtonAfterSelect, translateWithKeyPress]
+        [dispatch, handleSetPos, translateDirectly, isEnableTranslate, showButtonAfterSelect, translateWithKeyPress, handleForwardTranslate]
     );
 
     const unselectCb = useCallback(
         () => {
             setShowBtn(false);
             
-            dispatch(hideTsResult());
+            dispatch(hideResultBox());
         },
         [dispatch]
     );
@@ -114,26 +125,23 @@ const TsBtn = () => {
             if (chromeMsg?.type === SCTS_CONTEXT_MENUS_CLICKED) {
                 setShowBtn(false);
 
-                dispatch(showTsResultWithOutResultObject(
+                handleForwardTranslate(
                     chromeMsg.payload.selectionText,
                     posRef.current
-                ));
+                );
             }
             else if (chromeMsg?.type === SCTS_TRANSLATE_COMMAND_KEY_PRESSED) {
                 setShowBtn(false);
 
                 const text = getSelectedText();
-                text && dispatch(showTsResultWithOutResultObject(
-                    text,
-                    posRef.current
-                ));
+                text && handleForwardTranslate(text, posRef.current);
             }
             else if (chromeMsg?.type === SCTS_AUDIO_COMMAND_KEY_PRESSED) {
                 const text = getSelectedText();
                 text && sendAudio(text, {});
             }
         },
-        [chromeMsg, isEnableTranslate, dispatch]
+        [chromeMsg, isEnableTranslate, handleForwardTranslate]
     );
 
     useEffect(
@@ -155,7 +163,7 @@ const TsBtn = () => {
             }}
             onMouseUp={(e) => {
                 setShowBtn(false);
-                dispatch(showTsResultWithOutResultObject(text, pos));
+                handleForwardTranslate(text, posRef.current);
                 e.stopPropagation();
             }}
             onMouseDown={e => e.stopPropagation()}

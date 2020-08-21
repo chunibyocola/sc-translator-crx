@@ -2,12 +2,11 @@ import React, {useState, useEffect, useCallback, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
     startRequest,
-    showTsResult,
     finishRequest,
-    showTsResultWithText,
-    errorRequest,
-    setTsResultPosition
+    requestTsResultWithText,
+    errorRequest
 } from '../../redux/actions/tsResultActions';
+import { setResultBoxShowAndPosition } from '../../redux/actions/resultBoxActions';
 import {addHistory} from '../../redux/actions/tsHistoryActions';
 import { translationUpdate } from '../../redux/actions/translationActions';
 import {sendTranslate, sendAudio} from '../../public/send';
@@ -52,12 +51,12 @@ const ResultBox = () => {
         requesting,
         err,
         errCode,
-        show,
-        pos,
         resultObj,
         withResultObj,
         text
     } = useSelector(state => state.tsResultState);
+
+    const { show, pos } = useSelector(state => state.resultBoxState);
     const tsHistoryState = useSelector(state => state.tsHistoryState);
     const translationState = useSelector(state => state.translationState);
     
@@ -72,10 +71,7 @@ const ResultBox = () => {
 
     const pinningToggle = useCallback(
         () => {
-            if (pinning) {
-                dispatch(setTsResultPosition(pinPosRef.current));
-                dispatch(showTsResult());
-            }
+            pinning && dispatch(setResultBoxShowAndPosition(pinPosRef.current));
 
             setPinning(!pinning);
         },
@@ -164,7 +160,7 @@ const ResultBox = () => {
 
     const handleRawTextTranslate = useCallback(
         (text) => {
-            if (text) dispatch(showTsResultWithText(text));
+            if (text) dispatch(requestTsResultWithText(text));
         },
         [dispatch]
     );
