@@ -41,3 +41,5 @@ export const langCode = {
     [BING_COM]: bingLangCode,
     [MOJIDICT_COM]: mojidictLangCode
 };
+
+export const mtLangCode = googleLangCode;

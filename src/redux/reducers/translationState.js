@@ -19,6 +19,8 @@ const translationState = (state = initState, action) => {
             return {...state, from: state.to, to: state.from};
         case types.TRANSLATION_UPDATE:
             return {...state, ...payload};
+        case types.TRANSLATION_SET_FROM_AND_TO:
+            return {...state, ...payload};
         default:
             return state;
     }

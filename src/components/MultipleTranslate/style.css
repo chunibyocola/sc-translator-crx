@@ -1,0 +1,60 @@
+.ts-mt {
+    border-radius: 0px 5px 5px 5px;
+    color: var(--text-normal) !important;
+    position: fixed;
+    z-index: 100001;
+    top: 0px;
+    left: 0px;
+    width: 250px;
+    background-color: var(--bg-total);
+}
+.ts-mt-content {
+    width: 246px;
+    margin: 2px auto;
+    max-height: 250px;
+    overflow-y: auto;
+}
+.ts-mt-content::-webkit-scrollbar{
+    width:4px;
+}
+.ts-mt-content::-webkit-scrollbar-track{
+    background: rgb(239, 239, 239);
+    border-radius:2px;
+}
+.ts-mt-content::-webkit-scrollbar-thumb{
+    background: #bfbfbf;
+    border-radius:20px;
+}
+.ts-mt-content::-webkit-scrollbar-thumb:hover{
+    background: #999;
+}
+.ts-mt-header {
+    cursor: move;
+    user-select: none;
+    width: 100%;
+    color: var(--text-title);
+    background-color: var(--bg-title);
+    padding: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.ts-mt-header-title {
+    float: left;
+}
+.ts-mt-header-title>span {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100px;
+    overflow: hidden;
+}
+.ts-mt-header-icons {
+    float: right;
+    margin-right: 5px;
+}
+.ts-mt-result-add-translate-source {
+    word-break: break-all;
+    padding: 10px;
+}

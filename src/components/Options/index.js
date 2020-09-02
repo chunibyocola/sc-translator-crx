@@ -1,13 +1,14 @@
 import React, {useCallback, useEffect} from 'react';
 import defaultOptions from '../../constants/defaultOptions';
 import { audioSource, translateSource } from '../../constants/translateSource';
-import {userLangs, langCode} from '../../constants/langCode';
+import { userLangs, langCode, mtLangCode } from '../../constants/langCode';
 import {setLocalStorage, getI18nMessage} from '../../public/chrome-call';
 import {useOptions} from '../../public/react-use';
 import HostList from './HostList';
 import './style.css';
 import DefaultSelect from './DefaultSelect';
 import OptionToggle from './OptionToggle';
+import TransferList from './TransferList';
 
 const Options = () => {
     const {
@@ -24,7 +25,12 @@ const Options = () => {
         darkMode,
         showButtonAfterSelect,
         defaultAudioSource,
-        translateWithKeyPress
+        translateWithKeyPress,
+        useDotCn,
+        multipleTranslateMode,
+        multipleTranslateSourceList,
+        multipleTranslateFrom,
+        multipleTranslateTo
     } = useOptions(Object.keys(defaultOptions));
 
     useEffect(() => { document.body.className = `${darkMode ? 'dark' : 'light'}`; }, [darkMode]);
@@ -41,6 +47,15 @@ const Options = () => {
                     message='optionsDarkMode'
                     checked={darkMode}
                     onClick={() => updateStorage('darkMode', !darkMode)}
+                />
+            </div>
+            <h3>URL</h3>
+            <div className='opt-item'>
+                <OptionToggle
+                    id='use-dot-cn'
+                    message='optionsUseDotCn'
+                    checked={useDotCn}
+                    onClick={() => updateStorage('useDotCn', !useDotCn)}
                 />
             </div>
             <h3>{getI18nMessage('optionsAudio')}</h3>
@@ -88,6 +103,15 @@ const Options = () => {
             <div className='opt-item'>
                 {getI18nMessage('optionsDefaultTranslateOptions')}
                 <div className='child-mt10-ml30'>
+                    <div className='options-mode'>
+                        {getI18nMessage('optionsMode')}
+                        <OptionToggle
+                            id='multiple-translate-mode'
+                            message='optionsMultipleTranslateMode'
+                            checked={multipleTranslateMode}
+                            onClick={() => updateStorage('multipleTranslateMode', !multipleTranslateMode)}
+                        />
+                    </div>
                     <DefaultSelect
                         message='optionsLanguage'
                         value={userLanguage}
@@ -96,34 +120,60 @@ const Options = () => {
                         optionValue='code'
                         optionLabel='name'
                     />
-                    <DefaultSelect
-                        message='optionsSource'
-                        value={defaultTranslateSource}
-                        onChange={value => {
-                            updateStorage('defaultTranslateSource', value);
-                            updateStorage('defaultTranslateFrom', '');
-                            updateStorage('defaultTranslateTo', '');
-                        }}
-                        options={translateSource}
-                        optionValue='source'
-                        optionLabel='url'
-                    />
-                    <DefaultSelect
-                        message='optionsFrom'
-                        value={defaultTranslateFrom}
-                        onChange={value => updateStorage('defaultTranslateFrom', value)}
-                        options={langCode[defaultTranslateSource][userLanguage]}
-                        optionValue='code'
-                        optionLabel='name'
-                    />
-                    <DefaultSelect
-                        message='optionsTo'
-                        value={defaultTranslateTo}
-                        onChange={value => updateStorage('defaultTranslateTo', value)}
-                        options={langCode[defaultTranslateSource][userLanguage]}
-                        optionValue='code'
-                        optionLabel='name'
-                    />
+                    {multipleTranslateMode ?
+                    <>
+                        <TransferList
+                            enabledList={multipleTranslateSourceList}
+                            onChange={value => updateStorage('multipleTranslateSourceList', value)}
+                        />
+                        <DefaultSelect
+                            message='optionsFrom'
+                            value={multipleTranslateFrom}
+                            onChange={value => updateStorage('multipleTranslateFrom', value)}
+                            options={mtLangCode[userLanguage]}
+                            optionValue='code'
+                            optionLabel='name'
+                        />
+                        <DefaultSelect
+                            message='optionsTo'
+                            value={multipleTranslateTo}
+                            onChange={value => updateStorage('multipleTranslateTo', value)}
+                            options={mtLangCode[userLanguage]}
+                            optionValue='code'
+                            optionLabel='name'
+                        />
+                    </> :
+                    <>
+                        <DefaultSelect
+                            message='optionsSource'
+                            value={defaultTranslateSource}
+                            onChange={value => {
+                                updateStorage('defaultTranslateSource', value);
+                                updateStorage('defaultTranslateFrom', '');
+                                updateStorage('defaultTranslateTo', '');
+                            }}
+                            options={translateSource}
+                            optionValue='source'
+                            optionLabel='url'
+                        />
+                        <DefaultSelect
+                            message='optionsFrom'
+                            value={defaultTranslateFrom}
+                            onChange={value => updateStorage('defaultTranslateFrom', value)}
+                            options={langCode[defaultTranslateSource][userLanguage]}
+                            optionValue='code'
+                            optionLabel='name'
+                        />
+                        <DefaultSelect
+                            message='optionsTo'
+                            value={defaultTranslateTo}
+                            onChange={value => updateStorage('defaultTranslateTo', value)}
+                            options={langCode[defaultTranslateSource][userLanguage]}
+                            optionValue='code'
+                            optionLabel='name'
+                        />
+                    </>
+                    }
                 </div>
             </div>
             <div className='opt-item'>

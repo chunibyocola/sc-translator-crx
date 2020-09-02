@@ -69,3 +69,46 @@
 .host-list-menu button {
     width: 50px;
 }
+.options-mode .option-toggle {
+    display: inline-block;
+    margin-left: 10px;
+}
+.transfer-content {
+    margin-left: 10px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+.transfer-box {
+    box-shadow: -3px 3px 1px -1px rgba(153,153,153,0.2), 1px -2px 1px 0px rgba(153,153,153,0.14), 3px 1px 3px 0px rgba(153,153,153,0.12);
+}
+.transfer-box>hr {
+    border: none;
+    height: 2px;
+    margin: 0;
+    background-color: rgba(153, 153, 153, 0.12);
+}
+.transfer-box-head {
+    padding: 8px 16px;
+}
+.transfer-box-list {
+    height: 200px;
+    width: 200px;
+}
+.transfer-box-list-item {
+    cursor: pointer;
+    padding: 10px;
+}
+.transfer-box-list-item:hover {
+    background-color: rgb(221,221,221, 0.2);
+}
+.operation-panel {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 20px;
+}
+.operation-panel button {
+    min-width: 60px;
+    margin: 4px 0px;
+    padding: 3px 9px;
+}

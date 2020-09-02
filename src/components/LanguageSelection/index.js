@@ -1,32 +1,23 @@
 import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
 import LSelect from './LSelect';
 import IconFont from '../IconFont';
-import {
-    translationSwapFromAndTo
-} from '../../redux/actions/translationActions';
 import './style.css';
 
-const LanguageSelection = ({selectionChange, disableSelect}) => {
-    const { source, from, to } = useSelector(state => state.translationState);
-
-    const dispatch = useDispatch();
-
+const LanguageSelection = ({ selectionChange, disableSelect, from, to, options }) => {
     return (
         <div className='ts-language-selection'>
-            <LSelect onChange={selectionChange} disableSelect={disableSelect} source={source} from />
+            <LSelect onChange={selectionChange} disableSelect={disableSelect} from={from} to={to} options={options} isFrom />
             <span
                 className='ts-lselect-swrap'
                 onClick={() => {
                     if (from !== to && !disableSelect) {
-                        dispatch(translationSwapFromAndTo());
                         selectionChange(to, from);
                     }
                 }}
             >
                 <IconFont iconName='#icon-MdSwap' />
             </span>
-            <LSelect onChange={selectionChange} disableSelect={disableSelect} source={source} />
+            <LSelect onChange={selectionChange} disableSelect={disableSelect} from={from} to={to} options={options} />
         </div>
     );
 };

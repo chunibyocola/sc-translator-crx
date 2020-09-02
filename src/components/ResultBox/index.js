@@ -8,7 +8,7 @@ import {
 } from '../../redux/actions/tsResultActions';
 import { setResultBoxShowAndPosition } from '../../redux/actions/resultBoxActions';
 import {addHistory} from '../../redux/actions/tsHistoryActions';
-import { translationUpdate } from '../../redux/actions/translationActions';
+import { translationUpdate, translationSetFromAndTo } from '../../redux/actions/translationActions';
 import {sendTranslate, sendAudio} from '../../public/send';
 import TsResult from '../TsResult';
 import LanguageSelection from '../LanguageSelection';
@@ -16,6 +16,7 @@ import RawText from '../RawText';
 import {getI18nMessage} from '../../public/chrome-call';
 import IconFont from '../IconFont';
 import './style.css';
+import { langCode } from '../../constants/langCode';
 
 const resultBoxMargin = 5;
 const initPos = { x: 0, y: 0 };
@@ -167,6 +168,7 @@ const ResultBox = () => {
 
     const handleSelectionChange = useCallback(
         (from, to) => {
+            dispatch(translationSetFromAndTo(from, to));
             if (resultObj.text) {
                 const tempTranslation = {...translationState, from, to};
                 const tempResultObj = handleGetResultObjFromHistory(resultObj.text, tempTranslation);
@@ -253,6 +255,9 @@ const ResultBox = () => {
                     />
                     <LanguageSelection
                         selectionChange={handleSelectionChange}
+                        from={translationState.from}
+                        to={translationState.to}
+                        options={langCode[translationState.source]}
                         disableSelect={withResultObj}
                     />
                 </div>

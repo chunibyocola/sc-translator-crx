@@ -77,6 +77,24 @@
     "optionsDomainfilter": {
         "message": "功能變數名稱篩選"
     },
+    "optionsUseDotCn": {
+        "message": "在 URL 中使用“.cn”（例如：translate.google.cn）"
+    },
+    "optionsMode": {
+        "message": "模式"
+    },
+    "optionsMultipleTranslateMode": {
+        "message": "複數翻譯模式"
+    },
+    "optionsSourceList": {
+        "message": "源清單"
+    },
+    "optionsEnabled": {
+        "message": "啟用"
+    },
+    "optionsNotEnabled": {
+        "message": "未啟用"
+    },
     "contentInputHere": {
         "message": "在此輸入"
     },
@@ -121,6 +139,9 @@
     },
     "wordRequesting": {
         "message": "正在請求……"
+    },
+    "sentenceAddTranslateSource": {
+        "message": "請添加翻譯源。"
     },
     "errorCode_CONNECTION_TIMED_OUT": {
         "message": "錯誤：連接超時。"

@@ -8,8 +8,15 @@ import { GOOGLE_COM } from '../../constants/translateSource';
 /* global chrome */
 
 let defaultAudioSource = GOOGLE_COM;
-getLocalStorage('defaultAudioSource', storage => defaultAudioSource = storage.defaultAudioSource);
-listenOptionsChange(['defaultAudioSource'], changes => defaultAudioSource = changes.defaultAudioSource);
+let useDotCn = false;
+getLocalStorage(['defaultAudioSource', 'useDotCn'], (storage) => {
+    defaultAudioSource = storage.defaultAudioSource;
+    useDotCn = storage.useDotCn;
+});
+listenOptionsChange(['defaultAudioSource', 'useDotCn'], (changes) => {
+    'defaultAudioSource' in changes && (defaultAudioSource = changes.defaultAudioSource);
+    'useDotCn' in changes && (useDotCn = changes.useDotCn);
+});
 
 chrome.runtime.onMessage.addListener(
     (request, sender, sendResponse) => {
@@ -17,6 +24,7 @@ chrome.runtime.onMessage.addListener(
         switch (type) {
             case types.SCTS_TRANSLATE:
                 if (payload) {
+                    payload.requestObj.com = !useDotCn;
                     translate(payload, (result) => {
                         sendResponse(result);
                     });
@@ -24,6 +32,7 @@ chrome.runtime.onMessage.addListener(
                 return true;
             case types.SCTS_AUDIO:
                 if (payload) {
+                    payload.requestObj.com = !useDotCn;
                     !payload.source && (payload.source = defaultAudioSource);
                     payload.defaultSource = defaultAudioSource;
                     audio(payload, uri => playAudio(uri));

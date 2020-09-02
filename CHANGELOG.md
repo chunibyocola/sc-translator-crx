@@ -1,3 +1,6 @@
+# 2.0.0
+- Add multiple translate mode.
+- Add "Use '.cn' in URL" option.
 # 1.2.2
 - Add audio source "bing.com"
 # 1.2.1

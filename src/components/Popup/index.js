@@ -1,4 +1,4 @@
-import React, {useCallback, useState, useEffect} from 'react';
+import React, { useCallback } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import LanguageSelection from '../LanguageSelection';
 import { translationUpdate } from '../../redux/actions/translationActions';
@@ -8,34 +8,16 @@ import {
     errorRequest
 } from '../../redux/actions/tsResultActions';
 import {sendAudio, sendTranslate} from '../../public/send';
-import IconFont from '../IconFont';
 import RawText from '../RawText';
 import TsResult from '../TsResult';
-import {openOptionsPage, setLocalStorage} from '../../public/chrome-call';
-import {useOptions, useIsEnable} from '../../public/react-use';
-import {getCurrentTabHost, getIsContentScriptEnabled, getCurrentTab} from '../../public/utils';
-import {getI18nMessage} from '../../public/chrome-call';
+import { useOptions } from '../../public/react-use';
 import './style.css';
+import PopupHeader from '../PopupHeader';
+import { translationSetFromAndTo } from '../../redux/actions/translationActions';
+import { langCode } from '../../constants/langCode';
 
 const Popup = () => {
-    const [isContentScriptEnabled, setIsContentScriptEnabled] = useState(false);
-
-    const isEnableTranslate = useIsEnable('translate');
-    const isEnableHistory = useIsEnable('history');
-
-    const {
-        translateBlackListMode,
-        translateHostList,
-        historyBlackListMode,
-        historyHostList,
-        darkMode
-    } = useOptions([
-        'translateBlackListMode',
-        'translateHostList',
-        'historyBlackListMode',
-        'historyHostList',
-        'darkMode'
-    ]);
+    const { darkMode } = useOptions(['darkMode']);
 
     const {
         requestEnd,
@@ -48,32 +30,6 @@ const Popup = () => {
     const translationState = useSelector(state => state.translationState);
 
     const dispatch = useDispatch();
-
-    const handleDarkModeToggle = useCallback(
-        (daMode) => {
-            setLocalStorage({'darkMode': !daMode});
-        },
-        []
-    )
-
-    const handleIsEnableToggle = useCallback(
-        (list, bMode, isEnable, key) => {
-            getCurrentTabHost((host) => {
-                if ((isEnable && !bMode) || (!isEnable && bMode)) {
-                    const indexArr = list.reduce((t, v, i) => (
-                        host.endsWith(v)? t.concat(i): t
-                    ), []).reverse();
-                    indexArr.map((v) => (list.splice(v, 1)));
-                    setLocalStorage({[key]: list});
-                }
-                else {
-                    list.push(host);
-                    setLocalStorage({[key]: list});
-                }
-            });
-        },
-        []
-    );
 
     const handleTranslate = useCallback(
         (text, translation) => {
@@ -115,73 +71,26 @@ const Popup = () => {
 
     const handleSelectionChange = useCallback(
         (from, to) => {
+            dispatch(translationSetFromAndTo(from, to));
             if (resultObj.text) {
                 handleTranslate(resultObj.text, {...translationState, from, to});
             }
         },
-        [resultObj.text, translationState, handleTranslate]
-    );
-
-    useEffect(
-        () => {
-            const asyncGetData = async (tabId) => {
-                const result = await getIsContentScriptEnabled(tabId);
-
-                setIsContentScriptEnabled(result);
-            };
-
-            getCurrentTab(tab => tab && asyncGetData(tab.id));
-        },
-        []
+        [resultObj.text, translationState, handleTranslate, dispatch]
     );
 
     return (
         <div id="sc-translator-root" className={`container ${darkMode ? 'dark' : 'light'}`}>
-            <div className="title">
-                <div className='title-logo'>{getI18nMessage('extName')}</div>
-                <div className='title-icons'>
-                    <IconFont
-                        iconName={darkMode ? '#icon-IoMdMoon' : '#icon-IoMdSunny'}
-                        className='title-icons-enable'
-                        onClick={() => handleDarkModeToggle(darkMode)}
-                        title={darkMode ? getI18nMessage('popupDisableDarkMode') : getI18nMessage('popupEnableDarkMode')}
-                    />
-                    <IconFont
-                        iconName='#icon-MdTranslate'
-                        className={`${isEnableTranslate && isContentScriptEnabled? 'title-icons-enable': 'title-icons-disable'}`}
-                        onClick={() => isContentScriptEnabled && handleIsEnableToggle(
-                            translateHostList,
-                            translateBlackListMode,
-                            isEnableTranslate,
-                            'translateHostList'
-                        )}
-                        title={isContentScriptEnabled? isEnableTranslate? getI18nMessage('popupDisableTranslate'): getI18nMessage('popupEnableTranslate'): getI18nMessage('popupNotAvailable')}
-                    />
-                    <IconFont
-                        iconName='#icon-MdHistory'
-                        className={`${isEnableHistory && isContentScriptEnabled? 'title-icons-enable': 'title-icons-disable'}`}
-                        onClick={() => isContentScriptEnabled && handleIsEnableToggle(
-                            historyHostList,
-                            historyBlackListMode,
-                            isEnableHistory,
-                            'historyHostList'
-                        )}
-                        title={isContentScriptEnabled? isEnableHistory? getI18nMessage('popupDisableHistory'): getI18nMessage('popupEnableHistory'): getI18nMessage('popupNotAvailable')}
-                    />
-                    <IconFont
-                        iconName='#icon-MdSettings'
-                        className='title-icons-enable'
-                        onClick={openOptionsPage}
-                        title={getI18nMessage('popupOpenOptionsPage')}
-                    />
-                </div>
-            </div>
+            <PopupHeader />
             <div className="content">
                 <RawText
                     rawTextTranslate={handleRawTextTranslate}
                 />
                 <LanguageSelection
                     selectionChange={handleSelectionChange}
+                    from={translationState.from}
+                    to={translationState.to}
+                    options={langCode[translationState.source]}
                 />
                 <TsResult
                     resultObj={resultObj}

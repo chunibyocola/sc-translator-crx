@@ -77,6 +77,24 @@
     "optionsDomainfilter": {
         "message": "ドメイン名フィルター"
     },
+    "optionsUseDotCn": {
+        "message": "URL で 「.cn」 を使用します（例えば：translate.google.cn）"
+    },
+    "optionsMode": {
+        "message": "モード"
+    },
+    "optionsMultipleTranslateMode": {
+        "message": "複数翻訳モード"
+    },
+    "optionsSourceList": {
+        "message": "ソースリスト"
+    },
+    "optionsEnabled": {
+        "message": "有効"
+    },
+    "optionsNotEnabled": {
+        "message": "無効"
+    },
     "contentInputHere": {
         "message": "ここに入力"
     },
@@ -121,6 +139,9 @@
     },
     "wordRequesting": {
         "message": "ローディング......"
+    },
+    "sentenceAddTranslateSource": {
+        "message": "翻訳ソースを追加してください。"
     },
     "errorCode_CONNECTION_TIMED_OUT": {
         "message": "エラー：接続がタイムアウトしました。"

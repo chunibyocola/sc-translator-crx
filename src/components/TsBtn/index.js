@@ -7,6 +7,7 @@ import {
     setResultBoxShowAndPosition,
     hideResultBox
 } from '../../redux/actions/resultBoxActions';
+import { mtSetText } from '../../redux/actions/multipleTranslateActions';
 import getSelection, { getSelectedText } from '../../public/utils/get-selection';
 import {useOptions, useOnExtensionMessage, useIsEnable} from '../../public/react-use';
 import {
@@ -21,7 +22,7 @@ import { sendAudio } from '../../public/send';
 const initText = '';
 const initPos = { x: 5, y: 5 };
 
-const TsBtn = () => {
+const TsBtn = ({ multipleTranslateMode }) => {
     const [showBtn, setShowBtn] = useState(false);
     const [pos, setPos] = useState(initPos);
     const [text, setText] = useState(initText);
@@ -39,9 +40,9 @@ const TsBtn = () => {
     const handleForwardTranslate = useCallback(
         (text, pos) => {
             dispatch(setResultBoxShowAndPosition(pos));
-            dispatch(requestTsResultWithOutResultObject(text));
+            multipleTranslateMode ? dispatch(mtSetText({ text })) : dispatch(requestTsResultWithOutResultObject(text));
         },
-        [dispatch]
+        [dispatch, multipleTranslateMode]
     );
 
     const handleSetPos = useCallback(

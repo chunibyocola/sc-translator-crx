@@ -15,7 +15,13 @@ const defaultOptions = {
     darkMode: false,
     showButtonAfterSelect: true,
     defaultAudioSource: GOOGLE_COM,
-    translateWithKeyPress: false
+    translateWithKeyPress: false,
+    // multipleTranslate
+    useDotCn: false,
+    multipleTranslateMode: true,
+    multipleTranslateSourceList: ['google.com', 'bing.com'],
+    multipleTranslateFrom: '',
+    multipleTranslateTo: ''
 };
 
 export default defaultOptions;

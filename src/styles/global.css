@@ -12,6 +12,7 @@
     --history-bg: #eee;
     --history-item-hover-bg: #ddd;
     --history-content-border-right: 1px solid #ddd;
+    --source-selector-item-hover-bg: #eee;
 }
 #sc-translator-root.dark {
     --text-normal: hsla(0, 0%, 100%, 0.88);
@@ -24,4 +25,8 @@
     --history-bg: #282c35;
     --history-item-hover-bg: #444;
     --history-content-border-right: 1px solid #333;
+    --source-selector-item-hover-bg: #333;
+}
+.ts-button {
+    cursor: pointer;
 }

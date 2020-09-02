@@ -77,6 +77,24 @@
     "optionsDomainfilter": {
         "message": "Domain name filtering"
     },
+    "optionsUseDotCn": {
+        "message": "Use \".cn\" in URL (For example: translate.google.cn)"
+    },
+    "optionsMode": {
+        "message": "Mode"
+    },
+    "optionsMultipleTranslateMode": {
+        "message": "Multiple translate mode"
+    },
+    "optionsSourceList": {
+        "message": "source list"
+    },
+    "optionsEnabled": {
+        "message": "Enabled"
+    },
+    "optionsNotEnabled": {
+        "message": "Not enabled"
+    },
     "contentInputHere": {
         "message": "Input here"
     },
@@ -121,6 +139,9 @@
     },
     "wordRequesting": {
         "message": "Requesting..."
+    },
+    "sentenceAddTranslateSource": {
+        "message": "Please add a translate source."
     },
     "errorCode_CONNECTION_TIMED_OUT": {
         "message": "Error: Connection timed out."

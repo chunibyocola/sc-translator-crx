@@ -27,3 +27,11 @@ export const translationUpdate = (source, from, to) => ({
         to
     }
 });
+
+export const translationSetFromAndTo = (from, to) => ({
+    type: types.TRANSLATION_SET_FROM_AND_TO,
+    payload: {
+        from,
+        to
+    }
+});

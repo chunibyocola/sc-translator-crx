@@ -77,6 +77,24 @@
     "optionsDomainfilter": {
         "message": "域名筛选"
     },
+    "optionsUseDotCn": {
+        "message": "在 URL 中使用“.cn”（例如：translate.google.cn）"
+    },
+    "optionsMode": {
+        "message": "模式"
+    },
+    "optionsMultipleTranslateMode": {
+        "message": "复数翻译模式"
+    },
+    "optionsSourceList": {
+        "message": "源列表"
+    },
+    "optionsEnabled": {
+        "message": "启用"
+    },
+    "optionsNotEnabled": {
+        "message": "未启用"
+    },
     "contentInputHere": {
         "message": "在此输入"
     },
@@ -121,6 +139,9 @@
     },
     "wordRequesting": {
         "message": "正在请求……"
+    },
+    "sentenceAddTranslateSource": {
+        "message": "请添加翻译源。"
     },
     "errorCode_CONNECTION_TIMED_OUT": {
         "message": "错误：连接超时。"
