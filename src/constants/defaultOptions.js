@@ -18,7 +18,7 @@ const defaultOptions = {
     translateWithKeyPress: false,
     // multipleTranslate
     useDotCn: false,
-    multipleTranslateMode: true,
+    multipleTranslateMode: false,
     multipleTranslateSourceList: ['google.com', 'bing.com'],
     multipleTranslateFrom: '',
     multipleTranslateTo: ''
