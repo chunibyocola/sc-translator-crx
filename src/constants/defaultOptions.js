@@ -1,4 +1,4 @@
-import {GOOGLE_COM} from './translateSource';
+import { GOOGLE_COM, BING_COM } from './translateSource';
 import {LANG_EN} from './langCode';
 
 const defaultOptions = {
@@ -16,10 +16,9 @@ const defaultOptions = {
     showButtonAfterSelect: true,
     defaultAudioSource: GOOGLE_COM,
     translateWithKeyPress: false,
-    // multipleTranslate
     useDotCn: false,
     multipleTranslateMode: false,
-    multipleTranslateSourceList: ['google.com', 'bing.com'],
+    multipleTranslateSourceList: [GOOGLE_COM, BING_COM],
     multipleTranslateFrom: '',
     multipleTranslateTo: ''
 };

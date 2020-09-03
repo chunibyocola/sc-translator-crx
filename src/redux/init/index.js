@@ -1,5 +1,5 @@
-import {getStoreDispatch} from '../store';
-import {translationUpdate} from '../actions/translationActions';
+import { getStoreDispatch } from '../store';
+import { translationUpdate } from '../actions/translationActions';
 import { mtInit } from '../actions/multipleTranslateActions';
 
 export const initTranslation = ({

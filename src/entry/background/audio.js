@@ -24,4 +24,4 @@ export const playAudio = (srcList) => {
 
     audioPlayer.src = srcList[0];
     audioPlayer.play();
-}
+};

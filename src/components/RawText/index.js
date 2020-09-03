@@ -1,5 +1,5 @@
-import React, {useRef, useCallback, useState, useEffect} from 'react';
-import {getI18nMessage} from '../../public/chrome-call';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
+import { getI18nMessage } from '../../public/chrome-call';
 import './style.css';
 
 const debounce = (cb, time) => {
@@ -10,7 +10,7 @@ const debounce = (cb, time) => {
     };
 };
 
-const RawText = ({defaultValue, rawTextTranslate}) => {
+const RawText = ({ defaultValue, rawTextTranslate }) => {
     const [lastText, setLastText] = useState('');
 
     const textareaEl = useRef(null);

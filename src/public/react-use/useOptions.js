@@ -6,18 +6,15 @@ import defaultOptions from '../../constants/defaultOptions';
 const useOptions = (keys) => {
     const [curOptions, setCurOptions] = useState(defaultOptions);
 
-    useEffect(
-        () => {
-            getLocalStorage(keys, (data) => { setCurOptions(data); });
+    useEffect(() => {
+        getLocalStorage(keys, (data) => { setCurOptions(data); });
 
-            const removeListener = listenOptionsChange(keys, () => {
-                getLocalStorage(keys, data => setCurOptions(data));
-            });
+        const removeListener = listenOptionsChange(keys, () => {
+            getLocalStorage(keys, data => setCurOptions(data));
+        });
 
-            return removeListener;
-        },
-        []
-    );
+        return removeListener;
+    }, []);
 
     return curOptions;
 };

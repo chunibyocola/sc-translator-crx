@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback, useRef} from 'react';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
     requestTsResultWithOutResultObject,
 } from '../../redux/actions/tsResultActions';
@@ -9,7 +9,7 @@ import {
 } from '../../redux/actions/resultBoxActions';
 import { mtSetText } from '../../redux/actions/multipleTranslateActions';
 import getSelection, { getSelectedText } from '../../public/utils/get-selection';
-import {useOptions, useOnExtensionMessage, useIsEnable} from '../../public/react-use';
+import { useOptions, useOnExtensionMessage, useIsEnable } from '../../public/react-use';
 import {
     SCTS_CONTEXT_MENUS_CLICKED,
     SCTS_TRANSLATE_COMMAND_KEY_PRESSED,
@@ -37,129 +37,107 @@ const TsBtn = ({ multipleTranslateMode }) => {
 
     const dispatch = useDispatch();
 
-    const handleForwardTranslate = useCallback(
-        (text, pos) => {
-            dispatch(setResultBoxShowAndPosition(pos));
-            multipleTranslateMode ? dispatch(mtSetText({ text })) : dispatch(requestTsResultWithOutResultObject(text));
-        },
-        [dispatch, multipleTranslateMode]
-    );
+    const handleForwardTranslate = useCallback((text, pos) => {
+        dispatch(setResultBoxShowAndPosition(pos));
+        multipleTranslateMode ? dispatch(mtSetText({ text })) : dispatch(requestTsResultWithOutResultObject(text));
+    }, [dispatch, multipleTranslateMode]);
 
-    const handleSetPos = useCallback(
-        ({x, y}) => {
-            x += 5;
-            y += 5;
+    const handleSetPos = useCallback(({ x, y }) => {
+        x += 5;
+        y += 5;
 
-            const dH = document.documentElement.clientHeight;
-            const dW = document.documentElement.clientWidth;
-            const bW = btnEle.current.clientWidth;
-            const bH = btnEle.current.clientHeight;
-            const bL = x;
-            const bT = y;
-            const bB = bT + bH;
-            const bR = bL + bW;
+        const dH = document.documentElement.clientHeight;
+        const dW = document.documentElement.clientWidth;
+        const bW = btnEle.current.clientWidth;
+        const bH = btnEle.current.clientHeight;
+        const bL = x;
+        const bT = y;
+        const bB = bT + bH;
+        const bR = bL + bW;
 
-            if (bB > dH) y = y - 10 - bH;
-            if (bR > dW) x = x - 10 - bW;
+        if (bB > dH) y = y - 10 - bH;
+        if (bR > dW) x = x - 10 - bW;
 
-            posRef.current = {x, y};
-            setPos({x, y});
-        },
-        []
-    );
+        posRef.current = { x, y };
+        setPos({ x, y });
+    }, []);
 
-    const selectCb = useCallback(
-        ({ text, pos }) => {
-            if (!isEnableTranslate) return;
+    const selectCb = useCallback(({ text, pos }) => {
+        if (!isEnableTranslate) return;
 
-            handleSetPos(pos);
+        handleSetPos(pos);
 
-            if ((translateWithKeyPress && ctrlPressing.current) || translateDirectly) {
-                handleForwardTranslate(text, posRef.current);
+        if ((translateWithKeyPress && ctrlPressing.current) || translateDirectly) {
+            handleForwardTranslate(text, posRef.current);
+            return;
+        }
 
-                return;
-            }
+        setText(text);
+        showButtonAfterSelect && setShowBtn(true);
 
-            setText(text);
-            showButtonAfterSelect && setShowBtn(true);
+        dispatch(hideResultBox());
+    }, [dispatch, handleSetPos, translateDirectly, isEnableTranslate, showButtonAfterSelect, translateWithKeyPress, handleForwardTranslate]);
 
-            dispatch(hideResultBox());
-        },
-        [dispatch, handleSetPos, translateDirectly, isEnableTranslate, showButtonAfterSelect, translateWithKeyPress, handleForwardTranslate]
-    );
+    const unselectCb = useCallback(() => {
+        setShowBtn(false);
+        
+        dispatch(hideResultBox());
+    }, [dispatch]);
 
-    const unselectCb = useCallback(
-        () => {
+    useEffect(() => {
+        if (!translateWithKeyPress) return;
+
+        const onKeyDown = (e) => {
+            e.key === 'Control' && !ctrlPressing.current && (ctrlPressing.current = true);
+        };
+        const onKeyUp = (e) => {
+            e.key === 'Control' && ctrlPressing.current && (ctrlPressing.current = false);
+        };
+
+        window.addEventListener('keydown', onKeyDown);
+        window.addEventListener('keyup', onKeyUp);
+
+        return () => {
+            window.removeEventListener('keydown', onKeyDown);
+            window.removeEventListener('keyup', onKeyUp);
+        }
+    }, [translateWithKeyPress]);
+
+    useEffect(() => {
+        if (!isEnableTranslate) return;
+
+        if (chromeMsg?.type === SCTS_CONTEXT_MENUS_CLICKED) {
             setShowBtn(false);
-            
-            dispatch(hideResultBox());
-        },
-        [dispatch]
-    );
 
-    useEffect(
-        () => {
-            if (!translateWithKeyPress) return;
+            handleForwardTranslate(
+                chromeMsg.payload.selectionText,
+                posRef.current
+            );
+        }
+        else if (chromeMsg?.type === SCTS_TRANSLATE_COMMAND_KEY_PRESSED) {
+            setShowBtn(false);
 
-            const onKeyDown = (e) => {
-                e.key === 'Control' && !ctrlPressing.current && (ctrlPressing.current = true);
-            };
-            const onKeyUp = (e) => {
-                e.key === 'Control' && ctrlPressing.current && (ctrlPressing.current = false);
-            };
+            const text = getSelectedText();
+            text && handleForwardTranslate(text, posRef.current);
+        }
+        else if (chromeMsg?.type === SCTS_AUDIO_COMMAND_KEY_PRESSED) {
+            const text = getSelectedText();
+            text && sendAudio(text, {});
+        }
+    }, [chromeMsg, isEnableTranslate, handleForwardTranslate]);
 
-            window.addEventListener('keydown', onKeyDown);
-            window.addEventListener('keyup', onKeyUp);
+    useEffect(() => {
+        const unsubscribe = getSelection(selectCb, unselectCb);
 
-            return () => {
-                window.removeEventListener('keydown', onKeyDown);
-                window.removeEventListener('keyup', onKeyUp);
-            }
-        },
-        [translateWithKeyPress]
-    );
-
-    useEffect(
-        () => {
-            if (!isEnableTranslate) return;
-
-            if (chromeMsg?.type === SCTS_CONTEXT_MENUS_CLICKED) {
-                setShowBtn(false);
-
-                handleForwardTranslate(
-                    chromeMsg.payload.selectionText,
-                    posRef.current
-                );
-            }
-            else if (chromeMsg?.type === SCTS_TRANSLATE_COMMAND_KEY_PRESSED) {
-                setShowBtn(false);
-
-                const text = getSelectedText();
-                text && handleForwardTranslate(text, posRef.current);
-            }
-            else if (chromeMsg?.type === SCTS_AUDIO_COMMAND_KEY_PRESSED) {
-                const text = getSelectedText();
-                text && sendAudio(text, {});
-            }
-        },
-        [chromeMsg, isEnableTranslate, handleForwardTranslate]
-    );
-
-    useEffect(
-        () => {
-            const unsubscribe = getSelection(selectCb, unselectCb);
-
-            return unsubscribe;
-        },
-        [selectCb, unselectCb]
-    );
+        return unsubscribe;
+    }, [selectCb, unselectCb]);
 
     return (
         <div
             ref={btnEle}
             className='ts-btn'
             style={{
-                display: isEnableTranslate && showBtn? 'block': 'none',
+                display: isEnableTranslate && showBtn ? 'block' : 'none',
                 transform: `translate(${pos.x}px, ${pos.y}px)`
             }}
             onMouseUp={(e) => {

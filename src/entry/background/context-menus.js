@@ -31,12 +31,12 @@ const onEnableContextMenusChange = (changes) => {
 
 listenOptionsChange(['enableContextMenus'], onEnableContextMenusChange);
 
-chrome.contextMenus.onClicked.addListener(({selectionText}, tab) => {
+chrome.contextMenus.onClicked.addListener(({ selectionText }, tab) => {
     if (!tab) return;
 
     chrome.tabs.sendMessage(
         tab.id,
-        {type: SCTS_CONTEXT_MENUS_CLICKED, payload: {selectionText}}
+        {type: SCTS_CONTEXT_MENUS_CLICKED, payload: { selectionText }}
     );
 });
 

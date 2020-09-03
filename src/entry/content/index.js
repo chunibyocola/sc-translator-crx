@@ -5,12 +5,12 @@ import TsHistory from '../../components/TsHistory';
 import ResultBox from '../../components/ResultBox';
 import MultipleTranslate from '../../components/MultipleTranslate';
 
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import store from '../../redux/store';
 
 import { initTranslation, initMultipleTranslate } from '../../redux/init';
-import {initOptions, listenOptionsChange} from '../../public/options';
-import {getLocalStorage, onExtensionMessage} from '../../public/chrome-call';
+import { initOptions, listenOptionsChange } from '../../public/options';
+import { getLocalStorage, onExtensionMessage } from '../../public/chrome-call';
 import defaultOptions from '../../constants/defaultOptions';
 
 import '../../styles/global.css';

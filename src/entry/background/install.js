@@ -1,12 +1,12 @@
-import {LANG_ZH_CN, LANG_JA} from '../../constants/langCode';
+import { LANG_ZH_CN, LANG_JA } from '../../constants/langCode';
 import defaultOptions from '../../constants/defaultOptions';
-import {getLocalStorage} from '../../public/chrome-call';
+import { getLocalStorage } from '../../public/chrome-call';
 
 /* global chrome */
 
 const initStorageOnInstalled = (userLang, update) => {
 
-    const defaultSet = {...defaultOptions};
+    const defaultSet = { ...defaultOptions };
 
     switch (userLang) {
         case LANG_ZH_CN:
@@ -27,7 +27,7 @@ const initStorageOnInstalled = (userLang, update) => {
             data.defaultAudioSource = sourceSwitch(data.defaultAudioSource);
         }
 
-        chrome.storage.local.set({...defaultSet, ...data});
+        chrome.storage.local.set({ ...defaultSet, ...data });
     });
 };
 

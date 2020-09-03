@@ -1,9 +1,9 @@
-import React, {useState, useRef} from 'react';
-import {useSelector} from 'react-redux';
+import React, { useState, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import TsHistoryItem from './TsHistoryItem';
 import IconFont from '../IconFont';
-import {useIsEnable} from '../../public/react-use';
-import {getI18nMessage} from '../../public/chrome-call';
+import { useIsEnable } from '../../public/react-use';
+import { getI18nMessage } from '../../public/chrome-call';
 import './style.css';
 
 const TsHistory = () => {
@@ -21,8 +21,8 @@ const TsHistory = () => {
 
     return (
         <div
-            className={`ts-history ${fold? '': 'ts-history-show'}`}
-            style={{display: isEnableHistory && isEnableTranslate? 'block': 'none'}}
+            className={`ts-history ${fold ? '' : 'ts-history-show'}`}
+            style={{display: isEnableHistory && isEnableTranslate ? 'block' : 'none'}}
             ref={historyEle}
             onMouseEnter={() => {
                 if (pinning) return;
@@ -46,7 +46,7 @@ const TsHistory = () => {
             <div className='ts-history-head'>
                 {getI18nMessage('contentHistoryTitle')}
                 <div
-                    className={`tshh-icons ${pinning? 'tshh-icons-check': ''}`}
+                    className={`tshh-icons ${pinning ? 'tshh-icons-check' : ''}`}
                     onClick={() => setPinning(!pinning)}
                     onMouseUp={e => e.stopPropagation()}
                     onMouseDown={e => e.stopPropagation()}
@@ -55,17 +55,13 @@ const TsHistory = () => {
                 </div>
             </div>
             <div className='ts-history-content'>
-                {
-                    tsHistoryState.length === 0?
-                        (<div className='ts-history-norecord'>
-                            {getI18nMessage('contentNoRecord')}
-                        </div>):
-                        tsHistoryState.map(
-                            (v, i) => (
-                                <TsHistoryItem result={v} index={i} key={i} />
-                            )
-                        )
-                }
+                {tsHistoryState.length === 0 ?
+                    (<div className='ts-history-norecord'>
+                        {getI18nMessage('contentNoRecord')}
+                    </div>) :
+                tsHistoryState.map((v, i) => (
+                    <TsHistoryItem result={v} index={i} key={i} />
+                ))}
             </div>
         </div>
     );

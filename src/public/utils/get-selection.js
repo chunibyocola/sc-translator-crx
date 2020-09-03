@@ -9,7 +9,7 @@ const getSelection = (selectCallback, unselectCallback) => {
             lastSelectionText = text;
 
             selectCallback({
-                pos: {x: e.clientX, y: e.clientY},
+                pos: { x: e.clientX, y: e.clientY },
                 text
             });
         }, 0);

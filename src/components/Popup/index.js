@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import LanguageSelection from '../LanguageSelection';
 import { translationUpdate } from '../../redux/actions/translationActions';
 import {
@@ -7,7 +7,7 @@ import {
     finishRequest,
     errorRequest
 } from '../../redux/actions/tsResultActions';
-import {sendAudio, sendTranslate} from '../../public/send';
+import { sendAudio, sendTranslate } from '../../public/send';
 import RawText from '../RawText';
 import TsResult from '../TsResult';
 import { useOptions } from '../../public/react-use';
@@ -31,53 +31,38 @@ const Popup = () => {
 
     const dispatch = useDispatch();
 
-    const handleTranslate = useCallback(
-        (text, translation) => {
-            dispatch(startRequest());
+    const handleTranslate = useCallback((text, translation) => {
+        dispatch(startRequest());
 
-            sendTranslate(text, translation, (result) => {
-                if (result.suc) dispatch(finishRequest(result.data));
-                else dispatch(errorRequest(result.data.code));
-            })
-        },
-        [dispatch]
-    );
+        sendTranslate(text, translation, (result) => {
+            if (result.suc) dispatch(finishRequest(result.data));
+            else dispatch(errorRequest(result.data.code));
+        })
+    }, [dispatch]);
 
-    const handleSourceChange = useCallback(
-        (source) => {
-            if (source !== translationState.source) {
-                dispatch(translationUpdate(source, '', ''));
-                if (resultObj.text) {
-                    handleTranslate(resultObj.text, { source, from: '', to: '' });
-                }
-            }
-        },
-        [dispatch, translationState, resultObj.text, handleTranslate]
-    );
-
-    const handleReadText = useCallback(
-        (text, {source, from}) => {
-            sendAudio(text, {source, from});
-        },
-        []
-    );
-
-    const handleRawTextTranslate = useCallback(
-        (text) => {
-            handleTranslate(text, translationState);
-        },
-        [handleTranslate, translationState]
-    );
-
-    const handleSelectionChange = useCallback(
-        (from, to) => {
-            dispatch(translationSetFromAndTo(from, to));
+    const handleSourceChange = useCallback((source) => {
+        if (source !== translationState.source) {
+            dispatch(translationUpdate(source, '', ''));
             if (resultObj.text) {
-                handleTranslate(resultObj.text, {...translationState, from, to});
+                handleTranslate(resultObj.text, { source, from: '', to: '' });
             }
-        },
-        [resultObj.text, translationState, handleTranslate, dispatch]
-    );
+        }
+    }, [dispatch, translationState, resultObj.text, handleTranslate]);
+
+    const handleReadText = useCallback((text, { source, from }) => {
+        sendAudio(text, { source, from });
+    }, []);
+
+    const handleRawTextTranslate = useCallback((text) => {
+        handleTranslate(text, translationState);
+    }, [handleTranslate, translationState]);
+
+    const handleSelectionChange = useCallback((from, to) => {
+        dispatch(translationSetFromAndTo(from, to));
+        if (resultObj.text) {
+            handleTranslate(resultObj.text, { ...translationState, from, to });
+        }
+    }, [resultObj.text, translationState, handleTranslate, dispatch]);
 
     return (
         <div id="sc-translator-root" className={`container ${darkMode ? 'dark' : 'light'}`}>

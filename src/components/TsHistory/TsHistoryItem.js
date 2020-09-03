@@ -1,43 +1,34 @@
-import React, {useCallback, useRef} from 'react';
-import {removeHistory} from '../../redux/actions/tsHistoryActions';
-import {requestTsResultWithResultObject} from '../../redux/actions/tsResultActions';
+import React, { useCallback, useRef } from 'react';
+import { removeHistory } from '../../redux/actions/tsHistoryActions';
+import { requestTsResultWithResultObject } from '../../redux/actions/tsResultActions';
 import { setResultBoxShowAndPosition } from '../../redux/actions/resultBoxActions';
-import {resultToString} from '../../public/utils';
-import {useDispatch} from 'react-redux';
+import { resultToString } from '../../public/utils';
+import { useDispatch } from 'react-redux';
 import IconFont from '../IconFont';
-import {sendAudio} from '../../public/send';
+import { sendAudio } from '../../public/send';
 
-const TsHistoryItem = ({result, index}) => {
+const TsHistoryItem = ({ result, index }) => {
     const itemEle = useRef(null);
 
     const dispatch = useDispatch();
 
-    const handleReadText = useCallback(
-        (text, source, from) => {
-            if (text) sendAudio(text, {source, from});
-        },
-        []
-    );
+    const handleReadText = useCallback((text, source, from) => {
+        if (text) sendAudio(text, { source, from });
+    }, []);
 
-    const handleRemoveHistory = useCallback(
-        (index) => {
-            dispatch(removeHistory(index))
-        },
-        [dispatch]
-    );
+    const handleRemoveHistory = useCallback((index) => {
+        dispatch(removeHistory(index))
+    }, [dispatch]);
     
-    const handleItemClick = useCallback(
-        () => {
-            const ele = itemEle.current;
+    const handleItemClick = useCallback(() => {
+        const ele = itemEle.current;
 
-            dispatch(setResultBoxShowAndPosition({
-                x: 205,
-                y: ele.offsetTop - ele.parentNode.scrollTop
-            }));
-            dispatch(requestTsResultWithResultObject(result));
-        },
-        [dispatch, result]
-    );
+        dispatch(setResultBoxShowAndPosition({
+            x: 205,
+            y: ele.offsetTop - ele.parentNode.scrollTop
+        }));
+        dispatch(requestTsResultWithResultObject(result));
+    }, [dispatch, result]);
     
     return (
         <div className='ts-history-item' ref={itemEle}>

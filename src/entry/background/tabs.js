@@ -1,7 +1,7 @@
 /* global chrome */
-import {getIsContentScriptEnabled, getIsEnabled, getCurrentTab, getHost} from '../../public/utils';
-import {listenOptionsChange} from '../../public/options';
-import {getLocalStorage} from '../../public/chrome-call';
+import { getIsContentScriptEnabled, getIsEnabled, getCurrentTab, getHost } from '../../public/utils';
+import { listenOptionsChange } from '../../public/options';
+import { getLocalStorage } from '../../public/chrome-call';
 
 let isTranslateEnabled = false;
 let isContentScriptEnabled = false;

@@ -1,6 +1,6 @@
 import React, {useCallback, useState, useEffect} from 'react';
-import {getLocalStorage} from '../../public/chrome-call';
-import {LANG_EN} from '../../constants/langCode';
+import { getLocalStorage } from '../../public/chrome-call';
+import { LANG_EN } from '../../constants/langCode';
 
 const LSelect = ({ isFrom, onChange, disableSelect, from, to, options }) => {
     const [userLang, setUserLang] = useState(LANG_EN);

@@ -4,6 +4,7 @@ import IconFont from '../../IconFont';
 import SourceFavicon from '../../SourceFavicon';
 import { getI18nMessage } from '../../../public/chrome-call';
 import { resultToString } from '../../../public/utils';
+import { LANG_EN } from '../../../constants/langCode';
 
 const MtResult = ({ source, status, result, text, translate, remove, readText }) => {
     const [fold, setFold] = useState(false);
@@ -42,32 +43,30 @@ const MtResult = ({ source, status, result, text, translate, remove, readText })
                 </span>
             </div>
             <div className={`ts-mt-result-result${fold ? '-fold' : ''}`}>
-                {
-                    requesting ?
-                        getI18nMessage('wordRequesting') :
-                        !requestEnd ?
-                            getI18nMessage('contentTranslateAfterInput') :
-                            error ?
-                                getI18nMessage(`errorCode_${errorCode}`) :
-                                <>
-                                    {result.phonetic && result.from === 'en' && <div style={{marginBottom: '10px'}}>
-                                        {`[${result.phonetic}]`}
-                                    </div>}
-                                    <div>
-                                        <span style={{marginRight: '5px'}}>
-                                            {resultToString(result.result)}
-                                        </span>
-                                        <IconFont
-                                            iconName='#icon-GoUnmute'
-                                            style={{cursor: 'pointer'}}
-                                            onClick={() => readText(resultToString(result.result), result.to)}
-                                        />
-                                    </div>
-                                    {result.dict && result.dict.map((v, i) => (
-                                        <div key={i} style={i === 0 ? {marginTop: '10px'} : {}}>{v}</div>
-                                    ))}
-                                </>
-                }
+                {requesting ?
+                    getI18nMessage('wordRequesting') :
+                !requestEnd ?
+                    getI18nMessage('contentTranslateAfterInput') :
+                error ?
+                    getI18nMessage(`errorCode_${errorCode}`) :
+                <>
+                    {result.phonetic && result.from === LANG_EN && <div style={{marginBottom: '10px'}}>
+                        {`[${result.phonetic}]`}
+                    </div>}
+                    <div>
+                        <span style={{marginRight: '5px'}}>
+                            {resultToString(result.result)}
+                        </span>
+                        <IconFont
+                            iconName='#icon-GoUnmute'
+                            style={{cursor: 'pointer'}}
+                            onClick={() => readText(resultToString(result.result), result.to)}
+                        />
+                    </div>
+                    {result.dict && result.dict.map((v, i) => (
+                        <div key={i} style={i === 0 ? {marginTop: '10px'} : {}}>{v}</div>
+                    ))}
+                </>}
             </div>
         </div>
     );

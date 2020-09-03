@@ -13,7 +13,7 @@ export const openOptionsPage = () => {
 };
 
 export const getLocalStorage = (keys, cb) => {
-    chrome.storage.local.get(keys, (data) => {cb && cb(data);});
+    chrome.storage.local.get(keys, (data) => { cb && cb(data); });
 };
 
 export const setLocalStorage = (changes) => {

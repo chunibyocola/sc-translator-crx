@@ -7,9 +7,9 @@ import {
 import google from 'google-translate-result';
 import bing from 'bing-translate-result';
 import mojidict from '../public/translate/mojidict';
-import {getNavigatorLanguage} from './utils';
+import { getNavigatorLanguage } from './utils';
 
-export const translate = ({source, requestObj}, cb) => {
+export const translate = ({ source, requestObj }, cb) => {
 	let translate;
 	switch (source) {
 		case GOOGLE_COM:
@@ -33,11 +33,11 @@ export const translate = ({source, requestObj}, cb) => {
 	requestObj.userLang = getNavigatorLanguage();
 	
 	translate(requestObj)
-		.then(result => cb && cb({suc: true, data: result}))
-		.catch(err => cb && cb({suc: false, data: err}));
+		.then(result => cb && cb({ suc: true, data: result }))
+		.catch(err => cb && cb({ suc: false, data: err }));
 };
 
-export const audio = ({source, requestObj, defaultSource}, cb) => {
+export const audio = ({ source, requestObj, defaultSource }, cb) => {
 	audioSource.findIndex(v => v.source === source) < 0 && (source = defaultSource);
 
 	let audio;

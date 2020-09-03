@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.css';
 
-const IconFont = ({iconName, className, style, onClick, onMouseUp, onMouseDown, title}) => {
+const IconFont = ({ iconName, className, style, onClick, onMouseUp, onMouseDown, title }) => {
     return (
         <svg
             className={`ts-iconfont ${className ? className : ''}`}

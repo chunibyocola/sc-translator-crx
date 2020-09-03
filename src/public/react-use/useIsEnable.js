@@ -19,7 +19,7 @@ const useIsEnable = (enableType, host = '') => {
             else {
                 getCurrentTabHost((tabHost) => {
                     const find = list.some(v => tabHost.endsWith(v));
-                    setEnable(bMode? !find: find);
+                    setEnable(bMode ? !find : find);
                 });
             }
         },

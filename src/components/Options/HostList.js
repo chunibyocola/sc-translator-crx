@@ -1,59 +1,47 @@
-import React, {useRef, useCallback, useState} from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import IconFont from '../IconFont';
 
-const HostList = ({list, updateList}) => {
+const HostList = ({ list, updateList }) => {
     const [checked, setChecked] = useState({});
     const [checkAll, setCheckAll] = useState(false);
 
     const textEle = useRef(null);
 
-    const handleCheckBoxChange = useCallback(
-        (index) => {
-            if (index in checked) {
-                let tempObj = {...checked};
-                delete tempObj[index];
-                setChecked(tempObj);
-            }
-            else setChecked({...checked, [index]: index});
+    const handleCheckBoxChange = useCallback((index) => {
+        if (index in checked) {
+            let tempObj = { ...checked };
+            delete tempObj[index];
+            setChecked(tempObj);
+        }
+        else setChecked({ ...checked, [index]: index });
 
-            setCheckAll(false);
-        },
-        [checked]
-    );
+        setCheckAll(false);
+    }, [checked]);
 
-    const handleCheckAllToggle = useCallback(
-        () => {
-            checkAll? setChecked({}): setChecked(list.reduce((t, v, i) => ({...t, [i]: i}), {}));
-            
-            setCheckAll(!checkAll);
-        },
-        [checkAll, list]
-    );
+    const handleCheckAllToggle = useCallback(() => {
+        checkAll ? setChecked({}) : setChecked(list.reduce((t, v, i) => ({ ...t, [i]: i }), {}));
+        
+        setCheckAll(!checkAll);
+    }, [checkAll, list]);
 
-    const handleRemoveBtnClick = useCallback(
-        () => {
-            if (!Object.keys(checked).length) return;
+    const handleRemoveBtnClick = useCallback(() => {
+        if (!Object.keys(checked).length) return;
 
-            updateList(list.filter((v, i) => (!(i in checked))));
+        updateList(list.filter((v, i) => (!(i in checked))));
 
-            setChecked({});
-            setCheckAll(false);
-        },
-        [list, checked, updateList]
-    );
+        setChecked({});
+        setCheckAll(false);
+    }, [list, checked, updateList]);
 
-    const handleAddHostBtnClick = useCallback(
-        () => {
-            if (!textEle.current.value) return;
+    const handleAddHostBtnClick = useCallback(() => {
+        if (!textEle.current.value) return;
 
-            updateList([...list, textEle.current.value]);
+        updateList([...list, textEle.current.value]);
 
-            textEle.current.value = '';
+        textEle.current.value = '';
 
-            setCheckAll(false);
-        },
-        [list, updateList]
-    );
+        setCheckAll(false);
+    }, [list, updateList]);
 
     return (
         <div className='host-list'>

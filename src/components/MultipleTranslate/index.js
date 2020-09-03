@@ -11,49 +11,7 @@ import { sendTranslate, sendAudio } from '../../public/send';
 import { getI18nMessage } from '../../public/chrome-call';
 import './style.css';
 import { mtLangCode } from '../../constants/langCode';
-
-const drag = (element, currentPosition, mouseMoveCallback, mouseUpCallback) => {
-    const originX = element.clientX;
-    const originY = element.clientY;
-    const tempX = currentPosition.x;
-    const tempY = currentPosition.y;
-    let newX = tempX;
-    let newY = tempY;
-    document.onselectstart = () => { return false; };
-    document.onmousemove = function (ev) {
-        const nowX = ev.clientX;
-        const nowY = ev.clientY;
-        const diffX = originX - nowX;
-        const diffY = originY - nowY;
-        newX = tempX - diffX;
-        newY = tempY - diffY;
-        mouseMoveCallback({x: newX, y: newY});
-    };
-    document.onmouseup = function () {
-        document.onmousemove = null;
-        document.onmouseup = null;
-        document.onselectstart = () => { return true; };
-        mouseUpCallback({x: newX, y: newY});
-    };
-};
-
-const resultBoxMargin = 5;
-const calculatePosition = (element, { x, y }, callback) => {
-    const dH = document.documentElement.clientHeight;
-    const dW = document.documentElement.clientWidth;
-    const rbW = element.clientWidth;
-    const rbH = element.clientHeight;
-    const rbL = x;
-    const rbT = y;
-    const rbB = rbT + rbH;
-    const rbR = rbL + rbW;
-    // show top and right prior
-    if (rbL < resultBoxMargin) x = resultBoxMargin;
-    if (rbR > dW) x = dW - resultBoxMargin - rbW;
-    if (rbB > dH) y = dH - resultBoxMargin - rbH;
-    if (y < resultBoxMargin) y = resultBoxMargin;
-    callback({ x, y });
-};
+import { drag, calculatePosition } from '../../public/utils';
 
 const initPos = { x: 5, y: 5 };
 
@@ -71,6 +29,11 @@ const MultipleTranslate = () => {
     const dispatch = useDispatch();
 
     // position start
+    const changePinPos = useCallback((pos) => {
+        setPinPos(pos);
+        pinPosRef.current = pos;
+    }, []);
+
     const handlePosChange = useCallback(({x, y}) => {
         calculatePosition(mtEle.current, { x, y}, changePinPos);
     }, [changePinPos]);
@@ -81,11 +44,6 @@ const MultipleTranslate = () => {
         setPinning(!pinning);
     }, [dispatch, pinning]);
 
-    const changePinPos = useCallback((pos) => {
-        setPinPos(pos);
-        pinPosRef.current = pos;
-    }, []);
-
     useEffect(() => {
         !pinning && handlePosChange(pos);
     }, [pos, pinning, handlePosChange]);
@@ -93,7 +51,7 @@ const MultipleTranslate = () => {
 
     const handleTranslate = useCallback((source) => {
         dispatch(mtRequestStart({ source }));
-        //setTimeout(() => dispatch(mtRequestFinish({ source, result: { result: text }})), 500);
+
         sendTranslate(text, { source, from, to }, (result) => {
             result.suc ? dispatch(mtRequestFinish({ source, result: result.data})) : dispatch(mtRequestError({ source, errorCode: result.data.code }));
         });

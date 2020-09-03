@@ -1,6 +1,6 @@
 import * as types from '../../constants/chromeSendMessageTypes';
-import {translate, audio} from '../../public/request';
-import {playAudio} from './audio';
+import { translate, audio } from '../../public/request';
+import { playAudio } from './audio';
 import { listenOptionsChange } from '../../public/options';
 import { getLocalStorage } from '../../public/chrome-call';
 import { GOOGLE_COM } from '../../constants/translateSource';

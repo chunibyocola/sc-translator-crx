@@ -121,28 +121,28 @@ const Options = () => {
                         optionLabel='name'
                     />
                     {multipleTranslateMode ?
-                    <>
-                        <TransferList
-                            enabledList={multipleTranslateSourceList}
-                            onChange={value => updateStorage('multipleTranslateSourceList', value)}
-                        />
-                        <DefaultSelect
-                            message='optionsFrom'
-                            value={multipleTranslateFrom}
-                            onChange={value => updateStorage('multipleTranslateFrom', value)}
-                            options={mtLangCode[userLanguage]}
-                            optionValue='code'
-                            optionLabel='name'
-                        />
-                        <DefaultSelect
-                            message='optionsTo'
-                            value={multipleTranslateTo}
-                            onChange={value => updateStorage('multipleTranslateTo', value)}
-                            options={mtLangCode[userLanguage]}
-                            optionValue='code'
-                            optionLabel='name'
-                        />
-                    </> :
+                        <>
+                            <TransferList
+                                enabledList={multipleTranslateSourceList}
+                                onChange={value => updateStorage('multipleTranslateSourceList', value)}
+                            />
+                            <DefaultSelect
+                                message='optionsFrom'
+                                value={multipleTranslateFrom}
+                                onChange={value => updateStorage('multipleTranslateFrom', value)}
+                                options={mtLangCode[userLanguage]}
+                                optionValue='code'
+                                optionLabel='name'
+                            />
+                            <DefaultSelect
+                                message='optionsTo'
+                                value={multipleTranslateTo}
+                                onChange={value => updateStorage('multipleTranslateTo', value)}
+                                options={mtLangCode[userLanguage]}
+                                optionValue='code'
+                                optionLabel='name'
+                            />
+                        </> :
                     <>
                         <DefaultSelect
                             message='optionsSource'
@@ -172,8 +172,7 @@ const Options = () => {
                             optionValue='code'
                             optionLabel='name'
                         />
-                    </>
-                    }
+                    </>}
                 </div>
             </div>
             <div className='opt-item'>

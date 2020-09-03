@@ -4,10 +4,7 @@ import { onExtensionMessage } from '../chrome-call';
 const useOnExtensionMessage = () => {
     const [message, setMessage] = useState({});
 
-    useEffect(
-        () => onExtensionMessage(msg => setMessage(msg)),
-        []
-    );
+    useEffect(() => onExtensionMessage(msg => setMessage(msg)), []);
 
     return message;
 };
