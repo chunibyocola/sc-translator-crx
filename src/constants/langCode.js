@@ -3,7 +3,8 @@ import {
     GOOGLE_COM,
     BING_CN,
     BING_COM,
-    MOJIDICT_COM
+    MOJIDICT_COM,
+    BAIDU_COM
 } from './translateSource';
 
 export const LANG_ZH_CN = 'zh-CN';
@@ -34,12 +35,19 @@ export const mojidictLangCode = {
     [LANG_JA]: [{code:'',name:'中国語/日本語'}]
 };
 
+export const baiduLangCode = {
+    [LANG_EN]: [{code:"",name:"auto"},{code:"zh",name:"Chinese (Simplified)"},{code:"en",name:"English"},{code:"jp",name:"Japanese"},{code:"th",name:"Thai"},{code:"spa",name:"Spanish"},{code:"ara",name:"Arabic"},{code:"fra",name:"French"},{code:"kor",name:"Korean"},{code:"ru",name:"Russian"},{code:"de",name:"German"},{code:"pt",name:"Portuguese"},{code:"it",name:"Italian"},{code:"el",name:"Greek"},{code:"nl",name:"Dutch"},{code:"pl",name:"Polish"},{code:"fin",name:"Finnish"},{code:"cs",name:"Czech"},{code:"bul",name:"Bulgarian"},{code:"dan",name:"Danish"},{code:"est",name:"Estonian"},{code:"hu",name:"Hungarian"},{code:"rom",name:"Romanian"},{code:"swe",name:"Swedish"},{code:"vie",name:"Vietname:se"},{code:"yue",name:"Cantonese (Traditional)"},{code:"cht",name:"Chinese (Traditional)"},{code:"bel",name:"Belarusian"},{code:"bur",name:"Myanmar (Burmese)"},{code:"fil",name:"Filipino"},{code:"hi",name:"Hindi"},{code:"ice",name:"Icelandic"},{code:"id",name:"Indonesian"},{code:"gle",name:"Irish"},{code:"kaz",name:"Kazakh"},{code:"lao",name:"Lao"},{code:"lat",name:"Latin"},{code:"ltz",name:"Luxembourgish"},{code:"mac",name:"Macedonian"},{code:"may",name:"Malay"},{code:"nep",name:"Nepali"},{code:"per",name:"Persian"},{code:"srp",name:"Serbian"},{code:"sk",name:"Slovak"},{code:"tr",name:"Turkish"},{code:"ukr",name:"Ukrainian"},{code:"uzb",name:"Uzbek"},{code:"haw",name:"Hawaiian"},{code:"mao",name:"Maori"},{code:"nor",name:"Norwegian"}],
+    [LANG_ZH_CN]: [{code:'',name:'自动选择'},{code:'zh',name:'中文(简体)'},{code:'en',name:'英语'},{code:'jp',name:'日语'},{code:'th',name:'泰语'},{code:'spa',name:'西班牙语'},{code:'ara',name:'阿拉伯语'},{code:'fra',name:'法语'},{code:'kor',name:'韩语'},{code:'ru',name:'俄语'},{code:'de',name:'德语'},{code:'pt',name:'葡萄牙语'},{code:'it',name:'意大利语'},{code:'el',name:'希腊语'},{code:'nl',name:'荷兰语'},{code:'pl',name:'波兰语'},{code:'fin',name:'芬兰语'},{code:'cs',name:'捷克语'},{code:'bul',name:'保加利亚语'},{code:'dan',name:'丹麦语'},{code:'est',name:'爱沙尼亚语'},{code:'hu',name:'匈牙利语'},{code:'rom',name:'罗马尼亚语'},{code:'swe',name:'瑞典语'},{code:'vie',name:'越南语'},{code:'yue',name:'中文(粤语)'},{code:'cht',name:'中文(繁体)'},{code:'bel',name:'白俄罗斯语'},{code:'bur',name:'缅甸语'},{code:'fil',name:'菲律宾语'},{code:'hi',name:'印地语'},{code:'ice',name:'冰岛语'},{code:'id',name:'印尼语'},{code:'gle',name:'爱尔兰语'},{code:'kaz',name:'哈萨克语'},{code:'lao',name:'老挝语'},{code:'lat',name:'拉丁语'},{code:'ltz',name:'卢森堡语'},{code:'mac',name:'马其顿语'},{code:'may',name:'马来语'},{code:'nep',name:'尼泊尔语'},{code:'per',name:'波斯语'},{code:'srp',name:'塞尔维亚语(拉丁文)'},{code:'sk',name:'斯洛伐克语'},{code:'tr',name:'土耳其语'},{code:'ukr',name:'乌克兰语'},{code:'uzb',name:'乌兹别克语'},{code:'haw',name:'夏威夷语'},{code:'mao',name:'毛利语'},{code:'nor',name:'挪威语'}],
+    [LANG_JA]: [{code:"",name:"自動選択"},{code:"jp",name:"日本語"},{code:"en",name:"英語"},{code:"kor",name:"韓国語"},{code:"zh",name:"中国語（簡体）"},{code:"cht",name:"中国語（繁体）"},{code:"yue",name:"広東語（繁体）"},{code:"th",name:"タイ語"},{code:"spa",name:"スペイン語"},{code:"ara",name:"アラビア語"},{code:"fra",name:"フランス語"},{code:"ru",name:"ロシア語"},{code:"de",name:"ドイツ語"},{code:"pt",name:"ポルトガル語"},{code:"it",name:"イタリア語"},{code:"el",name:"ギリシャ語"},{code:"nl",name:"オランダ語"},{code:"pl",name:"ポーランド語"},{code:"fin",name:"フィンランド語"},{code:"cs",name:"チェコ語"},{code:"bul",name:"ブルガリア語"},{code:"dan",name:"デンマーク語"},{code:"est",name:"エストニア語"},{code:"hu",name:"ハンガリー語"},{code:"rom",name:"ルーマニア語"},{code:"swe",name:"スウェーデン語"},{code:"vie",name:"ベトナム語"},{code:"bel",name:"ベラルーシ語"},{code:"bur",name:"ミャンマー語"},{code:"fil",name:"タガログ語"},{code:"hi",name:"ヒンディー語"},{code:"ice",name:"アイスランド語"},{code:"id",name:"インドネシア語"},{code:"gle",name:"アイルランド語"},{code:"kaz",name:"カザフ語"},{code:"lao",name:"ラオ語"},{code:"lat",name:"ラテン語"},{code:"ltz",name:"ルクセンブルク語"},{code:"mac",name:"マケドニア語"},{code:"may",name:"マレー語"},{code:"nep",name:"ネパール語"},{code:"per",name:"ペルシャ語"},{code:"srp",name:"セルビア語"},{code:"sk",name:"スロバキア語"},{code:"tr",name:"トルコ語"},{code:"ukr",name:"ウクライナ語"},{code:"uzb",name:"ウズベク語"},{code:"haw",name:"ハワイ語"},{code:"mao",name:"マオリ語"},{code:"nor",name:"ノルウェー語"}]
+};
+
 export const langCode = {
     [GOOGLE_CN]: googleLangCode,
     [GOOGLE_COM]: googleLangCode,
     [BING_CN]: bingLangCode,
     [BING_COM]: bingLangCode,
-    [MOJIDICT_COM]: mojidictLangCode
+    [MOJIDICT_COM]: mojidictLangCode,
+    [BAIDU_COM]: baiduLangCode
 };
 
 export const mtLangCode = googleLangCode;
