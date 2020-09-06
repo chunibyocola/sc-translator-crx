@@ -12,7 +12,7 @@ const TsHistory = () => {
 
     const historyEle = useRef(null);
 
-    const tsHistoryState = useSelector(state => state.tsHistoryState);
+    const { history } = useSelector(state => state.singleTranslateState);
 
     const isEnableHistory = useIsEnable('history', window.location.host);
     const isEnableTranslate = useIsEnable('translate', window.location.host);
@@ -55,11 +55,11 @@ const TsHistory = () => {
                 </div>
             </div>
             <div className='ts-history-content'>
-                {tsHistoryState.length === 0 ?
+                {history.length === 0 ?
                     (<div className='ts-history-norecord'>
                         {getI18nMessage('contentNoRecord')}
                     </div>) :
-                tsHistoryState.map((v, i) => (
+                history.map((v, i) => (
                     <TsHistoryItem result={v} index={i} key={i} />
                 ))}
             </div>

@@ -8,7 +8,7 @@ import MultipleTranslate from '../../components/MultipleTranslate';
 import { Provider } from 'react-redux';
 import store from '../../redux/store';
 
-import { initTranslation, initMultipleTranslate } from '../../redux/init';
+import { initMultipleTranslate, initSingleTranslate } from '../../redux/init';
 import { initOptions, listenOptionsChange } from '../../public/options';
 import { getLocalStorage, onExtensionMessage } from '../../public/chrome-call';
 import defaultOptions from '../../constants/defaultOptions';
@@ -18,7 +18,7 @@ import '../../styles/global.css';
 const init = (options) => {
   initOptions(options);
 
-  options.multipleTranslateMode ? initMultipleTranslate(options) : initTranslation(options);
+  options.multipleTranslateMode ? initMultipleTranslate(options) : initSingleTranslate(options);
 
   const app = document.createElement('div');
   app.id = 'sc-translator-root';

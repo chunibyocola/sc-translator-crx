@@ -1,9 +1,6 @@
 import React, {useState, useEffect, useCallback, useRef} from 'react';
 import { useDispatch } from 'react-redux';
 import {
-    requestTsResultWithOutResultObject,
-} from '../../redux/actions/tsResultActions';
-import {
     setResultBoxShowAndPosition,
     hideResultBox
 } from '../../redux/actions/resultBoxActions';
@@ -18,6 +15,7 @@ import {
 import IconFont from '../IconFont';
 import './style.css';
 import { sendAudio } from '../../public/send';
+import { stSetText } from '../../redux/actions/singleTranslateActions';
 
 const initText = '';
 const initPos = { x: 5, y: 5 };
@@ -39,7 +37,7 @@ const TsBtn = ({ multipleTranslateMode }) => {
 
     const handleForwardTranslate = useCallback((text, pos) => {
         dispatch(setResultBoxShowAndPosition(pos));
-        multipleTranslateMode ? dispatch(mtSetText({ text })) : dispatch(requestTsResultWithOutResultObject(text));
+        multipleTranslateMode ? dispatch(mtSetText({ text })) : dispatch(stSetText({ text }));
     }, [dispatch, multipleTranslateMode]);
 
     const handleSetPos = useCallback(({ x, y }) => {

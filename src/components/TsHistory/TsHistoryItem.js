@@ -1,11 +1,10 @@
 import React, { useCallback, useRef } from 'react';
-import { removeHistory } from '../../redux/actions/tsHistoryActions';
-import { requestTsResultWithResultObject } from '../../redux/actions/tsResultActions';
 import { setResultBoxShowAndPosition } from '../../redux/actions/resultBoxActions';
 import { resultToString } from '../../public/utils';
 import { useDispatch } from 'react-redux';
 import IconFont from '../IconFont';
 import { sendAudio } from '../../public/send';
+import { stRemoveHistory, stSetResultFromHistory } from '../../redux/actions/singleTranslateActions';
 
 const TsHistoryItem = ({ result, index }) => {
     const itemEle = useRef(null);
@@ -17,7 +16,7 @@ const TsHistoryItem = ({ result, index }) => {
     }, []);
 
     const handleRemoveHistory = useCallback((index) => {
-        dispatch(removeHistory(index))
+        dispatch(stRemoveHistory({ historyIndex: index }));
     }, [dispatch]);
     
     const handleItemClick = useCallback(() => {
@@ -27,7 +26,7 @@ const TsHistoryItem = ({ result, index }) => {
             x: 205,
             y: ele.offsetTop - ele.parentNode.scrollTop
         }));
-        dispatch(requestTsResultWithResultObject(result));
+        dispatch(stSetResultFromHistory({ result }));
     }, [dispatch, result]);
     
     return (
@@ -50,7 +49,7 @@ const TsHistoryItem = ({ result, index }) => {
                     iconName='#icon-GoUnmute'
                     onMouseUp={e => e.stopPropagation()}
                     onMouseDown={e => e.stopPropagation()}
-                    onClick={() => handleReadText(result.text, result.translation.source, result.translation.from)}
+                    onClick={() => handleReadText(result.text, result.translation.source, result.from)}
                 />
                 <IconFont
                     iconName='#icon-GoX'

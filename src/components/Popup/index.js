@@ -1,68 +1,50 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import LanguageSelection from '../LanguageSelection';
-import { translationUpdate } from '../../redux/actions/translationActions';
-import {
-    startRequest,
-    finishRequest,
-    errorRequest
-} from '../../redux/actions/tsResultActions';
 import { sendAudio, sendTranslate } from '../../public/send';
 import RawText from '../RawText';
 import TsResult from '../TsResult';
 import { useOptions } from '../../public/react-use';
 import './style.css';
 import PopupHeader from '../PopupHeader';
-import { translationSetFromAndTo } from '../../redux/actions/translationActions';
 import { langCode } from '../../constants/langCode';
+import { stRequestFinish, stRequestStart, stRequestError, stSetSource, stSetFromAndTo, stSetText } from '../../redux/actions/singleTranslateActions';
 
 const Popup = () => {
     const { darkMode } = useOptions(['darkMode']);
 
-    const {
-        requestEnd,
-        requesting,
-        err,
-        errCode,
-        resultObj
-    } = useSelector(state => state.tsResultState);
-
-    const translationState = useSelector(state => state.translationState);
+    const { status, result, source, from, to, text } = useSelector(state => state.singleTranslateState);
+    const { requesting, requestEnd } = status;
 
     const dispatch = useDispatch();
 
-    const handleTranslate = useCallback((text, translation) => {
-        dispatch(startRequest());
+    const handleTranslate = useCallback(() => {
+        dispatch(stRequestStart());
 
-        sendTranslate(text, translation, (result) => {
-            if (result.suc) dispatch(finishRequest(result.data));
-            else dispatch(errorRequest(result.data.code));
-        })
+        sendTranslate(text, { source, from, to }, (result) => {
+            result.suc ? dispatch(stRequestFinish({ result: result.data })) : dispatch(stRequestError({ errorCode: result.data.code }));
+        });
+    }, [dispatch, text, source, from, to]);
+
+    const handleRawTextTranslate = useCallback((text) => {
+        text && dispatch(stSetText({ text }));
     }, [dispatch]);
-
-    const handleSourceChange = useCallback((source) => {
-        if (source !== translationState.source) {
-            dispatch(translationUpdate(source, '', ''));
-            if (resultObj.text) {
-                handleTranslate(resultObj.text, { source, from: '', to: '' });
-            }
-        }
-    }, [dispatch, translationState, resultObj.text, handleTranslate]);
 
     const handleReadText = useCallback((text, { source, from }) => {
         sendAudio(text, { source, from });
     }, []);
 
-    const handleRawTextTranslate = useCallback((text) => {
-        handleTranslate(text, translationState);
-    }, [handleTranslate, translationState]);
+    const handleSourceChange = useCallback((source) => {
+        dispatch(stSetSource({ source }));
+    }, [dispatch]);
 
     const handleSelectionChange = useCallback((from, to) => {
-        dispatch(translationSetFromAndTo(from, to));
-        if (resultObj.text) {
-            handleTranslate(resultObj.text, { ...translationState, from, to });
-        }
-    }, [resultObj.text, translationState, handleTranslate, dispatch]);
+        dispatch(stSetFromAndTo({ from, to }));
+    }, [dispatch]);
+
+    useEffect(() => {
+        !requestEnd && !requesting && text && handleTranslate();
+    }, [requestEnd, requesting, text, handleTranslate]);
 
     return (
         <div id="sc-translator-root" className={`container ${darkMode ? 'dark' : 'light'}`}>
@@ -73,16 +55,16 @@ const Popup = () => {
                 />
                 <LanguageSelection
                     selectionChange={handleSelectionChange}
-                    from={translationState.from}
-                    to={translationState.to}
-                    options={langCode[translationState.source]}
+                    from={from}
+                    to={to}
+                    options={langCode[source]}
                 />
                 <TsResult
-                    resultObj={resultObj}
-                    status={{requestEnd, requesting, err, errCode}}
+                    resultObj={result}
+                    status={status}
                     sourceChange={handleSourceChange}
                     readText={handleReadText}
-                    source={translationState.source}
+                    source={source}
                 />
             </div>
         </div>

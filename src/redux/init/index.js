@@ -1,16 +1,6 @@
 import { getStoreDispatch } from '../store';
-import { translationUpdate } from '../actions/translationActions';
 import { mtInit } from '../actions/multipleTranslateActions';
-
-export const initTranslation = ({
-    defaultTranslateSource = 'google.com',
-    defaultTranslateFrom = '',
-    defaultTranslateTo = ''
-}) => getStoreDispatch()(translationUpdate(
-    defaultTranslateSource,
-    defaultTranslateFrom,
-    defaultTranslateTo
-));
+import { stInit } from '../actions/singleTranslateActions';
 
 export const initMultipleTranslate = ({
     multipleTranslateSourceList = [],
@@ -20,4 +10,14 @@ export const initMultipleTranslate = ({
     sourceList: multipleTranslateSourceList,
     from: multipleTranslateFrom,
     to: multipleTranslateTo
+}));
+
+export const initSingleTranslate = ({
+    defaultTranslateSource = 'google.com',
+    defaultTranslateFrom = '',
+    defaultTranslateTo = ''
+}) => getStoreDispatch()(stInit({
+    source: defaultTranslateSource,
+    from: defaultTranslateFrom,
+    to: defaultTranslateTo
 }));

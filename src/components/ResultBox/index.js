@@ -1,14 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    startRequest,
-    finishRequest,
-    requestTsResultWithText,
-    errorRequest
-} from '../../redux/actions/tsResultActions';
 import { setResultBoxShowAndPosition } from '../../redux/actions/resultBoxActions';
-import { addHistory } from '../../redux/actions/tsHistoryActions';
-import { translationUpdate, translationSetFromAndTo } from '../../redux/actions/translationActions';
 import { sendTranslate, sendAudio } from '../../public/send';
 import TsResult from '../TsResult';
 import LanguageSelection from '../LanguageSelection';
@@ -18,23 +10,23 @@ import IconFont from '../IconFont';
 import './style.css';
 import { langCode } from '../../constants/langCode';
 import { drag, calculatePosition } from '../../public/utils';
+import {
+    stRequestStart,
+    stAddHistory,
+    stSetSource,
+    stSetFromAndTo,
+    stSetText,
+    stRequestFinish,
+    stRequestError
+} from '../../redux/actions/singleTranslateActions';
 
 const initPos = { x: 0, y: 0 };
 
 const ResultBox = () => {
-    const {
-        requestEnd,
-        requesting,
-        err,
-        errCode,
-        resultObj,
-        withResultObj,
-        text
-    } = useSelector(state => state.tsResultState);
+    const { text, source, from, to, status, result, history, resultFromHistory } = useSelector(state => state.singleTranslateState);
+    const { requesting, requestEnd } = status;
 
     const { show, pos } = useSelector(state => state.resultBoxState);
-    const tsHistoryState = useSelector(state => state.tsHistoryState);
-    const translationState = useSelector(state => state.translationState);
     
     const [pinning, setPinning] = useState(false);
     const [pinPos, setPinPos] = useState(initPos);
@@ -45,6 +37,7 @@ const ResultBox = () => {
 
     const dispatch = useDispatch();
 
+    // position start
     const pinningToggle = useCallback(() => {
         pinning && dispatch(setResultBoxShowAndPosition(pinPosRef.current));
 
@@ -60,72 +53,65 @@ const ResultBox = () => {
         calculatePosition(rbEle.current, { x, y }, changePinPos);
     }, [changePinPos]);
 
-    const handleGetResultObjFromHistory = useCallback((text, { source, from, to }) => tsHistoryState.find((v) => (
+    useEffect(() => {
+        !pinning && handlePosChange(pos);
+    }, [pos, pinning, handlePosChange]);
+    // position end
+
+    const handleGetHistory = useCallback((text, source, from, to) => history.find(v => (
         v.text === text &&
         v.translation.source === source &&
         v.translation.from === from &&
         v.translation.to === to
-    )), [tsHistoryState]);
+    )), [history]);
 
-    const handleTranslate = useCallback((text, translation) => {
-        // check if result is already in the history before send translate
-        const tempResultObj = handleGetResultObjFromHistory(text, translation);
-        if (tempResultObj) {
-            dispatch(finishRequest(tempResultObj));
+    const handleTranslate = useCallback(() => {
+        const tempResult = handleGetHistory(text, source, from, to);
+        if (tempResult) {
+            dispatch(stRequestFinish({ result: tempResult }));
             return;
         }
 
-        dispatch(startRequest());
+        dispatch(stRequestStart());
 
-        sendTranslate(text, translation, (result) => {
+        sendTranslate(text, { source, from, to }, (result) => {
             if (result.suc) {
-                dispatch(addHistory({...result.data, translation}));
-                dispatch(finishRequest(result.data));
+                dispatch(stAddHistory({ result: { ...result.data, translation: { source, from, to } } }));
+                dispatch(stRequestFinish({ result: result.data }));
             }
-            else dispatch(errorRequest(result.data.code));
+            else dispatch(stRequestError({ errorCode: result.data.code }));
 
             handlePosChange(pinPosRef.current);
         });
-    }, [dispatch, handlePosChange, handleGetResultObjFromHistory]);
+
+    }, [dispatch, text, source, from, to, handleGetHistory, handlePosChange]);
 
     const handleSourceChange = useCallback((source) => {
-        if (source !== translationState.source) {
-            const newTranslation = { source, from: '', to: '' };
-            dispatch(translationUpdate(source, '', ''));
-            resultObj.text && handleTranslate(resultObj.text, newTranslation);
-        }
-    }, [dispatch, translationState.source, resultObj.text, handleTranslate]);
+        dispatch(stSetSource({ source }));
+    }, [dispatch]);
+
+    const handleSelectionChange = useCallback((from, to) => {
+        dispatch(stSetFromAndTo({ from, to }));
+    }, [dispatch]);
+
+    const handleRawTextChange = useCallback((text) => {
+        text && dispatch(stSetText({ text }));
+    }, [dispatch]);
 
     const handleReadText = useCallback((text, { source, from }) => {
         text && sendAudio(text, { source, from });
     }, []);
 
-    const handleRawTextTranslate = useCallback((text) => {
-        text && dispatch(requestTsResultWithText(text));
-    }, [dispatch]);
-
-    const handleSelectionChange = useCallback((from, to) => {
-        dispatch(translationSetFromAndTo(from, to));
-        if (resultObj.text) {
-            const tempTranslation = { ...translationState, from, to };
-            handleTranslate(resultObj.text, tempTranslation);
-        }
-    }, [resultObj.text, translationState, handleTranslate, dispatch]);
-
     useEffect(() => {
-        !pinning && handlePosChange(pos);
-    }, [pos, pinning, handlePosChange]);
-
-    useEffect(() => {
-        !requestEnd && !requesting && !withResultObj && text && handleTranslate(text, translationState);
-    }, [requestEnd, requesting, withResultObj, text, translationState, handleTranslate,]);
+        !requestEnd && !requesting && !resultFromHistory && text && handleTranslate();
+    }, [requestEnd, requesting, resultFromHistory, text, handleTranslate]);
 
     return (
         <div
             ref={rbEle}
             className='ts-rb'
             style={{
-                display: show || pinning? 'block': 'none',
+                display: show || pinning ? 'block' : 'none',
                 transform: `translate(${pinPos.x}px, ${pinPos.y}px)`
             }}
             onMouseUp={e => e.stopPropagation()}
@@ -141,10 +127,10 @@ const ResultBox = () => {
                 >
                     <IconFont
                         iconName='#icon-GoChevronDown'
-                        className={`${showRtAndLs? 'tsrbhr-rtandls-check': ''}`}
-                        style={{visibility: withResultObj? 'hidden': 'visible'}}
+                        className={`${showRtAndLs ? 'tsrbhr-rtandls-check' : ''}`}
+                        style={{visibility: resultFromHistory ? 'hidden' : 'visible'}}
                         onClick={() => {
-                            if (withResultObj) return;
+                            if (resultFromHistory) return;
                             setShowRtAndLs(!showRtAndLs);
                         }}
                     />
@@ -156,26 +142,26 @@ const ResultBox = () => {
                 </span>
             </div>
             <div className='ts-rb-content'>
-                <div className={`tsrbc-rtandls ${showRtAndLs && !withResultObj? 'tsrbc-rtandls-show': ''}`}>
+                <div className={`tsrbc-rtandls ${showRtAndLs && !resultFromHistory ? 'tsrbc-rtandls-show' : ''}`}>
                     <RawText
                         defaultValue={text}
-                        rawTextTranslate={handleRawTextTranslate}
+                        rawTextTranslate={handleRawTextChange}
                     />
                     <LanguageSelection
                         selectionChange={handleSelectionChange}
-                        from={translationState.from}
-                        to={translationState.to}
-                        options={langCode[translationState.source]}
-                        disableSelect={withResultObj}
+                        from={from}
+                        to={to}
+                        options={langCode[source]}
+                        disableSelect={resultFromHistory}
                     />
                 </div>
                 <TsResult
-                    resultObj={resultObj}
-                    status={{requestEnd, requesting, err, errCode}}
+                    resultObj={result}
+                    status={status}
                     sourceChange={handleSourceChange}
                     readText={handleReadText}
-                    source={withResultObj? resultObj.translation.source: translationState.source}
-                    disableSourceChange={withResultObj}
+                    source={resultFromHistory ? result.translation.source : source}
+                    disableSourceChange={resultFromHistory}
                 />
             </div>
         </div>

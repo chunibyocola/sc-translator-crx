@@ -1,0 +1,12 @@
+export const ST_SET_TEXT = 'ST_SET_TEXT';
+export const ST_REQUEST_START = 'ST_REQUEST_START';
+export const ST_REQUEST_FINISH = 'ST_REQUEST_FINISH';
+export const ST_REQUEST_ERROR = 'ST_REQUEST_ERROR';
+export const ST_SET_SOURCE = 'ST_SET_SOURCE';
+export const ST_SET_FROM = 'ST_SET_FROM';
+export const ST_SET_TO = 'ST_SET_TO';
+export const ST_SET_FROM_AND_TO = 'ST_SET_FROM_AND_TO';
+export const ST_INIT = 'ST_INIT';
+export const ST_SET_RESULT_FROM_HISTORY = 'ST_SET_RESULT_FROM_HISTORY';
+export const ST_ADD_HISTORY = 'ST_ADD_HISTORY';
+export const ST_REMOVE_HISTORY = 'ST_REMOVE_HISTORY';

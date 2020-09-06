@@ -7,7 +7,7 @@ import Popup from '../../components/Popup';
 
 import { Provider } from 'react-redux';
 import store from '../../redux/store';
-import { initTranslation, initMultipleTranslate } from '../../redux/init';
+import { initMultipleTranslate, initSingleTranslate } from '../../redux/init';
 import { initOptions } from '../../public/options';
 import { getLocalStorage } from '../../public/chrome-call';
 import defaultOptions from '../../constants/defaultOptions';
@@ -16,8 +16,7 @@ import MtPopup from '../../components/MultipleTranslate/MtPopup';
 const init = (options) => {
     initOptions(options);
 
-    //initTranslation(options);
-    options.multipleTranslateMode ? initMultipleTranslate(options) : initTranslation(options);
+    options.multipleTranslateMode ? initMultipleTranslate(options) : initSingleTranslate(options);
 
     ReactDOM.render(
         <Provider store={store}>
