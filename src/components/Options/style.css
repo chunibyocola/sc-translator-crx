@@ -3,7 +3,7 @@
     margin: 0 auto;
 }
 .opt-item {
-    font-size: 18px;
+    font-size: 16px;
     padding: 10px;
 }
 .child-mt10-ml30>* {
@@ -111,4 +111,9 @@
     min-width: 60px;
     margin: 4px 0px;
     padding: 3px 9px;
+}
+.item-description {
+    font-size: 14px;
+    color: #999;
+    margin-top: 5px;
 }

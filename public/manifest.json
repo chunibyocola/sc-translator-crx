@@ -34,11 +34,12 @@
     }
   },
   "permissions": [
-    "https://translate.google.com/*",
-    "https://translate.google.cn/*",
+    "<all_urls>",
     "tabs",
     "storage",
-    "contextMenus"
+    "contextMenus",
+    "webRequest",
+    "webRequestBlocking"
   ],
   "content_scripts" : [
     {

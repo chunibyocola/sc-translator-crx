@@ -95,6 +95,12 @@
     "optionsNotEnabled": {
         "message": "Not enabled"
     },
+    "optionsEnablePdfViewer": {
+        "message": "Enable PDF viewer"
+    },
+    "optionsEnablePdfViewerDescription": {
+        "message": "When you enable this option, this extension will redirect the URL of all PDF files. With the PDF viewer, this extension can be used on PDF files. If you want to enable this extension for local PDF files as well, check \"Allow access to file URLs\" in extension management."
+    },
     "contentInputHere": {
         "message": "Input here"
     },

@@ -95,6 +95,12 @@
     "optionsNotEnabled": {
         "message": "未启用"
     },
+    "optionsEnablePdfViewer": {
+        "message": "启用 PDF 阅读器"
+    },
+    "optionsEnablePdfViewerDescription": {
+        "message": "启用此选项时，此扩展将重定向所有 PDF 文件的 URL。通过使用 PDF 阅读器，可以令此扩展在 PDF 文件内使用。如果你想要对本地 PDF 文件也启用此扩展，请在扩展管理中勾选“允许访问文件 URL”。"
+    },
     "contentInputHere": {
         "message": "在此输入"
     },

@@ -3,7 +3,7 @@
         "message": "Sc翻譯"
     },
     "extDescription": {
-        "message": "一個簡單但強大的翻譯擴展。基於 Google 翻譯和 Bing 翻譯。"
+        "message": "一個簡單但強大的翻譯擴充功能。基於 Google 翻譯和 Bing 翻譯。"
     },
     "extTranslateCommandDescription": {
         "message": "翻譯您選擇的文字"
@@ -94,6 +94,12 @@
     },
     "optionsNotEnabled": {
         "message": "未啟用"
+    },
+    "optionsEnablePdfViewer": {
+        "message": "啟用 PDF 閱讀器"
+    },
+    "optionsEnablePdfViewerDescription": {
+        "message": "啟用此選項時，此擴充功能將重定向所有 PDF 文件的 URL。通過使用PDF閱讀器，可以令此擴充功能在 PDF 文件內使用。如果你想要對本地 PDF 檔案也啟用此擴充功能，請在擴充功能管理中勾選“允許存取檔案URL”。"
     },
     "contentInputHere": {
         "message": "在此輸入"

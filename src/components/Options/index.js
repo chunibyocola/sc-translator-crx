@@ -30,7 +30,8 @@ const Options = () => {
         multipleTranslateMode,
         multipleTranslateSourceList,
         multipleTranslateFrom,
-        multipleTranslateTo
+        multipleTranslateTo,
+        enablePdfViewer
     } = useOptions(Object.keys(defaultOptions));
 
     useEffect(() => { document.body.className = `${darkMode ? 'dark' : 'light'}`; }, [darkMode]);
@@ -57,6 +58,16 @@ const Options = () => {
                     checked={useDotCn}
                     onClick={() => updateStorage('useDotCn', !useDotCn)}
                 />
+            </div>
+            <h3>PDF</h3>
+            <div className='opt-item'>
+                <OptionToggle
+                    id='enalbe-pdf-viewer'
+                    message='optionsEnablePdfViewer'
+                    checked={enablePdfViewer}
+                    onClick={() => updateStorage('enablePdfViewer', !enablePdfViewer)}
+                />
+                <div className='item-description'>{getI18nMessage('optionsEnablePdfViewerDescription')}</div>
             </div>
             <h3>{getI18nMessage('optionsAudio')}</h3>
             <div className='opt-item'>

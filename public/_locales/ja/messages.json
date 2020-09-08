@@ -95,6 +95,12 @@
     "optionsNotEnabled": {
         "message": "無効"
     },
+    "optionsEnablePdfViewer": {
+        "message": "PDFビューアを有効にする"
+    },
+    "optionsEnablePdfViewerDescription": {
+        "message": "このオプションを有効にすると、この拡張機能はすべてのPDFファイルのURLをリダイレクトします。PDFビューアを使用すると、この拡張機能をPDFファイルで使用することができます。ローカルPDFファイルでもこの拡張機能を有効にする場合は、拡張機能管理の「ファイルの URL へのアクセスを許可する」をチェックしてください。"
+    },
     "contentInputHere": {
         "message": "ここに入力"
     },

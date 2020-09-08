@@ -20,7 +20,8 @@ const defaultOptions = {
     multipleTranslateMode: false,
     multipleTranslateSourceList: [GOOGLE_COM, BING_COM],
     multipleTranslateFrom: '',
-    multipleTranslateTo: ''
+    multipleTranslateTo: '',
+    enablePdfViewer: false
 };
 
 export default defaultOptions;
