@@ -9,12 +9,9 @@ import google from 'google-translate-result';
 import bing from 'bing-translate-result';
 import mojidict from '../public/translate/mojidict';
 import baidu from '../public/translate/baidu';
-import { getNavigatorLanguage } from './utils';
 
 export const translate = ({ source, requestObj }, cb) => {
 	let translate;
-
-	requestObj.userLang = getNavigatorLanguage();
 
 	switch (source) {
 		case GOOGLE_COM:
@@ -24,6 +21,7 @@ export const translate = ({ source, requestObj }, cb) => {
 			translate = bing.translate;
 			requestObj.from = bingSwitchLangCode(requestObj.from);
 			requestObj.to = bingSwitchLangCode(requestObj.to);
+			requestObj.userLang = bingSwitchLangCode(requestObj.userLang);
 			break;
 		case MOJIDICT_COM:
 			translate = mojidict.translate;
@@ -130,7 +128,8 @@ const baiduSwitchLangCode = (code) => {
         case 'uz': return 'uzb';
         case 'haw': return 'haw';
         case 'mi': return 'mao';
-        case 'no': return 'nor';
+		case 'no': return 'nor';
+		case 'eo': return 'epo';
         default: return code;
     }
 };

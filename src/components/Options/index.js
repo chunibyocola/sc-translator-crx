@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react';
 import defaultOptions from '../../constants/defaultOptions';
 import { audioSource, translateSource } from '../../constants/translateSource';
-import { userLangs, langCode, mtLangCode } from '../../constants/langCode';
+import { userLangs, langCode, mtLangCode, preferredLangCode } from '../../constants/langCode';
 import {setLocalStorage, getI18nMessage} from '../../public/chrome-call';
 import {useOptions} from '../../public/react-use';
 import HostList from './HostList';
@@ -31,7 +31,8 @@ const Options = () => {
         multipleTranslateSourceList,
         multipleTranslateFrom,
         multipleTranslateTo,
-        enablePdfViewer
+        enablePdfViewer,
+        preferredLanguage
     } = useOptions(Object.keys(defaultOptions));
 
     useEffect(() => { document.body.className = `${darkMode ? 'dark' : 'light'}`; }, [darkMode]);
@@ -131,6 +132,15 @@ const Options = () => {
                         optionValue='code'
                         optionLabel='name'
                     />
+                    <DefaultSelect
+                        message='optionsPreferredLanguage'
+                        value={preferredLanguage}
+                        onChange={value => updateStorage('preferredLanguage', value)}
+                        options={preferredLangCode[userLanguage]}
+                        optionValue='code'
+                        optionLabel='name'
+                    />
+                    <div className='item-description'>{getI18nMessage('optionsPreferredLanguageDescription')}</div>
                     {multipleTranslateMode ?
                         <>
                             <TransferList

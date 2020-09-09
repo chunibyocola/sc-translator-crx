@@ -1,3 +1,8 @@
+# 2.1.0
+- Add "Enable PDF viewer" option.
+- Add translate source "baidu.com".
+- Add audio source "baidu.com".
+- Fix "some language environment can't normally use this extension" by adding "Preferred Language" selection.
 # 2.0.0
 - Add multiple translate mode.
 - Add "Use '.cn' in URL" option.

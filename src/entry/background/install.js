@@ -1,4 +1,4 @@
-import { LANG_ZH_CN, LANG_JA } from '../../constants/langCode';
+import { LANG_ZH_CN, LANG_JA, preferredLangCode } from '../../constants/langCode';
 import defaultOptions from '../../constants/defaultOptions';
 import { getLocalStorage } from '../../public/chrome-call';
 
@@ -18,6 +18,8 @@ const initStorageOnInstalled = (userLang, update) => {
             break;
         default: break;
     }
+
+    preferredLangCode[LANG_ZH_CN].some((v) => (v.code === userLang)) && (defaultSet.preferredLanguage = userLang);
 
     getLocalStorage(Object.keys(defaultOptions), (data) => {
         // in new version, use 'useDotCn' instead of 'xxx.cn'

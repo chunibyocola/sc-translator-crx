@@ -4,18 +4,22 @@ import { playAudio } from './audio';
 import { listenOptionsChange } from '../../public/options';
 import { getLocalStorage } from '../../public/chrome-call';
 import { GOOGLE_COM } from '../../constants/translateSource';
+import { LANG_EN } from '../../constants/langCode';
 
 /* global chrome */
 
 let defaultAudioSource = GOOGLE_COM;
 let useDotCn = false;
-getLocalStorage(['defaultAudioSource', 'useDotCn'], (storage) => {
+let preferredLanguage = LANG_EN;
+getLocalStorage(['defaultAudioSource', 'useDotCn', 'preferredLanguage'], (storage) => {
     defaultAudioSource = storage.defaultAudioSource;
     useDotCn = storage.useDotCn;
+    preferredLanguage = storage.preferredLanguage;
 });
-listenOptionsChange(['defaultAudioSource', 'useDotCn'], (changes) => {
+listenOptionsChange(['defaultAudioSource', 'useDotCn', 'preferredLanguage'], (changes) => {
     'defaultAudioSource' in changes && (defaultAudioSource = changes.defaultAudioSource);
     'useDotCn' in changes && (useDotCn = changes.useDotCn);
+    'preferredLanguage' in changes && (preferredLanguage = changes.preferredLanguage);
 });
 
 chrome.runtime.onMessage.addListener(
@@ -25,6 +29,7 @@ chrome.runtime.onMessage.addListener(
             case types.SCTS_TRANSLATE:
                 if (payload) {
                     payload.requestObj.com = !useDotCn;
+                    payload.requestObj.userLang = preferredLanguage;
                     translate(payload, (result) => {
                         sendResponse(result);
                     });

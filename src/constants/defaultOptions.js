@@ -1,5 +1,5 @@
 import { GOOGLE_COM, BING_COM } from './translateSource';
-import {LANG_EN} from './langCode';
+import { LANG_EN } from './langCode';
 
 const defaultOptions = {
     userLanguage: LANG_EN,
@@ -21,7 +21,8 @@ const defaultOptions = {
     multipleTranslateSourceList: [GOOGLE_COM, BING_COM],
     multipleTranslateFrom: '',
     multipleTranslateTo: '',
-    enablePdfViewer: false
+    enablePdfViewer: false,
+    preferredLanguage: LANG_EN
 };
 
 export default defaultOptions;

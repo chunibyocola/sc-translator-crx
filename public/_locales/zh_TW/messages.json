@@ -101,6 +101,12 @@
     "optionsEnablePdfViewerDescription": {
         "message": "啟用此選項時，此擴充功能將重定向所有 PDF 文件的 URL。通過使用PDF閱讀器，可以令此擴充功能在 PDF 文件內使用。如果你想要對本地 PDF 檔案也啟用此擴充功能，請在擴充功能管理中勾選“允許存取檔案URL”。"
     },
+    "optionsPreferredLanguage": {
+        "message": "首選語言"
+    },
+    "optionsPreferredLanguageDescription": {
+        "message": "當翻譯的目標語種為“自動選擇”時，會翻譯為首選語種。當文本的語種與首選語種相同時，將會翻譯為英語。"
+    },
     "contentInputHere": {
         "message": "在此輸入"
     },

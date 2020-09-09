@@ -101,6 +101,12 @@
     "optionsEnablePdfViewerDescription": {
         "message": "このオプションを有効にすると、この拡張機能はすべてのPDFファイルのURLをリダイレクトします。PDFビューアを使用すると、この拡張機能をPDFファイルで使用することができます。ローカルPDFファイルでもこの拡張機能を有効にする場合は、拡張機能管理の「ファイルの URL へのアクセスを許可する」をチェックしてください。"
     },
+    "optionsPreferredLanguage": {
+        "message": "優先言語"
+    },
+    "optionsPreferredLanguageDescription": {
+        "message": "翻訳対象の言語が「自動選択」の場合、優先言語に翻訳されます。テキストの言語が優先言語と同じ場合、英語に翻訳されます。"
+    },
     "contentInputHere": {
         "message": "ここに入力"
     },
