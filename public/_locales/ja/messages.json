@@ -11,6 +11,9 @@
     "extListenCommandDescription": {
         "message": "選択したテキストを聞く"
     },
+    "extCallOutCommandDescription": {
+        "message": "ウェブページで拡張機能を呼び出す"
+    },
     "optionsTitle": {
         "message": "オプション"
     },

@@ -2,7 +2,8 @@ import React, {useState, useEffect, useCallback, useRef} from 'react';
 import { useDispatch } from 'react-redux';
 import {
     setResultBoxShowAndPosition,
-    hideResultBox
+    hideResultBox,
+    callOutResultBox
 } from '../../redux/actions/resultBoxActions';
 import { mtSetText } from '../../redux/actions/multipleTranslateActions';
 import getSelection, { getSelectedText } from '../../public/utils/get-selection';
@@ -10,7 +11,8 @@ import { useOptions, useOnExtensionMessage, useIsEnable } from '../../public/rea
 import {
     SCTS_CONTEXT_MENUS_CLICKED,
     SCTS_TRANSLATE_COMMAND_KEY_PRESSED,
-    SCTS_AUDIO_COMMAND_KEY_PRESSED
+    SCTS_AUDIO_COMMAND_KEY_PRESSED,
+    SCTS_CALL_OUT_COMMAND_KEY_PRESSED
 } from '../../constants/chromeSendMessageTypes';
 import IconFont from '../IconFont';
 import './style.css';
@@ -122,7 +124,10 @@ const TsBtn = ({ multipleTranslateMode }) => {
             const text = getSelectedText();
             text && sendAudio(text, {});
         }
-    }, [chromeMsg, isEnableTranslate, handleForwardTranslate]);
+        else if (chromeMsg?.type === SCTS_CALL_OUT_COMMAND_KEY_PRESSED) {
+            dispatch(callOutResultBox());
+        }
+    }, [chromeMsg, isEnableTranslate, handleForwardTranslate, dispatch]);
 
     useEffect(() => {
         const unsubscribe = getSelection(selectCb, unselectCb);

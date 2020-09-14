@@ -26,7 +26,7 @@ const ResultBox = () => {
     const { text, source, from, to, status, result, history, resultFromHistory } = useSelector(state => state.singleTranslateState);
     const { requesting, requestEnd } = status;
 
-    const { show, pos } = useSelector(state => state.resultBoxState);
+    const { show, pos, focusRawText } = useSelector(state => state.resultBoxState);
     
     const [pinning, setPinning] = useState(false);
     const [pinPos, setPinPos] = useState(initPos);
@@ -36,6 +36,11 @@ const ResultBox = () => {
     const rbEle = useRef(null);
 
     const dispatch = useDispatch();
+
+    // show 'RawText' and 'LanguageSelection' when "call out"'s keyboard shortcut pressed
+    useEffect(() => {
+        focusRawText && setShowRtAndLs(true);
+    }, [focusRawText]);
 
     // position start
     const pinningToggle = useCallback(() => {
@@ -146,6 +151,7 @@ const ResultBox = () => {
                     <RawText
                         defaultValue={text}
                         rawTextTranslate={handleRawTextChange}
+                        focusDependency={focusRawText}
                     />
                     <LanguageSelection
                         selectionChange={handleSelectionChange}

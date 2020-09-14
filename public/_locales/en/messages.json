@@ -11,6 +11,9 @@
     "extListenCommandDescription": {
         "message": "Listen the text you select"
     },
+    "extCallOutCommandDescription": {
+        "message": "Call out extension in web page"
+    },
     "optionsTitle": {
         "message": "Options"
     },

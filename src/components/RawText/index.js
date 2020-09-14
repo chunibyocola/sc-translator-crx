@@ -10,7 +10,7 @@ const debounce = (cb, time) => {
     };
 };
 
-const RawText = ({ defaultValue, rawTextTranslate }) => {
+const RawText = ({ defaultValue, rawTextTranslate, focusDependency }) => {
     const [lastText, setLastText] = useState('');
 
     const textareaEl = useRef(null);
@@ -52,6 +52,10 @@ const RawText = ({ defaultValue, rawTextTranslate }) => {
     useEffect(() => {
         textareaEl.current.focus();
     }, []);
+
+    useEffect(() => {
+        focusDependency && setTimeout(() => textareaEl.current.focus(), 0);
+    }, [focusDependency]);
 
     return (
         <div className='ts-raw-text'>

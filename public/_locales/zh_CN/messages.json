@@ -11,6 +11,9 @@
     "extListenCommandDescription": {
         "message": "朗读您选择的文本"
     },
+    "extCallOutCommandDescription": {
+        "message": "在网页中唤出扩展"
+    },
     "optionsTitle": {
         "message": "常规选项"
     },

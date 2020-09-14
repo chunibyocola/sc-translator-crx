@@ -11,3 +11,5 @@ export const initResultBoxState = (multiMode) => ({
     type: types.INIT_RESULT_BOX_STATE,
     payload: multiMode
 });
+
+export const callOutResultBox = () => ({ type: types.CALL_OUT_RESULT_BOX });

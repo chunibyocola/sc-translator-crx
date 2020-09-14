@@ -23,10 +23,15 @@ const MultipleTranslate = () => {
     const pinPosRef = useRef(initPos);
     const mtEle = useRef(null);
 
-    const { show, pos } = useSelector(state => state.resultBoxState);
+    const { show, pos, focusRawText } = useSelector(state => state.resultBoxState);
     const { text, from, to, translations } = useSelector(state => state.multipleTranslateState);
 
     const dispatch = useDispatch();
+
+    // show 'RawText' and 'LanguageSelection' when "call out"'s keyboard shortcut pressed
+    useEffect(() => {
+        focusRawText && setShowRtAndLs(true);
+    }, [focusRawText]);
 
     // position start
     const changePinPos = useCallback((pos) => {
@@ -100,7 +105,11 @@ const MultipleTranslate = () => {
                 </span>
             </div>
             <div style={{display: showRtAndLs ? 'block' : 'none', width: '246px', margin: '0px auto'}}>
-                <RawText defaultValue={text} rawTextTranslate={handleRawTextChange} />
+                <RawText
+                    defaultValue={text}
+                    rawTextTranslate={handleRawTextChange}
+                    focusDependency={focusRawText}
+                />
                 <LanguageSelection
                     selectionChange={handleSelectionChange}
                     from={from}

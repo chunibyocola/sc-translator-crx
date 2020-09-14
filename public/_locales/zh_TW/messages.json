@@ -11,6 +11,9 @@
     "extListenCommandDescription": {
         "message": "讀讀您選擇的文字"
     },
+    "extCallOutCommandDescription": {
+        "message": "在網頁中喚出擴充功能"
+    },
     "optionsTitle": {
         "message": "常規選項"
     },
