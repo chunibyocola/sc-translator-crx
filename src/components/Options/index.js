@@ -227,6 +227,20 @@ const Options = () => {
                     />
                 </div>
             </div>
+            <h3>{getI18nMessage('optionsKeyboardShortcut')}</h3>
+            <div className='opt-item'>
+                {getI18nMessage('extTranslateCommandDescription')}
+                <span className='keyboard-shortcut'>ALT + Z</span>
+            </div>
+            <div className='opt-item'>
+                {getI18nMessage('extListenCommandDescription')}
+                <span className='keyboard-shortcut'>ALT + X</span>
+            </div>
+            <div className='opt-item'>
+                {getI18nMessage('extCallOutCommandDescription')}
+                <span className='keyboard-shortcut'>ALT + C</span>
+                <div className='item-description'>{getI18nMessage('optionsCallOutCommandDescription')}</div>
+            </div>
             <h3>{getI18nMessage('optionsMoreFeaturesOrBugReports')}</h3>
             <div className='opt-item'>
                 <a

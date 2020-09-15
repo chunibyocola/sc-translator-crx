@@ -110,6 +110,12 @@
     "optionsPreferredLanguageDescription": {
         "message": "当翻译的目标语种为“自动选择”时，会翻译为首选语种。当文本的语种与首选语种相同时，将会翻译为英语。"
     },
+    "optionsKeyboardShortcut": {
+        "message": "快捷键"
+    },
+    "optionsCallOutCommandDescription": {
+        "message": "当扩展在网页中启用时，点击此快捷键可以直接唤出扩展。当在已唤出扩展的状态下点击此快捷键时，将会聚焦文本框。"
+    },
     "contentInputHere": {
         "message": "在此输入"
     },

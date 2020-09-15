@@ -20,6 +20,7 @@ chrome.commands.onCommand.addListener((cmd) => {
             break;
         case SC_CALL_OUT:
             getCurrentTab(tab => tab && chrome.tabs.sendMessage(tab.id, { type: SCTS_CALL_OUT_COMMAND_KEY_PRESSED }));
+            break;
         default: break;
     }
 });

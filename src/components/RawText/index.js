@@ -54,7 +54,11 @@ const RawText = ({ defaultValue, rawTextTranslate, focusDependency }) => {
     }, []);
 
     useEffect(() => {
-        focusDependency && setTimeout(() => textareaEl.current.focus(), 0);
+        // use setTimeout(..., 0) is because it doesn't work in multipleTranslateMode without setTimeout
+        focusDependency && setTimeout(() => {
+            textareaEl.current.focus();
+            textareaEl.current.select();
+        }, 0);
     }, [focusDependency]);
 
     return (

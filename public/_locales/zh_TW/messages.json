@@ -110,6 +110,12 @@
     "optionsPreferredLanguageDescription": {
         "message": "當翻譯的目標語種為“自動選擇”時，會翻譯為首選語種。當文本的語種與首選語種相同時，將會翻譯為英語。"
     },
+    "optionsKeyboardShortcut": {
+        "message": "鍵盤快捷鍵"
+    },
+    "optionsCallOutCommandDescription": {
+        "message": "當擴充功能在網頁中啟用時，點擊此快捷鍵可以直接喚出擴充功能。當在已喚出擴充功能的狀態下點擊此快捷鍵時，將會聚焦文本框。"
+    },
     "contentInputHere": {
         "message": "在此輸入"
     },

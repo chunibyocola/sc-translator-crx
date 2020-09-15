@@ -1,3 +1,6 @@
+# 2.1.1
+- Add "Call out extension in web page" keyboard shortcut (default: Alt + C).
+- Show all keyboard shortcuts in the options page.
 # 2.1.0
 - Add "Enable PDF viewer" option.
 - Add translate source "baidu.com".

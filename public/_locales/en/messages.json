@@ -110,6 +110,12 @@
     "optionsPreferredLanguageDescription": {
         "message": "When the target language of translation is \"auto\", it will be translated into the preferred language. When the language of the text is the same as the preferred language, it will be translated into English."
     },
+    "optionsKeyboardShortcut": {
+        "message": "Keyboard shortcut"
+    },
+    "optionsCallOutCommandDescription": {
+        "message": "You can call out extension in web page when the extension is enabled in web page with this keyboard shortcut. When you click this keyboard shortcut with the extension called out, it focuses on the text box."
+    },
     "contentInputHere": {
         "message": "Input here"
     },

@@ -110,6 +110,12 @@
     "optionsPreferredLanguageDescription": {
         "message": "翻訳対象の言語が「自動選択」の場合、優先言語に翻訳されます。テキストの言語が優先言語と同じ場合、英語に翻訳されます。"
     },
+    "optionsKeyboardShortcut": {
+        "message": "キーボードショートカット"
+    },
+    "optionsCallOutCommandDescription": {
+        "message": "このキーボードショートカットでは、ウェブページで拡張機能を有効にしている場合に、ウェブページ内の拡張機能を呼び出すことができます。拡張機能をもう呼び出した状態でこのキーボードショートカットをクリックすると、テキストボックスにフォーカスします。"
+    },
     "contentInputHere": {
         "message": "ここに入力"
     },
