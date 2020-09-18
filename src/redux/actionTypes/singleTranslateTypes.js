@@ -10,3 +10,4 @@ export const ST_INIT = 'ST_INIT';
 export const ST_SET_RESULT_FROM_HISTORY = 'ST_SET_RESULT_FROM_HISTORY';
 export const ST_ADD_HISTORY = 'ST_ADD_HISTORY';
 export const ST_REMOVE_HISTORY = 'ST_REMOVE_HISTORY';
+export const ST_RETRY = 'ST_RETRY';

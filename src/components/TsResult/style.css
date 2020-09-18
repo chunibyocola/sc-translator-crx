@@ -75,3 +75,9 @@
     background: #fff;
     color: #000;
 }
+.ts-retry {
+    text-decoration: underline;
+}
+.ts-retry:hover {
+    color: #999;
+}

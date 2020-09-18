@@ -161,6 +161,9 @@
     "wordRequesting": {
         "message": "ローディング......"
     },
+    "wordRetry": {
+        "message": "再試行"
+    },
     "sentenceAddTranslateSource": {
         "message": "翻訳ソースを追加してください。"
     },

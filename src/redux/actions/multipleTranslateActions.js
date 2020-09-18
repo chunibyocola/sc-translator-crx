@@ -49,3 +49,8 @@ export const mtInit = ({ sourceList, from, to }) => ({
     type: types.MT_INIT,
     payload: { sourceList, from, to }
 });
+
+export const mtRetry = ({ source }) => ({
+    type: types.MT_RETRY,
+    payload: { source }
+});

@@ -34,3 +34,9 @@
     padding: 0px;
     height: 0px;
 }
+.ts-retry {
+    text-decoration: underline;
+}
+.ts-retry:hover {
+    color: #999;
+}

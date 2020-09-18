@@ -10,7 +10,7 @@ import bing from 'bing-translate-result';
 import mojidict from '../public/translate/mojidict';
 import baidu from '../public/translate/baidu';
 
-export const translate = ({ source, requestObj }, cb) => {
+export const translate = ({ source, translateId, requestObj }, cb) => {
 	let translate;
 
 	switch (source) {
@@ -40,8 +40,11 @@ export const translate = ({ source, requestObj }, cb) => {
 	}
 	
 	translate(requestObj)
-		.then(result => cb && cb({ suc: true, data: result }))
-		.catch(err => cb && cb({ suc: false, data: err }));
+		.then((result) => {
+			'raw' in result && delete result['raw'];
+			cb && cb({ suc: true, data: result, translateId });
+		})
+		.catch(err => cb && cb({ suc: false, data: err, translateId }));
 };
 
 export const audio = ({ source, requestObj, defaultSource }, cb) => {

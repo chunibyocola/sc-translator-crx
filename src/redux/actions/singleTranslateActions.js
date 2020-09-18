@@ -58,3 +58,7 @@ export const stRemoveHistory = ({ historyIndex }) => ({
     type: types.ST_REMOVE_HISTORY,
     payload: { historyIndex }
 });
+
+export const stRetry = () => ({
+    type: types.ST_RETRY
+});

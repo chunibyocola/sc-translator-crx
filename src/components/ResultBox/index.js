@@ -17,13 +17,13 @@ import {
     stSetFromAndTo,
     stSetText,
     stRequestFinish,
-    stRequestError
+    stRequestError, stRetry
 } from '../../redux/actions/singleTranslateActions';
 
 const initPos = { x: 0, y: 0 };
 
 const ResultBox = () => {
-    const { text, source, from, to, status, result, history, resultFromHistory } = useSelector(state => state.singleTranslateState);
+    const { text, source, from, to, status, result, history, resultFromHistory, translateId } = useSelector(state => state.singleTranslateState);
     const { requesting, requestEnd } = status;
 
     const { show, pos, focusRawText } = useSelector(state => state.resultBoxState);
@@ -34,8 +34,11 @@ const ResultBox = () => {
 
     const pinPosRef = useRef(initPos);
     const rbEle = useRef(null);
+    const translateIdRef = useRef(0);
 
     const dispatch = useDispatch();
+
+    translateIdRef.current = translateId;
 
     // show 'RawText' and 'LanguageSelection' when "call out"'s keyboard shortcut pressed
     useEffect(() => {
@@ -79,7 +82,9 @@ const ResultBox = () => {
 
         dispatch(stRequestStart());
 
-        sendTranslate(text, { source, from, to }, (result) => {
+        sendTranslate(text, { source, from, to, translateId: translateIdRef.current }, (result) => {
+            if (result.translateId !== translateIdRef.current) { return; }
+
             if (result.suc) {
                 dispatch(stAddHistory({ result: { ...result.data, translation: { source, from, to } } }));
                 dispatch(stRequestFinish({ result: result.data }));
@@ -106,6 +111,10 @@ const ResultBox = () => {
     const handleReadText = useCallback((text, { source, from }) => {
         text && sendAudio(text, { source, from });
     }, []);
+
+    const handleRetry = useCallback(() => {
+        dispatch(stRetry());
+    }, [dispatch]);
 
     useEffect(() => {
         !requestEnd && !requesting && !resultFromHistory && text && handleTranslate();
@@ -168,6 +177,7 @@ const ResultBox = () => {
                     readText={handleReadText}
                     source={resultFromHistory ? result.translation.source : source}
                     disableSourceChange={resultFromHistory}
+                    retry={handleRetry}
                 />
             </div>
         </div>

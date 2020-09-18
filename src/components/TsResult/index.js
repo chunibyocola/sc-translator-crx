@@ -6,7 +6,7 @@ import { LANG_EN } from '../../constants/langCode';
 import { resultToString } from '../../public/utils';
 import './style.css';
 
-const TsResult = ({resultObj, status, sourceChange, readText, source, disableSourceChange}) => {
+const TsResult = ({ resultObj, status, sourceChange, readText, source, disableSourceChange, retry }) => {
     const { text, result, dict, phonetic, from, to } = resultObj;
     const { requestEnd, requesting, error, errorCode } = status;
     
@@ -17,7 +17,7 @@ const TsResult = ({resultObj, status, sourceChange, readText, source, disableSou
             !requestEnd ?
                 getI18nMessage('contentTranslateAfterInput'):
             error ?
-                getI18nMessage(`errorCode_${errorCode}`) :
+                <>{getI18nMessage(`errorCode_${errorCode}`)}<span className='ts-button ts-retry' onClick={retry}>{getI18nMessage('wordRetry')}</span></> :
             <Fragment>
                 <div className='tss-result'>
                     <span>

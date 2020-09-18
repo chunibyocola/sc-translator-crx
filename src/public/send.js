@@ -1,9 +1,9 @@
 import * as types from '../constants/chromeSendMessageTypes';
 
-export const sendTranslate = (text, { source, from, to }, cb = undefined) => {
+export const sendTranslate = (text, { source, from, to, translateId }, cb = undefined) => {
     const action = {
         type: types.SCTS_TRANSLATE,
-        payload: packData(text, {source, from, to})
+        payload: packData(text, { source, from, to, translateId })
     };
 
     chromeSendMessage(action, cb);
@@ -18,12 +18,13 @@ export const sendAudio = (text, { source = '', from = '' }) => {
     chromeSendMessage(action);
 };
 
-const packData = (text, { source, from, to = undefined }) => ({
-	source,
+const packData = (text, { source, from, to = undefined, translateId = undefined }) => ({
+    source,
+    translateId,
 	requestObj: {
 		text,
 		from,
-		to
+        to
 	}
 });
 

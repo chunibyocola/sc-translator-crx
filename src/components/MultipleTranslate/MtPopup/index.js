@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { useOptions } from '../../../public/react-use';
 import './style.css';
 import PopupHeader from '../../PopupHeader';
 import RawText from '../../RawText';
 import LanguageSelection from '../../LanguageSelection';
-import { mtSetText, mtSetFromAndTo, mtRemoveSource, mtRequestStart, mtRequestFinish, mtRequestError } from '../../../redux/actions/multipleTranslateActions';
+import { mtSetText, mtSetFromAndTo, mtRemoveSource, mtRequestStart, mtRequestFinish, mtRequestError, mtRetry } from '../../../redux/actions/multipleTranslateActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendTranslate, sendAudio } from '../../../public/send';
 import MtAddSource from '../MtAddSource';
@@ -15,14 +15,20 @@ import { mtLangCode } from '../../../constants/langCode';
 const MtPopup = () => {
     const { darkMode } = useOptions(['darkMode']);
 
-    const { text, from, to, translations } = useSelector(state => state.multipleTranslateState);
+    const { text, from, to, translations, translateId } = useSelector(state => state.multipleTranslateState);
+
+    const translateIdRef = useRef(0);
 
     const dispatch = useDispatch();
+
+    translateIdRef.current = translateId;
 
     const handleTranslate = useCallback((source) => {
         dispatch(mtRequestStart({ source }));
 
-        sendTranslate(text, { source, from, to }, (result) => {
+        sendTranslate(text, { source, from, to, translateId: translateIdRef.current }, (result) => {
+            if (result.translateId !== translateIdRef.current) { return; }
+
             result.suc ? dispatch(mtRequestFinish({ source, result: result.data})) : dispatch(mtRequestError({ source, errorCode: result.data.code }));
         });
     }, [text, from, to, dispatch]);
@@ -37,6 +43,10 @@ const MtPopup = () => {
 
     const handleRemoveSource = useCallback((source) => {
         dispatch(mtRemoveSource({ source }));
+    }, [dispatch]);
+
+    const handleRetry = useCallback((source) => {
+        dispatch(mtRetry({ source }));
     }, [dispatch]);
 
     return (
@@ -64,6 +74,7 @@ const MtPopup = () => {
                         translate={() => handleTranslate(source)}
                         remove={() => handleRemoveSource(source)}
                         readText={(text, from) => sendAudio(text, { source, from })}
+                        retry={() => handleRetry(source)}
                     />
                 ))}
             </div>

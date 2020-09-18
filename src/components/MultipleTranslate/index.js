@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { mtRequestStart, mtRequestFinish, mtRequestError, mtRemoveSource, mtSetText, mtSetFromAndTo } from '../../redux/actions/multipleTranslateActions';
+import { mtRequestStart, mtRequestFinish, mtRequestError, mtRemoveSource, mtSetText, mtSetFromAndTo, mtRetry } from '../../redux/actions/multipleTranslateActions';
 import { setResultBoxShowAndPosition } from '../../redux/actions/resultBoxActions';
 import MtResult from './MtResult';
 import MtAddSource from './MtAddSource';
@@ -22,11 +22,14 @@ const MultipleTranslate = () => {
 
     const pinPosRef = useRef(initPos);
     const mtEle = useRef(null);
+    const translateIdRef = useRef(0);
 
     const { show, pos, focusRawText } = useSelector(state => state.resultBoxState);
-    const { text, from, to, translations } = useSelector(state => state.multipleTranslateState);
+    const { text, from, to, translations, translateId } = useSelector(state => state.multipleTranslateState);
 
     const dispatch = useDispatch();
+
+    translateIdRef.current = translateId;
 
     // show 'RawText' and 'LanguageSelection' when "call out"'s keyboard shortcut pressed
     useEffect(() => {
@@ -39,8 +42,8 @@ const MultipleTranslate = () => {
         pinPosRef.current = pos;
     }, []);
 
-    const handlePosChange = useCallback(({x, y}) => {
-        calculatePosition(mtEle.current, { x, y}, changePinPos);
+    const handlePosChange = useCallback(({ x, y }) => {
+        calculatePosition(mtEle.current, { x, y }, changePinPos);
     }, [changePinPos]);
 
     const pinningToggle = useCallback(() => {
@@ -57,7 +60,9 @@ const MultipleTranslate = () => {
     const handleTranslate = useCallback((source) => {
         dispatch(mtRequestStart({ source }));
 
-        sendTranslate(text, { source, from, to }, (result) => {
+        sendTranslate(text, { source, from, to, translateId: translateIdRef.current }, (result) => {
+            if (result.translateId !== translateIdRef.current) { return; }
+
             result.suc ? dispatch(mtRequestFinish({ source, result: result.data})) : dispatch(mtRequestError({ source, errorCode: result.data.code }));
         });
     }, [text, from, to, dispatch]);
@@ -72,6 +77,10 @@ const MultipleTranslate = () => {
 
     const handleSelectionChange = useCallback((from, to) => {
         dispatch(mtSetFromAndTo({ from, to }));
+    }, [dispatch]);
+
+    const handleRetry = useCallback((source) => {
+        dispatch(mtRetry({ source }));
     }, [dispatch]);
 
     return (
@@ -130,6 +139,7 @@ const MultipleTranslate = () => {
                         translate={() => handleTranslate(source)}
                         remove={() => handleRemoveSource(source)}
                         readText={(text, from) => sendAudio(text, { source, from })}
+                        retry={() => handleRetry(source)}
                     />
                 ))}
             </div>

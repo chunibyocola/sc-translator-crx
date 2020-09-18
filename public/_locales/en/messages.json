@@ -161,6 +161,9 @@
     "wordRequesting": {
         "message": "Requesting..."
     },
+    "wordRetry": {
+        "message": "Retry"
+    },
     "sentenceAddTranslateSource": {
         "message": "Please add a translate source."
     },

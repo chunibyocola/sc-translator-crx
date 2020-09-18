@@ -8,3 +8,4 @@ export const MT_SET_FROM = 'MT_SET_FROM';
 export const MT_SET_TO = 'MT_SET_TO';
 export const MT_SET_FROM_AND_TO = 'MT_SET_FROM_AND_TO';
 export const MT_INIT = 'MT_INIT';
+export const MT_RETRY = 'MT_RETRY';

@@ -30,3 +30,17 @@
 .ts-button {
     cursor: pointer;
 }
+.ts-scrollbar::-webkit-scrollbar {
+    width:4px;
+}
+.ts-scrollbar::-webkit-scrollbar-track {
+    background: rgb(239, 239, 239);
+    border-radius: 2px;
+}
+.ts-scrollbar::-webkit-scrollbar-thumb {
+    background: #bfbfbf;
+    border-radius: 20px;
+}
+.ts-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}

@@ -161,6 +161,9 @@
     "wordRequesting": {
         "message": "正在請求……"
     },
+    "wordRetry": {
+        "message": "重試"
+    },
     "sentenceAddTranslateSource": {
         "message": "請添加翻譯源。"
     },

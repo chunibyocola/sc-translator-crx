@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import LanguageSelection from '../LanguageSelection';
 import { sendAudio, sendTranslate } from '../../public/send';
@@ -8,20 +8,26 @@ import { useOptions } from '../../public/react-use';
 import './style.css';
 import PopupHeader from '../PopupHeader';
 import { langCode } from '../../constants/langCode';
-import { stRequestFinish, stRequestStart, stRequestError, stSetSource, stSetFromAndTo, stSetText } from '../../redux/actions/singleTranslateActions';
+import { stRequestFinish, stRequestStart, stRequestError, stSetSource, stSetFromAndTo, stSetText, stRetry } from '../../redux/actions/singleTranslateActions';
 
 const Popup = () => {
     const { darkMode } = useOptions(['darkMode']);
 
-    const { status, result, source, from, to, text } = useSelector(state => state.singleTranslateState);
+    const { status, result, source, from, to, text, translateId } = useSelector(state => state.singleTranslateState);
     const { requesting, requestEnd } = status;
+
+    const translateIdRef = useRef(0);
+
+    translateIdRef.current = translateId;
 
     const dispatch = useDispatch();
 
     const handleTranslate = useCallback(() => {
         dispatch(stRequestStart());
 
-        sendTranslate(text, { source, from, to }, (result) => {
+        sendTranslate(text, { source, from, to, translateId: translateIdRef.current }, (result) => {
+            if (result.translateId !== translateIdRef.current) { return; }
+
             result.suc ? dispatch(stRequestFinish({ result: result.data })) : dispatch(stRequestError({ errorCode: result.data.code }));
         });
     }, [dispatch, text, source, from, to]);
@@ -40,6 +46,10 @@ const Popup = () => {
 
     const handleSelectionChange = useCallback((from, to) => {
         dispatch(stSetFromAndTo({ from, to }));
+    }, [dispatch]);
+
+    const handleRetry = useCallback(() => {
+        dispatch(stRetry());
     }, [dispatch]);
 
     useEffect(() => {
@@ -65,6 +75,7 @@ const Popup = () => {
                     sourceChange={handleSourceChange}
                     readText={handleReadText}
                     source={source}
+                    retry={handleRetry}
                 />
             </div>
         </div>

@@ -6,7 +6,7 @@ import { getI18nMessage } from '../../../public/chrome-call';
 import { resultToString } from '../../../public/utils';
 import { LANG_EN } from '../../../constants/langCode';
 
-const MtResult = ({ source, status, result, text, translate, remove, readText }) => {
+const MtResult = ({ source, status, result, text, translate, remove, readText, retry }) => {
     const [fold, setFold] = useState(false);
 
     const { requesting, requestEnd, error, errorCode } = status;
@@ -48,7 +48,7 @@ const MtResult = ({ source, status, result, text, translate, remove, readText })
                 !requestEnd ?
                     getI18nMessage('contentTranslateAfterInput') :
                 error ?
-                    getI18nMessage(`errorCode_${errorCode}`) :
+                    <>{getI18nMessage(`errorCode_${errorCode}`)}<span className='ts-button ts-retry' onClick={retry}>{getI18nMessage('wordRetry')}</span></> :
                 <>
                     {result.phonetic && result.from === LANG_EN && <div style={{marginBottom: '10px'}}>
                         {`[${result.phonetic}]`}
