@@ -1,0 +1,26 @@
+.ts-via {
+    position: relative;
+    text-align: right;
+    color: #bbb;
+    background: var(--bg-content);
+}
+.ts-via-content {
+    border-top: 1px solid #ddd;
+    margin: 0 10px;
+    padding: 2px 0;
+}
+.ts-via-select {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--text-normal);
+    margin-left: 10px;
+    width: 150px;
+}
+.ts-via-select:focus {
+    background: var(--select-bg-focus);
+}
+.ts-via-select option {
+    background: #fff;
+    color: #000;
+}

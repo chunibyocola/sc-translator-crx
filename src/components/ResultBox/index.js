@@ -19,6 +19,7 @@ import {
     stRequestFinish,
     stRequestError, stRetry
 } from '../../redux/actions/singleTranslateActions';
+import TsVia from '../TsVia';
 
 const initPos = { x: 0, y: 0 };
 
@@ -173,11 +174,14 @@ const ResultBox = () => {
                 <TsResult
                     resultObj={result}
                     status={status}
-                    sourceChange={handleSourceChange}
                     readText={handleReadText}
                     source={resultFromHistory ? result.translation.source : source}
-                    disableSourceChange={resultFromHistory}
                     retry={handleRetry}
+                />
+                <TsVia
+                    sourceChange={handleSourceChange}
+                    source={resultFromHistory ? result.translation.source : source}
+                    disableSourceChange={resultFromHistory}
                 />
             </div>
         </div>

@@ -9,6 +9,7 @@ import './style.css';
 import DefaultSelect from './DefaultSelect';
 import OptionToggle from './OptionToggle';
 import TransferList from './TransferList';
+import SourceSelect from '../SourceSelect';
 
 const Options = () => {
     const {
@@ -74,14 +75,14 @@ const Options = () => {
             <div className='opt-item'>
                 {getI18nMessage('optionsDefaultAudioOptions')}
                 <div className='child-mt10-ml30'>
-                    <DefaultSelect
-                        message='optionsSource'
-                        value={defaultAudioSource}
-                        onChange={value => updateStorage('defaultAudioSource', value)}
-                        options={audioSource}
-                        optionValue='source'
-                        optionLabel='url'
-                    />
+                    <div className='opt-source-select'>
+                        {getI18nMessage('optionsSource')}
+                        <SourceSelect
+                            sourceList={audioSource}
+                            source={defaultAudioSource}
+                            onChange={value => updateStorage('defaultAudioSource', value)}
+                        />
+                    </div>
                 </div>
             </div>
             <h3>{getI18nMessage('optionsTranslate')}</h3>
@@ -165,18 +166,18 @@ const Options = () => {
                             />
                         </> :
                     <>
-                        <DefaultSelect
-                            message='optionsSource'
-                            value={defaultTranslateSource}
-                            onChange={value => {
-                                updateStorage('defaultTranslateSource', value);
-                                updateStorage('defaultTranslateFrom', '');
-                                updateStorage('defaultTranslateTo', '');
-                            }}
-                            options={translateSource}
-                            optionValue='source'
-                            optionLabel='url'
-                        />
+                        <div className='opt-source-select'>
+                            {getI18nMessage('optionsSource')}
+                            <SourceSelect
+                                sourceList={translateSource}
+                                source={defaultTranslateSource}
+                                onChange={value => {
+                                    updateStorage('defaultTranslateSource', value);
+                                    updateStorage('defaultTranslateFrom', '');
+                                    updateStorage('defaultTranslateTo', '');
+                                }}
+                            />
+                        </div>
                         <DefaultSelect
                             message='optionsFrom'
                             value={defaultTranslateFrom}

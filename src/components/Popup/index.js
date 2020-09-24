@@ -9,6 +9,7 @@ import './style.css';
 import PopupHeader from '../PopupHeader';
 import { langCode } from '../../constants/langCode';
 import { stRequestFinish, stRequestStart, stRequestError, stSetSource, stSetFromAndTo, stSetText, stRetry } from '../../redux/actions/singleTranslateActions';
+import TsVia from '../TsVia';
 
 const Popup = () => {
     const { darkMode } = useOptions(['darkMode']);
@@ -72,10 +73,13 @@ const Popup = () => {
                 <TsResult
                     resultObj={result}
                     status={status}
-                    sourceChange={handleSourceChange}
                     readText={handleReadText}
                     source={source}
                     retry={handleRetry}
+                />
+                <TsVia
+                    sourceChange={handleSourceChange}
+                    source={source}
                 />
             </div>
         </div>

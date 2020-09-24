@@ -1,12 +1,11 @@
 import React, { Fragment } from 'react';
 import IconFont from '../IconFont';
-import Via from './Via';
 import { getI18nMessage } from '../../public/chrome-call';
 import { LANG_EN } from '../../constants/langCode';
 import { resultToString } from '../../public/utils';
 import './style.css';
 
-const TsResult = ({ resultObj, status, sourceChange, readText, source, disableSourceChange, retry }) => {
+const TsResult = ({ resultObj, status, readText, source, retry }) => {
     const { text, result, dict, phonetic, from, to } = resultObj;
     const { requestEnd, requesting, error, errorCode } = status;
     
@@ -46,7 +45,6 @@ const TsResult = ({ resultObj, status, sourceChange, readText, source, disableSo
                     {`[${phonetic}]`}
                 </div>}
             </Fragment>}
-            <Via sourceChange={sourceChange} source={source} disableSourceChange={disableSourceChange} />
         </div>
     )
 };

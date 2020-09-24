@@ -2,10 +2,9 @@
     background: var(--bg-content);
     height: fit-content;
     width: 100%;
-    margin-bottom: 3px;
     border-radius: 3px;
     box-sizing: border-box;
-    padding: 10px 10px 0px 10px;
+    padding: 10px;
     word-break: break-all;
     font-size: 14px;
     max-height: 200px;
@@ -51,29 +50,6 @@
 .tss-origin-text .ts-iconfont {
     cursor: pointer;
     vertical-align: middle;
-}
-.ts-via {
-    padding: 2px 0px;
-    position: relative;
-    border-top: 1px solid #ddd;
-    margin-top: 10px;
-    text-align: right;
-    color: #bbb;
-}
-.ts-via-select {
-    border: none;
-    outline: none;
-    background: transparent;
-    color: var(--text-normal);
-    margin-left: 10px;
-    width: 150px;
-}
-.ts-via-select:focus {
-    background: var(--select-bg-focus);
-}
-.ts-via-select option {
-    background: #fff;
-    color: #000;
 }
 .ts-retry {
     text-decoration: underline;
