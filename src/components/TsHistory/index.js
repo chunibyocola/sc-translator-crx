@@ -54,7 +54,7 @@ const TsHistory = () => {
                     <IconFont iconName='#icon-GoPin' />
                 </div>
             </div>
-            <div className='ts-history-content'>
+            <div className='ts-history-content ts-scrollbar'>
                 {history.length === 0 ?
                     (<div className='ts-history-norecord'>
                         {getI18nMessage('contentNoRecord')}

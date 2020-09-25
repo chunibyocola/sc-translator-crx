@@ -17,13 +17,14 @@
 .title-icons .ts-iconfont {
     font-size: 20px !important;
     cursor: pointer;
+    color: var(--text-icon);
 }
 .title-icons .ts-iconfont:hover {
-    color: #fff;
+    opacity: 1;
 }
 .title-icons-enable {
-    color: #eee;
+    opacity: 0.9;
 }
 .title-icons-disable {
-    color: #999;
+    opacity: 0.6;
 }

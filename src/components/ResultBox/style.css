@@ -38,14 +38,6 @@
 }
 .tsrbh-icons .ts-iconfont {
     cursor: pointer;
-}
-.tsrbhr-rtandls-check {
-    display: inline-block;
-    transform: rotate(180deg);
-    color: #fff;
-}
-.tsrbhr-pin-check {
-    display: inline-block;
-    transform:rotate(-45deg);
-    color: #fff;
+    color: var(--text-icon);
+    opacity: 0.6;
 }

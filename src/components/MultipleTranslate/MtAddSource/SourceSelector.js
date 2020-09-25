@@ -26,7 +26,7 @@ const SourceSelector = ({ show, hideCallback, translations }) => {
 
     return (
         <div
-            className='ts-mt-source-selector'
+            className='ts-mt-source-selector ts-scrollbar'
             style={{display: show ? 'block': 'none'}}
             onMouseLeave={hideCallback}
         >

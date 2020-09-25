@@ -18,9 +18,5 @@
     width: 150px;
 }
 .ts-via-select:focus {
-    background: var(--select-bg-focus);
-}
-.ts-via-select option {
-    background: #fff;
-    color: #000;
+    background: var(--bg-select-focus);
 }

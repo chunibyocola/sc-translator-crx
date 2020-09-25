@@ -35,5 +35,5 @@
     overflow: hidden;
 }
 .ts-source-select-option:hover {
-    background: rgb(221,221,221, 0.2);;
+    background: var(--bg-item-hover);
 }

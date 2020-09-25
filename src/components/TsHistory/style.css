@@ -7,7 +7,7 @@
     left: -1px;
     height: 100%;
     width: 200px;
-    background: var(--history-bg);
+    background: var(--bg-content);
     color: var(--text-normal);
     transform: translate3d(-100%, 0px, 0px);
     transition: transform 0.2s ease 0s;
@@ -53,9 +53,9 @@
     position: absolute;
     top: 0px;
     left: 0px;
-    color: #eee;
+    color: var(--text-title);
     width: 100%;
-    background-color: #222;
+    background: var(--bg-title);
     padding: 10px 5px;
     min-height: 40px;
     box-sizing: border-box;
@@ -65,21 +65,7 @@
     height: 100%;
     width: 100%;
     box-sizing: border-box;
-    border-right: var(--history-content-border-right);
-}
-.ts-history-content::-webkit-scrollbar{
-    width:4px;
-}
-.ts-history-content::-webkit-scrollbar-track{
-    background: rgb(239, 239, 239);
-    border-radius:2px;
-}
-.ts-history-content::-webkit-scrollbar-thumb{
-    background: #bfbfbf;
-    border-radius:20px;
-}
-.ts-history-content::-webkit-scrollbar-thumb:hover{
-    background: #999;
+    border-right: 1px solid rgb(221,221,221, 0.6);
 }
 .ts-history-norecord {
     margin: 20px;
@@ -92,7 +78,7 @@
     font-size: 14px;
 }
 .ts-history-item:hover {
-    background: var(--history-item-hover-bg);
+    background: var(--bg-item-hover);
 }
 .tshi-content {
     color: var(--text-normal);
@@ -122,7 +108,6 @@
     display: flex;
     height: 50px;
     width: 50px;
-    color: #eee;
 }
 .tshi-icons .ts-iconfont {
     color: #555;
@@ -142,10 +127,11 @@
     float: right;
     margin-right: 5px;
     margin-top: 0px;
-    color: #777;
+    color: var(--text-icon);
+    opacity: 0.6;
     cursor: pointer;
 }
 .tshh-icons-check {
     transform: rotate(-45deg);
-    color: #fff;
+    opacity: 1;
 }

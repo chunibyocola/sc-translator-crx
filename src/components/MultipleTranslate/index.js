@@ -102,13 +102,13 @@ const MultipleTranslate = () => {
                     <IconFont
                         iconName='#icon-GoChevronDown'
                         onClick={() => setShowRtAndLs(!showRtAndLs)}
-                        style={showRtAndLs ? {transform: 'rotate(180deg)', color: '#fff'} : {}}
+                        style={showRtAndLs ? {transform: 'rotate(180deg)', opacity: '1'} : {}}
                         className='ts-button'
                     />
                     <IconFont
                         iconName='#icon-GoPin'
                         onClick={pinningToggle}
-                        style={pinning ? {transform: 'rotate(-45deg)', color: '#fff'} : {}}
+                        style={pinning ? {transform: 'rotate(-45deg)', opacity: '1'} : {}}
                         className='ts-button'
                     />
                 </span>
@@ -126,7 +126,7 @@ const MultipleTranslate = () => {
                     options={mtLangCode}
                 />
             </div>
-            <div className='ts-mt-content'>
+            <div className='ts-mt-content ts-scrollbar'>
                 {translations.length === 0 ? 
                     <div className='ts-mt-result-add-translate-source'>{getI18nMessage('sentenceAddTranslateSource')}</div> :
                 translations.map(({ source, status, result }) => (

@@ -142,8 +142,7 @@ const ResultBox = () => {
                 >
                     <IconFont
                         iconName='#icon-GoChevronDown'
-                        className={`${showRtAndLs ? 'tsrbhr-rtandls-check' : ''}`}
-                        style={{visibility: resultFromHistory ? 'hidden' : 'visible'}}
+                        style={{visibility: resultFromHistory ? 'hidden' : 'visible', ...showRtAndLs ? {transform: 'rotate(180deg)', opacity: '1'} : {}}}
                         onClick={() => {
                             if (resultFromHistory) return;
                             setShowRtAndLs(!showRtAndLs);
@@ -152,7 +151,7 @@ const ResultBox = () => {
                     <IconFont
                         iconName='#icon-GoPin'
                         onClick={pinningToggle}
-                        className={`${pinning? 'tsrbhr-pin-check': ''}`}
+                        style={pinning ? {transform: 'rotate(-45deg)', opacity: '1'} : {}}
                     />
                 </span>
             </div>

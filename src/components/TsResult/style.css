@@ -10,20 +10,6 @@
     max-height: 200px;
     overflow-y: auto;
 }
-.ts-result::-webkit-scrollbar{
-    width:4px;
-}
-.ts-result::-webkit-scrollbar-track{
-    background: rgb(239, 239, 239);
-    border-radius:2px;
-}
-.ts-result::-webkit-scrollbar-thumb{
-    background: #bfbfbf;
-    border-radius:20px;
-}
-.ts-result::-webkit-scrollbar-thumb:hover{
-    background: #999;
-}
 .tss-result {
     margin-bottom: 10px;
 }

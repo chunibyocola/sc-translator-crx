@@ -15,26 +15,12 @@
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
     overflow-y: auto;
 }
-.ts-mt-source-selector::-webkit-scrollbar{
-    width:4px;
-}
-.ts-mt-source-selector::-webkit-scrollbar-track{
-    background: rgb(239, 239, 239);
-    border-radius:2px;
-}
-.ts-mt-source-selector::-webkit-scrollbar-thumb{
-    background: #bfbfbf;
-    border-radius:20px;
-}
-.ts-mt-source-selector::-webkit-scrollbar-thumb:hover{
-    background: #999;
-}
 .ts-mt-source-selector-item {
     padding: 6px;
     overflow: hidden;
 }
 .ts-mt-source-selector-item:hover {
-    background: var(--source-selector-item-hover-bg);
+    background: var(--bg-item-hover);
 }
 .ts-mt-source-selector-item-source {
     display: inline-block;

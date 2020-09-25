@@ -14,20 +14,6 @@
     max-height: 250px;
     overflow-y: auto;
 }
-.ts-mt-content::-webkit-scrollbar{
-    width:4px;
-}
-.ts-mt-content::-webkit-scrollbar-track{
-    background: rgb(239, 239, 239);
-    border-radius:2px;
-}
-.ts-mt-content::-webkit-scrollbar-thumb{
-    background: #bfbfbf;
-    border-radius:20px;
-}
-.ts-mt-content::-webkit-scrollbar-thumb:hover{
-    background: #999;
-}
 .ts-mt-header {
     cursor: move;
     user-select: none;
@@ -53,6 +39,10 @@
 .ts-mt-header-icons {
     float: right;
     margin-right: 5px;
+}
+.ts-mt-header-icons .ts-iconfont {
+    color: var(--text-icon);
+    opacity: 0.6;
 }
 .ts-mt-result-add-translate-source {
     word-break: break-all;

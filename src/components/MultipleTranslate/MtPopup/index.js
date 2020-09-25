@@ -61,7 +61,7 @@ const MtPopup = () => {
                     options={mtLangCode}
                 />
             </div>
-            <div className='ts-mt-content'>
+            <div className='ts-mt-content ts-scrollbar'>
                 {translations.length === 0 ? 
                     <div className='ts-mt-result-add-translate-source'>{getI18nMessage('sentenceAddTranslateSource')}</div> :
                 translations.map(({ source, status, result }) => (

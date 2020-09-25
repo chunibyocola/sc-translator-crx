@@ -10,7 +10,7 @@ const TsResult = ({ resultObj, status, readText, source, retry }) => {
     const { requestEnd, requesting, error, errorCode } = status;
     
     return (
-        <div className='ts-result'>
+        <div className='ts-result ts-scrollbar'>
             {requesting ?
                 getI18nMessage('wordRequesting') :
             !requestEnd ?
