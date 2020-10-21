@@ -1,3 +1,6 @@
+# 2.2.0
+- Add "Customize theme".
+- Fixed "Enable PDF viewer can not work in incognito mode".
 # 2.1.1
 - Add "Call out extension in web page" keyboard shortcut (default: Alt + C).
 - Show all keyboard shortcuts in the options page.

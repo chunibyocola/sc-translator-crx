@@ -4,7 +4,6 @@ import LanguageSelection from '../LanguageSelection';
 import { sendAudio, sendTranslate } from '../../public/send';
 import RawText from '../RawText';
 import TsResult from '../TsResult';
-import { useOptions } from '../../public/react-use';
 import './style.css';
 import PopupHeader from '../PopupHeader';
 import { langCode } from '../../constants/langCode';
@@ -12,8 +11,6 @@ import { stRequestFinish, stRequestStart, stRequestError, stSetSource, stSetFrom
 import TsVia from '../TsVia';
 
 const Popup = () => {
-    const { darkMode } = useOptions(['darkMode']);
-
     const { status, result, source, from, to, text, translateId } = useSelector(state => state.singleTranslateState);
     const { requesting, requestEnd } = status;
 
@@ -58,7 +55,7 @@ const Popup = () => {
     }, [requestEnd, requesting, text, handleTranslate]);
 
     return (
-        <div id="sc-translator-root" className={`container ${darkMode ? 'dark' : 'light'}`}>
+        <div id="sc-translator-root" className='container'>
             <PopupHeader />
             <div className="content">
                 <RawText

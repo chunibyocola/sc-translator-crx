@@ -155,6 +155,9 @@
     "popupDisableDarkMode": {
         "message": "ダークモードを無効にする"
     },
+    "popupSwitchToTheNextTheme": {
+        "message": "次のテーマに切り替える"
+    },
     "wordTranslate": {
         "message": "翻訳"
     },

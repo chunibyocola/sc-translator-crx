@@ -14,9 +14,6 @@ h2 {
 a:hover, a:active {
   box-shadow: none;
 }
-.dark a {
-  color: #ffa7c4;
-}
-.light a {
-  color: #d23669;
+a {
+  color: var(--text-normal);
 }

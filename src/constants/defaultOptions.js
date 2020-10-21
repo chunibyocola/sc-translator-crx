@@ -1,5 +1,6 @@
 import { GOOGLE_COM, BING_COM } from './translateSource';
 import { LANG_EN } from './langCode';
+import { styleVarsList } from './defaultStyleVars';
 
 const defaultOptions = {
     userLanguage: LANG_EN,
@@ -12,7 +13,6 @@ const defaultOptions = {
     translateHostList: [],
     historyBlackListMode: false,
     historyHostList: [],
-    darkMode: false,
     showButtonAfterSelect: true,
     defaultAudioSource: GOOGLE_COM,
     translateWithKeyPress: false,
@@ -22,7 +22,9 @@ const defaultOptions = {
     multipleTranslateFrom: '',
     multipleTranslateTo: '',
     enablePdfViewer: false,
-    preferredLanguage: LANG_EN
+    preferredLanguage: LANG_EN,
+    styleVarsList: styleVarsList,
+    styleVarsIndex: 0
 };
 
 export default defaultOptions;

@@ -16,13 +16,15 @@ const PopupHeader = () => {
         translateHostList,
         historyBlackListMode,
         historyHostList,
-        darkMode
+        styleVarsList,
+        styleVarsIndex
     } = useOptions([
         'translateBlackListMode',
         'translateHostList',
         'historyBlackListMode',
         'historyHostList',
-        'darkMode'
+        'styleVarsList',
+        'styleVarsIndex'
     ]);
 
     useEffect(() => {
@@ -51,19 +53,19 @@ const PopupHeader = () => {
         });
     }, []);
 
-    const handleDarkModeToggle = useCallback((daMode) => {
-        setLocalStorage({'darkMode': !daMode});
-    }, []);
+    const handleThemeToggle = useCallback(() => {
+        setLocalStorage({'styleVarsIndex': styleVarsIndex >= styleVarsList.length - 1 ? 0 : styleVarsIndex + 1});
+    }, [styleVarsList, styleVarsIndex]);
 
     return (
         <div className="title">
             <div className='title-logo'>{getI18nMessage('extName')}</div>
             <div className='title-icons'>
                 <IconFont
-                    iconName={darkMode ? '#icon-IoMdMoon' : '#icon-IoMdSunny'}
+                    iconName='#icon-theme'
                     className='title-icons-enable'
-                    onClick={() => handleDarkModeToggle(darkMode)}
-                    title={darkMode ? getI18nMessage('popupDisableDarkMode') : getI18nMessage('popupEnableDarkMode')}
+                    onClick={() => handleThemeToggle()}
+                    title={getI18nMessage('popupSwitchToTheNextTheme')}
                 />
                 <IconFont
                     iconName='#icon-MdTranslate'

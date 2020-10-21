@@ -155,6 +155,9 @@
     "popupDisableDarkMode": {
         "message": "Disable dark mode"
     },
+    "popupSwitchToTheNextTheme": {
+        "message": "Switch to the next theme"
+    },
     "wordTranslate": {
         "message": "Translate"
     },

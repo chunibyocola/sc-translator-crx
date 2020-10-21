@@ -13,6 +13,9 @@ import { getLocalStorage } from '../../public/chrome-call';
 import defaultOptions from '../../constants/defaultOptions';
 import MtPopup from '../../components/MultipleTranslate/MtPopup';
 
+// inject style
+import '../../public/inject-style';
+
 const init = (options) => {
     initOptions(options);
 

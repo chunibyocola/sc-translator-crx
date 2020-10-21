@@ -1,5 +1,4 @@
 import React, { useCallback, useRef } from 'react';
-import { useOptions } from '../../../public/react-use';
 import './style.css';
 import PopupHeader from '../../PopupHeader';
 import RawText from '../../RawText';
@@ -13,8 +12,6 @@ import { getI18nMessage } from '../../../public/chrome-call';
 import { mtLangCode } from '../../../constants/langCode';
 
 const MtPopup = () => {
-    const { darkMode } = useOptions(['darkMode']);
-
     const { text, from, to, translations, translateId } = useSelector(state => state.multipleTranslateState);
 
     const translateIdRef = useRef(0);
@@ -50,7 +47,7 @@ const MtPopup = () => {
     }, [dispatch]);
 
     return (
-        <div id="sc-translator-root" className={`container ${darkMode ? 'dark' : 'light'}`}>
+        <div id="sc-translator-root" className='container'>
             <PopupHeader />
             <div className="content">
                 <RawText rawTextTranslate={handleRawTextTranslate} />

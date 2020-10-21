@@ -1,0 +1,69 @@
+.color-selector-adjust>div {
+    margin-bottom: 5px;
+}
+.color-selector-selected-color {
+    height: 20px;
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 5px 0px;
+}
+.color-selector-opacity-slider {
+    position: relative;
+    cursor: pointer;
+    height: 4px;
+    padding: 15px 0;
+    width: 100%;
+    color: #1F88D6;
+}
+.color-selector-opacity-rail {
+    opacity: 0.38;
+    height: 4px;
+    width: 100%;
+    position: absolute;
+    border-radius: 1px;
+    background: currentColor;
+    pointer-events: none;
+}
+.color-selector-opacity-track {
+    height: 4px;
+    position: absolute;
+    border-radius: 1px;
+    background: currentColor;
+    pointer-events: none;
+}
+.color-selector-opacity-pointer {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-left: -6px;
+    margin-top: -4px;
+    background: currentColor;
+    pointer-events: none;
+}
+.color-selector-opacity-display {
+    display: inline-block;
+    padding: 0 5px;
+}
+.color-selector-adjust-save {
+    border: 2px solid #333;
+    color: #333;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-block;
+    padding: 2px 15px;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+.color-selector-adjust-rgb input {
+    width: 100px;
+    border: 0;
+}
+.color-selector-adjust-rgb label {
+    width: 20px;
+    display: inline-block;
+    text-align: center;
+}

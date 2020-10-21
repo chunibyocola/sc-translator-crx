@@ -155,6 +155,9 @@
     "popupDisableDarkMode": {
         "message": "禁用黑夜模式"
     },
+    "popupSwitchToTheNextTheme": {
+        "message": "切换到下一个主题"
+    },
     "wordTranslate": {
         "message": "翻译"
     },

@@ -1,15 +1,16 @@
-import React, {useCallback, useEffect} from 'react';
+import React, { useCallback } from 'react';
 import defaultOptions from '../../constants/defaultOptions';
 import { audioSource, translateSource } from '../../constants/translateSource';
 import { userLangs, langCode, mtLangCode, preferredLangCode } from '../../constants/langCode';
-import {setLocalStorage, getI18nMessage} from '../../public/chrome-call';
-import {useOptions} from '../../public/react-use';
+import { setLocalStorage, getI18nMessage } from '../../public/chrome-call';
+import { useOptions } from '../../public/react-use';
 import HostList from './HostList';
 import './style.css';
 import DefaultSelect from './DefaultSelect';
 import OptionToggle from './OptionToggle';
 import TransferList from './TransferList';
 import SourceSelect from '../SourceSelect';
+import CustomizeTheme from './CustomizeTheme';
 
 const Options = () => {
     const {
@@ -23,7 +24,6 @@ const Options = () => {
         translateHostList,
         historyBlackListMode,
         historyHostList,
-        darkMode,
         showButtonAfterSelect,
         defaultAudioSource,
         translateWithKeyPress,
@@ -33,10 +33,10 @@ const Options = () => {
         multipleTranslateFrom,
         multipleTranslateTo,
         enablePdfViewer,
-        preferredLanguage
+        preferredLanguage,
+        styleVarsList,
+        styleVarsIndex
     } = useOptions(Object.keys(defaultOptions));
-
-    useEffect(() => { document.body.className = `${darkMode ? 'dark' : 'light'}`; }, [darkMode]);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
 
@@ -45,11 +45,11 @@ const Options = () => {
             <h2>{getI18nMessage('optionsTitle')}</h2>
             <h3>{getI18nMessage('optionsTheme')}</h3>
             <div className='opt-item'>
-                <OptionToggle
-                    id='dark-mode-checkbox'
-                    message='optionsDarkMode'
-                    checked={darkMode}
-                    onClick={() => updateStorage('darkMode', !darkMode)}
+                <CustomizeTheme
+                    styleVarsList={styleVarsList}
+                    styleVarsIndex={styleVarsIndex}
+                    updateStyleVarsList={list => updateStorage('styleVarsList', list)}
+                    updateStyleVarsIndex={index => updateStorage('styleVarsIndex', index)}
                 />
             </div>
             <h3>URL</h3>

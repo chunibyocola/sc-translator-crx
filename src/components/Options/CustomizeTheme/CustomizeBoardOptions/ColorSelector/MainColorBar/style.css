@@ -1,0 +1,18 @@
+.color-selector-bar {
+    margin: 0 15px;
+    border-radius: 3px;
+    position: relative;
+    height: 256px;
+    width: 20px;
+    background: linear-gradient(to bottom,rgb(255,0,0),rgb(255,0,255),rgb(0,0,255),rgb(0,255,255),rgb(0,255,0),rgb(255,255,0),rgb(255,0,0));
+}
+.color-selector-bar-pointer {
+    pointer-events: none;
+    left: -2px;
+    top: -2px;
+    height: 1px;
+    width: 100%;
+    position: absolute;
+    border-radius: 3px;
+    border: 2px solid #000;
+}
