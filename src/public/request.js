@@ -77,6 +77,10 @@ const bingSwitchLangCode = (code) => {
 	switch (code) {
 		case 'zh-CN': return 'zh-Hans';
 		case 'zh-TW': return 'zh-Hant';
+		case 'tl': return 'fil';
+		case 'iw': return 'he';
+		case 'hmn': return 'mww';
+		case 'sr': return 'sr-Cyrl';
 		default: return code;
 	}
 };

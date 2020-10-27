@@ -1,7 +1,5 @@
 import {
-    GOOGLE_CN,
     GOOGLE_COM,
-    BING_CN,
     BING_COM,
     MOJIDICT_COM,
     BAIDU_COM
@@ -42,9 +40,7 @@ export const baiduLangCode = {
 };
 
 export const langCode = {
-    [GOOGLE_CN]: googleLangCode,
     [GOOGLE_COM]: googleLangCode,
-    [BING_CN]: bingLangCode,
     [BING_COM]: bingLangCode,
     [MOJIDICT_COM]: mojidictLangCode,
     [BAIDU_COM]: baiduLangCode
