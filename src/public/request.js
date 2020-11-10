@@ -5,8 +5,8 @@ import {
 	BAIDU_COM,
 	audioSource
 } from '../constants/translateSource';
-import google from 'google-translate-result';
-import bing from 'bing-translate-result';
+import google from '../public/translate/google';
+import bing from '../public/translate/bing';
 import mojidict from '../public/translate/mojidict';
 import baidu from '../public/translate/baidu';
 
