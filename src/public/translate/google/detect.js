@@ -1,14 +1,13 @@
-import getTk from './getTk';
 import { getQueryString, fetchData, getError } from '../utils';
 import { RESULT_ERROR } from '../error-codes';
 
-export const detect = async ({ text, com = true }) => {
-    let url = `https://translate.google.${com ? 'com' : 'cn'}/translate_a/single`;
+export const detect = async ({ text }) => {
+    let url = `https://translate.googleapis.com/translate_a/single`;
 
     let params = {
-        client: 'webapp',
+        client: 'gtx',
         sl: 'auto',
-        tk: await getTk(text, com),
+        dj: 1,
         q: encodeURIComponent(text)
     };
 
@@ -19,7 +18,7 @@ export const detect = async ({ text, com = true }) => {
     try {
         const data = await res.json();
 
-        const langCode = data[2];
+        const langCode = data.src;
 
         return langCode;
     } catch (err) {

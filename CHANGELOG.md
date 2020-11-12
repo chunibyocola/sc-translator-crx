@@ -1,3 +1,5 @@
+# 2.2.1
+- Fixed "google translate invalid".
 # 2.2.0
 - Add "Customize theme".
 - Fixed "Enable PDF viewer can not work in incognito mode".
