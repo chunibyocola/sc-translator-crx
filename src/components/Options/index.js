@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import defaultOptions from '../../constants/defaultOptions';
 import { audioSource, translateSource } from '../../constants/translateSource';
 import { userLangs, langCode, mtLangCode, preferredLangCode } from '../../constants/langCode';
-import { setLocalStorage, getI18nMessage } from '../../public/chrome-call';
+import { setLocalStorage, getI18nMessage, getAllCommands, createNewTab } from '../../public/chrome-call';
 import { useOptions } from '../../public/react-use';
 import HostList from './HostList';
 import './style.css';
@@ -11,8 +11,11 @@ import OptionToggle from './OptionToggle';
 import TransferList from './TransferList';
 import SourceSelect from '../SourceSelect';
 import CustomizeTheme from './CustomizeTheme';
+import { SC_CALL_OUT, SC_TRANSLATE, SC_AUDIO, EXECUTE_BROWSER_ACTION } from '../../constants/commandsName';
 
 const Options = () => {
+    const [commands, setCommands] = useState({});
+
     const {
         userLanguage,
         enableContextMenus,
@@ -39,6 +42,12 @@ const Options = () => {
     } = useOptions(Object.keys(defaultOptions));
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
+
+    useEffect(() => {
+        getAllCommands((commands) => {
+            setCommands(commands.reduce((t, v) => ({ ...t, [v.name]: v.shortcut }), {}));
+        });
+    }, []);
 
     return (
         <div className='options'>
@@ -230,17 +239,26 @@ const Options = () => {
             </div>
             <h3>{getI18nMessage('optionsKeyboardShortcut')}</h3>
             <div className='opt-item'>
+                {getI18nMessage('extActivateExtensionDescription')}
+                <span className='keyboard-shortcut'>{commands[EXECUTE_BROWSER_ACTION] ?? ''}</span>
+            </div>
+            <div className='opt-item'>
                 {getI18nMessage('extTranslateCommandDescription')}
-                <span className='keyboard-shortcut'>ALT + Z</span>
+                <span className='keyboard-shortcut'>{commands[SC_TRANSLATE] ?? ''}</span>
             </div>
             <div className='opt-item'>
                 {getI18nMessage('extListenCommandDescription')}
-                <span className='keyboard-shortcut'>ALT + X</span>
+                <span className='keyboard-shortcut'>{commands[SC_AUDIO] ?? ''}</span>
             </div>
             <div className='opt-item'>
                 {getI18nMessage('extCallOutCommandDescription')}
-                <span className='keyboard-shortcut'>ALT + C</span>
+                <span className='keyboard-shortcut'>{commands[SC_CALL_OUT] ?? ''}</span>
                 <div className='item-description'>{getI18nMessage('optionsCallOutCommandDescription')}</div>
+            </div>
+            <div className='opt-item item-description'>
+                <a href='#' onClick={() => createNewTab('chrome://extensions/shortcuts')}>
+                    {getI18nMessage('optionsCustomizeHere')}
+                </a>
             </div>
             <h3>{getI18nMessage('optionsMoreFeaturesOrBugReports')}</h3>
             <div className='opt-item'>

@@ -39,3 +39,11 @@ export const sendMessageToTab = (tabId, msg, cb = undefined) => {
 export const getI18nMessage = (messageName) => {
     return chrome.i18n.getMessage(messageName);
 };
+
+export const getAllCommands = (cb) => {
+    chrome.commands.getAll(cb);
+};
+
+export const createNewTab = (url) => {
+    chrome.tabs.create({ url });
+};

@@ -5,6 +5,9 @@
     "extDescription": {
         "message": "A simple but powerful translate extension. Base on Google translate and Bing translate."
     },
+    "extActivateExtensionDescription": {
+        "message": "Activate the extension"
+    },
     "extTranslateCommandDescription": {
         "message": "Translate the text you select"
     },
@@ -115,6 +118,9 @@
     },
     "optionsCallOutCommandDescription": {
         "message": "You can call out extension in web page when the extension is enabled in web page with this keyboard shortcut. When you click this keyboard shortcut with the extension called out, it focuses on the text box."
+    },
+    "optionsCustomizeHere": {
+        "message": "Customize here"
     },
     "contentInputHere": {
         "message": "Input here"

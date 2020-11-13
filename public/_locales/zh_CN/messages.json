@@ -5,6 +5,9 @@
     "extDescription": {
         "message": "一个简单但强大的翻译扩展。基于 Google 翻译和 Bing 翻译。"
     },
+    "extActivateExtensionDescription": {
+        "message": "激活扩展"
+    },
     "extTranslateCommandDescription": {
         "message": "翻译您选择的文本"
     },
@@ -115,6 +118,9 @@
     },
     "optionsCallOutCommandDescription": {
         "message": "当扩展在网页中启用时，点击此快捷键可以直接唤出扩展。当在已唤出扩展的状态下点击此快捷键时，将会聚焦文本框。"
+    },
+    "optionsCustomizeHere": {
+        "message": "在此自定义"
     },
     "contentInputHere": {
         "message": "在此输入"

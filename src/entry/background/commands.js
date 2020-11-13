@@ -5,10 +5,7 @@ import {
     SCTS_AUDIO_COMMAND_KEY_PRESSED,
     SCTS_CALL_OUT_COMMAND_KEY_PRESSED
 } from '../../constants/chromeSendMessageTypes';
-
-const SC_TRANSLATE = 'sc-translate';
-const SC_AUDIO = 'sc-audio';
-const SC_CALL_OUT = 'sc-call-out';
+import { SC_AUDIO, SC_TRANSLATE, SC_CALL_OUT } from '../../constants/commandsName';
 
 chrome.commands.onCommand.addListener((cmd) => {
     switch (cmd) {

@@ -5,6 +5,9 @@
     "extDescription": {
         "message": "シンプルだが強力な翻訳拡張機能。 Google 翻訳と Bing 翻訳に基づいています。"
     },
+    "extActivateExtensionDescription": {
+        "message": "拡張機能のアクティブ化"
+    },
     "extTranslateCommandDescription": {
         "message": "選択したテキストを翻訳する"
     },
@@ -115,6 +118,9 @@
     },
     "optionsCallOutCommandDescription": {
         "message": "このキーボードショートカットでは、ウェブページで拡張機能を有効にしている場合に、ウェブページ内の拡張機能を呼び出すことができます。拡張機能をもう呼び出した状態でこのキーボードショートカットをクリックすると、テキストボックスにフォーカスします。"
+    },
+    "optionsCustomizeHere": {
+        "message": "ここでカスタマイズ"
     },
     "contentInputHere": {
         "message": "ここに入力"

@@ -5,6 +5,9 @@
     "extDescription": {
         "message": "一個簡單但強大的翻譯擴充功能。基於 Google 翻譯和 Bing 翻譯。"
     },
+    "extActivateExtensionDescription": {
+        "message": "啟用擴充功能"
+    },
     "extTranslateCommandDescription": {
         "message": "翻譯您選擇的文字"
     },
@@ -115,6 +118,9 @@
     },
     "optionsCallOutCommandDescription": {
         "message": "當擴充功能在網頁中啟用時，點擊此快捷鍵可以直接喚出擴充功能。當在已喚出擴充功能的狀態下點擊此快捷鍵時，將會聚焦文本框。"
+    },
+    "optionsCustomizeHere": {
+        "message": "在此自定義"
     },
     "contentInputHere": {
         "message": "在此輸入"
