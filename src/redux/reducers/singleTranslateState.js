@@ -40,6 +40,8 @@ const singleTranslateState = (state = initState, { type, payload }) => {
             return { ...state, history: state.history.filter((v, i) => (i !== payload.historyIndex)) };
         case types.ST_RETRY:
             return { ...state, status: { requesting: false, requestEnd: false, error: false } };
+        case types.ST_SET_SOURCE_FROM_TO:
+            return { ...state, status: { requesting: false, requestEnd: false, error: false }, source: payload.source, from: payload.from, to: payload.to, translateId: state.translateId + 1 };
         default: return state;
     }
 };

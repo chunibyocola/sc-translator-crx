@@ -62,3 +62,8 @@ export const stRemoveHistory = ({ historyIndex }) => ({
 export const stRetry = () => ({
     type: types.ST_RETRY
 });
+
+export const stSetSourceFromTo = ({ source, from, to }) => ({
+    type: types.ST_SET_SOURCE_FROM_TO,
+    payload: { source, from, to }
+});

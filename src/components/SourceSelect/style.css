@@ -24,6 +24,7 @@
     width: inherit;
     overflow-y: auto;
     max-height: 300px;
+    left: 0px;
 }
 .ts-source-select-value {
     box-sizing: border-box;

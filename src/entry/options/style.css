@@ -14,6 +14,10 @@ h2 {
 a:hover, a:active {
   box-shadow: none;
 }
+a:hover {
+  cursor: pointer;
+}
 a {
   color: var(--text-normal);
+  text-decoration: underline;
 }

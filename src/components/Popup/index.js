@@ -7,8 +7,9 @@ import TsResult from '../TsResult';
 import './style.css';
 import PopupHeader from '../PopupHeader';
 import { langCode } from '../../constants/langCode';
-import { stRequestFinish, stRequestStart, stRequestError, stSetSource, stSetFromAndTo, stSetText, stRetry } from '../../redux/actions/singleTranslateActions';
+import { stRequestFinish, stRequestStart, stRequestError, stSetFromAndTo, stSetText, stRetry, stSetSourceFromTo } from '../../redux/actions/singleTranslateActions';
 import TsVia from '../TsVia';
+import { switchTranslateSource } from '../../public/switch-translate-source';
 
 const Popup = () => {
     const { status, result, source, from, to, text, translateId } = useSelector(state => state.singleTranslateState);
@@ -38,9 +39,9 @@ const Popup = () => {
         sendAudio(text, { source, from });
     }, []);
 
-    const handleSourceChange = useCallback((source) => {
-        dispatch(stSetSource({ source }));
-    }, [dispatch]);
+    const handleSourceChange = useCallback((targetSource) => {
+        dispatch(stSetSourceFromTo(switchTranslateSource(targetSource, { source, from, to })));
+    }, [dispatch, source, from, to]);
 
     const handleSelectionChange = useCallback((from, to) => {
         dispatch(stSetFromAndTo({ from, to }));

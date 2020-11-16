@@ -13,13 +13,15 @@ import { drag, calculatePosition } from '../../public/utils';
 import {
     stRequestStart,
     stAddHistory,
-    stSetSource,
     stSetFromAndTo,
     stSetText,
     stRequestFinish,
-    stRequestError, stRetry
+    stRequestError,
+    stRetry,
+    stSetSourceFromTo
 } from '../../redux/actions/singleTranslateActions';
 import TsVia from '../TsVia';
+import { switchTranslateSource } from '../../public/switch-translate-source';
 
 const initPos = { x: 0, y: 0 };
 
@@ -97,9 +99,9 @@ const ResultBox = () => {
 
     }, [dispatch, text, source, from, to, handleGetHistory, handlePosChange]);
 
-    const handleSourceChange = useCallback((source) => {
-        dispatch(stSetSource({ source }));
-    }, [dispatch]);
+    const handleSourceChange = useCallback((targetSource) => {
+        dispatch(stSetSourceFromTo(switchTranslateSource(targetSource, { source, from, to })));
+    }, [dispatch, source, from, to]);
 
     const handleSelectionChange = useCallback((from, to) => {
         dispatch(stSetFromAndTo({ from, to }));

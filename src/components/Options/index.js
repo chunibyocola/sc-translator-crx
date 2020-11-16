@@ -12,6 +12,7 @@ import TransferList from './TransferList';
 import SourceSelect from '../SourceSelect';
 import CustomizeTheme from './CustomizeTheme';
 import { SC_CALL_OUT, SC_TRANSLATE, SC_AUDIO, EXECUTE_BROWSER_ACTION } from '../../constants/commandsName';
+import { switchTranslateSource } from '../../public/switch-translate-source';
 
 const Options = () => {
     const [commands, setCommands] = useState({});
@@ -181,9 +182,14 @@ const Options = () => {
                                 sourceList={translateSource}
                                 source={defaultTranslateSource}
                                 onChange={value => {
-                                    updateStorage('defaultTranslateSource', value);
-                                    updateStorage('defaultTranslateFrom', '');
-                                    updateStorage('defaultTranslateTo', '');
+                                    const { source, from, to } = switchTranslateSource(value, {
+                                        source: defaultTranslateSource,
+                                        from: defaultTranslateFrom,
+                                        to: defaultTranslateTo
+                                    });
+                                    updateStorage('defaultTranslateSource', source);
+                                    updateStorage('defaultTranslateFrom', from);
+                                    updateStorage('defaultTranslateTo', to);
                                 }}
                             />
                         </div>
@@ -256,7 +262,7 @@ const Options = () => {
                 <div className='item-description'>{getI18nMessage('optionsCallOutCommandDescription')}</div>
             </div>
             <div className='opt-item item-description'>
-                <a href='#' onClick={() => createNewTab('chrome://extensions/shortcuts')}>
+                <a onClick={() => createNewTab('chrome://extensions/shortcuts')}>
                     {getI18nMessage('optionsCustomizeHere')}
                 </a>
             </div>
