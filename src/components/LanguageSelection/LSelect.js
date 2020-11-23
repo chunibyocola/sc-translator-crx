@@ -24,7 +24,6 @@ const LSelect = ({ isFrom, onChange, disableSelect, from, to, options }) => {
 
     return (
         <div className='ts-select-box'>
-            <label className='ts-fromAndTo'>{isFrom? 'from': 'to'}</label>
             <select
                 value={isFrom ? from : to}
                 className='ts-lselect'

@@ -7,10 +7,14 @@
     left: 0px;
     width: 250px;
     background-color: var(--bg-total);
+    box-shadow: rgba(0, 0, 0, 0.8) 0px 0px 10px 0px;
 }
 .ts-mt-content {
-    width: 246px;
-    margin: 2px auto;
+    width: 242px;
+    margin: 0 auto 4px;
+}
+.ts-mt-results {
+    width: 100%;
     max-height: 250px;
     overflow-y: auto;
 }
@@ -18,8 +22,6 @@
     cursor: move;
     user-select: none;
     width: 100%;
-    color: var(--text-title);
-    background-color: var(--bg-title);
     padding: 5px;
     box-sizing: border-box;
     overflow: hidden;
@@ -35,6 +37,8 @@
     white-space: nowrap;
     max-width: 100px;
     overflow: hidden;
+    font-weight: bold;
+    color: var(--text-icon);
 }
 .ts-mt-header-icons {
     float: right;

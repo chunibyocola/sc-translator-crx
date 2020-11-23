@@ -4,14 +4,12 @@ import ColorSelector from './ColorSelector';
 import './style.css';
 
 const initChanging = { targetColor: '', saved: false, offsetColor: '' };
-const textKeyList = ['--text-normal', '--text-title', '--text-icon'];
-const bgKeyList = ['--bg-content', '--bg-title', '--bg-total', '--bg-item-hover', '--bg-select-focus'];
+const textKeyList = ['--text-normal', '--text-icon'];
+const bgKeyList = ['--bg-content', '--bg-total', '--bg-item-hover', '--bg-select-focus'];
 const i18nMessage = {
     '--text-normal': 'Normal',
-    '--text-title': 'Title',
     '--text-icon': 'Icon',
     '--bg-content': 'Content',
-    '--bg-title': 'Title',
     '--bg-total': 'Total',
     '--bg-item-hover': 'Item hover',
     '--bg-select-focus': 'Select focus'

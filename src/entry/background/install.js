@@ -1,6 +1,7 @@
 import { LANG_ZH_CN, LANG_JA, preferredLangCode } from '../../constants/langCode';
 import defaultOptions from '../../constants/defaultOptions';
 import { getLocalStorage } from '../../public/chrome-call';
+import { defaultStyleVars } from '../../constants/defaultStyleVars';
 
 /* global chrome */
 
@@ -27,6 +28,10 @@ const initStorageOnInstalled = (userLang, update) => {
             data.useDotCn = true;
             data.defaultTranslateSource = sourceSwitch(data.defaultTranslateSource);
             data.defaultAudioSource = sourceSwitch(data.defaultAudioSource);
+        }
+
+        if (data.styleVarsList?.[0]?.styleVars) {
+            (data.styleVarsList[0].styleVars = defaultStyleVars);
         }
 
         chrome.storage.local.set({ ...defaultSet, ...data });

@@ -8,14 +8,11 @@
     color: var(--text-normal) !important;
 }
 .content {
-    margin: 0 auto;
-    height: fit-content;
-    width: 240px;
-    color: var(--text-normal);
-}
-.ts-mt-content {
-    width: 246px;
     margin: 2px auto;
+    width: 242px;
+}
+.ts-mt-results {
+    width: 100%;
     max-height: 250px;
     overflow-y: auto;
 }

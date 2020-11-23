@@ -138,7 +138,7 @@ const ResultBox = () => {
                 className='ts-rb-head'
                 onMouseDown={(e) => drag(e, pinPos, changePinPos, handlePosChange)}
             >
-                <div className='tsrbh-title'>{getI18nMessage('contentResult')}</div>
+                <div className='tsrbh-title'>Sc</div>
                 <span 
                     className='tsrbh-icons'
                 >
@@ -158,7 +158,7 @@ const ResultBox = () => {
                 </span>
             </div>
             <div className='ts-rb-content'>
-                <div className={`tsrbc-rtandls ${showRtAndLs && !resultFromHistory ? 'tsrbc-rtandls-show' : ''}`}>
+                <div style={{display: (showRtAndLs && !resultFromHistory) ? 'block' : 'none'}}>
                     <RawText
                         defaultValue={text}
                         rawTextTranslate={handleRawTextChange}

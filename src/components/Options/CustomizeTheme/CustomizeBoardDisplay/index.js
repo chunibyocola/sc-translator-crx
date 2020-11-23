@@ -29,24 +29,22 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                 <div
                     class="ts-rb-head"
                     style={{
-                        color: styleVars['--text-title'],
-                        background: styleVars['--bg-title']
+                        color: styleVars['--text-icon']
                     }}
                 >
-                    <div class="tsrbh-title">Result</div>
+                    <div class="tsrbh-title">Sc</div>
                     <span class="tsrbh-icons">
                         <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(180deg)', opacity: '1', color: styleVars['--text-icon']}} />
                         <IconFont iconName='#icon-GoPin' style={{color: styleVars['--text-icon']}} />
                     </span>
                 </div>
                 <div class="ts-rb-content">
-                    <div class="tsrbc-rtandls tsrbc-rtandls-show">
+                    <div style={{color: styleVars['--text-normal']}}>
                         <div class="ts-raw-text">
                             <textarea placeholder="Input here" class="ts-rt-text">welcome</textarea>
                         </div>
                         <div class="ts-language-selection">
                             <div class="ts-select-box">
-                                <label class="ts-fromAndTo">from</label>
                                 <select class="ts-lselect" disabled style={{color: styleVars['--text-normal'], opacity: '1'}}>
                                     <option value="">自动选择</option>
                                 </select>
@@ -55,7 +53,6 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                                 <IconFont iconName='#icon-MdSwap' />
                             </span>
                             <div class="ts-select-box">
-                                <label class="ts-fromAndTo">to</label>
                                 <select class="ts-lselect" disabled style={{color: styleVars['--text-normal'], opacity: '1', background: styleVars['--bg-select-focus']}}>
                                     <option value="">自动选择</option>
                                 </select>
@@ -98,11 +95,10 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                 <div
                     class="title"
                     style={{
-                        color: styleVars['--text-title'],
-                        background: styleVars['--bg-title']
+                        color: styleVars['--text-icon']
                     }}
                 >
-                    <div class="title-logo">ScTranslator</div>
+                    <div class="title-logo">Sc</div>
                     <div class="title-icons">
                         <IconFont iconName='#icon-theme' className='title-icons-enable' style={{color: styleVars['--text-icon']}} />
                         <IconFont iconName='#icon-MdTranslate' className='title-icons-enable' style={{color: styleVars['--text-icon']}} />
@@ -116,7 +112,6 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                     </div>
                     <div class="ts-language-selection">
                         <div class="ts-select-box">
-                            <label class="ts-fromAndTo">from</label>
                             <select class="ts-lselect" disabled style={{color: styleVars['--text-normal'], opacity: '1', background: styleVars['--bg-select-focus']}}>
                                 <option value="">自动选择</option>
                             </select>
@@ -125,56 +120,55 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                             <IconFont iconName='#icon-MdSwap' />
                         </span>
                         <div class="ts-select-box">
-                            <label class="ts-fromAndTo">to</label>
                             <select class="ts-lselect" disabled style={{color: styleVars['--text-normal'], opacity: '1'}}>
                                 <option value="ja">日语</option>
                             </select>
                         </div>
                     </div>
-                </div>
-                <div class="ts-mt-content ts-scrollbar">
-                    <div class="ts-mt-result" style={{background: styleVars['--bg-content']}}>
-                        <div class="ts-mt-result-head ts-button" style={{color: styleVars['--text-normal']}}>
-                            <span class="ts-mt-result-head-source">
-                                <SourceFavicon source='google.com' />
-                                <IconFont iconName='#icon-GoUnmute' style={{marginLeft: '5px'}} />
-                            </span>
-                            <span class="ts-mt-result-head-icons">
-                                <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(180deg)'}} />
-                                <IconFont iconName='#icon-GoX' />
-                            </span>
-                        </div>
-                        <div class="ts-mt-result-result">
-                            <div style={{marginBottom: '10px'}}>[ˈwelkəm]</div>
-                            <div>
-                                <span style={{marginRight: '5px'}}>ようこそ</span>
-                                <IconFont iconName='#icon-GoUnmute' />
+                    <div class="ts-mt-results ts-scrollbar">
+                        <div class="ts-mt-result" style={{background: styleVars['--bg-content']}}>
+                            <div class="ts-mt-result-head ts-button" style={{color: styleVars['--text-normal']}}>
+                                <span class="ts-mt-result-head-source">
+                                    <SourceFavicon source='google.com' />
+                                    <IconFont iconName='#icon-GoUnmute' style={{marginLeft: '5px'}} />
+                                </span>
+                                <span class="ts-mt-result-head-icons">
+                                    <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(180deg)'}} />
+                                    <IconFont iconName='#icon-GoX' />
+                                </span>
                             </div>
-                            <div style={{marginTop: '10px'}}>名词: 歓迎, ウエルカム, 優待, 奉迎, 遠見, 接待</div>
-                            <div>动词: 歓迎する</div>
-                        </div>
-                    </div>
-                    <div class="ts-mt-result" style={{background: styleVars['--bg-content']}}>
-                        <div class="ts-mt-result-head ts-button" style={{color: styleVars['--text-normal']}}>
-                            <span class="ts-mt-result-head-source">
-                                <SourceFavicon source='bing.com' />
-                                <IconFont iconName='#icon-GoUnmute' style={{marginLeft: '5px'}} />
-                            </span>
-                            <span class="ts-mt-result-head-icons">
-                                <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(180deg)'}} />
-                                <IconFont iconName='#icon-GoX' />
-                            </span>
-                        </div>
-                        <div class="ts-mt-result-result">
-                            <div>
-                                <span style={{marginRight: '5px'}}>ようこそ</span>
-                                <IconFont iconName='#icon-GoUnmute' />
+                            <div class="ts-mt-result-result">
+                                <div style={{marginBottom: '10px'}}>[ˈwelkəm]</div>
+                                <div>
+                                    <span style={{marginRight: '5px'}}>ようこそ</span>
+                                    <IconFont iconName='#icon-GoUnmute' />
+                                </div>
+                                <div style={{marginTop: '10px'}}>名词: 歓迎, ウエルカム, 優待, 奉迎, 遠見, 接待</div>
+                                <div>动词: 歓迎する</div>
                             </div>
                         </div>
+                        <div class="ts-mt-result" style={{background: styleVars['--bg-content']}}>
+                            <div class="ts-mt-result-head ts-button" style={{color: styleVars['--text-normal']}}>
+                                <span class="ts-mt-result-head-source">
+                                    <SourceFavicon source='bing.com' />
+                                    <IconFont iconName='#icon-GoUnmute' style={{marginLeft: '5px'}} />
+                                </span>
+                                <span class="ts-mt-result-head-icons">
+                                    <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(180deg)'}} />
+                                    <IconFont iconName='#icon-GoX' />
+                                </span>
+                            </div>
+                            <div class="ts-mt-result-result">
+                                <div>
+                                    <span style={{marginRight: '5px'}}>ようこそ</span>
+                                    <IconFont iconName='#icon-GoUnmute' />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="ts-mt-add-source">
-                    <IconFont iconName='#icon-plus' />
+                    <div class="ts-mt-add-source">
+                        <IconFont iconName='#icon-plus' />
+                    </div>
                 </div>
             </div>
             {/* SourceSelector */}

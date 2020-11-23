@@ -59,7 +59,7 @@ const PopupHeader = () => {
 
     return (
         <div className="title">
-            <div className='title-logo'>{getI18nMessage('extName')}</div>
+            <div className='title-logo'>Sc</div>
             <div className='title-icons'>
                 <IconFont
                     iconName='#icon-theme'

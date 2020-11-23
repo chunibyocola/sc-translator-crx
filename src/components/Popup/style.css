@@ -5,10 +5,9 @@
   height: fit-content;
   background: var(--bg-total);
   padding-bottom: 2px;
+  color: var(--text-normal) !important;
 }
 .content {
-  margin: 0 auto;
-  height: fit-content;
-  width: 240px;
-  color: var(--text-normal);
+  margin: 4px;
+  width: 242px;
 }

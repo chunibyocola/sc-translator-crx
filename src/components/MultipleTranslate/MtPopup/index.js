@@ -57,25 +57,25 @@ const MtPopup = () => {
                     to={to}
                     options={mtLangCode}
                 />
+                <div className='ts-mt-results ts-scrollbar'>
+                    {translations.length === 0 ? 
+                        <div className='ts-mt-result-add-translate-source'>{getI18nMessage('sentenceAddTranslateSource')}</div> :
+                    translations.map(({ source, status, result }) => (
+                        <MtResult
+                            source={source}
+                            status={status}
+                            result={result}
+                            key={source}
+                            text={text}
+                            translate={() => handleTranslate(source)}
+                            remove={() => handleRemoveSource(source)}
+                            readText={(text, from) => sendAudio(text, { source, from })}
+                            retry={() => handleRetry(source)}
+                        />
+                    ))}
+                </div>
+                <MtAddSource translations={translations} />
             </div>
-            <div className='ts-mt-content ts-scrollbar'>
-                {translations.length === 0 ? 
-                    <div className='ts-mt-result-add-translate-source'>{getI18nMessage('sentenceAddTranslateSource')}</div> :
-                translations.map(({ source, status, result }) => (
-                    <MtResult
-                        source={source}
-                        status={status}
-                        result={result}
-                        key={source}
-                        text={text}
-                        translate={() => handleTranslate(source)}
-                        remove={() => handleRemoveSource(source)}
-                        readText={(text, from) => sendAudio(text, { source, from })}
-                        retry={() => handleRetry(source)}
-                    />
-                ))}
-            </div>
-            <MtAddSource translations={translations} />
         </div>
     );
 };

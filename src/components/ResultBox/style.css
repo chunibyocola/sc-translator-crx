@@ -7,30 +7,30 @@
     left: 0px;
     width: 250px;
     background-color: var(--bg-total);
+    box-shadow: rgba(0, 0, 0, 0.8) 0px 0px 10px 0px;
 }
 .ts-rb-head {
     cursor: move;
     user-select: none;
     width: 100%;
-    color: var(--text-title);
-    background-color: var(--bg-title);
+    color: var(--text-icon);
     padding: 5px;
     box-sizing: border-box;
     overflow: hidden;
 }
 .ts-rb-content {
-    width: 246px;
-    margin: 2px auto;
+    width: 242px;
+    margin: 0 auto 4px;
 }
 .tsrbc-rtandls {
     overflow: hidden;
-    height: 0px;
 }
 .tsrbc-rtandls-show {
     height: fit-content;
 }
 .tsrbh-title {
     float: left;
+    font-weight: bold;
 }
 .tsrbh-icons {
     float: right;
@@ -38,6 +38,5 @@
 }
 .tsrbh-icons .ts-iconfont {
     cursor: pointer;
-    color: var(--text-icon);
     opacity: 0.6;
 }

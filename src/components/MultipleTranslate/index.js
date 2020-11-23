@@ -96,7 +96,7 @@ const MultipleTranslate = () => {
                 onMouseDown={e => drag(e, pinPos, changePinPos, handlePosChange)}
             >
                 <span className='ts-mt-header-title'>
-                    <span>{getI18nMessage('contentResult')}</span>
+                    <span>Sc</span>
                 </span>
                 <span className='ts-mt-header-icons'>
                     <IconFont
@@ -113,37 +113,39 @@ const MultipleTranslate = () => {
                     />
                 </span>
             </div>
-            <div style={{display: showRtAndLs ? 'block' : 'none', width: '246px', margin: '0px auto'}}>
-                <RawText
-                    defaultValue={text}
-                    rawTextTranslate={handleRawTextChange}
-                    focusDependency={focusRawText}
-                />
-                <LanguageSelection
-                    selectionChange={handleSelectionChange}
-                    from={from}
-                    to={to}
-                    options={mtLangCode}
-                />
-            </div>
-            <div className='ts-mt-content ts-scrollbar'>
-                {translations.length === 0 ? 
-                    <div className='ts-mt-result-add-translate-source'>{getI18nMessage('sentenceAddTranslateSource')}</div> :
-                translations.map(({ source, status, result }) => (
-                    <MtResult
-                        source={source}
-                        status={status}
-                        result={result}
-                        key={source}
-                        text={text}
-                        translate={() => handleTranslate(source)}
-                        remove={() => handleRemoveSource(source)}
-                        readText={(text, from) => sendAudio(text, { source, from })}
-                        retry={() => handleRetry(source)}
+            <div className='ts-mt-content'>
+                <div style={{display: showRtAndLs ? 'block' : 'none'}}>
+                    <RawText
+                        defaultValue={text}
+                        rawTextTranslate={handleRawTextChange}
+                        focusDependency={focusRawText}
                     />
-                ))}
+                    <LanguageSelection
+                        selectionChange={handleSelectionChange}
+                        from={from}
+                        to={to}
+                        options={mtLangCode}
+                    />
+                </div>
+                <div className='ts-mt-results ts-scrollbar'>
+                    {translations.length === 0 ? 
+                        <div className='ts-mt-result-add-translate-source'>{getI18nMessage('sentenceAddTranslateSource')}</div> :
+                    translations.map(({ source, status, result }) => (
+                        <MtResult
+                            source={source}
+                            status={status}
+                            result={result}
+                            key={source}
+                            text={text}
+                            translate={() => handleTranslate(source)}
+                            remove={() => handleRemoveSource(source)}
+                            readText={(text, from) => sendAudio(text, { source, from })}
+                            retry={() => handleRetry(source)}
+                        />
+                    ))}
+                </div>
+                <MtAddSource translations={translations} />
             </div>
-            <MtAddSource translations={translations} />
         </div>
     );
 };

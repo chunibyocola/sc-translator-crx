@@ -53,9 +53,9 @@
     position: absolute;
     top: 0px;
     left: 0px;
-    color: var(--text-title);
+    color: var(--text-icon);
     width: 100%;
-    background: var(--bg-title);
+    background: var(--bg-total);
     padding: 10px 5px;
     min-height: 40px;
     box-sizing: border-box;

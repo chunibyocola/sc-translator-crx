@@ -1,11 +1,11 @@
 .title {
     position: relative;
-    background: var(--bg-title);
+    color: var(--text-icon);
     height: 30px;
     line-height: 30px;
-    color: var(--text-title);
 }
 .title-logo {
+    font-weight: bold;
     font-size: 16px;
     margin-left: 5px;
 }
