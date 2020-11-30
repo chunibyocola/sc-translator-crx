@@ -1,3 +1,7 @@
+# 2.3.0
+- Add "customize button's position".
+- Add "customize shortcuts".
+- Simplify the interface.
 # 2.2.1
 - Fixed "google translate invalid".
 # 2.2.0

@@ -147,3 +147,11 @@
 .opt-source-select .ts-source-select:hover::before {
     border-bottom-width: 2px;
 }
+.link-p {
+    cursor: pointer;
+    text-decoration: underline;
+    display: inline;
+}
+.link-p:hover,.link-p:focus {
+    text-decoration: none;
+}

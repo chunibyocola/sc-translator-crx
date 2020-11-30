@@ -268,9 +268,9 @@ const Options = () => {
                 <div className='item-description'>{getI18nMessage('optionsCallOutCommandDescription')}</div>
             </div>
             <div className='opt-item item-description'>
-                <a onClick={() => createNewTab('chrome://extensions/shortcuts')}>
+                <p onClick={() => createNewTab('chrome://extensions/shortcuts')} className='link-p'>
                     {getI18nMessage('optionsCustomizeHere')}
-                </a>
+                </p>
             </div>
             <h3>{getI18nMessage('optionsMoreFeaturesOrBugReports')}</h3>
             <div className='opt-item'>

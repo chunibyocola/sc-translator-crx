@@ -1,5 +1,5 @@
 # sc-translator-crx
-A simple translate extension for chrome.
+Focus on providing a great inline web translation experience.
 ## Translate API
 Based on [google-translate-result](https://github.com/chunibyocola/google-translate-result), [bing-translate-result](https://github.com/chunibyocola/bing-translate-result)
 ## Install
