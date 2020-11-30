@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { defaultStyleVars, darkStyleVars } from '../../../../constants/defaultStyleVars';
+import { getI18nMessage } from '../../../../public/chrome-call';
 import ColorSelector from './ColorSelector';
 import './style.css';
 
@@ -85,7 +86,7 @@ const CustomizeBoardOptions = ({ styleVars, themeName, updateCallback, finishCal
                 </div>))}
                 <div className='colors-save'>
                     <input ref={themeNameEle} type='text' defaultValue={themeName} />
-                    <button onClick={() => handleSaveBtnClick()}>Save</button>
+                    <button onClick={() => handleSaveBtnClick()}>{getI18nMessage('wordSave')}</button>
                 </div>
             </div>
             {changing.targetColor && <ColorSelector

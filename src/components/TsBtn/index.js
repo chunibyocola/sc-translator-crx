@@ -18,9 +18,31 @@ import IconFont from '../IconFont';
 import './style.css';
 import { sendAudio } from '../../public/send';
 import { stSetText } from '../../redux/actions/singleTranslateActions';
+import { getOptions } from '../../public/options';
 
 const initText = '';
 const initPos = { x: 5, y: 5 };
+const btnWidth = 24;
+const btnHeight = 24;
+
+const calculateBtnPos = ({ x, y }) => {
+    const { btnPosition } = getOptions();
+    let tmpX = x + btnPosition.x, tmpY = y + btnPosition.y;
+
+    const dH = document.documentElement.clientHeight;
+    const dW = document.documentElement.clientWidth;
+    const bL = tmpX;
+    const bT = tmpY;
+    const bB = bT + btnHeight;
+    const bR = bL + btnWidth;
+
+    if (bB > dH) tmpY = y - 5 - btnHeight;
+    if (bT < 0) tmpY = y + 5;
+    if (bR > dW) tmpX = x - 5 - btnWidth;
+    if (bL < 0) tmpX = x + 5;
+
+    return { x: tmpX, y: tmpY };
+};
 
 const TsBtn = ({ multipleTranslateMode }) => {
     const [showBtn, setShowBtn] = useState(false);
@@ -43,23 +65,10 @@ const TsBtn = ({ multipleTranslateMode }) => {
     }, [dispatch, multipleTranslateMode]);
 
     const handleSetPos = useCallback(({ x, y }) => {
-        x += 5;
-        y += 5;
+        const result = calculateBtnPos({ x, y });
 
-        const dH = document.documentElement.clientHeight;
-        const dW = document.documentElement.clientWidth;
-        const bW = btnEle.current.clientWidth;
-        const bH = btnEle.current.clientHeight;
-        const bL = x;
-        const bT = y;
-        const bB = bT + bH;
-        const bR = bL + bW;
-
-        if (bB > dH) y = y - 10 - bH;
-        if (bR > dW) x = x - 10 - bW;
-
-        posRef.current = { x, y };
-        setPos({ x, y });
+        posRef.current = result;
+        setPos(result);
     }, []);
 
     const selectCb = useCallback(({ text, pos }) => {

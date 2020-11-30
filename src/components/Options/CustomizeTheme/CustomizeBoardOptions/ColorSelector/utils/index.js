@@ -1,10 +1,5 @@
 export const pointerDrag = (element, { maxX = 0, maxY = 0 }, mouseMoveCallback, mouseUpCallback) => {
-    const elementOffset = {
-        left: element.offsetLeft,
-        right: element.offsetWidth + element.offsetLeft,
-        top: element.offsetTop,
-        bottom: element.offsetTop + element.offsetHeight
-    };
+    const { left, top } = element.getBoundingClientRect();
 
     const calculate = (x, y) => {
         x = x >= 0 ? x <= maxX ? x : maxX : 0;
@@ -15,7 +10,7 @@ export const pointerDrag = (element, { maxX = 0, maxY = 0 }, mouseMoveCallback, 
     document.onselectstart = () => { return false; };
 
     document.onmousemove = (e) => {
-        mouseMoveCallback && mouseMoveCallback(calculate(e.clientX - elementOffset.left, e.clientY - elementOffset.top));
+        mouseMoveCallback && mouseMoveCallback(calculate(e.clientX - left, e.clientY - top));
     };
 
     document.onmouseup = (e) => {
@@ -23,7 +18,7 @@ export const pointerDrag = (element, { maxX = 0, maxY = 0 }, mouseMoveCallback, 
         document.onmouseup = null;
         document.onselectstart = () => { return true; };
 
-        mouseUpCallback && mouseUpCallback(calculate(e.clientX - elementOffset.left, e.clientY - elementOffset.top));
+        mouseUpCallback && mouseUpCallback(calculate(e.clientX - left, e.clientY - top));
     };
 };
 

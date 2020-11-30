@@ -24,7 +24,8 @@ const defaultOptions = {
     enablePdfViewer: false,
     preferredLanguage: LANG_EN,
     styleVarsList: styleVarsList,
-    styleVarsIndex: 0
+    styleVarsIndex: 0,
+    btnPosition: { x: 5, y: 5 }
 };
 
 export default defaultOptions;

@@ -122,6 +122,9 @@
     "optionsCustomizeHere": {
         "message": "ここでカスタマイズ"
     },
+    "optionsButtonsPosition": {
+        "message": "ボタンの位置"
+    },
     "contentInputHere": {
         "message": "ここに入力"
     },
@@ -172,6 +175,12 @@
     },
     "wordRetry": {
         "message": "再試行"
+    },
+    "wordSave": {
+        "message": "セーブ"
+    },
+    "wordCancel": {
+        "message": "キャンセル"
     },
     "sentenceAddTranslateSource": {
         "message": "翻訳ソースを追加してください。"

@@ -13,6 +13,7 @@ import SourceSelect from '../SourceSelect';
 import CustomizeTheme from './CustomizeTheme';
 import { SC_CALL_OUT, SC_TRANSLATE, SC_AUDIO, EXECUTE_BROWSER_ACTION } from '../../constants/commandsName';
 import { switchTranslateSource } from '../../public/switch-translate-source';
+import BtnPostion from './BtnPosition';
 
 const Options = () => {
     const [commands, setCommands] = useState({});
@@ -39,7 +40,8 @@ const Options = () => {
         enablePdfViewer,
         preferredLanguage,
         styleVarsList,
-        styleVarsIndex
+        styleVarsIndex,
+        btnPosition
     } = useOptions(Object.keys(defaultOptions));
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -122,6 +124,10 @@ const Options = () => {
                     checked={translateDirectly}
                     onClick={() => updateStorage('translateDirectly', !translateDirectly)}
                 />
+                <div className='child-mt10-ml30'>
+                    {getI18nMessage('optionsButtonsPosition')}
+                    <BtnPostion currentPos={btnPosition} updateBtnPostion={pos => updateStorage('btnPosition', pos)} />
+                </div>
             </div>
             <div className='opt-item'>
                 {getI18nMessage('optionsDefaultTranslateOptions')}

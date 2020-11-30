@@ -122,6 +122,9 @@
     "optionsCustomizeHere": {
         "message": "Customize here"
     },
+    "optionsButtonsPosition": {
+        "message": "Button's position"
+    },
     "contentInputHere": {
         "message": "Input here"
     },
@@ -172,6 +175,12 @@
     },
     "wordRetry": {
         "message": "Retry"
+    },
+    "wordSave": {
+        "message": "Save"
+    },
+    "wordCancel": {
+        "message": "Cancel"
     },
     "sentenceAddTranslateSource": {
         "message": "Please add a translate source."

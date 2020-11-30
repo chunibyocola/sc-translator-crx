@@ -122,6 +122,9 @@
     "optionsCustomizeHere": {
         "message": "在此自定義"
     },
+    "optionsButtonsPosition": {
+        "message": "按鈕的位置"
+    },
     "contentInputHere": {
         "message": "在此輸入"
     },
@@ -172,6 +175,12 @@
     },
     "wordRetry": {
         "message": "重試"
+    },
+    "wordSave": {
+        "message": "保存"
+    },
+    "wordCancel": {
+        "message": "取消"
     },
     "sentenceAddTranslateSource": {
         "message": "請添加翻譯源。"

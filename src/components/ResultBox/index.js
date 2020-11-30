@@ -5,7 +5,6 @@ import { sendTranslate, sendAudio } from '../../public/send';
 import TsResult from '../TsResult';
 import LanguageSelection from '../LanguageSelection';
 import RawText from '../RawText';
-import { getI18nMessage } from '../../public/chrome-call';
 import IconFont from '../IconFont';
 import './style.css';
 import { langCode } from '../../constants/langCode';

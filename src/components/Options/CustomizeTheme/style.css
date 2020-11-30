@@ -69,7 +69,7 @@
     left: 0px;
     right: 0px;
     bottom: 0px;
-    z-index: 100;
+    z-index: 10000;
     overflow-y: auto;
 }
 .customize-board-close {

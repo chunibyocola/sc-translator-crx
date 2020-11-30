@@ -1,0 +1,22 @@
+.btn-display {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+.btn-display-zone {
+    width: 30px;
+    height: 30px;
+    background: rgba(102, 102, 102, 0.5);
+}
+.btn-cursor-default {
+    position: absolute;
+    left: calc(50% - 5px);
+    top: calc(50% - 2px);
+    font-size: 22px !important;
+    z-index: 1000;
+}

@@ -123,6 +123,8 @@
     display: inline-block;
     vertical-align: bottom;
     border-bottom: 1px #999 solid;
+    width: 80px;
+    text-align: center;
 }
 .opt-source-select .ts-source-select {
     width: 150px;
