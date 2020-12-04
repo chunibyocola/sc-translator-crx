@@ -37,6 +37,9 @@
         "default": "Alt+C"
       },
       "description": "__MSG_extCallOutCommandDescription__"
+    },
+    "sc-open-separate-window": {
+      "description": "__MSG_extOpenSeparateWindowDescription__"
     }
   },
   "permissions": [

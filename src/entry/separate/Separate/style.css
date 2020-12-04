@@ -1,0 +1,18 @@
+.container {
+    transition: all 0.2s ease-in-out;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-total);
+    color: var(--text-normal) !important;
+}
+.content {
+    padding: 2px 4px;
+    background: var(--bg-total);
+}
+.ts-mt-results {
+    width: 100%;
+}
+.ts-mt-result-add-translate-source {
+    word-break: break-all;
+    padding: 10px;
+}

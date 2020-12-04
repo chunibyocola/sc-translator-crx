@@ -17,6 +17,9 @@
     "extCallOutCommandDescription": {
         "message": "在网页中唤出扩展"
     },
+    "extOpenSeparateWindowDescription": {
+        "message": "打开独立翻译窗口"
+    },
     "optionsTitle": {
         "message": "常规选项"
     },

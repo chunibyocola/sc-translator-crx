@@ -65,7 +65,7 @@
     height: 100%;
     width: 100%;
     box-sizing: border-box;
-    border-right: 1px solid rgb(221,221,221, 0.6);
+    border-right: 1px solid var(--bg-total);
 }
 .ts-history-norecord {
     margin: 20px;

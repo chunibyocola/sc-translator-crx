@@ -17,6 +17,9 @@
     "extCallOutCommandDescription": {
         "message": "Call out extension in web page"
     },
+    "extOpenSeparateWindowDescription": {
+        "message": "Open separate translate window"
+    },
     "optionsTitle": {
         "message": "Options"
     },

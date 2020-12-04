@@ -5,7 +5,8 @@ import {
     SCTS_AUDIO_COMMAND_KEY_PRESSED,
     SCTS_CALL_OUT_COMMAND_KEY_PRESSED
 } from '../../constants/chromeSendMessageTypes';
-import { SC_AUDIO, SC_TRANSLATE, SC_CALL_OUT } from '../../constants/commandsName';
+import { SC_AUDIO, SC_TRANSLATE, SC_CALL_OUT, SC_OPEN_SEPARATE_WINDOW } from '../../constants/commandsName';
+import { createSeparateWindow } from './separate-window';
 
 chrome.commands.onCommand.addListener((cmd) => {
     switch (cmd) {
@@ -17,6 +18,9 @@ chrome.commands.onCommand.addListener((cmd) => {
             break;
         case SC_CALL_OUT:
             getCurrentTab(tab => tab && chrome.tabs.sendMessage(tab.id, { type: SCTS_CALL_OUT_COMMAND_KEY_PRESSED }));
+            break;
+        case SC_OPEN_SEPARATE_WINDOW:
+            createSeparateWindow();
             break;
         default: break;
     }

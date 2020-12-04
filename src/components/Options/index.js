@@ -11,7 +11,7 @@ import OptionToggle from './OptionToggle';
 import TransferList from './TransferList';
 import SourceSelect from '../SourceSelect';
 import CustomizeTheme from './CustomizeTheme';
-import { SC_CALL_OUT, SC_TRANSLATE, SC_AUDIO, EXECUTE_BROWSER_ACTION } from '../../constants/commandsName';
+import { SC_CALL_OUT, SC_TRANSLATE, SC_AUDIO, EXECUTE_BROWSER_ACTION, SC_OPEN_SEPARATE_WINDOW } from '../../constants/commandsName';
 import { switchTranslateSource } from '../../public/switch-translate-source';
 import BtnPostion from './BtnPosition';
 
@@ -266,6 +266,10 @@ const Options = () => {
                 {getI18nMessage('extCallOutCommandDescription')}
                 <span className='keyboard-shortcut'>{commands[SC_CALL_OUT] ?? ''}</span>
                 <div className='item-description'>{getI18nMessage('optionsCallOutCommandDescription')}</div>
+            </div>
+            <div className='opt-item'>
+                {getI18nMessage('extOpenSeparateWindowDescription')}
+                <span className='keyboard-shortcut'>{commands[SC_OPEN_SEPARATE_WINDOW] ?? ''}</span>
             </div>
             <div className='opt-item item-description'>
                 <p onClick={() => createNewTab('chrome://extensions/shortcuts')} className='link-p'>

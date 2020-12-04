@@ -17,6 +17,9 @@
     "extCallOutCommandDescription": {
         "message": "ウェブページで拡張機能を呼び出す"
     },
+    "extOpenSeparateWindowDescription": {
+        "message": "スタンドアロン翻訳ウィンドウを開く"
+    },
     "optionsTitle": {
         "message": "オプション"
     },

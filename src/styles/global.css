@@ -1,26 +1,6 @@
 #sc-translator-root {
     font-size: 14px !important;
 }
-#sc-translator-root.light {
-    --text-normal: #666;
-    --text-title: #bbb;
-    --text-icon: #fff;
-    --bg-content: #fff;
-    --bg-title: #666;
-    --bg-total: #eee;
-    --bg-item-hover: rgb(221,221,221, 0.2);
-    --bg-select-focus: #ddd;
-}
-#sc-translator-root.dark {
-    --text-normal: hsla(0, 0%, 100%, 0.88);
-    --text-title: #bbb;
-    --text-icon: #fff;
-    --bg-content: #282c35;
-    --bg-title: #222;
-    --bg-total: #111;
-    --bg-item-hover: rgb(221,221,221, 0.2);
-    --bg-select-focus: #333;
-}
 .ts-button {
     cursor: pointer;
 }
