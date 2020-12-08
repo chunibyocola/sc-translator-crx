@@ -1,3 +1,5 @@
+# 2.4.1
+- Fixed "result box undraggable".
 # 2.4.0
 - Add "separate translate window".
 # 2.3.0
