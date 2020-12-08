@@ -1,3 +1,5 @@
+# 2.4.0
+- Add "separate translate window".
 # 2.3.0
 - Add "customize button's position".
 - Add "customize shortcuts".

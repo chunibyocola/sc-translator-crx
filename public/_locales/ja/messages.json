@@ -20,6 +20,9 @@
     "extOpenSeparateWindowDescription": {
         "message": "スタンドアロン翻訳ウィンドウを開く"
     },
+    "titleSeparateWindow": {
+        "message": "スタンドアロン翻訳ウィンドウ"
+    },
     "optionsTitle": {
         "message": "オプション"
     },

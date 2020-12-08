@@ -20,6 +20,9 @@
     "extOpenSeparateWindowDescription": {
         "message": "打開獨立翻譯視窗"
     },
+    "titleSeparateWindow": {
+        "message": "獨立翻譯視窗"
+    },
     "optionsTitle": {
         "message": "常規選項"
     },

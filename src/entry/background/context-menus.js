@@ -1,6 +1,7 @@
 import { listenOptionsChange } from '../../public/options';
 import { SCTS_CONTEXT_MENUS_CLICKED } from '../../constants/chromeSendMessageTypes';
 import { getI18nMessage, getLocalStorage } from '../../public/chrome-call';
+import { createSeparateWindow } from './separate-window';
 
 /* global chrome */
 
@@ -41,3 +42,13 @@ chrome.contextMenus.onClicked.addListener(({ selectionText }, tab) => {
 });
 
 getLocalStorage('enableContextMenus', options => options.enableContextMenus && createContextMenus());
+
+// open separate window
+chrome.contextMenus.create({
+    id: 'separate_window',
+    title: getI18nMessage('extOpenSeparateWindowDescription'),
+    contexts: ['browser_action'],
+    onclick: () => {
+        createSeparateWindow();
+    }
+});

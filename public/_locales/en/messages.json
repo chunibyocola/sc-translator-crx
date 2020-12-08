@@ -20,6 +20,9 @@
     "extOpenSeparateWindowDescription": {
         "message": "Open separate translate window"
     },
+    "titleSeparateWindow": {
+        "message": "Separate translate window"
+    },
     "optionsTitle": {
         "message": "Options"
     },

@@ -20,6 +20,9 @@
     "extOpenSeparateWindowDescription": {
         "message": "打开独立翻译窗口"
     },
+    "titleSeparateWindow": {
+        "message": "独立翻译窗口"
+    },
     "optionsTitle": {
         "message": "常规选项"
     },
