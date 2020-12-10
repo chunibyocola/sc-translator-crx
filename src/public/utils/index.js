@@ -46,22 +46,27 @@ export const drag = (element, currentPosition, mouseMoveCallback, mouseUpCallbac
     const tempY = currentPosition.y;
     let newX = tempX;
     let newY = tempY;
-    document.onselectstart = () => { return false; };
-    document.onmousemove = function (ev) {
-        const nowX = ev.clientX;
-        const nowY = ev.clientY;
+
+    const mouseMoveListener = (e) => {
+        const nowX = e.clientX;
+        const nowY = e.clientY;
         const diffX = originX - nowX;
         const diffY = originY - nowY;
         newX = tempX - diffX;
         newY = tempY - diffY;
         mouseMoveCallback({ x: newX, y: newY });
     };
-    document.onmouseup = function () {
-        document.onmousemove = null;
-        document.onmouseup = null;
+
+    const mouseUpListener = () => {
+        document.removeEventListener('mousemove', mouseMoveListener, true);
+        document.removeEventListener('mouseup', mouseUpListener, true);
         document.onselectstart = () => { return true; };
         mouseUpCallback({ x: newX, y: newY });
     };
+
+    document.onselectstart = () => { return false; };
+    document.addEventListener('mousemove', mouseMoveListener, true);
+    document.addEventListener('mouseup', mouseUpListener, true);
 };
 
 const resultBoxMargin = 5;
