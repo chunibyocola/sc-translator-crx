@@ -13,7 +13,10 @@ const createContextMenus = () => {
     chrome.contextMenus.create({
         id: 'sc-translator-context-menu',
         title: `${getI18nMessage('wordTranslate')} "%s"`,
-        contexts: ['selection']
+        contexts: ['selection'],
+        onclick: ({ selectionText }, tab) => {
+            tab && chrome.tabs.sendMessage(tab.id, { type: SCTS_CONTEXT_MENUS_CLICKED, payload: { selectionText } });
+        }
     });
 
     contextMenusCreated = true;
@@ -31,15 +34,6 @@ const onEnableContextMenusChange = (changes) => {
 };
 
 listenOptionsChange(['enableContextMenus'], onEnableContextMenusChange);
-
-chrome.contextMenus.onClicked.addListener(({ selectionText }, tab) => {
-    if (!tab) return;
-
-    chrome.tabs.sendMessage(
-        tab.id,
-        {type: SCTS_CONTEXT_MENUS_CLICKED, payload: { selectionText }}
-    );
-});
 
 getLocalStorage('enableContextMenus', options => options.enableContextMenus && createContextMenus());
 

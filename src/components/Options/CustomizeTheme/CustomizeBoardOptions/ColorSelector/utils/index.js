@@ -7,19 +7,20 @@ export const pointerDrag = (element, { maxX = 0, maxY = 0 }, mouseMoveCallback, 
         return { x, y };
     };
 
-    document.onselectstart = () => { return false; };
-
-    document.onmousemove = (e) => {
+    const mouseMoveListener = (e) => {
         mouseMoveCallback && mouseMoveCallback(calculate(e.clientX - left, e.clientY - top));
     };
 
-    document.onmouseup = (e) => {
-        document.onmousemove = null;
-        document.onmouseup = null;
+    const mouseUpListener = (e) => {
+        document.removeEventListener('mousemove', mouseMoveListener, true);
+        document.removeEventListener('mouseup', mouseUpListener, true);
         document.onselectstart = () => { return true; };
-
         mouseUpCallback && mouseUpCallback(calculate(e.clientX - left, e.clientY - top));
     };
+
+    document.onselectstart = () => { return false; };
+    document.addEventListener('mousemove', mouseMoveListener, true);
+    document.addEventListener('mouseup', mouseUpListener, true);
 };
 
 export const rgbToHex = (r, g, b) => {
