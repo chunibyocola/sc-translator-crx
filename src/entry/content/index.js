@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TsBtn from '../../components/TsBtn';
 import TsHistory from '../../components/TsHistory';
-import ResultBox from '../../components/ResultBox';
-import MultipleTranslate from '../../components/MultipleTranslate';
+import ResultBox from './ResultBox';
 
 import { Provider } from 'react-redux';
 import store from '../../redux/store';
@@ -30,7 +29,8 @@ const init = (options) => {
   ReactDOM.render(
     <Provider store={store}>
       <TsBtn multipleTranslateMode={options.multipleTranslateMode} />
-      {options.multipleTranslateMode ? <MultipleTranslate /> : <><TsHistory /><ResultBox /></>}
+      {!options.multipleTranslateMode  && <TsHistory />}
+      <ResultBox multipleTranslateMode={options.multipleTranslateMode} />
     </Provider>, 
     app
   );

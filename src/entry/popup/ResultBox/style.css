@@ -1,0 +1,13 @@
+.container {
+    transition: all 0.2s ease-in-out;
+    border-radius: 3px;
+    width: 250px;
+    height: fit-content;
+    background: var(--bg-total);
+    padding-bottom: 2px;
+    color: var(--text-normal) !important;
+}
+.content {
+    margin: 2px auto;
+    width: 242px;
+}

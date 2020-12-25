@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Options from '../../components/Options';
+import Options from './Options';
 import './style.css';
 import '../../styles/global.css';
 import { getI18nMessage } from '../../public/chrome-call';
