@@ -24,7 +24,7 @@ const HandleCommands = () => {
         switch (type) {
             case SCTS_CONTEXT_MENUS_CLICKED:
                 const { selectionText } = payload;
-                selectionText && dispatch(mtSetText({ text }));
+                selectionText && dispatch(mtSetText({ text: selectionText }));
                 break;
             case SCTS_TRANSLATE_COMMAND_KEY_PRESSED:
                 text = getSelectedText();
