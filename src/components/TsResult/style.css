@@ -4,7 +4,7 @@
     width: 100%;
     border-radius: 3px;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 10px 10px 0 10px;
     word-break: break-all;
     font-size: 14px;
     max-height: 200px;
@@ -33,13 +33,12 @@
     white-space: nowrap;
     max-width: 190px;
 }
-.tss-origin-text .ts-iconfont {
-    cursor: pointer;
-    vertical-align: middle;
-}
 .ts-retry {
     text-decoration: underline;
 }
 .ts-retry:hover {
     color: #999;
+}
+.ts-st-dividing-line {
+    margin-top: 10px;
 }

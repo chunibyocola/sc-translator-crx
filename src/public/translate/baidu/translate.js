@@ -58,7 +58,7 @@ export const translate = async ({ text, from = '', to = '', userLang = '' }) => 
         }
         else if (data?.dict_result?.simple_means?.symbols?.[0]) {
             const { ph_am, ph_en } = data.dict_result.simple_means.symbols[0];
-            phonetic = `${ph_en ? ('UK: ' + ph_en) : ''} ${ph_am ? ('US: ' + ph_am) : ''}`.trimLeft();
+            phonetic = `${ph_en ? ('UK: [' + ph_en + ']') : ''} ${ph_am ? ('US: [' + ph_am + ']') : ''}`.trimLeft();
         }
 
         const result = {

@@ -25,14 +25,8 @@
     margin-right: 5px;
 }
 .ts-mt-result-result {
-    border-top: 1px solid #ddd;
     padding: 10px 0px;
     height: fit-content;
-}
-.ts-mt-result-result-fold {
-    border-top: none;
-    padding: 0px;
-    height: 0px;
 }
 .ts-retry {
     text-decoration: underline;

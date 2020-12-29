@@ -24,6 +24,7 @@ const MtResult = ({ source, status, result, text, translate, remove, readText, r
                 <span className='ts-mt-result-head-source'>
                     <SourceFavicon source={source} />
                     {requestEnd && !error && <IconFont
+                        className='ts-iconbutton'
                         iconName='#icon-GoUnmute'
                         style={{marginLeft: '5px'}}
                         onClick={(e) => { e.stopPropagation(); readText(text, result.from); }}
@@ -33,16 +34,16 @@ const MtResult = ({ source, status, result, text, translate, remove, readText, r
                     <IconFont
                         iconName='#icon-GoChevronDown'
                         style={!fold ? {transform: 'rotate(180deg)'} : {}}
-                        className='ts-button'
                     />
                     <IconFont
                         iconName='#icon-GoX'
                         onClick={remove}
-                        className='ts-button'
+                        className='ts-iconbutton'
                     />
                 </span>
             </div>
-            <div className={`ts-mt-result-result${fold ? '-fold' : ''}`}>
+            <div className='ts-dividing-line' style={fold ? {display: 'none'} : {}}></div>
+            <div className='ts-mt-result-result' style={fold ? {display: 'none'} : {}}>
                 {requesting ?
                     getI18nMessage('wordRequesting') :
                 !requestEnd ?
@@ -51,15 +52,15 @@ const MtResult = ({ source, status, result, text, translate, remove, readText, r
                     <>{getI18nMessage(`errorCode_${errorCode}`)}<span className='ts-button ts-retry' onClick={retry}>{getI18nMessage('wordRetry')}</span></> :
                 <>
                     {result.phonetic && result.from === LANG_EN && <div style={{marginBottom: '10px'}}>
-                        {`[${result.phonetic}]`}
+                        {result.phonetic}
                     </div>}
                     <div>
                         <span style={{marginRight: '5px'}}>
                             {resultToString(result.result)}
                         </span>
                         <IconFont
+                            className='ts-iconbutton ts-button'
                             iconName='#icon-GoUnmute'
-                            style={{cursor: 'pointer'}}
                             onClick={() => readText(resultToString(result.result), result.to)}
                         />
                     </div>

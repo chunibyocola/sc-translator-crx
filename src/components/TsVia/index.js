@@ -9,7 +9,7 @@ const TsVia = ({ sourceChange, source, disableSourceChange }) => {
             className='ts-via'
         >
             <div className='ts-via-content'>
-                via
+                <span className='ts-via-pre'>via</span>
                 <SourceSelect
                     source={source}
                     sourceList={translateSource}

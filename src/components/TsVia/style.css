@@ -1,19 +1,20 @@
 .ts-via {
     position: relative;
     text-align: right;
-    color: #bbb;
     background: var(--bg-content);
 }
 .ts-via-content {
-    border-top: 1px solid #ddd;
+    font-size: 14px !important;
     margin: 0 10px;
     padding: 2px 0;
+}
+.ts-via-content .ts-via-pre {
+    opacity: 0.7;
 }
 .ts-via-select {
     border: none;
     outline: none;
     background: transparent;
-    color: var(--text-normal);
     margin-left: 10px;
     width: 150px;
 }

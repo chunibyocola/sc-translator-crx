@@ -36,7 +36,7 @@ export const translate = async ({ text, from = '', to = '', userLang = '', autoD
             to,
             result: data.sentences?.reduce((t, v) => (v.trans ? t.concat(v.trans) : t), []),
             dict: data.dict?.reduce((t, v) => (t.concat(v.pos + ': ' + v.terms.join(', '))), []),
-            phonetic: data.sentences?.[1]?.src_translit
+            phonetic: data.sentences?.[1]?.src_translit && `[${data.sentences[1].src_translit}]`
         };
 
         return result;

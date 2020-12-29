@@ -63,16 +63,17 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                     <div class="ts-result ts-scrollbar" style={{background: styleVars['--bg-content']}}>
                         <div class="tss-result">
                             <span>欢迎</span>
-                            <IconFont iconName='#icon-GoUnmute' />
+                            <IconFont iconName='#icon-GoUnmute' className='ts-iconbutton ts-button' />
                         </div>
                         <div>名词: 欢迎, 欢迎光临</div>
                         <div>动词: 欢迎, 迎, 迎接, 赞同, 赞成, 赞许, 揖, 迓, 赞, 接</div>
                         <div>形容词: 受欢迎, 爽快, 顗</div>
                         <div class="tss-origin-text">
                             <span class="tss-origin-raw">welcome</span>
-                            <IconFont iconName='#icon-GoUnmute' />
+                            <IconFont iconName='#icon-GoUnmute' className='ts-iconbutton ts-button' />
                         </div>
                         <div class="tss-phonetic">[ˈwelkəm]</div>
+                        <div className='ts-dividing-line ts-st-dividing-line'></div>
                     </div>
                     <div class="ts-via" style={{background: styleVars['--bg-content']}}>
                         <div class="ts-via-content">
@@ -131,18 +132,19 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                             <div class="ts-mt-result-head ts-button" style={{color: styleVars['--text-normal']}}>
                                 <span class="ts-mt-result-head-source">
                                     <SourceFavicon source='google.com' />
-                                    <IconFont iconName='#icon-GoUnmute' style={{marginLeft: '5px'}} />
+                                    <IconFont iconName='#icon-GoUnmute' style={{marginLeft: '5px'}} className='ts-iconbutton' />
                                 </span>
                                 <span class="ts-mt-result-head-icons">
                                     <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(180deg)'}} />
-                                    <IconFont iconName='#icon-GoX' />
+                                    <IconFont iconName='#icon-GoX' className='ts-iconbutton' />
                                 </span>
                             </div>
+                            <div className='ts-dividing-line'></div>
                             <div class="ts-mt-result-result">
                                 <div style={{marginBottom: '10px'}}>[ˈwelkəm]</div>
                                 <div>
                                     <span style={{marginRight: '5px'}}>ようこそ</span>
-                                    <IconFont iconName='#icon-GoUnmute' />
+                                    <IconFont iconName='#icon-GoUnmute' className='ts-iconbutton ts-button' />
                                 </div>
                                 <div style={{marginTop: '10px'}}>名词: 歓迎, ウエルカム, 優待, 奉迎, 遠見, 接待</div>
                                 <div>动词: 歓迎する</div>
@@ -152,17 +154,18 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                             <div class="ts-mt-result-head ts-button" style={{color: styleVars['--text-normal']}}>
                                 <span class="ts-mt-result-head-source">
                                     <SourceFavicon source='bing.com' />
-                                    <IconFont iconName='#icon-GoUnmute' style={{marginLeft: '5px'}} />
+                                    <IconFont iconName='#icon-GoUnmute' style={{marginLeft: '5px'}} className='ts-iconbutton' />
                                 </span>
                                 <span class="ts-mt-result-head-icons">
                                     <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(180deg)'}} />
-                                    <IconFont iconName='#icon-GoX' />
+                                    <IconFont iconName='#icon-GoX' className='ts-iconbutton' />
                                 </span>
                             </div>
+                            <div className='ts-dividing-line'></div>
                             <div class="ts-mt-result-result">
                                 <div>
                                     <span style={{marginRight: '5px'}}>ようこそ</span>
-                                    <IconFont iconName='#icon-GoUnmute' />
+                                    <IconFont iconName='#icon-GoUnmute' className='ts-iconbutton ts-button' />
                                 </div>
                             </div>
                         </div>

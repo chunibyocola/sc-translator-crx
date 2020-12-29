@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import IconFont from '../IconFont';
 import { getI18nMessage } from '../../public/chrome-call';
 import { LANG_EN } from '../../constants/langCode';
@@ -17,12 +17,13 @@ const TsResult = ({ resultObj, status, readText, source, retry }) => {
                 getI18nMessage('contentTranslateAfterInput'):
             error ?
                 <>{getI18nMessage(`errorCode_${errorCode}`)}<span className='ts-button ts-retry' onClick={retry}>{getI18nMessage('wordRetry')}</span></> :
-            <Fragment>
+            <>
                 <div className='tss-result'>
                     <span>
                         {resultToString(result)}
                     </span>
                     <IconFont
+                        className='ts-iconbutton ts-button'
                         iconName='#icon-GoUnmute'
                         onClick={() => readText(
                             resultToString(result),
@@ -34,6 +35,7 @@ const TsResult = ({ resultObj, status, readText, source, retry }) => {
                 <div className='tss-origin-text'>
                     <span className='tss-origin-raw'>{text}</span>
                     <IconFont
+                        className='ts-iconbutton ts-button'
                         iconName='#icon-GoUnmute'
                         onClick={() => readText(
                             text,
@@ -42,9 +44,10 @@ const TsResult = ({ resultObj, status, readText, source, retry }) => {
                     />
                 </div>
                 {phonetic && from === LANG_EN && <div className='tss-phonetic'>
-                    {`[${phonetic}]`}
+                    {phonetic}
                 </div>}
-            </Fragment>}
+            </>}
+            <div className='ts-dividing-line ts-st-dividing-line'></div>
         </div>
     )
 };
