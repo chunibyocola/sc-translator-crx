@@ -131,6 +131,15 @@
     "optionsButtonsPosition": {
         "message": "Button's position"
     },
+    "optionsVolume": {
+        "message": "Volume"
+    },
+    "optionsPlaybackRate": {
+        "message": "Playback rate"
+    },
+    "optionsPlayTestAudio": {
+        "message": "Play test audio"
+    },
     "contentInputHere": {
         "message": "Input here"
     },

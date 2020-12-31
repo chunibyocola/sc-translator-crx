@@ -131,6 +131,15 @@
     "optionsButtonsPosition": {
         "message": "按钮的位置"
     },
+    "optionsVolume": {
+        "message": "音量"
+    },
+    "optionsPlaybackRate": {
+        "message": "播放速率"
+    },
+    "optionsPlayTestAudio": {
+        "message": "播放测试音频"
+    },
     "contentInputHere": {
         "message": "在此输入"
     },

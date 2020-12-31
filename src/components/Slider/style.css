@@ -1,0 +1,66 @@
+.ts-slider {
+    position: relative;
+    cursor: pointer;
+    height: 4px;
+    padding: 15px 0;
+    width: 100%;
+    color: #1F88D6;
+    margin: 20px 0;
+}
+.ts-slider-rail {
+    opacity: 0.38;
+    height: 4px;
+    width: 100%;
+    position: absolute;
+    border-radius: 1px;
+    background: currentColor;
+    pointer-events: none;
+}
+.ts-slider-track {
+    height: 4px;
+    position: absolute;
+    border-radius: 1px;
+    background: currentColor;
+    pointer-events: none;
+}
+.ts-slider-pointer {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-left: -6px;
+    margin-top: -4px;
+    background: currentColor;
+    pointer-events: none;
+    z-index: 1;
+}
+.ts-slider-label {
+    position: absolute;
+    color: var(--text-normal);
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 14px;
+    top: -11px;
+    letter-spacing: 0.01071em;
+}
+.ts-slider-mark-label {
+    position: absolute;
+    color: var(--text-normal);
+    top: 24px;
+    font-size: 14px;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    letter-spacing: 0.01071em;
+}
+.ts-slider-mark {
+    width: 2px;
+    height: 4px;
+    position: absolute;
+    border-radius: 1px;
+    background: currentColor;
+    pointer-events: none;
+}
+.ts-slider-mark-active {
+    opacity: 0.8;
+    background: #fff;
+}

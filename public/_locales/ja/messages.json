@@ -131,6 +131,15 @@
     "optionsButtonsPosition": {
         "message": "ボタンの位置"
     },
+    "optionsVolume": {
+        "message": "音量"
+    },
+    "optionsPlaybackRate": {
+        "message": "再生速度"
+    },
+    "optionsPlayTestAudio": {
+        "message": "テストオーディオを再生する"
+    },
     "contentInputHere": {
         "message": "ここに入力"
     },

@@ -1,3 +1,6 @@
+import { getLocalStorage } from "../../public/chrome-call";
+import { listenOptionsChange } from "../../public/options";
+
 const audioPlayer = new Audio();
 let index = 0;
 let audioSrcList = [];
@@ -25,3 +28,12 @@ export const playAudio = (srcList) => {
     audioPlayer.src = srcList[0];
     audioPlayer.play();
 };
+
+getLocalStorage(['audioVolume', 'audioPlaybackRate'], (storage) => {
+    audioPlayer.volume = (storage.audioVolume ?? 100) / 100;
+    audioPlayer.defaultPlaybackRate = storage.audioPlaybackRate ?? 1;
+});
+listenOptionsChange(['audioVolume', 'audioPlaybackRate'], (changes) => {
+    'audioVolume' in changes && (audioPlayer.volume = (changes.audioVolume ?? 100) / 100);
+    'audioPlaybackRate' in changes && (audioPlayer.defaultPlaybackRate = changes.audioPlaybackRate ?? 1);
+});

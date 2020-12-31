@@ -25,6 +25,7 @@
     overflow-y: auto;
     max-height: 300px;
     left: 0px;
+    z-index: 999;
 }
 .ts-source-select-value {
     box-sizing: border-box;

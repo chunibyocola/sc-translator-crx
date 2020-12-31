@@ -25,7 +25,9 @@ const defaultOptions = {
     preferredLanguage: LANG_EN,
     styleVarsList: styleVarsList,
     styleVarsIndex: 0,
-    btnPosition: { x: 5, y: 5 }
+    btnPosition: { x: 5, y: 5 },
+    audioVolume: 100,
+    audioPlaybackRate: 1
 };
 
 export default defaultOptions;
