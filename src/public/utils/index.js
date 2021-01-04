@@ -86,3 +86,11 @@ export const calculatePosition = (element, { x, y }, callback) => {
     if (y < resultBoxMargin) y = resultBoxMargin;
     callback({ x, y });
 };
+
+export const debounce = (cb, time) => {
+    let timeout = null;
+    return () => {
+        timeout && clearTimeout(timeout);
+        timeout = setTimeout(cb, time);
+    };
+};

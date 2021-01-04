@@ -1,14 +1,7 @@
 import React, { useRef, useCallback, useState, useEffect } from 'react';
 import { getI18nMessage } from '../../public/chrome-call';
+import { debounce } from '../../public/utils';
 import './style.css';
-
-const debounce = (cb, time) => {
-    let timeout = null;
-    return () => {
-        timeout && clearTimeout(timeout);
-        timeout = setTimeout(cb, time);
-    };
-};
 
 const RawText = ({ defaultValue, rawTextTranslate, focusDependency }) => {
     const [lastText, setLastText] = useState('');
@@ -39,7 +32,7 @@ const RawText = ({ defaultValue, rawTextTranslate, focusDependency }) => {
     }, []);
 
     useEffect(() => {
-        debounceHandleRtTextChange.current = debounce(handleRtTextChange, 500);
+        debounceHandleRtTextChange.current = debounce(handleRtTextChange, 600);
     }, [handleRtTextChange]);
 
     useEffect(() => {

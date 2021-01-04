@@ -34,10 +34,18 @@ const marksPlaybackRate = [
     { value: 1.75, label: '1.75x' },
     { value: 2, label: '2.00x' }
 ];
+const marksHideButtonFixedTime = [
+    { value: 500, label: '0.50s' },
+    { value: 1000, label: '1.00s' },
+    { value: 2000, label: '2.00s' },
+    { value: 3000, label: '3.00s' },
+    { value: 4000, label: '4.00s' }
+];
 const volumeFormat = v => Number(Number(v).toFixed(0));
 const playbackRateFormat = v => Number(Number(v).toFixed(2));
-const volumeLabelFormat = v => `${volumeFormat(v)}`;
-const playbackRateLabelFormat = v => `${playbackRateFormat(v)}x`;
+const volumeLabelFormat = v => `${Number(v).toFixed(0)}`;
+const playbackRateLabelFormat = v => `${Number(v).toFixed(2)}x`;
+const hideButtonFixedTimeLabelFormat = v => `${(v / 1000).toFixed(2)}s`
 
 const Options = () => {
     const [commands, setCommands] = useState({});
@@ -67,7 +75,9 @@ const Options = () => {
         styleVarsIndex,
         btnPosition,
         audioVolume,
-        audioPlaybackRate
+        audioPlaybackRate,
+        hideButtonAfterFixedTime,
+        hideButtonFixedTime
     } = useOptions(Object.keys(defaultOptions));
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -164,20 +174,39 @@ const Options = () => {
                     onClick={() => updateStorage('enableContextMenus', !enableContextMenus)}
                 />
                 <OptionToggle
-                    id='show-button-after-select-checkbox'
-                    message='optionsShowButtonAfterSelect'
-                    checked={showButtonAfterSelect}
-                    onClick={() => updateStorage('showButtonAfterSelect', !showButtonAfterSelect)}
-                />
-                <OptionToggle
                     id='translate-directly-checkbox'
                     message='optionsTranslateDirectly'
                     checked={translateDirectly}
                     onClick={() => updateStorage('translateDirectly', !translateDirectly)}
                 />
+                <OptionToggle
+                    id='show-button-after-select-checkbox'
+                    message='optionsShowButtonAfterSelect'
+                    checked={showButtonAfterSelect}
+                    onClick={() => updateStorage('showButtonAfterSelect', !showButtonAfterSelect)}
+                />
                 <div className='child-mt10-ml30'>
                     {getI18nMessage('optionsButtonsPosition')}
                     <BtnPostion currentPos={btnPosition} updateBtnPostion={pos => updateStorage('btnPosition', pos)} />
+                </div>
+                <OptionToggle
+                    id='hide-button-after-fixed-time'
+                    message='optionsHideButtonAfterFixedTime'
+                    checked={hideButtonAfterFixedTime}
+                    onClick={() => updateStorage('hideButtonAfterFixedTime', !hideButtonAfterFixedTime)}
+                />
+                <div className='child-mt10-ml30'>
+                    {getI18nMessage('optionsTheFixedTimeOfHidingButton')}
+                    <Slider
+                        defaultValue={hideButtonFixedTime}
+                        min={500}
+                        max={4000}
+                        step={250}
+                        marks={marksHideButtonFixedTime}
+                        valueLabelDisplay
+                        valueLabelFormat={hideButtonFixedTimeLabelFormat}
+                        mouseUpCallback={v => updateStorage('hideButtonFixedTime', v)}
+                    />
                 </div>
             </div>
             <div className='opt-item'>

@@ -140,6 +140,12 @@
     "optionsPlayTestAudio": {
         "message": "Play test audio"
     },
+    "optionsHideButtonAfterFixedTime": {
+        "message": "Hide button after fixed time"
+    },
+    "optionsTheFixedTimeOfHidingButton": {
+        "message": "The fixed time of hiding button"
+    },
     "contentInputHere": {
         "message": "Input here"
     },

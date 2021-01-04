@@ -19,11 +19,13 @@ import './style.css';
 import { sendAudio } from '../../public/send';
 import { stSetText } from '../../redux/actions/singleTranslateActions';
 import { getOptions } from '../../public/options';
+import { debounce } from '../../public/utils';
 
 const initText = '';
 const initPos = { x: 5, y: 5 };
 const btnWidth = 24;
 const btnHeight = 24;
+const useOptionsDependency = ['translateDirectly', 'showButtonAfterSelect', 'translateWithKeyPress', 'hideButtonAfterFixedTime', 'hideButtonFixedTime'];
 
 const calculateBtnPos = ({ x, y }) => {
     const { btnPosition } = getOptions();
@@ -52,8 +54,9 @@ const TsBtn = ({ multipleTranslateMode }) => {
     const posRef = useRef(initPos);
     const btnEle = useRef(null);
     const ctrlPressing = useRef(false);
+    const debounceHideButtonAfterFixedTime = useRef(null);
 
-    const { translateDirectly, showButtonAfterSelect, translateWithKeyPress } = useOptions(['translateDirectly', 'showButtonAfterSelect', 'translateWithKeyPress']);
+    const { translateDirectly, showButtonAfterSelect, translateWithKeyPress , hideButtonAfterFixedTime, hideButtonFixedTime } = useOptions(useOptionsDependency);
     const isEnableTranslate = useIsEnable('translate', window.location.host);
     const chromeMsg = useOnExtensionMessage();
 
@@ -82,10 +85,13 @@ const TsBtn = ({ multipleTranslateMode }) => {
         }
 
         setText(text);
-        showButtonAfterSelect && setShowBtn(true);
+        if (showButtonAfterSelect) {
+            setShowBtn(true);
+            hideButtonAfterFixedTime && debounceHideButtonAfterFixedTime.current();
+        }
 
         dispatch(hideResultBox());
-    }, [dispatch, handleSetPos, translateDirectly, isEnableTranslate, showButtonAfterSelect, translateWithKeyPress, handleForwardTranslate]);
+    }, [dispatch, handleSetPos, translateDirectly, isEnableTranslate, showButtonAfterSelect, translateWithKeyPress, handleForwardTranslate, hideButtonAfterFixedTime]);
 
     const unselectCb = useCallback(() => {
         setShowBtn(false);
@@ -143,6 +149,10 @@ const TsBtn = ({ multipleTranslateMode }) => {
 
         return unsubscribe;
     }, [selectCb, unselectCb]);
+
+    useEffect(() => {
+        debounceHideButtonAfterFixedTime.current = debounce(() => setShowBtn(false), hideButtonFixedTime);
+    }, [hideButtonFixedTime]);
 
     return (
         <div

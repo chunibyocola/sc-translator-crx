@@ -140,6 +140,12 @@
     "optionsPlayTestAudio": {
         "message": "播放測試音訊"
     },
+    "optionsHideButtonAfterFixedTime": {
+        "message": "在固定時間後隱藏按鈕"
+    },
+    "optionsTheFixedTimeOfHidingButton": {
+        "message": "隱藏按鈕的固定時間"
+    },
     "contentInputHere": {
         "message": "在此輸入"
     },

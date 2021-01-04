@@ -140,6 +140,12 @@
     "optionsPlayTestAudio": {
         "message": "テストオーディオを再生する"
     },
+    "optionsHideButtonAfterFixedTime": {
+        "message": "一定時間後にボタンを非表示にする"
+    },
+    "optionsTheFixedTimeOfHidingButton": {
+        "message": "ボタンを非表示にするの固定時間"
+    },
     "contentInputHere": {
         "message": "ここに入力"
     },

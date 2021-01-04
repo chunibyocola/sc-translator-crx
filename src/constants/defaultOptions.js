@@ -27,7 +27,9 @@ const defaultOptions = {
     styleVarsIndex: 0,
     btnPosition: { x: 5, y: 5 },
     audioVolume: 100,
-    audioPlaybackRate: 1
+    audioPlaybackRate: 1,
+    hideButtonAfterFixedTime: false,
+    hideButtonFixedTime: 1000
 };
 
 export default defaultOptions;
