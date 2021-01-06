@@ -1,3 +1,9 @@
+# 2.5.0
+- Add "hide button after fixed time".
+- Add "customize audio's volume and playback rate".
+- Update the panel's interface.
+- Fixed "separate window does not respond to the translation option of the context menu".
+- Fixed "click the 'open separate window' menus option will call out the panel in current web page".
 # 2.4.1
 - Fixed "result box undraggable".
 # 2.4.0

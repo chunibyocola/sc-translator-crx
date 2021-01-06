@@ -19,7 +19,7 @@ import TsVia from '../../../components/TsVia';
 import { switchTranslateSource } from '../../../public/switch-translate-source';
 
 const SingleTranslateResult = ({ showRtAndLs }) => {
-    const { text, source, from, to, status, result, history, resultFromHistory, translateId } = useSelector(state => state.singleTranslateState);
+    const { text, source, from, to, status, result, history, translateId } = useSelector(state => state.singleTranslateState);
     const { requesting, requestEnd } = status;
 
     const { focusRawText } = useSelector(state => state.resultBoxState);
@@ -79,12 +79,12 @@ const SingleTranslateResult = ({ showRtAndLs }) => {
     }, [dispatch]);
 
     useEffect(() => {
-        !requestEnd && !requesting && !resultFromHistory && text && handleTranslate();
-    }, [requestEnd, requesting, resultFromHistory, text, handleTranslate]);
+        !requestEnd && !requesting && text && handleTranslate();
+    }, [requestEnd, requesting, text, handleTranslate]);
 
     return (
         <>
-            <div style={{display: (showRtAndLs && !resultFromHistory) ? 'block' : 'none'}}>
+            <div style={{display: showRtAndLs ? 'block' : 'none'}}>
                 <RawText
                     defaultValue={text}
                     rawTextTranslate={handleRawTextChange}
@@ -95,20 +95,18 @@ const SingleTranslateResult = ({ showRtAndLs }) => {
                     from={from}
                     to={to}
                     options={langCode[source]}
-                    disableSelect={resultFromHistory}
                 />
             </div>
             <TsResult
                 resultObj={result}
                 status={status}
                 readText={handleReadText}
-                source={resultFromHistory ? result.translation.source : source}
+                source={source}
                 retry={handleRetry}
             />
             <TsVia
                 sourceChange={handleSourceChange}
-                source={resultFromHistory ? result.translation.source : source}
-                disableSourceChange={resultFromHistory}
+                source={source}
             />
         </>
     );

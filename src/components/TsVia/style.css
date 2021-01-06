@@ -2,6 +2,7 @@
     position: relative;
     text-align: right;
     background: var(--bg-content);
+    border-radius: 0 0 3px 3px;
 }
 .ts-via-content {
     font-size: 14px !important;

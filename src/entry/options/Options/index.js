@@ -47,6 +47,8 @@ const volumeLabelFormat = v => `${Number(v).toFixed(0)}`;
 const playbackRateLabelFormat = v => `${Number(v).toFixed(2)}x`;
 const hideButtonFixedTimeLabelFormat = v => `${(v / 1000).toFixed(2)}s`
 
+const useOptionsDependency = Object.keys(defaultOptions);
+
 const Options = () => {
     const [commands, setCommands] = useState({});
 
@@ -78,7 +80,7 @@ const Options = () => {
         audioPlaybackRate,
         hideButtonAfterFixedTime,
         hideButtonFixedTime
-    } = useOptions(Object.keys(defaultOptions));
+    } = useOptions(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
 

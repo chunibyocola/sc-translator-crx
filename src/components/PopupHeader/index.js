@@ -5,27 +5,15 @@ import { useIsEnable, useOptions } from '../../public/react-use';
 import { getCurrentTabHost, getCurrentTab, getIsContentScriptEnabled } from '../../public/utils';
 import './style.css';
 
+const useOptionsDependency = ['translateBlackListMode', 'translateHostList', 'historyBlackListMode', 'historyHostList', 'styleVarsList', 'styleVarsIndex'];
+
 const PopupHeader = () => {
     const [isContentScriptEnabled, setIsContentScriptEnabled] = useState(false);
 
     const isEnableTranslate = useIsEnable('translate');
     const isEnableHistory = useIsEnable('history');
 
-    const {
-        translateBlackListMode,
-        translateHostList,
-        historyBlackListMode,
-        historyHostList,
-        styleVarsList,
-        styleVarsIndex
-    } = useOptions([
-        'translateBlackListMode',
-        'translateHostList',
-        'historyBlackListMode',
-        'historyHostList',
-        'styleVarsList',
-        'styleVarsIndex'
-    ]);
+    const { translateBlackListMode, translateHostList, historyBlackListMode, historyHostList, styleVarsList, styleVarsIndex } = useOptions(useOptionsDependency);
 
     useEffect(() => {
         const asyncGetData = async (tabId) => {
