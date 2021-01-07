@@ -146,6 +146,9 @@
     "optionsTheFixedTimeOfHidingButton": {
         "message": "The fixed time of hiding button"
     },
+    "optionsRespondToSeparateWindow": {
+        "message": "Respond to separate translate window"
+    },
     "contentInputHere": {
         "message": "Input here"
     },

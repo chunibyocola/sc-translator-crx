@@ -5,6 +5,7 @@ import { listenOptionsChange } from '../../public/options';
 import { getLocalStorage } from '../../public/chrome-call';
 import { GOOGLE_COM } from '../../constants/translateSource';
 import { LANG_EN } from '../../constants/langCode';
+import { sendTextToSeparateWindow } from './separate-window';
 
 /* global chrome */
 
@@ -42,6 +43,9 @@ chrome.runtime.onMessage.addListener(
                     payload.defaultSource = defaultAudioSource;
                     audio(payload, uri => playAudio(uri));
                 }
+                return false;
+            case types.SCTS_SEND_TEXT_TO_SEPARATE_WINDOW:
+                payload?.text && sendTextToSeparateWindow(request);
                 return false;
             default: break;
         }

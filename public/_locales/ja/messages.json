@@ -146,6 +146,9 @@
     "optionsTheFixedTimeOfHidingButton": {
         "message": "ボタンを非表示にするの固定時間"
     },
+    "optionsRespondToSeparateWindow": {
+        "message": "スタンドアロン翻訳ウィンドウに応答する"
+    },
     "contentInputHere": {
         "message": "ここに入力"
     },

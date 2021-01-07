@@ -29,7 +29,8 @@ const defaultOptions = {
     audioVolume: 100,
     audioPlaybackRate: 1,
     hideButtonAfterFixedTime: false,
-    hideButtonFixedTime: 1000
+    hideButtonFixedTime: 1000,
+    respondToSeparateWindow: false
 };
 
 export default defaultOptions;

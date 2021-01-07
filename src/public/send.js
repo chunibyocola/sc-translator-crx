@@ -18,6 +18,13 @@ export const sendAudio = (text, { source = '', from = '' }) => {
     chromeSendMessage(action);
 };
 
+export const sendSeparate = (text) => {
+    chromeSendMessage({
+        type: types.SCTS_SEND_TEXT_TO_SEPARATE_WINDOW,
+        payload: { text }
+    });
+};
+
 const packData = (text, { source, from, to = undefined, translateId = undefined }) => ({
     source,
     translateId,

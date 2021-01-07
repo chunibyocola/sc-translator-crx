@@ -39,7 +39,8 @@ const Translate = ({
     defaultTranslateFrom,
     defaultTranslateTo,
     translateBlackListMode,
-    translateHostList
+    translateHostList,
+    respondToSeparateWindow
 }) => {
     return (
         <>
@@ -93,6 +94,12 @@ const Translate = ({
                         mouseUpCallback={v => updateStorage('hideButtonFixedTime', v)}
                     />
                 </div>
+                <OptionToggle
+                    id='respond-to-separate-window'
+                    message='optionsRespondToSeparateWindow'
+                    checked={respondToSeparateWindow}
+                    onClick={() => updateStorage('respondToSeparateWindow', !respondToSeparateWindow)}
+                />
             </div>
             <div className='opt-item'>
                 {getI18nMessage('optionsDefaultTranslateOptions')}

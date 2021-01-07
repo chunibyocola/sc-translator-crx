@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import IconFont from '../../../components/IconFont';
 import LanguageSelection from '../../../components/LanguageSelection';
@@ -56,6 +56,11 @@ const Separate = () => {
     const handleThemeToggle = useCallback(() => {
         setLocalStorage({'styleVarsIndex': styleVarsIndex >= styleVarsList.length - 1 ? 0 : styleVarsIndex + 1});
     }, [styleVarsList, styleVarsIndex]);
+
+    useEffect(() => {
+        const text = new URL(window.location.href).searchParams.get('text');
+        text && dispatch(mtSetText({ text }));
+    }, [dispatch]);
 
     return (
         <div id="sc-translator-root" className='container'>

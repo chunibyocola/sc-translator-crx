@@ -16,7 +16,7 @@ import {
 } from '../../constants/chromeSendMessageTypes';
 import IconFont from '../IconFont';
 import './style.css';
-import { sendAudio } from '../../public/send';
+import { sendAudio, sendSeparate } from '../../public/send';
 import { stSetText } from '../../redux/actions/singleTranslateActions';
 import { getOptions } from '../../public/options';
 import { debounce } from '../../public/utils';
@@ -25,7 +25,7 @@ const initText = '';
 const initPos = { x: 5, y: 5 };
 const btnWidth = 24;
 const btnHeight = 24;
-const useOptionsDependency = ['translateDirectly', 'showButtonAfterSelect', 'translateWithKeyPress', 'hideButtonAfterFixedTime', 'hideButtonFixedTime'];
+const useOptionsDependency = ['translateDirectly', 'showButtonAfterSelect', 'translateWithKeyPress', 'hideButtonAfterFixedTime', 'hideButtonFixedTime', 'respondToSeparateWindow'];
 
 const calculateBtnPos = ({ x, y }) => {
     const { btnPosition } = getOptions();
@@ -55,17 +55,25 @@ const TsBtn = ({ multipleTranslateMode }) => {
     const btnEle = useRef(null);
     const ctrlPressing = useRef(false);
     const debounceHideButtonAfterFixedTime = useRef(null);
+    const oldChromeMsg = useRef(null);
 
-    const { translateDirectly, showButtonAfterSelect, translateWithKeyPress , hideButtonAfterFixedTime, hideButtonFixedTime } = useOptions(useOptionsDependency);
+    const {
+        translateDirectly, showButtonAfterSelect, translateWithKeyPress , hideButtonAfterFixedTime, hideButtonFixedTime, respondToSeparateWindow
+    } = useOptions(useOptionsDependency);
     const isEnableTranslate = useIsEnable('translate', window.location.host);
     const chromeMsg = useOnExtensionMessage();
 
     const dispatch = useDispatch();
 
     const handleForwardTranslate = useCallback((text, pos) => {
+        if (respondToSeparateWindow) {
+            sendSeparate(text);
+            return;
+        }
+
         dispatch(setResultBoxShowAndPosition(pos));
         multipleTranslateMode ? dispatch(mtSetText({ text })) : dispatch(stSetText({ text }));
-    }, [dispatch, multipleTranslateMode]);
+    }, [dispatch, multipleTranslateMode, respondToSeparateWindow]);
 
     const handleSetPos = useCallback(({ x, y }) => {
         const result = calculateBtnPos({ x, y });
@@ -119,29 +127,32 @@ const TsBtn = ({ multipleTranslateMode }) => {
     }, [translateWithKeyPress]);
 
     useEffect(() => {
-        if (!isEnableTranslate) return;
+        if (!Object.is(oldChromeMsg.current, chromeMsg) && !isEnableTranslate) return;
 
-        if (chromeMsg?.type === SCTS_CONTEXT_MENUS_CLICKED) {
-            setShowBtn(false);
+        const { type, payload } = chromeMsg;
+        let text;
 
-            handleForwardTranslate(
-                chromeMsg.payload.selectionText,
-                posRef.current
-            );
+        switch (type) {
+            case SCTS_CONTEXT_MENUS_CLICKED:
+                setShowBtn(false);
+                handleForwardTranslate(payload.selectionText, posRef.current);
+                break;
+            case SCTS_TRANSLATE_COMMAND_KEY_PRESSED:
+                setShowBtn(false);
+                text = getSelectedText();
+                text && handleForwardTranslate(text, posRef.current);
+                break;
+            case SCTS_AUDIO_COMMAND_KEY_PRESSED:
+                text = getSelectedText();
+                text && sendAudio(text, {});
+                break;
+            case SCTS_CALL_OUT_COMMAND_KEY_PRESSED:
+                dispatch(callOutResultBox());
+                break;
+            default: break;
         }
-        else if (chromeMsg?.type === SCTS_TRANSLATE_COMMAND_KEY_PRESSED) {
-            setShowBtn(false);
 
-            const text = getSelectedText();
-            text && handleForwardTranslate(text, posRef.current);
-        }
-        else if (chromeMsg?.type === SCTS_AUDIO_COMMAND_KEY_PRESSED) {
-            const text = getSelectedText();
-            text && sendAudio(text, {});
-        }
-        else if (chromeMsg?.type === SCTS_CALL_OUT_COMMAND_KEY_PRESSED) {
-            dispatch(callOutResultBox());
-        }
+        oldChromeMsg.current = chromeMsg;
     }, [chromeMsg, isEnableTranslate, handleForwardTranslate, dispatch]);
 
     useEffect(() => {

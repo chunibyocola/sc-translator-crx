@@ -4,6 +4,7 @@ import {
     SCTS_AUDIO_COMMAND_KEY_PRESSED,
     SCTS_CALL_OUT_COMMAND_KEY_PRESSED,
     SCTS_CONTEXT_MENUS_CLICKED,
+    SCTS_SEND_TEXT_TO_SEPARATE_WINDOW,
     SCTS_TRANSLATE_COMMAND_KEY_PRESSED
 } from '../../../constants/chromeSendMessageTypes';
 import { useOnExtensionMessage } from '../../../public/react-use';
@@ -36,6 +37,9 @@ const HandleCommands = () => {
                 break;
             case SCTS_CALL_OUT_COMMAND_KEY_PRESSED:
                 dispatch(callOutResultBox());
+                break;
+            case SCTS_SEND_TEXT_TO_SEPARATE_WINDOW:
+                payload.text && dispatch(mtSetText({ text: payload.text }));
                 break;
             default: break;
         }

@@ -146,6 +146,9 @@
     "optionsTheFixedTimeOfHidingButton": {
         "message": "隐藏按钮的固定时间"
     },
+    "optionsRespondToSeparateWindow": {
+        "message": "响应到独立翻译窗口"
+    },
     "contentInputHere": {
         "message": "在此输入"
     },

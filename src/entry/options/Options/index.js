@@ -42,7 +42,8 @@ const Options = () => {
         audioVolume,
         audioPlaybackRate,
         hideButtonAfterFixedTime,
-        hideButtonFixedTime
+        hideButtonFixedTime,
+        respondToSeparateWindow
     } = useOptions(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -89,6 +90,7 @@ const Options = () => {
                 defaultTranslateTo={defaultTranslateTo}
                 translateBlackListMode={translateBlackListMode}
                 translateHostList={translateHostList}
+                respondToSeparateWindow={respondToSeparateWindow}
             />
             <History
                 updateStorage={updateStorage}
