@@ -7,6 +7,7 @@ import History from './sections/History';
 import KeyboardShortcut from './sections/KeyboardShortcut';
 import More from './sections/More';
 import Pdf from './sections/PDF';
+import SeparateWindow from './sections/SeparateWindow';
 import Theme from './sections/Theme';
 import Translate from './sections/Translate';
 import Url from './sections/URL';
@@ -43,7 +44,8 @@ const Options = () => {
         audioPlaybackRate,
         hideButtonAfterFixedTime,
         hideButtonFixedTime,
-        respondToSeparateWindow
+        respondToSeparateWindow,
+        rememberStwSizeAndPosition
     } = useOptions(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -69,6 +71,10 @@ const Options = () => {
                 defaultAudioSource={defaultAudioSource}
                 audioVolume={audioVolume}
                 audioPlaybackRate={audioPlaybackRate}
+            />
+            <SeparateWindow
+                updateStorage={updateStorage}
+                rememberStwSizeAndPosition={rememberStwSizeAndPosition}
             />
             <Translate
                 updateStorage={updateStorage}

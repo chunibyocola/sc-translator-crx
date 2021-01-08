@@ -149,6 +149,15 @@
     "optionsRespondToSeparateWindow": {
         "message": "Respond to separate translate window"
     },
+    "optionsRememberStwSizeAndPosition": {
+        "message": "Remember separate translate window's size and position"
+    },
+    "optionsStwDescription": {
+        "message": "The separate translate window uses the \"Multiple translate mode\" translate panel, which shares the same set of translation settings."
+    },
+    "optionsResetSizeAndPosition": {
+        "message": "Reset size and position"
+    },
     "contentInputHere": {
         "message": "Input here"
     },

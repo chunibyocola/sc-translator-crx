@@ -13,7 +13,7 @@ import './style.css';
 import '../../../components/PopupHeader/style.css';
 import { useOptions } from '../../../public/react-use';
 
-const useOptionsDependency = ['styleVarsList', 'styleVarsIndex'];
+const useOptionsDependency = ['styleVarsList', 'styleVarsIndex', 'rememberStwSizeAndPosition'];
 
 const Separate = () => {
     const { text, from, to, translations, translateId } = useSelector(state => state.multipleTranslateState);
@@ -51,7 +51,7 @@ const Separate = () => {
         dispatch(mtRetry({ source }));
     }, [dispatch]);
 
-    const { styleVarsList, styleVarsIndex } = useOptions(useOptionsDependency);
+    const { styleVarsList, styleVarsIndex, rememberStwSizeAndPosition } = useOptions(useOptionsDependency);
 
     const handleThemeToggle = useCallback(() => {
         setLocalStorage({'styleVarsIndex': styleVarsIndex >= styleVarsList.length - 1 ? 0 : styleVarsIndex + 1});
@@ -61,6 +61,25 @@ const Separate = () => {
         const text = new URL(window.location.href).searchParams.get('text');
         text && dispatch(mtSetText({ text }));
     }, [dispatch]);
+
+    useEffect(() => {
+        if (!rememberStwSizeAndPosition) { return; }
+
+        const onBeforeUnload = () => {
+            const sizeAndPosition = {
+                width: window.outerWidth,
+                height: window.outerHeight,
+                left: window.screenX,
+                top: window.screenY
+            };
+
+            setLocalStorage({ 'stwSizeAndPosition': sizeAndPosition });
+        };
+
+        window.addEventListener('beforeunload', onBeforeUnload);
+
+        return () => window.removeEventListener('beforeunload', onBeforeUnload);
+    }, [rememberStwSizeAndPosition]);
 
     return (
         <div id="sc-translator-root" className='container'>

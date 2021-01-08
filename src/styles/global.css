@@ -1,5 +1,6 @@
 #sc-translator-root {
     font-size: 14px !important;
+    line-height: initial !important;
 }
 .ts-button {
     cursor: pointer;

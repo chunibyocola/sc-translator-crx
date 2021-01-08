@@ -149,6 +149,15 @@
     "optionsRespondToSeparateWindow": {
         "message": "响应到独立翻译窗口"
     },
+    "optionsRememberStwSizeAndPosition": {
+        "message": "记住独立翻译窗口的大小与位置"
+    },
+    "optionsStwDescription": {
+        "message": "独立翻译窗口使用“复数翻译模式”的翻译面板，与其共用同一套翻译设置。"
+    },
+    "optionsResetSizeAndPosition": {
+        "message": "重置大小与位置"
+    },
     "contentInputHere": {
         "message": "在此输入"
     },

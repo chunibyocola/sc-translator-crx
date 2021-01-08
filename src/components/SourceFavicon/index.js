@@ -4,12 +4,13 @@ import google from './favicons/google.png';
 import bing from './favicons/bing.png';
 import mojidict from './favicons/mojidict.png';
 import baidu from './favicons/baidu.png';
+import './style.css';
 
 const SourceFavicon = ({ source }) => {
     return (
         <>
             <img
-                style={{verticalAlign: 'bottom', marginRight: '5px', userSelect: 'none'}}
+                className='ts-favicon'
                 src={getFavicon(source)}
                 width='20'
                 height='20'

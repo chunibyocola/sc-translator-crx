@@ -30,7 +30,10 @@ const defaultOptions = {
     audioPlaybackRate: 1,
     hideButtonAfterFixedTime: false,
     hideButtonFixedTime: 1000,
-    respondToSeparateWindow: false
+    respondToSeparateWindow: false,
+    // 'stw' means 'Separate translate Window'
+    rememberStwSizeAndPosition: false,
+    stwSizeAndPosition: { width: 286, height: 439, left: 550, top: 250 }
 };
 
 export default defaultOptions;

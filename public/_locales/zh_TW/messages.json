@@ -149,6 +149,15 @@
     "optionsRespondToSeparateWindow": {
         "message": "響應到獨立翻譯視窗"
     },
+    "optionsRememberStwSizeAndPosition": {
+        "message": "記住獨立翻譯視窗的大小與位置"
+    },
+    "optionsStwDescription": {
+        "message": "獨立翻譯視窗使用“複數翻譯模式”的翻譯面板，與其共用同一套翻譯設置。"
+    },
+    "optionsResetSizeAndPosition": {
+        "message": "重置大小與位置"
+    },
     "contentInputHere": {
         "message": "在此輸入"
     },
