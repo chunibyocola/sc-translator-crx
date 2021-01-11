@@ -13,3 +13,5 @@ export const initResultBoxState = (multiMode) => ({
 });
 
 export const callOutResultBox = () => ({ type: types.CALL_OUT_RESULT_BOX });
+
+export const closeResultBox = () => ({ type: types.CLOSE_RESULT_BOX });

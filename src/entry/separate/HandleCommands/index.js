@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import {
     SCTS_AUDIO_COMMAND_KEY_PRESSED,
     SCTS_CALL_OUT_COMMAND_KEY_PRESSED,
+    SCTS_CLOSE_COMMAND_KEY_PRESSED,
     SCTS_CONTEXT_MENUS_CLICKED,
     SCTS_SEND_TEXT_TO_SEPARATE_WINDOW,
     SCTS_TRANSLATE_COMMAND_KEY_PRESSED
@@ -40,6 +41,9 @@ const HandleCommands = () => {
                 break;
             case SCTS_SEND_TEXT_TO_SEPARATE_WINDOW:
                 payload.text && dispatch(mtSetText({ text: payload.text }));
+                break;
+            case SCTS_CLOSE_COMMAND_KEY_PRESSED:
+                window.close();
                 break;
             default: break;
         }

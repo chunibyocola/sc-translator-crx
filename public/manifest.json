@@ -40,6 +40,9 @@
     },
     "sc-open-separate-window": {
       "description": "__MSG_extOpenSeparateWindowDescription__"
+    },
+    "sc-close": {
+      "description": "__MSG_extCloseCommandDescription__"
     }
   },
   "permissions": [

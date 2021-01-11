@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux';
 import {
     setResultBoxShowAndPosition,
     hideResultBox,
-    callOutResultBox
+    callOutResultBox,
+    closeResultBox
 } from '../../redux/actions/resultBoxActions';
 import { mtSetText } from '../../redux/actions/multipleTranslateActions';
 import getSelection, { getSelectedText } from '../../public/utils/get-selection';
@@ -12,7 +13,8 @@ import {
     SCTS_CONTEXT_MENUS_CLICKED,
     SCTS_TRANSLATE_COMMAND_KEY_PRESSED,
     SCTS_AUDIO_COMMAND_KEY_PRESSED,
-    SCTS_CALL_OUT_COMMAND_KEY_PRESSED
+    SCTS_CALL_OUT_COMMAND_KEY_PRESSED,
+    SCTS_CLOSE_COMMAND_KEY_PRESSED
 } from '../../constants/chromeSendMessageTypes';
 import IconFont from '../IconFont';
 import './style.css';
@@ -127,7 +129,7 @@ const TsBtn = ({ multipleTranslateMode }) => {
     }, [translateWithKeyPress]);
 
     useEffect(() => {
-        if (!Object.is(oldChromeMsg.current, chromeMsg) && !isEnableTranslate) return;
+        if (oldChromeMsg.current === chromeMsg || !isEnableTranslate) { return; }
 
         const { type, payload } = chromeMsg;
         let text;
@@ -148,6 +150,9 @@ const TsBtn = ({ multipleTranslateMode }) => {
                 break;
             case SCTS_CALL_OUT_COMMAND_KEY_PRESSED:
                 dispatch(callOutResultBox());
+                break;
+            case SCTS_CLOSE_COMMAND_KEY_PRESSED:
+                dispatch(closeResultBox());
                 break;
             default: break;
         }

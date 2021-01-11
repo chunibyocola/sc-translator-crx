@@ -20,6 +20,9 @@
     "extOpenSeparateWindowDescription": {
         "message": "Open separate translate window"
     },
+    "extCloseCommandDescription": {
+        "message": "Close extension in web page"
+    },
     "titleSeparateWindow": {
         "message": "Separate translate window"
     },
@@ -153,7 +156,7 @@
         "message": "Remember separate translate window's size and position"
     },
     "optionsStwDescription": {
-        "message": "The separate translate window uses the \"Multiple translate mode\" translate panel, which shares the same set of translation settings."
+        "message": "The separate translate window uses the \"Multiple translate mode\" translate panel, which shares the same set of translation settings. The separate translate window can also respond to keyboard shortcuts."
     },
     "optionsResetSizeAndPosition": {
         "message": "Reset size and position"

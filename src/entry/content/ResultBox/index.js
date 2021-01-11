@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import IconFont from '../../../components/IconFont';
 import { calculatePosition, drag } from '../../../public/utils';
-import { setResultBoxShowAndPosition } from '../../../redux/actions/resultBoxActions';
+import { closeResultBox, setResultBoxShowAndPosition } from '../../../redux/actions/resultBoxActions';
 import MultipleTranslateResult from '../MultipleTranslateResult';
 import SingleTranslateResult from '../SingleTranslateResult';
 import './style.css';
@@ -16,8 +16,9 @@ const ResultBox = ({ multipleTranslateMode }) => {
 
     const pinPosRef = useRef(initPos);
     const mtEle = useRef(null);
+    const oldPos = useRef(null);
 
-    const { show, pos, focusRawText } = useSelector(state => state.resultBoxState);
+    const { show, pos, focusRawText, hideResultBox } = useSelector(state => state.resultBoxState);
 
     const dispatch = useDispatch();
 
@@ -44,9 +45,21 @@ const ResultBox = ({ multipleTranslateMode }) => {
     }, [dispatch, pinning]);
 
     useEffect(() => {
+        if (oldPos.current === pos) { return; }
+
         !pinning && handlePosChange(pos);
+
+        oldPos.current = pos;
     }, [pos, pinning, handlePosChange]);
     // position end
+
+    const handleCloseIconClick = useCallback(() => {
+        dispatch(closeResultBox());
+    }, [dispatch]);
+
+    useEffect(() => {
+        setPinning(false);
+    }, [hideResultBox]);
 
     return (
         <div
@@ -73,6 +86,11 @@ const ResultBox = ({ multipleTranslateMode }) => {
                         onClick={pinningToggle}
                         style={pinning ? {transform: 'rotate(-45deg)', opacity: '1'} : {}}
                         className='ts-button'
+                    />
+                    <IconFont
+                        className='ts-iconbutton ts-button'
+                        iconName='#icon-GoX'
+                        onClick={handleCloseIconClick}
                     />
                 </span>
             </div>

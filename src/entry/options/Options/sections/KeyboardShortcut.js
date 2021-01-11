@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { EXECUTE_BROWSER_ACTION, SC_AUDIO, SC_CALL_OUT, SC_OPEN_SEPARATE_WINDOW, SC_TRANSLATE } from '../../../../constants/commandsName';
+import { EXECUTE_BROWSER_ACTION, SC_AUDIO, SC_CALL_OUT, SC_CLOSE, SC_OPEN_SEPARATE_WINDOW, SC_TRANSLATE } from '../../../../constants/commandsName';
 import { createNewTab, getAllCommands, getI18nMessage } from '../../../../public/chrome-call';
 
 const KeyboardShortcut = () => {
@@ -30,6 +30,10 @@ const KeyboardShortcut = () => {
                 {getI18nMessage('extCallOutCommandDescription')}
                 <span className='keyboard-shortcut'>{commands[SC_CALL_OUT] ?? ''}</span>
                 <div className='item-description'>{getI18nMessage('optionsCallOutCommandDescription')}</div>
+            </div>
+            <div className='opt-item'>
+                {getI18nMessage('extCloseCommandDescription')}
+                <span className='keyboard-shortcut'>{commands[SC_CLOSE] ?? ''}</span>
             </div>
             <div className='opt-item'>
                 {getI18nMessage('extOpenSeparateWindowDescription')}

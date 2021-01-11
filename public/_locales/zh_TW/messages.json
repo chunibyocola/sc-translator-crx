@@ -20,6 +20,9 @@
     "extOpenSeparateWindowDescription": {
         "message": "打開獨立翻譯視窗"
     },
+    "extCloseCommandDescription": {
+        "message": "在網頁中關閉擴充功能"
+    },
     "titleSeparateWindow": {
         "message": "獨立翻譯視窗"
     },
@@ -153,7 +156,7 @@
         "message": "記住獨立翻譯視窗的大小與位置"
     },
     "optionsStwDescription": {
-        "message": "獨立翻譯視窗使用“複數翻譯模式”的翻譯面板，與其共用同一套翻譯設置。"
+        "message": "獨立翻譯視窗使用“複數翻譯模式”的翻譯面板，與其共用同一套翻譯設置。獨立翻譯視窗也可以響應鍵盤快速鍵。"
     },
     "optionsResetSizeAndPosition": {
         "message": "重置大小與位置"

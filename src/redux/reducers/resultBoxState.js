@@ -4,7 +4,8 @@ const initState = {
     show: false,
     pos: { x: 5, y: 5 },
     focusRawText: 0,
-    multipleMode: false
+    multipleMode: false,
+    hideResultBox: 0
 };
 
 const resultBoxState = (state = initState, { type, payload }) => {
@@ -17,6 +18,8 @@ const resultBoxState = (state = initState, { type, payload }) => {
             return { ...state, multipleMode: payload, show: false, pos: { x: 5, y: 5 } };
         case types.CALL_OUT_RESULT_BOX:
             return { ...state, show: true, focusRawText: state.focusRawText + 1 };
+        case types.CLOSE_RESULT_BOX:
+            return { ...state, show: false, hideResultBox: state.hideResultBox + 1 };
         default:
             return state;
     }

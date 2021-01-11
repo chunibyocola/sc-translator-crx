@@ -20,6 +20,9 @@
     "extOpenSeparateWindowDescription": {
         "message": "打开独立翻译窗口"
     },
+    "extCloseCommandDescription": {
+        "message": "在网页中关闭扩展"
+    },
     "titleSeparateWindow": {
         "message": "独立翻译窗口"
     },
@@ -153,7 +156,7 @@
         "message": "记住独立翻译窗口的大小与位置"
     },
     "optionsStwDescription": {
-        "message": "独立翻译窗口使用“复数翻译模式”的翻译面板，与其共用同一套翻译设置。"
+        "message": "独立翻译窗口使用“复数翻译模式”的翻译面板，与其共用同一套翻译设置。独立翻译窗口也可以响应键盘快捷键。"
     },
     "optionsResetSizeAndPosition": {
         "message": "重置大小与位置"

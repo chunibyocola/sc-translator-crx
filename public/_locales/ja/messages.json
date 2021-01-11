@@ -20,6 +20,9 @@
     "extOpenSeparateWindowDescription": {
         "message": "スタンドアロン翻訳ウィンドウを開く"
     },
+    "extCloseCommandDescription": {
+        "message": "ウェブページで拡張機能を閉じる"
+    },
     "titleSeparateWindow": {
         "message": "スタンドアロン翻訳ウィンドウ"
     },
@@ -153,7 +156,7 @@
         "message": "スタンドアロン翻訳ウィンドウのサイズと位置を記憶する"
     },
     "optionsStwDescription": {
-        "message": "スタンドアロン翻訳ウィンドウでは、「複数翻訳モード」の翻訳パネルを使用して、同じ翻訳設定を共有します。"
+        "message": "スタンドアロン翻訳ウィンドウでは、「複数翻訳モード」の翻訳パネルを使用して、同じ翻訳設定を共有します。スタンドアロン翻訳ウィンドウはキーボードショートカットにも応答できます。"
     },
     "optionsResetSizeAndPosition": {
         "message": "サイズと位置をリセットする"
