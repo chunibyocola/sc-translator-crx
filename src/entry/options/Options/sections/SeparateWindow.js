@@ -1,5 +1,5 @@
 import React from 'react';
-import { getI18nMessage } from '../../../../public/chrome-call';
+import { getMessage } from '../../../../public/i18n';
 import OptionToggle from '../../OptionToggle';
 
 const initSizeAndPosition = { width: 286, height: 439, left: 550, top: 250 };
@@ -7,9 +7,9 @@ const initSizeAndPosition = { width: 286, height: 439, left: 550, top: 250 };
 const SeparateWindow = ({ updateStorage, rememberStwSizeAndPosition }) => {
     return (
         <>
-            <h3>{getI18nMessage('titleSeparateWindow')}</h3>
+            <h3>{getMessage('titleSeparateWindow')}</h3>
             <div className='opt-item item-description'>
-                {getI18nMessage('optionsStwDescription')}
+                {getMessage('optionsStwDescription')}
             </div>
             <div className='opt-item'>
                 <OptionToggle
@@ -21,7 +21,7 @@ const SeparateWindow = ({ updateStorage, rememberStwSizeAndPosition }) => {
             </div>
             <div className='opt-item'>
                 <button onClick={() => updateStorage('stwSizeAndPosition', initSizeAndPosition)}>
-                    {getI18nMessage('optionsResetSizeAndPosition')}
+                    {getMessage('optionsResetSizeAndPosition')}
                 </button>  
             </div>
         </>

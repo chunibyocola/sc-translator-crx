@@ -2,7 +2,7 @@ import React from 'react';
 import Slider from '../../../../components/Slider';
 import SourceSelect from '../../../../components/SourceSelect';
 import { audioSource } from '../../../../constants/translateSource';
-import { getI18nMessage } from '../../../../public/chrome-call';
+import { getMessage } from '../../../../public/i18n';
 import { sendAudio } from '../../../../public/send';
 
 const marksVolume = [
@@ -30,12 +30,12 @@ const playbackRateLabelFormat = v => `${Number(v).toFixed(2)}x`;
 const Audio = ({ updateStorage, defaultAudioSource, audioVolume, audioPlaybackRate }) => {
     return (
         <>
-            <h3>{getI18nMessage('optionsAudio')}</h3>
+            <h3>{getMessage('optionsAudio')}</h3>
             <div className='opt-item'>
-                {getI18nMessage('optionsDefaultAudioOptions')}
+                {getMessage('optionsDefaultAudioOptions')}
                 <div className='child-mt10-ml30'>
                     <div className='opt-source-select'>
-                        {getI18nMessage('optionsSource')}
+                        {getMessage('optionsSource')}
                         <SourceSelect
                             sourceList={audioSource}
                             source={defaultAudioSource}
@@ -45,7 +45,7 @@ const Audio = ({ updateStorage, defaultAudioSource, audioVolume, audioPlaybackRa
                 </div>
             </div>
             <div className='opt-item'>
-                {getI18nMessage('optionsVolume')}
+                {getMessage('optionsVolume')}
                 <Slider
                     defaultValue={audioVolume}
                     min={5}
@@ -56,7 +56,7 @@ const Audio = ({ updateStorage, defaultAudioSource, audioVolume, audioPlaybackRa
                     mouseUpCallback={v => updateStorage('audioVolume', volumeFormat(v))}
                     valueLabelFormat={volumeLabelFormat}
                 />
-                {getI18nMessage('optionsPlaybackRate')}
+                {getMessage('optionsPlaybackRate')}
                 <Slider
                     defaultValue={audioPlaybackRate}
                     min={0.5}
@@ -67,7 +67,7 @@ const Audio = ({ updateStorage, defaultAudioSource, audioVolume, audioPlaybackRa
                     mouseUpCallback={v => updateStorage('audioPlaybackRate', playbackRateFormat(v))}
                     valueLabelFormat={playbackRateLabelFormat}
                 />
-                <button onClick={() => sendAudio('this is a test audio', { from: 'en' })}>{getI18nMessage('optionsPlayTestAudio')}</button>
+                <button onClick={() => sendAudio('this is a test audio', { from: 'en' })}>{getMessage('optionsPlayTestAudio')}</button>
             </div>
         </>
     );

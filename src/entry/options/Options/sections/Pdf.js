@@ -1,5 +1,5 @@
 import React from 'react';
-import { getI18nMessage } from '../../../../public/chrome-call';
+import { getMessage } from '../../../../public/i18n';
 import OptionToggle from '../../OptionToggle';
 
 const Pdf = ({ updateStorage, enablePdfViewer }) => {
@@ -13,7 +13,7 @@ const Pdf = ({ updateStorage, enablePdfViewer }) => {
                     checked={enablePdfViewer}
                     onClick={() => updateStorage('enablePdfViewer', !enablePdfViewer)}
                 />
-                <div className='item-description'>{getI18nMessage('optionsEnablePdfViewerDescription')}</div>
+                <div className='item-description'>{getMessage('optionsEnablePdfViewerDescription')}</div>
             </div>
         </>
     );

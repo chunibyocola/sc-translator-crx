@@ -6,12 +6,13 @@ import MtAddSource from '../../../components/MtAddSource';
 import MtResult from '../../../components/MtResult';
 import RawText from '../../../components/RawText';
 import { mtLangCode } from '../../../constants/langCode';
-import { getI18nMessage, openOptionsPage, setLocalStorage } from '../../../public/chrome-call';
+import { openOptionsPage, setLocalStorage } from '../../../public/chrome-call';
 import { sendAudio, sendTranslate } from '../../../public/send';
 import { mtRemoveSource, mtRequestError, mtRequestFinish, mtRequestStart, mtRetry, mtSetFromAndTo, mtSetText } from '../../../redux/actions/multipleTranslateActions';
 import './style.css';
 import '../../../components/PopupHeader/style.css';
 import { useOptions } from '../../../public/react-use';
+import { getMessage } from '../../../public/i18n';
 
 const useOptionsDependency = ['styleVarsList', 'styleVarsIndex', 'rememberStwSizeAndPosition'];
 
@@ -90,13 +91,13 @@ const Separate = () => {
                         iconName='#icon-theme'
                         className='title-icons-enable'
                         onClick={() => handleThemeToggle()}
-                        title={getI18nMessage('popupSwitchToTheNextTheme')}
+                        title={getMessage('popupSwitchToTheNextTheme')}
                     />
                     <IconFont
                         iconName='#icon-MdSettings'
                         className='title-icons-enable'
                         onClick={openOptionsPage}
-                        title={getI18nMessage('popupOpenOptionsPage')}
+                        title={getMessage('popupOpenOptionsPage')}
                     />
                 </div>
             </div>
@@ -114,7 +115,7 @@ const Separate = () => {
                 />
                 <div className='ts-mt-results ts-scrollbar'>
                     {translations.length === 0 ? 
-                        <div className='ts-mt-result-add-translate-source'>{getI18nMessage('sentenceAddTranslateSource')}</div> :
+                        <div className='ts-mt-result-add-translate-source'>{getMessage('sentenceAddTranslateSource')}</div> :
                     translations.map(({ source, status, result }) => (
                         <MtResult
                             source={source}

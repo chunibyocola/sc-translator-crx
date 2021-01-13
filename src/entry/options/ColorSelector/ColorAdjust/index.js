@@ -1,11 +1,11 @@
-import React, { useEffect, useCallback, useState, useRef } from 'react';
-import { hexToRgb, rgbToHex, pointerDrag } from '../utils';
+import React, { useEffect, useCallback, useState } from 'react';
+import Slider from '../../../../components/Slider';
+import { getMessage } from '../../../../public/i18n';
+import { hexToRgb, rgbToHex } from '../utils';
 import './style.css';
 
 const ColorAdjust = ({ selectedColor, adjust, opacity, opacityChange, save }) => {
     const [hex, setHex] = useState('ff0000');
-
-    const sliderEle = useRef(null);
 
     useEffect(() => {
         setHex(rgbToHex(selectedColor.r, selectedColor.g, selectedColor.b));
@@ -34,24 +34,19 @@ const ColorAdjust = ({ selectedColor, adjust, opacity, opacityChange, save }) =>
         }
     }, [hex, adjust]);
 
-    const handleSliderPointerDrag = useCallback(({ x }) => {
-        const value = x === sliderEle.current.offsetWidth ? 1 : (x / sliderEle.current.offsetWidth).toFixed(2);
-        opacityChange(value);
-    }, [opacityChange]);
-
-    const handleSliderMouseDown = useCallback((e) => {
-        const value = e.nativeEvent.offsetX + 1 === sliderEle.current.offsetWidth ? 1 : ((e.nativeEvent.offsetX + 1) / sliderEle.current.offsetWidth).toFixed(2);
-        opacityChange(value);
-        pointerDrag(e.target, { maxX: e.target.offsetWidth }, handleSliderPointerDrag);
-    }, [handleSliderPointerDrag, opacityChange]);
-
     const handleSaveBtnClick = useCallback(() => {
         save(`rgba(${selectedColor.r},${selectedColor.g},${selectedColor.b},${opacity})`);
     }, [selectedColor, opacity, save]);
 
     return (
         <div className='color-selector-adjust'>
-            <div className='color-selector-selected-color' style={{background: `rgba(${selectedColor.r}, ${selectedColor.g}, ${selectedColor.b}, ${opacity})`}}></div>
+            <div className='color-selector-selected-color-outer'>
+                <div className='color-selector-selected-color' style={{background: `rgba(${selectedColor.r}, ${selectedColor.g}, ${selectedColor.b}, ${opacity})`}}></div>
+            </div>
+            <div className='color-selector-adjust-rgb'>
+                <label className='color-selector-adjust-rgb-label' htmlFor='adjust-h'>#</label>
+                <input id='adjust-h' type='text' value={hex} onChange={handleHexInputChange} />
+            </div>
             <div className='color-selector-adjust-rgb'>
                 <label className='color-selector-adjust-rgb-label' htmlFor='adjust-r'>R</label>
                 <input id='adjust-r' type='text' value={selectedColor.r} onChange={e => handleRgbInputChange('r', e)} onClick={e => e.target.select()} />
@@ -65,21 +60,18 @@ const ColorAdjust = ({ selectedColor, adjust, opacity, opacityChange, save }) =>
                 <input id='adjust-b' type='text' value={selectedColor.b} onChange={e => handleRgbInputChange('b', e)} onClick={e => e.target.select()} />
             </div>
             <div className='color-selector-adjust-rgb'>
-                <label className='color-selector-adjust-rgb-label' htmlFor='adjust-h'>#</label>
-                <input id='adjust-h' type='text' value={hex} onChange={handleHexInputChange} />
+                <label className='color-selector-adjust-rgb-label'>A</label>
+                <input type='text' value={opacity} disabled/>
             </div>
-            <div className='color-selector-adjust-opacity'>
-                Opacity
-                <span className='color-selector-opacity-display'>{opacity}</span>
-                <div ref={sliderEle} className='color-selector-opacity-slider' onMouseDown={handleSliderMouseDown}>
-                    <div className='color-selector-opacity-rail'></div>
-                    <div className='color-selector-opacity-track' style={{width: `${opacity * 100}%`}}></div>
-                    <div className='color-selector-opacity-pointer' style={{left: `${opacity * 100}%`}}></div>
-                </div>
-            </div>
-            <div className={'color-selector-adjust-save'} onClick={handleSaveBtnClick}>
-                Save
-            </div>
+            <Slider
+                min={0}
+                max={1}
+                step={0.01}
+                defaultValue={opacity}
+                mouseDownCallback={v => opacityChange(Number(v.toFixed(2)))}
+                mouseMoveCallback={v => opacityChange(Number(v.toFixed(2)))}
+            />
+            <button style={{width: '100%'}} onClick={handleSaveBtnClick}>{getMessage('themeSaveColor')}</button>
         </div>
     );
 };

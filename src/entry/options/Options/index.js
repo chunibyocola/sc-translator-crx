@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import defaultOptions from '../../../constants/defaultOptions';
-import { setLocalStorage, getI18nMessage } from '../../../public/chrome-call';
+import { setLocalStorage } from '../../../public/chrome-call';
+import { getMessage } from '../../../public/i18n';
 import { useOptions } from '../../../public/react-use';
 import Audio from './sections/Audio';
 import History from './sections/History';
@@ -52,7 +53,7 @@ const Options = () => {
 
     return (
         <div className='options'>
-            <h2>{getI18nMessage('optionsTitle')}</h2>
+            <h2>{getMessage('optionsTitle')}</h2>
             <Theme
                 updateStorage={updateStorage}
                 styleVarsList={styleVarsList}

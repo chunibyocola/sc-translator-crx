@@ -161,6 +161,21 @@
     "optionsResetSizeAndPosition": {
         "message": "Reset size and position"
     },
+    "themePreset": {
+        "message": "Preset"
+    },
+    "themeTextColor": {
+        "message": "Text color"
+    },
+    "themeBackgroundColor": {
+        "message": "Background color"
+    },
+    "themeThemeName": {
+        "message": "Theme name"
+    },
+    "themeSaveColor": {
+        "message": "Save color"
+    },
     "contentInputHere": {
         "message": "Input here"
     },

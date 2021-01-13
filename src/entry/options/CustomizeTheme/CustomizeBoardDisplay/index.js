@@ -73,7 +73,7 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                             <IconFont iconName='#icon-GoUnmute' className='ts-iconbutton ts-button' />
                         </div>
                         <div class="tss-phonetic">[ˈwelkəm]</div>
-                        <div className='ts-dividing-line ts-st-dividing-line'></div>
+                        <div className='ts-dividing-line ts-st-dividing-line' style={{background: styleVars['--text-normal']}}></div>
                     </div>
                     <div class="ts-via" style={{background: styleVars['--bg-content']}}>
                         <div class="ts-via-content">
@@ -139,7 +139,7 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                                     <IconFont iconName='#icon-GoX' className='ts-iconbutton' />
                                 </span>
                             </div>
-                            <div className='ts-dividing-line'></div>
+                            <div className='ts-dividing-line' style={{background: styleVars['--text-normal']}}></div>
                             <div class="ts-mt-result-result">
                                 <div style={{marginBottom: '10px'}}>[ˈwelkəm]</div>
                                 <div>
@@ -161,7 +161,7 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                                     <IconFont iconName='#icon-GoX' className='ts-iconbutton' />
                                 </span>
                             </div>
-                            <div className='ts-dividing-line'></div>
+                            <div className='ts-dividing-line' style={{background: styleVars['--text-normal']}}></div>
                             <div class="ts-mt-result-result">
                                 <div>
                                     <span style={{marginRight: '5px'}}>ようこそ</span>

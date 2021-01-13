@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { translateSource } from '../../../constants/translateSource';
 import SourceFavicon from '../../../components/SourceFavicon';
-import { getI18nMessage } from '../../../public/chrome-call';
 import './style.css';
+import { getMessage } from '../../../public/i18n';
 
 const TransferList = ({ enabledList, onChange }) => {
     const [notEnabledList, setNotEnabledList] = useState([]);
@@ -48,10 +48,10 @@ const TransferList = ({ enabledList, onChange }) => {
 
     return (
         <div className='transfer-list'>
-            {getI18nMessage('optionsSourceList')}
+            {getMessage('optionsSourceList')}
             <div className='transfer-content'>
                 <div className='transfer-box'>
-                    <div className='transfer-box-head'>{getI18nMessage('optionsEnabled')}</div>
+                    <div className='transfer-box-head'>{getMessage('optionsEnabled')}</div>
                     <hr />
                     <div className='transfer-box-list'>
                         {enabledList.map(v => (
@@ -73,7 +73,7 @@ const TransferList = ({ enabledList, onChange }) => {
                     <button onClick={() => handleTransferAll(true)}>≪</button>
                 </div>
                 <div className='transfer-box'>
-                    <div className='transfer-box-head'>{getI18nMessage('optionsNotEnabled')}</div>
+                    <div className='transfer-box-head'>{getMessage('optionsNotEnabled')}</div>
                     <hr />
                     <div className='transfer-box-list'>
                         {notEnabledList.map(v => (

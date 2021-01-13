@@ -161,6 +161,21 @@
     "optionsResetSizeAndPosition": {
         "message": "サイズと位置をリセットする"
     },
+    "themePreset": {
+        "message": "プリセット"
+    },
+    "themeTextColor": {
+        "message": "テキストの色"
+    },
+    "themeBackgroundColor": {
+        "message": "背景色"
+    },
+    "themeThemeName": {
+        "message": "テーマ名"
+    },
+    "themeSaveColor": {
+        "message": "色を保存"
+    },
     "contentInputHere": {
         "message": "ここに入力"
     },

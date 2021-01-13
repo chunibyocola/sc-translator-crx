@@ -1,5 +1,5 @@
 import React from 'react';
-import { getI18nMessage } from '../../../public/chrome-call';
+import { getMessage } from '../../../public/i18n';
 
 const OptionToggle = ({ id, message, checked, onClick }) => {
     return (
@@ -11,7 +11,7 @@ const OptionToggle = ({ id, message, checked, onClick }) => {
                 onClick={onClick}
             />
             <label htmlFor={id}>
-                {getI18nMessage(message)}
+                {getMessage(message)}
             </label>
         </div>
     );

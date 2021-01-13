@@ -24,11 +24,24 @@
 .colors-color {
     box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 5px 0px;
     display: inline-block;
+    box-sizing: border-box;
     width: 100px;
     height: 20px;
-    border-radius: 4px;
+    vertical-align: middle;
 }
 .colors-label {
     display: inline-block;
     width: 100px;
+}
+.colors-head {
+    margin: 7px 0;
+}
+.colors-save {
+    margin: 0 auto;
+    display: block;
+    width: 150px;
+}
+.colors-theme-name {
+    width: 100%;
+    box-sizing: border-box;
 }

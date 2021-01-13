@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { defaultStyleVars, darkStyleVars } from '../../../../constants/defaultStyleVars';
-import { getI18nMessage } from '../../../../public/chrome-call';
+import { getMessage } from '../../../../public/i18n';
 import ColorSelector from '../../ColorSelector';
 import './style.css';
 
@@ -54,6 +54,7 @@ const CustomizeBoardOptions = ({ styleVars, themeName, updateCallback, finishCal
     return (
         <div className='customize-board-options'>
             <div className='customize-board-options-colors'>
+                <p className='colors-head'>{getMessage('themePreset')}</p>
                 <div className='customize-offset'>
                     <div
                         className='customize-offset-item ts-button'
@@ -66,7 +67,7 @@ const CustomizeBoardOptions = ({ styleVars, themeName, updateCallback, finishCal
                         style={{background: darkStyleVars['--bg-content']}}
                     />
                 </div>
-                <p className='colors-head'>Text color</p>
+                <p className='colors-head'>{getMessage('themeTextColor')}</p>
                 {textKeyList.map((v) => (<div className='colors-title'>
                     <span className='colors-label' style={{color: v === changing.targetColor ? '#1F88D6' : '#666666'}}>{i18nMessage[v]}</span>
                     <div
@@ -75,7 +76,7 @@ const CustomizeBoardOptions = ({ styleVars, themeName, updateCallback, finishCal
                         onClick={() => handleColorClick(v, customizeStyleVars[v])}
                     />
                 </div>))}
-                <p className='colors-head'>Background color</p>
+                <p className='colors-head'>{getMessage('themeBackgroundColor')}</p>
                 {bgKeyList.map((v) => (<div className='colors-title'>
                     <span className='colors-label' style={{color: v === changing.targetColor ? '#1F88D6' : '#666666'}}>{i18nMessage[v]}</span>
                     <div
@@ -84,10 +85,10 @@ const CustomizeBoardOptions = ({ styleVars, themeName, updateCallback, finishCal
                         onClick={() => handleColorClick(v, customizeStyleVars[v])}
                     />
                 </div>))}
-                <div className='colors-save'>
-                    <input ref={themeNameEle} type='text' defaultValue={themeName} />
-                    <button onClick={() => handleSaveBtnClick()}>{getI18nMessage('wordSave')}</button>
-                </div>
+                <p className='colors-head'>{getMessage('themeThemeName')}</p>
+                <input className='colors-theme-name' ref={themeNameEle} type='text' defaultValue={themeName} />
+                <div className='ts-dividing-line' style={{background: '#000', margin: '10px 0'}}></div>
+                <button className='colors-save' onClick={() => handleSaveBtnClick()}>{getMessage('wordSave')}</button>
             </div>
             {changing.targetColor && <ColorSelector
                 initColor={changing.offsetColor}

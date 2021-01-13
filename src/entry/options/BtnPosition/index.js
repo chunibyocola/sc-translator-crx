@@ -3,7 +3,7 @@ import IconFont from '../../../components/IconFont';
 import './style.css';
 import '../../../components/TsBtn/style.css';
 import { pointerDrag } from '../ColorSelector/utils';
-import { getI18nMessage } from '../../../public/chrome-call';
+import { getMessage } from '../../../public/i18n';
 
 const BtnPostion = ({ currentPos, updateBtnPostion }) => {
     const [pos, setPos] = useState({ x: 5, y: 5 });
@@ -43,8 +43,8 @@ const BtnPostion = ({ currentPos, updateBtnPostion }) => {
                     <IconFont iconName='#icon-MdTranslate' style={{display: 'block'}} />
                 </div>
             </div>
-            <button onClick={() => updateBtnPostion(pos)} disabled={pos.x === currentPos.x && pos.y === currentPos.y}>{getI18nMessage('wordSave')}</button>
-            <button onClick={() => setPos(currentPos)} disabled={pos.x === currentPos.x && pos.y === currentPos.y}>{getI18nMessage('wordCancel')}</button>
+            <button onClick={() => updateBtnPostion(pos)} disabled={pos.x === currentPos.x && pos.y === currentPos.y}>{getMessage('wordSave')}</button>
+            <button onClick={() => setPos(currentPos)} disabled={pos.x === currentPos.x && pos.y === currentPos.y}>{getMessage('wordCancel')}</button>
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useState, useEffect } from 'react';
-import { getI18nMessage } from '../../public/chrome-call';
+import { getMessage } from '../../public/i18n';
 import { debounce } from '../../public/utils';
 import './style.css';
 
@@ -58,7 +58,7 @@ const RawText = ({ defaultValue, rawTextTranslate, focusDependency }) => {
         <div className='ts-raw-text'>
             <textarea
                 defaultValue={defaultValue}
-                placeholder={getI18nMessage('contentInputHere')}
+                placeholder={getMessage('contentInputHere')}
                 onChange={onChange}
                 onCompositionStart={onCompositionStart}
                 onCompositionEnd={onCompositionEnd}

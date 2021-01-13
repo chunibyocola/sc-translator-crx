@@ -6,9 +6,9 @@ import MtAddSource from '../../../components/MtAddSource';
 import LanguageSelection from '../../../components/LanguageSelection';
 import RawText from '../../../components/RawText';
 import { sendTranslate, sendAudio } from '../../../public/send';
-import { getI18nMessage } from '../../../public/chrome-call';
 import { mtLangCode } from '../../../constants/langCode';
 import './style.css';
+import { getMessage } from '../../../public/i18n';
 
 const MultipleTranslateResult = ({ showRtAndLs }) => {
     const translateIdRef = useRef(0);
@@ -63,7 +63,7 @@ const MultipleTranslateResult = ({ showRtAndLs }) => {
             </div>
             <div className='ts-mt-results ts-scrollbar'>
                 {translations.length === 0 ? 
-                    <div className='ts-mt-result-add-translate-source'>{getI18nMessage('sentenceAddTranslateSource')}</div> :
+                    <div className='ts-mt-result-add-translate-source'>{getMessage('sentenceAddTranslateSource')}</div> :
                 translations.map(({ source, status, result }) => (
                     <MtResult
                         source={source}

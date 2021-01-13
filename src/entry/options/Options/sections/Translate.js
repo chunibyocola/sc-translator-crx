@@ -3,7 +3,7 @@ import Slider from '../../../../components/Slider';
 import SourceSelect from '../../../../components/SourceSelect';
 import { langCode, mtLangCode, preferredLangCode, userLangs } from '../../../../constants/langCode';
 import { translateSource } from '../../../../constants/translateSource';
-import { getI18nMessage } from '../../../../public/chrome-call';
+import { getMessage } from '../../../../public/i18n';
 import { switchTranslateSource } from '../../../../public/switch-translate-source';
 import BtnPostion from '../../BtnPosition';
 import DefaultSelect from '../../DefaultSelect';
@@ -44,9 +44,9 @@ const Translate = ({
 }) => {
     return (
         <>
-            <h3>{getI18nMessage('optionsTranslate')}</h3>
+            <h3>{getMessage('optionsTranslate')}</h3>
             <div className='opt-item child-mt10-ml30'>
-                {getI18nMessage('optionsInWebPage')}
+                {getMessage('optionsInWebPage')}
                 <OptionToggle
                     id='translate-with-key-press-checkbox'
                     message='optionsTranslateWithKeyPress'
@@ -72,7 +72,7 @@ const Translate = ({
                     onClick={() => updateStorage('showButtonAfterSelect', !showButtonAfterSelect)}
                 />
                 <div className='child-mt10-ml30'>
-                    {getI18nMessage('optionsButtonsPosition')}
+                    {getMessage('optionsButtonsPosition')}
                     <BtnPostion currentPos={btnPosition} updateBtnPostion={pos => updateStorage('btnPosition', pos)} />
                 </div>
                 <OptionToggle
@@ -82,7 +82,7 @@ const Translate = ({
                     onClick={() => updateStorage('hideButtonAfterFixedTime', !hideButtonAfterFixedTime)}
                 />
                 <div className='child-mt10-ml30'>
-                    {getI18nMessage('optionsTheFixedTimeOfHidingButton')}
+                    {getMessage('optionsTheFixedTimeOfHidingButton')}
                     <Slider
                         defaultValue={hideButtonFixedTime}
                         min={500}
@@ -102,10 +102,10 @@ const Translate = ({
                 />
             </div>
             <div className='opt-item'>
-                {getI18nMessage('optionsDefaultTranslateOptions')}
+                {getMessage('optionsDefaultTranslateOptions')}
                 <div className='child-mt10-ml30'>
                     <div className='options-mode'>
-                        {getI18nMessage('optionsMode')}
+                        {getMessage('optionsMode')}
                         <OptionToggle
                             id='multiple-translate-mode'
                             message='optionsMultipleTranslateMode'
@@ -129,7 +129,7 @@ const Translate = ({
                         optionValue='code'
                         optionLabel='name'
                     />
-                    <div className='item-description'>{getI18nMessage('optionsPreferredLanguageDescription')}</div>
+                    <div className='item-description'>{getMessage('optionsPreferredLanguageDescription')}</div>
                     {multipleTranslateMode ?
                         <>
                             <TransferList
@@ -155,7 +155,7 @@ const Translate = ({
                         </> :
                     <>
                         <div className='opt-source-select'>
-                            {getI18nMessage('optionsSource')}
+                            {getMessage('optionsSource')}
                             <SourceSelect
                                 sourceList={translateSource}
                                 source={defaultTranslateSource}
@@ -191,7 +191,7 @@ const Translate = ({
                 </div>
             </div>
             <div className='opt-item'>
-                {getI18nMessage('optionsDomainfilter')}
+                {getMessage('optionsDomainfilter')}
                 <div className='child-mt10-ml30'>
                     <OptionToggle
                         id='translate-black-list-mode-checkbox'

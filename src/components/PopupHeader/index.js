@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import IconFont from '../IconFont';
-import { getI18nMessage, setLocalStorage, openOptionsPage } from '../../public/chrome-call';
+import { setLocalStorage, openOptionsPage } from '../../public/chrome-call';
 import { useIsEnable, useOptions } from '../../public/react-use';
 import { getCurrentTabHost, getCurrentTab, getIsContentScriptEnabled } from '../../public/utils';
 import './style.css';
+import { getMessage } from '../../public/i18n';
 
 const useOptionsDependency = ['translateBlackListMode', 'translateHostList', 'historyBlackListMode', 'historyHostList', 'styleVarsList', 'styleVarsIndex'];
 
@@ -53,7 +54,7 @@ const PopupHeader = () => {
                     iconName='#icon-theme'
                     className='title-icons-enable'
                     onClick={() => handleThemeToggle()}
-                    title={getI18nMessage('popupSwitchToTheNextTheme')}
+                    title={getMessage('popupSwitchToTheNextTheme')}
                 />
                 <IconFont
                     iconName='#icon-MdTranslate'
@@ -64,7 +65,7 @@ const PopupHeader = () => {
                         isEnableTranslate,
                         'translateHostList'
                     )}
-                    title={isContentScriptEnabled? isEnableTranslate? getI18nMessage('popupDisableTranslate'): getI18nMessage('popupEnableTranslate'): getI18nMessage('popupNotAvailable')}
+                    title={isContentScriptEnabled? isEnableTranslate? getMessage('popupDisableTranslate'): getMessage('popupEnableTranslate'): getMessage('popupNotAvailable')}
                 />
                 <IconFont
                     iconName='#icon-MdHistory'
@@ -75,13 +76,13 @@ const PopupHeader = () => {
                         isEnableHistory,
                         'historyHostList'
                     )}
-                    title={isContentScriptEnabled? isEnableHistory? getI18nMessage('popupDisableHistory'): getI18nMessage('popupEnableHistory'): getI18nMessage('popupNotAvailable')}
+                    title={isContentScriptEnabled? isEnableHistory? getMessage('popupDisableHistory'): getMessage('popupEnableHistory'): getMessage('popupNotAvailable')}
                 />
                 <IconFont
                     iconName='#icon-MdSettings'
                     className='title-icons-enable'
                     onClick={openOptionsPage}
-                    title={getI18nMessage('popupOpenOptionsPage')}
+                    title={getMessage('popupOpenOptionsPage')}
                 />
             </div>
         </div>

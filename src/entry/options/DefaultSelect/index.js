@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { getI18nMessage } from '../../../public/chrome-call';
+import { getMessage } from '../../../public/i18n';
 import './style.css';
 
 const DefaultSelect = ({ message, onChange, value, options, optionValue, optionLabel }) => {
@@ -12,7 +12,7 @@ const DefaultSelect = ({ message, onChange, value, options, optionValue, optionL
     
     return (
         <div className='default-select'>
-            {getI18nMessage(message)}
+            {getMessage(message)}
             <select
                 value={value}
                 onChange={handleOnChange}

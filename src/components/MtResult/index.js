@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './style.css';
 import IconFont from '../IconFont';
 import SourceFavicon from '../SourceFavicon';
-import { getI18nMessage } from '../../public/chrome-call';
 import { resultToString } from '../../public/utils';
 import { LANG_EN } from '../../constants/langCode';
+import { getMessage } from '../../public/i18n';
 
 const MtResult = ({ source, status, result, text, translate, remove, readText, retry }) => {
     const [fold, setFold] = useState(false);
@@ -45,11 +45,11 @@ const MtResult = ({ source, status, result, text, translate, remove, readText, r
             <div className='ts-dividing-line' style={fold ? {display: 'none'} : {}}></div>
             <div className='ts-mt-result-result' style={fold ? {display: 'none'} : {}}>
                 {requesting ?
-                    getI18nMessage('wordRequesting') :
+                    getMessage('wordRequesting') :
                 !requestEnd ?
-                    getI18nMessage('contentTranslateAfterInput') :
+                    getMessage('contentTranslateAfterInput') :
                 error ?
-                    <>{getI18nMessage(`errorCode_${errorCode}`)}<span className='ts-button ts-retry' onClick={retry}>{getI18nMessage('wordRetry')}</span></> :
+                    <>{getMessage(`errorCode_${errorCode}`)}<span className='ts-button ts-retry' onClick={retry}>{getMessage('wordRetry')}</span></> :
                 <>
                     {result.phonetic && result.from === LANG_EN && <div style={{marginBottom: '10px'}}>
                         {result.phonetic}

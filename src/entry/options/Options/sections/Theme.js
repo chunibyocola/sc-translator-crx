@@ -1,11 +1,11 @@
 import React from 'react';
-import { getI18nMessage } from '../../../../public/chrome-call';
+import { getMessage } from '../../../../public/i18n';
 import CustomizeTheme from '../../CustomizeTheme';
 
 const Theme = ({ updateStorage, styleVarsList, styleVarsIndex }) => {
     return (
         <>
-            <h3>{getI18nMessage('optionsTheme')}</h3>
+            <h3>{getMessage('optionsTheme')}</h3>
             <div className='opt-item'>
                 <CustomizeTheme
                     styleVarsList={styleVarsList}

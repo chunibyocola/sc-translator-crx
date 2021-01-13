@@ -1,10 +1,10 @@
 import React from 'react';
-import { getI18nMessage } from '../../../../public/chrome-call';
+import { getMessage } from '../../../../public/i18n';
 
 const More = () => {
     return (
         <>
-            <h3>{getI18nMessage('optionsMoreFeaturesOrBugReports')}</h3>
+            <h3>{getMessage('optionsMoreFeaturesOrBugReports')}</h3>
             <div className='opt-item'>
                 <a
                     target='_blank'

@@ -2,10 +2,16 @@
     margin-bottom: 5px;
 }
 .color-selector-selected-color {
-    height: 20px;
+    height: 100%;
     width: 100%;
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 5px 0px;
+    box-sizing: border-box;
+    border: 2px solid #fff;
+}
+.color-selector-selected-color-outer {
+    box-sizing: border-box;
+    height: 24px;
+    width: 100%;
+    border: 2px solid #000;
 }
 .color-selector-opacity-slider {
     position: relative;
@@ -66,4 +72,7 @@
     width: 20px;
     display: inline-block;
     text-align: center;
+}
+.color-selector-adjust .ts-slider {
+    margin: 0;
 }

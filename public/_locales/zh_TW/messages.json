@@ -161,6 +161,21 @@
     "optionsResetSizeAndPosition": {
         "message": "重置大小與位置"
     },
+    "themePreset": {
+        "message": "預設"
+    },
+    "themeTextColor": {
+        "message": "文字顏色"
+    },
+    "themeBackgroundColor": {
+        "message": "背景顏色"
+    },
+    "themeThemeName": {
+        "message": "主題名稱"
+    },
+    "themeSaveColor": {
+        "message": "保存顏色"
+    },
     "contentInputHere": {
         "message": "在此輸入"
     },

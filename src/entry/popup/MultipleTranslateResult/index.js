@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { sendTranslate, sendAudio } from '../../../public/send';
 import MtAddSource from '../../../components/MtAddSource';
 import MtResult from '../../../components/MtResult';
-import { getI18nMessage } from '../../../public/chrome-call';
 import { mtLangCode } from '../../../constants/langCode';
+import { getMessage } from '../../../public/i18n';
 
 const MultipleTranslateResult = () => {
     const { focusRawText } = useSelector(state => state.resultBoxState);
@@ -62,7 +62,7 @@ const MultipleTranslateResult = () => {
             />
             <div className='ts-mt-results ts-scrollbar'>
                 {translations.length === 0 ? 
-                    <div className='ts-mt-result-add-translate-source'>{getI18nMessage('sentenceAddTranslateSource')}</div> :
+                    <div className='ts-mt-result-add-translate-source'>{getMessage('sentenceAddTranslateSource')}</div> :
                 translations.map(({ source, status, result }) => (
                     <MtResult
                         source={source}

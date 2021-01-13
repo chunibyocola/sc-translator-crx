@@ -1,9 +1,9 @@
 import React from 'react';
 import IconFont from '../IconFont';
-import { getI18nMessage } from '../../public/chrome-call';
 import { LANG_EN } from '../../constants/langCode';
 import { resultToString } from '../../public/utils';
 import './style.css';
+import { getMessage } from '../../public/i18n';
 
 const TsResult = ({ resultObj, status, readText, source, retry }) => {
     const { text, result, dict, phonetic, from, to } = resultObj;
@@ -12,11 +12,11 @@ const TsResult = ({ resultObj, status, readText, source, retry }) => {
     return (
         <div className='ts-result ts-scrollbar'>
             {requesting ?
-                getI18nMessage('wordRequesting') :
+                getMessage('wordRequesting') :
             !requestEnd ?
-                getI18nMessage('contentTranslateAfterInput'):
+                getMessage('contentTranslateAfterInput'):
             error ?
-                <>{getI18nMessage(`errorCode_${errorCode}`)}<span className='ts-button ts-retry' onClick={retry}>{getI18nMessage('wordRetry')}</span></> :
+                <>{getMessage(`errorCode_${errorCode}`)}<span className='ts-button ts-retry' onClick={retry}>{getMessage('wordRetry')}</span></> :
             <>
                 <div className='tss-result'>
                     <span>

@@ -1,14 +1,14 @@
 import React from 'react';
-import { getI18nMessage } from '../../../../public/chrome-call';
+import { getMessage } from '../../../../public/i18n';
 import HostList from '../../HostList';
 import OptionToggle from '../../OptionToggle';
 
 const History = ({ updateStorage, historyBlackListMode, historyHostList }) => {
     return (
         <>
-            <h3>{getI18nMessage('optionsHistory')}</h3>
+            <h3>{getMessage('optionsHistory')}</h3>
             <div className='opt-item'>
-                {getI18nMessage('optionsDomainfilter')}
+                {getMessage('optionsDomainfilter')}
                 <div className='child-mt10-ml30'>
                     <OptionToggle
                         id='history-black-list-mode-checkbox'
