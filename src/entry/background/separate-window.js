@@ -6,9 +6,9 @@ import { listenOptionsChange } from "../../public/options";
 import { getQueryString } from "../../public/translate/utils";
 import { getIsContentScriptEnabled } from "../../public/utils";
 
-const initSize = { width: 286, height: 439 };
+const initSize = { width: 286, height: 439, left: 550, top: 250 };
 let rememberStwSizeAndPosition = false;
-let stwSizeAndPosition = { width: 286, height: 439, left: 550, top: 250 };
+let stwSizeAndPosition = { ...initSize };
 
 let tabId = null;
 let windowId = null;
