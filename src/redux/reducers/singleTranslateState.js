@@ -22,24 +22,10 @@ const singleTranslateState = (state = initState, { type, payload }) => {
             return { ...state, status: { requesting: false, requestEnd: true, error: false }, result: payload.result, resultFromHistory: false };
         case types.ST_REQUEST_ERROR:
             return { ...state, status: { requesting: false, requestEnd: true, error: true, errorCode: payload.errorCode }, result: {}, resultFromHistory: false };
-        case types.ST_SET_SOURCE:
-            return { ...state, status: { requesting: false, requestEnd: false, error: false }, source: payload.source, from: '', to: '', translateId: state.translateId + 1 };
         case types.ST_SET_FROM_AND_TO:
             return { ...state, status: { requesting: false, requestEnd: false, error: false }, from: payload.from, to: payload.to, translateId: state.translateId + 1 };
-        case types.ST_SET_FROM:
-            return { ...state, from: payload.from };
-        case types.ST_SET_TO:
-            return { ...state, to: payload.to };
         case types.ST_INIT:
             return { ...state, source: payload.source, from: payload.from, to: payload.to };
-        case types.ST_SET_RESULT_FROM_HISTORY:
-            return { ...state, status: { requesting: false, requestEnd: true, error: false }, result: payload.result, resultFromHistory: true };
-        case types.ST_ADD_HISTORY:
-            return { ...state, history: [ ...state.history, payload.result ] };
-        case types.ST_REMOVE_HISTORY:
-            return { ...state, history: state.history.filter((v, i) => (i !== payload.historyIndex)) };
-        case types.ST_RETRY:
-            return { ...state, status: { requesting: false, requestEnd: false, error: false } };
         case types.ST_SET_SOURCE_FROM_TO:
             return { ...state, status: { requesting: false, requestEnd: false, error: false }, source: payload.source, from: payload.from, to: payload.to, translateId: state.translateId + 1 };
         default: return state;

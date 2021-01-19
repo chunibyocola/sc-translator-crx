@@ -29,7 +29,7 @@ const init = (options) => {
   ReactDOM.render(
     <Provider store={store}>
       <TsBtn multipleTranslateMode={options.multipleTranslateMode} />
-      {!options.multipleTranslateMode  && <TsHistory />}
+      <TsHistory />
       <ResultBox multipleTranslateMode={options.multipleTranslateMode} />
     </Provider>, 
     app

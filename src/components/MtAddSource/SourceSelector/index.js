@@ -1,25 +1,21 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import IconFont from '../../IconFont';
-import { mtAddSource } from '../../../redux/actions/multipleTranslateActions';
-import { useDispatch } from 'react-redux';
 import { translateSource } from '../../../constants/translateSource';
 import SourceFavicon from '../../SourceFavicon';
 import './style.css';
 
-const SourceSelector = ({ show, hideCallback, translations }) => {
+const SourceSelector = ({ show, hideCallback, translations, addSource }) => {
     const [sourceList, setSourceList] = useState([]);
 
-    const dispatch = useDispatch();
-
     const handleAddSourceUnshift = useCallback((source) => {
-        dispatch(mtAddSource({ source, addType: 1 }));
+        addSource(source, 1);
         hideCallback();
-    }, [dispatch, hideCallback]);
+    }, [addSource, hideCallback]);
 
     const handleAddSourcePush = useCallback((source) => {
-        dispatch(mtAddSource({ source, addType: 0 }));
+        addSource(source, 0);
         hideCallback();
-    }, [dispatch, hideCallback]);
+    }, [addSource, hideCallback]);
 
     useEffect(() => {
         setSourceList(translateSource.filter(v => translations.findIndex(v1 => v1.source === v.source) < 0));

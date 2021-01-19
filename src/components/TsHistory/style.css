@@ -18,13 +18,13 @@
     transform: translate3d(0px, 0px, 0px);
     transition: transform 0.3s ease-in 0s;
 }
-.ts-history-show .tsh-unfold {
+.ts-history-show .ts-history-unfold {
     opacity: 0;
     right: 10px;
     pointer-events: none;
     transition: right 0s ease 0s, opacity 0s ease 0s;
 }
-.tsh-unfold {
+.ts-history-unfold {
     opacity: 1;
     position: fixed;
     top: 30%;
@@ -43,11 +43,12 @@
     transition: right 0.25s ease-in 0.2s, opacity 0.35s ease-in 0.2s;
     color: #000;
 }
-.tsh-unfold .tsh-unfold-text {
+.ts-history-unfold .ts-history-unfold-text {
     display: inline-block;
     font-size: 12px;
     transform: rotate(-180deg);
     writing-mode: tb-rl;
+    font-weight: bold;
 }
 .ts-history-head {
     position: absolute;
@@ -70,60 +71,7 @@
 .ts-history-norecord {
     margin: 20px;
 }
-.ts-history-item {
-    display: flex;
-    width: 100%;
-    height: 50px;
-    overflow: hidden;
-    font-size: 14px;
-}
-.ts-history-item:hover {
-    background: var(--bg-item-hover);
-}
-.tshi-content {
-    color: var(--text-normal);
-    box-sizing: border-box;
-    padding-left: 5px;
-    width: 150px;
-    cursor: pointer;
-    height: 50px;
-}
-.tshi-content-text {
-    height: 25px;
-    line-height: 25px;
-    overflow: hidden;
-    text-overflow:ellipsis;
-    white-space: nowrap;
-}
-.tshi-content-result {
-    height: 25px;
-    line-height: 25px;
-    overflow: hidden;
-    text-overflow:ellipsis;
-    white-space: nowrap;
-}
-.tshi-icons {
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    height: 50px;
-    width: 50px;
-}
-.tshi-icons .ts-iconfont {
-    color: #555;
-    border-radius: 50%;
-    background: #ccc;
-    padding: 3px;
-    font-size: 15px !important;
-    cursor: pointer;
-}
-.tshi-icons .ts-iconfont:hover {
-    background-color: #bbb;
-}
-.tshi-icons .ts-iconfont:last-child {
-    margin-left: 2px;
-}
-.tshh-icons {
+.ts-history-head-icons {
     float: right;
     margin-right: 5px;
     margin-top: 0px;
@@ -131,7 +79,7 @@
     opacity: 0.6;
     cursor: pointer;
 }
-.tshh-icons-check {
+.ts-history-head-icons-check {
     transform: rotate(-45deg);
     opacity: 1;
 }

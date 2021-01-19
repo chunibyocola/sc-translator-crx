@@ -1,23 +1,39 @@
-import React, { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import TsHistoryItem from './TsHistoryItem';
+import React, { useState, useRef, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import IconFont from '../IconFont';
 import { useIsEnable } from '../../public/react-use';
 import './style.css';
 import { getMessage } from '../../public/i18n';
+import HistoryResultPanel from './HistoryResultPanel';
+import HistoryItem from './HistoryItem';
+import { removeHistory } from '../../redux/actions/translateHistoryActions';
 
 const TsHistory = () => {
     const [pinning, setPinning] = useState(false);
     const [fold, setFold] = useState(true);
+    const [panelTranslations, setPanelTranslations] = useState([]);
+    const [panelPosition, setPanelPosition] = useState({ x: 195, y: 5 });
+    const [hovering, setHovering] = useState(false);
 
     const historyEle = useRef(null);
 
-    const { history } = useSelector(state => state.singleTranslateState);
+    const translateHistoryState = useSelector(state => state.translateHistoryState);
 
     const isEnableHistory = useIsEnable('history', window.location.host);
     const isEnableTranslate = useIsEnable('translate', window.location.host);
 
-    let foldTimeDelay;
+    const foldTimeDelay = useRef(null);
+
+    const dispatch = useDispatch();
+
+    const handleShowResultPanel = useCallback((translations, y) => {
+        setPanelPosition({ x: 195, y });
+        setPanelTranslations(translations);
+    }, []);
+
+    const handleRemoveHistory = useCallback((translateId) => {
+        dispatch(removeHistory({ translateId }));
+    }, [dispatch]);
 
     return (
         <div
@@ -25,28 +41,35 @@ const TsHistory = () => {
             style={{display: isEnableHistory && isEnableTranslate ? 'block' : 'none'}}
             ref={historyEle}
             onMouseEnter={() => {
+                setHovering(true);
+
                 if (pinning) return;
-                if (foldTimeDelay) clearTimeout(foldTimeDelay);
+                if (foldTimeDelay.current) clearTimeout(foldTimeDelay.current);
                 setFold(false);
             }}
             onMouseLeave={() => {
-                foldTimeDelay = setTimeout(() => {
+                setHovering(false);
+                setPanelTranslations([]);
+
+                foldTimeDelay.current = setTimeout(() => {
                     if (!pinning) {
                         setFold(true);
                     }
                 }, 500);
             }}
+            onMouseUp={e => e.stopPropagation()}
+            onMouseDown={e => e.stopPropagation()}
         >
             <div
-                className={`tsh-unfold`}
+                className='ts-history-unfold'
             >
                 <IconFont iconName='#icon-GoChevronRight' />
-                <span className='tsh-unfold-text'>ScTranslator</span>
+                <span className='ts-history-unfold-text'>Sc</span>
             </div>
             <div className='ts-history-head'>
                 {getMessage('contentHistoryTitle')}
                 <div
-                    className={`tshh-icons ${pinning ? 'tshh-icons-check' : ''}`}
+                    className={`ts-history-head-icons ${pinning ? 'ts-history-head-icons-check' : ''}`}
                     onClick={() => setPinning(!pinning)}
                     onMouseUp={e => e.stopPropagation()}
                     onMouseDown={e => e.stopPropagation()}
@@ -55,13 +78,14 @@ const TsHistory = () => {
                 </div>
             </div>
             <div className='ts-history-content ts-scrollbar'>
-                {history.length === 0 ?
+                {translateHistoryState.length === 0 ?
                     (<div className='ts-history-norecord'>
                         {getMessage('contentNoRecord')}
                     </div>) :
-                history.map((v, i) => (
-                    <TsHistoryItem result={v} index={i} key={i} />
+                translateHistoryState.map((v) => (
+                    <HistoryItem historyItem={v} key={v.translateId} showResultPanel={handleShowResultPanel} removeHistory={handleRemoveHistory} />
                 ))}
+                <HistoryResultPanel translations={panelTranslations} position={panelPosition} show={panelTranslations?.length > 0 && hovering} />
             </div>
         </div>
     );

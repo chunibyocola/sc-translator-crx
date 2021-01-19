@@ -3,7 +3,7 @@ import IconFont from '../IconFont';
 import SourceSelector from './SourceSelector';
 import './style.css';
 
-const MtAddSource = ({ translations }) => {
+const MtAddSource = ({ translations, addSource }) => {
     const [showSourceSelector, setShowSourceSelector] = useState(false);
 
     const plusOnClick = useCallback(() => {
@@ -25,6 +25,7 @@ const MtAddSource = ({ translations }) => {
                 show={showSourceSelector}
                 hideCallback={hideCallback}
                 translations={translations}
+                addSource={addSource}
             />
         </div>
     );

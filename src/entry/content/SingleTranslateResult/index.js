@@ -7,56 +7,48 @@ import RawText from '../../../components/RawText';
 import { langCode } from '../../../constants/langCode';
 import {
     stRequestStart,
-    stAddHistory,
     stSetFromAndTo,
     stSetText,
     stRequestFinish,
     stRequestError,
-    stRetry,
     stSetSourceFromTo
 } from '../../../redux/actions/singleTranslateActions';
 import TsVia from '../../../components/TsVia';
 import { switchTranslateSource } from '../../../public/switch-translate-source';
+import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/actions/translateHistoryActions';
+import { useIsEnable } from '../../../public/react-use';
 
 const SingleTranslateResult = ({ showRtAndLs }) => {
-    const { text, source, from, to, status, result, history, translateId } = useSelector(state => state.singleTranslateState);
-    const { requesting, requestEnd } = status;
+    const { text, source, from, to, status, result, translateId } = useSelector(state => state.singleTranslateState);
 
     const { focusRawText } = useSelector(state => state.resultBoxState);
 
     const translateIdRef = useRef(0);
+    const oldTranslateIdRef = useRef(0);
 
     const dispatch = useDispatch();
 
+    const isEnableHistory = useIsEnable('history', window.location.host);
+
     translateIdRef.current = translateId;
 
-    const handleGetHistory = useCallback((text, source, from, to) => history.find(v => (
-        v.text === text &&
-        v.translation.source === source &&
-        v.translation.from === from &&
-        v.translation.to === to
-    )), [history]);
-
     const handleTranslate = useCallback(() => {
-        const tempResult = handleGetHistory(text, source, from, to);
-        if (tempResult) {
-            dispatch(stRequestFinish({ result: tempResult }));
-            return;
-        }
-
         dispatch(stRequestStart());
 
         sendTranslate(text, { source, from, to, translateId: translateIdRef.current }, (result) => {
             if (result.translateId !== translateIdRef.current) { return; }
 
             if (result.suc) {
-                dispatch(stAddHistory({ result: { ...result.data, translation: { source, from, to } } }));
+                dispatch(updateHistoryFinish({ translateId: result.translateId, source, result: result.data }));
                 dispatch(stRequestFinish({ result: result.data }));
             }
-            else dispatch(stRequestError({ errorCode: result.data.code }));
+            else {
+                dispatch(updateHistoryError({ translateId: result.translateId, source, errorCode: result.data.code }));
+                dispatch(stRequestError({ errorCode: result.data.code }));
+            }
         });
 
-    }, [dispatch, text, source, from, to, handleGetHistory]);
+    }, [dispatch, text, source, from, to]);
 
     const handleSourceChange = useCallback((targetSource) => {
         dispatch(stSetSourceFromTo(switchTranslateSource(targetSource, { source, from, to })));
@@ -75,12 +67,19 @@ const SingleTranslateResult = ({ showRtAndLs }) => {
     }, []);
 
     const handleRetry = useCallback(() => {
-        dispatch(stRetry());
-    }, [dispatch]);
+        handleTranslate();
+    }, [handleTranslate]);
 
     useEffect(() => {
-        !requestEnd && !requesting && text && handleTranslate();
-    }, [requestEnd, requesting, text, handleTranslate]);
+        if (oldTranslateIdRef.current === translateId) { return; }
+
+        if (text) {
+            isEnableHistory && dispatch(addHistory({ translateId, text, sourceList: [source] }));
+            handleTranslate();
+        }
+
+        oldTranslateIdRef.current = translateId;
+    }, [text, handleTranslate, dispatch, translateId, source, isEnableHistory]);
 
     return (
         <>

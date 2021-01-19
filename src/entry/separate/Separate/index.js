@@ -8,7 +8,7 @@ import RawText from '../../../components/RawText';
 import { mtLangCode } from '../../../constants/langCode';
 import { openOptionsPage, setLocalStorage } from '../../../public/chrome-call';
 import { sendAudio, sendTranslate } from '../../../public/send';
-import { mtRemoveSource, mtRequestError, mtRequestFinish, mtRequestStart, mtRetry, mtSetFromAndTo, mtSetText } from '../../../redux/actions/multipleTranslateActions';
+import { mtAddSource, mtRemoveSource, mtRequestError, mtRequestFinish, mtRequestStart, mtSetFromAndTo, mtSetText } from '../../../redux/actions/multipleTranslateActions';
 import './style.css';
 import '../../../components/PopupHeader/style.css';
 import { useOptions } from '../../../public/react-use';
@@ -21,6 +21,7 @@ const Separate = () => {
     const { focusRawText } = useSelector(state => state.resultBoxState);
 
     const translateIdRef = useRef(0);
+    const oldTranslateIdRef = useRef(0);
 
     const dispatch = useDispatch();
 
@@ -49,8 +50,21 @@ const Separate = () => {
     }, [dispatch]);
 
     const handleRetry = useCallback((source) => {
-        dispatch(mtRetry({ source }));
-    }, [dispatch]);
+        handleTranslate(source);
+    }, [handleTranslate]);
+
+    const handleAddSource = useCallback((source, addType) => {
+        dispatch(mtAddSource({ source, addType }));
+        text && handleTranslate(source);
+    }, [dispatch, text, handleTranslate]);
+
+    useEffect(() => {
+        if (oldTranslateIdRef.current === translateId) { return; }
+
+        text && translations.map(({ source }) => (handleTranslate(source)));
+
+        oldTranslateIdRef.current = translateId;
+    }, [translateId, text, handleTranslate, translations, dispatch]);
 
     const { styleVarsList, styleVarsIndex, rememberStwSizeAndPosition } = useOptions(useOptionsDependency);
 
@@ -123,14 +137,13 @@ const Separate = () => {
                             result={result}
                             key={source}
                             text={text}
-                            translate={() => handleTranslate(source)}
                             remove={() => handleRemoveSource(source)}
                             readText={(text, from) => sendAudio(text, { source, from })}
                             retry={() => handleRetry(source)}
                         />
                     ))}
                 </div>
-                <MtAddSource translations={translations} />
+                <MtAddSource translations={translations} addSource={handleAddSource} />
             </div>
         </div>
     );

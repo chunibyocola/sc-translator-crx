@@ -5,7 +5,7 @@ import { sendAudio, sendTranslate } from '../../../public/send';
 import RawText from '../../../components/RawText';
 import TsResult from '../../../components/TsResult';
 import { langCode } from '../../../constants/langCode';
-import { stRequestFinish, stRequestStart, stRequestError, stSetFromAndTo, stSetText, stRetry, stSetSourceFromTo } from '../../../redux/actions/singleTranslateActions';
+import { stRequestFinish, stRequestStart, stRequestError, stSetFromAndTo, stSetText, stSetSourceFromTo } from '../../../redux/actions/singleTranslateActions';
 import TsVia from '../../../components/TsVia';
 import { switchTranslateSource } from '../../../public/switch-translate-source';
 
@@ -16,6 +16,7 @@ const SingleTranslateResult = () => {
     const { requesting, requestEnd } = status;
 
     const translateIdRef = useRef(0);
+    const oldTranslateIdRef = useRef(0);
 
     translateIdRef.current = translateId;
 
@@ -48,12 +49,16 @@ const SingleTranslateResult = () => {
     }, [dispatch]);
 
     const handleRetry = useCallback(() => {
-        dispatch(stRetry());
-    }, [dispatch]);
+        handleTranslate();
+    }, [handleTranslate]);
 
     useEffect(() => {
-        !requestEnd && !requesting && text && handleTranslate();
-    }, [requestEnd, requesting, text, handleTranslate]);
+        if (oldTranslateIdRef.current === translateId) { return; }
+
+        text && handleTranslate();
+
+        oldTranslateIdRef.current = translateId;
+    }, [requestEnd, requesting, text, handleTranslate, translateId]);
 
     return (
         <>

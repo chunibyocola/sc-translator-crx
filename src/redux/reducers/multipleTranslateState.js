@@ -25,7 +25,15 @@ const multipleTranslateState = (state = initState, { type, payload }) => {
         case types.MT_REMOVE_SOURCE:
             return { ...state, translations: state.translations.filter(v => v.source !== payload.source) };
         case types.MT_SET_TEXT:
-            return { ...state, text: payload.text, translations: state.translations.map(v => ({ ...v, status: { requesting: false, requestEnd: false, error: false } })), translateId: state.translateId + 1 };
+            return {
+                ...state,
+                text: payload.text,
+                translations: state.translations.map(v => ({
+                    ...v,
+                    status: { requesting: false, requestEnd: false, error: false }
+                })),
+                translateId: state.translateId + 1
+            };
         case types.MT_REQUEST_START:
             return { ...state, translations: state.translations.map((v) => {
                 if (v.source === payload.source) {
@@ -63,12 +71,17 @@ const multipleTranslateState = (state = initState, { type, payload }) => {
                 }
                 return v;
             }) };
-        case types.MT_SET_FROM:
-            return { ...state, from: payload.from };
-        case types.MT_SET_TO:
-            return { ...state, to: payload.to };
         case types.MT_SET_FROM_AND_TO:
-            return { ...state, from: payload.from, to: payload.to, translations: state.translations.map(v => ({ ...v, status: { requesting: false, requestEnd: false, error: false } })), translateId: state.translateId + 1 };
+            return {
+                ...state,
+                from: payload.from,
+                to: payload.to,
+                translations: state.translations.map(v => ({
+                    ...v,
+                    status: { requesting: false, requestEnd: false, error: false }
+                })),
+                translateId: state.translateId + 1
+            };
         case types.MT_INIT:
             return { ...state, from: payload.from, to: payload.to, translations: payload.sourceList.map(v => ({
                 source: v,
@@ -80,19 +93,6 @@ const multipleTranslateState = (state = initState, { type, payload }) => {
                 },
                 result: {}
             })) };
-        case types.MT_RETRY:
-            return { ...state, translations: state.translations.map((v) => {
-                if (v.source === payload.source) {
-                    v.status = {
-                        requesting: false,
-                        requestEnd: false,
-                        error: false,
-                        errorCode: ''
-                    };
-                    v.result = {};
-                }
-                return v;
-            }) };
         default:
             return state;
     }

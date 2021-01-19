@@ -1,0 +1,16 @@
+.ts-history-result-panel-wrap {
+    padding-left: 10px;
+    position: fixed;
+}
+.ts-history-result-panel {
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    padding: 4px 4px 1px 4px;
+    width: 200px;
+    background: var(--bg-total);
+    border-radius: 5px;
+    user-select: text;
+    max-height: calc(100vh - 20px);
+}
+.ts-hr-result {
+    width: 100%;
+}

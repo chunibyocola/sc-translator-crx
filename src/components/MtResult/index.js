@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './style.css';
 import IconFont from '../IconFont';
 import SourceFavicon from '../SourceFavicon';
@@ -6,14 +6,10 @@ import { resultToString } from '../../public/utils';
 import { LANG_EN } from '../../constants/langCode';
 import { getMessage } from '../../public/i18n';
 
-const MtResult = ({ source, status, result, text, translate, remove, readText, retry }) => {
+const MtResult = ({ source, status, result, text, remove, readText, retry }) => {
     const [fold, setFold] = useState(false);
 
     const { requesting, requestEnd, error, errorCode } = status;
-
-    useEffect(() => {
-        !requesting && !requestEnd && text && translate();
-    }, [requesting, requestEnd, text, translate]);
 
     return (
         <div className='ts-mt-result'>
