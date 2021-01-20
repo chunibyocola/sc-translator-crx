@@ -3,10 +3,11 @@ import { langCode } from './lang-code';
 import { RESULT_ERROR, LANGUAGE_NOT_SOPPORTED } from '../error-codes';
 import { detect } from './detect';
 
-export const translate = async ({ text, from = '', to = '', userLang = '', autoDetect = true }) => {
-    userLang = userLang || 'en';
+export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '', autoDetect = true }) => {
+    preferredLanguage = preferredLanguage || 'en';
+    secondPreferredLanguage = secondPreferredLanguage || 'en';
     from = from || (autoDetect && !to ? await detect({ text }) : 'auto');
-    to = to || (from === userLang ? 'en' : userLang);
+    to = to || (from === preferredLanguage ? secondPreferredLanguage : preferredLanguage);
 
     if (!(from in langCode) || !(to in langCode)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
 
@@ -15,7 +16,7 @@ export const translate = async ({ text, from = '', to = '', userLang = '', autoD
         client: 'gtx',
         sl: from,
         tl: to,
-        hl: userLang || to,
+        hl: preferredLanguage || to,
         dt: ['at', 'bd', 'ex', 'ld', 'md', 'qca', 'rw', 'rm', 'ss', 't'],
         ie: 'UTF-8',
         oe: 'UTF-8',

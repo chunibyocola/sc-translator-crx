@@ -23,6 +23,7 @@ const defaultOptions = {
     multipleTranslateTo: '',
     enablePdfViewer: false,
     preferredLanguage: LANG_EN,
+    secondPreferredLanguage: LANG_EN,
     styleVarsList: styleVarsList,
     styleVarsIndex: 0,
     btnPosition: { x: 5, y: 5 },

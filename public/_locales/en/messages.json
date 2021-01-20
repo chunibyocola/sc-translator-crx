@@ -3,7 +3,7 @@
         "message": "ScTranslator"
     },
     "extDescription": {
-        "message": "Focus on providing a great inline web translation experience. Base on Google translate and Bing translate."
+        "message": "Focus on providing a great inline web translation experience."
     },
     "extActivateExtensionDescription": {
         "message": "Activate the extension"
@@ -120,7 +120,7 @@
         "message": "Preferred Language"
     },
     "optionsPreferredLanguageDescription": {
-        "message": "When the target language of translation is \"auto\", it will be translated into the preferred language. When the language of the text is the same as the preferred language, it will be translated into English."
+        "message": "When the target language of translation is \"auto\", it will be translated into the \"preferred language\". When the language of the text is the same as the \"preferred language\", it will be translated into \"second preferred Language\"."
     },
     "optionsKeyboardShortcut": {
         "message": "Keyboard shortcut"
@@ -160,6 +160,9 @@
     },
     "optionsResetSizeAndPosition": {
         "message": "Reset size and position"
+    },
+    "optionsSecondPreferredLanguage": {
+        "message": "Second preferred Language"
     },
     "themePreset": {
         "message": "Preset"

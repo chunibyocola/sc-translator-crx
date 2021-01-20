@@ -40,7 +40,8 @@ const Translate = ({
     defaultTranslateTo,
     translateBlackListMode,
     translateHostList,
-    respondToSeparateWindow
+    respondToSeparateWindow,
+    secondPreferredLanguage
 }) => {
     return (
         <>
@@ -125,6 +126,14 @@ const Translate = ({
                         message='optionsPreferredLanguage'
                         value={preferredLanguage}
                         onChange={value => updateStorage('preferredLanguage', value)}
+                        options={preferredLangCode[userLanguage]}
+                        optionValue='code'
+                        optionLabel='name'
+                    />
+                    <DefaultSelect
+                        message='optionsSecondPreferredLanguage'
+                        value={secondPreferredLanguage}
+                        onChange={value => updateStorage('secondPreferredLanguage', value)}
                         options={preferredLangCode[userLanguage]}
                         optionValue='code'
                         optionLabel='name'

@@ -22,7 +22,8 @@ export const translate = ({ source, translateId, requestObj }, cb) => {
 			translate = bing.translate;
 			requestObj.from = bingSwitchLangCode(requestObj.from);
 			requestObj.to = bingSwitchLangCode(requestObj.to);
-			requestObj.userLang = bingSwitchLangCode(requestObj.userLang);
+			requestObj.preferredLanguage = bingSwitchLangCode(requestObj.preferredLanguage);
+			requestObj.secondPreferredLanguage = bingSwitchLangCode(requestObj.secondPreferredLanguage);
 			break;
 		case MOJIDICT_COM:
 			translate = mojidict.translate;
@@ -31,7 +32,8 @@ export const translate = ({ source, translateId, requestObj }, cb) => {
 			translate = baidu.translate;
 			requestObj.from = baiduSwitchLangCode(requestObj.from);
 			requestObj.to = baiduSwitchLangCode(requestObj.to);
-			requestObj.userLang = baiduSwitchLangCode(requestObj.userLang);
+			requestObj.preferredLanguage = baiduSwitchLangCode(requestObj.preferredLanguage);
+			requestObj.secondPreferredLanguage = baiduSwitchLangCode(requestObj.secondPreferredLanguage);
 			break;
 		default:
 			let err = new Error();

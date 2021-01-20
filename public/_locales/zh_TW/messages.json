@@ -3,7 +3,7 @@
         "message": "Sc翻譯"
     },
     "extDescription": {
-        "message": "專注於提供一個良好的網頁內劃詞翻譯體驗。基於 Google 翻譯和 Bing 翻譯。"
+        "message": "專注於提供一個良好的網頁內劃詞翻譯體驗。"
     },
     "extActivateExtensionDescription": {
         "message": "啟用擴充功能"
@@ -120,7 +120,7 @@
         "message": "首選語言"
     },
     "optionsPreferredLanguageDescription": {
-        "message": "當翻譯的目標語種為“自動選擇”時，會翻譯為首選語種。當文本的語種與首選語種相同時，將會翻譯為英語。"
+        "message": "當翻譯的目標語言為“自動選擇”時，會翻譯為“首選語言”。當文本的語言與“首選語言”相同時，將會翻譯為“次選語言”。"
     },
     "optionsKeyboardShortcut": {
         "message": "鍵盤快捷鍵"
@@ -160,6 +160,9 @@
     },
     "optionsResetSizeAndPosition": {
         "message": "重置大小與位置"
+    },
+    "optionsSecondPreferredLanguage": {
+        "message": "次選語言"
     },
     "themePreset": {
         "message": "預設"

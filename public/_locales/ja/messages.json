@@ -3,7 +3,7 @@
         "message": "Sc翻訳"
     },
     "extDescription": {
-        "message": "優れたインラインウェブ翻訳体験を提供することに焦点を当てています。 Google 翻訳と Bing 翻訳に基づいています。"
+        "message": "優れたインラインウェブ翻訳体験を提供することに焦点を当てています。"
     },
     "extActivateExtensionDescription": {
         "message": "拡張機能のアクティブ化"
@@ -120,7 +120,7 @@
         "message": "優先言語"
     },
     "optionsPreferredLanguageDescription": {
-        "message": "翻訳対象の言語が「自動選択」の場合、優先言語に翻訳されます。テキストの言語が優先言語と同じ場合、英語に翻訳されます。"
+        "message": "翻訳の目標言語が「自動選択」の場合、「優先言語」に翻訳されます。テキストの言語が「優先言語」と同じ場合、「第二優先言語」に翻訳されます。"
     },
     "optionsKeyboardShortcut": {
         "message": "キーボードショートカット"
@@ -160,6 +160,9 @@
     },
     "optionsResetSizeAndPosition": {
         "message": "サイズと位置をリセットする"
+    },
+    "optionsSecondPreferredLanguage": {
+        "message": "第二優先言語"
     },
     "themePreset": {
         "message": "プリセット"

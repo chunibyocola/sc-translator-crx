@@ -12,15 +12,18 @@ import { sendTextToSeparateWindow } from './separate-window';
 let defaultAudioSource = GOOGLE_COM;
 let useDotCn = false;
 let preferredLanguage = LANG_EN;
-getLocalStorage(['defaultAudioSource', 'useDotCn', 'preferredLanguage'], (storage) => {
+let secondPreferredLanguage = LANG_EN;
+getLocalStorage(['defaultAudioSource', 'useDotCn', 'preferredLanguage', 'secondPreferredLanguage'], (storage) => {
     defaultAudioSource = storage.defaultAudioSource;
     useDotCn = storage.useDotCn;
     preferredLanguage = storage.preferredLanguage;
+    secondPreferredLanguage = storage.secondPreferredLanguage;
 });
-listenOptionsChange(['defaultAudioSource', 'useDotCn', 'preferredLanguage'], (changes) => {
+listenOptionsChange(['defaultAudioSource', 'useDotCn', 'preferredLanguage', 'secondPreferredLanguage'], (changes) => {
     'defaultAudioSource' in changes && (defaultAudioSource = changes.defaultAudioSource);
     'useDotCn' in changes && (useDotCn = changes.useDotCn);
     'preferredLanguage' in changes && (preferredLanguage = changes.preferredLanguage);
+    'secondPreferredLanguage' in changes && (secondPreferredLanguage = changes.secondPreferredLanguage);
 });
 
 chrome.runtime.onMessage.addListener(
@@ -30,7 +33,8 @@ chrome.runtime.onMessage.addListener(
             case types.SCTS_TRANSLATE:
                 if (payload) {
                     payload.requestObj.com = !useDotCn;
-                    payload.requestObj.userLang = preferredLanguage;
+                    payload.requestObj.preferredLanguage = preferredLanguage;
+                    payload.requestObj.secondPreferredLanguage = secondPreferredLanguage;
                     translate(payload, (result) => {
                         sendResponse(result);
                     });

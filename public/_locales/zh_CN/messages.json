@@ -3,7 +3,7 @@
         "message": "Sc翻译"
     },
     "extDescription": {
-        "message": "专注于提供一个良好的网页内划词翻译体验。基于 Google 翻译和 Bing 翻译。"
+        "message": "专注于提供一个良好的网页内划词翻译体验。"
     },
     "extActivateExtensionDescription": {
         "message": "激活扩展"
@@ -120,7 +120,7 @@
         "message": "首选语言"
     },
     "optionsPreferredLanguageDescription": {
-        "message": "当翻译的目标语种为“自动选择”时，会翻译为首选语种。当文本的语种与首选语种相同时，将会翻译为英语。"
+        "message": "当翻译的目标语言为“自动选择”时，会翻译为“首选语言”。当文本的语言与“首选语言”相同时，将会翻译为“次选语言”。"
     },
     "optionsKeyboardShortcut": {
         "message": "快捷键"
@@ -160,6 +160,9 @@
     },
     "optionsResetSizeAndPosition": {
         "message": "重置大小与位置"
+    },
+    "optionsSecondPreferredLanguage": {
+        "message": "次选语言"
     },
     "themePreset": {
         "message": "预设"

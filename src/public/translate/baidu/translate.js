@@ -4,10 +4,11 @@ import { detect } from './detect';
 import { RESULT_ERROR, LANGUAGE_NOT_SOPPORTED } from '../error-codes';
 import { langCode } from './lang-code';
 
-export const translate = async ({ text, from = '', to = '', userLang = '' }) => {
-    userLang = userLang || 'en';
+export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '' }) => {
+    preferredLanguage = preferredLanguage || 'en';
+    secondPreferredLanguage = secondPreferredLanguage || 'en';
     from = from || await detect({ text });
-    to = to || (from === userLang ? 'en' : userLang);
+    to = to || (from === preferredLanguage ? secondPreferredLanguage : preferredLanguage);
 
     if (!(from in langCode) || !(to in langCode)) { throw getError(LANGUAGE_NOT_SOPPORTED); };
 

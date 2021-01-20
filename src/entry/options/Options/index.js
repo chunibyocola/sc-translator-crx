@@ -38,6 +38,7 @@ const Options = () => {
         multipleTranslateTo,
         enablePdfViewer,
         preferredLanguage,
+        secondPreferredLanguage,
         styleVarsList,
         styleVarsIndex,
         btnPosition,
@@ -98,6 +99,7 @@ const Options = () => {
                 translateBlackListMode={translateBlackListMode}
                 translateHostList={translateHostList}
                 respondToSeparateWindow={respondToSeparateWindow}
+                secondPreferredLanguage={secondPreferredLanguage}
             />
             <History
                 updateStorage={updateStorage}
