@@ -1,3 +1,7 @@
+# 2.7.0 (2021-01-21)
+- Add "multiple translate mode"'s history record.
+- Add "second preferred language" selection.
+- Remake translate history.
 # 2.6.0 (2021-01-14)
 - Add close button of translate panel.
 - Add close keyboard shortcut of translate panel.

@@ -76,7 +76,7 @@ const MultipleTranslateResult = ({ showRtAndLs }) => {
 
     return (
         <>
-            <div style={{display: showRtAndLs ? 'block' : 'none'}}>
+            <div style={showRtAndLs ? {height: 'auto'} : {height: '0px', overflow: 'hidden'}}>
                 <RawText
                     defaultValue={text}
                     rawTextTranslate={handleRawTextChange}
