@@ -21,7 +21,7 @@ export const setLocalStorage = (changes) => {
 };
 
 export const onExtensionMessage = (cb) => {
-    chrome.extension.onMessage.addListener(cb);
+    chrome.runtime.onMessage.addListener(cb);
 };
 
 export const onStorageChanged = (cb) => {

@@ -93,7 +93,7 @@
         "message": "功能變數名稱篩選"
     },
     "optionsUseDotCn": {
-        "message": "在 URL 中使用“.cn”（例如：translate.google.cn）"
+        "message": "在 URL 中使用「.cn」（例如：translate.google.cn）"
     },
     "optionsMode": {
         "message": "模式"
@@ -114,13 +114,13 @@
         "message": "啟用 PDF 閱讀器"
     },
     "optionsEnablePdfViewerDescription": {
-        "message": "啟用此選項時，此擴充功能將重定向所有 PDF 文件的 URL。通過使用PDF閱讀器，可以令此擴充功能在 PDF 文件內使用。如果你想要對本地 PDF 檔案也啟用此擴充功能，請在擴充功能管理中勾選“允許存取檔案URL”。"
+        "message": "啟用此選項時，此擴充功能將重定向所有 PDF 文件的 URL。通過使用PDF閱讀器，可以令此擴充功能在 PDF 文件內使用。如果你想要對本地 PDF 檔案也啟用此擴充功能，請在擴充功能管理中勾選「允許存取檔案URL」。"
     },
     "optionsPreferredLanguage": {
         "message": "首選語言"
     },
     "optionsPreferredLanguageDescription": {
-        "message": "當翻譯的目標語言為“自動選擇”時，會翻譯為“首選語言”。當文本的語言與“首選語言”相同時，將會翻譯為“次選語言”。"
+        "message": "當翻譯的目標語言為「自動選擇」時，會翻譯為「首選語言」。當文本的語言與「首選語言」相同時，將會翻譯為「次選語言」。"
     },
     "optionsKeyboardShortcut": {
         "message": "鍵盤快捷鍵"
@@ -156,7 +156,7 @@
         "message": "記住獨立翻譯視窗的大小與位置"
     },
     "optionsStwDescription": {
-        "message": "獨立翻譯視窗使用“複數翻譯模式”的翻譯面板，與其共用同一套翻譯設置。獨立翻譯視窗也可以響應鍵盤快速鍵。"
+        "message": "獨立翻譯視窗使用「複數翻譯模式」的翻譯面板，與其共用同一套翻譯設置。獨立翻譯視窗也可以響應鍵盤快速鍵。"
     },
     "optionsResetSizeAndPosition": {
         "message": "重置大小與位置"

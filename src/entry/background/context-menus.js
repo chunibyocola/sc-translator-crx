@@ -23,7 +23,7 @@ const createContextMenus = () => {
 };
 
 const removeContextMenus = () => {
-    chrome.contextMenus.removeAll();
+    chrome.contextMenus.remove('sc-translator-context-menu');
 
     contextMenusCreated = false;
 };
