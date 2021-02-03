@@ -4,11 +4,38 @@
 }
 .opt-item {
     font-size: 16px;
-    padding: 10px;
+    padding: 20px;
+    background: var(--bg-content);
+    color: var(--text-normal);
+    border-radius: 10px;
 }
 .child-mt10-ml30>* {
     margin-top: 10px;
     margin-left: 30px;
+}
+.mt10-ml30 {
+    margin-top: 10px;
+    margin-left: 30px;
+}
+.mt10-mb10 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.main-title {
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+.sub-title {
+    font-size: 1.3em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
 }
 .opt-item label {
     cursor: pointer;

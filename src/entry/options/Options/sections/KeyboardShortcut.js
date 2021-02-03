@@ -13,39 +13,38 @@ const KeyboardShortcut = () => {
     }, []);
 
     return (
-        <>
-            <h3>{getMessage('optionsKeyboardShortcut')}</h3>
-            <div className='opt-item'>
+        <div className='opt-item'>
+            <div className='mt10-mb10'>
                 {getMessage('extActivateExtensionDescription')}
                 <span className='keyboard-shortcut'>{commands[EXECUTE_BROWSER_ACTION] ?? ''}</span>
             </div>
-            <div className='opt-item'>
+            <div className='mt10-mb10'>
                 {getMessage('extTranslateCommandDescription')}
                 <span className='keyboard-shortcut'>{commands[SC_TRANSLATE] ?? ''}</span>
             </div>
-            <div className='opt-item'>
+            <div className='mt10-mb10'>
                 {getMessage('extListenCommandDescription')}
                 <span className='keyboard-shortcut'>{commands[SC_AUDIO] ?? ''}</span>
             </div>
-            <div className='opt-item'>
+            <div className='mt10-mb10'>
                 {getMessage('extCallOutCommandDescription')}
                 <span className='keyboard-shortcut'>{commands[SC_CALL_OUT] ?? ''}</span>
                 <div className='item-description'>{getMessage('optionsCallOutCommandDescription')}</div>
             </div>
-            <div className='opt-item'>
+            <div className='mt10-mb10'>
                 {getMessage('extCloseCommandDescription')}
                 <span className='keyboard-shortcut'>{commands[SC_CLOSE] ?? ''}</span>
             </div>
-            <div className='opt-item'>
+            <div className='mt10-mb10'>
                 {getMessage('extOpenSeparateWindowDescription')}
                 <span className='keyboard-shortcut'>{commands[SC_OPEN_SEPARATE_WINDOW] ?? ''}</span>
             </div>
-            <div className='opt-item item-description'>
+            <div className='item-description mt10-mb10'>
                 <p onClick={() => createNewTab('chrome://extensions/shortcuts')} className='link-p'>
                     {getMessage('optionsCustomizeHere')}
                 </p>
             </div>
-        </>
+        </div>
     );
 };
 

@@ -44,57 +44,66 @@ const Translate = ({
     secondPreferredLanguage
 }) => {
     return (
-        <>
-            <h3>{getMessage('optionsTranslate')}</h3>
-            <div className='opt-item child-mt10-ml30'>
-                {getMessage('optionsInWebPage')}
+        <div className='opt-item'>
+            {getMessage('optionsInWebPage')}
+            <div className='mt10-ml30'>
                 <OptionToggle
                     id='translate-with-key-press-checkbox'
                     message='optionsTranslateWithKeyPress'
                     checked={translateWithKeyPress}
                     onClick={() => updateStorage('translateWithKeyPress', !translateWithKeyPress)}
                 />
+            </div>
+            <div className='mt10-ml30'>
                 <OptionToggle
                     id='context-menus-checkbox'
                     message='optionsEnableContextMenus'
                     checked={enableContextMenus}
                     onClick={() => updateStorage('enableContextMenus', !enableContextMenus)}
                 />
+            </div>
+            <div className='mt10-ml30'>
                 <OptionToggle
                     id='translate-directly-checkbox'
                     message='optionsTranslateDirectly'
                     checked={translateDirectly}
                     onClick={() => updateStorage('translateDirectly', !translateDirectly)}
                 />
+            </div>
+            <div className='mt10-ml30'>
                 <OptionToggle
                     id='show-button-after-select-checkbox'
                     message='optionsShowButtonAfterSelect'
                     checked={showButtonAfterSelect}
                     onClick={() => updateStorage('showButtonAfterSelect', !showButtonAfterSelect)}
                 />
-                <div className='child-mt10-ml30'>
-                    {getMessage('optionsButtonsPosition')}
+            </div>
+            <div className='mt10-ml30'>
+                {getMessage('optionsButtonsPosition')}
+                <div className='mt10-ml30'>
                     <BtnPostion currentPos={btnPosition} updateBtnPostion={pos => updateStorage('btnPosition', pos)} />
                 </div>
+            </div>
+            <div className='mt10-ml30'>
                 <OptionToggle
                     id='hide-button-after-fixed-time'
                     message='optionsHideButtonAfterFixedTime'
                     checked={hideButtonAfterFixedTime}
                     onClick={() => updateStorage('hideButtonAfterFixedTime', !hideButtonAfterFixedTime)}
                 />
-                <div className='child-mt10-ml30'>
-                    {getMessage('optionsTheFixedTimeOfHidingButton')}
-                    <Slider
-                        defaultValue={hideButtonFixedTime}
-                        min={500}
-                        max={4000}
-                        step={250}
-                        marks={marksHideButtonFixedTime}
-                        valueLabelDisplay
-                        valueLabelFormat={hideButtonFixedTimeLabelFormat}
-                        mouseUpCallback={v => updateStorage('hideButtonFixedTime', v)}
-                    />
-                </div>
+            </div>
+            <div className='mt10-ml30'>{getMessage('optionsTheFixedTimeOfHidingButton')}</div>
+            <Slider
+                defaultValue={hideButtonFixedTime}
+                min={500}
+                max={4000}
+                step={250}
+                marks={marksHideButtonFixedTime}
+                valueLabelDisplay
+                valueLabelFormat={hideButtonFixedTimeLabelFormat}
+                mouseUpCallback={v => updateStorage('hideButtonFixedTime', v)}
+            />
+            <div className='mt10-ml30'>
                 <OptionToggle
                     id='respond-to-separate-window'
                     message='optionsRespondToSeparateWindow'
@@ -102,119 +111,115 @@ const Translate = ({
                     onClick={() => updateStorage('respondToSeparateWindow', !respondToSeparateWindow)}
                 />
             </div>
-            <div className='opt-item'>
-                {getMessage('optionsDefaultTranslateOptions')}
-                <div className='child-mt10-ml30'>
-                    <div className='options-mode'>
-                        {getMessage('optionsMode')}
-                        <OptionToggle
-                            id='multiple-translate-mode'
-                            message='optionsMultipleTranslateMode'
-                            checked={multipleTranslateMode}
-                            onClick={() => updateStorage('multipleTranslateMode', !multipleTranslateMode)}
-                        />
-                    </div>
-                    <DefaultSelect
-                        message='optionsLanguage'
-                        value={userLanguage}
-                        onChange={value => updateStorage('userLanguage', value)}
-                        options={userLangs}
-                        optionValue='code'
-                        optionLabel='name'
+            <div className='mt10-mb10'>{getMessage('optionsDefaultTranslateOptions')}</div>
+            <div className='child-mt10-ml30'>
+                <div className='options-mode'>
+                    {getMessage('optionsMode')}
+                    <OptionToggle
+                        id='multiple-translate-mode'
+                        message='optionsMultipleTranslateMode'
+                        checked={multipleTranslateMode}
+                        onClick={() => updateStorage('multipleTranslateMode', !multipleTranslateMode)}
                     />
-                    <DefaultSelect
-                        message='optionsPreferredLanguage'
-                        value={preferredLanguage}
-                        onChange={value => updateStorage('preferredLanguage', value)}
-                        options={preferredLangCode[userLanguage]}
-                        optionValue='code'
-                        optionLabel='name'
-                    />
-                    <DefaultSelect
-                        message='optionsSecondPreferredLanguage'
-                        value={secondPreferredLanguage}
-                        onChange={value => updateStorage('secondPreferredLanguage', value)}
-                        options={preferredLangCode[userLanguage]}
-                        optionValue='code'
-                        optionLabel='name'
-                    />
-                    <div className='item-description'>{getMessage('optionsPreferredLanguageDescription')}</div>
-                    {multipleTranslateMode ?
-                        <>
-                            <TransferList
-                                enabledList={multipleTranslateSourceList}
-                                onChange={value => updateStorage('multipleTranslateSourceList', value)}
-                            />
-                            <DefaultSelect
-                                message='optionsFrom'
-                                value={multipleTranslateFrom}
-                                onChange={value => updateStorage('multipleTranslateFrom', value)}
-                                options={mtLangCode[userLanguage]}
-                                optionValue='code'
-                                optionLabel='name'
-                            />
-                            <DefaultSelect
-                                message='optionsTo'
-                                value={multipleTranslateTo}
-                                onChange={value => updateStorage('multipleTranslateTo', value)}
-                                options={mtLangCode[userLanguage]}
-                                optionValue='code'
-                                optionLabel='name'
-                            />
-                        </> :
+                </div>
+                <DefaultSelect
+                    message='optionsLanguage'
+                    value={userLanguage}
+                    onChange={value => updateStorage('userLanguage', value)}
+                    options={userLangs}
+                    optionValue='code'
+                    optionLabel='name'
+                />
+                <DefaultSelect
+                    message='optionsPreferredLanguage'
+                    value={preferredLanguage}
+                    onChange={value => updateStorage('preferredLanguage', value)}
+                    options={preferredLangCode[userLanguage]}
+                    optionValue='code'
+                    optionLabel='name'
+                />
+                <DefaultSelect
+                    message='optionsSecondPreferredLanguage'
+                    value={secondPreferredLanguage}
+                    onChange={value => updateStorage('secondPreferredLanguage', value)}
+                    options={preferredLangCode[userLanguage]}
+                    optionValue='code'
+                    optionLabel='name'
+                />
+                <div className='item-description'>{getMessage('optionsPreferredLanguageDescription')}</div>
+                {multipleTranslateMode ?
                     <>
-                        <div className='opt-source-select'>
-                            {getMessage('optionsSource')}
-                            <SourceSelect
-                                sourceList={translateSource}
-                                source={defaultTranslateSource}
-                                onChange={value => {
-                                    const { source, from, to } = switchTranslateSource(value, {
-                                        source: defaultTranslateSource,
-                                        from: defaultTranslateFrom,
-                                        to: defaultTranslateTo
-                                    });
-                                    updateStorage('defaultTranslateSource', source);
-                                    updateStorage('defaultTranslateFrom', from);
-                                    updateStorage('defaultTranslateTo', to);
-                                }}
-                            />
-                        </div>
+                        <TransferList
+                            enabledList={multipleTranslateSourceList}
+                            onChange={value => updateStorage('multipleTranslateSourceList', value)}
+                        />
                         <DefaultSelect
                             message='optionsFrom'
-                            value={defaultTranslateFrom}
-                            onChange={value => updateStorage('defaultTranslateFrom', value)}
-                            options={langCode[defaultTranslateSource][userLanguage]}
+                            value={multipleTranslateFrom}
+                            onChange={value => updateStorage('multipleTranslateFrom', value)}
+                            options={mtLangCode[userLanguage]}
                             optionValue='code'
                             optionLabel='name'
                         />
                         <DefaultSelect
                             message='optionsTo'
-                            value={defaultTranslateTo}
-                            onChange={value => updateStorage('defaultTranslateTo', value)}
-                            options={langCode[defaultTranslateSource][userLanguage]}
+                            value={multipleTranslateTo}
+                            onChange={value => updateStorage('multipleTranslateTo', value)}
+                            options={mtLangCode[userLanguage]}
                             optionValue='code'
                             optionLabel='name'
                         />
-                    </>}
-                </div>
-            </div>
-            <div className='opt-item'>
-                {getMessage('optionsDomainfilter')}
-                <div className='child-mt10-ml30'>
-                    <OptionToggle
-                        id='translate-black-list-mode-checkbox'
-                        message='optionsTranslateBlackListMode'
-                        checked={translateBlackListMode}
-                        onClick={() => updateStorage('translateBlackListMode', !translateBlackListMode)}
+                    </> :
+                <>
+                    <div className='opt-source-select'>
+                        {getMessage('optionsSource')}
+                        <SourceSelect
+                            sourceList={translateSource}
+                            source={defaultTranslateSource}
+                            onChange={value => {
+                                const { source, from, to } = switchTranslateSource(value, {
+                                    source: defaultTranslateSource,
+                                    from: defaultTranslateFrom,
+                                    to: defaultTranslateTo
+                                });
+                                updateStorage('defaultTranslateSource', source);
+                                updateStorage('defaultTranslateFrom', from);
+                                updateStorage('defaultTranslateTo', to);
+                            }}
+                        />
+                    </div>
+                    <DefaultSelect
+                        message='optionsFrom'
+                        value={defaultTranslateFrom}
+                        onChange={value => updateStorage('defaultTranslateFrom', value)}
+                        options={langCode[defaultTranslateSource][userLanguage]}
+                        optionValue='code'
+                        optionLabel='name'
                     />
-                    <HostList
-                        list={translateHostList}
-                        updateList={list => updateStorage('translateHostList', list)}
+                    <DefaultSelect
+                        message='optionsTo'
+                        value={defaultTranslateTo}
+                        onChange={value => updateStorage('defaultTranslateTo', value)}
+                        options={langCode[defaultTranslateSource][userLanguage]}
+                        optionValue='code'
+                        optionLabel='name'
                     />
-                </div>
+                </>}
             </div>
-        </>
+            <div className='mt10-mb10'>{getMessage('optionsDomainfilter')}</div>
+            <div className='child-mt10-ml30'>
+                <OptionToggle
+                    id='translate-black-list-mode-checkbox'
+                    message='optionsTranslateBlackListMode'
+                    checked={translateBlackListMode}
+                    onClick={() => updateStorage('translateBlackListMode', !translateBlackListMode)}
+                />
+                <HostList
+                    list={translateHostList}
+                    updateList={list => updateStorage('translateHostList', list)}
+                />
+            </div>
+        </div>
     );
 };
 

@@ -54,30 +54,36 @@ const Options = () => {
 
     return (
         <div className='options'>
-            <h2>{getMessage('optionsTitle')}</h2>
+            <div className='main-title'>{getMessage('optionsTitle')}</div>
+            <div className='sub-title'>{getMessage('optionsTheme')}</div>
             <Theme
                 updateStorage={updateStorage}
                 styleVarsList={styleVarsList}
                 styleVarsIndex={styleVarsIndex}
             />
+            <div className='sub-title'>URL</div>
             <Url
                 updateStorage={updateStorage}
                 useDotCn={useDotCn}
             />
+            <div className='sub-title'>PDF</div>
             <Pdf
                 updateStorage={updateStorage}
                 enablePdfViewer={enablePdfViewer}
             />
+            <div className='sub-title'>{getMessage('optionsAudio')}</div>
             <Audio
                 updateStorage={updateStorage}
                 defaultAudioSource={defaultAudioSource}
                 audioVolume={audioVolume}
                 audioPlaybackRate={audioPlaybackRate}
             />
+            <div className='sub-title'>{getMessage('titleSeparateWindow')}</div>
             <SeparateWindow
                 updateStorage={updateStorage}
                 rememberStwSizeAndPosition={rememberStwSizeAndPosition}
             />
+            <div className='sub-title'>{getMessage('optionsTranslate')}</div>
             <Translate
                 updateStorage={updateStorage}
                 translateWithKeyPress={translateWithKeyPress}
@@ -101,12 +107,15 @@ const Options = () => {
                 respondToSeparateWindow={respondToSeparateWindow}
                 secondPreferredLanguage={secondPreferredLanguage}
             />
+            <div className='sub-title'>{getMessage('optionsHistory')}</div>
             <History
                 updateStorage={updateStorage}
                 historyBlackListMode={historyBlackListMode}
                 historyHostList={historyHostList}
             />
+            <div className='sub-title'>{getMessage('optionsKeyboardShortcut')}</div>
             <KeyboardShortcut />
+            <div className='sub-title'>{getMessage('optionsMoreFeaturesOrBugReports')}</div>
             <More />
         </div>
     );

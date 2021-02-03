@@ -8,7 +8,7 @@ import { getI18nMessage } from '../../public/chrome-call';
 // inject style
 import '../../public/inject-style';
 
-document.body.id = 'sc-translator-root';
+document.documentElement.id = 'sc-translator-root';
 document.title = `${getI18nMessage('optionsTitle')} - ${getI18nMessage('extName')}`;
 
 ReactDOM.render(
