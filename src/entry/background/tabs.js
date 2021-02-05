@@ -1,5 +1,5 @@
 /* global chrome */
-import { getIsContentScriptEnabled, getIsEnabled, getCurrentTab, getHost } from '../../public/utils';
+import { getIsContentScriptEnabled, getIsEnabled, getCurrentTabHost } from '../../public/utils';
 import { listenOptionsChange } from '../../public/options';
 import { getLocalStorage } from '../../public/chrome-call';
 
@@ -9,14 +9,18 @@ let blackMode = true;
 let hostList = [];
 
 const onTabsUpdated = async (tabId, changeInfo, tab) => {
-    if (!tab.active || !tab.url) return;
+    if (!tab.active) { return; }
 
-    isContentScriptEnabled = await getIsContentScriptEnabled(tabId);
+    getCurrentTabHost().then((tabHost) => {
+        if (!tabHost) return;
 
-    updateBadge(getHost(tab.url));
+        isContentScriptEnabled = !!tabHost;
+
+        updateBadge(tabHost);
+    });
 };
 
-const onTabsActivated = async ({tabId}) => {
+const onTabsActivated = async ({ tabId }) => {
     isContentScriptEnabled = await getIsContentScriptEnabled(tabId);
 
     updateBadge();
@@ -28,9 +32,13 @@ const updateIsTranslateEnabled = async (host = '') => {
             resolve(getIsEnabled(host, hostList, blackMode));
         }
         else {
-            getCurrentTab((tab) => {
-                if (!tab.url) reject(false);
-                else resolve(getIsEnabled(getHost(tab.url), hostList, blackMode));
+            getCurrentTabHost().then((tabHost) => {
+                if (!tabHost) {
+                    reject(false);
+                    return;
+                }
+
+                resolve(getIsEnabled(tabHost, hostList, blackMode));
             });
         }
     }).catch(() => false);
@@ -39,8 +47,13 @@ const updateIsTranslateEnabled = async (host = '') => {
 const updateBadge = async (host) => {
     isTranslateEnabled = await updateIsTranslateEnabled(host);
 
-    chrome.browserAction.setBadgeText({
-        text: isContentScriptEnabled && isTranslateEnabled ? '' : 'off'
+    const grayText = isContentScriptEnabled && isTranslateEnabled ? '' : '-gray';
+    chrome.browserAction.setIcon({
+        path: {
+            16: `image/icon${grayText}-16.png`,
+            48: `image/icon${grayText}-48.png`,
+            128: `image/icon${grayText}-128.png`
+        }
     });
 };
 

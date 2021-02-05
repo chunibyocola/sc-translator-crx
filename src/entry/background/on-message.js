@@ -28,7 +28,7 @@ listenOptionsChange(['defaultAudioSource', 'useDotCn', 'preferredLanguage', 'sec
 
 chrome.runtime.onMessage.addListener(
     (request, sender, sendResponse) => {
-        const {type, payload} = request;
+        const { type, payload } = request;
         switch (type) {
             case types.SCTS_TRANSLATE:
                 if (payload) {

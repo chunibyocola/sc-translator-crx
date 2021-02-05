@@ -39,5 +39,5 @@ const init = (options) => {
 getLocalStorage(defaultOptions, init);
 
 onExtensionMessage((request, sender, sendResponse) => {
-  if (request === 'Are you enabled?') sendResponse('Yes!');
+  if (request === 'Are you enabled?') sendResponse({ host: window.location.host });
 });

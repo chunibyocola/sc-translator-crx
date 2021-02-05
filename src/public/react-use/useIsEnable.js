@@ -14,10 +14,15 @@ const useIsEnable = (enableType, host = '') => {
         () => {
             if (host) {
                 const find = list.some(v => host.endsWith(v));
-                setEnable(bMode? !find: find);
+                setEnable(bMode ? !find : find);
             }
             else {
-                getCurrentTabHost((tabHost) => {
+                getCurrentTabHost().then((tabHost) => {
+                    if (!tabHost) {
+                        setEnable(false);
+                        return;
+                    };
+
                     const find = list.some(v => tabHost.endsWith(v));
                     setEnable(bMode ? !find : find);
                 });

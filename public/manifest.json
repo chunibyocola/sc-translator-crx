@@ -47,7 +47,6 @@
   },
   "permissions": [
     "<all_urls>",
-    "tabs",
     "storage",
     "contextMenus",
     "webRequest",
