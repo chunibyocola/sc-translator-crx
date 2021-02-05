@@ -1,3 +1,8 @@
+# 2.7.1 (2021-02-05)
+- Remove permission "tabs". Implementing this by changing the way of getting the current web page's host.
+- Change the way of bage showing that content script is on or off on the current web page.
+- Update the interface of options page.
+- Fix uncheck "enable context menus" option will remove all context menus.
 # 2.7.0 (2021-01-21)
 - Add "multiple translate mode"'s history record.
 - Add "second preferred language" selection.
