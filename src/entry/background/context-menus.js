@@ -1,31 +1,23 @@
 import { listenOptionsChange } from '../../public/options';
 import { SCTS_CONTEXT_MENUS_CLICKED } from '../../constants/chromeSendMessageTypes';
-import { getI18nMessage, getLocalStorage } from '../../public/chrome-call';
+import { createNewTab, getI18nMessage, getLocalStorage } from '../../public/chrome-call';
 import { createSeparateWindow } from './separate-window';
 
 /* global chrome */
 
-let contextMenusCreated = false;
-
 const createContextMenus = () => {
-    if (contextMenusCreated) return;
-
     chrome.contextMenus.create({
         id: 'sc-translator-context-menu',
         title: `${getI18nMessage('wordTranslate')} "%s"`,
         contexts: ['selection'],
         onclick: ({ selectionText }, tab) => {
-            tab && chrome.tabs.sendMessage(tab.id, { type: SCTS_CONTEXT_MENUS_CLICKED, payload: { selectionText } });
+            tab?.id >= 0 && chrome.tabs.sendMessage(tab.id, { type: SCTS_CONTEXT_MENUS_CLICKED, payload: { selectionText } });
         }
     });
-
-    contextMenusCreated = true;
 };
 
 const removeContextMenus = () => {
     chrome.contextMenus.remove('sc-translator-context-menu');
-
-    contextMenusCreated = false;
 };
 
 const onEnableContextMenusChange = (changes) => {
@@ -44,5 +36,15 @@ chrome.contextMenus.create({
     contexts: ['browser_action'],
     onclick: () => {
         createSeparateWindow();
+    }
+});
+
+// open this page with pdf viewer
+chrome.contextMenus.create({
+    id: 'open_this_page_with_pdf_viewer',
+    title: getI18nMessage('extOpenWithPdfViewerDescription'),
+    contexts: ['browser_action'],
+    onclick: (info, { url }) => {
+        url && createNewTab(`${chrome.runtime.getURL('/pdf-viewer/web/viewer.html')}?file=${encodeURIComponent(url)}`);
     }
 });

@@ -2,8 +2,6 @@
 import { getLocalStorage } from '../../public/chrome-call';
 import { listenOptionsChange } from '../../public/options';
 
-let enablePdfViewer = false;
-
 const viewerURL = chrome.runtime.getURL('/pdf-viewer/web/viewer.html');
 
 const getRedirectBlocking = (url) => ({
@@ -28,28 +26,20 @@ const onHeadersReceived = ({ responseHeaders, url, method }) => {
 };
 
 const enablePdfUrlRedirect = () => {
-    if (enablePdfViewer) { return; }
-
     chrome.webRequest.onBeforeRequest.addListener(onBeforeRequest, {
         urls: ['ftp://*/*.pdf', 'ftp://*/*.PDF', 'file://*/*.pdf', 'file://*/*.PDF'],
         types: ['main_frame', 'sub_frame']
     }, ['blocking']);
     chrome.webRequest.onHeadersReceived.addListener(onHeadersReceived, {
-        urls: ['https://*/*', 'https://*/*', 'http://*/*', 'http://*/*'],
+        urls: ['https://*/*', 'http://*/*'],
         types: ['main_frame', 'sub_frame']
     }, ['blocking', 'responseHeaders']);
-
-    enablePdfViewer = true;
 };
 
 const disablePdfUrlRedirect = () => {
-    if (!enablePdfViewer) { return; }
-
     chrome.webRequest.onBeforeRequest.removeListener(onBeforeRequest);
     chrome.webRequest.onHeadersReceived.removeListener(onHeadersReceived);
-
-    enablePdfViewer = false;
 };
 
-getLocalStorage('enablePdfViewer', options => 'enablePdfViewer' in options && options.enablePdfViewer ? enablePdfUrlRedirect() : disablePdfUrlRedirect());
-listenOptionsChange(['enablePdfViewer'], changes => 'enablePdfViewer' in changes && changes.enablePdfViewer ? enablePdfUrlRedirect() : disablePdfUrlRedirect());
+getLocalStorage('enablePdfViewer', options => options?.enablePdfViewer ? enablePdfUrlRedirect() : disablePdfUrlRedirect());
+listenOptionsChange(['enablePdfViewer'], changes => changes?.enablePdfViewer ? enablePdfUrlRedirect() : disablePdfUrlRedirect());

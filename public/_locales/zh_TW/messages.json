@@ -23,6 +23,9 @@
     "extCloseCommandDescription": {
         "message": "在網頁中關閉擴充功能"
     },
+    "extOpenWithPdfViewerDescription": {
+        "message": "用 PDF 閱讀器打開此頁面"
+    },
     "titleSeparateWindow": {
         "message": "獨立翻譯視窗"
     },

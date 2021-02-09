@@ -23,6 +23,9 @@
     "extCloseCommandDescription": {
         "message": "Close extension in web page"
     },
+    "extOpenWithPdfViewerDescription": {
+        "message": "Open this page with PDF viewer"
+    },
     "titleSeparateWindow": {
         "message": "Separate translate window"
     },

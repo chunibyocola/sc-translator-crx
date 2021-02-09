@@ -12,8 +12,6 @@ const SourceFavicon = ({ source }) => {
             <img
                 className='ts-favicon'
                 src={getFavicon(source)}
-                width='20'
-                height='20'
                 alt='favicon'
             />
             {getName(source)}

@@ -23,6 +23,9 @@
     "extCloseCommandDescription": {
         "message": "ウェブページで拡張機能を閉じる"
     },
+    "extOpenWithPdfViewerDescription": {
+        "message": "PDFビューアでこのページを開く"
+    },
     "titleSeparateWindow": {
         "message": "スタンドアロン翻訳ウィンドウ"
     },

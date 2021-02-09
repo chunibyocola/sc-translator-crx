@@ -23,6 +23,9 @@
     "extCloseCommandDescription": {
         "message": "在网页中关闭扩展"
     },
+    "extOpenWithPdfViewerDescription": {
+        "message": "用 PDF 阅读器打开此页面"
+    },
     "titleSeparateWindow": {
         "message": "独立翻译窗口"
     },
