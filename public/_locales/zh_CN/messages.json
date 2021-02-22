@@ -167,6 +167,12 @@
     "optionsSecondPreferredLanguage": {
         "message": "次选语言"
     },
+    "optionsPinThePanelWhileOpeningIt": {
+        "message": "打开面板时将其固定"
+    },
+    "optionsPinThePanelWhileOpeningItDescription": {
+        "message": "在面板处于隐藏的状态下进行翻译或是使用“在网页中唤出扩展”快捷键时会自动固定面板。"
+    },
     "themePreset": {
         "message": "预设"
     },

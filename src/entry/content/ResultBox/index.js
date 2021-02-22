@@ -1,13 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import IconFont from '../../../components/IconFont';
+import { useOptions } from '../../../public/react-use';
 import { calculatePosition, drag } from '../../../public/utils';
-import { closeResultBox, setResultBoxShowAndPosition } from '../../../redux/actions/resultBoxActions';
+import { closeResultBox, hideResultBox } from '../../../redux/actions/resultBoxActions';
 import MultipleTranslateResult from '../MultipleTranslateResult';
 import SingleTranslateResult from '../SingleTranslateResult';
 import './style.css';
 
 const initPos = { x: 5, y: 5 };
+const useOptionsDependency = ['pinThePanelWhileOpeningIt'];
 
 const ResultBox = ({ multipleTranslateMode }) => {
     const [pinning, setPinning] = useState(false);
@@ -17,11 +19,30 @@ const ResultBox = ({ multipleTranslateMode }) => {
     const pinPosRef = useRef(initPos);
     const mtEle = useRef(null);
     const oldPos = useRef(null);
+    const oldShow = useRef(null);
+    const oldHidePanelRequest = useRef(null);
 
-    const { show, pos, focusRawText, hideResultBox } = useSelector(state => state.resultBoxState);
+    const { show, pos, focusRawText, closePanel, hidePanelRequest } = useSelector(state => state.resultBoxState);
 
     const dispatch = useDispatch();
 
+    const { pinThePanelWhileOpeningIt } = useOptions(useOptionsDependency);
+
+    useEffect(() => {
+        if (oldHidePanelRequest.current === hidePanelRequest) { return; }
+
+        !pinning && dispatch(hideResultBox());
+
+        oldHidePanelRequest.current = hidePanelRequest;
+    }, [hidePanelRequest, pinning, dispatch]);
+
+    useEffect(() => {
+        if (oldShow.current === show) { return; }
+
+        show && pinThePanelWhileOpeningIt && setPinning(true);
+
+        oldShow.current = show;
+    }, [show, pinThePanelWhileOpeningIt]);
 
     // show 'RawText' and 'LanguageSelection' when "call out"'s keyboard shortcut pressed
     useEffect(() => {
@@ -39,10 +60,8 @@ const ResultBox = ({ multipleTranslateMode }) => {
     }, [changePinPos]);
 
     const pinningToggle = useCallback(() => {
-        pinning && dispatch(setResultBoxShowAndPosition(pinPosRef.current));
-
         setPinning(!pinning);
-    }, [dispatch, pinning]);
+    }, [pinning]);
 
     useEffect(() => {
         if (oldPos.current === pos) { return; }
@@ -59,7 +78,7 @@ const ResultBox = ({ multipleTranslateMode }) => {
 
     useEffect(() => {
         setPinning(false);
-    }, [hideResultBox]);
+    }, [closePanel]);
 
     return (
         <div

@@ -2,9 +2,9 @@ import React, {useState, useEffect, useCallback, useRef} from 'react';
 import { useDispatch } from 'react-redux';
 import {
     setResultBoxShowAndPosition,
-    hideResultBox,
     callOutResultBox,
-    closeResultBox
+    closeResultBox,
+    requestToHidePanel
 } from '../../redux/actions/resultBoxActions';
 import { mtSetText } from '../../redux/actions/multipleTranslateActions';
 import getSelection, { getSelectedText } from '../../public/utils/get-selection';
@@ -100,13 +100,13 @@ const TsBtn = ({ multipleTranslateMode }) => {
             hideButtonAfterFixedTime && debounceHideButtonAfterFixedTime.current();
         }
 
-        dispatch(hideResultBox());
+        dispatch(requestToHidePanel());
     }, [dispatch, handleSetPos, translateDirectly, isEnableTranslate, showButtonAfterSelect, translateWithKeyPress, handleForwardTranslate, hideButtonAfterFixedTime]);
 
     const unselectCb = useCallback(() => {
         setShowBtn(false);
         
-        dispatch(hideResultBox());
+        dispatch(requestToHidePanel());
     }, [dispatch]);
 
     useEffect(() => {

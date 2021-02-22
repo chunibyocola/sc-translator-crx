@@ -167,6 +167,12 @@
     "optionsSecondPreferredLanguage": {
         "message": "第二優先言語"
     },
+    "optionsPinThePanelWhileOpeningIt": {
+        "message": "パネルを開くときに固定する"
+    },
+    "optionsPinThePanelWhileOpeningItDescription": {
+        "message": "パネルを非表示にした状態で翻訳する場合や、「ウェブページで拡張機能を呼び出す」ショートカットを使用している場合は、パネルが自動的に固定されます。"
+    },
     "themePreset": {
         "message": "プリセット"
     },

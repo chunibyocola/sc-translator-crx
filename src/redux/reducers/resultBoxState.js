@@ -5,7 +5,8 @@ const initState = {
     pos: { x: 5, y: 5 },
     focusRawText: 0,
     multipleMode: false,
-    hideResultBox: 0
+    closePanel: 0,
+    hidePanelRequest: 0,
 };
 
 const resultBoxState = (state = initState, { type, payload }) => {
@@ -19,7 +20,9 @@ const resultBoxState = (state = initState, { type, payload }) => {
         case types.CALL_OUT_RESULT_BOX:
             return { ...state, show: true, focusRawText: state.focusRawText + 1 };
         case types.CLOSE_RESULT_BOX:
-            return { ...state, show: false, hideResultBox: state.hideResultBox + 1 };
+            return { ...state, show: false, closePanel: state.closePanel + 1 };
+        case types.REQUEST_TO_HIDE_PANEL:
+            return { ...state, hidePanelRequest: state.hidePanelRequest + 1 };
         default:
             return state;
     }

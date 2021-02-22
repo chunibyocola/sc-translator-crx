@@ -41,7 +41,8 @@ const Translate = ({
     translateBlackListMode,
     translateHostList,
     respondToSeparateWindow,
-    secondPreferredLanguage
+    secondPreferredLanguage,
+    pinThePanelWhileOpeningIt
 }) => {
     return (
         <div className='opt-item'>
@@ -110,6 +111,15 @@ const Translate = ({
                     checked={respondToSeparateWindow}
                     onClick={() => updateStorage('respondToSeparateWindow', !respondToSeparateWindow)}
                 />
+            </div>
+            <div className='mt10-ml30'>
+                <OptionToggle
+                    id='pin-the-panel-after-translating'
+                    message='optionsPinThePanelWhileOpeningIt'
+                    checked={pinThePanelWhileOpeningIt}
+                    onClick={() => updateStorage('pinThePanelWhileOpeningIt', !pinThePanelWhileOpeningIt)}
+                />
+                <div className='item-description'>{getMessage('optionsPinThePanelWhileOpeningItDescription')}</div>
             </div>
             <div className='mt10-mb10'>{getMessage('optionsDefaultTranslateOptions')}</div>
             <div className='child-mt10-ml30'>

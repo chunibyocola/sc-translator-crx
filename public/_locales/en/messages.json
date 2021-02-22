@@ -167,6 +167,12 @@
     "optionsSecondPreferredLanguage": {
         "message": "Second preferred Language"
     },
+    "optionsPinThePanelWhileOpeningIt": {
+        "message": "Pin the panel while opening it"
+    },
+    "optionsPinThePanelWhileOpeningItDescription": {
+        "message": "The panel will be pinned automatically while translating or the shortcut of \"Call out extension in web page\" is used."
+    },
     "themePreset": {
         "message": "Preset"
     },

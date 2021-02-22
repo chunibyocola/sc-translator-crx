@@ -47,7 +47,8 @@ const Options = () => {
         hideButtonAfterFixedTime,
         hideButtonFixedTime,
         respondToSeparateWindow,
-        rememberStwSizeAndPosition
+        rememberStwSizeAndPosition,
+        pinThePanelWhileOpeningIt
     } = useOptions(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -106,6 +107,7 @@ const Options = () => {
                 translateHostList={translateHostList}
                 respondToSeparateWindow={respondToSeparateWindow}
                 secondPreferredLanguage={secondPreferredLanguage}
+                pinThePanelWhileOpeningIt={pinThePanelWhileOpeningIt}
             />
             <div className='sub-title'>{getMessage('optionsHistory')}</div>
             <History
