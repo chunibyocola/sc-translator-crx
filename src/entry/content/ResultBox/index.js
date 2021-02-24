@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import IconFont from '../../../components/IconFont';
-import { useOptions } from '../../../public/react-use';
+import { useOptions, useWindowSize } from '../../../public/react-use';
 import { calculatePosition, drag } from '../../../public/utils';
 import { closeResultBox, hideResultBox } from '../../../redux/actions/resultBoxActions';
 import MultipleTranslateResult from '../MultipleTranslateResult';
@@ -27,6 +27,14 @@ const ResultBox = ({ multipleTranslateMode }) => {
     const dispatch = useDispatch();
 
     const { pinThePanelWhileOpeningIt } = useOptions(useOptionsDependency);
+
+    const windowSize = useWindowSize();
+
+    useEffect(() => {
+        if (!mtEle) { return; }
+
+        calculatePosition(mtEle.current, pinPosRef.current, setPinPos);
+    }, [windowSize]);
 
     useEffect(() => {
         if (oldHidePanelRequest.current === hidePanelRequest) { return; }
@@ -84,7 +92,7 @@ const ResultBox = ({ multipleTranslateMode }) => {
         <div
             ref={mtEle}
             className='ts-rb'
-            style={{display: show || pinning ? 'block' : 'none', transform: `translate(${pinPos.x}px, ${pinPos.y}px)`}}
+            style={{display: show ? 'block' : 'none', transform: `translate(${pinPos.x}px, ${pinPos.y}px)`}}
             onMouseUp={e => e.stopPropagation()}
             onMouseDown={e => e.stopPropagation()}
         >
