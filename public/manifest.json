@@ -18,7 +18,10 @@
     "default_title": "__MSG_extName__",
     "default_popup": "popup.html"
   },
-  "options_page": "options.html",
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "options.html"
+  },
   "commands": {
     "sc-translate": {
       "suggested_key": {
@@ -66,5 +69,5 @@
   "web_accessible_resources":[
     "/pdf-viewer/*"
   ],
-  "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'"
+  "content_security_policy": "script-src 'self'; object-src 'self'"
 }
