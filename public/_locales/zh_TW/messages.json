@@ -173,6 +173,12 @@
     "optionsPinThePanelWhileOpeningItDescription": {
         "message": "在面板處於隱藏的狀態下進行翻譯或是使用「在網頁中喚出擴充功能」快速鍵時會自動固定面板。"
     },
+    "optionsRememberPositionOfPinnedPanel": {
+        "message": "記住面板固定的位置"
+    },
+    "optionsRememberPositionOfPinnedPanelDescription": {
+        "message": "在未固定的狀態下點擊圖釘圖標時會自動移到最後固定的位置。在已固定的狀態下移動面板後會把當前位置自動同步到所有頁面中。"
+    },
     "themePreset": {
         "message": "預設"
     },

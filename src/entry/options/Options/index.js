@@ -48,7 +48,8 @@ const Options = () => {
         hideButtonFixedTime,
         respondToSeparateWindow,
         rememberStwSizeAndPosition,
-        pinThePanelWhileOpeningIt
+        pinThePanelWhileOpeningIt,
+        rememberPositionOfPinnedPanel,
     } = useOptions(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -108,6 +109,7 @@ const Options = () => {
                 respondToSeparateWindow={respondToSeparateWindow}
                 secondPreferredLanguage={secondPreferredLanguage}
                 pinThePanelWhileOpeningIt={pinThePanelWhileOpeningIt}
+                rememberPositionOfPinnedPanel={rememberPositionOfPinnedPanel}
             />
             <div className='sub-title'>{getMessage('optionsHistory')}</div>
             <History

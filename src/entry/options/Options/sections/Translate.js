@@ -42,7 +42,8 @@ const Translate = ({
     translateHostList,
     respondToSeparateWindow,
     secondPreferredLanguage,
-    pinThePanelWhileOpeningIt
+    pinThePanelWhileOpeningIt,
+    rememberPositionOfPinnedPanel
 }) => {
     return (
         <div className='opt-item'>
@@ -120,6 +121,15 @@ const Translate = ({
                     onClick={() => updateStorage('pinThePanelWhileOpeningIt', !pinThePanelWhileOpeningIt)}
                 />
                 <div className='item-description'>{getMessage('optionsPinThePanelWhileOpeningItDescription')}</div>
+            </div>
+            <div className='mt10-ml30'>
+                <OptionToggle
+                    id='remember-position-of-pinned-panel'
+                    message='optionsRememberPositionOfPinnedPanel'
+                    checked={rememberPositionOfPinnedPanel}
+                    onClick={() => updateStorage('rememberPositionOfPinnedPanel', !rememberPositionOfPinnedPanel)}
+                />
+                <div className='item-description'>{getMessage('optionsRememberPositionOfPinnedPanelDescription')}</div>
             </div>
             <div className='mt10-mb10'>{getMessage('optionsDefaultTranslateOptions')}</div>
             <div className='child-mt10-ml30'>

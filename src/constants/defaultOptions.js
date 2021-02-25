@@ -35,7 +35,9 @@ const defaultOptions = {
     // 'stw' means 'Separate translate Window'
     rememberStwSizeAndPosition: false,
     stwSizeAndPosition: { width: 286, height: 439, left: 550, top: 250 },
-    pinThePanelWhileOpeningIt: false
+    pinThePanelWhileOpeningIt: false,
+    rememberPositionOfPinnedPanel: false,
+    positionOfPinnedPanel: { x: 5, y: 5 }
 };
 
 export default defaultOptions;

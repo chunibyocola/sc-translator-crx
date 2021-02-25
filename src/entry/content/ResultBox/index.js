@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import IconFont from '../../../components/IconFont';
+import { setLocalStorage } from '../../../public/chrome-call';
 import { useOptions, useWindowSize } from '../../../public/react-use';
 import { calculatePosition, drag } from '../../../public/utils';
 import { closeResultBox, hideResultBox } from '../../../redux/actions/resultBoxActions';
@@ -9,7 +10,7 @@ import SingleTranslateResult from '../SingleTranslateResult';
 import './style.css';
 
 const initPos = { x: 5, y: 5 };
-const useOptionsDependency = ['pinThePanelWhileOpeningIt'];
+const useOptionsDependency = ['pinThePanelWhileOpeningIt', 'rememberPositionOfPinnedPanel', 'positionOfPinnedPanel'];
 
 const ResultBox = ({ multipleTranslateMode }) => {
     const [pinning, setPinning] = useState(false);
@@ -26,14 +27,19 @@ const ResultBox = ({ multipleTranslateMode }) => {
 
     const dispatch = useDispatch();
 
-    const { pinThePanelWhileOpeningIt } = useOptions(useOptionsDependency);
+    const { pinThePanelWhileOpeningIt, rememberPositionOfPinnedPanel, positionOfPinnedPanel } = useOptions(useOptionsDependency);
 
     const windowSize = useWindowSize();
 
     useEffect(() => {
-        if (!mtEle) { return; }
+        if (rememberPositionOfPinnedPanel && pinning) {
+            pinPosRef.current = { ...positionOfPinnedPanel };
+            calculatePosition(mtEle.current, pinPosRef.current, setPinPos);
+        }
+    }, [rememberPositionOfPinnedPanel, pinning, positionOfPinnedPanel]);
 
-        calculatePosition(mtEle.current, pinPosRef.current, setPinPos);
+    useEffect(() => {
+        mtEle && calculatePosition(mtEle.current, pinPosRef.current, setPinPos);
     }, [windowSize]);
 
     useEffect(() => {
@@ -63,21 +69,23 @@ const ResultBox = ({ multipleTranslateMode }) => {
         pinPosRef.current = pos;
     }, []);
 
-    const handlePosChange = useCallback(({ x, y }) => {
-        calculatePosition(mtEle.current, { x, y }, changePinPos);
-    }, [changePinPos]);
+    const handleMouseUpCallback = useCallback((pos) => {
+        calculatePosition(mtEle.current, pos, (pos) => {
+            if (rememberPositionOfPinnedPanel && pinning && pinPos.x !== pos.x && pinPos.y !== pos.y) {
+                setLocalStorage({ 'positionOfPinnedPanel': pos });
+            }
 
-    const pinningToggle = useCallback(() => {
-        setPinning(!pinning);
-    }, [pinning]);
+            changePinPos(pos);
+        });
+    }, [rememberPositionOfPinnedPanel, changePinPos, pinPos, pinning]);
 
     useEffect(() => {
         if (oldPos.current === pos) { return; }
 
-        !pinning && handlePosChange(pos);
+        !pinning && calculatePosition(mtEle.current, pos, changePinPos);
 
         oldPos.current = pos;
-    }, [pos, pinning, handlePosChange]);
+    }, [pos, pinning, changePinPos]);
     // position end
 
     const handleCloseIconClick = useCallback(() => {
@@ -98,7 +106,7 @@ const ResultBox = ({ multipleTranslateMode }) => {
         >
             <div
                 className='ts-rb-header'
-                onMouseDown={e => drag(e, pinPos, changePinPos, handlePosChange)}
+                onMouseDown={e => drag(e, pinPos, changePinPos, handleMouseUpCallback)}
             >
                 <span className='ts-rb-header-title'>Sc</span>
                 <span className='ts-rb-header-icons'>
@@ -110,7 +118,7 @@ const ResultBox = ({ multipleTranslateMode }) => {
                     />
                     <IconFont
                         iconName='#icon-GoPin'
-                        onClick={pinningToggle}
+                        onClick={() => setPinning(!pinning)}
                         style={pinning ? {transform: 'rotate(-45deg)', opacity: '1'} : {}}
                         className='ts-button'
                     />
