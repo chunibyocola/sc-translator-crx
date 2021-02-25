@@ -5,7 +5,7 @@ import { listenOptionsChange } from '../../public/options';
 import { getLocalStorage } from '../../public/chrome-call';
 import { GOOGLE_COM } from '../../constants/translateSource';
 import { LANG_EN } from '../../constants/langCode';
-import { sendTextToSeparateWindow } from './separate-window';
+import { createSeparateWindow } from './separate-window';
 
 /* global chrome */
 
@@ -49,7 +49,7 @@ chrome.runtime.onMessage.addListener(
                 }
                 return false;
             case types.SCTS_SEND_TEXT_TO_SEPARATE_WINDOW:
-                payload?.text && sendTextToSeparateWindow(request);
+                payload?.text && createSeparateWindow(payload.text);
                 return false;
             default: break;
         }

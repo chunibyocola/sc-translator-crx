@@ -42,12 +42,6 @@ export const createSeparateWindow = async (text) => {
     return enabled;
 };
 
-export const sendTextToSeparateWindow = async (request) => {
-    const enabled = await createSeparateWindow(request?.payload?.text);
-
-    enabled && sendMessageToTab(tabId, request);
-};
-
 getLocalStorage(['rememberStwSizeAndPosition', 'stwSizeAndPosition'], (storage) => {
     rememberStwSizeAndPosition = storage.rememberStwSizeAndPosition;
     stwSizeAndPosition = storage.stwSizeAndPosition;
