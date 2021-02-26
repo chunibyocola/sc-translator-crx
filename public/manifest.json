@@ -61,13 +61,13 @@
         "http://*/*",
         "https://*/*"
       ],
-      "css": ["/static/css/content.css"],
       "js": ["/static/js/content.js"]
     }
   ],
   "incognito": "split",
   "web_accessible_resources":[
-    "/pdf-viewer/*"
+    "/pdf-viewer/*",
+    "/static/css/content.css"
   ],
   "content_security_policy": "script-src 'self'; object-src 'self'"
 }

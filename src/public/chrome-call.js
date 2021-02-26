@@ -47,3 +47,7 @@ export const getAllCommands = (cb) => {
 export const createNewTab = (url) => {
     chrome.tabs.create({ url });
 };
+
+export const getExtensionURL = (path) => {
+    return chrome.runtime.getURL(path);
+};

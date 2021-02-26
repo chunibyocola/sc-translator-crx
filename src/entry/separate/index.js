@@ -12,14 +12,14 @@ import defaultOptions from '../../constants/defaultOptions';
 import HandleCommand from './HandleCommands';
 import Separate from './Separate';
 import { getI18nMessage } from '../../public/chrome-call';
-
-// inject style
-import '../../public/inject-style';
+import { injectThemeStyle } from '../../public/inject-style';
 
 document.title = `${getI18nMessage('titleSeparateWindow')} - ${getI18nMessage('extName')}`;
 
 const init = (options) => {
     initOptions(options);
+
+    injectThemeStyle();
 
     initMultipleTranslate(options);
 

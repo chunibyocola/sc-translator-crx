@@ -4,9 +4,7 @@ import { defaultStyleVars } from '../constants/defaultStyleVars';
 
 let styleVarsList = [];
 let styleVarsIndex = 0;
-const head = document.head || document.querySelector('head');
-let style = document.createElement('style');
-head.appendChild(style);
+let style;
 
 const styleVarsToStyleText = (styleVars) => {
     styleVars = { ...defaultStyleVars, ...styleVars };
@@ -28,13 +26,19 @@ const setStyleInnerText = (text) => {
     style.innerText = text;
 };
 
-getLocalStorage(['styleVarsList', 'styleVarsIndex'], (storage) => {
-    styleVarsList = storage.styleVarsList;
-    styleVarsIndex = storage.styleVarsIndex;
-    updateStyle();
-});
-listenOptionsChange(['styleVarsList', 'styleVarsIndex'], (changes) => {
-    'styleVarsList' in changes && (styleVarsList = changes.styleVarsList);
-    'styleVarsIndex' in changes && (styleVarsIndex = changes.styleVarsIndex);
-    updateStyle();
-});
+export const injectThemeStyle = (styleElement) => {
+    if (style) { return; }
+
+    style = styleElement ?? document.createElement('style');
+    styleElement || document.head.appendChild(style);
+    getLocalStorage(['styleVarsList', 'styleVarsIndex'], (storage) => {
+        styleVarsList = storage.styleVarsList;
+        styleVarsIndex = storage.styleVarsIndex;
+        updateStyle();
+    });
+    listenOptionsChange(['styleVarsList', 'styleVarsIndex'], (changes) => {
+        'styleVarsList' in changes && (styleVarsList = changes.styleVarsList);
+        'styleVarsIndex' in changes && (styleVarsIndex = changes.styleVarsIndex);
+        updateStyle();
+    });
+};
