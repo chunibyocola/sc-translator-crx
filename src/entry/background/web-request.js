@@ -1,4 +1,3 @@
-/* global chrome */
 import { getLocalStorage } from '../../public/chrome-call';
 import { listenOptionsChange } from '../../public/options';
 

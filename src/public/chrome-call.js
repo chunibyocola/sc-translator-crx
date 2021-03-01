@@ -1,4 +1,3 @@
-/* global chrome */
 /* export const chromeCallback = (target, methodName, ...args) => {
     return new Promise((resolve, reject) => {
         target[methodName](...args, (...args1) => {

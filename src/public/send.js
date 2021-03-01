@@ -35,7 +35,6 @@ const packData = (text, { source, from, to = undefined, translateId = undefined 
 	}
 });
 
-/* global chrome */
 const chromeSendMessage = (action, cb = undefined) => {
     chrome.runtime.sendMessage(action, cb);
 };

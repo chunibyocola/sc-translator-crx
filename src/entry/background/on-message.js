@@ -7,8 +7,6 @@ import { GOOGLE_COM } from '../../constants/translateSource';
 import { LANG_EN } from '../../constants/langCode';
 import { createSeparateWindow } from './separate-window';
 
-/* global chrome */
-
 let defaultAudioSource = GOOGLE_COM;
 let useDotCn = false;
 let preferredLanguage = LANG_EN;

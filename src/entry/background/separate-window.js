@@ -1,5 +1,3 @@
-/* global chrome */
-
 import { SCTS_CALL_OUT_COMMAND_KEY_PRESSED } from "../../constants/chromeSendMessageTypes";
 import { getLocalStorage, sendMessageToTab } from "../../public/chrome-call";
 import { listenOptionsChange } from "../../public/options";

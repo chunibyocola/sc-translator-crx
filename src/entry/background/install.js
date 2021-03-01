@@ -3,8 +3,6 @@ import defaultOptions from '../../constants/defaultOptions';
 import { getLocalStorage } from '../../public/chrome-call';
 import { defaultStyleVars } from '../../constants/defaultStyleVars';
 
-/* global chrome */
-
 const initStorageOnInstalled = (userLang, update) => {
 
     const defaultSet = { ...defaultOptions };

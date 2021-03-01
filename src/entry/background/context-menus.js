@@ -3,8 +3,6 @@ import { SCTS_CONTEXT_MENUS_CLICKED } from '../../constants/chromeSendMessageTyp
 import { createNewTab, getI18nMessage, getLocalStorage } from '../../public/chrome-call';
 import { createSeparateWindow } from './separate-window';
 
-/* global chrome */
-
 const createContextMenus = () => {
     chrome.contextMenus.create({
         id: 'sc-translator-context-menu',

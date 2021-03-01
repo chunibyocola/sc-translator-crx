@@ -1,3 +1,4 @@
 import { translate } from './translate';
 
-export default { translate };
+const mojidict = { translate };
+export default mojidict;

@@ -6,7 +6,6 @@ export const getCurrentTab = (cb) => {
     queryTabs({ active: true, lastFocusedWindow: true }, tabs => cb(tabs[0]));
 };
 
-/* global chrome */
 export const getIsContentScriptEnabled = async (tabId) => {
     return await new Promise((resolve, reject) => {
         sendMessageToTab(tabId, 'Are you enabled?', () => {

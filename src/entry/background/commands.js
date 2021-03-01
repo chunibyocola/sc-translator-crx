@@ -1,4 +1,3 @@
-/* global chrome */
 import { getCurrentTab } from '../../public/utils';
 import {
     SCTS_TRANSLATE_COMMAND_KEY_PRESSED,

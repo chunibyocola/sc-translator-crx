@@ -1,4 +1,3 @@
-/* global chrome */
 import { getIsContentScriptEnabled, getIsEnabled, getCurrentTabHost } from '../../public/utils';
 import { listenOptionsChange } from '../../public/options';
 import { getLocalStorage } from '../../public/chrome-call';
