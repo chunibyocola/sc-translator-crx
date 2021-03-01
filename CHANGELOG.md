@@ -1,3 +1,9 @@
+# 3.0.0 (2021-03-01)
+- Add "remember the position of the pinned panel" option.
+- Add listener that listen window size change to keep panel inside document.
+- Add "pin the panel while opening it" option.
+- Add "open this page with PDF viewer" context menu of "browser_action".
+- Fix "respond to separate translate window" might send two duplicate requests at the same time.
 # 2.7.1 (2021-02-05)
 - Remove permission "tabs". Implementing this by changing the way of getting the current web page's host.
 - Change the way of bage showing that content script is on or off on the current web page.
