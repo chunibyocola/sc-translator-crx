@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef } from 'react';
+import React, { useEffect, useCallback, useRef, useLayoutEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendTranslate, sendAudio } from '../../../public/send';
 import TsResult from '../../../components/TsResult';
@@ -17,14 +17,23 @@ import TsVia from '../../../components/TsVia';
 import { switchTranslateSource } from '../../../public/switch-translate-source';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/actions/translateHistoryActions';
 import { useIsEnable } from '../../../public/react-use';
+import './style.css';
 
-const SingleTranslateResult = ({ showRtAndLs }) => {
+const SingleTranslateResult = ({ showRtAndLs, maxHeightGap }) => {
+    const [resultMaxHeight, setResultMaxHeight] = useState(500);
+
     const { text, source, from, to, status, result, translateId } = useSelector(state => state.singleTranslateState);
 
     const { focusRawText } = useSelector(state => state.resultBoxState);
 
     const translateIdRef = useRef(0);
     const oldTranslateIdRef = useRef(0);
+    const resultContainerEle = useRef(null);
+
+    useLayoutEffect(() => {
+        const maxHeight = maxHeightGap + resultContainerEle.current.offsetHeight;
+        setResultMaxHeight(maxHeight < 40 ? 40 : maxHeight);
+    }, [maxHeightGap]);
 
     const dispatch = useDispatch();
 
@@ -96,13 +105,15 @@ const SingleTranslateResult = ({ showRtAndLs }) => {
                     options={langCode[source]}
                 />
             </div>
-            <TsResult
-                resultObj={result}
-                status={status}
-                readText={handleReadText}
-                source={source}
-                retry={handleRetry}
-            />
+            <div className='ts-result-container ts-scrollbar' style={{maxHeight: `${resultMaxHeight}px`}} ref={resultContainerEle}>
+                <TsResult
+                    resultObj={result}
+                    status={status}
+                    readText={handleReadText}
+                    source={source}
+                    retry={handleRetry}
+                />
+            </div>
             <TsVia
                 sourceChange={handleSourceChange}
                 source={source}

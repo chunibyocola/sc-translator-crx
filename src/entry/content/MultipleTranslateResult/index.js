@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef, useEffect, useState, useLayoutEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { mtRequestStart, mtRequestFinish, mtRequestError, mtRemoveSource, mtSetText, mtSetFromAndTo, mtAddSource } from '../../../redux/actions/multipleTranslateActions';
 import MtResult from '../../../components/MtResult';
@@ -12,9 +12,17 @@ import { getMessage } from '../../../public/i18n';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/actions/translateHistoryActions';
 import { useIsEnable } from '../../../public/react-use';
 
-const MultipleTranslateResult = ({ showRtAndLs }) => {
+const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap }) => {
+    const [resultMaxHeight, setResultMaxHeight] = useState(500);
+
     const translateIdRef = useRef(0);
     const oldTranslateIdRef = useRef(0);
+    const resultContainerEle = useRef(null);
+
+    useLayoutEffect(() => {
+        const maxHeight = maxHeightGap + resultContainerEle.current.offsetHeight;
+        setResultMaxHeight(maxHeight < 40 ? 40 : maxHeight);
+    }, [maxHeightGap]);
 
     const { focusRawText } = useSelector(state => state.resultBoxState);
     const { text, from, to, translations, translateId } = useSelector(state => state.multipleTranslateState);
@@ -89,7 +97,7 @@ const MultipleTranslateResult = ({ showRtAndLs }) => {
                     options={mtLangCode}
                 />
             </div>
-            <div className='ts-mt-results ts-scrollbar'>
+            <div className='ts-mt-results ts-scrollbar' style={{maxHeight: `${resultMaxHeight}px`}} ref={resultContainerEle}>
                 {translations.length === 0 ? 
                     <div className='ts-mt-result-add-translate-source'>{getMessage('sentenceAddTranslateSource')}</div> :
                 translations.map(({ source, status, result }) => (

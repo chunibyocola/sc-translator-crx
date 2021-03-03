@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import IconFont from '../../../components/IconFont';
 import { setLocalStorage } from '../../../public/chrome-call';
@@ -10,12 +10,13 @@ import SingleTranslateResult from '../SingleTranslateResult';
 import './style.css';
 
 const initPos = { x: 5, y: 5 };
-const useOptionsDependency = ['pinThePanelWhileOpeningIt', 'rememberPositionOfPinnedPanel', 'positionOfPinnedPanel'];
+const useOptionsDependency = ['pinThePanelWhileOpeningIt', 'rememberPositionOfPinnedPanel', 'positionOfPinnedPanel', 'translatePanelMaxHeight'];
 
 const ResultBox = ({ multipleTranslateMode }) => {
     const [pinning, setPinning] = useState(false);
     const [pinPos, setPinPos] = useState(initPos);
     const [showRtAndLs, setShowRtAndLs] = useState(false);
+    const [maxHeightGap, setMaxHeightGap] = useState(600);
 
     const pinPosRef = useRef(initPos);
     const mtEle = useRef(null);
@@ -27,7 +28,7 @@ const ResultBox = ({ multipleTranslateMode }) => {
 
     const dispatch = useDispatch();
 
-    const { pinThePanelWhileOpeningIt, rememberPositionOfPinnedPanel, positionOfPinnedPanel } = useOptions(useOptionsDependency);
+    const { pinThePanelWhileOpeningIt, rememberPositionOfPinnedPanel, positionOfPinnedPanel, translatePanelMaxHeight } = useOptions(useOptionsDependency);
 
     const windowSize = useWindowSize();
 
@@ -41,6 +42,11 @@ const ResultBox = ({ multipleTranslateMode }) => {
     useEffect(() => {
         mtEle && calculatePosition(mtEle.current, pinPosRef.current, setPinPos);
     }, [windowSize]);
+
+    useLayoutEffect(() => {
+        const maxHeight = translatePanelMaxHeight.percentage ? ~~(windowSize.height * translatePanelMaxHeight.percent / 100) : translatePanelMaxHeight.px;
+        setMaxHeightGap(maxHeight - mtEle.current.offsetHeight);
+    }, [windowSize, translatePanelMaxHeight, showRtAndLs]);
 
     useEffect(() => {
         if (oldHidePanelRequest.current === hidePanelRequest) { return; }
@@ -130,7 +136,13 @@ const ResultBox = ({ multipleTranslateMode }) => {
                 </span>
             </div>
             <div className='ts-rb-content'>
-                {multipleTranslateMode ? <MultipleTranslateResult showRtAndLs={showRtAndLs} /> : <SingleTranslateResult showRtAndLs={showRtAndLs} />}
+                {multipleTranslateMode ? <MultipleTranslateResult
+                    showRtAndLs={showRtAndLs}
+                    maxHeightGap={maxHeightGap}
+                /> : <SingleTranslateResult
+                    showRtAndLs={showRtAndLs}
+                    maxHeightGap={maxHeightGap}
+                />}
             </div>
         </div>
     );

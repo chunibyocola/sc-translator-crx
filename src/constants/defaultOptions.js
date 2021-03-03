@@ -37,7 +37,8 @@ const defaultOptions = {
     stwSizeAndPosition: { width: 286, height: 439, left: 550, top: 250 },
     pinThePanelWhileOpeningIt: false,
     rememberPositionOfPinnedPanel: false,
-    positionOfPinnedPanel: { x: 5, y: 5 }
+    positionOfPinnedPanel: { x: 5, y: 5 },
+    translatePanelMaxHeight: { percentage: false, px: '600', percent: '60' }
 };
 
 export default defaultOptions;

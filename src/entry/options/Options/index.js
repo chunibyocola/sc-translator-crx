@@ -11,6 +11,7 @@ import Pdf from './sections/PDF';
 import SeparateWindow from './sections/SeparateWindow';
 import Theme from './sections/Theme';
 import Translate from './sections/Translate';
+import TranslatePanel from './sections/TranslatePanel';
 import Url from './sections/URL';
 import './style.css';
 
@@ -50,6 +51,7 @@ const Options = () => {
         rememberStwSizeAndPosition,
         pinThePanelWhileOpeningIt,
         rememberPositionOfPinnedPanel,
+        translatePanelMaxHeight
     } = useOptions(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -85,6 +87,13 @@ const Options = () => {
                 updateStorage={updateStorage}
                 rememberStwSizeAndPosition={rememberStwSizeAndPosition}
             />
+            <div className='sub-title'>{getMessage('optionsTranslatePanel')}</div>
+            <TranslatePanel
+                updateStorage={updateStorage}
+                pinThePanelWhileOpeningIt={pinThePanelWhileOpeningIt}
+                rememberPositionOfPinnedPanel={rememberPositionOfPinnedPanel}
+                translatePanelMaxHeight={translatePanelMaxHeight}
+            />
             <div className='sub-title'>{getMessage('optionsTranslate')}</div>
             <Translate
                 updateStorage={updateStorage}
@@ -108,8 +117,6 @@ const Options = () => {
                 translateHostList={translateHostList}
                 respondToSeparateWindow={respondToSeparateWindow}
                 secondPreferredLanguage={secondPreferredLanguage}
-                pinThePanelWhileOpeningIt={pinThePanelWhileOpeningIt}
-                rememberPositionOfPinnedPanel={rememberPositionOfPinnedPanel}
             />
             <div className='sub-title'>{getMessage('optionsHistory')}</div>
             <History

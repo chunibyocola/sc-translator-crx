@@ -40,9 +40,9 @@ const KeyboardShortcut = () => {
                 <span className='keyboard-shortcut'>{commands[SC_OPEN_SEPARATE_WINDOW] ?? ''}</span>
             </div>
             <div className='item-description mt10-mb10'>
-                <p onClick={() => createNewTab('chrome://extensions/shortcuts')} className='link-p'>
+                <span onClick={() => createNewTab('chrome://extensions/shortcuts')} className='span-link'>
                     {getMessage('optionsCustomizeHere')}
-                </p>
+                </span>
             </div>
         </div>
     );

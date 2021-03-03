@@ -10,13 +10,13 @@ const TsResult = ({ resultObj, status, readText, source, retry }) => {
     const { requestEnd, requesting, error, errorCode } = status;
     
     return (
-        <div className='ts-result ts-scrollbar'>
+        <div className='ts-result'>
             {requesting ?
                 getMessage('wordRequesting') :
             !requestEnd ?
                 getMessage('contentTranslateAfterInput'):
             error ?
-                <>{getMessage(`errorCode_${errorCode}`)}<span className='ts-button ts-retry' onClick={retry}>{getMessage('wordRetry')}</span></> :
+                <>{getMessage(`errorCode_${errorCode}`)}<span className='span-link' onClick={retry}>{getMessage('wordRetry')}</span></> :
             <>
                 <div className='tss-result'>
                     <span>
@@ -47,7 +47,6 @@ const TsResult = ({ resultObj, status, readText, source, retry }) => {
                     {phonetic}
                 </div>}
             </>}
-            <div className='ts-dividing-line ts-st-dividing-line'></div>
         </div>
     )
 };

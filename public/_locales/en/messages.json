@@ -179,6 +179,15 @@
     "optionsRememberPositionOfPinnedPanelDescription": {
         "message": "When you click the pin icon in the unpinned state of the panel, it will automatically move to the last pinned position. Moving the panel in the pinned state will automatically synchronize the current position to all pages."
     },
+    "optionsTranslatePanel": {
+        "message": "Translate panel"
+    },
+    "optionsMaxHeightOfTranslatePanel": {
+        "message": "Max height of translate panel"
+    },
+    "optionsPercentage": {
+        "message": "Percentage"
+    },
     "themePreset": {
         "message": "Preset"
     },

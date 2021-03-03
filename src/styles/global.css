@@ -32,3 +32,10 @@
     opacity: 0.7;
     display: block;
 }
+.span-link {
+    cursor: pointer;
+    text-decoration: underline;
+}
+.span-link:hover {
+    text-decoration: none;
+}

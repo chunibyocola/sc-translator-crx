@@ -28,9 +28,3 @@
     padding: 10px 0px;
     height: fit-content;
 }
-.ts-retry {
-    text-decoration: underline;
-}
-.ts-retry:hover {
-    color: #999;
-}

@@ -45,7 +45,7 @@ const MtResult = ({ source, status, result, text, remove, readText, retry }) => 
                 !requestEnd ?
                     getMessage('contentTranslateAfterInput') :
                 error ?
-                    <>{getMessage(`errorCode_${errorCode}`)}<span className='ts-button ts-retry' onClick={retry}>{getMessage('wordRetry')}</span></> :
+                    <>{getMessage(`errorCode_${errorCode}`)}<span className='span-link' onClick={retry}>{getMessage('wordRetry')}</span></> :
                 <>
                     {result.phonetic && result.from === LANG_EN && <div style={{marginBottom: '10px'}}>
                         {result.phonetic}

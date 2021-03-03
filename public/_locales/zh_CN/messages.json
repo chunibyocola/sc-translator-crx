@@ -179,6 +179,15 @@
     "optionsRememberPositionOfPinnedPanelDescription": {
         "message": "在未固定的状态下点击图钉图标时会自动移到最后固定的位置。在已固定的状态下移动面板后会把当前位置自动同步到所有页面中。"
     },
+    "optionsTranslatePanel": {
+        "message": "翻译面板"
+    },
+    "optionsMaxHeightOfTranslatePanel": {
+        "message": "翻译面板的最大高度"
+    },
+    "optionsPercentage": {
+        "message": "百分比"
+    },
     "themePreset": {
         "message": "预设"
     },

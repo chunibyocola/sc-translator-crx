@@ -40,10 +40,9 @@ const Slider = ({ defaultValue, min, max, step, marks, valueLabelDisplay, valueL
     }, [handleSliderMouseMove, handleSliderMouseUp, mouseDownCallback, calculateValueByX, handleValueChange]);
 
     const handleMarkMouseDown = useCallback((value) => {
-        pointerDrag(sliderEle.current, { maxX: sliderEle.current.offsetWidth }, handleSliderMouseMove, handleSliderMouseUp);
-        mouseDownCallback && mouseDownCallback(value);
+        mouseUpCallback && mouseUpCallback(value);
         handleValueChange(value);
-    }, [handleSliderMouseUp, handleSliderMouseMove, mouseDownCallback, handleValueChange]);
+    }, [mouseUpCallback, handleValueChange]);
 
     useEffect(() => {
         handleValueChange(defaultValue);
@@ -57,10 +56,6 @@ const Slider = ({ defaultValue, min, max, step, marks, valueLabelDisplay, valueL
             {valueLabelDisplay && <div
                 className='ts-slider-label'
                 style={{left: `${pointerLeft}%`}}
-                onMouseDown={(e) => {
-                    handleMarkMouseDown(value);
-                    e.stopPropagation();
-                }}
             >
                 {valueLabelFormat ? valueLabelFormat(value) : value}
             </div>}

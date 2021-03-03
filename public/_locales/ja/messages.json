@@ -179,6 +179,15 @@
     "optionsRememberPositionOfPinnedPanelDescription": {
         "message": "パネルの固定しない状態でピンアイコンをクリックすると、最後に固定された位置に自動的に移動します。パネルを固定する状態で移動すると、移動後の位置は自動的にすべてのページに同期されます。"
     },
+    "optionsTranslatePanel": {
+        "message": "翻訳パネル"
+    },
+    "optionsMaxHeightOfTranslatePanel": {
+        "message": "翻訳パネルの最大高さ"
+    },
+    "optionsPercentage": {
+        "message": "パーセント"
+    },
     "themePreset": {
         "message": "プリセット"
     },

@@ -5,9 +5,8 @@ import './style.css';
 
 const TsVia = ({ sourceChange, source, disableSourceChange }) => {
     return (
-        <div
-            className='ts-via'
-        >
+        <div className='ts-via'>
+            <div className='ts-dividing-line'></div>
             <div className='ts-via-content'>
                 <span className='ts-via-pre'>via</span>
                 <SourceSelect
@@ -18,7 +17,6 @@ const TsVia = ({ sourceChange, source, disableSourceChange }) => {
                     disabled={disableSourceChange}
                 />
             </div>
-            
         </div>
     );
 };

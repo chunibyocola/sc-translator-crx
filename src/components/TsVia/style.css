@@ -3,10 +3,10 @@
     text-align: right;
     background: var(--bg-content);
     border-radius: 0 0 3px 3px;
+    padding: 0 10px;
 }
 .ts-via-content {
     font-size: 14px !important;
-    margin: 0 10px;
     padding: 2px 0;
 }
 .ts-via-content .ts-via-pre {

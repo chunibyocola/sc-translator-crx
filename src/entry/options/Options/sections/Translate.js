@@ -113,24 +113,6 @@ const Translate = ({
                     onClick={() => updateStorage('respondToSeparateWindow', !respondToSeparateWindow)}
                 />
             </div>
-            <div className='mt10-ml30'>
-                <OptionToggle
-                    id='pin-the-panel-after-translating'
-                    message='optionsPinThePanelWhileOpeningIt'
-                    checked={pinThePanelWhileOpeningIt}
-                    onClick={() => updateStorage('pinThePanelWhileOpeningIt', !pinThePanelWhileOpeningIt)}
-                />
-                <div className='item-description'>{getMessage('optionsPinThePanelWhileOpeningItDescription')}</div>
-            </div>
-            <div className='mt10-ml30'>
-                <OptionToggle
-                    id='remember-position-of-pinned-panel'
-                    message='optionsRememberPositionOfPinnedPanel'
-                    checked={rememberPositionOfPinnedPanel}
-                    onClick={() => updateStorage('rememberPositionOfPinnedPanel', !rememberPositionOfPinnedPanel)}
-                />
-                <div className='item-description'>{getMessage('optionsRememberPositionOfPinnedPanelDescription')}</div>
-            </div>
             <div className='mt10-mb10'>{getMessage('optionsDefaultTranslateOptions')}</div>
             <div className='child-mt10-ml30'>
                 <div className='options-mode'>
