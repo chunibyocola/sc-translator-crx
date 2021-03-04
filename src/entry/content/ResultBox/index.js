@@ -10,7 +10,7 @@ import SingleTranslateResult from '../SingleTranslateResult';
 import './style.css';
 
 const initPos = { x: 5, y: 5 };
-const useOptionsDependency = ['pinThePanelWhileOpeningIt', 'rememberPositionOfPinnedPanel', 'positionOfPinnedPanel', 'translatePanelMaxHeight'];
+const useOptionsDependency = ['pinThePanelWhileOpeningIt', 'rememberPositionOfPinnedPanel', 'positionOfPinnedPanel', 'translatePanelMaxHeight', 'translatePanelWidth'];
 
 const ResultBox = ({ multipleTranslateMode }) => {
     const [pinning, setPinning] = useState(false);
@@ -28,7 +28,7 @@ const ResultBox = ({ multipleTranslateMode }) => {
 
     const dispatch = useDispatch();
 
-    const { pinThePanelWhileOpeningIt, rememberPositionOfPinnedPanel, positionOfPinnedPanel, translatePanelMaxHeight } = useOptions(useOptionsDependency);
+    const { pinThePanelWhileOpeningIt, rememberPositionOfPinnedPanel, positionOfPinnedPanel, translatePanelMaxHeight, translatePanelWidth } = useOptions(useOptionsDependency);
 
     const windowSize = useWindowSize();
 
@@ -106,7 +106,11 @@ const ResultBox = ({ multipleTranslateMode }) => {
         <div
             ref={mtEle}
             className='ts-rb'
-            style={{display: show ? 'block' : 'none', transform: `translate(${pinPos.x}px, ${pinPos.y}px)`}}
+            style={{
+                display: show ? 'block' : 'none',
+                transform: `translate(${pinPos.x}px, ${pinPos.y}px)`,
+                width: translatePanelWidth.percentage ? `calc(${translatePanelWidth.percent}% - 10px)` : `${translatePanelWidth.px}px`
+            }}
             onMouseUp={e => e.stopPropagation()}
             onMouseDown={e => e.stopPropagation()}
         >

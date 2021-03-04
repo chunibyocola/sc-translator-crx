@@ -188,6 +188,9 @@
     "optionsPercentage": {
         "message": "パーセント"
     },
+    "optionsWidthOfTranslatePanel": {
+        "message": "翻訳パネルの幅"
+    },
     "themePreset": {
         "message": "プリセット"
     },

@@ -51,7 +51,8 @@ const Options = () => {
         rememberStwSizeAndPosition,
         pinThePanelWhileOpeningIt,
         rememberPositionOfPinnedPanel,
-        translatePanelMaxHeight
+        translatePanelMaxHeight,
+        translatePanelWidth
     } = useOptions(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -93,6 +94,7 @@ const Options = () => {
                 pinThePanelWhileOpeningIt={pinThePanelWhileOpeningIt}
                 rememberPositionOfPinnedPanel={rememberPositionOfPinnedPanel}
                 translatePanelMaxHeight={translatePanelMaxHeight}
+                translatePanelWidth={translatePanelWidth}
             />
             <div className='sub-title'>{getMessage('optionsTranslate')}</div>
             <Translate

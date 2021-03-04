@@ -18,10 +18,18 @@ const marksPx = [
     { value: 750, label: '750px' },
     { value: 1000, label: '1000px' }
 ];
+const marksWidthPx = [
+    { value: 250, label: '250px' },
+    { value: 750, label: '750px' },
+    { value: 1250, label: '1250px' },
+    { value: 1750, label: '1750px' },
+    { value: 1910, label: '1910px' }
+];
 const pxLabelFormat = v => `${v}px`
 
-const TranslatePanel = ({ updateStorage, pinThePanelWhileOpeningIt, rememberPositionOfPinnedPanel, translatePanelMaxHeight }) => {
-    const { percentage, px, percent } = translatePanelMaxHeight;
+const TranslatePanel = ({ updateStorage, pinThePanelWhileOpeningIt, rememberPositionOfPinnedPanel, translatePanelMaxHeight, translatePanelWidth }) => {
+    const { percentage: hPercentage, px: hPx, percent: hPercent } = translatePanelMaxHeight;
+    const { percentage: wPercentage, px: wPx, percent: wPercent } = translatePanelWidth;
 
     return (
         <div className='opt-item'>
@@ -30,12 +38,12 @@ const TranslatePanel = ({ updateStorage, pinThePanelWhileOpeningIt, rememberPosi
                 <OptionToggle
                     id='max-height-percentage'
                     message='optionsPercentage'
-                    checked={percentage}
-                    onClick={() => updateStorage('translatePanelMaxHeight', { ...translatePanelMaxHeight, percentage: !percentage })}
+                    checked={hPercentage}
+                    onClick={() => updateStorage('translatePanelMaxHeight', { ...translatePanelMaxHeight, percentage: !hPercentage })}
                 />
             </div>
-            {percentage ? <Slider
-                defaultValue={percent}
+            {hPercentage ? <Slider
+                defaultValue={hPercent}
                 min={10}
                 max={100}
                 step={1}
@@ -44,7 +52,7 @@ const TranslatePanel = ({ updateStorage, pinThePanelWhileOpeningIt, rememberPosi
                 valueLabelFormat={percentageLabelFormat}
                 mouseUpCallback={v => updateStorage('translatePanelMaxHeight', { ...translatePanelMaxHeight, 'percent': v })}
             /> : <Slider
-                defaultValue={px}
+                defaultValue={hPx}
                 min={100}
                 max={1000}
                 step={5}
@@ -52,6 +60,34 @@ const TranslatePanel = ({ updateStorage, pinThePanelWhileOpeningIt, rememberPosi
                 valueLabelDisplay
                 valueLabelFormat={pxLabelFormat}
                 mouseUpCallback={v => updateStorage('translatePanelMaxHeight', { ...translatePanelMaxHeight, 'px': v })}
+            />}
+            <div className='options-mode'>
+                {getMessage('optionsWidthOfTranslatePanel')}
+                <OptionToggle
+                    id='width-percentage'
+                    message='optionsPercentage'
+                    checked={wPercentage}
+                    onClick={() => updateStorage('translatePanelWidth', { ...translatePanelWidth, percentage: !wPercentage })}
+                />
+            </div>
+            {wPercentage ? <Slider
+                defaultValue={wPercent}
+                min={10}
+                max={100}
+                step={1}
+                marks={marksPercentage}
+                valueLabelDisplay
+                valueLabelFormat={percentageLabelFormat}
+                mouseUpCallback={v => updateStorage('translatePanelWidth', { ...translatePanelWidth, 'percent': v })}
+            /> : <Slider
+                defaultValue={wPx}
+                min={250}
+                max={1910}
+                step={5}
+                marks={marksWidthPx}
+                valueLabelDisplay
+                valueLabelFormat={pxLabelFormat}
+                mouseUpCallback={v => updateStorage('translatePanelWidth', { ...translatePanelWidth, 'px': v })}
             />}
             <OptionToggle
                 id='pin-the-panel-after-translating'

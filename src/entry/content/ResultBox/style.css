@@ -8,10 +8,10 @@
     width: 250px;
     background-color: var(--bg-total);
     box-shadow: rgba(0, 0, 0, 0.8) 0px 0px 10px 0px;
+    min-width: 250px;
 }
 .ts-rb-content {
-    width: 242px;
-    margin: 0 auto 4px;
+    margin: 0 4px 4px 4px;
 }
 .ts-rb-header {
     cursor: move;

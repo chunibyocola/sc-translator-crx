@@ -188,6 +188,9 @@
     "optionsPercentage": {
         "message": "百分比"
     },
+    "optionsWidthOfTranslatePanel": {
+        "message": "翻譯面板的寬度"
+    },
     "themePreset": {
         "message": "預設"
     },
