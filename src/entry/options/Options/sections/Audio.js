@@ -29,9 +29,8 @@ const playbackRateLabelFormat = v => `${Number(v).toFixed(2)}x`;
 
 const Audio = ({ updateStorage, defaultAudioSource, audioVolume, audioPlaybackRate }) => {
     return (
-        <div className='opt-item'>
-            {getMessage('optionsDefaultAudioOptions')}
-            <div className='child-mt10-ml30'>
+        <div className='opt-section'>
+            <div className='opt-section-row'>
                 <div className='opt-source-select'>
                     {getMessage('optionsSource')}
                     <SourceSelect
@@ -41,29 +40,35 @@ const Audio = ({ updateStorage, defaultAudioSource, audioVolume, audioPlaybackRa
                     />
                 </div>
             </div>
-            {getMessage('optionsVolume')}
-            <Slider
-                defaultValue={audioVolume}
-                min={5}
-                max={100}
-                step={5}
-                marks={marksVolume}
-                valueLabelDisplay
-                mouseUpCallback={v => updateStorage('audioVolume', volumeFormat(v))}
-                valueLabelFormat={volumeLabelFormat}
-            />
-            {getMessage('optionsPlaybackRate')}
-            <Slider
-                defaultValue={audioPlaybackRate}
-                min={0.5}
-                max={2}
-                step={0.25}
-                marks={marksPlaybackRate}
-                valueLabelDisplay
-                mouseUpCallback={v => updateStorage('audioPlaybackRate', playbackRateFormat(v))}
-                valueLabelFormat={playbackRateLabelFormat}
-            />
-            <button onClick={() => sendAudio('this is a test audio', { from: 'en' })}>{getMessage('optionsPlayTestAudio')}</button>
+            <div className='opt-section-row'>
+                {getMessage('optionsVolume')}
+                <Slider
+                    defaultValue={audioVolume}
+                    min={5}
+                    max={100}
+                    step={5}
+                    marks={marksVolume}
+                    valueLabelDisplay
+                    mouseUpCallback={v => updateStorage('audioVolume', volumeFormat(v))}
+                    valueLabelFormat={volumeLabelFormat}
+                />
+            </div>
+            <div className='opt-section-row'>
+                {getMessage('optionsPlaybackRate')}
+                <Slider
+                    defaultValue={audioPlaybackRate}
+                    min={0.5}
+                    max={2}
+                    step={0.25}
+                    marks={marksPlaybackRate}
+                    valueLabelDisplay
+                    mouseUpCallback={v => updateStorage('audioPlaybackRate', playbackRateFormat(v))}
+                    valueLabelFormat={playbackRateLabelFormat}
+                />
+            </div>
+            <div className='opt-section-row'>
+                <button onClick={() => sendAudio('this is a test audio', { from: 'en' })}>{getMessage('optionsPlayTestAudio')}</button>
+            </div>
         </div>
     );
 };

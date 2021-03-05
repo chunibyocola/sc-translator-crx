@@ -48,13 +48,13 @@
         "message": "Default translate options"
     },
     "optionsSource": {
-        "message": "source"
+        "message": "Source"
     },
     "optionsFrom": {
-        "message": "from"
+        "message": "From"
     },
     "optionsTo": {
-        "message": "to"
+        "message": "To"
     },
     "optionsTranslateDirectly": {
         "message": "Translate directly"

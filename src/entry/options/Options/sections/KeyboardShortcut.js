@@ -13,33 +13,33 @@ const KeyboardShortcut = () => {
     }, []);
 
     return (
-        <div className='opt-item'>
-            <div className='mt10-mb10'>
+        <div className='opt-section'>
+            <div className='opt-section-row'>
                 {getMessage('extActivateExtensionDescription')}
-                <span className='keyboard-shortcut'>{commands[EXECUTE_BROWSER_ACTION] ?? ''}</span>
+                <span className='keyboard-shortcut'>{commands[EXECUTE_BROWSER_ACTION]}</span>
             </div>
-            <div className='mt10-mb10'>
+            <div className='opt-section-row'>
                 {getMessage('extTranslateCommandDescription')}
-                <span className='keyboard-shortcut'>{commands[SC_TRANSLATE] ?? ''}</span>
+                <span className='keyboard-shortcut'>{commands[SC_TRANSLATE]}</span>
             </div>
-            <div className='mt10-mb10'>
+            <div className='opt-section-row'>
                 {getMessage('extListenCommandDescription')}
-                <span className='keyboard-shortcut'>{commands[SC_AUDIO] ?? ''}</span>
+                <span className='keyboard-shortcut'>{commands[SC_AUDIO]}</span>
             </div>
-            <div className='mt10-mb10'>
+            <div className='opt-section-row'>
                 {getMessage('extCallOutCommandDescription')}
-                <span className='keyboard-shortcut'>{commands[SC_CALL_OUT] ?? ''}</span>
+                <span className='keyboard-shortcut'>{commands[SC_CALL_OUT]}</span>
                 <div className='item-description'>{getMessage('optionsCallOutCommandDescription')}</div>
             </div>
-            <div className='mt10-mb10'>
+            <div className='opt-section-row'>
                 {getMessage('extCloseCommandDescription')}
-                <span className='keyboard-shortcut'>{commands[SC_CLOSE] ?? ''}</span>
+                <span className='keyboard-shortcut'>{commands[SC_CLOSE]}</span>
             </div>
-            <div className='mt10-mb10'>
+            <div className='opt-section-row'>
                 {getMessage('extOpenSeparateWindowDescription')}
-                <span className='keyboard-shortcut'>{commands[SC_OPEN_SEPARATE_WINDOW] ?? ''}</span>
+                <span className='keyboard-shortcut'>{commands[SC_OPEN_SEPARATE_WINDOW]}</span>
             </div>
-            <div className='item-description mt10-mb10'>
+            <div className='item-description opt-section-row'>
                 <span onClick={() => createNewTab('chrome://extensions/shortcuts')} className='span-link'>
                     {getMessage('optionsCustomizeHere')}
                 </span>

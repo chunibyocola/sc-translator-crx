@@ -10,7 +10,7 @@ const OptionToggle = ({ id, message, checked, onClick }) => {
                 checked={checked}
                 onClick={onClick}
             />
-            <label htmlFor={id}>
+            <label htmlFor={id} className='ts-button'>
                 {getMessage(message)}
             </label>
         </div>

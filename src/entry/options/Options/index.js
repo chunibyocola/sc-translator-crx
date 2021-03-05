@@ -4,6 +4,7 @@ import { setLocalStorage } from '../../../public/chrome-call';
 import { getMessage } from '../../../public/i18n';
 import { useOptions } from '../../../public/react-use';
 import Audio from './sections/Audio';
+import DefaultTranslateOptions from './sections/DefaultTranslateOptions';
 import History from './sections/History';
 import KeyboardShortcut from './sections/KeyboardShortcut';
 import More from './sections/More';
@@ -12,7 +13,6 @@ import SeparateWindow from './sections/SeparateWindow';
 import Theme from './sections/Theme';
 import Translate from './sections/Translate';
 import TranslatePanel from './sections/TranslatePanel';
-import Url from './sections/URL';
 import './style.css';
 
 const useOptionsDependency = Object.keys(defaultOptions);
@@ -66,11 +66,6 @@ const Options = () => {
                 styleVarsList={styleVarsList}
                 styleVarsIndex={styleVarsIndex}
             />
-            <div className='sub-title'>URL</div>
-            <Url
-                updateStorage={updateStorage}
-                useDotCn={useDotCn}
-            />
             <div className='sub-title'>PDF</div>
             <Pdf
                 updateStorage={updateStorage}
@@ -96,7 +91,22 @@ const Options = () => {
                 translatePanelMaxHeight={translatePanelMaxHeight}
                 translatePanelWidth={translatePanelWidth}
             />
-            <div className='sub-title'>{getMessage('optionsTranslate')}</div>
+            <div className='sub-title'>{getMessage('optionsDefaultTranslateOptions')}</div>
+            <DefaultTranslateOptions
+                updateStorage={updateStorage}
+                multipleTranslateMode={multipleTranslateMode}
+                userLanguage={userLanguage}
+                preferredLanguage={preferredLanguage}
+                secondPreferredLanguage={secondPreferredLanguage}
+                multipleTranslateSourceList={multipleTranslateSourceList}
+                multipleTranslateFrom={multipleTranslateFrom}
+                multipleTranslateTo={multipleTranslateTo}
+                defaultTranslateSource={defaultTranslateSource}
+                defaultTranslateFrom={defaultTranslateFrom}
+                defaultTranslateTo={defaultTranslateTo}
+                useDotCn={useDotCn}
+            />
+            <div className='sub-title'>{getMessage('optionsInWebPage')}</div>
             <Translate
                 updateStorage={updateStorage}
                 translateWithKeyPress={translateWithKeyPress}
@@ -106,19 +116,9 @@ const Options = () => {
                 btnPosition={btnPosition}
                 hideButtonAfterFixedTime={hideButtonAfterFixedTime}
                 hideButtonFixedTime={hideButtonFixedTime}
-                multipleTranslateMode={multipleTranslateMode}
-                userLanguage={userLanguage}
-                preferredLanguage={preferredLanguage}
-                multipleTranslateSourceList={multipleTranslateSourceList}
-                multipleTranslateFrom={multipleTranslateFrom}
-                multipleTranslateTo={multipleTranslateTo}
-                defaultTranslateSource={defaultTranslateSource}
-                defaultTranslateFrom={defaultTranslateFrom}
-                defaultTranslateTo={defaultTranslateTo}
                 translateBlackListMode={translateBlackListMode}
                 translateHostList={translateHostList}
                 respondToSeparateWindow={respondToSeparateWindow}
-                secondPreferredLanguage={secondPreferredLanguage}
             />
             <div className='sub-title'>{getMessage('optionsHistory')}</div>
             <History
