@@ -21,6 +21,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
+    "react-signal-slot": "^1.0.1",
     "redux": "^4.0.5",
     "whatwg-fetch": "^3.6.2"
   },

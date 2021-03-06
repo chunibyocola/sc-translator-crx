@@ -2,6 +2,7 @@
     width: 680px;
     margin: 0 auto;
     margin-bottom: 60px;
+    margin-top: 56px;
 }
 .opt-section {
     background: var(--bg-content);
@@ -13,15 +14,14 @@
     margin-left: 30px;
 }
 .main-title {
-    font-size: 150%;
-    margin: 18px 0;
+    font-size: 115%;
     font-weight: 500;
 }
 .sub-title {
     font-size: 110%;
     font-weight: 400;
-    margin-top: 32px;
-    margin-bottom: 16px;
+    padding-top: 32px;
+    padding-bottom: 16px;
 }
 .option-toggle, .options-mode {
     display: flex;
@@ -66,4 +66,18 @@
 }
 .opt-section-row {
     padding: 12px 24px;
+}
+.opt-nav-bar {
+    position: fixed;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    height: 56px;
+    background: var(--bg-content);
+    color: var(--text-normal);
+    padding-left: 20px;
+    top: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
 }

@@ -1,0 +1,65 @@
+.options-menu {
+    display: inline-block;
+}
+.options-menu-item {
+    padding: 10px 0 10px 60px;
+    width: 250px;
+    box-sizing: border-box;
+}
+.options-menu-item:hover {
+    opacity: 0.6;
+}
+.options-sidebar-menu {
+    padding-top: 56px;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-sizing: border-box;
+}
+.options-sidebar-items {
+    height: 100%;
+    overflow: auto;
+}
+.options-navbar-menu-icon {
+    font-size: 250% !important;
+    margin-right: 10px;
+}
+.options-navbar-menu-backdrop {
+    background-color: rgba(0,0,0,.6);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    z-index: 10000;
+    display: none;
+}
+.options-navbar-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow: auto;
+    background: var(--bg-total);
+    transition: transform 200ms;
+    transform: translateX(-100%);
+    z-index: 10001;
+}
+.options-navbar-sidebar-brand {
+    font-size: 115%;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+.options-navbar-sidebar-items {
+    width: 250px;
+}
+.options-navbar-sidebar-show .options-navbar-sidebar {
+    transform: translateX(0);
+}
+.options-navbar-sidebar-show .options-navbar-menu-backdrop {
+    display: block;
+}
