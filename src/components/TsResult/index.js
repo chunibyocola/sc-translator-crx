@@ -18,7 +18,7 @@ const TsResult = ({ resultObj, status, readText, source, retry }) => {
             error ?
                 <>{getMessage(`errorCode_${errorCode}`)}<span className='span-link' onClick={retry}>{getMessage('wordRetry')}</span></> :
             <>
-                <div className='tss-result'>
+                <div className='tss-result flex-align-items-center'>
                     <span>
                         {resultToString(result)}
                     </span>
@@ -32,7 +32,7 @@ const TsResult = ({ resultObj, status, readText, source, retry }) => {
                     />
                 </div>
                 {dict && dict.map((v, i) => (<div key={i}>{v}</div>))}
-                <div className='tss-origin-text'>
+                <div className='tss-origin-text flex-align-items-center'>
                     <span className='tss-origin-raw'>{text}</span>
                     <IconFont
                         className='ts-iconbutton ts-button'

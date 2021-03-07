@@ -25,6 +25,7 @@
 }
 .option-toggle, .options-mode {
     display: flex;
+    align-items: center;
 }
 .options-mode .option-toggle {
     display: inline-flex;

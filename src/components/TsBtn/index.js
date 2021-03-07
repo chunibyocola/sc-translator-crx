@@ -176,7 +176,8 @@ const TsBtn = ({ multipleTranslateMode }) => {
             className='ts-btn'
             style={{
                 display: isEnableTranslate && showBtn ? 'block' : 'none',
-                transform: `translate(${pos.x}px, ${pos.y}px)`
+                left: `${pos.x}px`,
+                top: `${pos.y}px`
             }}
             onMouseUp={(e) => {
                 setShowBtn(false);

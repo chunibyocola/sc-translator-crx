@@ -73,9 +73,9 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                             <IconFont iconName='#icon-GoUnmute' className='ts-iconbutton ts-button' />
                         </div>
                         <div class="tss-phonetic">[ˈwelkəm]</div>
-                        <div className='ts-dividing-line ts-st-dividing-line' style={{background: styleVars['--text-normal']}}></div>
                     </div>
                     <div class="ts-via" style={{background: styleVars['--bg-content']}}>
+                        <div className='ts-dividing-line ts-st-dividing-line' style={{background: styleVars['--text-normal']}}></div>
                         <div class="ts-via-content">
                             via
                             <div class="ts-source-select ts-via-select" style={{color: styleVars['--text-normal']}}>
@@ -171,7 +171,7 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                         </div>
                     </div>
                     <div class="ts-mt-add-source">
-                        <IconFont iconName='#icon-plus' />
+                        <IconFont iconName='#icon-plus' style={{color: styleVars['--text-icon']}} />
                     </div>
                 </div>
             </div>

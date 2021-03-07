@@ -108,18 +108,19 @@ const ResultBox = ({ multipleTranslateMode }) => {
             className='ts-rb'
             style={{
                 display: show ? 'block' : 'none',
-                transform: `translate(${pinPos.x}px, ${pinPos.y}px)`,
+                left: `${pinPos.x}px`,
+                top: `${pinPos.y}px`,
                 width: translatePanelWidth.percentage ? `calc(${translatePanelWidth.percent}% - 10px)` : `${translatePanelWidth.px}px`
             }}
             onMouseUp={e => e.stopPropagation()}
             onMouseDown={e => e.stopPropagation()}
         >
             <div
-                className='ts-rb-header'
+                className='ts-rb-header flex-justify-content-space-between'
                 onMouseDown={e => drag(e, pinPos, changePinPos, handleMouseUpCallback)}
             >
-                <span className='ts-rb-header-title'>Sc</span>
-                <span className='ts-rb-header-icons'>
+                <span className='ts-rb-header-title flex-align-items-center'>Sc</span>
+                <span className='ts-rb-header-icons flex-align-items-center'>
                     <IconFont
                         iconName='#icon-GoChevronDown'
                         onClick={() => setShowRtAndLs(!showRtAndLs)}

@@ -2,9 +2,7 @@
     border-radius: 0px 5px 5px 5px;
     color: var(--text-normal) !important;
     position: fixed;
-    z-index: 100001;
-    top: 0px;
-    left: 0px;
+    z-index: 2147483647;
     width: 250px;
     background-color: var(--bg-total);
     box-shadow: rgba(0, 0, 0, 0.8) 0px 0px 10px 0px;
@@ -17,17 +15,14 @@
     cursor: move;
     user-select: none;
     width: 100%;
-    padding: 5px;
-    box-sizing: border-box;
-    overflow: hidden;
+    padding: 0 5px;
     color: var(--text-icon);
+    height: 30px;
 }
 .ts-rb-header-title {
-    float: left;
     font-weight: bold;
 }
 .ts-rb-header-icons {
-    float: right;
     margin-right: 5px;
 }
 .ts-rb-header-icons .ts-iconfont {

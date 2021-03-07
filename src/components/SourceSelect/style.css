@@ -1,7 +1,6 @@
 .ts-source-select {
     position: relative;
     text-align: start;
-    box-sizing: border-box;
     align-items: center;
     display: inline-flex;
     cursor: default;
@@ -28,7 +27,6 @@
     z-index: 999;
 }
 .ts-source-select-value {
-    box-sizing: border-box;
     width: calc(100% - 20px);
     overflow: hidden;
 }

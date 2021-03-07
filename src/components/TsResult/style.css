@@ -1,9 +1,6 @@
 .ts-result {
     background: var(--bg-content);
-    height: fit-content;
-    width: 100%;
     border-radius: 3px 3px 0 0;
-    box-sizing: border-box;
     padding: 10px;
     word-break: break-all;
     font-size: 14px;

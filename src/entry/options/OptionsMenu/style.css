@@ -4,7 +4,6 @@
 .options-menu-item {
     padding: 10px 0 10px 60px;
     width: 250px;
-    box-sizing: border-box;
 }
 .options-menu-item:hover {
     opacity: 0.6;
@@ -15,7 +14,6 @@
     position: fixed;
     left: 0;
     top: 0;
-    box-sizing: border-box;
 }
 .options-sidebar-items {
     height: 100%;

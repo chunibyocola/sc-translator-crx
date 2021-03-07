@@ -15,4 +15,5 @@
     position: absolute;
     border-radius: 3px;
     border: 2px solid #000;
+    box-sizing: unset;
 }

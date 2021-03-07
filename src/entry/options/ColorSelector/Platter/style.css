@@ -15,6 +15,7 @@
     height: 5px;
     border-radius: 50%;
     border: 2px solid #fff;
+    box-sizing: unset;
 }
 .color-selector-platter-back {
     pointer-events: none;

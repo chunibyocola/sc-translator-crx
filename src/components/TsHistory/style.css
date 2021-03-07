@@ -1,6 +1,6 @@
 .ts-history {
     font-size: 13px;
-    z-index: 100000;
+    z-index: 2147483647;
     user-select: none;
     position: fixed;
     top: 0px;
@@ -12,7 +12,6 @@
     transform: translate3d(-100%, 0px, 0px);
     transition: transform 0.2s ease 0s;
     padding-top: 40px;
-    box-sizing: border-box;
 }
 .ts-history-show {
     transform: translate3d(0px, 0px, 0px);
@@ -57,24 +56,23 @@
     color: var(--text-icon);
     width: 100%;
     background: var(--bg-total);
-    padding: 10px 5px;
-    min-height: 40px;
-    box-sizing: border-box;
+    padding: 0 5px;
+    display: flex;
+    height: 40px;
+    justify-content: space-between;
+    align-items: center;
 }
 .ts-history-content {
     overflow-y: auto;
     height: 100%;
     width: 100%;
-    box-sizing: border-box;
     border-right: 1px solid var(--bg-total);
 }
 .ts-history-norecord {
     margin: 20px;
 }
 .ts-history-head-icons {
-    float: right;
     margin-right: 5px;
-    margin-top: 0px;
     color: var(--text-icon);
     opacity: 0.6;
     cursor: pointer;

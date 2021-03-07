@@ -18,5 +18,5 @@
     left: calc(50% - 5px);
     top: calc(50% - 2px);
     font-size: 22px !important;
-    z-index: 1000;
+    z-index: 2;
 }

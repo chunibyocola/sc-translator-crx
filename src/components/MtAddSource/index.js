@@ -19,7 +19,7 @@ const MtAddSource = ({ translations, addSource }) => {
             <IconFont
                 iconName='#icon-plus'
                 onClick={plusOnClick}
-                className='ts-button'
+                className='ts-mt-add-source-bage ts-button'
             />
             <SourceSelector
                 show={showSourceSelector}

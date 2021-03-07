@@ -27,7 +27,7 @@ const HistoryResultPanel = ({ translations, position, show }) => {
             >
                 {translations.map(({ source, status, from, result }) => (<div className='ts-mt-result' key={source}>
                     <div className='ts-mt-result-head'>
-                        <span className='ts-mt-result-head-source'>
+                        <span className='flex-align-items-center'>
                             <SourceFavicon source={source} />
                             {status.requestEnd && !status.error && <IconFont
                                 className='ts-iconbutton ts-button'
@@ -49,7 +49,7 @@ const HistoryResultPanel = ({ translations, position, show }) => {
                             {result.phonetic && result.from === LANG_EN && <div style={{marginBottom: '10px'}}>
                                 {result.phonetic}
                             </div>}
-                            <div>
+                            <div className='flex-align-items-center'>
                                 <span style={{marginRight: '5px'}}>
                                     {resultToString(result.result)}
                                 </span>

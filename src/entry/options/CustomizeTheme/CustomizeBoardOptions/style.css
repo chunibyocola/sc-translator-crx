@@ -5,7 +5,6 @@
     background: #fff;
     border-radius: 10px;
     padding: 10px;
-    box-sizing: border-box;
     color: #666;
 }
 .customize-offset {
@@ -24,7 +23,6 @@
 .colors-color {
     box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 5px 0px;
     display: inline-block;
-    box-sizing: border-box;
     width: 100px;
     height: 20px;
     vertical-align: middle;
@@ -43,5 +41,4 @@
 }
 .colors-theme-name {
     width: 100%;
-    box-sizing: border-box;
 }

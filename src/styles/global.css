@@ -1,3 +1,6 @@
+* {
+    box-sizing: border-box;
+}
 #sc-translator-root {
     font-size: 14px !important;
     line-height: initial !important;
@@ -38,4 +41,12 @@
 }
 .span-link:hover {
     text-decoration: none;
+}
+.flex-align-items-center {
+    display: flex;
+    align-items: center;
+}
+.flex-justify-content-space-between {
+    display: flex;
+    justify-content: space-between;
 }

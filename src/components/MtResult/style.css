@@ -1,30 +1,19 @@
 .ts-mt-result {
     background: var(--bg-content);
-    height: fit-content;
     width: 100%;
     margin-bottom: 3px;
-    box-sizing: border-box;
     word-break: break-all;
     font-size: 14px;
-    overflow-y: auto;
     border-radius: 3px;
     padding: 0px 10px;
-    overflow: hidden;
 }
 .ts-mt-result-head {
     padding: 2px 0px;
-    position: relative;
     color: var(--text-normal);
-    overflow: hidden;
-}
-.ts-mt-result-head-source {
-    float: left;
 }
 .ts-mt-result-head-icons {
-    float: right;
     margin-right: 5px;
 }
 .ts-mt-result-result {
     padding: 10px 0px;
-    height: fit-content;
 }

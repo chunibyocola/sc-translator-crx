@@ -13,9 +13,6 @@
     opacity: 0.7;
 }
 .ts-via-select {
-    border: none;
-    outline: none;
-    background: transparent;
     margin-left: 10px;
     width: 150px;
 }

@@ -4,11 +4,9 @@
 .color-selector-selected-color {
     height: 100%;
     width: 100%;
-    box-sizing: border-box;
     border: 2px solid #fff;
 }
 .color-selector-selected-color-outer {
-    box-sizing: border-box;
     height: 24px;
     width: 100%;
     border: 2px solid #000;
@@ -61,7 +59,6 @@
     padding: 2px 15px;
     border-radius: 4px;
     width: 100%;
-    box-sizing: border-box;
     text-align: center;
 }
 .color-selector-adjust-rgb input {

@@ -37,7 +37,8 @@ const BtnPostion = ({ currentPos, updateBtnPostion }) => {
                         top: `calc(50% + ${pos.y}px)`,
                         left: `calc(50% + ${pos.x}px)`,
                         position: 'absolute',
-                        cursor: 'default'
+                        cursor: 'default',
+                        zIndex: '1'
                     }}
                 >
                     <IconFont iconName='#icon-MdTranslate' style={{display: 'block'}} />

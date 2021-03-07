@@ -10,37 +10,24 @@
 }
 .ts-history-item-content {
     color: var(--text-normal);
-    box-sizing: border-box;
     padding-left: 5px;
     width: 150px;
     cursor: pointer;
     height: 50px;
 }
-.ts-history-item-content-text {
+.ts-history-item-content-text, .ts-history-item-content-result {
     height: 25px;
     line-height: 25px;
     overflow: hidden;
-    text-overflow:ellipsis;
-    white-space: nowrap;
-}
-.ts-history-item-content-result {
-    height: 25px;
-    line-height: 25px;
-    overflow: hidden;
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
 }
 .ts-history-item-icons {
     justify-content: center;
     align-items: center;
     display: flex;
-    height: 50px;
     width: 50px;
 }
 .ts-history-item-icons .ts-iconfont {
-    padding: 3px;
     font-size: 15px !important;
-}
-.ts-history-item-icons .ts-iconfont:last-child {
-    margin-left: 2px;
 }

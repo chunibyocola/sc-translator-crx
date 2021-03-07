@@ -1,17 +1,13 @@
 .ts-btn {
     user-select: none;
-    border-radius: 5px;
-    width: fit-content;
-    border: 1px solid rgb(187, 187, 187);
+    border-radius: 3px;
     padding: 3px;
-    box-shadow: rgb(221, 221, 221, 0.3) 1px 1px 1px;
+    box-shadow: 0px 0px 4px -1px rgba(0, 0, 0, .88) ;
     cursor: pointer;
     color: var(--text-normal);
     background: var(--bg-content);
     position: fixed;
-    z-index: 999;
-    top: 0px;
-    left: 0px;
+    z-index: 2147483647;
 }
 .ts-btn .ts-iconfont {
     display: block;

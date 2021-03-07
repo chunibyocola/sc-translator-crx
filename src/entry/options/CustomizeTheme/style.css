@@ -5,7 +5,6 @@
 }
 .theme-item-badge {
     display: flex;
-    box-sizing: border-box;
     width: 100px;
     height: 100px;
     border-radius: 50%;

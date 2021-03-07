@@ -14,10 +14,10 @@ const MtResult = ({ source, status, result, text, remove, readText, retry }) => 
     return (
         <div className='ts-mt-result'>
             <div
-                className='ts-mt-result-head ts-button'
+                className='ts-mt-result-head ts-button flex-justify-content-space-between'
                 onClick={() => setFold(!fold)}
             >
-                <span className='ts-mt-result-head-source'>
+                <span className='flex-align-items-center'>
                     <SourceFavicon source={source} />
                     {requestEnd && !error && <IconFont
                         className='ts-iconbutton'
@@ -26,7 +26,7 @@ const MtResult = ({ source, status, result, text, remove, readText, retry }) => 
                         onClick={(e) => { e.stopPropagation(); readText(text, result.from); }}
                     />}
                 </span>
-                <span className='ts-mt-result-head-icons'>
+                <span className='ts-mt-result-head-icons flex-align-items-center'>
                     <IconFont
                         iconName='#icon-GoChevronDown'
                         style={!fold ? {transform: 'rotate(180deg)'} : {}}
@@ -50,7 +50,7 @@ const MtResult = ({ source, status, result, text, remove, readText, retry }) => 
                     {result.phonetic && result.from === LANG_EN && <div style={{marginBottom: '10px'}}>
                         {result.phonetic}
                     </div>}
-                    <div>
+                    <div className='flex-align-items-center'>
                         <span style={{marginRight: '5px'}}>
                             {resultToString(result.result)}
                         </span>
