@@ -54,7 +54,8 @@ const Options = () => {
         pinThePanelWhileOpeningIt,
         rememberPositionOfPinnedPanel,
         translatePanelMaxHeight,
-        translatePanelWidth
+        translatePanelWidth,
+        translatePanelFontSize
     } = useOptions(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -95,6 +96,7 @@ const Options = () => {
                 rememberPositionOfPinnedPanel={rememberPositionOfPinnedPanel}
                 translatePanelMaxHeight={translatePanelMaxHeight}
                 translatePanelWidth={translatePanelWidth}
+                translatePanelFontSize={translatePanelFontSize}
             />
             <div className='sub-title' id='default-translate-options'>{getMessage('optionsDefaultTranslateOptions')}</div>
             <DefaultTranslateOptions

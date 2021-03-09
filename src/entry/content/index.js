@@ -13,7 +13,7 @@ import { getExtensionURL, getLocalStorage, onExtensionMessage } from '../../publ
 import defaultOptions from '../../constants/defaultOptions';
 
 import '../../styles/global.css';
-import { injectThemeStyle } from '../../public/inject-style';
+import { injectFontSizeStyle, injectThemeStyle } from '../../public/inject-style';
 
 const init = (options) => {
   initOptions(options);
@@ -34,6 +34,7 @@ const init = (options) => {
 
   const themeStyle = document.createElement('style');
   injectThemeStyle(themeStyle);
+  injectFontSizeStyle(themeStyle);
   shadowRoot.appendChild(themeStyle);
 
   const div = document.createElement('div');

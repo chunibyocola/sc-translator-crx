@@ -3,18 +3,15 @@
     border-radius: 3px 3px 0 0;
     padding: 10px;
     word-break: break-all;
-    font-size: 14px;
 }
 .tss-result {
     margin-bottom: 10px;
 }
-.tss-result span {
-    vertical-align: middle;
-    margin-right: 5px;
-}
 .tss-result .ts-iconfont {
     cursor: pointer;
-    vertical-align: middle;
+    margin-left: 5px;
+    position: relative;
+    bottom: .125em;
 }
 .tss-origin-text {
     margin-top: 10px;
@@ -24,7 +21,7 @@
     vertical-align: middle;
     margin-right: 5px;
     overflow: hidden;
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
     max-width: 190px;
 }

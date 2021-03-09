@@ -3,6 +3,7 @@
     text-align: right;
     margin-right: 5px;
     margin-bottom: 2px;
+    font-size: 14px;
 }
 .ts-mt-add-source-bage {
     color: var(--text-icon);

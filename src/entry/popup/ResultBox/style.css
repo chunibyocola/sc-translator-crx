@@ -1,5 +1,5 @@
 .container {
-    transition: all 0.2s ease-in-out;
+    transition: background 0.2s ease-in-out;
     border-radius: 3px;
     width: 250px;
     height: fit-content;

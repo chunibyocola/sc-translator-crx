@@ -191,6 +191,9 @@
     "optionsWidthOfTranslatePanel": {
         "message": "翻译面板的宽度"
     },
+    "optionsFontSizeOfTranslatePanel": {
+        "message": "翻译面板的字体大小"
+    },
     "themePreset": {
         "message": "预设"
     },

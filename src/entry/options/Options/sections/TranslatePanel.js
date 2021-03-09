@@ -25,9 +25,17 @@ const marksWidthPx = [
     { value: 1750, label: '1750px' },
     { value: 1910, label: '1910px' }
 ];
+const marksFontSize = [
+    { value: 12, label: '12px' },
+    { value: 14, label: '14px' },
+    { value: 16, label: '16px' },
+    { value: 20, label: '20px' },
+    { value: 24, label: '24px' },
+    { value: 28, label: '28px' }
+];
 const pxLabelFormat = v => `${v}px`
 
-const TranslatePanel = ({ updateStorage, pinThePanelWhileOpeningIt, rememberPositionOfPinnedPanel, translatePanelMaxHeight, translatePanelWidth }) => {
+const TranslatePanel = ({ updateStorage, pinThePanelWhileOpeningIt, rememberPositionOfPinnedPanel, translatePanelMaxHeight, translatePanelWidth, translatePanelFontSize }) => {
     const { percentage: hPercentage, px: hPx, percent: hPercent } = translatePanelMaxHeight;
     const { percentage: wPercentage, px: wPx, percent: wPercent } = translatePanelWidth;
 
@@ -92,6 +100,19 @@ const TranslatePanel = ({ updateStorage, pinThePanelWhileOpeningIt, rememberPosi
                     valueLabelFormat={pxLabelFormat}
                     mouseUpCallback={v => updateStorage('translatePanelWidth', { ...translatePanelWidth, 'px': v })}
                 />}
+            </div>
+            <div className='opt-section-row'>
+                {getMessage('optionsFontSizeOfTranslatePanel')}
+                <Slider
+                    defaultValue={translatePanelFontSize}
+                    min={12}
+                    max={28}
+                    step={1}
+                    marks={marksFontSize}
+                    valueLabelDisplay
+                    valueLabelFormat={pxLabelFormat}
+                    mouseUpCallback={v => updateStorage('translatePanelFontSize', v)}
+                />
             </div>
             <div className='opt-section-row'>
                 <OptionToggle

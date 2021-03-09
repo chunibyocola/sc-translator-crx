@@ -50,15 +50,15 @@ const MtResult = ({ source, status, result, text, remove, readText, retry }) => 
                     {result.phonetic && result.from === LANG_EN && <div style={{marginBottom: '10px'}}>
                         {result.phonetic}
                     </div>}
-                    <div className='flex-align-items-center'>
-                        <span style={{marginRight: '5px'}}>
+                    <div className='ts-mt-result-result-container'>
+                        <span>
                             {resultToString(result.result)}
+                            <IconFont
+                                className='ts-iconbutton ts-button'
+                                iconName='#icon-GoUnmute'
+                                onClick={() => readText(resultToString(result.result), result.to)}
+                            />
                         </span>
-                        <IconFont
-                            className='ts-iconbutton ts-button'
-                            iconName='#icon-GoUnmute'
-                            onClick={() => readText(resultToString(result.result), result.to)}
-                        />
                     </div>
                     {result.dict && result.dict.map((v, i) => (
                         <div key={i} style={i === 0 ? {marginTop: '10px'} : {}}>{v}</div>

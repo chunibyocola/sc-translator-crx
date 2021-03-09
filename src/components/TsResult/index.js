@@ -18,18 +18,18 @@ const TsResult = ({ resultObj, status, readText, source, retry }) => {
             error ?
                 <>{getMessage(`errorCode_${errorCode}`)}<span className='span-link' onClick={retry}>{getMessage('wordRetry')}</span></> :
             <>
-                <div className='tss-result flex-align-items-center'>
+                <div className='tss-result'>
                     <span>
                         {resultToString(result)}
+                        <IconFont
+                            className='ts-iconbutton ts-button'
+                            iconName='#icon-GoUnmute'
+                            onClick={() => readText(
+                                resultToString(result),
+                                { source, from: to }
+                            )}
+                        />
                     </span>
-                    <IconFont
-                        className='ts-iconbutton ts-button'
-                        iconName='#icon-GoUnmute'
-                        onClick={() => readText(
-                            resultToString(result),
-                            { source, from: to }
-                        )}
-                    />
                 </div>
                 {dict && dict.map((v, i) => (<div key={i}>{v}</div>))}
                 <div className='tss-origin-text flex-align-items-center'>

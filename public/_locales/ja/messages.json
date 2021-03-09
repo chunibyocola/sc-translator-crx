@@ -191,6 +191,9 @@
     "optionsWidthOfTranslatePanel": {
         "message": "翻訳パネルの幅"
     },
+    "optionsFontSizeOfTranslatePanel": {
+        "message": "翻訳パネルのフォントサイズ"
+    },
     "themePreset": {
         "message": "プリセット"
     },

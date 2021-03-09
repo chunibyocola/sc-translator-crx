@@ -3,17 +3,22 @@
     width: 100%;
     margin-bottom: 3px;
     word-break: break-all;
-    font-size: 14px;
     border-radius: 3px;
     padding: 0px 10px;
 }
 .ts-mt-result-head {
     padding: 2px 0px;
     color: var(--text-normal);
+    font-size: 14px;
 }
 .ts-mt-result-head-icons {
     margin-right: 5px;
 }
 .ts-mt-result-result {
     padding: 10px 0px;
+}
+.ts-mt-result-result-container .ts-iconfont {
+    margin-left: 5px;
+    position: relative;
+    bottom: .125em;
 }

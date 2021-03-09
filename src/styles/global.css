@@ -2,7 +2,7 @@
     box-sizing: border-box;
 }
 #sc-translator-root {
-    font-size: 14px !important;
+    font-size: 14px;
     line-height: initial !important;
 }
 .ts-button {

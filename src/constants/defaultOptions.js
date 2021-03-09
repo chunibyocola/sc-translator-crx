@@ -39,7 +39,8 @@ const defaultOptions = {
     rememberPositionOfPinnedPanel: false,
     positionOfPinnedPanel: { x: 5, y: 5 },
     translatePanelMaxHeight: { percentage: false, px: 500, percent: 50 },
-    translatePanelWidth: { percentage: false, px: 250, percent: 10 }
+    translatePanelWidth: { percentage: false, px: 250, percent: 10 },
+    translatePanelFontSize: 14
 };
 
 export default defaultOptions;
