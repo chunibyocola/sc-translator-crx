@@ -72,8 +72,8 @@ module.exports = {
                     from: paths.appPublic,
                     to: paths.appBuild,
                     filter: (path) => {
-                        return !path.endsWith('.html');
-                    }
+                        return !/popup|options|separate\.html/.test(path);
+                    },
                 },
             ],
         }),
@@ -104,4 +104,5 @@ module.exports = {
           context: paths.appSrc,
         }),
     ],
+    node: false,
 };

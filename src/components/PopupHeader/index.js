@@ -45,9 +45,9 @@ const PopupHeader = () => {
     }, [styleVarsList, styleVarsIndex]);
 
     return (
-        <div className="title">
-            <div className='title-logo'>Sc</div>
-            <div className='title-icons'>
+        <div className="title flex-justify-content-space-between">
+            <div className='title-logo flex-align-items-center'>Sc</div>
+            <div className='title-icons flex-align-items-center'>
                 <IconFont
                     iconName='#icon-theme'
                     className='title-icons-enable'

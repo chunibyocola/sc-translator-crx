@@ -1,8 +1,6 @@
 .title {
-    position: relative;
     color: var(--text-icon);
     height: 30px;
-    line-height: 30px;
 }
 .title-logo {
     font-weight: bold;
@@ -10,9 +8,7 @@
     margin-left: 5px;
 }
 .title-icons {
-    position: absolute;
-    right: 5px;
-    top: -1px;
+    margin-right: 5px;
 }
 .title-icons .ts-iconfont {
     font-size: 20px !important;

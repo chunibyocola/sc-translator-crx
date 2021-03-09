@@ -28,13 +28,13 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                 ref={node => node && node.style.setProperty('color', styleVars['--text-normal'], 'important')}
             >
                 <div
-                    class="ts-rb-header"
+                    class="ts-rb-header flex-justify-content-space-between"
                     style={{
                         color: styleVars['--text-icon']
                     }}
                 >
-                    <div class="ts-rb-header-title">Sc</div>
-                    <span class="ts-rb-header-icons">
+                    <div class="ts-rb-header-title flex-align-items-center">Sc</div>
+                    <span class="ts-rb-header-icons flex-align-items-center">
                         <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(180deg)', opacity: '1', color: styleVars['--text-icon']}} />
                         <IconFont iconName='#icon-GoPin' style={{color: styleVars['--text-icon']}} />
                     </span>
@@ -95,13 +95,13 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                 ref={node => node && node.style.setProperty('color', styleVars['--text-normal'], 'important')}
             >
                 <div
-                    class="title"
+                    class="title flex-justify-content-space-between"
                     style={{
                         color: styleVars['--text-icon']
                     }}
                 >
-                    <div class="title-logo">Sc</div>
-                    <div class="title-icons">
+                    <div class="title-logo flex-align-items-center">Sc</div>
+                    <div class="title-icons flex-align-items-center">
                         <IconFont iconName='#icon-theme' className='title-icons-enable' style={{color: styleVars['--text-icon']}} />
                         <IconFont iconName='#icon-MdTranslate' className='title-icons-enable' style={{color: styleVars['--text-icon']}} />
                         <IconFont iconName='#icon-MdHistory' className='title-icons-disable' style={{color: styleVars['--text-icon']}} />
@@ -129,12 +129,12 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                     </div>
                     <div class="ts-mt-results ts-scrollbar">
                         <div class="ts-mt-result" style={{background: styleVars['--bg-content']}}>
-                            <div class="ts-mt-result-head ts-button" style={{color: styleVars['--text-normal']}}>
-                                <span class="ts-mt-result-head-source">
+                            <div class="ts-mt-result-head ts-button flex-justify-content-space-between" style={{color: styleVars['--text-normal']}}>
+                                <span class="flex-align-items-center">
                                     <SourceFavicon source='google.com' />
                                     <IconFont iconName='#icon-GoUnmute' style={{marginLeft: '5px'}} className='ts-iconbutton' />
                                 </span>
-                                <span class="ts-mt-result-head-icons">
+                                <span class="ts-mt-result-head-icons flex-align-items-center">
                                     <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(180deg)'}} />
                                     <IconFont iconName='#icon-GoX' className='ts-iconbutton' />
                                 </span>
@@ -151,12 +151,12 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                             </div>
                         </div>
                         <div class="ts-mt-result" style={{background: styleVars['--bg-content']}}>
-                            <div class="ts-mt-result-head ts-button" style={{color: styleVars['--text-normal']}}>
-                                <span class="ts-mt-result-head-source">
+                            <div class="ts-mt-result-head ts-button flex-justify-content-space-between" style={{color: styleVars['--text-normal']}}>
+                                <span class="flex-align-items-center">
                                     <SourceFavicon source='bing.com' />
                                     <IconFont iconName='#icon-GoUnmute' style={{marginLeft: '5px'}} className='ts-iconbutton' />
                                 </span>
-                                <span class="ts-mt-result-head-icons">
+                                <span class="ts-mt-result-head-icons flex-align-items-center">
                                     <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(180deg)'}} />
                                     <IconFont iconName='#icon-GoX' className='ts-iconbutton' />
                                 </span>
