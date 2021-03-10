@@ -11,6 +11,9 @@ const SeparateWindow = ({ updateStorage, rememberStwSizeAndPosition }) => {
                 <div className='item-description'>{getMessage('optionsStwDescription')}</div>
             </div>
             <div className='opt-section-row'>
+                <div className='item-description'>{getMessage('optionsStwAutoRespondDescription')}</div>
+            </div>
+            <div className='opt-section-row'>
                 <OptionToggle
                     id='remember-separate-window-size-and-position'
                     message='optionsRememberStwSizeAndPosition'

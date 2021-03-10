@@ -1,4 +1,4 @@
-import { SCTS_CALL_OUT_COMMAND_KEY_PRESSED } from "../../constants/chromeSendMessageTypes";
+import { SCTS_CALL_OUT_COMMAND_KEY_PRESSED, SCTS_SEPARATE_WINDOW_SET_TEXT } from "../../constants/chromeSendMessageTypes";
 import { getLocalStorage, sendMessageToTab } from "../../public/chrome-call";
 import { listenOptionsChange } from "../../public/options";
 import { getQueryString } from "../../public/translate/utils";
@@ -20,6 +20,8 @@ export const createSeparateWindow = async (text) => {
         chrome.windows.update(windowId, { focused: true });
 
         sendMessageToTab(tabId, { type: SCTS_CALL_OUT_COMMAND_KEY_PRESSED });
+
+        text && sendMessageToTab(tabId, { type: SCTS_SEPARATE_WINDOW_SET_TEXT, payload: { text } });
     }
     else {
         let query = '';

@@ -2,14 +2,23 @@ import { listenOptionsChange } from '../../public/options';
 import { SCTS_CONTEXT_MENUS_CLICKED } from '../../constants/chromeSendMessageTypes';
 import { createNewTab, getI18nMessage, getLocalStorage } from '../../public/chrome-call';
 import { createSeparateWindow } from './separate-window';
+import { getIsContentScriptEnabled } from '../../public/utils';
 
 const createContextMenus = () => {
     chrome.contextMenus.create({
         id: 'sc-translator-context-menu',
         title: `${getI18nMessage('wordTranslate')} "%s"`,
         contexts: ['selection'],
-        onclick: ({ selectionText }, tab) => {
-            tab?.id >= 0 && chrome.tabs.sendMessage(tab.id, { type: SCTS_CONTEXT_MENUS_CLICKED, payload: { selectionText } });
+        onclick: async ({ selectionText }, tab) => {
+            if (tab?.id >= 0) {
+                const enabled = await getIsContentScriptEnabled(tab.id);
+                enabled
+                    ? chrome.tabs.sendMessage(tab.id, { type: SCTS_CONTEXT_MENUS_CLICKED, payload: { selectionText } })
+                    : createSeparateWindow(selectionText);
+            }
+            else {
+                createSeparateWindow(selectionText);
+            }
         }
     });
 };

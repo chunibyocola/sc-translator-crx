@@ -194,6 +194,9 @@
     "optionsFontSizeOfTranslatePanel": {
         "message": "翻訳パネルのフォントサイズ"
     },
+    "optionsStwAutoRespondDescription": {
+        "message": "スタンドアロン翻訳ウィンドウは、拡張機能が利用できないページのコンテキストメニューの「翻訳」項目をクリックした翻訳リクエストに自動的に応答します。"
+    },
     "themePreset": {
         "message": "プリセット"
     },

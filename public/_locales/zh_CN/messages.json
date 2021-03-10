@@ -194,6 +194,9 @@
     "optionsFontSizeOfTranslatePanel": {
         "message": "翻译面板的字体大小"
     },
+    "optionsStwAutoRespondDescription": {
+        "message": "独立翻译窗口会自动响应你在扩展不可用的页面中点击右键菜单中的“翻译”项后产生的翻译请求。"
+    },
     "themePreset": {
         "message": "预设"
     },
