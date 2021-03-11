@@ -1,3 +1,11 @@
+# 3.1.0 (2021-03-11)
+- Add auto respond of separate translate window.
+- Add translate panel's font size slider.
+- Add options page's menu.
+- Add translate panel's width slider.
+- Add translate panel's max height slider.
+- Beautify and clarify options page.
+- Fix style disordered in "arabic" language.
 # 3.0.0 (2021-03-01)
 - Add "remember the position of the pinned panel" option.
 - Add listener that listen window size change to keep panel inside document.
