@@ -51,10 +51,10 @@
         "message": "Source"
     },
     "optionsFrom": {
-        "message": "From"
+        "message": "Source language"
     },
     "optionsTo": {
-        "message": "To"
+        "message": "Target language"
     },
     "optionsTranslateDirectly": {
         "message": "Translate directly"

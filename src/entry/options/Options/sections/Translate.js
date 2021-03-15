@@ -97,14 +97,16 @@ const Translate = ({
                 />
             </div>
             <div className='opt-section-row'>
-                {getMessage('optionsDomainfilter')}
-                <div className='mt10-ml30'>
+                <div className='options-mode'>
+                    {getMessage('optionsDomainfilter')}
                     <OptionToggle
                         id='translate-black-list-mode-checkbox'
                         message='optionsTranslateBlackListMode'
                         checked={translateBlackListMode}
                         onClick={() => updateStorage('translateBlackListMode', !translateBlackListMode)}
                     />
+                </div>
+                <div className='mt10-ml30'>
                     <HostList
                         list={translateHostList}
                         updateList={list => updateStorage('translateHostList', list)}

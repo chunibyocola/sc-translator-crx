@@ -51,10 +51,10 @@
         "message": "ソース"
     },
     "optionsFrom": {
-        "message": "から"
+        "message": "ソース言語"
     },
     "optionsTo": {
-        "message": "へ"
+        "message": "目標言語"
     },
     "optionsTranslateDirectly": {
         "message": "直接翻訳する"

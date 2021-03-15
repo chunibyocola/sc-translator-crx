@@ -51,10 +51,10 @@
         "message": "源"
     },
     "optionsFrom": {
-        "message": "從"
+        "message": "源語言"
     },
     "optionsTo": {
-        "message": "到"
+        "message": "目標語言"
     },
     "optionsTranslateDirectly": {
         "message": "直接翻譯"

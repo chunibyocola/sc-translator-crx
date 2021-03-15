@@ -7,14 +7,16 @@ const History = ({ updateStorage, historyBlackListMode, historyHostList }) => {
     return (
         <div className='opt-section'>
             <div className='opt-section-row'>
-                {getMessage('optionsDomainfilter')}
-                <div className='mt10-ml30'>
+                <div className='options-mode'>
+                    {getMessage('optionsDomainfilter')}
                     <OptionToggle
                         id='history-black-list-mode-checkbox'
                         message='optionsHistoryBlackListMode'
                         checked={historyBlackListMode}
                         onClick={() => updateStorage('historyBlackListMode', !historyBlackListMode)}
                     />
+                </div>
+                <div className='mt10-ml30'>
                     <HostList
                         list={historyHostList}
                         updateList={list => updateStorage('historyHostList', list)}
