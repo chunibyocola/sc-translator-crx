@@ -1,0 +1,46 @@
+.ts-language-select {
+    position: relative;
+    text-align: start;
+    align-items: center;
+    display: inline-flex;
+    cursor: default;
+    vertical-align: middle;
+    user-select: none;
+    outline: 0;
+    white-space: pre;
+    padding: 2px 3px;
+}
+.ts-language-select .badge {
+    display: flex;
+    align-items: center;
+}
+.badge .badge-text {
+    margin-right: 8px;
+    flex: 1;
+    overflow: hidden;
+}
+.ts-language-select .options {
+    display: none;
+}
+.ts-language-select-search {
+    display: flex;
+    margin: 5px;
+    border-bottom: 1px solid currentColor;
+    align-items: center;
+    padding: 5px;
+}
+.ts-language-select-search-input {
+    flex: 1;
+}
+.ts-language-select-search-input input {
+    outline: 0;
+    border: 0;
+    width: 100%;
+}
+.ts-language-select-option, .ts-language-select-no-result {
+    padding: 2px 5px;
+    line-height: 1;
+}
+.ts-language-select-option:hover {
+    background: var(--bg-item-hover);
+}

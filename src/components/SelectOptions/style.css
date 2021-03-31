@@ -1,0 +1,12 @@
+.ts-select-options {
+    position: absolute;
+    background: var(--bg-content);
+    color: var(--text-normal);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 300px;
+    z-index: 999;
+    width: auto;
+    max-width: 240px;
+}

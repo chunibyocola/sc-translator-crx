@@ -15,16 +15,9 @@
     opacity: 0.7;
 }
 .ts-source-select-options {
-    position: absolute;
     background: var(--bg-content);
     color: var(--text-normal);
     border-radius: 5px;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-    width: inherit;
-    overflow-y: auto;
-    max-height: 300px;
-    left: 0px;
-    z-index: 999;
 }
 .ts-source-select-value {
     width: calc(100% - 20px);

@@ -122,10 +122,10 @@ const Separate = () => {
                     focusDependency={focusRawText}
                 />
                 <LanguageSelection
-                    selectionChange={handleSelectionChange}
+                    onChange={handleSelectionChange}
                     from={from}
                     to={to}
-                    options={mtLangCode}
+                    languageCodes={mtLangCode}
                 />
                 <div className='ts-mt-results ts-scrollbar'>
                     {translations.length === 0 ? 

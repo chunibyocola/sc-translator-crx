@@ -68,22 +68,24 @@ const SingleTranslateResult = () => {
                 focusDependency={focusRawText}
             />
             <LanguageSelection
-                selectionChange={handleSelectionChange}
+                onChange={handleSelectionChange}
                 from={from}
                 to={to}
-                options={langCode[source]}
+                languageCodes={langCode[source]}
             />
-            <TsResult
-                resultObj={result}
-                status={status}
-                readText={handleReadText}
-                source={source}
-                retry={handleRetry}
-            />
-            <TsVia
-                sourceChange={handleSourceChange}
-                source={source}
-            />
+            <div className='ts-scrollbar' style={{height: '250px', overflowY: 'auto'}}>
+                <TsResult
+                    resultObj={result}
+                    status={status}
+                    readText={handleReadText}
+                    source={source}
+                    retry={handleRetry}
+                />
+                <TsVia
+                    sourceChange={handleSourceChange}
+                    source={source}
+                />
+            </div>
         </>
     );
 };

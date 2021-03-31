@@ -91,10 +91,10 @@ const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap }) => {
                     focusDependency={focusRawText}
                 />
                 <LanguageSelection
-                    selectionChange={handleSelectionChange}
+                    onChange={handleSelectionChange}
                     from={from}
                     to={to}
-                    options={mtLangCode}
+                    languageCodes={mtLangCode}
                 />
             </div>
             <div className='ts-mt-results ts-scrollbar' style={{maxHeight: `${resultMaxHeight}px`}} ref={resultContainerEle}>

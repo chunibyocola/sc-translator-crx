@@ -1,6 +1,6 @@
 .ts-mt-results {
     width: 100%;
-    max-height: 250px;
+    height: 250px;
     overflow-y: auto;
 }
 .ts-mt-result-add-translate-source {

@@ -99,10 +99,10 @@ const SingleTranslateResult = ({ showRtAndLs, maxHeightGap }) => {
                     focusDependency={focusRawText}
                 />
                 <LanguageSelection
-                    selectionChange={handleSelectionChange}
+                    onChange={handleSelectionChange}
                     from={from}
                     to={to}
-                    options={langCode[source]}
+                    languageCodes={langCode[source]}
                 />
             </div>
             <div className='ts-result-container ts-scrollbar' style={{maxHeight: `${resultMaxHeight}px`}} ref={resultContainerEle}>

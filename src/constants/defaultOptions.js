@@ -40,7 +40,9 @@ const defaultOptions = {
     positionOfPinnedPanel: { x: 5, y: 5 },
     translatePanelMaxHeight: { percentage: false, px: 500, percent: 50 },
     translatePanelWidth: { percentage: false, px: 250, percent: 10 },
-    translatePanelFontSize: 14
+    translatePanelFontSize: 14,
+    recentTranslateFromList: [],
+    recentTranslateToList: []
 };
 
 export default defaultOptions;

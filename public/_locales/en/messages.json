@@ -272,6 +272,12 @@
     "sentenceAddTranslateSource": {
         "message": "Please add a translate source."
     },
+    "sentenceNoResult": {
+        "message": "No result."
+    },
+    "sentenceSearchLanguages": {
+        "message": "Search languages"
+    },
     "errorCode_CONNECTION_TIMED_OUT": {
         "message": "Error: Connection timed out."
     },

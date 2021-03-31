@@ -272,6 +272,12 @@
     "sentenceAddTranslateSource": {
         "message": "请添加翻译源。"
     },
+    "sentenceNoResult": {
+        "message": "无结果。"
+    },
+    "sentenceSearchLanguages": {
+        "message": "搜索语言"
+    },
     "errorCode_CONNECTION_TIMED_OUT": {
         "message": "错误：连接超时。"
     },
