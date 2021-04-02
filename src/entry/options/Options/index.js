@@ -55,7 +55,8 @@ const Options = () => {
         rememberPositionOfPinnedPanel,
         translatePanelMaxHeight,
         translatePanelWidth,
-        translatePanelFontSize
+        translatePanelFontSize,
+        rememberHistoryPanelStatus
     } = useOptions(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -132,6 +133,7 @@ const Options = () => {
                 updateStorage={updateStorage}
                 historyBlackListMode={historyBlackListMode}
                 historyHostList={historyHostList}
+                rememberHistoryPanelStatus={rememberHistoryPanelStatus}
             />
             <div className='sub-title' id='keyboard-shortcut'>{getMessage('optionsKeyboardShortcut')}</div>
             <KeyboardShortcut />

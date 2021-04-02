@@ -11,7 +11,8 @@
 .ts-history-item-content {
     color: var(--text-normal);
     padding-left: 5px;
-    width: 150px;
+    flex: 1;
+    overflow: hidden;
     cursor: pointer;
     height: 50px;
 }
@@ -26,7 +27,7 @@
     justify-content: center;
     align-items: center;
     display: flex;
-    width: 50px;
+    width: 30px;
 }
 .ts-history-item-icons .ts-iconfont {
     font-size: 15px !important;

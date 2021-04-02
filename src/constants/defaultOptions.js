@@ -42,7 +42,9 @@ const defaultOptions = {
     translatePanelWidth: { percentage: false, px: 250, percent: 10 },
     translatePanelFontSize: 14,
     recentTranslateFromList: [],
-    recentTranslateToList: []
+    recentTranslateToList: [],
+    rememberHistoryPanelStatus: false,
+    historyPanelStatus: { pin: false, width: 200 }
 };
 
 export default defaultOptions;

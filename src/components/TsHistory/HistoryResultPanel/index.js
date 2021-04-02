@@ -7,19 +7,19 @@ import IconFont from '../../IconFont';
 import SourceFavicon from '../../SourceFavicon';
 import './style.css';
 
-const HistoryResultPanel = ({ translations, position, show }) => {
+const HistoryResultPanel = ({ translations, top, historyWidth }) => {
     const [pos, setPos] = useState({ x: 5, y: 5 });
 
     const panelEle = useRef(null);
 
     useLayoutEffect(() => {
-        calculatePosition(panelEle.current, position, (pos) => setPos(pos));
-    }, [position]);
+        calculatePosition(panelEle.current, { x: historyWidth - 5, y: top }, pos => setPos(pos));
+    }, [top, historyWidth]);
 
     return (
         <div
             className='ts-history-result-panel-wrap'
-            style={{left: `${pos.x}px`, top: `${pos.y}px`, display: show ? 'block' : 'none'}}
+            style={{left: `${pos.x}px`, top: `${pos.y}px`, display: translations?.length > 0 ? 'block' : 'none'}}
         >
             <div
                 className='ts-history-result-panel ts-scrollbar'

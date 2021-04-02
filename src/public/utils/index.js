@@ -85,3 +85,20 @@ export const debounce = (cb, time) => {
         timeout = setTimeout(cb, time);
     };
 };
+
+export const mouseDrag = (mouseMoveCallback, mouseUpCallback) => {
+    const mouseMoveListener = (e) => {
+        mouseMoveCallback?.({ x: e.clientX, y: e.clientY });
+    };
+
+    const mouseUpListener = (e) => {
+        document.removeEventListener('mousemove', mouseMoveListener, true);
+        document.removeEventListener('mouseup', mouseUpListener, true);
+        document.onselectstart = () => { return true; };
+        mouseUpCallback?.({ x: e.clientX, y: e.clientY });
+    };
+
+    document.onselectstart = () => { return false; };
+    document.addEventListener('mousemove', mouseMoveListener, true);
+    document.addEventListener('mouseup', mouseUpListener, true);
+};

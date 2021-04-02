@@ -11,6 +11,7 @@ import '../../../popup/MultipleTranslateResult/style.css';
 import '../../../../components/MtAddSource/style.css';
 import '../../../../components/MtAddSource/SourceSelector/style.css';
 import '../../../../components/MtResult/style.css';
+import '../../../../components/LanguageSelect/style.css';
 import SourceFavicon from '../../../../components/SourceFavicon';
 import IconFont from '../../../../components/IconFont';
 
@@ -45,18 +46,18 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                             <textarea placeholder="Input here" class="ts-rt-text">welcome</textarea>
                         </div>
                         <div class="ts-language-selection">
-                            <div class="ts-select-box">
-                                <select class="ts-lselect" disabled style={{color: styleVars['--text-normal'], opacity: '1'}}>
-                                    <option value="">自动选择</option>
-                                </select>
+                            <div class="ts-language-select ts-language-selection-select" style={{color: styleVars['--text-normal']}}>
+                                <span class="badge">
+                                    <span class="badge-text">自动选择</span>
+                                    <IconFont iconName='#icon-GoChevronDown' />
+                                </span>
                             </div>
-                            <span class="ts-lselect-swrap">
-                                <IconFont iconName='#icon-MdSwap' />
-                            </span>
-                            <div class="ts-select-box">
-                                <select class="ts-lselect" disabled style={{color: styleVars['--text-normal'], opacity: '1', background: styleVars['--bg-select-focus']}}>
-                                    <option value="">自动选择</option>
-                                </select>
+                            <IconFont iconName='#icon-MdSwap' />
+                            <div class="ts-language-select ts-language-selection-select" style={{color: styleVars['--text-normal'], background: styleVars['--bg-select-focus']}}>
+                                <span class="badge">
+                                    <span class="badge-text">自动选择</span>
+                                    <IconFont iconName='#icon-GoChevronDown' />
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -113,18 +114,18 @@ const CustomizeBoardDisplay = ({ styleVars }) => {
                         <textarea placeholder="Input here" class="ts-rt-text">welcome</textarea>
                     </div>
                     <div class="ts-language-selection">
-                        <div class="ts-select-box">
-                            <select class="ts-lselect" disabled style={{color: styleVars['--text-normal'], opacity: '1', background: styleVars['--bg-select-focus']}}>
-                                <option value="">自动选择</option>
-                            </select>
+                        <div class="ts-language-select ts-language-selection-select" style={{color: styleVars['--text-normal'], background: styleVars['--bg-select-focus']}}>
+                            <span class="badge">
+                                <span class="badge-text">自动选择</span>
+                                <IconFont iconName='#icon-GoChevronDown' />
+                            </span>
                         </div>
-                        <span class="ts-lselect-swrap">
-                            <IconFont iconName='#icon-MdSwap' />
-                        </span>
-                        <div class="ts-select-box">
-                            <select class="ts-lselect" disabled style={{color: styleVars['--text-normal'], opacity: '1'}}>
-                                <option value="ja">日语</option>
-                            </select>
+                        <IconFont iconName='#icon-MdSwap' />
+                        <div class="ts-language-select ts-language-selection-select" style={{color: styleVars['--text-normal']}}>
+                            <span class="badge">
+                                <span class="badge-text">日语</span>
+                                <IconFont iconName='#icon-GoChevronDown' />
+                            </span>
                         </div>
                     </div>
                     <div class="ts-mt-results ts-scrollbar">

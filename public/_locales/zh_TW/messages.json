@@ -197,6 +197,9 @@
     "optionsStwAutoRespondDescription": {
         "message": "獨立翻譯視窗會自動回應你在擴充功能不可用的頁面中點擊右鍵功能表中的「翻譯」項後產生的翻譯請求。"
     },
+    "optionsRememberHistoryPanelStatus": {
+        "message": "記住翻譯歷史面板的狀態"
+    },
     "themePreset": {
         "message": "預設"
     },

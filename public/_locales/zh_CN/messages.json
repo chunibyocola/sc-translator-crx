@@ -197,6 +197,9 @@
     "optionsStwAutoRespondDescription": {
         "message": "独立翻译窗口会自动响应你在扩展不可用的页面中点击右键菜单中的“翻译”项后产生的翻译请求。"
     },
+    "optionsRememberHistoryPanelStatus": {
+        "message": "记住翻译历史面板的状态"
+    },
     "themePreset": {
         "message": "预设"
     },

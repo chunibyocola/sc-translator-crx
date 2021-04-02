@@ -81,3 +81,17 @@
     transform: rotate(-45deg);
     opacity: 1;
 }
+.ts-history-e-resize {
+    display: none;
+    height: 100%;
+    position: absolute;
+    width: 6px;
+    right: -2px;
+    bottom: 0;
+}
+.ts-history-e-resize:hover {
+    cursor: e-resize;
+}
+.ts-history-show .ts-history-e-resize {
+    display: block;
+}
