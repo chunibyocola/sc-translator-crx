@@ -7,6 +7,14 @@ const History = ({ updateStorage, historyBlackListMode, historyHostList, remembe
     return (
         <div className='opt-section'>
             <div className='opt-section-row'>
+                <OptionToggle
+                    id='history-status'
+                    message='optionsRememberHistoryPanelStatus'
+                    checked={rememberHistoryPanelStatus}
+                    onClick={() => updateStorage('rememberHistoryPanelStatus', !rememberHistoryPanelStatus)}
+                />
+            </div>
+            <div className='opt-section-row'>
                 <div className='options-mode'>
                     {getMessage('optionsDomainfilter')}
                     <OptionToggle
@@ -22,14 +30,6 @@ const History = ({ updateStorage, historyBlackListMode, historyHostList, remembe
                         updateList={list => updateStorage('historyHostList', list)}
                     />
                 </div>
-            </div>
-            <div className='opt-section-row'>
-                <OptionToggle
-                    id='history-status'
-                    message='optionsRememberHistoryPanelStatus'
-                    checked={rememberHistoryPanelStatus}
-                    onClick={() => updateStorage('rememberHistoryPanelStatus', !rememberHistoryPanelStatus)}
-                />
             </div>
         </div>
     );

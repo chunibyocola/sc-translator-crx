@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback, useRef} from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     setResultBoxShowAndPosition,
     callOutResultBox,
@@ -7,8 +7,8 @@ import {
     requestToHidePanel
 } from '../../redux/actions/resultBoxActions';
 import { mtSetText } from '../../redux/actions/multipleTranslateActions';
-import getSelection, { getSelectedText } from '../../public/utils/get-selection';
-import { useOptions, useOnExtensionMessage, useIsEnable } from '../../public/react-use';
+import { getSelectedText } from '../../public/utils/get-selection';
+import { useOptions, useOnExtensionMessage, useIsEnable, useGetSelection } from '../../public/react-use';
 import {
     SCTS_CONTEXT_MENUS_CLICKED,
     SCTS_TRANSLATE_COMMAND_KEY_PRESSED,
@@ -27,7 +27,15 @@ const initText = '';
 const initPos = { x: 5, y: 5 };
 const btnWidth = 24;
 const btnHeight = 24;
-const useOptionsDependency = ['translateDirectly', 'showButtonAfterSelect', 'translateWithKeyPress', 'hideButtonAfterFixedTime', 'hideButtonFixedTime', 'respondToSeparateWindow'];
+const useOptionsDependency = [
+    'translateDirectly',
+    'showButtonAfterSelect',
+    'translateWithKeyPress',
+    'hideButtonAfterFixedTime',
+    'hideButtonFixedTime',
+    'respondToSeparateWindow',
+    'translateDirectlyWhilePinning'
+];
 
 const calculateBtnPos = ({ x, y }) => {
     const { btnPosition } = getOptions();
@@ -53,16 +61,24 @@ const TsBtn = ({ multipleTranslateMode }) => {
     const [pos, setPos] = useState(initPos);
     const [text, setText] = useState(initText);
 
-    const posRef = useRef(initPos);
-    const btnEle = useRef(null);
     const ctrlPressing = useRef(false);
     const debounceHideButtonAfterFixedTime = useRef(null);
     const oldChromeMsg = useRef(null);
 
+    const { pinning } = useSelector(state => state.resultBoxState);
+
     const {
-        translateDirectly, showButtonAfterSelect, translateWithKeyPress , hideButtonAfterFixedTime, hideButtonFixedTime, respondToSeparateWindow
+        translateDirectly,
+        showButtonAfterSelect,
+        translateWithKeyPress,
+        hideButtonAfterFixedTime,
+        hideButtonFixedTime,
+        respondToSeparateWindow,
+        translateDirectlyWhilePinning
     } = useOptions(useOptionsDependency);
+
     const isEnableTranslate = useIsEnable('translate', window.location.host);
+
     const chromeMsg = useOnExtensionMessage();
 
     const dispatch = useDispatch();
@@ -76,38 +92,6 @@ const TsBtn = ({ multipleTranslateMode }) => {
         dispatch(setResultBoxShowAndPosition(pos));
         multipleTranslateMode ? dispatch(mtSetText({ text })) : dispatch(stSetText({ text }));
     }, [dispatch, multipleTranslateMode, respondToSeparateWindow]);
-
-    const handleSetPos = useCallback(({ x, y }) => {
-        const result = calculateBtnPos({ x, y });
-
-        posRef.current = result;
-        setPos(result);
-    }, []);
-
-    const selectCb = useCallback(({ text, pos }) => {
-        if (!isEnableTranslate) return;
-
-        handleSetPos(pos);
-
-        if ((translateWithKeyPress && ctrlPressing.current) || translateDirectly) {
-            handleForwardTranslate(text, posRef.current);
-            return;
-        }
-
-        setText(text);
-        if (showButtonAfterSelect) {
-            setShowBtn(true);
-            hideButtonAfterFixedTime && debounceHideButtonAfterFixedTime.current();
-        }
-
-        dispatch(requestToHidePanel());
-    }, [dispatch, handleSetPos, translateDirectly, isEnableTranslate, showButtonAfterSelect, translateWithKeyPress, handleForwardTranslate, hideButtonAfterFixedTime]);
-
-    const unselectCb = useCallback(() => {
-        setShowBtn(false);
-        
-        dispatch(requestToHidePanel());
-    }, [dispatch]);
 
     useEffect(() => {
         if (!translateWithKeyPress) return;
@@ -137,12 +121,12 @@ const TsBtn = ({ multipleTranslateMode }) => {
         switch (type) {
             case SCTS_CONTEXT_MENUS_CLICKED:
                 setShowBtn(false);
-                handleForwardTranslate(payload.selectionText, posRef.current);
+                handleForwardTranslate(payload.selectionText, pos);
                 break;
             case SCTS_TRANSLATE_COMMAND_KEY_PRESSED:
                 setShowBtn(false);
                 text = getSelectedText();
-                text && handleForwardTranslate(text, posRef.current);
+                text && handleForwardTranslate(text, pos);
                 break;
             case SCTS_AUDIO_COMMAND_KEY_PRESSED:
                 text = getSelectedText();
@@ -158,13 +142,31 @@ const TsBtn = ({ multipleTranslateMode }) => {
         }
 
         oldChromeMsg.current = chromeMsg;
-    }, [chromeMsg, isEnableTranslate, handleForwardTranslate, dispatch]);
+    }, [chromeMsg, isEnableTranslate, handleForwardTranslate, dispatch, pos]);
 
-    useEffect(() => {
-        const unsubscribe = getSelection(selectCb, unselectCb);
+    useGetSelection(({ text, pos }) => {
+        if (!isEnableTranslate) { return; }
 
-        return unsubscribe;
-    }, [selectCb, unselectCb]);
+        const nextPos = calculateBtnPos(pos);
+
+        if ((translateWithKeyPress && ctrlPressing.current) || translateDirectly || (pinning && translateDirectlyWhilePinning)) {
+            handleForwardTranslate(text, nextPos);
+            return;
+        }
+
+        setPos(nextPos);
+        setText(text);
+        if (showButtonAfterSelect) {
+            setShowBtn(true);
+            hideButtonAfterFixedTime && debounceHideButtonAfterFixedTime.current();
+        }
+
+        dispatch(requestToHidePanel());
+    }, () => {
+        setShowBtn(false);
+
+        dispatch(requestToHidePanel());
+    });
 
     useEffect(() => {
         debounceHideButtonAfterFixedTime.current = debounce(() => setShowBtn(false), hideButtonFixedTime);
@@ -172,7 +174,6 @@ const TsBtn = ({ multipleTranslateMode }) => {
 
     return (
         <div
-            ref={btnEle}
             className='ts-btn'
             style={{
                 display: isEnableTranslate && showBtn ? 'block' : 'none',
@@ -181,7 +182,7 @@ const TsBtn = ({ multipleTranslateMode }) => {
             }}
             onMouseUp={(e) => {
                 setShowBtn(false);
-                handleForwardTranslate(text, posRef.current);
+                handleForwardTranslate(text, pos);
                 e.stopPropagation();
             }}
             onMouseDown={e => e.stopPropagation()}

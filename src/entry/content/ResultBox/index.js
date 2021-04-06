@@ -4,7 +4,7 @@ import IconFont from '../../../components/IconFont';
 import { setLocalStorage } from '../../../public/chrome-call';
 import { useOptions, useWindowSize } from '../../../public/react-use';
 import { calculatePosition, drag } from '../../../public/utils';
-import { closeResultBox, hideResultBox } from '../../../redux/actions/resultBoxActions';
+import { closeResultBox, setPanelPinning } from '../../../redux/actions/resultBoxActions';
 import MultipleTranslateResult from '../MultipleTranslateResult';
 import SingleTranslateResult from '../SingleTranslateResult';
 import './style.css';
@@ -13,7 +13,6 @@ const initPos = { x: 5, y: 5 };
 const useOptionsDependency = ['pinThePanelWhileOpeningIt', 'rememberPositionOfPinnedPanel', 'positionOfPinnedPanel', 'translatePanelMaxHeight', 'translatePanelWidth'];
 
 const ResultBox = ({ multipleTranslateMode }) => {
-    const [pinning, setPinning] = useState(false);
     const [pinPos, setPinPos] = useState(initPos);
     const [showRtAndLs, setShowRtAndLs] = useState(false);
     const [maxHeightGap, setMaxHeightGap] = useState(600);
@@ -22,15 +21,18 @@ const ResultBox = ({ multipleTranslateMode }) => {
     const mtEle = useRef(null);
     const oldPos = useRef(null);
     const oldShow = useRef(null);
-    const oldHidePanelRequest = useRef(null);
 
-    const { show, pos, focusRawText, closePanel, hidePanelRequest } = useSelector(state => state.resultBoxState);
+    const { show, pos, focusRawText, pinning } = useSelector(state => state.resultBoxState);
 
     const dispatch = useDispatch();
 
     const { pinThePanelWhileOpeningIt, rememberPositionOfPinnedPanel, positionOfPinnedPanel, translatePanelMaxHeight, translatePanelWidth } = useOptions(useOptionsDependency);
 
     const windowSize = useWindowSize();
+
+    const handleSetPinning = useCallback((pinning) => {
+        dispatch(setPanelPinning(pinning));
+    }, [dispatch]);
 
     useEffect(() => {
         if (rememberPositionOfPinnedPanel && pinning) {
@@ -49,20 +51,12 @@ const ResultBox = ({ multipleTranslateMode }) => {
     }, [windowSize, translatePanelMaxHeight, showRtAndLs]);
 
     useEffect(() => {
-        if (oldHidePanelRequest.current === hidePanelRequest) { return; }
-
-        !pinning && dispatch(hideResultBox());
-
-        oldHidePanelRequest.current = hidePanelRequest;
-    }, [hidePanelRequest, pinning, dispatch]);
-
-    useEffect(() => {
         if (oldShow.current === show) { return; }
 
-        show && pinThePanelWhileOpeningIt && setPinning(true);
+        show && pinThePanelWhileOpeningIt && handleSetPinning(true);
 
         oldShow.current = show;
-    }, [show, pinThePanelWhileOpeningIt]);
+    }, [show, pinThePanelWhileOpeningIt, handleSetPinning]);
 
     // show 'RawText' and 'LanguageSelection' when "call out"'s keyboard shortcut pressed
     useEffect(() => {
@@ -98,10 +92,6 @@ const ResultBox = ({ multipleTranslateMode }) => {
         dispatch(closeResultBox());
     }, [dispatch]);
 
-    useEffect(() => {
-        setPinning(false);
-    }, [closePanel]);
-
     return (
         <div
             ref={mtEle}
@@ -129,7 +119,7 @@ const ResultBox = ({ multipleTranslateMode }) => {
                     />
                     <IconFont
                         iconName='#icon-GoPin'
-                        onClick={() => setPinning(!pinning)}
+                        onClick={() => handleSetPinning(!pinning)}
                         style={pinning ? {transform: 'rotate(-45deg)', opacity: '1'} : {}}
                         className='ts-button'
                     />

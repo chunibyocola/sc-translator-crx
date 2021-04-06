@@ -200,6 +200,9 @@
     "optionsRememberHistoryPanelStatus": {
         "message": "記住翻譯歷史面板的狀態"
     },
+    "optionsTranslateDirectlyWhilePinning": {
+        "message": "翻譯面板固定時直接翻譯"
+    },
     "themePreset": {
         "message": "預設"
     },

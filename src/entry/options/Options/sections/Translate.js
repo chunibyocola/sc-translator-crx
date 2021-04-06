@@ -25,7 +25,8 @@ const Translate = ({
     hideButtonFixedTime,
     translateBlackListMode,
     translateHostList,
-    respondToSeparateWindow
+    respondToSeparateWindow,
+    translateDirectlyWhilePinning
 }) => {
     return (
         <div className='opt-section'>
@@ -94,6 +95,14 @@ const Translate = ({
                     message='optionsRespondToSeparateWindow'
                     checked={respondToSeparateWindow}
                     onClick={() => updateStorage('respondToSeparateWindow', !respondToSeparateWindow)}
+                />
+            </div>
+            <div className='opt-section-row'>
+                <OptionToggle
+                    id='translate-directly-while-pinning'
+                    message='optionsTranslateDirectlyWhilePinning'
+                    checked={translateDirectlyWhilePinning}
+                    onClick={() => updateStorage('translateDirectlyWhilePinning', !translateDirectlyWhilePinning)}
                 />
             </div>
             <div className='opt-section-row'>

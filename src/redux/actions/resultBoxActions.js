@@ -17,3 +17,10 @@ export const callOutResultBox = () => ({ type: types.CALL_OUT_RESULT_BOX });
 export const closeResultBox = () => ({ type: types.CLOSE_RESULT_BOX });
 
 export const requestToHidePanel = () => ({ type: types.REQUEST_TO_HIDE_PANEL });
+
+export const setPanelPinning = (pinning) => ({
+    type: types.SET_PANEL_PINNING,
+    payload: {
+        pinning
+    }
+});

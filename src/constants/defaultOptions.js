@@ -44,7 +44,8 @@ const defaultOptions = {
     recentTranslateFromList: [],
     recentTranslateToList: [],
     rememberHistoryPanelStatus: false,
-    historyPanelStatus: { pin: false, width: 200 }
+    historyPanelStatus: { pin: false, width: 200 },
+    translateDirectlyWhilePinning: false
 };
 
 export default defaultOptions;

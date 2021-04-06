@@ -200,6 +200,9 @@
     "optionsRememberHistoryPanelStatus": {
         "message": "Remember the status of translate history panel"
     },
+    "optionsTranslateDirectlyWhilePinning": {
+        "message": "Translate directly while translate panel pinning"
+    },
     "themePreset": {
         "message": "Preset"
     },

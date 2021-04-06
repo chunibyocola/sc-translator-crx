@@ -200,6 +200,9 @@
     "optionsRememberHistoryPanelStatus": {
         "message": "翻訳記録パネルのステータスを記憶する"
     },
+    "optionsTranslateDirectlyWhilePinning": {
+        "message": "翻訳パネルの固定中に直接翻訳する"
+    },
     "themePreset": {
         "message": "プリセット"
     },

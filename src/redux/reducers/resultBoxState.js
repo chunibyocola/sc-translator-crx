@@ -3,10 +3,9 @@ import * as types from '../actionTypes/resultBoxTypes';
 const initState = {
     show: false,
     pos: { x: 5, y: 5 },
+    pinning: false,
     focusRawText: 0,
     multipleMode: false,
-    closePanel: 0,
-    hidePanelRequest: 0,
 };
 
 const resultBoxState = (state = initState, { type, payload }) => {
@@ -20,9 +19,11 @@ const resultBoxState = (state = initState, { type, payload }) => {
         case types.CALL_OUT_RESULT_BOX:
             return { ...state, show: true, focusRawText: state.focusRawText + 1 };
         case types.CLOSE_RESULT_BOX:
-            return { ...state, show: false, closePanel: state.closePanel + 1 };
+            return { ...state, show: false, pinning: false };
         case types.REQUEST_TO_HIDE_PANEL:
-            return { ...state, hidePanelRequest: state.hidePanelRequest + 1 };
+            return { ...state, show: state.pinning && state.show };
+        case types.SET_PANEL_PINNING:
+            return { ...state, pinning: payload.pinning };
         default:
             return state;
     }
