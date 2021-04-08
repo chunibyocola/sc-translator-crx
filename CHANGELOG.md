@@ -1,3 +1,7 @@
+# 3.2.0 (2021-04-08)
+- Add "translate directly while translate panel pinning" option.
+- Add "remember the status of translate history panel" option.
+- Add recent language list of language selection.
 # 3.1.0 (2021-03-11)
 - Add auto respond of separate translate window.
 - Add translate panel's font size slider.

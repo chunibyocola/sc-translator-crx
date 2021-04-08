@@ -1,6 +1,6 @@
 {
   "name": "sc-translator-crx",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "private": true,
   "description": "Focus on providing a great inline web translation experience.",
   "license": "Apache License 2.0",
