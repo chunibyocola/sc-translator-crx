@@ -15,7 +15,9 @@ const LanguageSelect = ({ value, onChange, className, langCodes, langLocal, rece
     const searchInputElementRef = useRef(null);
     const languageSelectElementRef = useRef(null);
     const onMouseDownRef = useRef((e) => {
-        if (e.path.indexOf(languageSelectElementRef.current) >= 0) { return; }
+        const path = e.path || e.composedPath?.();
+
+        if (path.indexOf(languageSelectElementRef.current) >= 0) { return; }
 
         setShowOptions(false);
     });
