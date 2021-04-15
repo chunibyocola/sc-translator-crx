@@ -25,7 +25,7 @@ const multipleTranslateState = (state = initState, { type, payload }) => {
         case types.MT_REMOVE_SOURCE:
             return { ...state, translations: state.translations.filter(v => v.source !== payload.source) };
         case types.MT_SET_TEXT:
-            return {
+            return payload.text !== state.text ? {
                 ...state,
                 text: payload.text,
                 translations: state.translations.map(v => ({
@@ -33,7 +33,7 @@ const multipleTranslateState = (state = initState, { type, payload }) => {
                     status: { requesting: false, requestEnd: false, error: false }
                 })),
                 translateId: state.translateId + 1
-            };
+            } : state;
         case types.MT_REQUEST_START:
             return { ...state, translations: state.translations.map((v) => {
                 if (v.source === payload.source) {
