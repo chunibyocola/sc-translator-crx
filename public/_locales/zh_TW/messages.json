@@ -203,6 +203,12 @@
     "optionsTranslateDirectlyWhilePinning": {
         "message": "翻譯面板固定時直接翻譯"
     },
+    "optionsDoNotRespondInTextBox": {
+        "message": "不在文本框中響應"
+    },
+    "optionsDoNotRespondInTextBoxDescription": {
+        "message": "在文本框內選擇文本時，擴充功能不會展示按鈕和自動翻譯。"
+    },
     "themePreset": {
         "message": "預設"
     },

@@ -21,7 +21,7 @@ import './style.css';
 import { sendAudio, sendSeparate } from '../../public/send';
 import { stSetText } from '../../redux/actions/singleTranslateActions';
 import { getOptions } from '../../public/options';
-import { debounce } from '../../public/utils';
+import { debounce, isTextBox } from '../../public/utils';
 
 const initText = '';
 const initPos = { x: 5, y: 5 };
@@ -34,7 +34,8 @@ const useOptionsDependency = [
     'hideButtonAfterFixedTime',
     'hideButtonFixedTime',
     'respondToSeparateWindow',
-    'translateDirectlyWhilePinning'
+    'translateDirectlyWhilePinning',
+    'doNotRespondInTextBox'
 ];
 
 const calculateBtnPos = ({ x, y }) => {
@@ -74,7 +75,8 @@ const TsBtn = ({ multipleTranslateMode }) => {
         hideButtonAfterFixedTime,
         hideButtonFixedTime,
         respondToSeparateWindow,
-        translateDirectlyWhilePinning
+        translateDirectlyWhilePinning,
+        doNotRespondInTextBox
     } = useOptions(useOptionsDependency);
 
     const isEnableTranslate = useIsEnable('translate', window.location.host);
@@ -146,6 +148,8 @@ const TsBtn = ({ multipleTranslateMode }) => {
 
     useGetSelection(({ text, pos }) => {
         if (!isEnableTranslate) { return; }
+
+        if (doNotRespondInTextBox && isTextBox(document.activeElement)) { return; }
 
         const nextPos = calculateBtnPos(pos);
 

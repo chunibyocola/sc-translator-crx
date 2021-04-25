@@ -26,7 +26,8 @@ const Translate = ({
     translateBlackListMode,
     translateHostList,
     respondToSeparateWindow,
-    translateDirectlyWhilePinning
+    translateDirectlyWhilePinning,
+    doNotRespondInTextBox
 }) => {
     return (
         <div className='opt-section'>
@@ -104,6 +105,15 @@ const Translate = ({
                     checked={translateDirectlyWhilePinning}
                     onClick={() => updateStorage('translateDirectlyWhilePinning', !translateDirectlyWhilePinning)}
                 />
+            </div>
+            <div className='opt-section-row'>
+                <OptionToggle
+                    id='do-not-respond-in-text-box'
+                    message='optionsDoNotRespondInTextBox'
+                    checked={doNotRespondInTextBox}
+                    onClick={() => updateStorage('doNotRespondInTextBox', !doNotRespondInTextBox)}
+                />
+                <div className='item-description'>{getMessage('optionsDoNotRespondInTextBoxDescription')}</div>
             </div>
             <div className='opt-section-row'>
                 <div className='options-mode'>

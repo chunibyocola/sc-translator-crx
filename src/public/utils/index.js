@@ -102,3 +102,7 @@ export const mouseDrag = (mouseMoveCallback, mouseUpCallback) => {
     document.addEventListener('mousemove', mouseMoveListener, true);
     document.addEventListener('mouseup', mouseUpListener, true);
 };
+
+export const isTextBox = (element) => {
+    return (element.tagName === 'INPUT' && element.type === 'text') || element.tagName === 'TEXTAREA' || element.isContentEditable;
+};

@@ -203,6 +203,12 @@
     "optionsTranslateDirectlyWhilePinning": {
         "message": "Translate directly while translate panel pinning"
     },
+    "optionsDoNotRespondInTextBox": {
+        "message": "Do not respond in text box"
+    },
+    "optionsDoNotRespondInTextBoxDescription": {
+        "message": "Extension will not show button and will not auto translate if you select some text in text box."
+    },
     "themePreset": {
         "message": "Preset"
     },

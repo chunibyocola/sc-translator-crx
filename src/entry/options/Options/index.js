@@ -57,7 +57,8 @@ const Options = () => {
         translatePanelWidth,
         translatePanelFontSize,
         rememberHistoryPanelStatus,
-        translateDirectlyWhilePinning
+        translateDirectlyWhilePinning,
+        doNotRespondInTextBox
     } = useOptions(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -129,6 +130,7 @@ const Options = () => {
                 translateHostList={translateHostList}
                 respondToSeparateWindow={respondToSeparateWindow}
                 translateDirectlyWhilePinning={translateDirectlyWhilePinning}
+                doNotRespondInTextBox={doNotRespondInTextBox}
             />
             <div className='sub-title' id='history'>{getMessage('optionsHistory')}</div>
             <History

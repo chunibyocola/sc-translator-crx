@@ -203,6 +203,12 @@
     "optionsTranslateDirectlyWhilePinning": {
         "message": "翻訳パネルの固定中に直接翻訳する"
     },
+    "optionsDoNotRespondInTextBox": {
+        "message": "テキストボックスに応答しない"
+    },
+    "optionsDoNotRespondInTextBoxDescription": {
+        "message": "テキストボックスでテキストを選択するでも、拡張機能は「ボタンを表示」や「自動翻訳」をしません。"
+    },
     "themePreset": {
         "message": "プリセット"
     },
