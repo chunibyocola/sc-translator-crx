@@ -1,83 +1,86 @@
+# 3.2.1 (2021-05-01)
+- Add "do not respond in text box" option. ([8f48391](https://github.com/chunibyocola/sc-translator-crx/commit/8f483919a70b196b0b5388ee2e56ff49567fbadd))
+- Fix extension will send duplicate translate request with same text. ([84acec1](https://github.com/chunibyocola/sc-translator-crx/commit/84acec15d17d3f4aac3bfa9476f2bd7fe4e1c044))
 # 3.2.0 (2021-04-08)
-- Add "translate directly while translate panel pinning" option.
-- Add "remember the status of translate history panel" option.
-- Add recent language list of language selection.
+- Add "translate directly while translate panel pinning" option. ([79a775b](https://github.com/chunibyocola/sc-translator-crx/commit/79a775bbe901ea4c023b919f53e9e14f89cdfc28))
+- Add "remember the status of translate history panel" option. ([65c118f](https://github.com/chunibyocola/sc-translator-crx/commit/65c118fa11f4e1132578f968c7f05c25afdfc282))
+- Add recent language list of language selection. ([4304d63](https://github.com/chunibyocola/sc-translator-crx/commit/4304d639433072dea90e390ae333d5e5204adf21))
 # 3.1.0 (2021-03-11)
-- Add auto respond of separate translate window.
-- Add translate panel's font size slider.
-- Add options page's menu.
-- Add translate panel's width slider.
-- Add translate panel's max height slider.
-- Beautify and clarify options page.
-- Fix style disordered in "arabic" language.
+- Add auto respond of separate translate window. ([99f170f](https://github.com/chunibyocola/sc-translator-crx/commit/99f170f5b8f09f56c54042129309eebbd1dd2dae))
+- Add translate panel's font size slider. ([53647a2](https://github.com/chunibyocola/sc-translator-crx/commit/53647a249e5ace2338d0dc09187595aca60130c4))
+- Add options page's menu. ([8de8ee4](https://github.com/chunibyocola/sc-translator-crx/commit/8de8ee4f208c50067ff8d8f9f75a01c5a87041c2))
+- Add translate panel's width slider. ([7b46e18](https://github.com/chunibyocola/sc-translator-crx/commit/7b46e18da6b4007cd9bd9d96fcda466f36948108))
+- Add translate panel's max height slider. ([b965208](https://github.com/chunibyocola/sc-translator-crx/commit/b965208094553e7bc3d15fbcc9c5e43f237f5256))
+- Beautify and clarify options page. ([b808e14](https://github.com/chunibyocola/sc-translator-crx/commit/b808e140e6628dab55316f11996af96a2b95601d))
+- Fix style disordered in "arabic" language. ([53647a2](https://github.com/chunibyocola/sc-translator-crx/commit/53647a249e5ace2338d0dc09187595aca60130c4))
 # 3.0.0 (2021-03-01)
-- Add "remember the position of the pinned panel" option.
-- Add listener that listen window size change to keep panel inside document.
-- Add "pin the panel while opening it" option.
-- Add "open this page with PDF viewer" context menu of "browser_action".
-- Fix "respond to separate translate window" might send two duplicate requests at the same time.
+- Add "remember the position of the pinned panel" option. ([8c56c85](https://github.com/chunibyocola/sc-translator-crx/commit/8c56c8540695c912012584f407f14aa6160b4a53))
+- Add listener that listen window size change to keep panel inside document. ([71a0d5b](https://github.com/chunibyocola/sc-translator-crx/commit/71a0d5bb2ac97f5868081686bb5947e25d22f3fe))
+- Add "pin the panel while opening it" option. ([3fb23b4](https://github.com/chunibyocola/sc-translator-crx/commit/3fb23b44898b652a6b59fd59e35d3a47c7c4cbc0))
+- Add "open this page with PDF viewer" context menu of "browser_action". ([2149773](https://github.com/chunibyocola/sc-translator-crx/commit/21497736bbe145ab9026ce5e7cfb3ae46f1b9753))
+- Fix "respond to separate translate window" might send two duplicate requests at the same time. ([6898b10](https://github.com/chunibyocola/sc-translator-crx/commit/6898b10682e1244cd11816b3edf9562966689e87))
 # 2.7.1 (2021-02-05)
-- Remove permission "tabs". Implementing this by changing the way of getting the current web page's host.
-- Change the way of bage showing that content script is on or off on the current web page.
-- Update the interface of options page.
-- Fix uncheck "enable context menus" option will remove all context menus.
+- Remove permission "tabs". Implementing this by changing the way of getting the current web page's host. ([0ba0154](https://github.com/chunibyocola/sc-translator-crx/commit/0ba0154caacbe996bd7f5e132967fb141f43431b))
+- Change the way of bage showing that content script is on or off on the current web page. ([0ba0154](https://github.com/chunibyocola/sc-translator-crx/commit/0ba0154caacbe996bd7f5e132967fb141f43431b))
+- Update the interface of options page. ([7ba1f3b](https://github.com/chunibyocola/sc-translator-crx/commit/7ba1f3baf6376254857a658077dcef1cb11d600c))
+- Fix uncheck "enable context menus" option will remove all context menus. ([6a0c2e0](https://github.com/chunibyocola/sc-translator-crx/commit/6a0c2e0841cd393be66cbe9d010847e8dba0af59))
 # 2.7.0 (2021-01-21)
-- Add "multiple translate mode"'s history record.
-- Add "second preferred language" selection.
-- Remake translate history.
+- Add "multiple translate mode"'s history record. ([f2b1bde](https://github.com/chunibyocola/sc-translator-crx/commit/f2b1bdef24ebac86ec2777fd615c079495cc5d1e))
+- Add "second preferred language" selection. ([8b9f49a](https://github.com/chunibyocola/sc-translator-crx/commit/8b9f49af6fbe58902bef461ea48370678010b646))
+- Remake translate history. ([f2b1bde](https://github.com/chunibyocola/sc-translator-crx/commit/f2b1bdef24ebac86ec2777fd615c079495cc5d1e))
 # 2.6.0 (2021-01-14)
-- Add close button of translate panel.
-- Add close keyboard shortcut of translate panel.
-- Add "remember separate translate window size and position" option.
-- Add "respond to separate translate window" option.
+- Add close button of translate panel. ([2f38803](https://github.com/chunibyocola/sc-translator-crx/commit/2f388034d539fb7e56dc9b15931ff9f78d590b23))
+- Add close keyboard shortcut of translate panel. ([2f38803](https://github.com/chunibyocola/sc-translator-crx/commit/2f388034d539fb7e56dc9b15931ff9f78d590b23))
+- Add "remember separate translate window size and position" option. ([c5b3fb2](https://github.com/chunibyocola/sc-translator-crx/commit/c5b3fb25272f6cdc8b5d0b12fcbdfd391d92acbd))
+- Add "respond to separate translate window" option. ([a030f34](https://github.com/chunibyocola/sc-translator-crx/commit/a030f348a5f8c0e80026023757ae282aaf3cb3cd))
 # 2.5.0 (2021-01-06)
-- Add "hide button after fixed time".
-- Add audio's volume slider.
-- Add audio's playback rate slider.
-- Update the panel's interface.
-- Fix separate window not responding to the translation option of the context menu.
-- Fix clicking the "open separate window" menus option will call out the panel in current web page.
+- Add "hide button after fixed time". ([af6b18a](https://github.com/chunibyocola/sc-translator-crx/commit/af6b18a7864960c63d6653842223cae730c1cdf5))
+- Add audio's volume slider. ([e5822b4](https://github.com/chunibyocola/sc-translator-crx/commit/e5822b4a223e0161e46f3cb1c94034abf6e2c91d))
+- Add audio's playback rate slider. ([e5822b4](https://github.com/chunibyocola/sc-translator-crx/commit/e5822b4a223e0161e46f3cb1c94034abf6e2c91d))
+- Update the panel's interface. ([14ae16a](https://github.com/chunibyocola/sc-translator-crx/commit/14ae16a094ece6f658dda402aa92e231923c62d8))
+- Fix separate window not responding to the translation option of the context menu. ([51f0dbf](https://github.com/chunibyocola/sc-translator-crx/commit/51f0dbf18dac6ec1b1c28f8631f8fc6408f50bd6))
+- Fix clicking the "open separate window" menus option will call out the panel in current web page. ([e906f55](https://github.com/chunibyocola/sc-translator-crx/commit/e906f55ed5f7841518e419962723b6a72d414f8b))
 # 2.4.1 (2020-12-08)
-- Fix result box undraggable.
+- Fix result box undraggable. ([ae80653](https://github.com/chunibyocola/sc-translator-crx/commit/ae80653b25b6256d1f96c545e5a292b714d1f2e1))
 # 2.4.0 (2020-12-08)
-- Add "separate translate window".
+- Add "separate translate window". ([6194bd0](https://github.com/chunibyocola/sc-translator-crx/commit/6194bd0b18813763716af01190ff579a2a5bd88f))
 # 2.3.0 (2020-11-30)
-- Add "customize button's position".
-- Add "customize shortcuts".
-- Simplify the interface.
+- Add "customize button's position". ([45b005f](https://github.com/chunibyocola/sc-translator-crx/commit/45b005f41c403a883b07c26658e35539e55b1b64))
+- Add "customize shortcuts". ([27ffeb7](https://github.com/chunibyocola/sc-translator-crx/commit/27ffeb755acae00b87d065af21c916889857de56))
+- Simplify the interface. ([f334ce7](https://github.com/chunibyocola/sc-translator-crx/commit/f334ce72e22ccf766e0099583915ddd380aa4a85))
 # 2.2.1 (2020-11-12)
-- Fix google translate invalid.
+- Fix google translate invalid. ([9171cf0](https://github.com/chunibyocola/sc-translator-crx/commit/9171cf0716129848c13b89a1e95f9cca5a444b1d))
 # 2.2.0 (2020-10-21)
-- Add "Customize theme".
-- Fix PDF viewer not working in incognito mode".
+- Add "Customize theme". ([e486d97](https://github.com/chunibyocola/sc-translator-crx/commit/e486d97b7987d43bbf1aeac185d5031c02318557))
+- Fix PDF viewer not working in incognito mode". ([e486d97](https://github.com/chunibyocola/sc-translator-crx/commit/e486d97b7987d43bbf1aeac185d5031c02318557))
 # 2.1.1 (2020-09-15)
-- Add "Call out extension in web page" keyboard shortcut (default: Alt + C).
-- Show all keyboard shortcuts in the options page.
+- Add "Call out extension in web page" keyboard shortcut (default: Alt + C). ([b27c032](https://github.com/chunibyocola/sc-translator-crx/commit/b27c0326fa248c88bfd703d90f2ba6911cd16298))
+- Show all keyboard shortcuts in the options page. ([ba953a1](https://github.com/chunibyocola/sc-translator-crx/commit/ba953a11a27c48ac8697968e0a987146b57a8523))
 # 2.1.0 (2020-09-10)
-- Add "Enable PDF viewer" option.
-- Add translate source "baidu".
-- Add audio source "baidu".
-- Fix some language environment can't normally use this extension by adding "Preferred Language" selection.
+- Add "Enable PDF viewer" option. ([ce81425](https://github.com/chunibyocola/sc-translator-crx/commit/ce81425195f79dfbfaf2e2565019b691bfb4b8f8))
+- Add translate source "baidu". ([917ba0e](https://github.com/chunibyocola/sc-translator-crx/commit/917ba0e26ae767a4bc4860be95913bfad7171feb))
+- Add audio source "baidu". ([917ba0e](https://github.com/chunibyocola/sc-translator-crx/commit/917ba0e26ae767a4bc4860be95913bfad7171feb))
+- Fix some language environment can't normally use this extension by adding "Preferred Language" selection. ([99f75a2](https://github.com/chunibyocola/sc-translator-crx/commit/99f75a2b40967cad741a7dc0972f99fa3bfabe8f))
 # 2.0.0 (2020-09-02)
-- Add multiple translate mode.
-- Add "Use '.cn' in URL" option.
+- Add multiple translate mode. ([ed57edc](https://github.com/chunibyocola/sc-translator-crx/commit/ed57edcfa1cba17fcb9f4fbdc8aaba16c947a1a4))
+- Add "Use '.cn' in URL" option. ([ed57edc](https://github.com/chunibyocola/sc-translator-crx/commit/ed57edcfa1cba17fcb9f4fbdc8aaba16c947a1a4))
 # 1.2.2 (2020-08-18)
-- Add audio source "bing"
+- Add audio source "bing". ([1dde335](https://github.com/chunibyocola/sc-translator-crx/commit/1dde3352e09212fdbc21f7fc9d3cf01d575cd053))
 # 1.2.1 (2020-08-14)
-- Add press "Ctrl" key and select text to translate.
-- Optimize accurate representation of translate error.
-- Optimize options page.
+- Add press "Ctrl" key and select text to translate. ([74f9a9f](https://github.com/chunibyocola/sc-translator-crx/commit/74f9a9f886b61add6e38e1b2b573a2db8fcefc03))
+- Optimize accurate representation of translate error. ([74f9a9f](https://github.com/chunibyocola/sc-translator-crx/commit/74f9a9f886b61add6e38e1b2b573a2db8fcefc03))
+- Optimize options page. ([74f9a9f](https://github.com/chunibyocola/sc-translator-crx/commit/74f9a9f886b61add6e38e1b2b573a2db8fcefc03))
 # 1.2.0 (2020-08-13)
-- Add "translate" keyboard shortcut (default: Alt + Z).
-- Add option "show button after select".
-- Add "listen" keyboard shortcut (default: Alt + X).
-- Add translate source "bing".
-- Add translate source "mojidict".
-- Optimize get selection.
-- Fix "context menus invalid".
-- Separate "translate" and "listen".
+- Add "translate" keyboard shortcut (default: Alt + Z). ([dc23235](https://github.com/chunibyocola/sc-translator-crx/commit/dc23235bf66662ba0a5b7bc969f756747e0bc382))
+- Add option "show button after select". ([dc23235](https://github.com/chunibyocola/sc-translator-crx/commit/dc23235bf66662ba0a5b7bc969f756747e0bc382))
+- Add "listen" keyboard shortcut (default: Alt + X). ([dc23235](https://github.com/chunibyocola/sc-translator-crx/commit/dc23235bf66662ba0a5b7bc969f756747e0bc382))
+- Add translate source "bing". ([dc23235](https://github.com/chunibyocola/sc-translator-crx/commit/dc23235bf66662ba0a5b7bc969f756747e0bc382))
+- Add translate source "mojidict". ([dc23235](https://github.com/chunibyocola/sc-translator-crx/commit/dc23235bf66662ba0a5b7bc969f756747e0bc382))
+- Optimize get selection. ([dc23235](https://github.com/chunibyocola/sc-translator-crx/commit/dc23235bf66662ba0a5b7bc969f756747e0bc382))
+- Fix "context menus invalid". ([dc23235](https://github.com/chunibyocola/sc-translator-crx/commit/dc23235bf66662ba0a5b7bc969f756747e0bc382))
+- Separate "translate" and "listen". ([dc23235](https://github.com/chunibyocola/sc-translator-crx/commit/dc23235bf66662ba0a5b7bc969f756747e0bc382))
 # 1.1.0 (2020-07-31)
-- Add i18n (support en, ja, zh-cn, zh-tw now).
-- Add dark mode.
+- Add i18n (support en, ja, zh-cn, zh-tw now). ([e2bafdb](https://github.com/chunibyocola/sc-translator-crx/commit/e2bafdb4664decc079bef2c5def186fdf0506757))
+- Add dark mode. ([e2bafdb](https://github.com/chunibyocola/sc-translator-crx/commit/e2bafdb4664decc079bef2c5def186fdf0506757))
 # 1.0.0 (2020-04-24)
-- Initial
+- Initial ([2957c5d](https://github.com/chunibyocola/sc-translator-crx/commit/2957c5d7e13d4b35d773d9eeb3d6a9ce4527e7b7))

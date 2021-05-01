@@ -104,5 +104,5 @@ export const mouseDrag = (mouseMoveCallback, mouseUpCallback) => {
 };
 
 export const isTextBox = (element) => {
-    return (element.tagName === 'INPUT' && element.type === 'text') || element.tagName === 'TEXTAREA' || element.isContentEditable;
+    return (element.tagName === 'INPUT' && (element.type === 'text' || element.type === 'search')) || element.tagName === 'TEXTAREA' || element.isContentEditable;
 };
