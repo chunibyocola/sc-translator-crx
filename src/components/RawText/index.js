@@ -1,22 +1,30 @@
 import React, { useRef, useCallback, useState, useEffect } from 'react';
 import { getMessage } from '../../public/i18n';
-import { debounce } from '../../public/utils';
+import useDebounce from '../../public/react-use/useDebounce';
 import './style.css';
 
 const RawText = ({ defaultValue, rawTextTranslate, focusDependency }) => {
-    const [lastText, setLastText] = useState('');
+    const [debounceDependency, setDebounceDependency] = useState(0);
 
+    const lastTextRef = useRef('');
     const textareaEl = useRef(null);
     const compositionStatus = useRef(false);
-    const debounceHandleRtTextChange = useRef(null);
 
-    const handleRtTextChange = useCallback(() => {
-        let text = textareaEl.current.value;
-        text = text.trimLeft().trimRight();
-        if (text === '' || text === lastText) return;
-        setLastText(text);
+    const rawTextChanged = useCallback(() => {
+        setDebounceDependency(v => v + 1);
+    }, []);
+
+    const handleRawTextChanged = useCallback(() => {
+        let text = textareaEl.current.value.trimLeft();
+
+        if (!text || text.trimRight() === lastTextRef.current) { return; }
+
+        lastTextRef.current = text.trimRight();
+
         rawTextTranslate(text);
-    }, [lastText, rawTextTranslate]);
+    }, [rawTextTranslate]);
+
+    useDebounce(handleRawTextChanged, 600, [debounceDependency]);
 
     const onCompositionStart = useCallback(() => {
         compositionStatus.current = true;
@@ -24,20 +32,16 @@ const RawText = ({ defaultValue, rawTextTranslate, focusDependency }) => {
 
     const onCompositionEnd = useCallback(() => {
         compositionStatus.current = false;
-        debounceHandleRtTextChange.current();
-    }, []);
+        rawTextChanged();
+    }, [rawTextChanged]);
 
     const onChange = useCallback(() => {
-        !compositionStatus.current && debounceHandleRtTextChange.current();
-    }, []);
-
-    useEffect(() => {
-        debounceHandleRtTextChange.current = debounce(handleRtTextChange, 600);
-    }, [handleRtTextChange]);
+        !compositionStatus.current && rawTextChanged();
+    }, [rawTextChanged]);
 
     useEffect(() => {
         if (defaultValue) {
-            setLastText(defaultValue);
+            lastTextRef.current = defaultValue.trimRight();
             textareaEl.current.value = defaultValue;
         }
     }, [defaultValue]);
