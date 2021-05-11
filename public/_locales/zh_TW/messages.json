@@ -290,6 +290,9 @@
     "sentenceSearchLanguages": {
         "message": "搜索語言"
     },
+    "sentenceRefreshPage": {
+        "message": "刷新頁面"
+    },
     "errorCode_CONNECTION_TIMED_OUT": {
         "message": "錯誤：連接超時。"
     },
@@ -301,5 +304,11 @@
     },
     "errorCode_NO_RESULT": {
         "message": "錯誤：無翻譯結果。"
+    },
+    "errorCode_EXTENSION_UPDATED": {
+        "message": "錯誤：擴充功能可能已更新，請嘗試刷新頁面以重新啟動擴充功能。"
+    },
+    "errorCode_SOURCE_ERROR": {
+        "message": "錯誤：未找到翻譯源。"
     }
 }

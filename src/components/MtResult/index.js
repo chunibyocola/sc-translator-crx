@@ -5,6 +5,7 @@ import SourceFavicon from '../SourceFavicon';
 import { resultToString } from '../../public/utils';
 import { LANG_EN } from '../../constants/langCode';
 import { getMessage } from '../../public/i18n';
+import ErrorMessage from '../ErrorMessage';
 
 const MtResult = ({ source, status, result, text, remove, readText, retry }) => {
     const [fold, setFold] = useState(false);
@@ -45,7 +46,7 @@ const MtResult = ({ source, status, result, text, remove, readText, retry }) => 
                 !requestEnd ?
                     getMessage('contentTranslateAfterInput') :
                 error ?
-                    <>{getMessage(`errorCode_${errorCode}`)}<span className='span-link' onClick={retry}>{getMessage('wordRetry')}</span></> :
+                    <ErrorMessage errorCode={errorCode} retry={retry} /> :
                 <>
                     {result.phonetic && result.from === LANG_EN && <div style={{marginBottom: '10px'}}>
                         {result.phonetic}

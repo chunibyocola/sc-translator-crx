@@ -290,6 +290,9 @@
     "sentenceSearchLanguages": {
         "message": "検索言語"
     },
+    "sentenceRefreshPage": {
+        "message": "ページを更新"
+    },
     "errorCode_CONNECTION_TIMED_OUT": {
         "message": "エラー：接続がタイムアウトしました。"
     },
@@ -301,5 +304,11 @@
     },
     "errorCode_NO_RESULT": {
         "message": "エラー：翻訳結果はありません。"
+    },
+    "errorCode_EXTENSION_UPDATED": {
+        "message": "エラー：拡張機能が更新されている可能性があります、ページを更新して拡張機能を再起動にお試しください。"
+    },
+    "errorCode_SOURCE_ERROR": {
+        "message": "エラー：翻訳ソースが見つかりません。"
     }
 }

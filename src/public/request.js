@@ -10,6 +10,7 @@ import bing from '../public/translate/bing';
 import mojidict from '../public/translate/mojidict';
 import baidu from '../public/translate/baidu';
 import { bingSwitchLangCode, baiduSwitchLangCode } from '../public/switch-lang-code';
+import { SOURCE_ERROR } from '../constants/errorCodes';
 
 export const translate = ({ source, translateId, requestObj }, cb) => {
 	let translate;
@@ -37,8 +38,8 @@ export const translate = ({ source, translateId, requestObj }, cb) => {
 			break;
 		default:
 			let err = new Error();
-			err.code = 'SOURCE_ERROR';
-			cb({ suc: false, data: err });
+			err.code = SOURCE_ERROR;
+			cb?.({ suc: false, data: err, translateId });
 			return;
 	}
 	

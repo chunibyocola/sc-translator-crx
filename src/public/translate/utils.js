@@ -28,7 +28,7 @@ export const getError = (code) => {
 export const fetchData = async (url, init = {}) => {
     const res = await fetch(url, init).catch(() => { throw getError(CONNECTION_TIMED_OUT) });
 
-    if (!res.ok) throw getError(`${BAD_REQUEST} ${res.status}`);
+    if (!res.ok) { throw getError(`${BAD_REQUEST} (http ${res.status})`); }
 
     return res;
 };

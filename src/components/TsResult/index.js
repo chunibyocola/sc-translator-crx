@@ -4,6 +4,7 @@ import { LANG_EN } from '../../constants/langCode';
 import { resultToString } from '../../public/utils';
 import './style.css';
 import { getMessage } from '../../public/i18n';
+import ErrorMessage from '../ErrorMessage';
 
 const TsResult = ({ resultObj, status, readText, source, retry }) => {
     const { text, result, dict, phonetic, from, to } = resultObj;
@@ -16,7 +17,7 @@ const TsResult = ({ resultObj, status, readText, source, retry }) => {
             !requestEnd ?
                 getMessage('contentTranslateAfterInput'):
             error ?
-                <>{getMessage(`errorCode_${errorCode}`)}<span className='span-link' onClick={retry}>{getMessage('wordRetry')}</span></> :
+                <ErrorMessage errorCode={errorCode} retry={retry} /> :
             <>
                 <div className='tss-result'>
                     <span>

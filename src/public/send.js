@@ -1,4 +1,5 @@
 import * as types from '../constants/chromeSendMessageTypes';
+import { EXTENSION_UPDATED } from '../constants/errorCodes';
 
 export const sendTranslate = (text, { source, from, to, translateId }, cb = undefined) => {
     const action = {
@@ -36,5 +37,13 @@ const packData = (text, { source, from, to = undefined, translateId = undefined 
 });
 
 const chromeSendMessage = (action, cb = undefined) => {
-    chrome.runtime.sendMessage(action, cb);
+    try {
+        chrome.runtime.sendMessage(action, cb);
+    }
+    catch {
+        const translateId = action?.payload?.translateId;
+        let err = new Error();
+        err.code = EXTENSION_UPDATED;
+        cb?.({ suc: false, data: err, translateId });
+    }
 };

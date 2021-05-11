@@ -290,6 +290,9 @@
     "sentenceSearchLanguages": {
         "message": "Search languages"
     },
+    "sentenceRefreshPage": {
+        "message": "Refresh page"
+    },
     "errorCode_CONNECTION_TIMED_OUT": {
         "message": "Error: Connection timed out."
     },
@@ -301,5 +304,11 @@
     },
     "errorCode_NO_RESULT": {
         "message": "Error: No translate result."
+    },
+    "errorCode_EXTENSION_UPDATED": {
+        "message": "Error: Extension might be updated, try refreshing page to reactivate extension."
+    },
+    "errorCode_SOURCE_ERROR": {
+        "message": "Error: Translate source not found."
     }
 }

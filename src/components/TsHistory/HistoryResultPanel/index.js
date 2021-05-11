@@ -3,6 +3,7 @@ import { LANG_EN } from '../../../constants/langCode';
 import { getMessage } from '../../../public/i18n';
 import { sendAudio } from '../../../public/send';
 import { calculatePosition, resultToString } from '../../../public/utils';
+import ErrorMessage from '../../ErrorMessage';
 import IconFont from '../../IconFont';
 import SourceFavicon from '../../SourceFavicon';
 import './style.css';
@@ -44,7 +45,7 @@ const HistoryResultPanel = ({ translations, top, historyWidth }) => {
                         !status.requestEnd ?
                             getMessage('contentTranslateAfterInput') :
                         status.error ?
-                            <>{getMessage(`errorCode_${status.errorCode}`)}</> :
+                            <ErrorMessage errorCode={status.errorCode} /> :
                         <>
                             {result.phonetic && result.from === LANG_EN && <div style={{marginBottom: '10px'}}>
                                 {result.phonetic}

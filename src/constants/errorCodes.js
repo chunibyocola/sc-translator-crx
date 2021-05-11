@@ -1,0 +1,2 @@
+export const SOURCE_ERROR = 'SOURCE_ERROR';
+export const EXTENSION_UPDATED = 'EXTENSION_UPDATED';

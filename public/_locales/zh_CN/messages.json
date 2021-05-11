@@ -290,6 +290,9 @@
     "sentenceSearchLanguages": {
         "message": "搜索语言"
     },
+    "sentenceRefreshPage": {
+        "message": "刷新页面"
+    },
     "errorCode_CONNECTION_TIMED_OUT": {
         "message": "错误：连接超时。"
     },
@@ -301,5 +304,11 @@
     },
     "errorCode_NO_RESULT": {
         "message": "错误：无翻译结果。"
+    },
+    "errorCode_EXTENSION_UPDATED": {
+        "message": "错误：扩展可能已更新了，请尝试刷新页面以重新启动扩展。"
+    },
+    "errorCode_SOURCE_ERROR": {
+        "message": "错误：未找到翻译源。"
     }
 }
