@@ -209,6 +209,12 @@
     "optionsDoNotRespondInTextBoxDescription": {
         "message": "Extension will not show button and will not auto translate if you select some text in text box."
     },
+    "optionsMore": {
+        "message": "More"
+    },
+    "optionsChangeLog": {
+        "message": "Change log"
+    },
     "themePreset": {
         "message": "Preset"
     },

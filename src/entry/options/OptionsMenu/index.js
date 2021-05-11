@@ -15,7 +15,7 @@ const menusItems = [
     { title: getMessage('optionsInWebPage'), id: 'in-web-page' },
     { title: getMessage('optionsHistory'), id: 'history' },
     { title: getMessage('optionsKeyboardShortcut'), id: 'keyboard-shortcut' },
-    { title: getMessage('optionsMoreFeaturesOrBugReports'), id: 'more-features-or-bug-reports' }
+    { title: getMessage('optionsMore'), id: 'more' }
 ];
 
 const OptionsMenu = () => {

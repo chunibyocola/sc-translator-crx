@@ -1,4 +1,5 @@
 import React from 'react';
+import { getMessage } from '../../../../public/i18n';
 
 const More = () => {
     return (
@@ -7,9 +8,18 @@ const More = () => {
                 <a
                     target='_blank'
                     href='https://github.com/chunibyocola/sc-translator-crx/issues'
-                    rel="noopener noreferrer"
+                    rel='noreferrer'
                 >
-                    sc-translator-crx
+                    {getMessage('optionsMoreFeaturesOrBugReports')}
+                </a>
+            </div>
+            <div className='opt-section-row'>
+                <a
+                    target='_blank'
+                    href='https://github.com/chunibyocola/sc-translator-crx/blob/master/CHANGELOG.md'
+                    rel='noreferrer'
+                >
+                    {getMessage('optionsChangeLog')}
                 </a>
             </div>
         </div>

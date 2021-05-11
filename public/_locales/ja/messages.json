@@ -209,6 +209,12 @@
     "optionsDoNotRespondInTextBoxDescription": {
         "message": "テキストボックスでテキストを選択するでも、拡張機能は「ボタンを表示」や「自動翻訳」をしません。"
     },
+    "optionsMore": {
+        "message": "その他"
+    },
+    "optionsChangeLog": {
+        "message": "更新ログ"
+    },
     "themePreset": {
         "message": "プリセット"
     },

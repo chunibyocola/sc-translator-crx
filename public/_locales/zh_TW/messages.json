@@ -209,6 +209,12 @@
     "optionsDoNotRespondInTextBoxDescription": {
         "message": "在文本框內選擇文本時，擴充功能不會展示按鈕和自動翻譯。"
     },
+    "optionsMore": {
+        "message": "其它"
+    },
+    "optionsChangeLog": {
+        "message": "更新日誌"
+    },
     "themePreset": {
         "message": "預設"
     },

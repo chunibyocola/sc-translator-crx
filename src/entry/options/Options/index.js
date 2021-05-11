@@ -141,7 +141,7 @@ const Options = () => {
             />
             <div className='sub-title' id='keyboard-shortcut'>{getMessage('optionsKeyboardShortcut')}</div>
             <KeyboardShortcut />
-            <div className='sub-title' id='more-features-or-bug-reports'>{getMessage('optionsMoreFeaturesOrBugReports')}</div>
+            <div className='sub-title' id='more'>{getMessage('optionsMore')}</div>
             <More />
             <OverScroll />
         </div>

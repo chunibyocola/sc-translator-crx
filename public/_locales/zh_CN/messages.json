@@ -209,6 +209,12 @@
     "optionsDoNotRespondInTextBoxDescription": {
         "message": "在文本框内选择文本时，扩展不会展示按钮和自动翻译。"
     },
+    "optionsMore": {
+        "message": "其它"
+    },
+    "optionsChangeLog": {
+        "message": "更新日志"
+    },
     "themePreset": {
         "message": "预设"
     },
