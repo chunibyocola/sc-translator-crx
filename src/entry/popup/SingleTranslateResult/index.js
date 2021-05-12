@@ -74,14 +74,16 @@ const SingleTranslateResult = ({ autoTranslateAfterInput }) => {
                 to={to}
                 languageCodes={langCode[source]}
             />
-            <div className='ts-scrollbar' style={{height: '250px', overflowY: 'auto'}}>
-                <TsResult
-                    resultObj={result}
-                    status={status}
-                    readText={handleReadText}
-                    source={source}
-                    retry={handleRetry}
-                />
+            <div style={{minHeight: '250px'}}>
+                <div className='ts-scrollbar' style={{maxHeight: '300px', overflowY: 'auto'}}>
+                    <TsResult
+                        resultObj={result}
+                        status={status}
+                        readText={handleReadText}
+                        source={source}
+                        retry={handleRetry}
+                    />
+                </div>
                 <TsVia
                     sourceChange={handleSourceChange}
                     source={source}
