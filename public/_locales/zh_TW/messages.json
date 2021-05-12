@@ -215,6 +215,12 @@
     "optionsChangeLog": {
         "message": "更新日誌"
     },
+    "optionsAutoTranslateAfterInput": {
+        "message": "在輸入框輸入後自動翻譯"
+    },
+    "optionsAutoTranslateAfterInputDescription": {
+        "message": "當你在輸入框輸入后，經過0.6秒，擴充功能會自動發送翻譯請求。當不啟用時，需要使用「Ctrl + Enter」快速鍵來發送翻譯請求。鍵盤快速鍵"
+    },
     "themePreset": {
         "message": "預設"
     },

@@ -215,6 +215,12 @@
     "optionsChangeLog": {
         "message": "Change log"
     },
+    "optionsAutoTranslateAfterInput": {
+        "message": "Auto translate after input in input box"
+    },
+    "optionsAutoTranslateAfterInputDescription": {
+        "message": "Extension will send a translate request automatically with the text you input in input box in 0.6s. If you disable it, you will need to use \"Ctrl + Enter\" keyboard shortcut to trigger the translate request."
+    },
     "themePreset": {
         "message": "Preset"
     },

@@ -58,7 +58,8 @@ const Options = () => {
         translatePanelFontSize,
         rememberHistoryPanelStatus,
         translateDirectlyWhilePinning,
-        doNotRespondInTextBox
+        doNotRespondInTextBox,
+        autoTranslateAfterInput
     } = useOptions(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -100,6 +101,7 @@ const Options = () => {
                 translatePanelMaxHeight={translatePanelMaxHeight}
                 translatePanelWidth={translatePanelWidth}
                 translatePanelFontSize={translatePanelFontSize}
+                autoTranslateAfterInput={autoTranslateAfterInput}
             />
             <div className='sub-title' id='default-translate-options'>{getMessage('optionsDefaultTranslateOptions')}</div>
             <DefaultTranslateOptions

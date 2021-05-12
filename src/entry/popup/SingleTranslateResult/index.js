@@ -9,7 +9,7 @@ import { stRequestFinish, stRequestStart, stRequestError, stSetFromAndTo, stSetT
 import TsVia from '../../../components/TsVia';
 import { switchTranslateSource } from '../../../public/switch-translate-source';
 
-const SingleTranslateResult = () => {
+const SingleTranslateResult = ({ autoTranslateAfterInput }) => {
     const { focusRawText } = useSelector(state => state.resultBoxState);
 
     const { status, result, source, from, to, text, translateId } = useSelector(state => state.singleTranslateState);
@@ -66,6 +66,7 @@ const SingleTranslateResult = () => {
                 defaultValue={text}
                 rawTextTranslate={handleRawTextTranslate}
                 focusDependency={focusRawText}
+                autoTranslateAfterInput={autoTranslateAfterInput}
             />
             <LanguageSelection
                 onChange={handleSelectionChange}

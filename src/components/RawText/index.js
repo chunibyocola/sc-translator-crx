@@ -1,9 +1,9 @@
-import React, { useRef, useCallback, useState, useEffect } from 'react';
+import React, { useRef, useCallback, useState, useEffect, useLayoutEffect } from 'react';
 import { getMessage } from '../../public/i18n';
 import useDebounce from '../../public/react-use/useDebounce';
 import './style.css';
 
-const RawText = ({ defaultValue, rawTextTranslate, focusDependency }) => {
+const RawText = ({ defaultValue, rawTextTranslate, focusDependency, autoTranslateAfterInput }) => {
     const [debounceDependency, setDebounceDependency] = useState(0);
 
     const lastTextRef = useRef('');
@@ -32,12 +32,12 @@ const RawText = ({ defaultValue, rawTextTranslate, focusDependency }) => {
 
     const onCompositionEnd = useCallback(() => {
         compositionStatus.current = false;
-        rawTextChanged();
-    }, [rawTextChanged]);
+        autoTranslateAfterInput && rawTextChanged();
+    }, [rawTextChanged, autoTranslateAfterInput]);
 
     const onChange = useCallback(() => {
-        !compositionStatus.current && rawTextChanged();
-    }, [rawTextChanged]);
+        autoTranslateAfterInput && !compositionStatus.current && rawTextChanged();
+    }, [rawTextChanged, autoTranslateAfterInput]);
 
     useEffect(() => {
         if (defaultValue) {
@@ -50,6 +50,21 @@ const RawText = ({ defaultValue, rawTextTranslate, focusDependency }) => {
         textareaEl.current.focus();
         textareaEl.current.select();
     }, [focusDependency]);
+
+    useLayoutEffect(() => {
+        const tempRef = textareaEl.current;
+
+        const onRawTextKeyDown = (e) => {
+            if (e.ctrlKey && e.keyCode === 13) {
+                e.preventDefault();
+                handleRawTextChanged();
+            }
+        };
+
+        !autoTranslateAfterInput && tempRef.addEventListener('keydown', onRawTextKeyDown);
+
+        return () => !autoTranslateAfterInput && tempRef.removeEventListener('keydown', onRawTextKeyDown);
+    }, [handleRawTextChanged, autoTranslateAfterInput]);
 
     return (
         <div className='ts-raw-text'>

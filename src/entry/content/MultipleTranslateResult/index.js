@@ -12,7 +12,7 @@ import { getMessage } from '../../../public/i18n';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/actions/translateHistoryActions';
 import { useIsEnable } from '../../../public/react-use';
 
-const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap }) => {
+const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterInput }) => {
     const [resultMaxHeight, setResultMaxHeight] = useState(500);
 
     const translateIdRef = useRef(0);
@@ -89,6 +89,7 @@ const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap }) => {
                     defaultValue={text}
                     rawTextTranslate={handleRawTextChange}
                     focusDependency={focusRawText}
+                    autoTranslateAfterInput={autoTranslateAfterInput}
                 />
                 <LanguageSelection
                     onChange={handleSelectionChange}

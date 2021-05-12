@@ -10,7 +10,7 @@ import MtResult from '../../../components/MtResult';
 import { mtLangCode } from '../../../constants/langCode';
 import { getMessage } from '../../../public/i18n';
 
-const MultipleTranslateResult = () => {
+const MultipleTranslateResult = ({ autoTranslateAfterInput }) => {
     const { focusRawText } = useSelector(state => state.resultBoxState);
 
     const { text, from, to, translations, translateId } = useSelector(state => state.multipleTranslateState);
@@ -67,6 +67,7 @@ const MultipleTranslateResult = () => {
                 defaultValue={text}
                 rawTextTranslate={handleRawTextTranslate}
                 focusDependency={focusRawText}
+                autoTranslateAfterInput={autoTranslateAfterInput}
             />
             <LanguageSelection
                 onChange={handleSelectionChange}

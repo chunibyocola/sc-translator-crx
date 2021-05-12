@@ -19,7 +19,7 @@ import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../re
 import { useIsEnable } from '../../../public/react-use';
 import './style.css';
 
-const SingleTranslateResult = ({ showRtAndLs, maxHeightGap }) => {
+const SingleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterInput }) => {
     const [resultMaxHeight, setResultMaxHeight] = useState(500);
 
     const { text, source, from, to, status, result, translateId } = useSelector(state => state.singleTranslateState);
@@ -97,6 +97,7 @@ const SingleTranslateResult = ({ showRtAndLs, maxHeightGap }) => {
                     defaultValue={text}
                     rawTextTranslate={handleRawTextChange}
                     focusDependency={focusRawText}
+                    autoTranslateAfterInput={autoTranslateAfterInput}
                 />
                 <LanguageSelection
                     onChange={handleSelectionChange}

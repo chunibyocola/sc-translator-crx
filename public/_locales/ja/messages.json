@@ -215,6 +215,12 @@
     "optionsChangeLog": {
         "message": "更新ログ"
     },
+    "optionsAutoTranslateAfterInput": {
+        "message": "入力ボックスに入力した後に自動翻訳する"
+    },
+    "optionsAutoTranslateAfterInputDescription": {
+        "message": "あなたが入力ボックスに入力した0.6秒後に拡張機能が自動的に翻訳リクエストを送ります。無効にする場合は「Ctrl + Enter」キーボードショートカットを使って翻訳リクエストを送ります。"
+    },
     "themePreset": {
         "message": "プリセット"
     },

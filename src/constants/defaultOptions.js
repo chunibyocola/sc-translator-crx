@@ -46,7 +46,8 @@ const defaultOptions = {
     rememberHistoryPanelStatus: false,
     historyPanelStatus: { pin: false, width: 200 },
     translateDirectlyWhilePinning: false,
-    doNotRespondInTextBox: false
+    doNotRespondInTextBox: false,
+    autoTranslateAfterInput: true
 };
 
 export default defaultOptions;

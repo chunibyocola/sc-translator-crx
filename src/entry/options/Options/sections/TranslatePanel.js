@@ -35,7 +35,15 @@ const marksFontSize = [
 ];
 const pxLabelFormat = v => `${v}px`
 
-const TranslatePanel = ({ updateStorage, pinThePanelWhileOpeningIt, rememberPositionOfPinnedPanel, translatePanelMaxHeight, translatePanelWidth, translatePanelFontSize }) => {
+const TranslatePanel = ({
+    updateStorage,
+    pinThePanelWhileOpeningIt,
+    rememberPositionOfPinnedPanel,
+    translatePanelMaxHeight,
+    translatePanelWidth,
+    translatePanelFontSize,
+    autoTranslateAfterInput
+}) => {
     const { percentage: hPercentage, px: hPx, percent: hPercent } = translatePanelMaxHeight;
     const { percentage: wPercentage, px: wPx, percent: wPercent } = translatePanelWidth;
 
@@ -131,6 +139,15 @@ const TranslatePanel = ({ updateStorage, pinThePanelWhileOpeningIt, rememberPosi
                     onClick={() => updateStorage('rememberPositionOfPinnedPanel', !rememberPositionOfPinnedPanel)}
                 />
                 <div className='item-description'>{getMessage('optionsRememberPositionOfPinnedPanelDescription')}</div>
+            </div>
+            <div className='opt-section-row'>
+                <OptionToggle
+                    id='auto-translate-after-input'
+                    message='optionsAutoTranslateAfterInput'
+                    checked={autoTranslateAfterInput}
+                    onClick={() => updateStorage('autoTranslateAfterInput', !autoTranslateAfterInput)}
+                />
+                <div className='item-description'>{getMessage('optionsAutoTranslateAfterInputDescription')}</div>
             </div>
         </div>
     );

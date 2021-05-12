@@ -10,7 +10,14 @@ import SingleTranslateResult from '../SingleTranslateResult';
 import './style.css';
 
 const initPos = { x: 5, y: 5 };
-const useOptionsDependency = ['pinThePanelWhileOpeningIt', 'rememberPositionOfPinnedPanel', 'positionOfPinnedPanel', 'translatePanelMaxHeight', 'translatePanelWidth'];
+const useOptionsDependency = [
+    'pinThePanelWhileOpeningIt',
+    'rememberPositionOfPinnedPanel',
+    'positionOfPinnedPanel',
+    'translatePanelMaxHeight',
+    'translatePanelWidth',
+    'autoTranslateAfterInput'
+];
 
 const ResultBox = ({ multipleTranslateMode }) => {
     const [pinPos, setPinPos] = useState(initPos);
@@ -26,7 +33,14 @@ const ResultBox = ({ multipleTranslateMode }) => {
 
     const dispatch = useDispatch();
 
-    const { pinThePanelWhileOpeningIt, rememberPositionOfPinnedPanel, positionOfPinnedPanel, translatePanelMaxHeight, translatePanelWidth } = useOptions(useOptionsDependency);
+    const {
+        pinThePanelWhileOpeningIt,
+        rememberPositionOfPinnedPanel,
+        positionOfPinnedPanel,
+        translatePanelMaxHeight,
+        translatePanelWidth,
+        autoTranslateAfterInput
+    } = useOptions(useOptionsDependency);
 
     const windowSize = useWindowSize();
 
@@ -134,9 +148,11 @@ const ResultBox = ({ multipleTranslateMode }) => {
                 {multipleTranslateMode ? <MultipleTranslateResult
                     showRtAndLs={showRtAndLs}
                     maxHeightGap={maxHeightGap}
+                    autoTranslateAfterInput={autoTranslateAfterInput}
                 /> : <SingleTranslateResult
                     showRtAndLs={showRtAndLs}
                     maxHeightGap={maxHeightGap}
+                    autoTranslateAfterInput={autoTranslateAfterInput}
                 />}
             </div>
         </div>

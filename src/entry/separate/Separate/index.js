@@ -14,7 +14,7 @@ import '../../../components/PopupHeader/style.css';
 import { useOptions } from '../../../public/react-use';
 import { getMessage } from '../../../public/i18n';
 
-const useOptionsDependency = ['styleVarsList', 'styleVarsIndex', 'rememberStwSizeAndPosition'];
+const useOptionsDependency = ['styleVarsList', 'styleVarsIndex', 'rememberStwSizeAndPosition', 'autoTranslateAfterInput'];
 
 const Separate = () => {
     const { text, from, to, translations, translateId } = useSelector(state => state.multipleTranslateState);
@@ -66,7 +66,7 @@ const Separate = () => {
         oldTranslateIdRef.current = translateId;
     }, [translateId, text, handleTranslate, translations, dispatch]);
 
-    const { styleVarsList, styleVarsIndex, rememberStwSizeAndPosition } = useOptions(useOptionsDependency);
+    const { styleVarsList, styleVarsIndex, rememberStwSizeAndPosition, autoTranslateAfterInput } = useOptions(useOptionsDependency);
 
     const handleThemeToggle = useCallback(() => {
         setLocalStorage({'styleVarsIndex': styleVarsIndex >= styleVarsList.length - 1 ? 0 : styleVarsIndex + 1});
@@ -120,6 +120,7 @@ const Separate = () => {
                     defaultValue={text}
                     rawTextTranslate={handleRawTextTranslate}
                     focusDependency={focusRawText}
+                    autoTranslateAfterInput={autoTranslateAfterInput}
                 />
                 <LanguageSelection
                     onChange={handleSelectionChange}

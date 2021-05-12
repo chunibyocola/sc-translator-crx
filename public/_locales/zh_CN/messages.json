@@ -215,6 +215,12 @@
     "optionsChangeLog": {
         "message": "更新日志"
     },
+    "optionsAutoTranslateAfterInput": {
+        "message": "在输入框输入后自动翻译"
+    },
+    "optionsAutoTranslateAfterInputDescription": {
+        "message": "当你在输入框输入后，经过0.6秒，扩展会自动发送翻译请求。当不启用时，需要使用“Ctrl + Enter”快捷键来发送翻译请求。"
+    },
     "themePreset": {
         "message": "预设"
     },
