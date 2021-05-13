@@ -1,3 +1,8 @@
+# 3.2.2 (2021-05-13)
+- Add "auto translate after input in input box" option. ([3262b74](https://github.com/chunibyocola/sc-translator-crx/commit/3262b74465d3fb249b4ef1fc632421134c3d1a31))
+- Improve the representation of errors. ([7af1a7b](https://github.com/chunibyocola/sc-translator-crx/commit/7af1a7b79553513a7fdd56032ec8f445a6f52cb5))
+- Fix auto remove the spaces on the right side of the text in the input box. ([fe24829](https://github.com/chunibyocola/sc-translator-crx/commit/fe248294e9a02ac73f0150328a61d067a4f57534)) ([#4](https://github.com/chunibyocola/sc-translator-crx/issues/4))
+- Fix part of 'source selector' invisible in popup page (single-translate-mode only) in some case. ([695a6e9](https://github.com/chunibyocola/sc-translator-crx/commit/695a6e9d3d2319fa6514b8d4d2360d304e3a8fc2))
 # 3.2.1 (2021-05-01)
 - Add "do not respond in text box" option. ([8f48391](https://github.com/chunibyocola/sc-translator-crx/commit/8f483919a70b196b0b5388ee2e56ff49567fbadd))
 - Fix extension will send duplicate translate request with same text. ([84acec1](https://github.com/chunibyocola/sc-translator-crx/commit/84acec15d17d3f4aac3bfa9476f2bd7fe4e1c044))
