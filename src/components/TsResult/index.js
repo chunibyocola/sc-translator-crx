@@ -6,8 +6,8 @@ import './style.css';
 import { getMessage } from '../../public/i18n';
 import ErrorMessage from '../ErrorMessage';
 
-const TsResult = ({ resultObj, status, readText, source, retry }) => {
-    const { text, result, dict, phonetic, from, to } = resultObj;
+const TsResult = ({ resultObj, status, readText, source, retry, setText }) => {
+    const { text, result, dict, phonetic, from, to, related } = resultObj;
     const { requestEnd, requesting, error, errorCode } = status;
     
     return (
@@ -33,6 +33,11 @@ const TsResult = ({ resultObj, status, readText, source, retry }) => {
                     </span>
                 </div>
                 {dict && dict.map((v, i) => (<div key={i}>{v}</div>))}
+                {related && from === LANG_EN && <div>
+                    {getMessage('wordRelated')}: {related.map((v, i) => (<span key={`${v}${i}`}>
+                        {i !== 0 && ', '}<span className='span-link' onClick={() => setText(v)}>{v}</span>
+                    </span>))}
+                </div>}
                 <div className='tss-origin-text flex-align-items-center'>
                     <span className='tss-origin-raw'>{text}</span>
                     <IconFont

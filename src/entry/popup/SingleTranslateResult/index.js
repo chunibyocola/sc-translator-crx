@@ -32,7 +32,7 @@ const SingleTranslateResult = ({ autoTranslateAfterInput }) => {
         });
     }, [dispatch, text, source, from, to]);
 
-    const handleRawTextTranslate = useCallback((text) => {
+    const handleSetText = useCallback((text) => {
         text && dispatch(stSetText({ text }));
     }, [dispatch]);
 
@@ -64,7 +64,7 @@ const SingleTranslateResult = ({ autoTranslateAfterInput }) => {
         <>
             <RawText
                 defaultValue={text}
-                rawTextTranslate={handleRawTextTranslate}
+                rawTextTranslate={handleSetText}
                 focusDependency={focusRawText}
                 autoTranslateAfterInput={autoTranslateAfterInput}
             />
@@ -82,6 +82,7 @@ const SingleTranslateResult = ({ autoTranslateAfterInput }) => {
                         readText={handleReadText}
                         source={source}
                         retry={handleRetry}
+                        setText={handleSetText}
                     />
                 </div>
                 <TsVia

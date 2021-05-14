@@ -293,6 +293,9 @@
     "wordCancel": {
         "message": "Cancel"
     },
+    "wordRelated": {
+        "message": "Related"
+    },
     "sentenceAddTranslateSource": {
         "message": "Please add a translate source."
     },

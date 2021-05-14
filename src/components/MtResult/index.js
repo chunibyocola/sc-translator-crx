@@ -7,7 +7,7 @@ import { LANG_EN } from '../../constants/langCode';
 import { getMessage } from '../../public/i18n';
 import ErrorMessage from '../ErrorMessage';
 
-const MtResult = ({ source, status, result, text, remove, readText, retry }) => {
+const MtResult = ({ source, status, result, text, remove, readText, retry, setText }) => {
     const [fold, setFold] = useState(false);
 
     const { requesting, requestEnd, error, errorCode } = status;
@@ -64,6 +64,11 @@ const MtResult = ({ source, status, result, text, remove, readText, retry }) => 
                     {result.dict && result.dict.map((v, i) => (
                         <div key={i} style={i === 0 ? {marginTop: '10px'} : {}}>{v}</div>
                     ))}
+                    {result.related && result.from === LANG_EN && <div>
+                        {getMessage('wordRelated')}: {result.related.map((v, i) => (<span key={`${v}${i}`}>
+                            {i !== 0 && ', '}<span className='span-link' onClick={() => setText(v)}>{v}</span>
+                        </span>))}
+                    </div>}
                 </>}
             </div>
         </div>

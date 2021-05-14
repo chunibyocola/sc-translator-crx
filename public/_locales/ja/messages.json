@@ -293,6 +293,9 @@
     "wordCancel": {
         "message": "キャンセル"
     },
+    "wordRelated": {
+        "message": "関連"
+    },
     "sentenceAddTranslateSource": {
         "message": "翻訳ソースを追加してください。"
     },

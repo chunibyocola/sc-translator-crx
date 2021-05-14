@@ -54,7 +54,7 @@ const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfter
         dispatch(mtRemoveSource({ source }));
     }, [dispatch]);
 
-    const handleRawTextChange = useCallback((text) => {
+    const handleSetText = useCallback((text) => {
         text && dispatch(mtSetText({ text }));
     }, [dispatch]);
 
@@ -87,7 +87,7 @@ const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfter
             <div style={showRtAndLs ? {height: 'auto'} : {height: '0px', overflow: 'hidden'}}>
                 <RawText
                     defaultValue={text}
-                    rawTextTranslate={handleRawTextChange}
+                    rawTextTranslate={handleSetText}
                     focusDependency={focusRawText}
                     autoTranslateAfterInput={autoTranslateAfterInput}
                 />
@@ -111,6 +111,7 @@ const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfter
                         remove={() => handleRemoveSource(source)}
                         readText={(text, from) => sendAudio(text, { source, from })}
                         retry={() => handleRetry(source)}
+                        setText={handleSetText}
                     />
                 ))}
             </div>

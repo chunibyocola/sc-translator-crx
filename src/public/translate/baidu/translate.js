@@ -62,13 +62,19 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
             phonetic = `${ph_en ? ('UK: [' + ph_en + ']') : ''} ${ph_am ? ('US: [' + ph_am + ']') : ''}`.trimLeft();
         }
 
+        let related = undefined;
+        if (Array.isArray(data?.dict_result?.simple_means?.exchange?.word_proto)) {
+            related = data.dict_result.simple_means.exchange.word_proto;
+        }
+
         const result = {
             text,
             from: data.trans_result.from,
             to: data.trans_result.to,
             dict,
             phonetic,
-            result: data.trans_result.data.map(v => v.dst)
+            result: data.trans_result.data.map(v => v.dst),
+            related
         };
 
         return result;

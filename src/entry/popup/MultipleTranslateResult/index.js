@@ -32,7 +32,7 @@ const MultipleTranslateResult = ({ autoTranslateAfterInput }) => {
         });
     }, [text, from, to, dispatch]);
 
-    const handleRawTextTranslate = useCallback((text) => {
+    const handleSetText = useCallback((text) => {
         text && dispatch(mtSetText({ text }));
     }, [dispatch]);
 
@@ -65,7 +65,7 @@ const MultipleTranslateResult = ({ autoTranslateAfterInput }) => {
         <>
             <RawText
                 defaultValue={text}
-                rawTextTranslate={handleRawTextTranslate}
+                rawTextTranslate={handleSetText}
                 focusDependency={focusRawText}
                 autoTranslateAfterInput={autoTranslateAfterInput}
             />
@@ -88,6 +88,7 @@ const MultipleTranslateResult = ({ autoTranslateAfterInput }) => {
                         remove={() => handleRemoveSource(source)}
                         readText={(text, from) => sendAudio(text, { source, from })}
                         retry={() => handleRetry(source)}
+                        setText={handleSetText}
                     />
                 ))}
             </div>

@@ -293,6 +293,9 @@
     "wordCancel": {
         "message": "取消"
     },
+    "wordRelated": {
+        "message": "相关"
+    },
     "sentenceAddTranslateSource": {
         "message": "请添加翻译源。"
     },

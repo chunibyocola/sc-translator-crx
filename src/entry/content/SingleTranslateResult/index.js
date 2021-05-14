@@ -67,7 +67,7 @@ const SingleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterIn
         dispatch(stSetFromAndTo({ from, to }));
     }, [dispatch]);
 
-    const handleRawTextChange = useCallback((text) => {
+    const handleSetText = useCallback((text) => {
         text && dispatch(stSetText({ text }));
     }, [dispatch]);
 
@@ -95,7 +95,7 @@ const SingleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterIn
             <div style={showRtAndLs ? {height: 'auto'} : {height: '0px', overflow: 'hidden'}}>
                 <RawText
                     defaultValue={text}
-                    rawTextTranslate={handleRawTextChange}
+                    rawTextTranslate={handleSetText}
                     focusDependency={focusRawText}
                     autoTranslateAfterInput={autoTranslateAfterInput}
                 />
@@ -113,6 +113,7 @@ const SingleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterIn
                     readText={handleReadText}
                     source={source}
                     retry={handleRetry}
+                    setText={handleSetText}
                 />
             </div>
             <TsVia
