@@ -15,10 +15,13 @@ const initStorageOnInstalled = (userLang, update) => {
         case LANG_JA:
             defaultSet.userLanguage = LANG_JA;
             break;
-        default: break;
+        default:
+            userLang.includes('zh') && (defaultSet.userLanguage = LANG_ZH_CN);
+            break;
     }
 
     preferredLangCode[LANG_ZH_CN].some((v) => (v.code === userLang)) && (defaultSet.preferredLanguage = userLang);
+    defaultSet.preferredLanguage === 'en' && (defaultSet.secondPreferredLanguage = 'es');
 
     getLocalStorage(Object.keys(defaultOptions), (data) => {
         // in new version, use 'useDotCn' instead of 'xxx.cn'

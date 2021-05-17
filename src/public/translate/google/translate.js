@@ -1,12 +1,13 @@
 import { getQueryString, fetchData, getError } from '../utils';
 import { langCode } from './lang-code';
 import { RESULT_ERROR, LANGUAGE_NOT_SOPPORTED } from '../error-codes';
-import { detect } from './detect';
 
-export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '', autoDetect = true }) => {
+export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '' }) => {
     preferredLanguage = preferredLanguage || 'en';
     secondPreferredLanguage = secondPreferredLanguage || 'en';
-    from = from || (autoDetect && !to ? await detect({ text }) : 'auto');
+    const originTo = to;
+    const originFrom = from;
+    from = from || 'auto';
     to = to || (from === preferredLanguage ? secondPreferredLanguage : preferredLanguage);
 
     if (!(from in langCode) || !(to in langCode)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
@@ -24,12 +25,22 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
         q: encodeURIComponent(text)
     };
 
-    url += getQueryString(params);
-
-    const res = await fetchData(url);
+    const res = await fetchData(url + getQueryString(params));
 
     try {
-        const data = await res.json();
+        let data = await res.json();
+
+        // Re-request with second preferred language.
+        // Triggered only in the situation of "'from' and 'to' are both empty('')" and
+        // "source language is same as 'to'" (set as preferred language above).
+        if (!originFrom && !originTo && data.src === to && preferredLanguage !== secondPreferredLanguage) {
+            params.sl = data.src;
+            params.tl = secondPreferredLanguage;
+
+            const newRes = await fetchData(url + getQueryString(params));
+
+            data = await newRes.json();
+        }
 
         const result = {
             text,

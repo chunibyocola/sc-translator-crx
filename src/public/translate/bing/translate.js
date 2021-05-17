@@ -1,33 +1,33 @@
 import { fetchData, getError } from '../utils';
 import { langCode } from './lang-code';
 import { LANGUAGE_NOT_SOPPORTED, RESULT_ERROR } from '../error-codes';
-import { detect } from './detect';
 
-export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '', com = true, autoDetect = true}) => {
+export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '', com = true　}) => {
     preferredLanguage = preferredLanguage || 'en';
     secondPreferredLanguage = secondPreferredLanguage || 'en';
-    from = from || (autoDetect && !to ? await detect({ text, com }) : 'auto-detect');
+    const originTo = to;
+    const originFrom = from;
+    from = from || 'auto-detect';
     to = to || (from === preferredLanguage ? secondPreferredLanguage : preferredLanguage);
 
     if (!(from in langCode) || !(to in langCode)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
 
-    const url = `https://${com ? 'www' : 'cn'}.bing.com/ttranslatev3`;
-
-    let searchParams = new URLSearchParams();
-    searchParams.append('fromLang', from);
-    searchParams.append('text', text);
-    searchParams.append('to', to);
-
-    const res = await fetchData(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: searchParams.toString()
-    });
+    const res = await fetchResultFromBing({ text, from, to, com });
 
     try {
-        const data = await res.json();
+        let data = await res.json();
+
+        // Re-request with second preferred language.
+        // Triggered only in the situation of "'from' and 'to' are both empty('')" and
+        // "source language is same as 'to'" (set as preferred language above).
+        if (!originFrom && !originTo && data[0].detectedLanguage.language === to && preferredLanguage !== secondPreferredLanguage) {
+            from = data[0].detectedLanguage.language;
+            to = secondPreferredLanguage;
+
+            const newRes = await fetchResultFromBing({ text, from, to, com });
+
+            data = await newRes.json();
+        }
 
         const result = {
             text,
@@ -40,4 +40,21 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
     } catch (err) {
         throw getError(RESULT_ERROR);
     }
+};
+
+const fetchResultFromBing = async ({ text, from, to, com }) => {
+    const url = `https://${com ? 'www' : 'cn'}.bing.com/ttranslatev3`;
+
+    const searchParams = new URLSearchParams();
+    searchParams.append('fromLang', from);
+    searchParams.append('text', text);
+    searchParams.append('to', to);
+
+    return await fetchData(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: searchParams.toString()
+    });
 };
