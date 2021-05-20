@@ -17,7 +17,6 @@ const hideButtonFixedTimeLabelFormat = v => `${(v / 1000).toFixed(2)}s`
 const Translate = ({
     updateStorage,
     translateWithKeyPress,
-    enableContextMenus,
     translateDirectly,
     showButtonAfterSelect,
     btnPosition,
@@ -37,14 +36,6 @@ const Translate = ({
                     message='optionsTranslateWithKeyPress'
                     checked={translateWithKeyPress}
                     onClick={() => updateStorage('translateWithKeyPress', !translateWithKeyPress)}
-                />
-            </div>
-            <div className='opt-section-row'>
-                <OptionToggle
-                    id='context-menus-checkbox'
-                    message='optionsEnableContextMenus'
-                    checked={enableContextMenus}
-                    onClick={() => updateStorage('enableContextMenus', !enableContextMenus)}
                 />
             </div>
             <div className='opt-section-row'>

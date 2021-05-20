@@ -221,6 +221,9 @@
     "optionsAutoTranslateAfterInputDescription": {
         "message": "当你在输入框输入后，经过0.6秒，扩展会自动发送翻译请求。当不启用时，需要使用“Ctrl + Enter”快捷键来发送翻译请求。"
     },
+    "optionsContextMenus": {
+        "message": "右键菜单"
+    },
     "themePreset": {
         "message": "预设"
     },
@@ -307,6 +310,18 @@
     },
     "sentenceRefreshPage": {
         "message": "刷新页面"
+    },
+    "contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER": {
+        "message": "用 PDF 阅读器打开此页面"
+    },
+    "contextMenus_OPEN_SEPARATE_WINDOW": {
+        "message": "打开独立翻译窗口"
+    },
+    "contextMenus_TRANSLATE_SELECTION_TEXT": {
+        "message": "翻译您选择的文本"
+    },
+    "contextMenus_LISTEN_SELECTION_TEXT": {
+        "message": "朗读您选择的文本"
     },
     "errorCode_CONNECTION_TIMED_OUT": {
         "message": "错误：连接超时。"

@@ -221,6 +221,9 @@
     "optionsAutoTranslateAfterInputDescription": {
         "message": "Extension will send a translate request automatically with the text you input in input box in 0.6s. If you disable it, you will need to use \"Ctrl + Enter\" keyboard shortcut to trigger the translate request."
     },
+    "optionsContextMenus": {
+        "message": "Context menus"
+    },
     "themePreset": {
         "message": "Preset"
     },
@@ -307,6 +310,18 @@
     },
     "sentenceRefreshPage": {
         "message": "Refresh page"
+    },
+    "contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER": {
+        "message": "Open this page with PDF viewer"
+    },
+    "contextMenus_OPEN_SEPARATE_WINDOW": {
+        "message": "Open separate translate window"
+    },
+    "contextMenus_TRANSLATE_SELECTION_TEXT": {
+        "message": "Translate the text you select"
+    },
+    "contextMenus_LISTEN_SELECTION_TEXT": {
+        "message": "Listen the text you select"
     },
     "errorCode_CONNECTION_TIMED_OUT": {
         "message": "Error: Connection timed out."

@@ -1,0 +1,7 @@
+.draggable-item {
+    width: 100%;
+    padding: 16px 24px;
+}
+.draggable-item .ts-iconfont {
+    cursor: move;
+}

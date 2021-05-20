@@ -14,6 +14,7 @@ const menusItems = [
     { title: getMessage('optionsDefaultTranslateOptions'), id: 'default-translate-options' },
     { title: getMessage('optionsInWebPage'), id: 'in-web-page' },
     { title: getMessage('optionsHistory'), id: 'history' },
+    { title: getMessage('optionsContextMenus'), id: 'context-menus' },
     { title: getMessage('optionsKeyboardShortcut'), id: 'keyboard-shortcut' },
     { title: getMessage('optionsMore'), id: 'more' }
 ];

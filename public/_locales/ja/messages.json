@@ -12,7 +12,7 @@
         "message": "選択したテキストを翻訳する"
     },
     "extListenCommandDescription": {
-        "message": "選択したテキストを聞く"
+        "message": "選択したテキストの音声を聞く"
     },
     "extCallOutCommandDescription": {
         "message": "ウェブページで拡張機能を呼び出す"
@@ -221,6 +221,9 @@
     "optionsAutoTranslateAfterInputDescription": {
         "message": "あなたが入力ボックスに入力した0.6秒後に拡張機能が自動的に翻訳リクエストを送ります。無効にする場合は「Ctrl + Enter」キーボードショートカットを使って翻訳リクエストを送ります。"
     },
+    "optionsContextMenus": {
+        "message": "コンテキストメニュー"
+    },
     "themePreset": {
         "message": "プリセット"
     },
@@ -307,6 +310,18 @@
     },
     "sentenceRefreshPage": {
         "message": "ページを更新"
+    },
+    "contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER": {
+        "message": "PDFビューアでこのページを開く"
+    },
+    "contextMenus_OPEN_SEPARATE_WINDOW": {
+        "message": "スタンドアロン翻訳ウィンドウを開く"
+    },
+    "contextMenus_TRANSLATE_SELECTION_TEXT": {
+        "message": "選択したテキストを翻訳する"
+    },
+    "contextMenus_LISTEN_SELECTION_TEXT": {
+        "message": "選択したテキストの音声を聞く"
     },
     "errorCode_CONNECTION_TIMED_OUT": {
         "message": "エラー：接続がタイムアウトしました。"

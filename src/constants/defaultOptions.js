@@ -1,10 +1,10 @@
 import { GOOGLE_COM, BING_COM } from './translateSource';
 import { LANG_EN } from './langCode';
 import { styleVarsList } from './defaultStyleVars';
+import { defaultContextMenus } from './contextMenusIds';
 
 const defaultOptions = {
     userLanguage: LANG_EN,
-    enableContextMenus: true,
     defaultTranslateSource: GOOGLE_COM,
     defaultTranslateFrom: '',
     defaultTranslateTo: '',
@@ -47,7 +47,8 @@ const defaultOptions = {
     historyPanelStatus: { pin: false, width: 200 },
     translateDirectlyWhilePinning: false,
     doNotRespondInTextBox: false,
-    autoTranslateAfterInput: true
+    autoTranslateAfterInput: true,
+    contextMenus: defaultContextMenus
 };
 
 export default defaultOptions;

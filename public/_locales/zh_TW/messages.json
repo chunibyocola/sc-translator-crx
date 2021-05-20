@@ -221,6 +221,9 @@
     "optionsAutoTranslateAfterInputDescription": {
         "message": "當你在輸入框輸入后，經過0.6秒，擴充功能會自動發送翻譯請求。當不啟用時，需要使用「Ctrl + Enter」鍵盤快速鍵來發送翻譯請求。"
     },
+    "optionsContextMenus": {
+        "message": "右鍵菜單"
+    },
     "themePreset": {
         "message": "預設"
     },
@@ -307,6 +310,18 @@
     },
     "sentenceRefreshPage": {
         "message": "刷新頁面"
+    },
+    "contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER": {
+        "message": "用 PDF 閱讀器打開此頁面"
+    },
+    "contextMenus_OPEN_SEPARATE_WINDOW": {
+        "message": "打開獨立翻譯視窗"
+    },
+    "contextMenus_TRANSLATE_SELECTION_TEXT": {
+        "message": "翻譯您選擇的文字"
+    },
+    "contextMenus_LISTEN_SELECTION_TEXT": {
+        "message": "讀讀您選擇的文字"
     },
     "errorCode_CONNECTION_TIMED_OUT": {
         "message": "錯誤：連接超時。"

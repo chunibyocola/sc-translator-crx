@@ -6,6 +6,7 @@ import { useOptions } from '../../../public/react-use';
 import OptionsMenu from '../OptionsMenu';
 import OverScroll from '../OverScroll';
 import Audio from './sections/Audio';
+import ContextMenus from './sections/ContextMenus';
 import DefaultTranslateOptions from './sections/DefaultTranslateOptions';
 import History from './sections/History';
 import KeyboardShortcut from './sections/KeyboardShortcut';
@@ -22,7 +23,6 @@ const useOptionsDependency = Object.keys(defaultOptions);
 const Options = () => {
     const {
         userLanguage,
-        enableContextMenus,
         defaultTranslateSource,
         defaultTranslateFrom,
         defaultTranslateTo,
@@ -59,7 +59,8 @@ const Options = () => {
         rememberHistoryPanelStatus,
         translateDirectlyWhilePinning,
         doNotRespondInTextBox,
-        autoTranslateAfterInput
+        autoTranslateAfterInput,
+        contextMenus
     } = useOptions(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -122,7 +123,6 @@ const Options = () => {
             <Translate
                 updateStorage={updateStorage}
                 translateWithKeyPress={translateWithKeyPress}
-                enableContextMenus={enableContextMenus}
                 translateDirectly={translateDirectly}
                 showButtonAfterSelect={showButtonAfterSelect}
                 btnPosition={btnPosition}
@@ -140,6 +140,11 @@ const Options = () => {
                 historyBlackListMode={historyBlackListMode}
                 historyHostList={historyHostList}
                 rememberHistoryPanelStatus={rememberHistoryPanelStatus}
+            />
+            <div className='sub-title' id='context-menus'>{getMessage('optionsContextMenus')}</div>
+            <ContextMenus
+                updateStorage={updateStorage}
+                contextMenus={contextMenus}
             />
             <div className='sub-title' id='keyboard-shortcut'>{getMessage('optionsKeyboardShortcut')}</div>
             <KeyboardShortcut />

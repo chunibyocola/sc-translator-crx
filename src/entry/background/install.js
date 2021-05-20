@@ -2,6 +2,7 @@ import { LANG_ZH_CN, LANG_JA, preferredLangCode } from '../../constants/langCode
 import defaultOptions from '../../constants/defaultOptions';
 import { getLocalStorage } from '../../public/chrome-call';
 import { defaultStyleVars } from '../../constants/defaultStyleVars';
+import { TRANSLATE_SELECTION_TEXT } from '../../constants/contextMenusIds';
 
 const initStorageOnInstalled = (userLang, update) => {
 
@@ -29,6 +30,14 @@ const initStorageOnInstalled = (userLang, update) => {
             data.useDotCn = true;
             data.defaultTranslateSource = sourceSwitch(data.defaultTranslateSource);
             data.defaultAudioSource = sourceSwitch(data.defaultAudioSource);
+        }
+
+        // In 3.3.0, remake context menus
+        if (update && 'enableContextMenus' in data && !('contextMenus' in data)) {
+            const index = defaultSet.contextMenus.findIndex(v => v.id === TRANSLATE_SELECTION_TEXT);
+            if (index >= 0) {
+                defaultSet.contextMenus[index].enabled = data.enableContextMenus;
+            }
         }
 
         if (data.styleVarsList?.[0]?.styleVars) {
