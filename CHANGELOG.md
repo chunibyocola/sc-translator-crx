@@ -1,3 +1,8 @@
+# 3.3.0 (2021-05-21)
+- Add related word in translate result if source support (English only). ([4704fde](https://github.com/chunibyocola/sc-translator-crx/commit/4704fde9b2fef23e9e3ae9fb8c1ec75eacc706c4))
+- Improve the translate request logic. ([e55f208](https://github.com/chunibyocola/sc-translator-crx/commit/e55f208f449c5ae5b54fa1687d855085c0dc8ca6))
+- Remake context menus.  ([bfc32ae](https://github.com/chunibyocola/sc-translator-crx/commit/bfc32aeeccc4e3c239bb5c6f268d3ee95023ab83))
+- Fix can not play audio in some case. ([b349b35](https://github.com/chunibyocola/sc-translator-crx/commit/b349b3574431d2077076fa9d97f12a76d635b5dc))
 # 3.2.2 (2021-05-13)
 - Add "auto translate after input in input box" option. ([3262b74](https://github.com/chunibyocola/sc-translator-crx/commit/3262b74465d3fb249b4ef1fc632421134c3d1a31))
 - Improve the representation of errors. ([7af1a7b](https://github.com/chunibyocola/sc-translator-crx/commit/7af1a7b79553513a7fdd56032ec8f445a6f52cb5))
