@@ -2,6 +2,7 @@ import { getLocalStorage } from "../../public/chrome-call";
 import { listenOptionsChange } from "../../public/options";
 
 const audioPlayer = new Audio();
+audioPlayer.crossOrigin = 'anonymous';
 let index = 0;
 let audioSrcList = [];
 
