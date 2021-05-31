@@ -20,13 +20,14 @@ export const getIsEnabled = (host, hostList, mode) => {
     return mode ? !find : find;
 };
 
-export const getCurrentTabHost = async () => {
+export const getCurrentTabHost = async (tabId) => {
     return await new Promise((resolve, reject) => {
-        getCurrentTab(tab => sendMessageToTab(tab.id, 'Are you enabled?', (tabData) => {
+        const callback = tabId => sendMessageToTab(tabId, 'Are you enabled?', (tabData) => {
             chrome.runtime.lastError && reject(null);
 
             resolve(tabData?.host);
-        }));
+        });
+        tabId ? callback(tabId) : getCurrentTab(tab => callback(tab.id));
     }).catch(() => null);
 };
 

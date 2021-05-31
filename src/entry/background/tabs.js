@@ -10,28 +10,28 @@ let hostList = [];
 const onTabsUpdated = async (tabId, changeInfo, tab) => {
     if (!tab.active) { return; }
 
-    getCurrentTabHost().then((tabHost) => {
-        if (!tabHost) return;
+    getCurrentTabHost(tabId).then((tabHost) => {
+        if (!tabHost) { return; }
 
         isContentScriptEnabled = !!tabHost;
 
-        updateBadge(tabHost);
+        updateBadge(tabHost, tabId);
     });
 };
 
 const onTabsActivated = async ({ tabId }) => {
     isContentScriptEnabled = await getIsContentScriptEnabled(tabId);
 
-    updateBadge();
+    updateBadge('', tabId);
 };
 
-const updateIsTranslateEnabled = async (host = '') => {
+const updateIsTranslateEnabled = async (host = '', tabId) => {
     return new Promise((resolve, reject) => {
         if (host) {
             resolve(getIsEnabled(host, hostList, blackMode));
         }
         else {
-            getCurrentTabHost().then((tabHost) => {
+            getCurrentTabHost(tabId).then((tabHost) => {
                 if (!tabHost) {
                     reject(false);
                     return;
@@ -43,8 +43,8 @@ const updateIsTranslateEnabled = async (host = '') => {
     }).catch(() => false);
 }
 
-const updateBadge = async (host) => {
-    isTranslateEnabled = await updateIsTranslateEnabled(host);
+const updateBadge = async (host, tabId) => {
+    isTranslateEnabled = await updateIsTranslateEnabled(host, tabId);
 
     const grayText = isContentScriptEnabled && isTranslateEnabled ? '' : '-gray';
     chrome.browserAction.setIcon({
