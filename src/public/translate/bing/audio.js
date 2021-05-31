@@ -1,6 +1,7 @@
 import { fetchData, getError } from '../utils';
 import { detect } from './detect';
 import { LANGUAGE_NOT_SOPPORTED, RESULT_ERROR } from '../error-codes';
+import { getTokenAndKey } from './getTokenAndKey';
 
 export const audio = async ({ text, from, com = true }) => {
     from = from || await detect({ text, com });
@@ -56,7 +57,18 @@ const getAuthorization = async (com) => {
 
     const url = `https://${com ? 'www' : 'cn'}.bing.com/tfetspktok`;
 
-    const res = await fetchData(url, { method: 'POST' });
+    const { token, key } = await getTokenAndKey(com);
+
+    const searchParams = new URLSearchParams();
+    searchParams.append('token', token);
+    searchParams.append('key', key);
+    const res = await fetchData(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: searchParams.toString()
+    });
 
     try {
         const data = await res.json();

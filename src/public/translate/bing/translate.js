@@ -1,6 +1,7 @@
 import { fetchData, getError } from '../utils';
 import { langCode } from './lang-code';
 import { LANGUAGE_NOT_SOPPORTED, RESULT_ERROR } from '../error-codes';
+import { getTokenAndKey } from './getTokenAndKey';
 
 export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '', com = true　}) => {
     preferredLanguage = preferredLanguage || 'en';
@@ -45,10 +46,14 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
 const fetchResultFromBing = async ({ text, from, to, com }) => {
     const url = `https://${com ? 'www' : 'cn'}.bing.com/ttranslatev3`;
 
+    const { token, key } = await getTokenAndKey(com);
+
     const searchParams = new URLSearchParams();
     searchParams.append('fromLang', from);
     searchParams.append('text', text);
     searchParams.append('to', to);
+    searchParams.append('token', token);
+    searchParams.append('key', key);
 
     return await fetchData(url, {
         method: 'POST',
