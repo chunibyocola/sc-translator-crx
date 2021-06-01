@@ -48,7 +48,8 @@ const defaultOptions = {
     translateDirectlyWhilePinning: false,
     doNotRespondInTextBox: false,
     autoTranslateAfterInput: true,
-    contextMenus: defaultContextMenus
+    contextMenus: defaultContextMenus,
+    optionalPermissions: { clipboardRead: false, clipboardWrite: false }
 };
 
 export default defaultOptions;

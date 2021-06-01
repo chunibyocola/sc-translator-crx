@@ -16,6 +16,7 @@ import SeparateWindow from './sections/SeparateWindow';
 import Theme from './sections/Theme';
 import Translate from './sections/Translate';
 import TranslatePanel from './sections/TranslatePanel';
+import Clipboard from './sections/Clipboard';
 import './style.css';
 
 const useOptionsDependency = Object.keys(defaultOptions);
@@ -60,7 +61,8 @@ const Options = () => {
         translateDirectlyWhilePinning,
         doNotRespondInTextBox,
         autoTranslateAfterInput,
-        contextMenus
+        contextMenus,
+        optionalPermissions
     } = useOptions(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -81,6 +83,11 @@ const Options = () => {
             <Pdf
                 updateStorage={updateStorage}
                 enablePdfViewer={enablePdfViewer}
+            />
+            <div className='sub-title' id='clipboard'>{getMessage('optionsClipboard')}</div>
+            <Clipboard
+                clipboardRead={optionalPermissions.clipboardRead}
+                clipboardWrite={optionalPermissions.clipboardWrite}
             />
             <div className='sub-title' id='audio'>{getMessage('optionsAudio')}</div>
             <Audio

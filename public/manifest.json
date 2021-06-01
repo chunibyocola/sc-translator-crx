@@ -55,6 +55,10 @@
     "webRequest",
     "webRequestBlocking"
   ],
+  "optional_permissions": [
+    "clipboardRead",
+    "clipboardWrite"
+  ],
   "content_scripts" : [
     {
       "matches": [

@@ -224,6 +224,15 @@
     "optionsContextMenus": {
         "message": "コンテキストメニュー"
     },
+    "optionsClipboard": {
+        "message": "クリップボード"
+    },
+    "optionsAllowExtensionToReadClipboard": {
+        "message": "拡張機能にクリップボードの読み取りを許可する"
+    },
+    "optionsAllowExtensionToWriteClipboard": {
+        "message": "拡張機能にクリップボードへの書き込みを許可する"
+    },
     "themePreset": {
         "message": "プリセット"
     },

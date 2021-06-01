@@ -224,6 +224,15 @@
     "optionsContextMenus": {
         "message": "右键菜单"
     },
+    "optionsClipboard": {
+        "message": "剪贴板"
+    },
+    "optionsAllowExtensionToReadClipboard": {
+        "message": "允许扩展读取剪贴板"
+    },
+    "optionsAllowExtensionToWriteClipboard": {
+        "message": "允许扩展写入剪贴板"
+    },
     "themePreset": {
         "message": "预设"
     },
