@@ -8,6 +8,8 @@ import { langCode } from '../../../constants/langCode';
 import { stRequestFinish, stRequestStart, stRequestError, stSetFromAndTo, stSetText, stSetSourceFromTo } from '../../../redux/actions/singleTranslateActions';
 import TsVia from '../../../components/TsVia';
 import { switchTranslateSource } from '../../../public/switch-translate-source';
+import { getOptions } from '../../../public/options';
+import { callOutResultBox } from '../../../redux/actions/resultBoxActions';
 
 const SingleTranslateResult = ({ autoTranslateAfterInput }) => {
     const { focusRawText } = useSelector(state => state.resultBoxState);
@@ -59,6 +61,16 @@ const SingleTranslateResult = ({ autoTranslateAfterInput }) => {
 
         oldTranslateIdRef.current = translateId;
     }, [requestEnd, requesting, text, handleTranslate, translateId]);
+
+    useEffect(() => {
+        const readClipboardText = async () => {
+            const clipboardText = await navigator.clipboard.readText();
+            clipboardText && dispatch(stSetText({ text: clipboardText }));
+            dispatch(callOutResultBox());
+        };
+
+        getOptions().autoPasteInTheInputBox && chrome.permissions.contains({ permissions: ['clipboardRead'] }, result => result && readClipboardText());
+    }, [dispatch]);
 
     return (
         <>

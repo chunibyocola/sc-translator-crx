@@ -233,6 +233,12 @@
     "optionsAllowExtensionToWriteClipboard": {
         "message": "Allow extension to write clipboard"
     },
+    "optionsReadClipboardAutomatically": {
+        "message": "Paste in the input box automatically"
+    },
+    "optionsReadClipboardAutomaticallyDescription": {
+        "message": "The last clipboard text will be automatically pasted in the input box while opening popup page or separate translate window."
+    },
     "themePreset": {
         "message": "Preset"
     },

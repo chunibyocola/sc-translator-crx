@@ -233,6 +233,12 @@
     "optionsAllowExtensionToWriteClipboard": {
         "message": "允许扩展写入剪贴板"
     },
+    "optionsReadClipboardAutomatically": {
+        "message": "自动粘贴到输入框中"
+    },
+    "optionsReadClipboardAutomaticallyDescription": {
+        "message": "打开弹出页面或独立翻译窗口时，最后的剪贴板文本将自动粘贴到输入框中。"
+    },
     "themePreset": {
         "message": "预设"
     },

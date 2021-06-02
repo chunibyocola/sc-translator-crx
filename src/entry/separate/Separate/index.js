@@ -13,6 +13,8 @@ import './style.css';
 import '../../../components/PopupHeader/style.css';
 import { useOptions } from '../../../public/react-use';
 import { getMessage } from '../../../public/i18n';
+import { getOptions } from '../../../public/options';
+import { callOutResultBox } from '../../../redux/actions/resultBoxActions';
 
 const useOptionsDependency = ['styleVarsList', 'styleVarsIndex', 'rememberStwSizeAndPosition', 'autoTranslateAfterInput'];
 
@@ -75,6 +77,20 @@ const Separate = () => {
     useEffect(() => {
         const text = new URL(window.location.href).searchParams.get('text');
         text && dispatch(mtSetText({ text }));
+
+        // read clipboard
+        const readClipboardText = async () => {
+            const clipboardText = await navigator.clipboard.readText();
+            clipboardText && dispatch(mtSetText({ text: clipboardText }));
+            dispatch(callOutResultBox());
+        };
+
+        if (getOptions().autoPasteInTheInputBox && !text) {
+            chrome.permissions.contains({ permissions: ['clipboardRead'] }, result => result && readClipboardText());
+        }
+        else {
+            dispatch(callOutResultBox());
+        }
     }, [dispatch]);
 
     useEffect(() => {

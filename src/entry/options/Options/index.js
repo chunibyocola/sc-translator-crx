@@ -62,7 +62,8 @@ const Options = () => {
         doNotRespondInTextBox,
         autoTranslateAfterInput,
         contextMenus,
-        optionalPermissions
+        optionalPermissions,
+        autoPasteInTheInputBox
     } = useOptions(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -86,8 +87,10 @@ const Options = () => {
             />
             <div className='sub-title' id='clipboard'>{getMessage('optionsClipboard')}</div>
             <Clipboard
+                updateStorage={updateStorage}
                 clipboardRead={optionalPermissions.clipboardRead}
                 clipboardWrite={optionalPermissions.clipboardWrite}
+                autoPasteInTheInputBox={autoPasteInTheInputBox}
             />
             <div className='sub-title' id='audio'>{getMessage('optionsAudio')}</div>
             <Audio

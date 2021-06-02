@@ -9,6 +9,8 @@ import MtAddSource from '../../../components/MtAddSource';
 import MtResult from '../../../components/MtResult';
 import { mtLangCode } from '../../../constants/langCode';
 import { getMessage } from '../../../public/i18n';
+import { getOptions } from '../../../public/options';
+import { callOutResultBox } from '../../../redux/actions/resultBoxActions';
 
 const MultipleTranslateResult = ({ autoTranslateAfterInput }) => {
     const { focusRawText } = useSelector(state => state.resultBoxState);
@@ -60,6 +62,16 @@ const MultipleTranslateResult = ({ autoTranslateAfterInput }) => {
 
         oldTranslateIdRef.current = translateId;
     }, [translateId, text, handleTranslate, translations, dispatch]);
+
+    useEffect(() => {
+        const readClipboardText = async () => {
+            const clipboardText = await navigator.clipboard.readText();
+            clipboardText && dispatch(mtSetText({ text: clipboardText }));
+            dispatch(callOutResultBox());
+        };
+
+        getOptions().autoPasteInTheInputBox && chrome.permissions.contains({ permissions: ['clipboardRead'] }, result => result && readClipboardText());
+    }, [dispatch]);
 
     return (
         <>
