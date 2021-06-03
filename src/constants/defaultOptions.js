@@ -49,7 +49,7 @@ const defaultOptions = {
     doNotRespondInTextBox: false,
     autoTranslateAfterInput: true,
     contextMenus: defaultContextMenus,
-    optionalPermissions: { clipboardRead: false, clipboardWrite: false },
+    clipboardReadPermission: false,
     autoPasteInTheInputBox: false
 };
 

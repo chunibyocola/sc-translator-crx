@@ -230,9 +230,6 @@
     "optionsAllowExtensionToReadClipboard": {
         "message": "拡張機能にクリップボードの読み取りを許可する"
     },
-    "optionsAllowExtensionToWriteClipboard": {
-        "message": "拡張機能にクリップボードへの書き込みを許可する"
-    },
     "optionsReadClipboardAutomatically": {
         "message": "入力ボックスに自動的に貼り付け"
     },

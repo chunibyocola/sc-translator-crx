@@ -62,7 +62,7 @@ const Options = () => {
         doNotRespondInTextBox,
         autoTranslateAfterInput,
         contextMenus,
-        optionalPermissions,
+        clipboardReadPermission,
         autoPasteInTheInputBox
     } = useOptions(useOptionsDependency);
 
@@ -88,8 +88,7 @@ const Options = () => {
             <div className='sub-title' id='clipboard'>{getMessage('optionsClipboard')}</div>
             <Clipboard
                 updateStorage={updateStorage}
-                clipboardRead={optionalPermissions.clipboardRead}
-                clipboardWrite={optionalPermissions.clipboardWrite}
+                clipboardReadPermission={clipboardReadPermission}
                 autoPasteInTheInputBox={autoPasteInTheInputBox}
             />
             <div className='sub-title' id='audio'>{getMessage('optionsAudio')}</div>

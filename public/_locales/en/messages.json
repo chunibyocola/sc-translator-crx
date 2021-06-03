@@ -230,9 +230,6 @@
     "optionsAllowExtensionToReadClipboard": {
         "message": "Allow extension to read clipboard"
     },
-    "optionsAllowExtensionToWriteClipboard": {
-        "message": "Allow extension to write clipboard"
-    },
     "optionsReadClipboardAutomatically": {
         "message": "Paste in the input box automatically"
     },
