@@ -230,6 +230,9 @@
     "optionsAllowExtensionToReadClipboard": {
         "message": "Allow extension to read clipboard"
     },
+    "optionsAllowExtensionToReadClipboardDescription": {
+        "message": "Some features require you to allow the extension to read the clipboard to get the lase text. For example: Paste in the input box automatically."
+    },
     "optionsReadClipboardAutomatically": {
         "message": "Paste in the input box automatically"
     },

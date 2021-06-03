@@ -230,6 +230,9 @@
     "optionsAllowExtensionToReadClipboard": {
         "message": "拡張機能にクリップボードの読み取りを許可する"
     },
+    "optionsAllowExtensionToReadClipboardDescription": {
+        "message": "一部の機能では、拡張機能がクリップボードを読み取って最後のテキストを取得できるようにする必要があります。例えば：入力ボックスに自動的に貼り付け。"
+    },
     "optionsReadClipboardAutomatically": {
         "message": "入力ボックスに自動的に貼り付け"
     },

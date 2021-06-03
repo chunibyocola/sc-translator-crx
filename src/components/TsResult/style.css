@@ -9,7 +9,6 @@
 }
 .tss-result .ts-iconfont {
     cursor: pointer;
-    margin-left: 5px;
     position: relative;
     bottom: .125em;
 }
@@ -23,5 +22,5 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 190px;
+    max-width: 170px;
 }

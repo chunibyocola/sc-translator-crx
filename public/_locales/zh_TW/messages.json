@@ -230,6 +230,9 @@
     "optionsAllowExtensionToReadClipboard": {
         "message": "允許擴充功能讀取剪貼板"
     },
+    "optionsAllowExtensionToReadClipboardDescription": {
+        "message": "部分功能需要你允許擴充功能去讀取剪貼板來獲取最後的文本。 如：自動粘貼到輸入框中。"
+    },
     "optionsReadClipboardAutomatically": {
         "message": "自動粘貼到輸入框中"
     },

@@ -20,12 +20,19 @@ const MtResult = ({ source, status, result, text, remove, readText, retry, setTe
             >
                 <span className='flex-align-items-center'>
                     <SourceFavicon source={source} />
-                    {requestEnd && !error && <IconFont
-                        className='ts-iconbutton'
-                        iconName='#icon-GoUnmute'
-                        style={{marginLeft: '5px'}}
-                        onClick={(e) => { e.stopPropagation(); readText(text, result.from); }}
-                    />}
+                    {requestEnd && !error && <>
+                        <IconFont
+                            className='ts-iconbutton'
+                            iconName='#icon-copy'
+                            style={{marginLeft: '5px'}}
+                            onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(text); }}
+                        />
+                        <IconFont
+                            className='ts-iconbutton'
+                            iconName='#icon-GoUnmute'
+                            onClick={(e) => { e.stopPropagation(); readText(text, result.from); }}
+                        />
+                    </>}
                 </span>
                 <span className='ts-mt-result-head-icons flex-align-items-center'>
                     <IconFont
@@ -54,6 +61,12 @@ const MtResult = ({ source, status, result, text, remove, readText, retry, setTe
                     <div className='ts-mt-result-result-container'>
                         <span>
                             {resultToString(result.result)}
+                            <IconFont
+                                className='ts-iconbutton ts-button'
+                                iconName='#icon-copy'
+                                onClick={() => navigator.clipboard.writeText(resultToString(result.result))}
+                                style={{marginLeft: '5px'}}
+                            />
                             <IconFont
                                 className='ts-iconbutton ts-button'
                                 iconName='#icon-GoUnmute'

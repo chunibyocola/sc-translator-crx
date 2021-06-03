@@ -24,6 +24,12 @@ const TsResult = ({ resultObj, status, readText, source, retry, setText }) => {
                         {resultToString(result)}
                         <IconFont
                             className='ts-iconbutton ts-button'
+                            iconName='#icon-copy'
+                            onClick={() => navigator.clipboard.writeText(resultToString(result))}
+                            style={{marginLeft: '5px'}}
+                        />
+                        <IconFont
+                            className='ts-iconbutton ts-button'
                             iconName='#icon-GoUnmute'
                             onClick={() => readText(
                                 resultToString(result),
@@ -40,6 +46,11 @@ const TsResult = ({ resultObj, status, readText, source, retry, setText }) => {
                 </div>}
                 <div className='tss-origin-text flex-align-items-center'>
                     <span className='tss-origin-raw'>{text}</span>
+                    <IconFont
+                        className='ts-iconbutton ts-button'
+                        iconName='#icon-copy'
+                        onClick={() => navigator.clipboard.writeText(text)}
+                    />
                     <IconFont
                         className='ts-iconbutton ts-button'
                         iconName='#icon-GoUnmute'

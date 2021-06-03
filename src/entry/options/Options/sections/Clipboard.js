@@ -21,6 +21,7 @@ const Clipboard = ({ updateStorage, clipboardReadPermission, autoPasteInTheInput
                     checked={clipboardReadPermission}
                     onClick={updateClipboardReadPermission}
                 />
+                <div className='item-description'>{getMessage('optionsAllowExtensionToReadClipboardDescription')}</div>
                 <div className='mt10-ml30'>
                     <OptionToggle
                         id='read-clipboard-automatically'
