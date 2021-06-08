@@ -1,6 +1,14 @@
 import { fetchData } from '../utils';
 
 /* eslint-disable */
+const a = (t) => {
+    if(Array.isArray(t)) {
+        for(var r = 0, u = Array(t.length); r < t.length; r++) u[r] = t[r];
+        return u;
+    }
+    return Array.from(t);
+};
+
 const n = (r, o) => {
     for (var t = 0; t < o.length - 2; t += 3) {
         var a = o.charAt(t + 2);
