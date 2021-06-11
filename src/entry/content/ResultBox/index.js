@@ -16,7 +16,8 @@ const useOptionsDependency = [
     'positionOfPinnedPanel',
     'translatePanelMaxHeight',
     'translatePanelWidth',
-    'autoTranslateAfterInput'
+    'autoTranslateAfterInput',
+    'enableInsertResult'
 ];
 
 const ResultBox = ({ multipleTranslateMode }) => {
@@ -39,7 +40,8 @@ const ResultBox = ({ multipleTranslateMode }) => {
         positionOfPinnedPanel,
         translatePanelMaxHeight,
         translatePanelWidth,
-        autoTranslateAfterInput
+        autoTranslateAfterInput,
+        enableInsertResult
     } = useOptions(useOptionsDependency);
 
     const windowSize = useWindowSize();
@@ -149,10 +151,12 @@ const ResultBox = ({ multipleTranslateMode }) => {
                     showRtAndLs={showRtAndLs}
                     maxHeightGap={maxHeightGap}
                     autoTranslateAfterInput={autoTranslateAfterInput}
+                    enableInsertResult={enableInsertResult}
                 /> : <SingleTranslateResult
                     showRtAndLs={showRtAndLs}
                     maxHeightGap={maxHeightGap}
                     autoTranslateAfterInput={autoTranslateAfterInput}
+                    enableInsertResult={enableInsertResult}
                 />}
             </div>
         </div>

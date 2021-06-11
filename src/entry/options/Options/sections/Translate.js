@@ -1,6 +1,7 @@
 import React from 'react';
 import Slider from '../../../../components/Slider';
 import { getMessage } from '../../../../public/i18n';
+import BetaIcon from '../../BetaIcon';
 import BtnPostion from '../../BtnPosition';
 import HostList from '../../HostList';
 import OptionToggle from '../../OptionToggle';
@@ -26,7 +27,8 @@ const Translate = ({
     translateHostList,
     respondToSeparateWindow,
     translateDirectlyWhilePinning,
-    doNotRespondInTextBox
+    doNotRespondInTextBox,
+    enableInsertResult
 }) => {
     return (
         <div className='opt-section'>
@@ -105,6 +107,18 @@ const Translate = ({
                     onClick={() => updateStorage('doNotRespondInTextBox', !doNotRespondInTextBox)}
                 />
                 <div className='item-description'>{getMessage('optionsDoNotRespondInTextBoxDescription')}</div>
+            </div>
+            <div className='opt-section-row'>
+                <div className='flex-align-items-center'>
+                    <OptionToggle
+                        id='enable-insert-result'
+                        message='optionsEnableInsertResult'
+                        checked={enableInsertResult}
+                        onClick={() => updateStorage('enableInsertResult', !enableInsertResult)}
+                    />
+                    <BetaIcon />
+                </div>
+                <div className='item-description'>{getMessage('optionsEnableInsertResultDescription')}</div>
             </div>
             <div className='opt-section-row'>
                 <div className='options-mode'>

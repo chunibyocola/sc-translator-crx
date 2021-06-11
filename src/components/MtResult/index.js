@@ -7,7 +7,7 @@ import { LANG_EN } from '../../constants/langCode';
 import { getMessage } from '../../public/i18n';
 import ErrorMessage from '../ErrorMessage';
 
-const MtResult = ({ source, status, result, text, remove, readText, retry, setText }) => {
+const MtResult = ({ source, status, result, text, remove, readText, retry, setText, insertResult }) => {
     const [fold, setFold] = useState(false);
 
     const { requesting, requestEnd, error, errorCode } = status;
@@ -61,11 +61,15 @@ const MtResult = ({ source, status, result, text, remove, readText, retry, setTe
                     <div className='ts-mt-result-result-container'>
                         <span>
                             {resultToString(result.result)}
+                            {insertResult && <IconFont
+                                className='ts-iconbutton ts-button'
+                                iconName='#icon-insert'
+                                onClick={() => insertResult(resultToString(result.result))}
+                            />}
                             <IconFont
                                 className='ts-iconbutton ts-button'
                                 iconName='#icon-copy'
                                 onClick={() => navigator.clipboard.writeText(resultToString(result.result))}
-                                style={{marginLeft: '5px'}}
                             />
                             <IconFont
                                 className='ts-iconbutton ts-button'

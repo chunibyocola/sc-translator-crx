@@ -6,10 +6,10 @@ import './style.css';
 import { getMessage } from '../../public/i18n';
 import ErrorMessage from '../ErrorMessage';
 
-const TsResult = ({ resultObj, status, readText, source, retry, setText }) => {
+const TsResult = ({ resultObj, status, readText, source, retry, setText, insertResult }) => {
     const { text, result, dict, phonetic, from, to, related } = resultObj;
     const { requestEnd, requesting, error, errorCode } = status;
-    
+
     return (
         <div className='ts-result'>
             {requesting ?
@@ -22,11 +22,15 @@ const TsResult = ({ resultObj, status, readText, source, retry, setText }) => {
                 <div className='tss-result'>
                     <span>
                         {resultToString(result)}
+                        {insertResult && <IconFont
+                            className='ts-iconbutton ts-button'
+                            iconName='#icon-insert'
+                            onClick={() => insertResult(resultToString(result))}
+                        />}
                         <IconFont
                             className='ts-iconbutton ts-button'
                             iconName='#icon-copy'
                             onClick={() => navigator.clipboard.writeText(resultToString(result))}
-                            style={{marginLeft: '5px'}}
                         />
                         <IconFont
                             className='ts-iconbutton ts-button'

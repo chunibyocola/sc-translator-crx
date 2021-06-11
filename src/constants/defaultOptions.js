@@ -50,7 +50,8 @@ const defaultOptions = {
     autoTranslateAfterInput: true,
     contextMenus: defaultContextMenus,
     clipboardReadPermission: false,
-    autoPasteInTheInputBox: false
+    autoPasteInTheInputBox: false,
+    enableInsertResult: false
 };
 
 export default defaultOptions;

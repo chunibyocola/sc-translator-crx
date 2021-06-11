@@ -21,3 +21,6 @@
     position: relative;
     bottom: .125em;
 }
+.ts-mt-result-result-container .ts-iconfont:first-child {
+    margin-left: 5px;
+}

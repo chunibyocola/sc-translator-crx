@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react';
+import { setSelectionRange } from '../insert-result';
+import { isTextBox } from '../utils';
 import { getSelectedText } from '../utils/get-selection';
 
 const useGetSelection = (selectCallback, unselectCallback) => {
@@ -20,6 +22,13 @@ const useGetSelection = (selectCallback, unselectCallback) => {
                 const text = getSelectedText();
 
                 if (!text || lastSelectionTextRef.current === text) { return; }
+
+                // insert result
+                if (window.getSelection().rangeCount > 0 && !isTextBox(document.activeElement)) {
+                    let selectionRange = window.getSelection().getRangeAt(0).cloneRange();
+                    selectionRange.collapse(false);
+                   setSelectionRange(selectionRange, text);
+                }
 
                 lastSelectionTextRef.current = text;
 

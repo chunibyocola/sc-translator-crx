@@ -12,6 +12,9 @@
     position: relative;
     bottom: .125em;
 }
+.tss-result .ts-iconfont:first-child {
+    margin-left: 5px;
+}
 .tss-origin-text {
     margin-top: 10px;
 }

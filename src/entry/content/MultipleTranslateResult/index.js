@@ -11,9 +11,11 @@ import './style.css';
 import { getMessage } from '../../../public/i18n';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/actions/translateHistoryActions';
 import { useIsEnable } from '../../../public/react-use';
+import { getInsertConfirmed, insertResultToggle } from '../../../public/insert-result';
 
-const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterInput }) => {
+const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterInput, enableInsertResult }) => {
     const [resultMaxHeight, setResultMaxHeight] = useState(500);
+    const [canInsertResult, setCanInsertResult] = useState(false);
 
     const translateIdRef = useRef(0);
     const oldTranslateIdRef = useRef(0);
@@ -77,10 +79,13 @@ const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfter
         if (text) {
             isEnableHistory && dispatch(addHistory({ translateId, text, sourceList: translations.map(({ source }) => (source)) }));
             translations.map(({ source }) => (handleTranslate(source)));
+
+            // insert result
+            setCanInsertResult(enableInsertResult && getInsertConfirmed(text, translateId));
         }
 
         oldTranslateIdRef.current = translateId;
-    }, [translateId, text, handleTranslate, translations, dispatch, isEnableHistory]);
+    }, [translateId, text, handleTranslate, translations, dispatch, isEnableHistory, enableInsertResult]);
 
     return (
         <>
@@ -112,6 +117,7 @@ const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfter
                         readText={(text, from) => sendAudio(text, { source, from })}
                         retry={() => handleRetry(source)}
                         setText={handleSetText}
+                        insertResult={canInsertResult ? result => insertResultToggle(translateId, source, result) : undefined}
                     />
                 ))}
             </div>

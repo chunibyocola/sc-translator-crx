@@ -239,6 +239,15 @@
     "optionsReadClipboardAutomaticallyDescription": {
         "message": "打開彈出頁面或獨立翻譯視窗時，最後的剪貼板文本將自動粘貼到輸入框中。"
     },
+    "optionsEnableInsertResult": {
+        "message": "允許擴充功能在網頁中插入翻譯結果"
+    },
+    "optionsEnableInsertResultDescription": {
+        "message": "在你啟用這個選項並且在可插入結果的情況下，翻譯結果後會有一個「插入」圖標。點擊該圖標後，擴充功能會在你選擇的文本的後面插入翻譯結果。再次點擊圖標會移除之前插入的翻譯結果。"
+    },
+    "optionsBeta": {
+        "message": "該功能可能沒有開發完整，可能會存在兼容性和破壞性的問題。如果想要報告錯誤或者提出功能上的建議，請與開發者聯繫。"
+    },
     "themePreset": {
         "message": "預設"
     },

@@ -239,6 +239,15 @@
     "optionsReadClipboardAutomaticallyDescription": {
         "message": "打开弹出页面或独立翻译窗口时，最后的剪贴板文本将自动粘贴到输入框中。"
     },
+    "optionsEnableInsertResult": {
+        "message": "允许扩展在网页中插入翻译结果"
+    },
+    "optionsEnableInsertResultDescription": {
+        "message": "在你启用这个选项并且在可插入结果的情况下，翻译结果后会有一个“插入”图标。点击该图标后，扩展会在你选择的文本的后面插入翻译结果。再次点击图标会移除之前插入的翻译结果。"
+    },
+    "optionsBeta": {
+        "message": "该功能可能没有开发完整，可能会存在兼容性和破坏性的问题。如果想要报告错误或者提出功能上的建议，请与开发者联系。"
+    },
     "themePreset": {
         "message": "预设"
     },

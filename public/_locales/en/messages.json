@@ -239,6 +239,15 @@
     "optionsReadClipboardAutomaticallyDescription": {
         "message": "The last clipboard text will be automatically pasted in the input box while opening popup page or separate translate window."
     },
+    "optionsEnableInsertResult": {
+        "message": "Allow extension to insert translate results in web pages"
+    },
+    "optionsEnableInsertResultDescription": {
+        "message": "When you enable this option and the result can be inserted, there will be an \"insert\" icon behind the translate result. After clicking the icon, extension will insert the translate result behind the text you selected. Clicking the icon again will remove the previously inserted translate result."
+    },
+    "optionsBeta": {
+        "message": "This function may not be fully developed, and there may be compatibility and destructive issues. If you want to report a bug or make a feature suggestion, please contact the developer."
+    },
     "themePreset": {
         "message": "Preset"
     },
