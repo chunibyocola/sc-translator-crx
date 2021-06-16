@@ -16,13 +16,13 @@ import {
 import TsVia from '../../../components/TsVia';
 import { switchTranslateSource } from '../../../public/switch-translate-source';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/actions/translateHistoryActions';
-import { useIsEnable } from '../../../public/react-use';
+import { useInsertResult, useIsEnable } from '../../../public/react-use';
 import './style.css';
-import { getInsertConfirmed, insertResultToggle } from '../../../public/insert-result';
 
-const SingleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterInput, enableInsertResult }) => {
+const SingleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterInput }) => {
     const [resultMaxHeight, setResultMaxHeight] = useState(500);
-    const [canInsertResult, setCanInsertResult] = useState(false);
+
+    const [canInsertResult, confirmInsertResult, insertResultToggle] = useInsertResult();
 
     const { text, source, from, to, status, result, translateId } = useSelector(state => state.singleTranslateState);
 
@@ -89,11 +89,11 @@ const SingleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterIn
             handleTranslate();
 
             // insert result
-            setCanInsertResult(enableInsertResult && getInsertConfirmed(text, translateId));
+            confirmInsertResult(text, translateId);
         }
 
         oldTranslateIdRef.current = translateId;
-    }, [text, handleTranslate, dispatch, translateId, source, isEnableHistory, enableInsertResult]);
+    }, [text, handleTranslate, dispatch, translateId, source, isEnableHistory, confirmInsertResult]);
 
     return (
         <>

@@ -10,12 +10,12 @@ import { mtLangCode } from '../../../constants/langCode';
 import './style.css';
 import { getMessage } from '../../../public/i18n';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/actions/translateHistoryActions';
-import { useIsEnable } from '../../../public/react-use';
-import { getInsertConfirmed, insertResultToggle } from '../../../public/insert-result';
+import { useInsertResult, useIsEnable } from '../../../public/react-use';
 
-const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterInput, enableInsertResult }) => {
+const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterInput }) => {
     const [resultMaxHeight, setResultMaxHeight] = useState(500);
-    const [canInsertResult, setCanInsertResult] = useState(false);
+
+    const [canInsertResult, confirmInsertResult, insertResultToggle] = useInsertResult();
 
     const translateIdRef = useRef(0);
     const oldTranslateIdRef = useRef(0);
@@ -81,11 +81,11 @@ const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfter
             translations.map(({ source }) => (handleTranslate(source)));
 
             // insert result
-            setCanInsertResult(enableInsertResult && getInsertConfirmed(text, translateId));
+            confirmInsertResult(text, translateId);
         }
 
         oldTranslateIdRef.current = translateId;
-    }, [translateId, text, handleTranslate, translations, dispatch, isEnableHistory, enableInsertResult]);
+    }, [translateId, text, handleTranslate, translations, dispatch, isEnableHistory, confirmInsertResult]);
 
     return (
         <>
