@@ -1,8 +1,9 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { getInsertConfirmed, insertResultToggle } from "../insert-result";
+import { resultToString } from "../utils";
 import useOptions from "./useOptions";
 
-const useOptionsDependency = ['enableInsertResult'];
+const useOptionsDependency = ['enableInsertResult', 'autoInsertResult'];
 
 /**
  * You need to confirm before insert toggle.
@@ -10,17 +11,30 @@ const useOptionsDependency = ['enableInsertResult'];
 const useInsertResult = () => {
     const [canInsert, setCanInsert] = useState(false);
 
-    const { enableInsertResult } = useOptions(useOptionsDependency);
+    const autoInsertedRef = useRef(false);
+
+    const { enableInsertResult, autoInsertResult } = useOptions(useOptionsDependency);
 
     const confirmInsert = useCallback((text, translateId) => {
         setCanInsert(enableInsertResult && getInsertConfirmed(text, translateId));
+
+        autoInsertedRef.current = false;
     }, [enableInsertResult]);
 
     const insertToggle = useCallback((translateId, translateSource, result) => {
         insertResultToggle(translateId, translateSource, result);
     }, []);
 
-    return [canInsert, confirmInsert, insertToggle];
+    const autoInsert = useCallback((translateId, translateSource, result) => {
+        if (!autoInsertResult || autoInsertedRef.current) { return; }
+
+        result = Array.isArray(result) ? resultToString(result) : result;
+        insertResultToggle(translateId, translateSource, result);
+
+        autoInsertedRef.current = true;
+    }, [autoInsertResult]);
+
+    return [canInsert, confirmInsert, insertToggle, autoInsert];
 };
 
 export default useInsertResult;

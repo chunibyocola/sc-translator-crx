@@ -64,7 +64,8 @@ const Options = () => {
         contextMenus,
         clipboardReadPermission,
         autoPasteInTheInputBox,
-        enableInsertResult
+        enableInsertResult,
+        autoInsertResult
     } = useOptions(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -144,6 +145,7 @@ const Options = () => {
                 translateDirectlyWhilePinning={translateDirectlyWhilePinning}
                 doNotRespondInTextBox={doNotRespondInTextBox}
                 enableInsertResult={enableInsertResult}
+                autoInsertResult={autoInsertResult}
             />
             <div className='sub-title' id='history'>{getMessage('optionsHistory')}</div>
             <History

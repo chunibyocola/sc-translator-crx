@@ -248,6 +248,9 @@
     "optionsBeta": {
         "message": "この機能は十分に開発されていない可能性があり、互換性や破壊性的な問題がある可能性があります。バグを報告したり、機能の提案をしたりする場合は、開発者に連絡してください。"
     },
+    "optionsAutoInsertResult": {
+        "message": "自動的に翻訳結果をWebページ内で挿入する"
+    },
     "themePreset": {
         "message": "プリセット"
     },

@@ -51,7 +51,8 @@ const defaultOptions = {
     contextMenus: defaultContextMenus,
     clipboardReadPermission: false,
     autoPasteInTheInputBox: false,
-    enableInsertResult: false
+    enableInsertResult: false,
+    autoInsertResult: false
 };
 
 export default defaultOptions;

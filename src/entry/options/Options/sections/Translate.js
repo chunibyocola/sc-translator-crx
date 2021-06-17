@@ -28,7 +28,8 @@ const Translate = ({
     respondToSeparateWindow,
     translateDirectlyWhilePinning,
     doNotRespondInTextBox,
-    enableInsertResult
+    enableInsertResult,
+    autoInsertResult
 }) => {
     return (
         <div className='opt-section'>
@@ -119,6 +120,14 @@ const Translate = ({
                     <BetaIcon />
                 </div>
                 <div className='item-description'>{getMessage('optionsEnableInsertResultDescription')}</div>
+                <div className='mt10-ml30'>
+                    <OptionToggle
+                        id='auto-insert-result'
+                        message='optionsAutoInsertResult'
+                        checked={autoInsertResult}
+                        onClick={() => updateStorage('autoInsertResult', !autoInsertResult)}
+                    />
+                </div>
             </div>
             <div className='opt-section-row'>
                 <div className='options-mode'>

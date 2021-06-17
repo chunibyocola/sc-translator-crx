@@ -22,7 +22,7 @@ import './style.css';
 const SingleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterInput }) => {
     const [resultMaxHeight, setResultMaxHeight] = useState(500);
 
-    const [canInsertResult, confirmInsertResult, insertResultToggle] = useInsertResult();
+    const [canInsertResult, confirmInsertResult, insertResultToggle, autoInsertResult] = useInsertResult();
 
     const { text, source, from, to, status, result, translateId } = useSelector(state => state.singleTranslateState);
 
@@ -52,6 +52,7 @@ const SingleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterIn
             if (result.suc) {
                 dispatch(updateHistoryFinish({ translateId: result.translateId, source, result: result.data }));
                 dispatch(stRequestFinish({ result: result.data }));
+                autoInsertResult(result.translateId, source, result.data.result);
             }
             else {
                 dispatch(updateHistoryError({ translateId: result.translateId, source, errorCode: result.data.code }));
@@ -59,7 +60,7 @@ const SingleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterIn
             }
         });
 
-    }, [dispatch, text, source, from, to]);
+    }, [dispatch, text, source, from, to, autoInsertResult]);
 
     const handleSourceChange = useCallback((targetSource) => {
         dispatch(stSetSourceFromTo(switchTranslateSource(targetSource, { source, from, to })));

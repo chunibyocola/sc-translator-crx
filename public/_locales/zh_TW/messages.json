@@ -248,6 +248,9 @@
     "optionsBeta": {
         "message": "該功能可能沒有開發完整，可能會存在兼容性和破壞性的問題。如果想要報告錯誤或者提出功能上的建議，請與開發者聯繫。"
     },
+    "optionsAutoInsertResult": {
+        "message": "自動在網頁中插入翻譯結果"
+    },
     "themePreset": {
         "message": "預設"
     },

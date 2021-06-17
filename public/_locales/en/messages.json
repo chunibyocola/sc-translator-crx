@@ -248,6 +248,9 @@
     "optionsBeta": {
         "message": "This function may not be fully developed, and there may be compatibility and destructive issues. If you want to report a bug or make a feature suggestion, please contact the developer."
     },
+    "optionsAutoInsertResult": {
+        "message": "Insert translate results in web pages automatically"
+    },
     "themePreset": {
         "message": "Preset"
     },

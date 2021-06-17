@@ -15,7 +15,7 @@ import { useInsertResult, useIsEnable } from '../../../public/react-use';
 const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterInput }) => {
     const [resultMaxHeight, setResultMaxHeight] = useState(500);
 
-    const [canInsertResult, confirmInsertResult, insertResultToggle] = useInsertResult();
+    const [canInsertResult, confirmInsertResult, insertResultToggle, autoInsertResult] = useInsertResult();
 
     const translateIdRef = useRef(0);
     const oldTranslateIdRef = useRef(0);
@@ -44,13 +44,14 @@ const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfter
             if (result.suc) {
                 dispatch(updateHistoryFinish({ translateId: result.translateId, source, result: result.data }));
                 dispatch(mtRequestFinish({ source, result: result.data}));
+                autoInsertResult(result.translateId, source, result.data.result);
             }
             else {
                 dispatch(updateHistoryError({ translateId: result.translateId, source, errorCode: result.data.code }));
                 dispatch(mtRequestError({ source, errorCode: result.data.code }));
             }
         });
-    }, [text, from, to, dispatch]);
+    }, [text, from, to, dispatch, autoInsertResult]);
 
     const handleRemoveSource = useCallback((source) => {
         dispatch(mtRemoveSource({ source }));
