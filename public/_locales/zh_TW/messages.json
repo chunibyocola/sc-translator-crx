@@ -17,6 +17,9 @@
     "extCallOutCommandDescription": {
         "message": "在網頁中喚出擴充功能"
     },
+    "extToggleAutoInsertResultDescription": {
+        "message": "切換「自動在網頁中插入翻譯結果」選項"
+    },
     "extOpenSeparateWindowDescription": {
         "message": "打開獨立翻譯視窗"
     },
@@ -250,6 +253,9 @@
     },
     "optionsAutoInsertResult": {
         "message": "自動在網頁中插入翻譯結果"
+    },
+    "optionsAutoInsertResultDescription": {
+        "message": "啟用此選項後，擴充功能將在翻譯請求完成並可以插入時自動在網頁中插入翻譯結果。你可以通過使用「切換『自動在網頁中插入翻譯結果』選項」鍵盤快速鍵來切換此選項。"
     },
     "themePreset": {
         "message": "預設"

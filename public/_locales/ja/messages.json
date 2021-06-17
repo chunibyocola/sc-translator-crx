@@ -17,6 +17,9 @@
     "extCallOutCommandDescription": {
         "message": "ウェブページで拡張機能を呼び出す"
     },
+    "extToggleAutoInsertResultDescription": {
+        "message": "「翻訳結果をWebページに自動的に挿入する」オプションを切り替えます"
+    },
     "extOpenSeparateWindowDescription": {
         "message": "スタンドアロン翻訳ウィンドウを開く"
     },
@@ -249,7 +252,10 @@
         "message": "この機能は十分に開発されていない可能性があり、互換性や破壊性的な問題がある可能性があります。バグを報告したり、機能の提案をしたりする場合は、開発者に連絡してください。"
     },
     "optionsAutoInsertResult": {
-        "message": "自動的に翻訳結果をWebページ内で挿入する"
+        "message": "翻訳結果をWebページに自動的に挿入する"
+    },
+    "optionsAutoInsertResultDescription": {
+        "message": "このオプションを有効にすると、拡張機能は、翻訳リクエストが完了して挿入することができるときに、翻訳結果をWebページに自動的に挿入します。このオプションは、「『翻訳結果をWebページに自動的に挿入する』オプションを切り替えます」キーボードショートカットで切り替えることができます。"
     },
     "themePreset": {
         "message": "プリセット"

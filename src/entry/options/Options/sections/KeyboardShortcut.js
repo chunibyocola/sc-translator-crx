@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { EXECUTE_BROWSER_ACTION, SC_AUDIO, SC_CALL_OUT, SC_CLOSE, SC_OPEN_SEPARATE_WINDOW, SC_TRANSLATE } from '../../../../constants/commandsName';
+import { EXECUTE_BROWSER_ACTION, SC_AUDIO, SC_CALL_OUT, SC_CLOSE, SC_OPEN_SEPARATE_WINDOW, SC_TOGGLE_AUTO_INSERT_RESULT, SC_TRANSLATE } from '../../../../constants/commandsName';
 import { createNewTab, getAllCommands } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 
@@ -38,6 +38,10 @@ const KeyboardShortcut = () => {
             <div className='opt-section-row'>
                 {getMessage('extOpenSeparateWindowDescription')}
                 <span className='keyboard-shortcut'>{commands[SC_OPEN_SEPARATE_WINDOW]}</span>
+            </div>
+            <div className='opt-section-row'>
+                {getMessage('extToggleAutoInsertResultDescription')}
+                <span className='keyboard-shortcut'>{commands[SC_TOGGLE_AUTO_INSERT_RESULT]}</span>
             </div>
             <div className='item-description opt-section-row'>
                 <span onClick={() => createNewTab('chrome://extensions/shortcuts')} className='span-link'>

@@ -17,6 +17,9 @@
     "extCallOutCommandDescription": {
         "message": "在网页中唤出扩展"
     },
+    "extToggleAutoInsertResultDescription": {
+        "message": "切换“自动在网页中插入翻译结果”选项"
+    },
     "extOpenSeparateWindowDescription": {
         "message": "打开独立翻译窗口"
     },
@@ -250,6 +253,9 @@
     },
     "optionsAutoInsertResult": {
         "message": "自动在网页中插入翻译结果"
+    },
+    "optionsAutoInsertResultDescription": {
+        "message": "启用此选项后，扩展将在翻译请求完成并可以插入时自动在网页中插入翻译结果。你可以通过使用“切换‘自动在网页中插入翻译结果’选项”键盘快捷键来切换此选项。"
     },
     "themePreset": {
         "message": "预设"

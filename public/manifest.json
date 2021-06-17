@@ -46,6 +46,9 @@
     },
     "sc-close": {
       "description": "__MSG_extCloseCommandDescription__"
+    },
+    "sc-toggle-auto-insert-result": {
+      "description": "__MSG_extToggleAutoInsertResultDescription__"
     }
   },
   "permissions": [

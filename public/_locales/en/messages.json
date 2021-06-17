@@ -17,6 +17,9 @@
     "extCallOutCommandDescription": {
         "message": "Call out extension in web page"
     },
+    "extToggleAutoInsertResultDescription": {
+        "message": "Toggle the option of \"insert translate results in web pages automatically\""
+    },
     "extOpenSeparateWindowDescription": {
         "message": "Open separate translate window"
     },
@@ -250,6 +253,9 @@
     },
     "optionsAutoInsertResult": {
         "message": "Insert translate results in web pages automatically"
+    },
+    "optionsAutoInsertResultDescription": {
+        "message": "After enabling this option, the extension will insert translate result in web page automatically when the translate request is completed and can be inserted. You can toggle this option through \"Toggle the option of 'insert translate results in web pages automatically'\" keyboard shortcut."
     },
     "themePreset": {
         "message": "Preset"

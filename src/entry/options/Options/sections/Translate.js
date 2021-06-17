@@ -127,6 +127,7 @@ const Translate = ({
                         checked={autoInsertResult}
                         onClick={() => updateStorage('autoInsertResult', !autoInsertResult)}
                     />
+                    <div className='item-description'>{getMessage('optionsAutoInsertResultDescription')}</div>
                 </div>
             </div>
             <div className='opt-section-row'>
