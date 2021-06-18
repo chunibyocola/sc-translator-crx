@@ -37,10 +37,47 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
             result: [data[0].translations[0].text]
         };
 
+        let dict = undefined;
+        try {
+            if (!text.includes(' ') && (result.from === 'en' || to === 'en')) {
+                const dictRes = await fetchDictFromBing({ text, from: result.from, to, com });
+                const dictData = await dictRes.json();
+
+                const dictObject = dictData[0]?.translations.reduce((t, c) => ({ ...t, [c.posTag]: t[c.posTag] ? t[c.posTag].concat(c.normalizedTarget) : [c.normalizedTarget] }), {});
+                dict = dictObject && Object.keys(dictObject).map(v => `${v}: ${dictObject[v].join(', ')}`);
+            }
+        }
+        catch {
+            dict = undefined;
+        }
+
+        result.dict = dict;
+
         return result;
     } catch (err) {
         throw getError(RESULT_ERROR);
     }
+};
+
+const fetchDictFromBing = async ({ text, from, to, com }) => {
+    const url = `https://${com ? 'www' : 'cn'}.bing.com/tlookupv3`;
+
+    const { token, key } = await getTokenAndKey(com);
+
+    const searchParams = new URLSearchParams();
+    searchParams.append('from', from);
+    searchParams.append('text', text);
+    searchParams.append('to', to);
+    searchParams.append('token', token);
+    searchParams.append('key', key);
+
+    return await fetchData(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: searchParams.toString()
+    });
 };
 
 const fetchResultFromBing = async ({ text, from, to, com }) => {
