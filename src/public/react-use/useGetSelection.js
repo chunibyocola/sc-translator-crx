@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { setSelectionRange } from '../insert-result';
+import { textPreprocessing } from '../text-preprocessing';
 import { isTextBox } from '../utils';
 import { getSelectedText } from '../utils/get-selection';
 
@@ -21,7 +22,7 @@ const useGetSelection = (selectCallback, unselectCallback) => {
             setTimeout(() => {
                 const text = getSelectedText();
 
-                if (!text || lastSelectionTextRef.current === text) { return; }
+                if (!text || lastSelectionTextRef.current === text || !textPreprocessing(text)) { return; }
 
                 // insert result
                 if (window.getSelection().rangeCount > 0 && !isTextBox(document.activeElement)) {

@@ -1,6 +1,7 @@
 import React, { useRef, useCallback, useState, useEffect, useLayoutEffect } from 'react';
 import { getMessage } from '../../public/i18n';
 import useDebounce from '../../public/react-use/useDebounce';
+import { textPreprocessing } from '../../public/text-preprocessing';
 import './style.css';
 
 const RawText = ({ defaultValue, rawTextTranslate, focusDependency, autoTranslateAfterInput }) => {
@@ -18,7 +19,7 @@ const RawText = ({ defaultValue, rawTextTranslate, focusDependency, autoTranslat
     const handleRawTextChanged = useCallback(() => {
         let text = textareaEl.current.value.trimLeft();
 
-        if (!text || text.trimRight() === lastTextRef.current) { return; }
+        if (!text || text.trimRight() === lastTextRef.current || !textPreprocessing(text)) { return; }
 
         lastTextRef.current = text.trimRight();
 

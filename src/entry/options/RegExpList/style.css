@@ -1,0 +1,9 @@
+.regexp-list>* {
+    margin: 5px;
+}
+.regexp-list-grid {
+    display: grid;
+    grid-template-columns: 50% 10% 20% auto;
+    grid-column-gap: 1%;
+    margin: 5px;
+}

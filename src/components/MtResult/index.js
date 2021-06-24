@@ -7,7 +7,7 @@ import { LANG_EN } from '../../constants/langCode';
 import { getMessage } from '../../public/i18n';
 import ErrorMessage from '../ErrorMessage';
 
-const MtResult = ({ source, status, result, text, remove, readText, retry, setText, insertResult }) => {
+const MtResult = ({ source, status, result, remove, readText, retry, setText, insertResult }) => {
     const [fold, setFold] = useState(false);
 
     const { requesting, requestEnd, error, errorCode } = status;
@@ -25,12 +25,12 @@ const MtResult = ({ source, status, result, text, remove, readText, retry, setTe
                             className='ts-iconbutton'
                             iconName='#icon-copy'
                             style={{marginLeft: '5px'}}
-                            onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(text); }}
+                            onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(result.text); }}
                         />
                         <IconFont
                             className='ts-iconbutton'
                             iconName='#icon-GoUnmute'
-                            onClick={(e) => { e.stopPropagation(); readText(text, result.from); }}
+                            onClick={(e) => { e.stopPropagation(); readText(result.text, result.from); }}
                         />
                     </>}
                 </span>

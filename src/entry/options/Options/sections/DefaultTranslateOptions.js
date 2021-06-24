@@ -4,8 +4,11 @@ import { langCode, mtLangCode, preferredLangCode, userLangs } from '../../../../
 import { translateSource } from '../../../../constants/translateSource';
 import { getMessage } from '../../../../public/i18n';
 import { switchTranslateSource } from '../../../../public/switch-translate-source';
+import BetaIcon from '../../BetaIcon';
 import DefaultSelect from '../../DefaultSelect';
 import OptionToggle from '../../OptionToggle';
+import RegExpList from '../../RegExpList';
+import TestTextProcessing from '../../TestTextPreprocessing';
 import TransferList from '../../TransferList';
 
 const DefaultTranslateOptions = ({
@@ -20,7 +23,8 @@ const DefaultTranslateOptions = ({
     defaultTranslateSource,
     defaultTranslateFrom,
     defaultTranslateTo,
-    useDotCn
+    useDotCn,
+    textPreprocessingRegExpList
 }) => {
     return (
         <div className='opt-section'>
@@ -139,6 +143,29 @@ const DefaultTranslateOptions = ({
                     />
                 </div>
             </>}
+            <div className='opt-section-row'>
+                <div className='flex-align-items-center'>
+                    {getMessage('optionsTextPreprocessing')} <BetaIcon />
+                </div>
+                <div className='item-description'>{getMessage('optionsTextPreprocessingDescription')}</div>
+                <div className='mt10-ml30'>
+                    {getMessage('optionsReplaceWithRegExp')}
+                    <div className='item-description'>{getMessage('optionsReplaceWithRegExpDescription')}</div>
+                    <div className='mt10-ml30'>
+                        <RegExpList
+                            textPreprocessingRegExpList={textPreprocessingRegExpList}
+                            onSave={value => updateStorage('textPreprocessingRegExpList', value)}
+                        />
+                    </div>
+                </div>
+                <div className='mt10-ml30'>
+                    {getMessage('optionsTestSomeText')}
+                    <div className='item-description'>{getMessage('optionsTestSomeTextDescription')}</div>
+                    <div className='mt10-ml30'>
+                        <TestTextProcessing />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

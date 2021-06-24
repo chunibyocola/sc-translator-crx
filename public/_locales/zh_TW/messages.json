@@ -257,6 +257,39 @@
     "optionsAutoInsertResultDescription": {
         "message": "啟用此選項後，擴充功能將在翻譯請求完成並可以插入時自動在網頁中插入翻譯結果。你可以通過使用「切換『自動在網頁中插入翻譯結果』選項」鍵盤快速鍵來切換此選項。"
     },
+    "optionsTextPreprocessing": {
+        "message": "文字預處理"
+    },
+    "optionsTextPreprocessingDescription": {
+        "message": "你要翻譯的文字將在發送翻譯請求之前進行處理。"
+    },
+    "optionsReplaceWithRegExp": {
+        "message": "用正則表達式替換"
+    },
+    "optionsReplaceWithRegExpDescription": {
+        "message": "使用正則表達式來匹配你所想要匹配的字串，並把匹配的字串替換成你所想替換的字串。如果你不熟悉正則表達式，則不建議自己編寫正則表達式。"
+    },
+    "optionsPattern": {
+        "message": "模式"
+    },
+    "optionsFlags": {
+        "message": "標誌"
+    },
+    "optionsReplacement": {
+        "message": "替換值"
+    },
+    "optionsModify": {
+        "message": "修改"
+    },
+    "optionsPatternCanNotBeEmpty": {
+        "message": "模式不能為空。"
+    },
+    "optionsTestSomeText": {
+        "message": "測試一些文字"
+    },
+    "optionsTestSomeTextDescription": {
+        "message": "在下方左邊的文本框裡輸入文本後會在右邊的文本框裡展示處理後的文本。"
+    },
     "themePreset": {
         "message": "預設"
     },

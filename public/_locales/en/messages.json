@@ -257,6 +257,39 @@
     "optionsAutoInsertResultDescription": {
         "message": "After enabling this option, the extension will insert translate result in web page automatically when the translate request is completed and can be inserted. You can toggle this option through \"Toggle the option of 'insert translate results in web pages automatically'\" keyboard shortcut."
     },
+    "optionsTextPreprocessing": {
+        "message": "Text preprocessing"
+    },
+    "optionsTextPreprocessingDescription": {
+        "message": "The text you want to translate will be processed before sending a translate request."
+    },
+    "optionsReplaceWithRegExp": {
+        "message": "Replace with regular expression"
+    },
+    "optionsReplaceWithRegExpDescription": {
+        "message": "Use regular expressions to match the string you want to match, and replace the matched string with the string you want to replace. If you are not familiar with regular expressions, you are not recommended to write your own regular expressions."
+    },
+    "optionsPattern": {
+        "message": "Pattern"
+    },
+    "optionsFlags": {
+        "message": "Flags"
+    },
+    "optionsReplacement": {
+        "message": "Replacement"
+    },
+    "optionsModify": {
+        "message": "Modify"
+    },
+    "optionsPatternCanNotBeEmpty": {
+        "message": "Pattern can not be empty."
+    },
+    "optionsTestSomeText": {
+        "message": "Test some text"
+    },
+    "optionsTestSomeTextDescription": {
+        "message": "After entering the text in the text box on the left below, the processed text will be displayed in the text box on the right."
+    },
     "themePreset": {
         "message": "Preset"
     },

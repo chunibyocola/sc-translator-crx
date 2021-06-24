@@ -1,0 +1,13 @@
+.test-text-processing {
+    display: grid;
+    grid-template-columns: 45% auto 45%;
+}
+.test-text-processing textarea {
+    resize: none;
+    height: 55px;
+}
+.test-text-processing-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

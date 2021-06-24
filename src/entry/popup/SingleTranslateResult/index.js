@@ -10,6 +10,7 @@ import TsVia from '../../../components/TsVia';
 import { switchTranslateSource } from '../../../public/switch-translate-source';
 import { getOptions } from '../../../public/options';
 import { callOutResultBox } from '../../../redux/actions/resultBoxActions';
+import { textPreprocessing } from '../../../public/text-preprocessing';
 
 const SingleTranslateResult = ({ autoTranslateAfterInput }) => {
     const { focusRawText } = useSelector(state => state.resultBoxState);
@@ -25,9 +26,13 @@ const SingleTranslateResult = ({ autoTranslateAfterInput }) => {
     const dispatch = useDispatch();
 
     const handleTranslate = useCallback(() => {
+        const preprocessedText = textPreprocessing(text);
+
+        if (!preprocessedText) { return; }
+
         dispatch(stRequestStart());
 
-        sendTranslate(text, { source, from, to, translateId: translateIdRef.current }, (result) => {
+        sendTranslate(preprocessedText, { source, from, to, translateId: translateIdRef.current }, (result) => {
             if (result.translateId !== translateIdRef.current) { return; }
 
             result.suc ? dispatch(stRequestFinish({ result: result.data })) : dispatch(stRequestError({ errorCode: result.data.code }));

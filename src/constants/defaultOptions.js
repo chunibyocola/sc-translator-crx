@@ -52,7 +52,8 @@ const defaultOptions = {
     clipboardReadPermission: false,
     autoPasteInTheInputBox: false,
     enableInsertResult: false,
-    autoInsertResult: false
+    autoInsertResult: false,
+    textPreprocessingRegExpList: []
 };
 
 export default defaultOptions;

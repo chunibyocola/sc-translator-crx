@@ -18,6 +18,7 @@ import { switchTranslateSource } from '../../../public/switch-translate-source';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/actions/translateHistoryActions';
 import { useInsertResult, useIsEnable } from '../../../public/react-use';
 import './style.css';
+import { textPreprocessing } from '../../../public/text-preprocessing';
 
 const SingleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterInput }) => {
     const [resultMaxHeight, setResultMaxHeight] = useState(500);
@@ -44,9 +45,13 @@ const SingleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterIn
     translateIdRef.current = translateId;
 
     const handleTranslate = useCallback(() => {
+        const preprocessedText = textPreprocessing(text);
+
+        if (!preprocessedText) { return; }
+
         dispatch(stRequestStart());
 
-        sendTranslate(text, { source, from, to, translateId: translateIdRef.current }, (result) => {
+        sendTranslate(preprocessedText, { source, from, to, translateId: translateIdRef.current }, (result) => {
             if (result.translateId !== translateIdRef.current) { return; }
 
             if (result.suc) {

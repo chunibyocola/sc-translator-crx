@@ -7,7 +7,7 @@ const BetaIcon = () => {
         <IconFont
             iconName='#icon-beta'
             title={getMessage('optionsBeta')}
-            style={{margin: '0 5px', cursor: 'help'}}
+            style={{margin: '0 5px', cursor: 'help', fontSize: '20px'}}
         />
     );
 };

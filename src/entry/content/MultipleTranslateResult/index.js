@@ -11,6 +11,7 @@ import './style.css';
 import { getMessage } from '../../../public/i18n';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/actions/translateHistoryActions';
 import { useInsertResult, useIsEnable } from '../../../public/react-use';
+import { textPreprocessing } from '../../../public/text-preprocessing';
 
 const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfterInput }) => {
     const [resultMaxHeight, setResultMaxHeight] = useState(500);
@@ -36,9 +37,13 @@ const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfter
     translateIdRef.current = translateId;
 
     const handleTranslate = useCallback((source) => {
+        const preprocessedText = textPreprocessing(text);
+
+        if (!preprocessedText) { return; }
+
         dispatch(mtRequestStart({ source }));
 
-        sendTranslate(text, { source, from, to, translateId: translateIdRef.current }, (result) => {
+        sendTranslate(preprocessedText, { source, from, to, translateId: translateIdRef.current }, (result) => {
             if (result.translateId !== translateIdRef.current) { return; }
 
             if (result.suc) {
@@ -113,7 +118,6 @@ const MultipleTranslateResult = ({ showRtAndLs, maxHeightGap, autoTranslateAfter
                         status={status}
                         result={result}
                         key={source}
-                        text={text}
                         remove={() => handleRemoveSource(source)}
                         readText={(text, from) => sendAudio(text, { source, from })}
                         retry={() => handleRetry(source)}

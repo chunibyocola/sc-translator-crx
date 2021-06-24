@@ -257,6 +257,39 @@
     "optionsAutoInsertResultDescription": {
         "message": "このオプションを有効にすると、拡張機能は、翻訳リクエストが完了して挿入することができるときに、翻訳結果をWebページに自動的に挿入します。このオプションは、「『翻訳結果をWebページに自動的に挿入する』オプションを切り替えます」キーボードショートカットで切り替えることができます。"
     },
+    "optionsTextPreprocessing": {
+        "message": "テキストの前処理"
+    },
+    "optionsTextPreprocessingDescription": {
+        "message": "翻訳するテキストは、翻訳リクエストを送信する前に処理されます。"
+    },
+    "optionsReplaceWithRegExp": {
+        "message": "正規表現で置き換える"
+    },
+    "optionsReplaceWithRegExpDescription": {
+        "message": "正規表現を使用して、マッチしたい文字にマッチさせ、マッチした文字を置き換えしたい文字に置き換えます。正規表現に慣れていない場合は、自分で正規表現を作成することはお勧めしません。"
+    },
+    "optionsPattern": {
+        "message": "パターン"
+    },
+    "optionsFlags": {
+        "message": "フラグ"
+    },
+    "optionsReplacement": {
+        "message": "置換値"
+    },
+    "optionsModify": {
+        "message": "変更する"
+    },
+    "optionsPatternCanNotBeEmpty": {
+        "message": "パターンを空にすることはできません。"
+    },
+    "optionsTestSomeText": {
+        "message": "テキストをテストする"
+    },
+    "optionsTestSomeTextDescription": {
+        "message": "下にいる左のテキストボックスにテキストを入力すると、処理されたテキストが右のテキストボックスに表示されます。"
+    },
     "themePreset": {
         "message": "プリセット"
     },

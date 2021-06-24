@@ -257,6 +257,39 @@
     "optionsAutoInsertResultDescription": {
         "message": "启用此选项后，扩展将在翻译请求完成并可以插入时自动在网页中插入翻译结果。你可以通过使用“切换‘自动在网页中插入翻译结果’选项”键盘快捷键来切换此选项。"
     },
+    "optionsTextPreprocessing": {
+        "message": "文本预处理"
+    },
+    "optionsTextPreprocessingDescription": {
+        "message": "你要翻译的文本将在发送翻译请求之前进行处理。"
+    },
+    "optionsReplaceWithRegExp": {
+        "message": "用正则表达式替换"
+    },
+    "optionsReplaceWithRegExpDescription": {
+        "message": "使用正则表达式来匹配你所想要匹配的字符串，并把匹配的字符串替换成你所想替换的字符串。如果你不熟悉正则表达式，则不建议自己编写正则表达式。"
+    },
+    "optionsPattern": {
+        "message": "模式"
+    },
+    "optionsFlags": {
+        "message": "标志"
+    },
+    "optionsReplacement": {
+        "message": "替换值"
+    },
+    "optionsModify": {
+        "message": "修改"
+    },
+    "optionsPatternCanNotBeEmpty": {
+        "message": "模式不能为空。"
+    },
+    "optionsTestSomeText": {
+        "message": "测试一些文本"
+    },
+    "optionsTestSomeTextDescription": {
+        "message": "在下方左边的文本框里输入文本后会在右边的文本框里展示处理后的文本。"
+    },
     "themePreset": {
         "message": "预设"
     },

@@ -11,6 +11,7 @@ import { mtLangCode } from '../../../constants/langCode';
 import { getMessage } from '../../../public/i18n';
 import { getOptions } from '../../../public/options';
 import { callOutResultBox } from '../../../redux/actions/resultBoxActions';
+import { textPreprocessing } from '../../../public/text-preprocessing';
 
 const MultipleTranslateResult = ({ autoTranslateAfterInput }) => {
     const { focusRawText } = useSelector(state => state.resultBoxState);
@@ -25,9 +26,13 @@ const MultipleTranslateResult = ({ autoTranslateAfterInput }) => {
     translateIdRef.current = translateId;
 
     const handleTranslate = useCallback((source) => {
+        const preprocessedText = textPreprocessing(text);
+
+        if (!preprocessedText) { return; }
+
         dispatch(mtRequestStart({ source }));
 
-        sendTranslate(text, { source, from, to, translateId: translateIdRef.current }, (result) => {
+        sendTranslate(preprocessedText, { source, from, to, translateId: translateIdRef.current }, (result) => {
             if (result.translateId !== translateIdRef.current) { return; }
 
             result.suc ? dispatch(mtRequestFinish({ source, result: result.data})) : dispatch(mtRequestError({ source, errorCode: result.data.code }));
@@ -96,7 +101,6 @@ const MultipleTranslateResult = ({ autoTranslateAfterInput }) => {
                         status={status}
                         result={result}
                         key={source}
-                        text={text}
                         remove={() => handleRemoveSource(source)}
                         readText={(text, from) => sendAudio(text, { source, from })}
                         retry={() => handleRetry(source)}
