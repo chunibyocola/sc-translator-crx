@@ -290,6 +290,12 @@
     "optionsTestSomeTextDescription": {
         "message": "下にいる左のテキストボックスにテキストを入力すると、処理されたテキストが右のテキストボックスに表示されます。"
     },
+    "optionsConvertCamelCase": {
+        "message": "キャメルケースを変換する"
+    },
+    "optionsLearnMoreAboutTextPreprocessing": {
+        "message": "テキストの前処理をもっと知る。"
+    },
     "themePreset": {
         "message": "プリセット"
     },

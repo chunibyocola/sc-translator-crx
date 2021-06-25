@@ -290,6 +290,12 @@
     "optionsTestSomeTextDescription": {
         "message": "在下方左边的文本框里输入文本后会在右边的文本框里展示处理后的文本。"
     },
+    "optionsConvertCamelCase": {
+        "message": "转换驼峰式"
+    },
+    "optionsLearnMoreAboutTextPreprocessing": {
+        "message": "深入了解文本预处理。"
+    },
     "themePreset": {
         "message": "预设"
     },

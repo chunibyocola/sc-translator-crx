@@ -53,7 +53,8 @@ const defaultOptions = {
     autoPasteInTheInputBox: false,
     enableInsertResult: false,
     autoInsertResult: false,
-    textPreprocessingRegExpList: []
+    textPreprocessingRegExpList: [],
+    textPreprocessingPreset: { convertCamelCase: false }
 };
 
 export default defaultOptions;

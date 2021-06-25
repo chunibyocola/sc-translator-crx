@@ -24,7 +24,8 @@ const DefaultTranslateOptions = ({
     defaultTranslateFrom,
     defaultTranslateTo,
     useDotCn,
-    textPreprocessingRegExpList
+    textPreprocessingRegExpList,
+    textPreprocessingPreset
 }) => {
     return (
         <div className='opt-section'>
@@ -147,7 +148,16 @@ const DefaultTranslateOptions = ({
                 <div className='flex-align-items-center'>
                     {getMessage('optionsTextPreprocessing')} <BetaIcon />
                 </div>
-                <div className='item-description'>{getMessage('optionsTextPreprocessingDescription')}</div>
+                <div className='item-description'>
+                    {getMessage('optionsTextPreprocessingDescription')}
+                    <a
+                        target='_blank'
+                        href='https://github.com/chunibyocola/sc-translator-crx/discussions/17'
+                        rel='noreferrer'
+                    >
+                        {getMessage('optionsLearnMoreAboutTextPreprocessing')}
+                    </a>
+                </div>
                 <div className='mt10-ml30'>
                     {getMessage('optionsReplaceWithRegExp')}
                     <div className='item-description'>{getMessage('optionsReplaceWithRegExpDescription')}</div>
@@ -156,6 +166,18 @@ const DefaultTranslateOptions = ({
                             textPreprocessingRegExpList={textPreprocessingRegExpList}
                             onSave={value => updateStorage('textPreprocessingRegExpList', value)}
                         />
+                    </div>
+                </div>
+                <div className='mt10-ml30'>
+                    {getMessage('themePreset')}
+                    <div className='mt10-ml30'>
+                        <OptionToggle
+                            id='convert-camel-case'
+                            message='optionsConvertCamelCase'
+                            checked={textPreprocessingPreset.convertCamelCase}
+                            onClick={() => updateStorage('textPreprocessingPreset', { ...textPreprocessingPreset, 'convertCamelCase': !textPreprocessingPreset.convertCamelCase })}
+                        />
+                        <div className='item-description'>{'"aCamelCaseText" => "a camel case text"'}</div>
                     </div>
                 </div>
                 <div className='mt10-ml30'>

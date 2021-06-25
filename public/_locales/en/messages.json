@@ -290,6 +290,12 @@
     "optionsTestSomeTextDescription": {
         "message": "After entering the text in the text box on the left below, the processed text will be displayed in the text box on the right."
     },
+    "optionsConvertCamelCase": {
+        "message": "Convert camel case"
+    },
+    "optionsLearnMoreAboutTextPreprocessing": {
+        "message": "Learn more about text preprocessing."
+    },
     "themePreset": {
         "message": "Preset"
     },

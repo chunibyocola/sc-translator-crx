@@ -66,7 +66,8 @@ const Options = () => {
         autoPasteInTheInputBox,
         enableInsertResult,
         autoInsertResult,
-        textPreprocessingRegExpList
+        textPreprocessingRegExpList,
+        textPreprocessingPreset
     } = useOptions(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -131,6 +132,7 @@ const Options = () => {
                 defaultTranslateTo={defaultTranslateTo}
                 useDotCn={useDotCn}
                 textPreprocessingRegExpList={textPreprocessingRegExpList}
+                textPreprocessingPreset={textPreprocessingPreset}
             />
             <div className='sub-title' id='in-web-page'>{getMessage('optionsInWebPage')}</div>
             <Translate

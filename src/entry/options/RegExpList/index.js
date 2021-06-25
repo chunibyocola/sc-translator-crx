@@ -15,7 +15,10 @@ const RegExpList = ({ textPreprocessingRegExpList, onSave }) => {
 
     useEffect(() => {
         setRegExpList(textPreprocessingRegExpList);
-    }, [textPreprocessingRegExpList])
+    }, [textPreprocessingRegExpList]);
+
+    // only for unique key of "regExpList.map"
+    const timestamp = new Date().getTime();
 
     return (
         <div className='regexp-list'>
@@ -24,7 +27,7 @@ const RegExpList = ({ textPreprocessingRegExpList, onSave }) => {
                 <span>{getMessage('optionsFlags')}</span>
                 <span>{getMessage('optionsReplacement')}</span>
             </div>
-            {regExpList.map((v, i) => (<div className='regexp-list-grid' key={i}>
+            {regExpList.map((v, i) => (<div className='regexp-list-grid' key={i + timestamp}>
                 <input type='text' disabled defaultValue={v.pattern} />
                 <input type='text' disabled defaultValue={v.flags} />
                 <input type='text' disabled defaultValue={v.replacement} />
