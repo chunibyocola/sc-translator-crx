@@ -26,7 +26,7 @@ const HistoryResultPanel = ({ translations, top, historyWidth }) => {
                 className='ts-history-result-panel ts-scrollbar'
                 ref={panelEle}
             >
-                {translations.map(({ source, status, from, result }) => (<div className='ts-mt-result' key={source}>
+                {translations.map(({ source, status, result }) => (<div className='ts-mt-result' key={source}>
                     <div className='ts-mt-result-head'>
                         <span className='flex-align-items-center'>
                             <SourceFavicon source={source} />
@@ -34,7 +34,7 @@ const HistoryResultPanel = ({ translations, top, historyWidth }) => {
                                 className='ts-iconbutton ts-button'
                                 iconName='#icon-GoUnmute'
                                 style={{marginLeft: '5px'}}
-                                onClick={(e) => { e.stopPropagation(); sendAudio(result.text, { source, from }); }}
+                                onClick={(e) => { e.stopPropagation(); sendAudio(result.text, { source, from: result.from }); }}
                             />}
                         </span>
                     </div>
