@@ -19,7 +19,7 @@ const onHeadersReceived = ({ responseHeaders, url, method }) => {
     if (!contentType) { return; }
 
     const value = contentType.value.toLowerCase();
-    if (value.includes('application/pdf') || (value.includes('application/octet-stream' && url.toLowerCase().endsWith('.pdf')))) {
+    if (value.includes('application/pdf') || (value.includes('application/octet-stream') && url.toLowerCase().endsWith('.pdf'))) {
         return getRedirectBlocking(url);
     }
 };
