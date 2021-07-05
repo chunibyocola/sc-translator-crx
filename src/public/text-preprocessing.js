@@ -30,6 +30,6 @@ getLocalStorage(['textPreprocessingRegExpList', 'textPreprocessingPreset'], (opt
     textPreprocessingPreset = options.textPreprocessingPreset ?? {};
 });
 listenOptionsChange(['textPreprocessingRegExpList', 'textPreprocessingPreset'], (changes) => {
-    textPreprocessingRegExpList = changes.textPreprocessingRegExpList ?? [];
-    textPreprocessingPreset = changes.textPreprocessingPreset ?? {};
+    'textPreprocessingRegExpList' in changes && (textPreprocessingRegExpList = changes.textPreprocessingRegExpList ?? []);
+    'textPreprocessingPreset' in changes && (textPreprocessingPreset = changes.textPreprocessingPreset ?? {});
 });
