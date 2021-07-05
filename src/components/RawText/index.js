@@ -8,7 +8,6 @@ const RawText = ({ defaultValue, rawTextTranslate, focusDependency, autoTranslat
     const [debounceDependency, setDebounceDependency] = useState(0);
 
     const lastTextRef = useRef('');
-    const stopPropagationRef = useRef(e => e.stopPropagation());
     const textareaEl = useRef(null);
     const compositionStatus = useRef(false);
 
@@ -40,16 +39,6 @@ const RawText = ({ defaultValue, rawTextTranslate, focusDependency, autoTranslat
     const onChange = useCallback(() => {
         autoTranslateAfterInput && !compositionStatus.current && rawTextChanged();
     }, [rawTextChanged, autoTranslateAfterInput]);
-
-    const onFocus = useCallback(() => {
-        window.addEventListener('keydown', stopPropagationRef.current, true);
-        window.addEventListener('keyup', stopPropagationRef.current, true);
-    }, []);
-
-    const onBlur = useCallback(() => {
-        window.removeEventListener('keydown', stopPropagationRef.current, true);
-        window.removeEventListener('keyup', stopPropagationRef.current, true);
-    }, []);
 
     useEffect(() => {
         if (defaultValue) {
@@ -86,8 +75,8 @@ const RawText = ({ defaultValue, rawTextTranslate, focusDependency, autoTranslat
                 onChange={onChange}
                 onCompositionStart={onCompositionStart}
                 onCompositionEnd={onCompositionEnd}
-                onFocus={onFocus}
-                onBlur={onBlur}
+                onKeyDown={e => e.stopPropagation()}
+                onKeyUp={e => e.stopPropagation()}
                 ref={textareaEl}
                 className='ts-rt-text'
             ></textarea>
