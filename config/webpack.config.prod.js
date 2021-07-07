@@ -15,6 +15,9 @@ module.exports = {
     optimization: {
         minimize: false,
     },
+    resolve: {
+        extensions: ['.ts', '.js', '.json', '.tsx', 'jsx']
+    },
     performance: false,
     entry: {
         popup: [require.resolve('./polyfills'), path.resolve(paths.appSrc, 'entry', 'popup')],
@@ -42,7 +45,7 @@ module.exports = {
                         },
                     },
                     {
-                        test: /\.(js|jsx|mjs)$/,
+                        test: /\.(js|jsx|mjs|tsx|ts)$/,
                         include: paths.appSrc,
                         loader: require.resolve('babel-loader'),
                         options: {
