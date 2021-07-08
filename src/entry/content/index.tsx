@@ -24,7 +24,7 @@ const init = (options: DefaultOptions) => {
   const root = document.createElement('div');
   root.id = 'sc-translator-shadow';
   root.setAttribute('style', 'all: initial;');
-  document.body.appendChild(root);
+  document.documentElement.appendChild(root);
 
   const shadowRoot = root.attachShadow({ mode: 'open' });
 
