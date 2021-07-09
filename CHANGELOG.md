@@ -1,3 +1,8 @@
+# 3.6.1 (2021-07-08)
+- Fix modify "RegExp list"/"preset" will make "preset"/"RegExp list" unavailable. ([fb40d3a](https://github.com/chunibyocola/sc-translator-crx/commit/fb40d3acca500faf740f162da63323c723d139ca))
+- Fix disable "Auto translate after input in input box" will not send translate requests after you use "Ctrl + Enter" in input box. ([4c81693](https://github.com/chunibyocola/sc-translator-crx/commit/4c8169353f04a2292a85e99fa49648c2d5e2137f))
+- Fix can not detect the pdf files with "application/octet-stream" content-type correctly. ([f610545](https://github.com/chunibyocola/sc-translator-crx/commit/f610545fadb331f361b2b0186f7024301cc75996))
+- Fix listening the text from "history" will send redundant request. ([02cf245](https://github.com/chunibyocola/sc-translator-crx/commit/02cf2452a667859cf7c2a41ebc40e8e599510ac5))
 # 3.6.0 (2021-06-28)
 - Add text preprocessing (preset: convert camel case). ([0851077](https://github.com/chunibyocola/sc-translator-crx/commit/08510775a01dc20a2bab27defcb51a53ba41186a))
 - Add text preprocessing (regular expressions). ([fdc206f](https://github.com/chunibyocola/sc-translator-crx/commit/fdc206fb0620905bf6c28249d5cc14961822a082))
