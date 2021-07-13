@@ -40,7 +40,7 @@ const CustomizeBoardOptions: React.FC<CustomizeBoardOptionsProps> = ({ styleVars
     }, [styleVars, updateCallback]);
 
     const handleColorClick = useCallback((targetColor, offsetColor) => {
-        !changing.saved && changing.targetColor && updateColor(changing.targetColor, changing.offsetColor);
+        changing.targetColor && changing.offsetColor && updateColor(changing.targetColor, changing.offsetColor);
 
         setChanging({ targetColor, saved: false, offsetColor });
     }, [changing, updateColor]);
