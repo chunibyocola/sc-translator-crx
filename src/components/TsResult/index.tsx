@@ -9,19 +9,17 @@ import { TranslateRequest } from '../../types';
 
 type TsResultProps = {
     translateRequest: TranslateRequest;
-    readText: (text: string, readObject: { source: string; from: string; }) => void;
-    source: string;
+    readText: (text: string, from: string) => void;
     retry: () => void;
     setText: (text: string) => void;
     insertResult?: (result: string) => void;
 };
 
-const TsResult: React.FC<TsResultProps> = ({ translateRequest, readText, source, retry, setText, insertResult }) => {
-
+const TsResult: React.FC<TsResultProps> = ({ translateRequest, readText, retry, setText, insertResult }) => {
     return (
         <div className='ts-result'>
             {translateRequest.status === 'loading' ?
-                getMessage('wordRequesting') :
+                <TranslateResultSkeleton /> :
             translateRequest.status === 'init' ?
                 getMessage('contentTranslateAfterInput'):
             translateRequest.status === 'error' ?
@@ -43,10 +41,7 @@ const TsResult: React.FC<TsResultProps> = ({ translateRequest, readText, source,
                         <IconFont
                             className='ts-iconbutton ts-button'
                             iconName='#icon-GoUnmute'
-                            onClick={() => readText(
-                                resultToString(translateRequest.result.result),
-                                { source, from: translateRequest.result.to }
-                            )}
+                            onClick={() => readText(resultToString(translateRequest.result.result), translateRequest.result.to)}
                         />
                     </span>
                 </div>
@@ -66,10 +61,7 @@ const TsResult: React.FC<TsResultProps> = ({ translateRequest, readText, source,
                     <IconFont
                         className='ts-iconbutton ts-button'
                         iconName='#icon-GoUnmute'
-                        onClick={() => readText(
-                            translateRequest.result.text,
-                            { source, from: translateRequest.result.from }
-                        )}
+                        onClick={() => readText(translateRequest.result.text, translateRequest.result.from)}
                     />
                 </div>
                 {translateRequest.result.phonetic && translateRequest.result.from === LANG_EN && <div className='tss-phonetic'>
@@ -77,7 +69,9 @@ const TsResult: React.FC<TsResultProps> = ({ translateRequest, readText, source,
                 </div>}
             </>}
         </div>
-    )
+    );
 };
+
+const TranslateResultSkeleton: React.FC = () => (<div className='skeleton' style={{height: '1.2em', width: '65%'}}></div>);
 
 export default TsResult;

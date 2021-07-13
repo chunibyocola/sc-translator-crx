@@ -156,7 +156,7 @@ const Separate: React.FC = () => {
                     translations.map(({ source, translateRequest }) => (
                         <MtResult
                             source={source}
-                            transalteRequest={translateRequest}
+                            translateRequest={translateRequest}
                             key={source}
                             remove={() => handleRemoveSource(source)}
                             readText={(text, from) => sendAudio(text, { source, from })}

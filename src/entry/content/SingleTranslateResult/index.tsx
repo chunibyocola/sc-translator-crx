@@ -79,9 +79,9 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ showRtAnd
         text && dispatch(stSetText({ text }));
     }, [dispatch]);
 
-    const handleReadText = useCallback((text: string, { source, from }: { source: string; from: string }) => {
+    const handleReadText = useCallback((text: string, from: string) => {
         text && sendAudio(text, { source, from });
-    }, []);
+    }, [source]);
 
     const handleRetry = useCallback(() => {
         handleTranslate();
@@ -121,7 +121,6 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ showRtAnd
                 <TsResult
                     translateRequest={translateRequest}
                     readText={handleReadText}
-                    source={source}
                     retry={handleRetry}
                     setText={handleSetText}
                     insertResult={canInsertResult ? result => insertResultToggle(translateId, source, result) : undefined}
