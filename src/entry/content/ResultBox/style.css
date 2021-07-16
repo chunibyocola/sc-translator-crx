@@ -1,5 +1,5 @@
 .ts-rb {
-    border-radius: 0px 5px 5px 5px;
+    border-radius: 6px;
     color: var(--text-normal) !important;
     position: fixed;
     z-index: 2147483647;
@@ -9,7 +9,7 @@
     min-width: 250px;
 }
 .ts-rb-content {
-    margin: 0 4px 4px 4px;
+    margin: 0 5px 5px 5px;
 }
 .ts-rb-header {
     cursor: move;

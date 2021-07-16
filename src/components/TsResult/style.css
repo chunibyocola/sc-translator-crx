@@ -1,6 +1,6 @@
 .ts-result {
     background: var(--bg-content);
-    border-radius: 3px 3px 0 0;
+    border-radius: 6px 6px 0 0;
     padding: 10px;
     word-break: break-all;
 }

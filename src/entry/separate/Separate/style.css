@@ -6,7 +6,7 @@
     color: var(--text-normal) !important;
 }
 .content {
-    padding: 2px 4px;
+    padding: 0px 5px 5px 5px;
     background: var(--bg-total);
 }
 .ts-mt-results {

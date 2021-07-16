@@ -8,6 +8,5 @@
     color: var(--text-normal) !important;
 }
 .content {
-    margin: 2px auto;
-    width: 242px;
+    margin: 0 5px 3px 5px;
 }
