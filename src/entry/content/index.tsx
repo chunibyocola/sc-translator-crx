@@ -15,6 +15,7 @@ import defaultOptions from '../../constants/defaultOptions';
 import '../../styles/global.css';
 import { injectFontSizeStyle, injectThemeStyle } from '../../public/inject-style';
 import { DefaultOptions } from '../../types';
+import WebPageTranslate from './WebPageTranslate';
 
 const init = (options: DefaultOptions) => {
   initOptions(options);
@@ -51,6 +52,7 @@ const init = (options: DefaultOptions) => {
       <TsBtn />
       <TsHistory />
       <ResultBox multipleTranslateMode={options.multipleTranslateMode} />
+      <WebPageTranslate />
     </Provider>, 
     app
   );

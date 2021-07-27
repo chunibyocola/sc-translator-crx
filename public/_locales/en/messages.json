@@ -20,6 +20,9 @@
     "extToggleAutoInsertResultDescription": {
         "message": "Toggle the option of \"insert translate results in web pages automatically\""
     },
+    "extTranslateCurrentPageDescription": {
+        "message": "Translate the current page"
+    },
     "extOpenSeparateWindowDescription": {
         "message": "Open separate translate window"
     },
@@ -326,6 +329,15 @@
     "contentNoRecord": {
         "message": "No record"
     },
+    "contentSwitchDisplayModeOfResult": {
+        "message": "Switch the display mode of translate results"
+    },
+    "contentStartWebPageTranslating": {
+        "message": "Start web page translating"
+    },
+    "contentCloseWebPageTranslating": {
+        "message": "Close web page translating"
+    },
     "popupEnableTranslate": {
         "message": "Enable translate on this website"
     },
@@ -394,6 +406,9 @@
     },
     "contextMenus_LISTEN_SELECTION_TEXT": {
         "message": "Listen the text you select"
+    },
+    "contextMenus_TRANSLATE_CURRENT_PAGE": {
+        "message": "Translate the current page"
     },
     "errorCode_CONNECTION_TIMED_OUT": {
         "message": "Error: Connection timed out."

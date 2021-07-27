@@ -20,3 +20,7 @@ export const audioSource: TranslateSource[] = [
     { source: BING_COM, url: 'www.bing.com/translator/' },
     { source: BAIDU_COM, url: 'fanyi.baidu.com' }
 ];
+
+export const webPageTranslateSource: TranslateSource[] = [
+    { source: GOOGLE_COM, url: 'translate.google.com' }
+];

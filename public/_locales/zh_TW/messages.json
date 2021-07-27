@@ -20,6 +20,9 @@
     "extToggleAutoInsertResultDescription": {
         "message": "切換「自動在網頁中插入翻譯結果」選項"
     },
+    "extTranslateCurrentPageDescription": {
+        "message": "翻譯當前頁面"
+    },
     "extOpenSeparateWindowDescription": {
         "message": "打開獨立翻譯視窗"
     },
@@ -326,6 +329,15 @@
     "contentNoRecord": {
         "message": "無記錄"
     },
+    "contentSwitchDisplayModeOfResult": {
+        "message": "切換翻譯結果的顯示方式"
+    },
+    "contentStartWebPageTranslating": {
+        "message": "開始網頁翻譯"
+    },
+    "contentCloseWebPageTranslating": {
+        "message": "關閉網頁翻譯"
+    },
     "popupEnableTranslate": {
         "message": "在此網站啟用翻譯"
     },
@@ -394,6 +406,9 @@
     },
     "contextMenus_LISTEN_SELECTION_TEXT": {
         "message": "讀讀您選擇的文字"
+    },
+    "contextMenus_TRANSLATE_CURRENT_PAGE": {
+        "message": "翻譯當前頁面"
     },
     "errorCode_CONNECTION_TIMED_OUT": {
         "message": "錯誤：連接超時。"

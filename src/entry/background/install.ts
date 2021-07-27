@@ -2,7 +2,7 @@ import { LANG_ZH_CN, LANG_JA, preferredLangCode } from '../../constants/langCode
 import defaultOptions from '../../constants/defaultOptions';
 import { getLocalStorage } from '../../public/chrome-call';
 import { defaultStyleVars } from '../../constants/defaultStyleVars';
-import { TRANSLATE_SELECTION_TEXT } from '../../constants/contextMenusIds';
+import { TRANSLATE_CURRENT_PAGE, TRANSLATE_SELECTION_TEXT } from '../../constants/contextMenusIds';
 import { DefaultOptions } from '../../types';
 
 const initStorageOnInstalled = (userLang: string, update: boolean) => {
@@ -38,6 +38,13 @@ const initStorageOnInstalled = (userLang: string, update: boolean) => {
             const index = defaultSet.contextMenus.findIndex(v => v.id === TRANSLATE_SELECTION_TEXT);
             if (index >= 0) {
                 defaultSet.contextMenus[index].enabled = data.enableContextMenus as boolean;
+            }
+        }
+
+        if (update && 'contextMenus' in data) {
+            const index = data.contextMenus.findIndex(v => v.id === TRANSLATE_CURRENT_PAGE);
+            if (index === -1) {
+                data.contextMenus = data.contextMenus.concat({ id: TRANSLATE_CURRENT_PAGE, enabled: false });
             }
         }
 

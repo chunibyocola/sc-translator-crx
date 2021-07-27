@@ -1,9 +1,16 @@
 import { listenOptionsChange } from '../../public/options';
-import { SCTS_CONTEXT_MENUS_CLICKED } from '../../constants/chromeSendMessageTypes';
+import { SCTS_CONTEXT_MENUS_CLICKED, SCTS_TRANSLATE_CURRENT_PAGE } from '../../constants/chromeSendMessageTypes';
 import { createNewTab, getI18nMessage, getLocalStorage } from '../../public/chrome-call';
 import { createSeparateWindow } from './separate-window';
 import { getIsContentScriptEnabled } from '../../public/utils';
-import { contextMenusContexts, LISTEN_SELECTION_TEXT, OPEN_SEPARATE_WINDOW, OPEN_THIS_PAGE_WITH_PDF_VIEWER, TRANSLATE_SELECTION_TEXT } from '../../constants/contextMenusIds';
+import {
+    contextMenusContexts,
+    LISTEN_SELECTION_TEXT,
+    OPEN_SEPARATE_WINDOW,
+    OPEN_THIS_PAGE_WITH_PDF_VIEWER,
+    TRANSLATE_CURRENT_PAGE,
+    TRANSLATE_SELECTION_TEXT
+} from '../../constants/contextMenusIds';
 import { playAudio } from './audio';
 import { audio } from '../../public/request';
 import { DefaultOptions, OptionsContextMenu } from '../../types';
@@ -42,6 +49,10 @@ const openThisPageWithPdfViewer: OnContextMenuClick = (info, tab) => {
 
 const openSeparateTranslateWindow = () => {
     createSeparateWindow();
+};
+
+const translateCurrentPage: OnContextMenuClick = (info, tab) => {
+    tab?.id !== undefined && tab.id >= 0 && chrome.tabs.sendMessage(tab.id, { type: SCTS_TRANSLATE_CURRENT_PAGE });
 };
 
 const updateContextMenus = (contextMenus: OptionsContextMenu[]) => {
@@ -85,6 +96,9 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
             return;
         case OPEN_THIS_PAGE_WITH_PDF_VIEWER:
             openThisPageWithPdfViewer(info, tab);
+            return;
+        case TRANSLATE_CURRENT_PAGE:
+            translateCurrentPage(info, tab);
             return;
         default: return;
     }

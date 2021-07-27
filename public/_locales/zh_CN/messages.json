@@ -20,6 +20,9 @@
     "extToggleAutoInsertResultDescription": {
         "message": "切换“自动在网页中插入翻译结果”选项"
     },
+    "extTranslateCurrentPageDescription": {
+        "message": "翻译当前页面"
+    },
     "extOpenSeparateWindowDescription": {
         "message": "打开独立翻译窗口"
     },
@@ -326,6 +329,15 @@
     "contentNoRecord": {
         "message": "无记录"
     },
+    "contentSwitchDisplayModeOfResult": {
+        "message": "切换翻译结果的显示方式"
+    },
+    "contentStartWebPageTranslating": {
+        "message": "开始网页翻译"
+    },
+    "contentCloseWebPageTranslating": {
+        "message": "关闭网页翻译"
+    },
     "popupEnableTranslate": {
         "message": "在此网站启用翻译"
     },
@@ -394,6 +406,9 @@
     },
     "contextMenus_LISTEN_SELECTION_TEXT": {
         "message": "朗读您选择的文本"
+    },
+    "contextMenus_TRANSLATE_CURRENT_PAGE": {
+        "message": "翻译当前页面"
     },
     "errorCode_CONNECTION_TIMED_OUT": {
         "message": "错误：连接超时。"
