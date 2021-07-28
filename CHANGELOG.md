@@ -1,3 +1,6 @@
+# 3.7.0 (2021-07-28)
+- Add web page translating. ([5aa0505](https://github.com/chunibyocola/sc-translator-crx/commit/5aa05052abb4136f8d5c8139ff7b7b59db1ab268))
+- Fix in customize theme, move anchor after saving color then switch to another type will make the color you save update. ([d39e83f](https://github.com/chunibyocola/sc-translator-crx/commit/d39e83f12735989081ed95fa2cb757983b5ede83))
 # 3.6.1 (2021-07-08)
 - Fix modify "RegExp list"/"preset" will make "preset"/"RegExp list" unavailable. ([fb40d3a](https://github.com/chunibyocola/sc-translator-crx/commit/fb40d3acca500faf740f162da63323c723d139ca))
 - Fix disable "Auto translate after input in input box" will not send translate requests after you use "Ctrl + Enter" in input box. ([4c81693](https://github.com/chunibyocola/sc-translator-crx/commit/4c8169353f04a2292a85e99fa49648c2d5e2137f))
