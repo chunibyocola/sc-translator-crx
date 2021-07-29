@@ -52,6 +52,7 @@ const RawText: React.FC<RawTextProps> = ({ defaultValue, rawTextTranslate, focus
     useEffect(() => {
         if (defaultValue) {
             lastTextRef.current = defaultValue.trimRight();
+            textareaEl.current && (textareaEl.current.value = defaultValue);
         }
     }, [defaultValue]);
 
