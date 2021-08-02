@@ -2,6 +2,7 @@ export const GOOGLE_COM = 'google.com';
 export const BING_COM = 'bing.com';
 export const MOJIDICT_COM = 'mojidict.com';
 export const BAIDU_COM = 'baidu.com';
+export const MICROSOFT_COM = 'microsofttranslator.com';
 
 export type TranslateSource = {
     source: string;
@@ -22,5 +23,6 @@ export const audioSource: TranslateSource[] = [
 ];
 
 export const webPageTranslateSource: TranslateSource[] = [
-    { source: GOOGLE_COM, url: 'translate.google.com' }
+    { source: GOOGLE_COM, url: 'translate.google.com' },
+    { source: MICROSOFT_COM, url: 'microsofttranslator.com' }
 ];

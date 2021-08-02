@@ -1,9 +1,10 @@
 import React from 'react';
-import { GOOGLE_COM, BING_COM, MOJIDICT_COM, BAIDU_COM } from '../../constants/translateSource';
+import { GOOGLE_COM, BING_COM, MOJIDICT_COM, BAIDU_COM, MICROSOFT_COM } from '../../constants/translateSource';
 import google from './favicons/google.png';
 import bing from './favicons/bing.png';
 import mojidict from './favicons/mojidict.png';
 import baidu from './favicons/baidu.png';
+import microsoft from './favicons/microsofttranslator.png';
 import './style.css';
 
 type SourceFaviconProps = {
@@ -29,6 +30,7 @@ const getFavicon = (source: string) => {
         case BING_COM: return bing;
         case MOJIDICT_COM: return mojidict;
         case BAIDU_COM: return baidu;
+        case MICROSOFT_COM: return microsoft;
         default: return;
     }
 };
@@ -39,6 +41,7 @@ const getName = (source: string) => {
         case BING_COM: return 'Bing';
         case MOJIDICT_COM: return 'Mojidict';
         case BAIDU_COM: return 'Baidu';
+        case MICROSOFT_COM: return 'Microsoft';
         default: return;
     }
 }

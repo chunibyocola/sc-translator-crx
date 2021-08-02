@@ -1,5 +1,7 @@
-import { GOOGLE_COM } from '../../constants/translateSource';
+import { GOOGLE_COM, MICROSOFT_COM } from '../../constants/translateSource';
+import { bingSwitchLangCode } from '../switch-lang-code';
 import { translate as googleWebTranslate } from './google/translate';
+import { translate as microsoftWebTranslate } from './microsoft/translate';
 
 type PageTranslateItemEnity = {
     prefix: string;
@@ -28,6 +30,7 @@ let maxViewPort = 0;
 
 let resultCache: { [key: string]: string[] } = {};
 let resultCacheLanguage = '';
+let resultCacheSource = '';
 
 let startFlag = 0;
 let closeFlag = 1;
@@ -201,9 +204,10 @@ export const startWebPageTranslating = (element: HTMLElement, translateSource: s
 
     source = translateSource;
     language = targetLanguage;
-    if (language !== resultCacheLanguage) {
+    if (language !== resultCacheLanguage || source !== resultCacheSource) {
         resultCache = {};
         resultCacheLanguage = language;
+        resultCacheSource = source;
     }
 
     ++startFlag;
@@ -281,9 +285,94 @@ const handleDelay = delay(() => {
         case GOOGLE_COM:
             googleWebTranslateProcess(nextTranslateList, language);
             break;
+        case MICROSOFT_COM:
+            microsoftWebTranslateProcess(nextTranslateList, bingSwitchLangCode(language));
+            break;
         default: break;
     }
 }, 500);
+
+const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[], targetLanguage: string) => {
+    if (nextTranslateList.length === 0) { return; }
+
+    let translateList: { requestArray: { Text: string }[], pageTranslateList: PageTranslateItemEnity[], textList: string[] }[] = [];
+
+    let pageTranslateList: PageTranslateItemEnity[] = [];
+    let text = '';
+    let requestCount = 0;
+    let requestArray: { Text: string }[] = [];
+    let textList: string[] = [];
+    for (let i = 0; i < nextTranslateList.length; i++) {
+        let currentItem = nextTranslateList[i];
+
+        const request = currentItem.textNodes.length === 1 ?
+            (currentItem.textNodes[0].nodeValue ?? '') :
+            currentItem.textNodes.reduce((t, v, i) => (t + `<b${i}>${escapeText(v.nodeValue ?? '')}</b${i}>`), '');
+        
+        if (request in resultCache) {
+            currentItem.result = resultCache[request];
+            currentItem.status = 'finished';
+            currentItem.textNodes.forEach((textNode, i) => {
+                if (!textNode.parentElement || !currentItem.result?.[i]) { return; }
+
+                const fonts = insertResultAndWrapOriginalTextNode(textNode, currentItem.result[i]);
+                fonts && currentItem.fontsNodes.push(fonts);
+            });
+
+            continue;
+        }
+
+        if (text.length + request.length < 1024 && requestCount <= 100) {
+            requestArray.push({ Text: request });
+            pageTranslateList.push(currentItem);
+            textList.push(request);
+            text += request;
+            ++requestCount;
+        }
+        else {
+            translateList.push({ requestArray, pageTranslateList, textList });
+            pageTranslateList = [currentItem];
+            requestArray = [{ Text: request }];
+            textList = [request];
+            text = request;
+            requestCount = 1;
+        }
+    }
+    if (text) {
+        translateList.push({ requestArray, pageTranslateList, textList });
+    }
+
+    if (translateList.length === 0) { return; }
+
+    const tempCloseFlag = closeFlag;
+
+    translateList.map((item) => {
+        const dealWithResult = (result: string[][]) => {
+            item.pageTranslateList.forEach((v, i) => {
+                v.result = result[i];
+                v.status = 'finished';
+                v.textNodes.forEach((textNode, i) => {
+                    if (!textNode.parentElement || !v.result?.[i]) { return; }
+    
+                    const fonts = insertResultAndWrapOriginalTextNode(textNode, v.result[i]);
+                    fonts && v.fontsNodes.push(fonts);
+                });
+            });
+        };
+
+        microsoftWebTranslate(item.requestArray, targetLanguage).then((result) => {
+            item.textList.length === result.length && item.textList.forEach((v, i) => (resultCache[v] = result[i]));
+
+            // if not the same, means web page translate has been closed.
+            tempCloseFlag === closeFlag && dealWithResult(result);
+        }).catch((reason) => {
+            item.pageTranslateList.forEach(v => v.status = 'error');
+            errorCallback?.(reason.code);
+        });
+
+        item.pageTranslateList.forEach(v => v.status = 'loading');
+    });
+};
 
 const googleWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[], targetLanguage: string) => {
     if (nextTranslateList.length === 0) { return; }
@@ -376,6 +465,9 @@ export const errorRetry = () => {
     switch (source) {
         case GOOGLE_COM:
             googleWebTranslateProcess(nextTranslateList, language);
+            break;
+        case MICROSOFT_COM:
+            microsoftWebTranslateProcess(nextTranslateList, bingSwitchLangCode(language));
             break;
         default: break;
     }
