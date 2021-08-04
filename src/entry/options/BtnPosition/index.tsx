@@ -34,11 +34,11 @@ const BtnPostion: React.FC<BtnPostionProps> = ({ currentPos, updateBtnPosition }
     }, [handlePointerDrag]);
 
     return (
-        <div className='btn-position'>
-            <div className='btn-display' onMouseDown={handleMouseDown}>
-                <IconFont className='btn-cursor-default' iconName='#icon-cursorDefault' style={{pointerEvents: 'none'}} />
+        <div className='translate-button-position'>
+            <div className='translate-button-position__display' onMouseDown={handleMouseDown}>
+                <IconFont className='translate-button-position__cursor-default' iconName='#icon-cursorDefault' style={{pointerEvents: 'none'}} />
                 <div
-                    className='ts-btn'
+                    className='translate-button'
                     ref={btnEle}
                     style={{
                         pointerEvents: 'none',

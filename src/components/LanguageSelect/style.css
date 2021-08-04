@@ -1,4 +1,4 @@
-.ts-language-select {
+.language-select {
     position: relative;
     text-align: start;
     align-items: center;
@@ -9,37 +9,34 @@
     white-space: pre;
     padding: 2px 3px;
 }
-.ts-language-select .badge {
+.language-select__badge {
     display: flex;
     align-items: center;
 }
-.badge .badge-text {
+.language-select__badge-text {
     margin-right: 8px;
     flex: 1;
     overflow: hidden;
 }
-.ts-language-select .options {
-    display: none;
-}
-.ts-language-select-search {
+.language-select__search {
     display: flex;
     margin: 5px;
     border-bottom: 1px solid currentColor;
     align-items: center;
     padding: 5px;
 }
-.ts-language-select-search-input {
+.language-select__search-input {
     flex: 1;
 }
-.ts-language-select-search-input input {
+.language-select__search-input>input {
     outline: 0;
     border: 0;
     width: 100%;
 }
-.ts-language-select-option, .ts-language-select-no-result {
+.language-select__option, .language-select__no-result {
     padding: 4px 6px;
     line-height: 1;
 }
-.ts-language-select-option:hover {
+.language-select__option:hover {
     background: var(--bg-item-hover);
 }

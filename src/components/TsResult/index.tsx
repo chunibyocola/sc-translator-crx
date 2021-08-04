@@ -17,7 +17,7 @@ type TsResultProps = {
 
 const TsResult: React.FC<TsResultProps> = ({ translateRequest, readText, retry, setText, insertResult }) => {
     return (
-        <div className='ts-result'>
+        <div className='st-result'>
             {translateRequest.status === 'loading' ?
                 <TranslateResultSkeleton /> :
             translateRequest.status === 'init' ?
@@ -25,46 +25,50 @@ const TsResult: React.FC<TsResultProps> = ({ translateRequest, readText, retry, 
             translateRequest.status === 'error' ?
                 <ErrorMessage errorCode={translateRequest.errorCode} retry={retry} /> :
             <>
-                <div className='tss-result'>
+                <div className='st-result__item-stack'>
                     <span>
                         {resultToString(translateRequest.result.result)}
                         {insertResult && <IconFont
-                            className='ts-iconbutton ts-button'
+                            className='iconbutton button'
                             iconName='#icon-insert'
                             onClick={() => insertResult(resultToString(translateRequest.result.result))}
                         />}
                         <IconFont
-                            className='ts-iconbutton ts-button'
+                            className='iconbutton button'
                             iconName='#icon-copy'
                             onClick={() => navigator.clipboard.writeText(resultToString(translateRequest.result.result))}
                         />
                         <IconFont
-                            className='ts-iconbutton ts-button'
+                            className='iconbutton button'
                             iconName='#icon-GoUnmute'
                             onClick={() => readText(resultToString(translateRequest.result.result), translateRequest.result.to)}
                         />
                     </span>
                 </div>
-                {translateRequest.result.dict?.map((v, i) => (<div key={i}>{v}</div>))}
-                {translateRequest.result.related && translateRequest.result.from === LANG_EN && <div>
+                {translateRequest.result.dict && translateRequest.result.dict.length > 0 && <div className='st-result__item-stack'>
+                    {translateRequest.result.dict.map((v, i) => (
+                        <div key={i}>{v}</div>
+                    ))}
+                </div>}
+                {translateRequest.result.related && translateRequest.result.from === LANG_EN && <div className='st-result__item-stack'>
                     {getMessage('wordRelated')}: {translateRequest.result.related.map((v, i) => (<span key={`${v}${i}`}>
                         {i !== 0 && ', '}<span className='span-link' onClick={() => setText(v)}>{v}</span>
                     </span>))}
                 </div>}
-                <div className='tss-origin-text flex-align-items-center'>
-                    <span className='tss-origin-raw'>{translateRequest.result.text}</span>
+                <div className='st-result__item-stack'>
+                    <span className='st-result__text'>{translateRequest.result.text}</span>
                     <IconFont
-                        className='ts-iconbutton ts-button'
+                        className='iconbutton button'
                         iconName='#icon-copy'
                         onClick={() => navigator.clipboard.writeText(translateRequest.result.text)}
                     />
                     <IconFont
-                        className='ts-iconbutton ts-button'
+                        className='iconbutton button'
                         iconName='#icon-GoUnmute'
                         onClick={() => readText(translateRequest.result.text, translateRequest.result.from)}
                     />
                 </div>
-                {translateRequest.result.phonetic && translateRequest.result.from === LANG_EN && <div className='tss-phonetic'>
+                {translateRequest.result.phonetic && translateRequest.result.from === LANG_EN && <div>
                     {translateRequest.result.phonetic}
                 </div>}
             </>}

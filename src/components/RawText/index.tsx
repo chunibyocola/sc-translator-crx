@@ -81,7 +81,7 @@ const RawText: React.FC<RawTextProps> = ({ defaultValue, rawTextTranslate, focus
     }, [handleRawTextChanged, autoTranslateAfterInput]);
 
     return (
-        <div className='ts-raw-text'>
+        <div className='raw-text'>
             <textarea
                 defaultValue={defaultValue}
                 placeholder={getMessage('contentInputHere')}
@@ -91,7 +91,7 @@ const RawText: React.FC<RawTextProps> = ({ defaultValue, rawTextTranslate, focus
                 onKeyDown={e => e.stopPropagation()}
                 onKeyUp={e => e.stopPropagation()}
                 ref={textareaEl}
-                className='ts-rt-text'
+                className='raw-text__textarea'
             ></textarea>
         </div>
     );

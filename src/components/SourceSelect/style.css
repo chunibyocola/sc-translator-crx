@@ -1,4 +1,4 @@
-.ts-source-select {
+.source-select {
     position: relative;
     text-align: start;
     align-items: center;
@@ -10,23 +10,23 @@
     white-space: pre;
     padding: 2px 3px;
 }
-.ts-source-select-disabled {
+.source-select--disabled {
     color: rgb(170, 170, 170);
     opacity: 0.7;
 }
-.ts-source-select-options {
+.source-select__options {
     background: var(--bg-content);
     color: var(--text-normal);
     border-radius: 5px;
 }
-.ts-source-select-value {
+.source-select__value {
     width: calc(100% - 20px);
     overflow: hidden;
 }
-.ts-source-select-option {
+.source-select__options__option {
     padding: 6px;
     overflow: hidden;
 }
-.ts-source-select-option:hover {
+.source-select__options__option:hover {
     background: var(--bg-item-hover);
 }

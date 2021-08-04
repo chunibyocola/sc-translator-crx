@@ -1,75 +1,28 @@
-.color-selector-adjust>div {
+.color-adjust>div {
     margin-bottom: 5px;
 }
-.color-selector-selected-color {
+.color-adjust__selected-color {
     height: 100%;
     width: 100%;
     border: 2px solid #fff;
 }
-.color-selector-selected-color-outer {
+.color-adjust__selected {
     height: 24px;
     width: 100%;
     border: 2px solid #000;
 }
-.color-selector-opacity-slider {
-    position: relative;
-    cursor: pointer;
-    height: 4px;
-    padding: 15px 0;
+.color-adjust__save-btn {
     width: 100%;
-    color: #1F88D6;
 }
-.color-selector-opacity-rail {
-    opacity: 0.38;
-    height: 4px;
-    width: 100%;
-    position: absolute;
-    border-radius: 1px;
-    background: currentColor;
-    pointer-events: none;
-}
-.color-selector-opacity-track {
-    height: 4px;
-    position: absolute;
-    border-radius: 1px;
-    background: currentColor;
-    pointer-events: none;
-}
-.color-selector-opacity-pointer {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin-left: -6px;
-    margin-top: -4px;
-    background: currentColor;
-    pointer-events: none;
-}
-.color-selector-opacity-display {
-    display: inline-block;
-    padding: 0 5px;
-}
-.color-selector-adjust-save {
-    border: 2px solid #333;
-    color: #333;
-    text-transform: uppercase;
-    font-weight: 500;
-    cursor: pointer;
-    display: inline-block;
-    padding: 2px 15px;
-    border-radius: 4px;
-    width: 100%;
-    text-align: center;
-}
-.color-selector-adjust-rgb input {
+.color-adjust__rgb input {
     width: 100px;
     border: 0;
 }
-.color-selector-adjust-rgb label {
+.color-adjust__rgb-label {
     width: 20px;
     display: inline-block;
     text-align: center;
 }
-.color-selector-adjust .ts-slider {
+.color-adjust .slider {
     margin: 0;
 }

@@ -40,14 +40,13 @@ const Audio: React.FC<AudioProps> = ({ updateStorage, defaultAudioSource, audioV
     return (
         <div className='opt-section'>
             <div className='opt-section-row'>
-                <div className='opt-source-select'>
-                    {getMessage('optionsSource')}
-                    <SourceSelect
-                        sourceList={audioSource}
-                        source={defaultAudioSource}
-                        onChange={value => updateStorage('defaultAudioSource', value)}
-                    />
-                </div>
+                {getMessage('optionsSource')}
+                <SourceSelect
+                    className='border-bottom-select opt-source-select'
+                    sourceList={audioSource}
+                    source={defaultAudioSource}
+                    onChange={value => updateStorage('defaultAudioSource', value)}
+                />
             </div>
             <div className='opt-section-row'>
                 {getMessage('optionsVolume')}

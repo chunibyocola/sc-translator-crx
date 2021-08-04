@@ -27,21 +27,21 @@ const HistoryItem: React.FC<HistoryItemProps> = ({ historyItem, showResultPanel,
     }, [showResultPanel, translations]);
     
     return (
-        <div className='ts-history-item' ref={itemEle}>
+        <div className='history-item' ref={itemEle}>
             <div
-                className='ts-history-item-content'
+                className='history-item__content'
                 onClick={handleItemClick}
             >
-                <div className='ts-history-item-content-text'>
+                <div className='history-item__content-text'>
                     {text}
                 </div>
-                <div className='ts-history-item-content-result'>
+                <div className='history-item__content-result'>
                     {result}
                 </div>
             </div>
-            <div className='ts-history-item-icons'>
+            <div className='history-item__icons'>
                 <IconFont
-                    className='ts-iconbutton ts-button'
+                    className='iconbutton button'
                     iconName='#icon-GoX'
                     onClick={() => handleRemoveHistory()}
                 />

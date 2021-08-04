@@ -1,26 +1,23 @@
-.ts-result {
+.st-result {
     background: var(--bg-content);
     border-radius: 6px 6px 0 0;
     padding: 10px;
     word-break: break-all;
 }
-.tss-result {
-    margin-bottom: 10px;
-}
-.tss-result .ts-iconfont {
+.st-result__item-stack .iconfont {
     cursor: pointer;
     position: relative;
     bottom: .125em;
 }
-.tss-result .ts-iconfont:first-child {
+.st-result__item-stack + .st-result__item-stack {
+    margin-block-start: 0.8em;
+}
+.st-result__item-stack .iconfont:first-child {
     margin-left: 5px;
 }
-.tss-origin-text {
-    margin-top: 10px;
-}
-.tss-origin-text .tss-origin-raw {
+.st-result__text {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: bottom;
     margin-right: 5px;
     overflow: hidden;
     text-overflow: ellipsis;

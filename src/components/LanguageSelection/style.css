@@ -1,29 +1,13 @@
-.ts-language-selection {
+.language-selection {
     margin: 5px;
     text-align: center;
 }
-.ts-language-selection>.ts-iconfont {
+.language-selection>.iconfont {
     cursor: pointer;
     margin: 0 5px;
 }
-.ts-language-selection-select {
+.language-selection__select {
     position: relative;
     width: 100px;
     display: inline-block;
-}
-.ts-language-selection-select::before {
-    left: 0;
-    right: 0;
-    bottom: 0;
-    content: "\00a0";
-    position: absolute;
-    transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    border-bottom: 1px solid rgba(136, 136, 136, 0.7);
-    pointer-events: none;
-}
-.ts-language-selection-select:hover::before {
-    border-bottom-width: 2px;
-}
-.ts-language-selection-select:focus {
-    background: var(--bg-select-focus);
 }

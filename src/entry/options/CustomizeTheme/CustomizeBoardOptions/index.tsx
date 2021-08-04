@@ -60,42 +60,42 @@ const CustomizeBoardOptions: React.FC<CustomizeBoardOptionsProps> = ({ styleVars
 
     return (
         <div className='customize-board-options'>
-            <div className='customize-board-options-colors'>
-                <p className='colors-head'>{getMessage('themePreset')}</p>
-                <div className='customize-offset'>
+            <div className='customize-board-options__colors'>
+                <p className='customize-board-options__colors-head'>{getMessage('themePreset')}</p>
+                <div className='customize-board-options__colors-offset'>
                     <div
-                        className='customize-offset-item ts-button'
+                        className='customize-board-options__colors-offset-item button'
                         onClick={() => handleOffsetStyleClick(defaultStyleVars)}
                         style={({background: defaultStyleVars['--bg-content']})}
                     />
                     <div
-                        className='customize-offset-item ts-button'
+                        className='customize-board-options__colors-offset-item button'
                         onClick={() => handleOffsetStyleClick(darkStyleVars)}
                         style={{background: darkStyleVars['--bg-content']}}
                     />
                 </div>
-                <p className='colors-head'>{getMessage('themeTextColor')}</p>
-                {textKeyList.map((v) => (<div className='colors-title'>
-                    <span className='colors-label' style={{color: v === changing.targetColor ? '#1F88D6' : '#666666'}}>{i18nMessage[v]}</span>
+                <p className='customize-board-options__colors-head'>{getMessage('themeTextColor')}</p>
+                {textKeyList.map((v) => (<div className='customize-board-options__colors-title'>
+                    <span className='customize-board-options__colors-label' style={{color: v === changing.targetColor ? '#1F88D6' : '#666666'}}>{i18nMessage[v]}</span>
                     <div
-                        className='colors-color ts-button'
+                        className='customize-board-options__colors-color button'
                         style={{background: customizeStyleVars[v]}}
                         onClick={() => handleColorClick(v, customizeStyleVars[v])}
                     />
                 </div>))}
-                <p className='colors-head'>{getMessage('themeBackgroundColor')}</p>
-                {bgKeyList.map((v) => (<div className='colors-title'>
-                    <span className='colors-label' style={{color: v === changing.targetColor ? '#1F88D6' : '#666666'}}>{i18nMessage[v]}</span>
+                <p className='customize-board-options__colors-head'>{getMessage('themeBackgroundColor')}</p>
+                {bgKeyList.map((v) => (<div className='customize-board-options__colors-title'>
+                    <span className='customize-board-options__colors-label' style={{color: v === changing.targetColor ? '#1F88D6' : '#666666'}}>{i18nMessage[v]}</span>
                     <div
-                        className='colors-color ts-button'
+                        className='customize-board-options__colors-color button'
                         style={{background: customizeStyleVars[v]}}
                         onClick={() => handleColorClick(v, customizeStyleVars[v])}
                     />
                 </div>))}
-                <p className='colors-head'>{getMessage('themeThemeName')}</p>
-                <input className='colors-theme-name' ref={themeNameEle} type='text' defaultValue={themeName} />
-                <div className='ts-dividing-line' style={{background: '#000', margin: '10px 0'}}></div>
-                <button className='colors-save' onClick={() => handleSaveBtnClick()}>{getMessage('wordSave')}</button>
+                <p className='customize-board-options__colors-head'>{getMessage('themeThemeName')}</p>
+                <input className='customize-board-options__colors-theme-name' ref={themeNameEle} type='text' defaultValue={themeName} />
+                <div className='dividing-line' style={{background: '#000', margin: '10px 0'}}></div>
+                <button className='customize-board-options__colors-save' onClick={() => handleSaveBtnClick()}>{getMessage('wordSave')}</button>
             </div>
             {changing.targetColor && <ColorSelector
                 initColor={changing.offsetColor}

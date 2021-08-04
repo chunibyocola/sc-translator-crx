@@ -1,4 +1,4 @@
-.ts-web-page-translate {
+.web-page-translate {
     position: fixed;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
     right: 10px;
@@ -8,46 +8,14 @@
     color: var(--text-normal);
     background: var(--bg-content);
 }
-.ts-web-page-translate-error {
+.web-page-translate__error {
     margin-bottom: 10px;
     max-width: 285px;
 }
-.ts-web-page-translate-content {
-    display: flex;
-    align-items: center;
-}
-.ts-web-page-translate-content>.ts-iconfont {
+.web-page-translate__content>.iconfont {
     margin-left: 10px;
-}
-.ts-web-page-translate-select {
-    width: 100px;
-}
-.ts-web-page-translate-select::before {
-    left: 0;
-    right: 0;
-    bottom: 0;
-    content: "\00a0";
-    position: absolute;
-    transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    border-bottom: 1px solid rgba(136, 136, 136, 0.7);
-    pointer-events: none;
-}
-.ts-web-page-translate-select:hover::before {
-    border-bottom-width: 2px;
-}
-.ts-web-page-translate-select:focus {
-    background: var(--bg-select-focus);
-}
-.ts-iconfont-enable, .ts-iconfont-disable {
     font-size: 20px;
 }
-.ts-iconfont-disable {
-    opacity: 0.4;
-}
-.ts-iconfont-enable {
-    cursor: pointer;
-    opacity: 0.7;
-}
-.ts-iconfont-enable:hover {
-    opacity: 1;
+.web-page-translate__select {
+    width: 100px;
 }

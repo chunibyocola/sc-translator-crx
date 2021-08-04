@@ -33,26 +33,26 @@ const RegExpList: React.FC<RegExpListProps> = ({ textPreprocessingRegExpList, on
                 <span>{getMessage('optionsFlags')}</span>
                 <span>{getMessage('optionsReplacement')}</span>
             </div>
-            {regExpList.map((v, i) => (<div className='regexp-list-grid' key={i + timestamp}>
+            {regExpList.map((v, i) => (<div className='regexp-list__grid' key={i + timestamp}>
                 <input type='text' disabled defaultValue={v.pattern} />
                 <input type='text' disabled defaultValue={v.flags} />
                 <input type='text' disabled defaultValue={v.replacement} />
                 {modifyMode && <IconFont
                     iconName='#icon-MdDelete'
-                    className='ts-button'
+                    className='button'
                     onClick={() => {
                         setRegExpList(regExpList.filter(v1 => v1 !== v));
                         setUpdated(true);
                     }}
                 />}
             </div>))}
-            {modifyMode && <div className='regexp-list-grid'>
+            {modifyMode && <div className='regexp-list__grid'>
                 <input type='text' ref={patternEleRef} placeholder={getMessage('optionsPatternCanNotBeEmpty')}/>
                 <input type='text' ref={flagsEleRef} />
                 <input type='text' ref={replacementEleRef} />
                 <IconFont
                     iconName='#icon-MdAdd'
-                    className='ts-button'
+                    className='button'
                     onClick={() => {
                         if (!patternEleRef.current || !flagsEleRef.current || !replacementEleRef.current) { return; }
 

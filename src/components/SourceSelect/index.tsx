@@ -26,23 +26,23 @@ const SourceSelect: React.FC<SourceSelectProps> = ({ onChange, sourceList, sourc
     return (
         <div
             tabIndex={-1}
-            className={`ts-source-select${className ? ' ' + className : ''}${disabled ? ' ts-source-select-disabled' : ''}`}
+            className={`source-select${className ? ' ' + className : ''}${disabled ? ' source-select--disabled' : ''}`}
             onClick={() => !disabled && setShowOptions(!showOptions)}
             onMouseLeave={() => !disabled && setShowOptions(false)}
             onMouseDown={e => disabled && e.preventDefault()}
         >
-            <span className='ts-source-select-value'>
+            <span className='source-select__value'>
                 <SourceFavicon source={source} />
             </span>
             <IconFont iconName='#icon-GoChevronDown' style={{position: 'absolute', right: '2px'}} />
             <SelectOptions
-                className='ts-source-select-options ts-scrollbar'
+                className='source-select__options scrollbar'
                 maxHeight={150}
                 maxWidth={150}
                 show={showOptions}
             >
                 {sourceList.map((v) => (<div
-                    className='ts-source-select-option'
+                    className='source-select__options__option'
                     key={v.source}
                     onClick={() => optionClick(v.source)}
                 >

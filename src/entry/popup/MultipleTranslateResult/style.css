@@ -1,9 +1,9 @@
-.ts-mt-results {
+.popup-multiple-result {
     width: 100%;
     height: 250px;
     overflow-y: auto;
 }
-.ts-mt-result-add-translate-source {
+.popup-multiple-result__add-source {
     word-break: break-all;
     padding: 10px;
 }

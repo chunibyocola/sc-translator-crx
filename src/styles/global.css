@@ -5,30 +5,30 @@
     font-size: 14px;
     line-height: initial !important;
 }
-.ts-button {
+.button {
     cursor: pointer;
 }
-.ts-scrollbar::-webkit-scrollbar {
+.scrollbar::-webkit-scrollbar {
     width:4px;
 }
-.ts-scrollbar::-webkit-scrollbar-track {
+.scrollbar::-webkit-scrollbar-track {
     background: rgb(239, 239, 239);
     border-radius: 2px;
 }
-.ts-scrollbar::-webkit-scrollbar-thumb {
+.scrollbar::-webkit-scrollbar-thumb {
     background: #bfbfbf;
     border-radius: 20px;
 }
-.ts-scrollbar::-webkit-scrollbar-thumb:hover {
+.scrollbar::-webkit-scrollbar-thumb:hover {
     background: #999;
 }
-.ts-iconbutton {
+.iconbutton {
     opacity: 0.7;
 }
-.ts-iconbutton:hover {
+.iconbutton:hover {
     opacity: 1;
 }
-.ts-dividing-line {
+.dividing-line {
     width: 100%;
     height: 1px;
     background: var(--text-normal);
@@ -73,4 +73,30 @@
     100% {
         background-position: calc(200px + 100%) 0;
     }
+}
+.border-bottom-select::before {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "\00a0";
+    position: absolute;
+    transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    border-bottom: 1px solid rgba(136, 136, 136, 0.7);
+    pointer-events: none;
+}
+.border-bottom-select:hover::before {
+    border-bottom-width: 2px;
+}
+.border-bottom-select:focus {
+    background: var(--bg-select-focus);
+}
+.iconfont--enable {
+    opacity: 0.7;
+}
+.iconfont--enable:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+.iconfont--disable {
+    opacity: 0.4;
 }

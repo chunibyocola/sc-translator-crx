@@ -12,6 +12,7 @@ import '../../../../components/MtAddSource/style.css';
 import '../../../../components/MtAddSource/SourceSelector/style.css';
 import '../../../../components/MtResult/style.css';
 import '../../../../components/LanguageSelect/style.css';
+import '../../../../components/TranslateResult/style.css';
 import SourceFavicon from '../../../../components/SourceFavicon';
 import IconFont from '../../../../components/IconFont';
 import { StyleVars } from '../../../../constants/defaultStyleVars';
@@ -25,7 +26,7 @@ const CustomizeBoardDisplay: React.FC<CustomizeBoardDisplayProps> = ({ styleVars
         <div className='customize-board-display'>
             {/* TsResult */}
             <div
-                className="ts-rb"
+                className="panel"
                 style={{
                     background: styleVars['--bg-total'],
                     position: 'unset',
@@ -34,58 +35,64 @@ const CustomizeBoardDisplay: React.FC<CustomizeBoardDisplayProps> = ({ styleVars
                 ref={node => node && node.style.setProperty('color', styleVars['--text-normal'], 'important')}
             >
                 <div
-                    className="ts-rb-header flex-justify-content-space-between"
+                    className="panel__header flex-justify-content-space-between"
                     style={{
                         color: styleVars['--text-icon']
                     }}
                 >
-                    <div className="ts-rb-header-title flex-align-items-center">Sc</div>
-                    <span className="ts-rb-header-icons flex-align-items-center">
+                    <div className="panel__header-logo flex-align-items-center">Sc</div>
+                    <span className="panel__header-icons flex-align-items-center">
                         <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(180deg)', opacity: '1', color: styleVars['--text-icon']}} />
                         <IconFont iconName='#icon-GoPin' style={{color: styleVars['--text-icon']}} />
                     </span>
                 </div>
-                <div className="ts-rb-content">
+                <div className="panel__content">
                     <div style={{color: styleVars['--text-normal']}}>
-                        <div className="ts-raw-text">
-                            <textarea placeholder="Input here" className="ts-rt-text">welcome</textarea>
+                        <div className="raw-text">
+                            <textarea placeholder="Input here" className="raw-text__textarea">welcome</textarea>
                         </div>
-                        <div className="ts-language-selection">
-                            <div className="ts-language-select ts-language-selection-select" style={{color: styleVars['--text-normal']}}>
-                                <span className="badge">
-                                    <span className="badge-text">自动选择</span>
+                        <div className="language-selection">
+                            <div className="language-select language-selection__select border-bottom-select" style={{color: styleVars['--text-normal']}}>
+                                <span className="language-select__badge">
+                                    <span className="language-select__badge-text">自动选择</span>
                                     <IconFont iconName='#icon-GoChevronDown' />
                                 </span>
                             </div>
                             <IconFont iconName='#icon-MdSwap' />
-                            <div className="ts-language-select ts-language-selection-select" style={{color: styleVars['--text-normal'], background: styleVars['--bg-select-focus']}}>
-                                <span className="badge">
-                                    <span className="badge-text">自动选择</span>
+                            <div className="language-select language-selection__select border-bottom-select" style={{color: styleVars['--text-normal'], background: styleVars['--bg-select-focus']}}>
+                                <span className="language-select__badge">
+                                    <span className="language-select__badge-text">自动选择</span>
                                     <IconFont iconName='#icon-GoChevronDown' />
                                 </span>
                             </div>
                         </div>
                     </div>
-                    <div className="ts-result ts-scrollbar" style={{background: styleVars['--bg-content']}}>
-                        <div className="tss-result">
-                            <span>欢迎</span>
-                            <IconFont iconName='#icon-GoUnmute' className='ts-iconbutton ts-button' />
+                    <div className="single-result scrollbar">
+                        <div className='st-result' style={{background: styleVars['--bg-content']}}>
+                            <div className="st-result__item-stack">
+                                <span>欢迎</span>
+                                <IconFont iconName='#icon-copy' className='iconbutton button' />
+                                <IconFont iconName='#icon-GoUnmute' className='iconbutton button' />
+                            </div>
+                            <div className="st-result__item-stack">
+                                <div>名词: 欢迎, 欢迎光临</div>
+                                <div>动词: 欢迎, 迎, 迎接, 赞同, 赞成, 赞许, 揖, 迓, 赞, 接</div>
+                                <div>形容词: 受欢迎, 爽快, 顗</div>
+                            </div>
+                            <div className="st-result__item-stack">
+                                <span className="st-result__text">welcome</span>
+                                <IconFont iconName='#icon-copy' className='iconbutton button' />
+                                <IconFont iconName='#icon-GoUnmute' className='iconbutton button' />
+                            </div>
+                            <div className="tss-phonetic">[ˈwelkəm]</div>
                         </div>
-                        <div>名词: 欢迎, 欢迎光临</div>
-                        <div>动词: 欢迎, 迎, 迎接, 赞同, 赞成, 赞许, 揖, 迓, 赞, 接</div>
-                        <div>形容词: 受欢迎, 爽快, 顗</div>
-                        <div className="tss-origin-text">
-                            <span className="tss-origin-raw">welcome</span>
-                            <IconFont iconName='#icon-GoUnmute' className='ts-iconbutton ts-button' />
-                        </div>
-                        <div className="tss-phonetic">[ˈwelkəm]</div>
                     </div>
-                    <div className="ts-via" style={{background: styleVars['--bg-content']}}>
-                        <div className='ts-dividing-line ts-st-dividing-line' style={{background: styleVars['--text-normal']}}></div>
-                        <div className="ts-via-content">
-                            via
-                            <div className="ts-source-select ts-via-select" style={{color: styleVars['--text-normal']}}>
-                                <span className="ts-source-select-value">
+                    <div className="via" style={{background: styleVars['--bg-content']}}>
+                        <div className='dividing-line' style={{background: styleVars['--text-normal']}}></div>
+                        <div className="via__content">
+                            <span className="via__content-pre">via</span>
+                            <div className="source-select via__content-select">
+                                <span className="source-select__value">
                                     <SourceFavicon source='google.com' />
                                 </span>
                                 <IconFont iconName='#icon-GoChevronDown' style={{position: 'absolute', right: '2px'}} />
@@ -96,93 +103,99 @@ const CustomizeBoardDisplay: React.FC<CustomizeBoardDisplayProps> = ({ styleVars
             </div>
             {/* MultiplePopup */}
             <div 
-                className="container"
+                className="popup-container"
                 style={{margin: '0 25px', transition: 'unset', background: styleVars['--bg-total']}}
                 ref={node => node && node.style.setProperty('color', styleVars['--text-normal'], 'important')}
             >
                 <div
-                    className="title flex-justify-content-space-between"
+                    className="popup-header flex-justify-content-space-between"
                     style={{
                         color: styleVars['--text-icon']
                     }}
                 >
-                    <div className="title-logo flex-align-items-center">Sc</div>
-                    <div className="title-icons flex-align-items-center">
-                        <IconFont iconName='#icon-theme' className='title-icons-enable' style={{color: styleVars['--text-icon']}} />
-                        <IconFont iconName='#icon-MdTranslate' className='title-icons-enable' style={{color: styleVars['--text-icon']}} />
-                        <IconFont iconName='#icon-MdHistory' className='title-icons-disable' style={{color: styleVars['--text-icon']}} />
-                        <IconFont iconName='#icon-MdSettings' className='title-icons-enable' style={{color: styleVars['--text-icon']}} />
+                    <div className="popup-header__logo flex-align-items-center">Sc</div>
+                    <div className="popup-header__icons flex-align-items-center">
+                        <IconFont iconName='#icon-theme' className='iconfont--enable' style={{color: styleVars['--text-icon']}} />
+                        <IconFont iconName='#icon-MdTranslate' className='iconfont--enable' style={{color: styleVars['--text-icon']}} />
+                        <IconFont iconName='#icon-MdHistory' className='iconfont--disable' style={{color: styleVars['--text-icon']}} />
+                        <IconFont iconName='#icon-MdSettings' className='iconfont--enable' style={{color: styleVars['--text-icon']}} />
                     </div>
                 </div>
-                <div className="content" style={{color: styleVars['--text-normal']}}>
-                    <div className="ts-raw-text">
-                        <textarea placeholder="Input here" className="ts-rt-text">welcome</textarea>
+                <div className="popup-container__content" style={{color: styleVars['--text-normal']}}>
+                    <div className="raw-text">
+                        <textarea placeholder="Input here" className="raw-text__textarea">welcome</textarea>
                     </div>
-                    <div className="ts-language-selection">
-                        <div className="ts-language-select ts-language-selection-select" style={{color: styleVars['--text-normal'], background: styleVars['--bg-select-focus']}}>
-                            <span className="badge">
-                                <span className="badge-text">自动选择</span>
+                    <div className="language-selection">
+                        <div className="language-select language-selection__select border-bottom-select" style={{color: styleVars['--text-normal'], background: styleVars['--bg-select-focus']}}>
+                            <span className="language-select__badge">
+                                <span className="language-select__badge-text">自动选择</span>
                                 <IconFont iconName='#icon-GoChevronDown' />
                             </span>
                         </div>
                         <IconFont iconName='#icon-MdSwap' />
-                        <div className="ts-language-select ts-language-selection-select" style={{color: styleVars['--text-normal']}}>
-                            <span className="badge">
-                                <span className="badge-text">日语</span>
+                        <div className="language-select language-selection__select border-bottom-select" style={{color: styleVars['--text-normal']}}>
+                            <span className="language-select__badge">
+                                <span className="language-select__badge-text">日语</span>
                                 <IconFont iconName='#icon-GoChevronDown' />
                             </span>
                         </div>
                     </div>
-                    <div className="ts-mt-results ts-scrollbar">
-                        <div className="ts-mt-result" style={{background: styleVars['--bg-content']}}>
-                            <div className="ts-mt-result-head ts-button flex-justify-content-space-between" style={{color: styleVars['--text-normal']}}>
+                    <div className="popup-multiple-result scrollbar">
+                        <div className="mt-result" style={{background: styleVars['--bg-content']}}>
+                            <div className="mt-result__head button flex-justify-content-space-between" style={{color: styleVars['--text-normal']}}>
                                 <span className="flex-align-items-center">
                                     <SourceFavicon source='google.com' />
-                                    <IconFont iconName='#icon-GoUnmute' style={{marginLeft: '5px'}} className='ts-iconbutton' />
+                                    <IconFont iconName='#icon-copy' className='iconbutton button' style={{marginLeft: '5px'}} />
+                                    <IconFont iconName='#icon-GoUnmute' className='iconbutton' />
                                 </span>
-                                <span className="ts-mt-result-head-icons flex-align-items-center">
+                                <span className="mt-result__head-icons flex-align-items-center">
                                     <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(180deg)'}} />
-                                    <IconFont iconName='#icon-GoX' className='ts-iconbutton' />
+                                    <IconFont iconName='#icon-GoX' className='iconbutton' />
                                 </span>
                             </div>
-                            <div className='ts-dividing-line' style={{background: styleVars['--text-normal']}}></div>
-                            <div className="ts-mt-result-result">
-                                <div style={{marginBottom: '10px'}}>[ˈwelkəm]</div>
-                                <div>
-                                    <span style={{marginRight: '5px'}}>ようこそ</span>
-                                    <IconFont iconName='#icon-GoUnmute' className='ts-iconbutton ts-button' />
+                            <div className='dividing-line' style={{background: styleVars['--text-normal']}}></div>
+                            <div className="translate-result">
+                                <div className="translate-result__item-stack">[ˈwelkəm]</div>
+                                <div className='translate-result__item-stack'>
+                                    <span>ようこそ</span>
+                                    <IconFont iconName='#icon-copy' className='iconbutton button' />
+                                    <IconFont iconName='#icon-GoUnmute' className='iconbutton button' />
                                 </div>
-                                <div style={{marginTop: '10px'}}>名词: 歓迎, ウエルカム, 優待, 奉迎, 遠見, 接待</div>
-                                <div>动词: 歓迎する</div>
+                                <div className="translate-result__item-stack">
+                                    <div>名词: 歓迎, ウエルカム, 優待, 奉迎, 遠見, 接待</div>
+                                    <div>动词: 歓迎する</div>
+                                </div>
                             </div>
                         </div>
-                        <div className="ts-mt-result" style={{background: styleVars['--bg-content']}}>
-                            <div className="ts-mt-result-head ts-button flex-justify-content-space-between" style={{color: styleVars['--text-normal']}}>
+                        <div className="mt-result" style={{background: styleVars['--bg-content']}}>
+                            <div className="mt-result__head button flex-justify-content-space-between" style={{color: styleVars['--text-normal']}}>
                                 <span className="flex-align-items-center">
                                     <SourceFavicon source='bing.com' />
-                                    <IconFont iconName='#icon-GoUnmute' style={{marginLeft: '5px'}} className='ts-iconbutton' />
+                                    <IconFont iconName='#icon-copy' className='iconbutton button' style={{marginLeft: '5px'}} />
+                                    <IconFont iconName='#icon-GoUnmute' className='iconbutton' />
                                 </span>
-                                <span className="ts-mt-result-head-icons flex-align-items-center">
+                                <span className="mt-result__head-icons flex-align-items-center">
                                     <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(180deg)'}} />
-                                    <IconFont iconName='#icon-GoX' className='ts-iconbutton' />
+                                    <IconFont iconName='#icon-GoX' className='iconbutton' />
                                 </span>
                             </div>
-                            <div className='ts-dividing-line' style={{background: styleVars['--text-normal']}}></div>
-                            <div className="ts-mt-result-result">
-                                <div>
-                                    <span style={{marginRight: '5px'}}>ようこそ</span>
-                                    <IconFont iconName='#icon-GoUnmute' className='ts-iconbutton ts-button' />
+                            <div className='dividing-line' style={{background: styleVars['--text-normal']}}></div>
+                            <div className="translate-result">
+                                <div className='translate-result__item-stack'>
+                                    <span>ようこそ</span>
+                                    <IconFont iconName='#icon-copy' className='iconbutton button' />
+                                    <IconFont iconName='#icon-GoUnmute' className='iconbutton button' />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="ts-mt-add-source">
+                    <div className="add-source">
                         <IconFont iconName='#icon-plus' style={{color: styleVars['--text-icon']}} />
                     </div>
                 </div>
             </div>
             {/* SourceSelector */}
-            <div className="ts-mt-source-selector"
+            <div className="source-selector scrollbar"
                 style={{
                     background: styleVars['--bg-content'],
                     color: styleVars['--text-normal'],
@@ -191,21 +204,21 @@ const CustomizeBoardDisplay: React.FC<CustomizeBoardDisplayProps> = ({ styleVars
                     position: 'unset'
                 }}
             >
-                <div className="ts-mt-source-selector-item ts-button">
-                    <span className="ts-mt-source-selector-item-source"><SourceFavicon source='google.com' /></span>
-                    <span className="ts-mt-source-selector-item-icons"><IconFont iconName='#icon-top' /></span>
+                <div className="source-selector__item button">
+                    <span className="source-selector__item-source"><SourceFavicon source='google.com' /></span>
+                    <span className="source-selector__item-icons"><IconFont iconName='#icon-top' /></span>
                 </div>
-                <div className="ts-mt-source-selector-item ts-button" style={{background: styleVars['--bg-item-hover']}}>
-                    <span className="ts-mt-source-selector-item-source"><SourceFavicon source='bing.com' /></span>
-                    <span className="ts-mt-source-selector-item-icons"><IconFont iconName='#icon-top' /></span>
+                <div className="source-selector__item button" style={{background: styleVars['--bg-item-hover']}}>
+                    <span className="source-selector__item-source"><SourceFavicon source='bing.com' /></span>
+                    <span className="source-selector__item-icons"><IconFont iconName='#icon-top' /></span>
                 </div>
-                <div className="ts-mt-source-selector-item ts-button">
-                    <span className="ts-mt-source-selector-item-source"><SourceFavicon source='baidu.com' /></span>
-                    <span className="ts-mt-source-selector-item-icons"><IconFont iconName='#icon-top' /></span>
+                <div className="source-selector__item button">
+                    <span className="source-selector__item-source"><SourceFavicon source='baidu.com' /></span>
+                    <span className="source-selector__item-icons"><IconFont iconName='#icon-top' /></span>
                 </div>
-                <div className="ts-mt-source-selector-item ts-button">
-                    <span className="ts-mt-source-selector-item-source"><SourceFavicon source='mojidict.com' /></span>
-                    <span className="ts-mt-source-selector-item-icons"><IconFont iconName='#icon-top' /></span>
+                <div className="source-selector__item button">
+                    <span className="source-selector__item-source"><SourceFavicon source='mojidict.com' /></span>
+                    <span className="source-selector__item-icons"><IconFont iconName='#icon-top' /></span>
                 </div>
             </div>
         </div>

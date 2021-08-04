@@ -15,7 +15,7 @@ const SourceFavicon: React.FC<SourceFaviconProps> = ({ source }) => {
     return (
         <>
             <img
-                className='ts-favicon'
+                className='favicon'
                 src={getFavicon(source)}
                 alt='favicon'
             />

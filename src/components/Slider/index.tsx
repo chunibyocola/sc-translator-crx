@@ -71,21 +71,21 @@ const Slider: React.FC<SliderProps> = ({ defaultValue, min, max, step, marks, va
     }, [defaultValue, handleValueChange]);
 
     return (
-        <div ref={sliderEle} className='ts-slider' onMouseDown={handleSliderMouseDown}>
-            <div className='ts-slider-rail'></div>
-            <div className='ts-slider-track' style={{width: `${pointerLeft}%`}}></div>
-            <div className='ts-slider-pointer' style={{left: `${pointerLeft}%`}}></div>
+        <div ref={sliderEle} className='slider' onMouseDown={handleSliderMouseDown}>
+            <div className='slider__rail'></div>
+            <div className='slider__rail-track' style={{width: `${pointerLeft}%`}}></div>
+            <div className='slider__rail-pointer' style={{left: `${pointerLeft}%`}}></div>
             {valueLabelDisplay && <div
-                className='ts-slider-label'
+                className='slider__label'
                 style={{left: `${pointerLeft}%`}}
             >
                 {valueLabelFormat?.(value) ?? value}
             </div>}
             {marks?.map((v, i) => (<>
-                <span className={`ts-slider-mark${value > v.value ? ' ts-slider-mark-active' : ''}`} style={{left: `${calculatePointerLeftByValue(v.value)}%`}}></span>
+                <span className={`slider__mark${value > v.value ? ' slider__mark-active' : ''}`} style={{left: `${calculatePointerLeftByValue(v.value)}%`}}></span>
                 <span
                     key={i}
-                    className='ts-slider-mark-label'
+                    className='slider__mark-label'
                     style={{left: `${calculatePointerLeftByValue(v.value)}%`}}
                     onMouseDown={(e) => {
                         handleMarkMouseDown(v.value);

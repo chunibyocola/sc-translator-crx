@@ -96,9 +96,9 @@ const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = ({ autoT
                 to={to}
                 languageCodes={mtLangCode}
             />
-            <div className='ts-mt-results ts-scrollbar'>
+            <div className='popup-multiple-result scrollbar'>
                 {translations.length === 0 ? 
-                    <div className='ts-mt-result-add-translate-source'>{getMessage('sentenceAddTranslateSource')}</div> :
+                    <div className='popup-multiple-result__add-source'>{getMessage('sentenceAddTranslateSource')}</div> :
                 translations.map(({ source, translateRequest }) => (
                     <MtResult
                         source={source}

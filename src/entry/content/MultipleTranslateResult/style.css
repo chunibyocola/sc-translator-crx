@@ -1,8 +1,8 @@
-.ts-mt-results {
+.multiple-result {
     width: 100%;
     overflow-y: auto;
 }
-.ts-mt-result-add-translate-source {
+.multiple-result__add-source {
     word-break: break-all;
     padding: 10px;
 }

@@ -7,38 +7,38 @@
     padding: 10px;
     color: #666;
 }
-.customize-offset {
+.customize-board-options__colors-offset {
     display: flex;
 }
-.customize-offset-item {
+.customize-board-options__colors-offset-item {
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
     width: 20px;
     height: 20px;
     margin: 5px;
     border-radius: 4px;
 }
-.colors-title {
+.customize-board-options__colors-title {
     margin: 2px;
 }
-.colors-color {
+.customize-board-options__colors-color {
     box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 5px 0px;
     display: inline-block;
     width: 100px;
     height: 20px;
     vertical-align: middle;
 }
-.colors-label {
+.customize-board-options__colors-label {
     display: inline-block;
     width: 100px;
 }
-.colors-head {
+.customize-board-options__colors-head {
     margin: 7px 0;
 }
-.colors-save {
+.customize-board-options__colors-save {
     margin: 0 auto;
     display: block;
     width: 150px;
 }
-.colors-theme-name {
+.customize-board-options__colors-theme-name {
     width: 100%;
 }

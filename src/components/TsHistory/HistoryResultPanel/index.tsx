@@ -26,33 +26,33 @@ const HistoryResultPanel: React.FC<HistoryResultPanelProps> = ({ translations, t
 
     return (
         <div
-            className='ts-history-result-panel-wrap'
+            className='history-result-panel'
             style={{left: `${pos.x}px`, top: `${pos.y}px`, display: translations?.length > 0 ? 'block' : 'none'}}
         >
             <div
-                className='ts-history-result-panel ts-scrollbar'
+                className='history-result-panel__container scrollbar'
                 ref={panelEle}
             >
-                {translations.map(({ source, translateRequest }) => (<div className='ts-mt-result' key={source}>
-                    <div className='ts-mt-result-head'>
+                {translations.map(({ source, translateRequest }) => (<div className='mt-result' key={source}>
+                    <div className='mt-result__head'>
                         <span className='flex-align-items-center'>
                             <SourceFavicon source={source} />
                             {translateRequest.status === 'finished' && <>
                                 <IconFont
-                                    className='ts-iconbutton ts-button'
+                                    className='iconbutton button'
                                     iconName='#icon-copy'
                                     style={{marginLeft: '5px'}}
                                     onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(translateRequest.result.text); }}
                                 />
                                 <IconFont
-                                    className='ts-iconbutton ts-button'
+                                    className='iconbutton button'
                                     iconName='#icon-GoUnmute'
                                     onClick={(e) => { e.stopPropagation(); sendAudio(translateRequest.result.text, { source, from: translateRequest.result.from }); }}
                                 />
                             </>}
                         </span>
                     </div>
-                    <div className='ts-dividing-line'></div>
+                    <div className='dividing-line'></div>
                     <TranslateResult
                         translateRequest={translateRequest}
                         readText={(text, from) => sendAudio(text, { source, from })}

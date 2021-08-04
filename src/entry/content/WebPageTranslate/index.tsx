@@ -108,12 +108,12 @@ const WebPageTranslate: React.FC = () => {
         oldChromeMsg.current = chromeMsg;
     }, [chromeMsg, working, dispach]);
 
-    return (<div className='ts-web-page-translate'
+    return (<div className='web-page-translate'
         style={show ? {} : {display: 'none'}}
         onMouseDown={e => e.stopPropagation()}
         onMouseUp={e => e.stopPropagation()}
     >
-        {error && <div className='ts-web-page-translate-error'>
+        {error && <div className='web-page-translate__error'>
             <ErrorMessage
                 errorCode={error}
                 retry={() => {
@@ -122,15 +122,15 @@ const WebPageTranslate: React.FC = () => {
                 }}
             />
         </div>}
-        <div className='ts-web-page-translate-content'>
+        <div className='web-page-translate__content flex-align-items-center'>
             <SourceSelect
-                className='ts-web-page-translate-select'
+                className='web-page-translate__select border-bottom-select'
                 source={source}
                 sourceList={webPageTranslateSource}
                 onChange={source => dispach({ type: 'change-source', source })}
             />
             <LanguageSelect
-                className='ts-web-page-translate-select'
+                className='web-page-translate__select border-bottom-select'
                 value={targetLanguage}
                 langCodes={langCodes}
                 langLocal={langLocal}
@@ -139,7 +139,7 @@ const WebPageTranslate: React.FC = () => {
             />
             <IconFont
                 iconName='#icon-switch'
-                className={working ? 'ts-iconfont-enable' : 'ts-iconfont-disable'}
+                className={working ? 'iconfont--enable' : 'iconfont--disable'}
                 title={wPTI18nCache.switchDisplayModeOfResult}
                 onClick={() => {
                     if (!working) { return; }
@@ -149,7 +149,7 @@ const WebPageTranslate: React.FC = () => {
             />
             <IconFont
                 iconName='#icon-start'
-                className={source === workingSourceAndLanguage.source && targetLanguage === workingSourceAndLanguage.targetLanguage ? 'ts-iconfont-disable' : 'ts-iconfont-enable'}
+                className={source === workingSourceAndLanguage.source && targetLanguage === workingSourceAndLanguage.targetLanguage ? 'iconfont--disable' : 'iconfont--enable'}
                 title={wPTI18nCache.startWebPageTranslating}
                 onClick={() => {
                     if (source === workingSourceAndLanguage.source && targetLanguage === workingSourceAndLanguage.targetLanguage) { return; }
@@ -167,7 +167,7 @@ const WebPageTranslate: React.FC = () => {
             />
             <IconFont
                 iconName='#icon-GoX'
-                className='ts-iconfont-enable'
+                className='iconfont--enable'
                 title={wPTI18nCache.closeWebPageTranslating}
                 onClick={() => {
                     closeWebPageTranslating();

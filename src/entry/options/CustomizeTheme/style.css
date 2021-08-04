@@ -3,7 +3,7 @@
     flex-wrap: wrap;
     width: 100%;
 }
-.theme-item-badge {
+.customize-theme__item-badge {
     display: flex;
     width: 100px;
     height: 100px;
@@ -16,17 +16,17 @@
     text-align: center;
     margin-bottom: 5px;
 }
-.theme-item {
+.customize-theme__item {
     margin-right: 10px;
     width: 100px;
     line-height: 1em;
     font-size: 14px;
 }
-.theme-item-box {
+.customize-theme__item-box {
     height: 30px;
     overflow: hidden;
 }
-.theme-item-box-content {
+.customize-theme__item-box-content {
     height: 100%;
     width: 100%;
     overflow: hidden;
@@ -35,15 +35,15 @@
     justify-content: center;
     align-items: center;
 }
-.theme-item-box-content .ts-iconfont {
+.customize-theme__item-box-content .iconfont {
     cursor: pointer;
     font-size: 20px !important;
 }
-.theme-item-box-content .not-editable {
+.customize-theme__item-box-content .not-editable {
     cursor: not-allowed;
     opacity: 0.5;
 }
-.theme-add {
+.customize-theme__add {
     width: 100px;
     height: 100px;
     display: flex;
@@ -53,13 +53,13 @@
     border: 1px dashed currentColor;
     opacity: 0.5;
 }
-.theme-add:hover {
+.customize-theme__add:hover {
     opacity: 1;
 }
-.theme-add .ts-iconfont {
+.customize-theme__add .iconfont {
     font-size: 50px !important;
 }
-.customize-board {
+.customize-theme__board {
     background: rgb(0, 0, 0, 0.55);
     position: fixed;
     width: 100%;
@@ -71,12 +71,12 @@
     z-index: 10000;
     overflow-y: auto;
 }
-.customize-board-close {
+.customize-theme__board-close {
     position: absolute;
     top: 5px;
     right: 5px;
     color: #fff;
 }
-.customize-board-close-icon {
+.customize-theme__board-close .iconfont {
     font-size: 50px !important;
 }

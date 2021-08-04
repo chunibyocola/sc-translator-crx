@@ -9,7 +9,7 @@ type IconFontProps = {
 const IconFont: React.FC<IconFontProps> = ({ iconName, className, style, onClick, onMouseUp, onMouseDown, title }) => {
     return (
         <svg
-            className={`ts-iconfont ${className ? className : ''}`}
+            className={`iconfont ${className ? className : ''}`}
             aria-hidden='true'
             style={style}
             onClick={onClick}

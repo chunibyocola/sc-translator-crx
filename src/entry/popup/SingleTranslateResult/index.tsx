@@ -95,7 +95,7 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ autoTrans
                 languageCodes={langCode[source]}
             />
             <div style={{minHeight: '250px'}}>
-                <div className='ts-scrollbar' style={{maxHeight: '300px', overflowY: 'auto'}}>
+                <div className='scrollbar' style={{maxHeight: '300px', overflowY: 'auto'}}>
                     <TsResult
                         translateRequest={translateRequest}
                         readText={handleReadText}

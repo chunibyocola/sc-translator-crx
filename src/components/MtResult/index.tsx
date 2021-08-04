@@ -19,9 +19,9 @@ const MtResult: React.FC<MtResultProps> = ({ source, translateRequest, remove, r
     const [fold, setFold] = useState(false);
 
     return (
-        <div className='ts-mt-result'>
+        <div className='mt-result'>
             <div
-                className='ts-mt-result-head ts-button flex-justify-content-space-between'
+                className='mt-result__head button flex-justify-content-space-between'
                 onClick={() => setFold(!fold)}
             >
                 <span className='flex-align-items-center'>
@@ -29,19 +29,19 @@ const MtResult: React.FC<MtResultProps> = ({ source, translateRequest, remove, r
                     {translateRequest.status === 'loading' && <IconsLoadingSkeleton />}
                     {translateRequest.status === 'finished' && <>
                         <IconFont
-                            className='ts-iconbutton'
+                            className='iconbutton'
                             iconName='#icon-copy'
                             style={{marginLeft: '5px'}}
                             onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(translateRequest.result.text); }}
                         />
                         <IconFont
-                            className='ts-iconbutton'
+                            className='iconbutton'
                             iconName='#icon-GoUnmute'
                             onClick={(e) => { e.stopPropagation(); readText(translateRequest.result.text, translateRequest.result.from); }}
                         />
                     </>}
                 </span>
-                <span className='ts-mt-result-head-icons flex-align-items-center'>
+                <span className='mt-result__head-icons flex-align-items-center'>
                     <IconFont
                         iconName='#icon-GoChevronDown'
                         style={!fold ? {transform: 'rotate(180deg)'} : {}}
@@ -49,11 +49,11 @@ const MtResult: React.FC<MtResultProps> = ({ source, translateRequest, remove, r
                     <IconFont
                         iconName='#icon-GoX'
                         onClick={remove}
-                        className='ts-iconbutton'
+                        className='iconbutton'
                     />
                 </span>
             </div>
-            <div className='ts-dividing-line' style={fold ? {display: 'none'} : {}}></div>
+            <div className='dividing-line' style={fold ? {display: 'none'} : {}}></div>
             <TranslateResult
                 translateRequest={translateRequest}
                 style={fold ? {display: 'none'} : {}}

@@ -1,28 +1,28 @@
-.color-selector-platter {
+.platter {
     position: relative;
     width: 256px;
     height: 256px;
 }
-.color-selector-platter-pointer {
+.platter__pointer {
     pointer-events: none;
     position: absolute;
     border-radius: 50%;
     border: 2px solid #000;
     z-index: 2;
 }
-.color-selector-platter-pointer-inside {
+.platter__pointerpointer-inside {
     width: 5px;
     height: 5px;
     border-radius: 50%;
     border: 2px solid #fff;
     box-sizing: unset;
 }
-.color-selector-platter-back {
+.platter__back {
     pointer-events: none;
     width: 100%;
     height: 100%;
 }
-.color-selector-platter-front {
+.platter__front {
     pointer-events: none;
     position: absolute;
     top: 0px;

@@ -1,4 +1,4 @@
-.ts-rb {
+.panel {
     border-radius: 6px;
     color: var(--text-normal) !important;
     position: fixed;
@@ -8,10 +8,10 @@
     box-shadow: rgba(0, 0, 0, 0.8) 0px 0px 10px 0px;
     min-width: 250px;
 }
-.ts-rb-content {
+.panel__content {
     margin: 0 5px 5px 5px;
 }
-.ts-rb-header {
+.panel__header {
     cursor: move;
     user-select: none;
     width: 100%;
@@ -19,13 +19,13 @@
     color: var(--text-icon);
     height: 30px;
 }
-.ts-rb-header-title {
+.panel__header-logo {
     font-weight: bold;
     font-size: 14px;
 }
-.ts-rb-header-icons {
+.panel__header-icons {
     margin-right: 5px;
 }
-.ts-rb-header-icons .ts-iconfont {
+.panel__header-icons .iconfont {
     opacity: 0.6;
 }

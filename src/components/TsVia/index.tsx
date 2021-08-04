@@ -11,15 +11,15 @@ type TsViaProps = {
 
 const TsVia: React.FC<TsViaProps> = ({ sourceChange, source, disableSourceChange }) => {
     return (
-        <div className='ts-via'>
-            <div className='ts-dividing-line'></div>
-            <div className='ts-via-content'>
-                <span className='ts-via-pre'>via</span>
+        <div className='via'>
+            <div className='dividing-line'></div>
+            <div className='via__content'>
+                <span className='via__content-pre'>via</span>
                 <SourceSelect
                     source={source}
                     sourceList={translateSource}
                     onChange={sourceChange}
-                    className='ts-via-select'
+                    className='via__content-select'
                     disabled={disableSourceChange}
                 />
             </div>

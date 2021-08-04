@@ -1,4 +1,4 @@
-.color-selector-bar {
+.main-color-bar {
     margin: 0 15px;
     border-radius: 3px;
     position: relative;
@@ -6,7 +6,7 @@
     width: 20px;
     background: linear-gradient(to bottom,rgb(255,0,0),rgb(255,0,255),rgb(0,0,255),rgb(0,255,255),rgb(0,255,0),rgb(255,255,0),rgb(255,0,0));
 }
-.color-selector-bar-pointer {
+.main-color-bar__pointer {
     pointer-events: none;
     left: -2px;
     top: -2px;

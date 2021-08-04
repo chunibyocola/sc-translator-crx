@@ -25,35 +25,35 @@ const TranslateResult: React.FC<TranslateResultProps> = ({ translateRequest, sty
             translateRequest.status === 'error' ?
                 <ErrorMessage errorCode={translateRequest.errorCode} retry={retry} /> :
             <>
-                {translateRequest.result.phonetic && translateRequest.result.from === LANG_EN && <div className='translate-result-item-stack'>
+                {translateRequest.result.phonetic && translateRequest.result.from === LANG_EN && <div className='translate-result__item-stack'>
                     {translateRequest.result.phonetic}
                 </div>}
-                <div className='translate-result-item-stack'>
+                <div className='translate-result__item-stack'>
                     <span>
                         {resultToString(translateRequest.result.result)}
                         {insertResult && <IconFont
-                            className='ts-iconbutton ts-button'
+                            className='iconbutton button'
                             iconName='#icon-insert'
                             onClick={() => insertResult(resultToString(translateRequest.result.result))}
                         />}
                         <IconFont
-                            className='ts-iconbutton ts-button'
+                            className='iconbutton button'
                             iconName='#icon-copy'
                             onClick={() => navigator.clipboard.writeText(resultToString(translateRequest.result.result))}
                         />
                         <IconFont
-                            className='ts-iconbutton ts-button'
+                            className='iconbutton button'
                             iconName='#icon-GoUnmute'
                             onClick={() => readText(resultToString(translateRequest.result.result), translateRequest.result.to)}
                         />
                     </span>
                 </div>
-                {translateRequest.result.dict && translateRequest.result.dict.length > 0 && <div className='translate-result-item-stack'>
+                {translateRequest.result.dict && translateRequest.result.dict.length > 0 && <div className='translate-result__item-stack'>
                     {translateRequest.result.dict.map((v, i) => (
                         <div key={i}>{v}</div>
                     ))}
                 </div>}
-                {translateRequest.result.related && translateRequest.result.from === LANG_EN && <div className='translate-result-item-stack'>
+                {translateRequest.result.related && translateRequest.result.from === LANG_EN && <div className='translate-result__item-stack'>
                     {getMessage('wordRelated')}: {translateRequest.result.related.map((v, i) => (<span key={`${v}${i}`}>
                         {i !== 0 && ', '}<span className={setText && 'span-link'} onClick={() => setText?.(v)}>{v}</span>
                     </span>))}

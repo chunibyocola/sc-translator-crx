@@ -1,26 +1,16 @@
-.title {
+.popup-header {
     color: var(--text-icon);
     height: 30px;
 }
-.title-logo {
+.popup-header__logo {
     font-weight: bold;
     font-size: 16px;
     margin-left: 5px;
 }
-.title-icons {
+.popup-header__icons {
     margin-right: 5px;
 }
-.title-icons .ts-iconfont {
+.popup-header__icons .iconfont {
     font-size: 20px !important;
-    cursor: pointer;
     color: var(--text-icon);
-}
-.title-icons .ts-iconfont:hover {
-    opacity: 1;
-}
-.title-icons-enable {
-    opacity: 0.9;
-}
-.title-icons-disable {
-    opacity: 0.6;
 }

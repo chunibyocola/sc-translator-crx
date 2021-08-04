@@ -31,18 +31,18 @@ const SourceSelector: React.FC<SourceSelectorProps> = ({ show, hideCallback, tra
 
     return (
         <div
-            className='ts-mt-source-selector ts-scrollbar'
+            className='source-selector scrollbar'
             style={{display: show ? 'block': 'none'}}
             onMouseLeave={hideCallback}
         >
             {sourceList.map(v => (<div
-                className='ts-mt-source-selector-item ts-button'
+                className='source-selector__item button'
                 onClick={() => handleAddSourcePush(v.source)}
             >
-                <span className='ts-mt-source-selector-item-source'>
+                <span className='source-selector__item-source'>
                     <SourceFavicon source={v.source} />
                 </span>
-                <span className='ts-mt-source-selector-item-icons'>
+                <span className='source-selector__item-icons'>
                     <IconFont
                         iconName='#icon-top'
                         onClick={(e) => {

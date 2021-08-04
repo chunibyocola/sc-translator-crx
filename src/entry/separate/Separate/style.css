@@ -1,18 +1,18 @@
-.container {
+.separate-container {
     transition: background 0.2s ease-in-out;
     width: 100%;
     height: 100%;
     background: var(--bg-total);
     color: var(--text-normal) !important;
 }
-.content {
+.separate-container__content {
     padding: 0px 5px 5px 5px;
     background: var(--bg-total);
 }
-.ts-mt-results {
+.separate-container__multiple-result {
     width: 100%;
 }
-.ts-mt-result-add-translate-source {
+.separate-container__add-source {
     word-break: break-all;
     padding: 10px;
 }

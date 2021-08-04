@@ -95,7 +95,7 @@ const SelectOptions: React.FC<SelectOptionsProps> = ({
 
     return (
         <div
-            className={`ts-select-options${className ? ' ' + className : ''}`}
+            className={`select-options${className ? ' ' + className : ''}`}
             ref={optionsElementRef}
             style={Object.assign({ display: showOptions ? 'block' : 'none' }, optionsStyle, style)}
             onMouseLeave={onMouseLeave}

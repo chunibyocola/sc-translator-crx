@@ -44,10 +44,10 @@ type BarMenuProps = {
 
 const SideBarMenu: React.FC<BarMenuProps> = ({ signal }) => {
     return (
-        <div className='options-sidebar-menu'>
-            <div className='options-sidebar-items'>
+        <div className='side-bar-menu'>
+            <div className='side-bar-menu__items'>
                 {menusItems.map((item) => (<div
-                    className='options-menu-item ts-button'
+                    className='options-menu__item button'
                     key={item.id}
                     onClick={() => signal('menu-item-click', item.id)}
                 >
@@ -62,17 +62,17 @@ const NavBarMenu: React.FC<BarMenuProps> = ({ signal }) => {
     const [showNavBarMenu, setShowNavBarMenu] = useState(false);
 
     return (
-        <div className={`options-navbar-menu${showNavBarMenu ? ' options-navbar-sidebar-show' : ''}`}>
-            <IconFont className='options-navbar-menu-icon ts-button' onClick={() => setShowNavBarMenu(true)} iconName='#icon-menu' />
-            <div className='options-navbar-menu-backdrop' onClick={() => setShowNavBarMenu(false)}></div>
-            <div className='options-navbar-sidebar'>
-                <div className='options-navbar-sidebar-brand'>
+        <div className={`nav-bar-menu${showNavBarMenu ? ' nav-bar-menu--show' : ''}`}>
+            <IconFont className='nav-bar-menu__icon button' onClick={() => setShowNavBarMenu(true)} iconName='#icon-menu' />
+            <div className='nav-bar-menu__backdrop' onClick={() => setShowNavBarMenu(false)}></div>
+            <div className='nav-bar-menu__sidebar'>
+                <div className='nav-bar-menu__sidebar-brand'>
                     <span style={{fontWeight: 'bold', marginRight: '10px'}}>Sc</span>
                     {getMessage('optionsTitle')}
                 </div>
-                <div className='options-navbar-sidebar-items'>
+                <div className='nav-bar-menu__sidebar-items'>
                     {menusItems.map((item) => (<div
-                        className='options-menu-item ts-button'
+                        className='options-menu__item button'
                         key={item.id}
                         onClick={() => {
                             setShowNavBarMenu(false);

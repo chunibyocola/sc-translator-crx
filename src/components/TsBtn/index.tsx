@@ -185,7 +185,7 @@ const TsBtn: React.FC = () => {
 
     return (
         <div
-            className='ts-btn'
+            className='translate-button'
             style={{
                 display: isEnableTranslate && showBtn ? 'block' : 'none',
                 left: `${pos.x}px`,

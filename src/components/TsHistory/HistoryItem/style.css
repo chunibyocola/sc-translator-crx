@@ -1,14 +1,14 @@
-.ts-history-item {
+.history-item {
     display: flex;
     width: 100%;
     height: 50px;
     overflow: hidden;
     font-size: 14px;
 }
-.ts-history-item:hover {
+.history-item:hover {
     background: var(--bg-item-hover);
 }
-.ts-history-item-content {
+.history-item__content {
     color: var(--text-normal);
     padding-left: 5px;
     flex: 1;
@@ -16,19 +16,19 @@
     cursor: pointer;
     height: 50px;
 }
-.ts-history-item-content-text, .ts-history-item-content-result {
+.history-item__content-text, .history-item__content-result {
     height: 25px;
     line-height: 25px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.ts-history-item-icons {
+.history-item__icons {
     justify-content: center;
     align-items: center;
     display: flex;
     width: 30px;
 }
-.ts-history-item-icons .ts-iconfont {
+.history-item__icons .iconfont {
     font-size: 15px !important;
 }

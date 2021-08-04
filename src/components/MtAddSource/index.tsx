@@ -21,11 +21,11 @@ const MtAddSource: React.FC<MtAddSourceProps> = ({ translations, addSource }) =>
     }, []);
 
     return (
-        <div className='ts-mt-add-source'>
+        <div className='add-source'>
             <IconFont
                 iconName='#icon-plus'
                 onClick={plusOnClick}
-                className='ts-mt-add-source-bage ts-button'
+                className='add-source__badge button'
             />
             <SourceSelector
                 show={showSourceSelector}

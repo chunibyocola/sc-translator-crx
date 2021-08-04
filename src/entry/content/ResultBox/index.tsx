@@ -127,7 +127,7 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
     return (
         <div
             ref={mtEle}
-            className='ts-rb'
+            className='panel'
             style={{
                 display: show ? 'block' : 'none',
                 left: `${pinPos.x}px`,
@@ -138,31 +138,31 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
             onMouseDown={e => e.stopPropagation()}
         >
             <div
-                className='ts-rb-header flex-justify-content-space-between'
+                className='panel__header flex-justify-content-space-between'
                 onMouseDown={e => drag(e.nativeEvent, pinPos, changePinPos, handleMouseUpCallback)}
             >
-                <span className='ts-rb-header-title flex-align-items-center'>Sc</span>
-                <span className='ts-rb-header-icons flex-align-items-center'>
+                <span className='panel__header-logo flex-align-items-center'>Sc</span>
+                <span className='panel__header-icons flex-align-items-center'>
                     <IconFont
                         iconName='#icon-GoChevronDown'
                         onClick={() => setShowRtAndLs(!showRtAndLs)}
                         style={showRtAndLs ? {transform: 'rotate(180deg)', opacity: '1'} : {}}
-                        className='ts-button'
+                        className='button'
                     />
                     <IconFont
                         iconName='#icon-GoPin'
                         onClick={() => handleSetPinning(!pinning)}
                         style={pinning ? {transform: 'rotate(-45deg)', opacity: '1'} : {}}
-                        className='ts-button'
+                        className='button'
                     />
                     <IconFont
-                        className='ts-iconbutton ts-button'
+                        className='iconbutton button'
                         iconName='#icon-GoX'
                         onClick={handleCloseIconClick}
                     />
                 </span>
             </div>
-            <div className='ts-rb-content'>
+            <div className='panel__content'>
                 {multipleTranslateMode ? <MultipleTranslateResult
                     showRtAndLs={showRtAndLs}
                     maxHeightGap={maxHeightGap}

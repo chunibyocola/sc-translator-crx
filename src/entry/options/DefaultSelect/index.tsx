@@ -23,6 +23,7 @@ const DefaultSelect: React.FC<DefaultSelectProps> = ({ message, onChange, value,
         <div className='default-select'>
             {getMessage(message)}
             <select
+                className='default-select__select'
                 value={value}
                 onChange={handleOnChange}
             >

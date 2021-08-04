@@ -58,13 +58,13 @@ const LanguageSelect: React.FC<LanguageSelectProps> = ({ value, onChange, classN
 
     return (
         <div
-            className={`ts-language-select${className ? ' ' + className : ''}`}
+            className={`language-select${className ? ' ' + className : ''}`}
             ref={languageSelectElementRef}
             tabIndex={-1}
             onClick={() => setShowOptions(v => !v)}
         >
-            <span className='badge'>
-                <span className='badge-text'>{langLocal[value] ?? langLocal['']}</span>
+            <span className='language-select__badge'>
+                <span className='language-select__badge-text'>{langLocal[value] ?? langLocal['']}</span>
                 <IconFont iconName='#icon-GoChevronDown' />
             </span>
             <SelectOptions
@@ -73,25 +73,25 @@ const LanguageSelect: React.FC<LanguageSelectProps> = ({ value, onChange, classN
                 onClick={e => e.stopPropagation()}
             >
                 {recentLangs?.map((v) => (v in langLocal && <div
-                    className='ts-language-select-option'
+                    className='language-select__option'
                     key={'recent-' + v}
                     onClick={() => handleOptionClick(v)}
                 >
                     {langLocal[v]}
                 </div>))}
-                <div className='ts-language-select-search'>
+                <div className='language-select__search'>
                     <IconFont iconName='#icon-search' />
-                    <div className='ts-language-select-search-input'>
+                    <div className='language-select__search-input'>
                         <input type='text' placeholder={getMessage('sentenceSearchLanguages')} onChange={handleInputChange} ref={searchInputElementRef} />
                     </div>
                 </div>
                 {searchLangCodes.length > 0 ? searchLangCodes.map((v) => (<div
-                    className='ts-language-select-option'
+                    className='language-select__option'
                     key={v['code']}
                     onClick={() => handleOptionClick(v['code'])}
                 >
                     {v['name']}
-                </div>)) : <div className='ts-language-select-no-result'>
+                </div>)) : <div className='language-select__no-result'>
                     {getMessage('sentenceNoResult')}
                 </div>}
             </SelectOptions>

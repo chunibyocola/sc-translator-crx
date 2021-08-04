@@ -48,28 +48,28 @@ const ColorAdjust: React.FC<ColorAdjustProps> = ({ selectedColor, adjust, opacit
     }, [selectedColor, opacity, save]);
 
     return (
-        <div className='color-selector-adjust'>
-            <div className='color-selector-selected-color-outer'>
-                <div className='color-selector-selected-color' style={{background: `rgba(${selectedColor.r}, ${selectedColor.g}, ${selectedColor.b}, ${opacity})`}}></div>
+        <div className='color-adjust'>
+            <div className='color-adjust__selected'>
+                <div className='color-adjust__selected-color' style={{background: `rgba(${selectedColor.r}, ${selectedColor.g}, ${selectedColor.b}, ${opacity})`}}></div>
             </div>
-            <div className='color-selector-adjust-rgb'>
-                <label className='color-selector-adjust-rgb-label' htmlFor='adjust-h'>#</label>
+            <div className='color-adjust__rgb'>
+                <label className='color-adjust__rgb-label' htmlFor='adjust-h'>#</label>
                 <input id='adjust-h' type='text' value={hex} onChange={handleHexInputChange} />
             </div>
-            <div className='color-selector-adjust-rgb'>
-                <label className='color-selector-adjust-rgb-label' htmlFor='adjust-r'>R</label>
+            <div className='color-adjust__rgb'>
+                <label className='color-adjust__rgb-label' htmlFor='adjust-r'>R</label>
                 <input id='adjust-r' type='text' value={selectedColor.r} onChange={e => handleRgbInputChange('r', e)} onClick={e => (e.target as HTMLInputElement).select()} />
             </div>
-            <div className='color-selector-adjust-rgb'>
-                <label className='color-selector-adjust-rgb-label' htmlFor='adjust-g'>G</label>
+            <div className='color-adjust__rgb'>
+                <label className='color-adjust__rgb-label' htmlFor='adjust-g'>G</label>
                 <input id='adjust-g' type='text' value={selectedColor.g} onChange={e => handleRgbInputChange('g', e)} onClick={e => (e.target as HTMLInputElement).select()} />
             </div>
-            <div className='color-selector-adjust-rgb'>
-                <label className='color-selector-adjust-rgb-label' htmlFor='adjust-b'>B</label>
+            <div className='color-adjust__rgb'>
+                <label className='color-adjust__rgb-label' htmlFor='adjust-b'>B</label>
                 <input id='adjust-b' type='text' value={selectedColor.b} onChange={e => handleRgbInputChange('b', e)} onClick={e => (e.target as HTMLInputElement).select()} />
             </div>
-            <div className='color-selector-adjust-rgb'>
-                <label className='color-selector-adjust-rgb-label'>A</label>
+            <div className='color-adjust__rgb'>
+                <label className='color-adjust__rgb-label'>A</label>
                 <input type='text' value={opacity} disabled/>
             </div>
             <Slider
@@ -80,7 +80,7 @@ const ColorAdjust: React.FC<ColorAdjustProps> = ({ selectedColor, adjust, opacit
                 mouseDownCallback={v => opacityChange(Number(v.toFixed(2)))}
                 mouseMoveCallback={v => opacityChange(Number(v.toFixed(2)))}
             />
-            <button style={{width: '100%'}} onClick={handleSaveBtnClick}>{getMessage('themeSaveColor')}</button>
+            <button className='color-adjust__save-btn' onClick={handleSaveBtnClick}>{getMessage('themeSaveColor')}</button>
         </div>
     );
 };

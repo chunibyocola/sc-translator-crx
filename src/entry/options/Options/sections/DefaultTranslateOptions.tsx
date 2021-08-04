@@ -124,23 +124,22 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
                 </div>
             </> : <>
                 <div className='opt-section-row'>
-                    <div className='opt-source-select'>
-                        {getMessage('optionsSource')}
-                        <SourceSelect
-                            sourceList={translateSource}
-                            source={defaultTranslateSource}
-                            onChange={value => {
-                                const { source, from, to } = switchTranslateSource(value, {
-                                    source: defaultTranslateSource,
-                                    from: defaultTranslateFrom,
-                                    to: defaultTranslateTo
-                                });
-                                updateStorage('defaultTranslateSource', source);
-                                updateStorage('defaultTranslateFrom', from);
-                                updateStorage('defaultTranslateTo', to);
-                            }}
-                        />
-                    </div>
+                    {getMessage('optionsSource')}
+                    <SourceSelect
+                        className='border-bottom-select opt-source-select'
+                        sourceList={translateSource}
+                        source={defaultTranslateSource}
+                        onChange={value => {
+                            const { source, from, to } = switchTranslateSource(value, {
+                                source: defaultTranslateSource,
+                                from: defaultTranslateFrom,
+                                to: defaultTranslateTo
+                            });
+                            updateStorage('defaultTranslateSource', source);
+                            updateStorage('defaultTranslateFrom', from);
+                            updateStorage('defaultTranslateTo', to);
+                        }}
+                    />
                 </div>
                 <div className='opt-section-row'>
                     <DefaultSelect

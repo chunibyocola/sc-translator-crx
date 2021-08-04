@@ -3,50 +3,50 @@
     width: 400px;
     padding: 5px;
 }
-.host-list-add {
+.host-list__add {
     display: flex;
     margin-bottom: 3px;
 }
-.host-list-add input {
+.host-list__add input {
     flex: 1;
 }
-.host-list-add button {
+.host-list__add button {
     width: 50px;
 }
-.host-list-box {
+.host-list__box {
     height: 150px;
     overflow-y: auto;
 }
-.host-list-item {
+.host-list__item {
     cursor: pointer;
     display: flex;
     padding: 5px;
 }
-.host-list-item:hover {
+.host-list__item:hover {
     background-color: var(--bg-item-hover);
 }
-.host-list-item:not(:last-child) {
+.host-list__item:not(:last-child) {
     border-bottom: 1px solid #999;
 }
-.host-list-item input {
+.host-list__item input {
     flex: 1;
 }
-.host-list-item span {
+.host-list__item span {
     vertical-align: middle;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     flex: 8;
 }
-.host-list-menu {
+.host-list__menu {
     margin-top: 3px;
     border-top: 1px solid #999;
     padding-top: 3px;
 }
-.host-list-menu input {
+.host-list__menu input {
     margin-left: 10px;
     margin-right: 20px;
 }
-.host-list-menu button {
+.host-list__menu button {
     width: 50px;
 }

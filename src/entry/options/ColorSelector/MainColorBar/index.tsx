@@ -24,8 +24,8 @@ const MainColorBar: React.FC<MainColorBarProps> = ({ top, topChange, width, heig
     }, [handlePointerDrag]);
 
     return (
-        <div className='color-selector-bar' style={{width: `${width}px`, height: `${height}px`}} onMouseDown={handleMouseDown}>
-            <div className='color-selector-bar-pointer' style={{top: `${top + barPointerOffsetTop}px`}}></div>
+        <div className='main-color-bar' style={{width: `${width}px`, height: `${height}px`}} onMouseDown={handleMouseDown}>
+            <div className='main-color-bar__pointer' style={{top: `${top + barPointerOffsetTop}px`}}></div>
         </div>
     );
 };

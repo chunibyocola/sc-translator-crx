@@ -18,7 +18,7 @@ const TestTextProcessing: React.FC = () => {
     return (
         <div className='test-text-processing'>
             <textarea onChange={e => setTestText(e.target.value)} />
-            <div className='test-text-processing-icon'>
+            <div className='test-text-processing__icon'>
                 <IconFont
                     iconName='#icon-GoChevronRight'
                 />

@@ -119,25 +119,25 @@ const Separate: React.FC = () => {
     }, [rememberStwSizeAndPosition]);
 
     return (
-        <div id="sc-translator-root" className='container'>
-            <div className="title flex-justify-content-space-between">
-                <div className='title-logo flex-align-items-center'>Sc</div>
-                <div className='title-icons flex-align-items-center'>
+        <div id="sc-translator-root" className='separate-container'>
+            <div className="popup-header flex-justify-content-space-between">
+                <div className='popup-header__logo flex-align-items-center'>Sc</div>
+                <div className='popup-header__icons flex-align-items-center'>
                     <IconFont
                         iconName='#icon-theme'
-                        className='title-icons-enable'
+                        className='iconfont--enable'
                         onClick={() => handleThemeToggle()}
                         title={getMessage('popupSwitchToTheNextTheme')}
                     />
                     <IconFont
                         iconName='#icon-MdSettings'
-                        className='title-icons-enable'
+                        className='iconfont--enable'
                         onClick={openOptionsPage}
                         title={getMessage('popupOpenOptionsPage')}
                     />
                 </div>
             </div>
-            <div className="content">
+            <div className="separate-container__content">
                 <RawText
                     defaultValue={text}
                     rawTextTranslate={handleSetText}
@@ -150,9 +150,9 @@ const Separate: React.FC = () => {
                     to={to}
                     languageCodes={mtLangCode}
                 />
-                <div className='ts-mt-results ts-scrollbar'>
+                <div className='separate-container__multiple-result scrollbar'>
                     {translations.length === 0 ? 
-                        <div className='ts-mt-result-add-translate-source'>{getMessage('sentenceAddTranslateSource')}</div> :
+                        <div className='separate-container__add-source'>{getMessage('sentenceAddTranslateSource')}</div> :
                     translations.map(({ source, translateRequest }) => (
                         <MtResult
                             source={source}

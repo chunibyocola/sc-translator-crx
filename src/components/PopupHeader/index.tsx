@@ -47,18 +47,18 @@ const PopupHeader: React.FC = () => {
     }, [styleVarsList, styleVarsIndex]);
 
     return (
-        <div className="title flex-justify-content-space-between">
-            <div className='title-logo flex-align-items-center'>Sc</div>
-            <div className='title-icons flex-align-items-center'>
+        <div className="popup-header flex-justify-content-space-between">
+            <div className='popup-header__logo flex-align-items-center'>Sc</div>
+            <div className='popup-header__icons flex-align-items-center'>
                 <IconFont
                     iconName='#icon-theme'
-                    className='title-icons-enable'
+                    className='iconfont--enable'
                     onClick={() => handleThemeToggle()}
                     title={getMessage('popupSwitchToTheNextTheme')}
                 />
                 <IconFont
                     iconName='#icon-MdTranslate'
-                    className={`${isEnableTranslate && isContentScriptEnabled? 'title-icons-enable': 'title-icons-disable'}`}
+                    className={`${isEnableTranslate && isContentScriptEnabled? 'iconfont--enable': 'iconfont--disable'}`}
                     onClick={() => isContentScriptEnabled && handleIsEnableToggle(
                         translateHostList,
                         translateBlackListMode,
@@ -69,7 +69,7 @@ const PopupHeader: React.FC = () => {
                 />
                 <IconFont
                     iconName='#icon-MdHistory'
-                    className={`${isEnableHistory && isContentScriptEnabled ? 'title-icons-enable' : 'title-icons-disable'}`}
+                    className={`${isEnableHistory && isContentScriptEnabled ? 'iconfont--enable' : 'iconfont--disable'}`}
                     onClick={() => isContentScriptEnabled && handleIsEnableToggle(
                         historyHostList,
                         historyBlackListMode,
@@ -80,7 +80,7 @@ const PopupHeader: React.FC = () => {
                 />
                 <IconFont
                     iconName='#icon-MdSettings'
-                    className='title-icons-enable'
+                    className='iconfont--enable'
                     onClick={openOptionsPage}
                     title={getMessage('popupOpenOptionsPage')}
                 />

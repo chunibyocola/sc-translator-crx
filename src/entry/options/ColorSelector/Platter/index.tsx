@@ -25,15 +25,15 @@ const Platter: React.FC<PlatterProps> = ({ mainColor, posChange, pos, width, hei
     }, [handlePointerDrag]);
 
     return (
-        <div className='color-selector-platter' style={{width: `${width}px`, height: `${height}px`}} onMouseDown={handleMouseDown}>
-            <div className='color-selector-platter-back' style={{background: `rgb(${mainColor.r}, ${mainColor.g}, ${mainColor.b})`}}></div>
-            <div className='color-selector-platter-front' style={{background: 'linear-gradient(to right, #fff, transparent)'}}></div>
-            <div className='color-selector-platter-front' style={{background: 'linear-gradient(to bottom, transparent, #000)'}}></div>
+        <div className='platter' style={{width: `${width}px`, height: `${height}px`}} onMouseDown={handleMouseDown}>
+            <div className='platter__back' style={{background: `rgb(${mainColor.r}, ${mainColor.g}, ${mainColor.b})`}}></div>
+            <div className='platter__front' style={{background: 'linear-gradient(to right, #fff, transparent)'}}></div>
+            <div className='platter__front' style={{background: 'linear-gradient(to bottom, transparent, #000)'}}></div>
             <div
-                className='color-selector-platter-pointer'
+                className='platter__pointer'
                 style={{top: `${pos.y + platterPointerOffsetPos.y}px`, left: `${pos.x + platterPointerOffsetPos.x}px`}}
             >
-                <div className='color-selector-platter-pointer-inside'></div>
+                <div className='platter__pointerpointer-inside'></div>
             </div>
         </div>
     );

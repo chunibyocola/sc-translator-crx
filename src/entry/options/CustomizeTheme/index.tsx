@@ -48,7 +48,7 @@ const CustomizeTheme: React.FC<CustomizeThemeProps> = ({ styleVarsList, styleVar
     return (
         <div className='customize-theme'>
             {styleVarsList.map(({ name, styleVars, editable }, i) => (<div
-                className='theme-item'
+                className='customize-theme__item'
                 onMouseEnter={() => setHoverIndex(i)}
                 onMouseLeave={() => {
                     setHoverIndex(null);
@@ -56,7 +56,7 @@ const CustomizeTheme: React.FC<CustomizeThemeProps> = ({ styleVarsList, styleVar
                 }}
             >
                 <div
-                    className='theme-item-badge ts-button'
+                    className='customize-theme__item-badge button'
                     style={{
                         background: styleVars['--bg-content'],
                         color: styleVars['--text-normal'],
@@ -66,17 +66,17 @@ const CustomizeTheme: React.FC<CustomizeThemeProps> = ({ styleVarsList, styleVar
                 >
                     {name}
                 </div>
-                <div className='theme-item-box'>
+                <div className='customize-theme__item-box'>
                     <div
-                        className='theme-item-box-content'
+                        className='customize-theme__item-box-content'
                         style={{transition: 'all 0.3s', marginTop: `${clickIndex === i ? '-60' : hoverIndex === i ? '-30' : '0'}px`}}
                     >
                         {name}
                     </div>
-                    <div className='theme-item-box-content'>
+                    <div className='customize-theme__item-box-content'>
                         <IconFont iconName='#icon-horizontalDots' className={!editable ? 'not-editable' : ''} onClick={() => editable && setClickIndex(i)} />
                     </div>
-                    <div className='theme-item-box-content'>
+                    <div className='customize-theme__item-box-content'>
                         <IconFont
                             iconName='#icon-MdDelete'
                             onClick={() => {
@@ -99,7 +99,7 @@ const CustomizeTheme: React.FC<CustomizeThemeProps> = ({ styleVarsList, styleVar
                 </div>
             </div>))}
             <div
-                className='theme-add'
+                className='customize-theme__add'
                 onClick={() => {
                     setShowBoard(true);
                     setStyleVars(defaultStyleVars);
@@ -107,8 +107,8 @@ const CustomizeTheme: React.FC<CustomizeThemeProps> = ({ styleVarsList, styleVar
                 }}>
                 <IconFont iconName='#icon-MdAdd' />
             </div>
-            {showBoard && <div className='customize-board'>
-                <span className='customize-board-close ts-button'>
+            {showBoard && <div className='customize-theme__board'>
+                <span className='customize-theme__board-close button'>
                     <IconFont
                         className='customize-board-close-icon'
                         iconName='#icon-GoX'

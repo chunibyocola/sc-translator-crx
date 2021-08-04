@@ -1,4 +1,4 @@
-.ts-history {
+.history {
     font-size: 13px;
     z-index: 2147483647;
     user-select: none;
@@ -13,17 +13,17 @@
     transition: transform 0.2s ease 0s;
     padding-top: 40px;
 }
-.ts-history-show {
+.history--show {
     transform: translate3d(0px, 0px, 0px);
     transition: transform 0.3s ease-in 0s;
 }
-.ts-history-show .ts-history-unfold {
+.history--show .history__unfold {
     opacity: 0;
     right: 10px;
     pointer-events: none;
     transition: right 0s ease 0s, opacity 0s ease 0s;
 }
-.ts-history-unfold {
+.history__unfold {
     opacity: 1;
     position: fixed;
     top: 30%;
@@ -42,14 +42,14 @@
     transition: right 0.25s ease-in 0.2s, opacity 0.35s ease-in 0.2s;
     color: #000;
 }
-.ts-history-unfold .ts-history-unfold-text {
+.history__unfold .history__unfold-text {
     display: inline-block;
     font-size: 12px;
     transform: rotate(-180deg);
     writing-mode: tb-rl;
     font-weight: bold;
 }
-.ts-history-head {
+.history__head {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -62,26 +62,26 @@
     justify-content: space-between;
     align-items: center;
 }
-.ts-history-content {
+.history__content {
     overflow-y: auto;
     height: 100%;
     width: 100%;
     border-right: 1px solid var(--bg-total);
 }
-.ts-history-norecord {
+.history_no-record {
     margin: 20px;
 }
-.ts-history-head-icons {
+.history-head__pin {
     margin-right: 5px;
     color: var(--text-icon);
     opacity: 0.6;
     cursor: pointer;
 }
-.ts-history-head-icons-check {
+.history-head__pin--ning {
     transform: rotate(-45deg);
     opacity: 1;
 }
-.ts-history-e-resize {
+.history__e-resize {
     display: none;
     height: 100%;
     position: absolute;
@@ -89,9 +89,9 @@
     right: -2px;
     bottom: 0;
 }
-.ts-history-e-resize:hover {
+.history__e-resize:hover {
     cursor: e-resize;
 }
-.ts-history-show .ts-history-e-resize {
+.history--show .history__e-resize {
     display: block;
 }

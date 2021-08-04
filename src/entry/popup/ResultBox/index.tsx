@@ -17,9 +17,9 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
     const { autoTranslateAfterInput } = useOptions<PickedOptions>(useOptionsDependency);
 
     return (
-        <div id="sc-translator-root" className='container'>
+        <div id="sc-translator-root" className='popup-container'>
             <PopupHeader />
-            <div className="content">
+            <div className="popup-container__content">
                 {multipleTranslateMode ? <MultipleTranslateResult
                     autoTranslateAfterInput={autoTranslateAfterInput}
                 /> : <SingleTranslateResult

@@ -51,15 +51,15 @@ const HostList: React.FC<HostListProps> = ({ list, updateList }) => {
 
     return (
         <div className='host-list'>
-            <div className='host-list-add'>
+            <div className='host-list__add'>
                 <input ref={textEle} type='text' />
                 <button onClick={handleAddHostBtnClick}>
                     <IconFont iconName='#icon-MdAdd' />
                 </button>
             </div>
-            <div className='host-list-box'>
+            <div className='host-list__box'>
                 {list.map((v, i) => (
-                    <div className='host-list-item' key={i} onClick={() => handleCheckBoxChange(i)}>
+                    <div className='host-list__item' key={i} onClick={() => handleCheckBoxChange(i)}>
                         <input
                             type='checkbox'
                             checked={i in checked}
@@ -68,7 +68,7 @@ const HostList: React.FC<HostListProps> = ({ list, updateList }) => {
                     </div>
                 ))}
             </div>
-            <div className='host-list-menu'>
+            <div className='host-list__menu'>
                 <input
                     type='checkbox'
                     checked={checkAll}

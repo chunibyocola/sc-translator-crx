@@ -1,29 +1,29 @@
 .options-menu {
     display: inline-block;
 }
-.options-menu-item {
+.options-menu__item {
     padding: 10px 0 10px 60px;
     width: 250px;
 }
-.options-menu-item:hover {
+.options-menu__item:hover {
     opacity: 0.6;
 }
-.options-sidebar-menu {
+.side-bar-menu {
     padding-top: 56px;
     height: 100%;
     position: fixed;
     left: 0;
     top: 0;
 }
-.options-sidebar-items {
+.side-bar-menu__items {
     height: 100%;
     overflow: auto;
 }
-.options-navbar-menu-icon {
+.nav-bar-menu__icon {
     font-size: 250% !important;
     margin-right: 10px;
 }
-.options-navbar-menu-backdrop {
+.nav-bar-menu__backdrop {
     background-color: rgba(0,0,0,.6);
     top: 0;
     bottom: 0;
@@ -33,7 +33,7 @@
     z-index: 10000;
     display: none;
 }
-.options-navbar-sidebar {
+.nav-bar-menu__sidebar {
     position: fixed;
     left: 0;
     top: 0;
@@ -44,7 +44,7 @@
     transform: translateX(-100%);
     z-index: 10001;
 }
-.options-navbar-sidebar-brand {
+.nav-bar-menu__sidebar-brand {
     font-size: 115%;
     height: 56px;
     display: flex;
@@ -52,12 +52,12 @@
     padding-left: 20px;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
 }
-.options-navbar-sidebar-items {
+.nav-bar-menu__sidebar-items {
     width: 250px;
 }
-.options-navbar-sidebar-show .options-navbar-sidebar {
+.nav-bar-menu--show .nav-bar-menu__sidebar {
     transform: translateX(0);
 }
-.options-navbar-sidebar-show .options-navbar-menu-backdrop {
+.nav-bar-menu--show .nav-bar-menu__backdrop {
     display: block;
 }

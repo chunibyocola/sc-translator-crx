@@ -6,7 +6,7 @@
     resize: none;
     height: 55px;
 }
-.test-text-processing-icon {
+.test-text-processing__icon {
     display: flex;
     justify-content: center;
     align-items: center;

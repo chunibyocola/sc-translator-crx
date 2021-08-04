@@ -53,7 +53,7 @@ const TsHistory: React.FC = () => {
 
     return (
         <div
-            className={`ts-history${fold ? '' : ' ts-history-show'}`}
+            className={`history${fold ? '' : ' history--show'}`}
             style={{display: isEnableHistory && isEnableTranslate ? 'block' : 'none', width: `${historyWidth}px`}}
             onMouseEnter={() => {
                 if (pinning) { return; }
@@ -69,15 +69,15 @@ const TsHistory: React.FC = () => {
             onMouseUp={e => e.stopPropagation()}
             onMouseDown={e => e.stopPropagation()}
         >
-            <div className='ts-history-unfold'>
+            <div className='history__unfold'>
                 <IconFont iconName='#icon-GoChevronRight' />
-                <span className='ts-history-unfold-text'>Sc</span>
+                <span className='history__unfold-text'>Sc</span>
             </div>
-            <div className='ts-history-head'>
+            <div className='history__head'>
                 {getMessage('contentHistoryTitle')}
                 <IconFont
                     iconName='#icon-GoPin'
-                    className={`ts-history-head-icons${pinning ? ' ts-history-head-icons-check' : ''}`}
+                    className={`history-head__pin${pinning ? ' history-head__pin--ning' : ''}`}
                     onClick={() => {
                         const nextPinning = !pinning;
                         rememberHistoryPanelStatus && setLocalStorage({ 'historyPanelStatus': { ...historyPanelStatus, pin: nextPinning } });
@@ -87,7 +87,7 @@ const TsHistory: React.FC = () => {
                 />
             </div>
             <div
-                className='ts-history-e-resize'
+                className='history__e-resize'
                 onMouseDown={({ clientX }) => (mouseDrag(({ x }) => (
                     x !== clientX && setHistoryWidth(midInThree(100, x - 1 + historyWidth - clientX, 300))
                 ), ({ x }) => {
@@ -98,8 +98,8 @@ const TsHistory: React.FC = () => {
                     }
                 }))}
             ></div>
-            <div className='ts-history-content ts-scrollbar'>
-                {translateHistoryState.length === 0 ? <div className='ts-history-norecord'>
+            <div className='history__content scrollbar'>
+                {translateHistoryState.length === 0 ? <div className='history_no-record'>
                         {getMessage('contentNoRecord')}
                 </div> : translateHistoryState.map((v) => (
                     <HistoryItem historyItem={v} key={v.translateId} showResultPanel={handleShowResultPanel} removeHistory={handleRemoveHistory} />
