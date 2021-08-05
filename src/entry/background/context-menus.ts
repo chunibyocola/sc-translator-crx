@@ -56,32 +56,46 @@ const translateCurrentPage: OnContextMenuClick = (info, tab) => {
 };
 
 const updateContextMenus = (contextMenus: OptionsContextMenu[]) => {
-    chrome.contextMenus.removeAll();
-
+    // To fix the issue of context menus disappear after opening incognito page.
+    // Replace chrome.contextMenus.removeAll() with the below codes.
+    // Also, there is a better way, using contextMenus' visible.
+    // But I don't want the wrapper even there is only a single context menu.
+    // Will be switch to "contextMenus' visible" if the below way cause bugs.
     contextMenus.forEach((contextMenu) => {
-        contextMenu.enabled && chrome.contextMenus.create({
-            id: contextMenu.id,
-            title: getI18nMessage(`contextMenus_${contextMenu.id}`),
-            contexts: contextMenusContexts[contextMenu.id]
-        })
-    });
-
-    // open separate window
-    chrome.contextMenus.create({
-        id: 'separate_window',
-        title: getI18nMessage('extOpenSeparateWindowDescription'),
-        contexts: ['browser_action'],
-        onclick: openSeparateTranslateWindow
-    });
-
-    // open this page with pdf viewer
-    chrome.contextMenus.create({
-        id: 'open_this_page_with_pdf_viewer',
-        title: getI18nMessage('extOpenWithPdfViewerDescription'),
-        contexts: ['browser_action'],
-        onclick: openThisPageWithPdfViewer
+        if (contextMenu.enabled) {
+            chrome.contextMenus.create({
+                id: contextMenu.id,
+                title: getI18nMessage(`contextMenus_${contextMenu.id}`),
+                contexts: contextMenusContexts[contextMenu.id]
+            }, () => {
+                // Catch the "Cannot create item with duplicate id" error, and ignore it.
+                if (chrome.runtime.lastError) { return; }
+            });
+        }
+        else {
+            chrome.contextMenus.remove(contextMenu.id, () => {
+                // Catch the "Cannot find menu item with id" error, and ignore it.
+                if (chrome.runtime.lastError) { return; }
+            });
+        }
     });
 };
+
+// open separate window
+chrome.contextMenus.create({
+    id: 'separate_window',
+    title: getI18nMessage('extOpenSeparateWindowDescription'),
+    contexts: ['browser_action'],
+    onclick: openSeparateTranslateWindow
+});
+
+// open this page with pdf viewer
+chrome.contextMenus.create({
+    id: 'open_this_page_with_pdf_viewer',
+    title: getI18nMessage('extOpenWithPdfViewerDescription'),
+    contexts: ['browser_action'],
+    onclick: openThisPageWithPdfViewer
+});
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
     switch (info.menuItemId) {
