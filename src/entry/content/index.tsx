@@ -13,53 +13,51 @@ import { getExtensionURL, getLocalStorage, onExtensionMessage } from '../../publ
 import defaultOptions from '../../constants/defaultOptions';
 
 import '../../styles/global.css';
-import { injectFontSizeStyle, injectThemeStyle } from '../../public/inject-style';
+import { appendColorVarsStyle, appendFontSizeStyle } from '../../public/inject-style';
 import { DefaultOptions } from '../../types';
 import WebPageTranslate from './WebPageTranslate';
 
 const init = (options: DefaultOptions) => {
-  initOptions(options);
+    initOptions(options);
 
-  options.multipleTranslateMode ? initMultipleTranslate(options) : initSingleTranslate(options);
+    options.multipleTranslateMode ? initMultipleTranslate(options) : initSingleTranslate(options);
 
-  const root = document.createElement('div');
-  root.id = 'sc-translator-shadow';
-  root.setAttribute('style', 'all: initial;');
-  document.documentElement.appendChild(root);
+    const root = document.createElement('div');
+    root.id = 'sc-translator-shadow';
+    root.setAttribute('style', 'all: initial;');
+    document.documentElement.appendChild(root);
 
-  const shadowRoot = root.attachShadow({ mode: 'open' });
+    const shadowRoot = root.attachShadow({ mode: 'open' });
 
-  const contentStyle = document.createElement('link');
-  contentStyle.rel = 'stylesheet';
-  contentStyle.href = getExtensionURL('/static/css/content.css');
-  shadowRoot.appendChild(contentStyle);
+    const contentStyle = document.createElement('link');
+    contentStyle.rel = 'stylesheet';
+    contentStyle.href = getExtensionURL('/static/css/content.css');
+    shadowRoot.appendChild(contentStyle);
 
-  const themeStyle = document.createElement('style');
-  injectThemeStyle(themeStyle);
-  injectFontSizeStyle(themeStyle);
-  shadowRoot.appendChild(themeStyle);
+    appendColorVarsStyle(shadowRoot);
+    appendFontSizeStyle(shadowRoot);
 
-  const div = document.createElement('div');
-  div.setAttribute('style', 'all: initial;');
-  shadowRoot.appendChild(div);
+    const div = document.createElement('div');
+    div.setAttribute('style', 'all: initial;');
+    shadowRoot.appendChild(div);
 
-  const app = document.createElement('div');
-  app.id = 'sc-translator-root';
-  div.appendChild(app);
+    const app = document.createElement('div');
+    app.id = 'sc-translator-root';
+    div.appendChild(app);
 
-  contentStyle.onload = () => ReactDOM.render(
-    <Provider store={store}>
-      <TsBtn />
-      <TsHistory />
-      <ResultBox multipleTranslateMode={options.multipleTranslateMode} />
-      <WebPageTranslate />
-    </Provider>, 
-    app
-  );
+    contentStyle.onload = () => ReactDOM.render(
+        <Provider store={store}>
+            <TsBtn />
+            <TsHistory />
+            <ResultBox multipleTranslateMode={options.multipleTranslateMode} />
+            <WebPageTranslate />
+        </Provider>,
+        app
+    );
 };
 
 getLocalStorage<DefaultOptions>(defaultOptions, init);
 
 onExtensionMessage((request, sender, sendResponse) => {
-  if (request === 'Are you enabled?') sendResponse({ host: window.location.host });
+    if (request === 'Are you enabled?') sendResponse({ host: window.location.host });
 });

@@ -3,10 +3,16 @@ import { listenOptionsChange } from './options';
 import { defaultStyleVars, StyleVars, StyleVarsList } from '../constants/defaultStyleVars';
 import { DefaultOptions } from '../types';
 
+// color vars
 let styleVarsList: StyleVarsList = [];
 let styleVarsIndex = 0;
-let translatePanelFontSize: number | null = null;
-let style: HTMLStyleElement;
+
+let colorVarsStyle: HTMLStyleElement;
+
+// font size
+let translatePanelFontSize: number;
+
+let fontSizeStyle: HTMLStyleElement;
 
 const styleVarsToStyleText = (styleVars: StyleVars) => {
     styleVars = { ...defaultStyleVars, ...styleVars };
@@ -17,61 +23,49 @@ const fontSizeToStyleText = (fontSize: number) => {
     return `#sc-translator-root{font-size:${fontSize}px}`;
 };
 
-const updateStyle = () => {
-    // theme style
-    let text = '';
+const updateColorVarsStyleInnerText = () => {
     if (styleVarsIndex < styleVarsList.length && styleVarsList[styleVarsIndex] && styleVarsList[styleVarsIndex].styleVars) {
-        text = styleVarsToStyleText(styleVarsList[styleVarsIndex].styleVars);
+        colorVarsStyle.innerText = styleVarsToStyleText(styleVarsList[styleVarsIndex].styleVars);
     }
     else {
-        text = styleVarsToStyleText(defaultStyleVars);
+        colorVarsStyle.innerText = styleVarsToStyleText(defaultStyleVars);
     }
-
-    // font-size of translate panel style
-    translatePanelFontSize && (text += fontSizeToStyleText(translatePanelFontSize));
-
-    setStyleInnerText(text);
 };
 
-const setStyleInnerText = (text: string) => {
-    style.innerText = text;
+const updateFontSizeStyleInnerText = () => {
+    fontSizeStyle.innerText = fontSizeToStyleText(translatePanelFontSize);
 };
 
-const injectStyle = (styleElement?: HTMLStyleElement) => {
-    if (style) { return; }
-
-    style = styleElement ?? document.createElement('style');
-    styleElement || document.head.appendChild(style);
-};
-
-export const injectThemeStyle = (styleElement?: HTMLStyleElement) => {
-    injectStyle(styleElement);
+export const appendColorVarsStyle = (targetParent: HTMLElement | ShadowRoot) => {
+    colorVarsStyle = document.createElement('style');
+    targetParent.appendChild(colorVarsStyle);
 
     type PickedOptions = Pick<DefaultOptions, 'styleVarsIndex' | 'styleVarsList'>;
     const keys: (keyof PickedOptions)[] = ['styleVarsList', 'styleVarsIndex'];
     getLocalStorage<PickedOptions>(keys, (storage) => {
         styleVarsList = storage.styleVarsList;
         styleVarsIndex = storage.styleVarsIndex;
-        updateStyle();
+        updateColorVarsStyleInnerText();
     });
     listenOptionsChange<PickedOptions>(keys, (changes) => {
         changes.styleVarsList !== undefined && (styleVarsList = changes.styleVarsList);
         changes.styleVarsIndex !== undefined && (styleVarsIndex = changes.styleVarsIndex);
-        updateStyle();
+        updateColorVarsStyleInnerText();
     });
 };
 
-export const injectFontSizeStyle = (styleElement?: HTMLStyleElement) => {
-    injectStyle(styleElement);
+export const appendFontSizeStyle = (targetParent: HTMLElement | ShadowRoot) => {
+    fontSizeStyle = document.createElement('style');
+    targetParent.appendChild(fontSizeStyle);
 
     type PickedOptions = Pick<DefaultOptions, 'translatePanelFontSize'>;
     const keys: (keyof PickedOptions)[] = ['translatePanelFontSize'];
     getLocalStorage<PickedOptions>(keys, (storage) => {
         translatePanelFontSize = storage.translatePanelFontSize;
-        updateStyle();
+        updateFontSizeStyleInnerText();
     });
     listenOptionsChange<PickedOptions>(keys, (changes) => {
         changes.translatePanelFontSize !== undefined && (translatePanelFontSize = changes.translatePanelFontSize);
-        updateStyle();
+        updateFontSizeStyleInnerText();
     });
 };
