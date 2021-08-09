@@ -299,6 +299,15 @@
     "optionsLearnMoreAboutTextPreprocessing": {
         "message": "深入瞭解文本預處理。"
     },
+    "optionsCustomizeStyle": {
+        "message": "自定義樣式"
+    },
+    "optionsCustomizeStyleDescription": {
+        "message": "在此輸入的 CSS 將會注入到除了設置頁外的所有頁面。"
+    },
+    "optionsCustomizeStyleNotice": {
+        "message": "注意：不能保證元素和類名不會更改。一旦元素和類名被更改了，你在此輸入的 CSS 可能會造成樣式錯亂，然後你可能會需要調整你所輸入的 CSS。"
+    },
     "themePreset": {
         "message": "預設"
     },

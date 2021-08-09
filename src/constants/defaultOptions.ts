@@ -55,7 +55,8 @@ const defaultOptions: DefaultOptions = {
     enableInsertResult: false,
     autoInsertResult: false,
     textPreprocessingRegExpList: [],
-    textPreprocessingPreset: { convertCamelCase: false }
+    textPreprocessingPreset: { convertCamelCase: false },
+    customizeStyleText: ''
 };
 
 export default defaultOptions;

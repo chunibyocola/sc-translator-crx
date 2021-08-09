@@ -94,4 +94,5 @@ export type DefaultOptions = {
     autoInsertResult: boolean;
     textPreprocessingRegExpList: TextPreprocessingRegExp[];
     textPreprocessingPreset: TextPreprocessingPreset;
+    customizeStyleText: string;
 };

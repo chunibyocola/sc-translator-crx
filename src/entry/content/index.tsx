@@ -13,7 +13,7 @@ import { getExtensionURL, getLocalStorage, onExtensionMessage } from '../../publ
 import defaultOptions from '../../constants/defaultOptions';
 
 import '../../styles/global.css';
-import { appendColorVarsStyle, appendFontSizeStyle } from '../../public/inject-style';
+import { appendColorVarsStyle, appendCustomizeStyle, appendFontSizeStyle } from '../../public/inject-style';
 import { DefaultOptions } from '../../types';
 import WebPageTranslate from './WebPageTranslate';
 
@@ -36,6 +36,7 @@ const init = (options: DefaultOptions) => {
 
     appendColorVarsStyle(shadowRoot);
     appendFontSizeStyle(shadowRoot);
+    appendCustomizeStyle(shadowRoot);
 
     const div = document.createElement('div');
     div.setAttribute('style', 'all: initial;');

@@ -8,7 +8,7 @@ import { initMultipleTranslate, initSingleTranslate } from '../../redux/init';
 import { initOptions } from '../../public/options';
 import { getLocalStorage } from '../../public/chrome-call';
 import defaultOptions from '../../constants/defaultOptions';
-import { appendColorVarsStyle, appendFontSizeStyle } from '../../public/inject-style';
+import { appendColorVarsStyle, appendCustomizeStyle, appendFontSizeStyle } from '../../public/inject-style';
 import ResultBox from './ResultBox';
 import { DefaultOptions } from '../../types';
 
@@ -17,6 +17,7 @@ const init = (options: DefaultOptions) => {
 
     appendColorVarsStyle(document.head);
     appendFontSizeStyle(document.head);
+    appendCustomizeStyle(document.head);
 
     options.multipleTranslateMode ? initMultipleTranslate(options) : initSingleTranslate(options);
 

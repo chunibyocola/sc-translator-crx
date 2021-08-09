@@ -1,0 +1,8 @@
+.customize-style-textarea textarea {
+    width: 95%;
+    resize: vertical;
+    display: block;
+    padding: 10px;
+    height: 100px;
+    margin-bottom: 5px;
+}

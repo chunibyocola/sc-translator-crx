@@ -12,7 +12,7 @@ import defaultOptions from '../../constants/defaultOptions';
 import HandleCommand from './HandleCommands';
 import Separate from './Separate';
 import { getI18nMessage } from '../../public/chrome-call';
-import { appendColorVarsStyle, appendFontSizeStyle } from '../../public/inject-style';
+import { appendColorVarsStyle, appendCustomizeStyle, appendFontSizeStyle } from '../../public/inject-style';
 import { DefaultOptions } from '../../types';
 
 document.title = `${getI18nMessage('titleSeparateWindow')} - ${getI18nMessage('extName')}`;
@@ -22,6 +22,7 @@ const init = (options: DefaultOptions) => {
 
     appendColorVarsStyle(document.head);
     appendFontSizeStyle(document.head);
+    appendCustomizeStyle(document.head);
 
     initMultipleTranslate(options);
 

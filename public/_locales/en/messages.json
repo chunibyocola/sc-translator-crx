@@ -299,6 +299,15 @@
     "optionsLearnMoreAboutTextPreprocessing": {
         "message": "Learn more about text preprocessing."
     },
+    "optionsCustomizeStyle": {
+        "message": "Customize style"
+    },
+    "optionsCustomizeStyleDescription": {
+        "message": "The CSS you input here will inject in all page except the options page."
+    },
+    "optionsCustomizeStyleNotice": {
+        "message": "Notice: there is no guarantee that elements or class names wil not be changed. Once elements or class names are changed, the CSS you input might cause \"style disorder\", then, you might need to adjust the CSS you input here."
+    },
     "themePreset": {
         "message": "Preset"
     },

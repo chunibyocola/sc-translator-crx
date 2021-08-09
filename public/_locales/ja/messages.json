@@ -299,6 +299,15 @@
     "optionsLearnMoreAboutTextPreprocessing": {
         "message": "テキストの前処理をもっと知る。"
     },
+    "optionsCustomizeStyle": {
+        "message": "スタイルをカスタマイズする"
+    },
+    "optionsCustomizeStyleDescription": {
+        "message": "入力したCSSは、オプションページを除くすべてのページに挿入されます。"
+    },
+    "optionsCustomizeStyleNotice": {
+        "message": "注意：要素とクラス名が変更されないという保証はありません。要素とクラス名が変更されると、入力したCSSによって「スタイルの乱れ」が発生する可能性があるため、ここで入力したCSSを調整する必要がある場合があります。"
+    },
     "themePreset": {
         "message": "プリセット"
     },

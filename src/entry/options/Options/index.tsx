@@ -72,7 +72,8 @@ const Options: React.FC = () => {
         enableInsertResult,
         autoInsertResult,
         textPreprocessingRegExpList,
-        textPreprocessingPreset
+        textPreprocessingPreset,
+        customizeStyleText
     } = useOptions<DefaultOptions>(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -88,6 +89,7 @@ const Options: React.FC = () => {
                 updateStorage={updateStorage}
                 styleVarsList={styleVarsList}
                 styleVarsIndex={styleVarsIndex}
+                customizeStyleText={customizeStyleText}
             />
             <div className='sub-title' id='pdf'>PDF</div>
             <Pdf
