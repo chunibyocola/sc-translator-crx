@@ -38,8 +38,8 @@ export const translate = async (searchParams: URLSearchParams, totalQText: strin
 
 const toResult = (rawResult: string) => {
     let result: string[] = [];
-    let preprocessText = rawResult.replace(/<i>.*?<\/i>/g, '').replace(/<[\/]?b>/g, '');
-    let matchArray = preprocessText.match(/(?<=<a i=)[0-9]+>.*?(?=<\/a>)/g);
+    let preprocessText = rawResult.replace(/<i>[\s\S]*?<\/i>/g, '').replace(/<[\/]?b>/g, '');
+    let matchArray = preprocessText.match(/(?<=<a i=)[0-9]+>[\s\S]*?(?=<\/a>)/g);
     if (matchArray) {
         matchArray.map(v => {
             const [index, rawResult] = v.split('>');

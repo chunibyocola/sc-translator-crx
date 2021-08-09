@@ -22,9 +22,9 @@ let wayOfFontsDisplaying: number = 1;
 let waitingList: PageTranslateItemEnity[] = [];
 let updatedList: PageTranslateItemEnity[] = [];
 
-const preIgnoreTagRegExp = /CANVAS|IFRAME|BR|HR|SVG|IMG|SCRIPT|LINK|STYLE|INPUT|TEXTAREA|CODE|#comment/i;
-const ignoreTagRegExp = /CANVAS|IFRAME|BR|HR|SVG|IMG|SCRIPT|LINK|STYLE|INPUT|TEXTAREA/i;
-const skipTagRegExp = /CODE|#comment/i;
+const preIgnoreTagRegExp = /^(CANVAS|IFRAME|BR|HR|SVG|IMG|SCRIPT|LINK|STYLE|INPUT|TEXTAREA|CODE|#comment)$/i;
+const ignoreTagRegExp = /^(CANVAS|IFRAME|BR|HR|SVG|IMG|SCRIPT|LINK|STYLE|INPUT|TEXTAREA)$/i;
+const skipTagRegExp = /^(CODE|#comment)$/i;
 let minViewPort = 0;
 let maxViewPort = 0;
 

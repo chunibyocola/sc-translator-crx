@@ -61,7 +61,7 @@ const fetchFromMicrosoft = async (requestArray: { Text: string }[], targetLangua
 
 const toResult = (rawResult: string) => {
     let result: string[] = [];
-    let matchArray = rawResult.match(/(?<=<b)[0-9]+>.*?(?=<\/b[0-9]+>)/g);
+    let matchArray = rawResult.match(/(?<=<b)[0-9]+>[\s\S]*?(?=<\/b[0-9]+>)/g);
     if (matchArray) {
         matchArray.map(v => {
             const [index, rawResult] = v.split('>');
