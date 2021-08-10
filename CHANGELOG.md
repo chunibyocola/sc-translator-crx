@@ -1,3 +1,10 @@
+# 3.8.0 (2021-08-10)
+- Add customize style. ([6ffb7b4](https://github.com/chunibyocola/sc-translator-crx/commit/6ffb7b4ad3eb95d3a44cc0f9dd3f952d3f360c15))
+- Add web page translate source "microsoft translator". ([833ce70](https://github.com/chunibyocola/sc-translator-crx/commit/833ce70628e0410a0f77501f5c490b3b510d28e2))
+- Upgrade PDF.js from v2.5.207 to v2.10.377.
+- Fix web page translating might ignore some elements. ([9f8cd55](https://github.com/chunibyocola/sc-translator-crx/commit/9f8cd5551f9929257fc2de9b2ddf81eee0b37ddf))
+- Fix context menus disappear. ([a349aef](https://github.com/chunibyocola/sc-translator-crx/commit/a349aefc93c20c34bacc1d803ff8a0b27ab0fb50)) ([#20](https://github.com/chunibyocola/sc-translator-crx/issues/20))
+- Fix typed input box's text will not update after you trigger a translate request which is not through typing in input box. ([22afdef](https://github.com/chunibyocola/sc-translator-crx/commit/22afdef3e7d7d3590b9e6fa3b8618df0617a01e1))
 # 3.7.0 (2021-07-28)
 - Add web page translating. ([5aa0505](https://github.com/chunibyocola/sc-translator-crx/commit/5aa05052abb4136f8d5c8139ff7b7b59db1ab268))
 - Fix in customize theme, move anchor after saving color then switch to another type will make the color you save update. ([d39e83f](https://github.com/chunibyocola/sc-translator-crx/commit/d39e83f12735989081ed95fa2cb757983b5ede83))
