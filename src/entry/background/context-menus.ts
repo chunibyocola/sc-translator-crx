@@ -62,22 +62,21 @@ const updateContextMenus = (contextMenus: OptionsContextMenu[]) => {
     // But I don't want the wrapper even there is only a single context menu.
     // Will be switch to "contextMenus' visible" if the below way cause bugs.
     contextMenus.forEach((contextMenu) => {
-        if (contextMenu.enabled) {
-            chrome.contextMenus.create({
-                id: contextMenu.id,
-                title: getI18nMessage(`contextMenus_${contextMenu.id}`),
-                contexts: contextMenusContexts[contextMenu.id]
-            }, () => {
-                // Catch the "Cannot create item with duplicate id" error, and ignore it.
-                if (chrome.runtime.lastError) { return; }
-            });
-        }
-        else {
-            chrome.contextMenus.remove(contextMenu.id, () => {
-                // Catch the "Cannot find menu item with id" error, and ignore it.
-                if (chrome.runtime.lastError) { return; }
-            });
-        }
+        chrome.contextMenus.remove(contextMenu.id, () => {
+            // Catch the "Cannot find menu item with id" error, and ignore it.
+            if (chrome.runtime.lastError) {}
+
+            if (contextMenu.enabled) {
+                chrome.contextMenus.create({
+                    id: contextMenu.id,
+                    title: getI18nMessage(`contextMenus_${contextMenu.id}`),
+                    contexts: contextMenusContexts[contextMenu.id]
+                }, () => {
+                    // Catch the "Cannot create item with duplicate id" error, and ignore it.
+                    if (chrome.runtime.lastError) {}
+                });
+            }
+        });
     });
 };
 

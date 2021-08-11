@@ -28,7 +28,7 @@ const RegExpList: React.FC<RegExpListProps> = ({ textPreprocessingRegExpList, on
 
     return (
         <div className='regexp-list'>
-            <div className='regexp-list-grid'>
+            <div className='regexp-list__grid'>
                 <span>{getMessage('optionsPattern')}</span>
                 <span>{getMessage('optionsFlags')}</span>
                 <span>{getMessage('optionsReplacement')}</span>
