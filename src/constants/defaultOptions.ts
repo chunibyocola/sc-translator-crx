@@ -3,6 +3,7 @@ import { LANG_EN } from './langCode';
 import { styleVarsList } from './defaultStyleVars';
 import { defaultContextMenus } from './contextMenusIds';
 import { DefaultOptions } from '../types';
+import { defaultTranslateButtons } from './translateButtonTypes';
 
 const defaultOptions: DefaultOptions = {
     userLanguage: LANG_EN,
@@ -14,7 +15,6 @@ const defaultOptions: DefaultOptions = {
     translateHostList: [],
     historyBlackListMode: false,
     historyHostList: [],
-    showButtonAfterSelect: true,
     defaultAudioSource: GOOGLE_COM,
     translateWithKeyPress: false,
     useDotCn: false,
@@ -56,7 +56,8 @@ const defaultOptions: DefaultOptions = {
     autoInsertResult: false,
     textPreprocessingRegExpList: [],
     textPreprocessingPreset: { convertCamelCase: false },
-    customizeStyleText: ''
+    customizeStyleText: '',
+    translateButtons: defaultTranslateButtons
 };
 
 export default defaultOptions;

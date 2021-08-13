@@ -37,7 +37,6 @@ const Options: React.FC = () => {
         translateHostList,
         historyBlackListMode,
         historyHostList,
-        showButtonAfterSelect,
         defaultAudioSource,
         translateWithKeyPress,
         useDotCn,
@@ -73,7 +72,8 @@ const Options: React.FC = () => {
         autoInsertResult,
         textPreprocessingRegExpList,
         textPreprocessingPreset,
-        customizeStyleText
+        customizeStyleText,
+        translateButtons
     } = useOptions<DefaultOptions>(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -146,7 +146,6 @@ const Options: React.FC = () => {
                 updateStorage={updateStorage}
                 translateWithKeyPress={translateWithKeyPress}
                 translateDirectly={translateDirectly}
-                showButtonAfterSelect={showButtonAfterSelect}
                 btnPosition={btnPosition}
                 hideButtonAfterFixedTime={hideButtonAfterFixedTime}
                 hideButtonFixedTime={hideButtonFixedTime}
@@ -157,6 +156,7 @@ const Options: React.FC = () => {
                 doNotRespondInTextBox={doNotRespondInTextBox}
                 enableInsertResult={enableInsertResult}
                 autoInsertResult={autoInsertResult}
+                translateButtons={translateButtons}
             />
             <div className='sub-title' id='history'>{getMessage('optionsHistory')}</div>
             <History

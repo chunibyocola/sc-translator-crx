@@ -84,7 +84,10 @@
         "message": "Dark Mode"
     },
     "optionsShowButtonAfterSelect": {
-        "message": "Show button after select text"
+        "message": "Show buttons after selecting text"
+    },
+    "optionsShowButtonAfterSelectDescription": {
+        "message": "When you select some text and release the left mouse button, the buttons you checked below will be displayed. The order of the buttons is related to the order in which you checked. If you don't want to show any buttons, just uncheck all the buttons."
     },
     "optionsAudio": {
         "message": "Audio"
@@ -307,6 +310,18 @@
     },
     "optionsCustomizeStyleNotice": {
         "message": "Notice: there is no guarantee that elements or class names wil not be changed. Once elements or class names are changed, the CSS you input might cause \"style disorder\", then, you might need to adjust the CSS you input here."
+    },
+    "optionsPreview": {
+        "message": "Preview:"
+    },
+    "optionsButtonTranslate": {
+        "message": "Translate"
+    },
+    "optionsButtonListen": {
+        "message": "Listen"
+    },
+    "optionsButtonCopy": {
+        "message": "Copy"
     },
     "themePreset": {
         "message": "Preset"

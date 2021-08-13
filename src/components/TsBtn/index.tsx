@@ -17,36 +17,38 @@ import { DefaultOptions, Position } from '../../types';
 import { callOutPanel, closePanel, requestToHidePanel, showPanelAndSetPosition } from '../../redux/slice/panelStatusSlice';
 import { mtSetText } from '../../redux/slice/multipleTranslateSlice';
 import { stSetText } from '../../redux/slice/singleTranslateSlice';
+import { translateButtonContext, TRANSLATE_BUTTON_COPY, TRANSLATE_BUTTON_LISTEN, TRANSLATE_BUTTON_TRANSLATE } from '../../constants/translateButtonTypes';
 
 const initText = '';
 const initPos = { x: 5, y: 5 };
-const btnWidth = 24;
-const btnHeight = 24;
 
 type PickedOptions = Pick<
     DefaultOptions,
     'translateDirectly' |
-    'showButtonAfterSelect' |
     'translateWithKeyPress' |
     'hideButtonAfterFixedTime' |
     'hideButtonFixedTime' |
     'respondToSeparateWindow' |
     'translateDirectlyWhilePinning' |
-    'doNotRespondInTextBox'
+    'doNotRespondInTextBox' |
+    'translateButtons'
 >;
 const useOptionsDependency: (keyof PickedOptions)[] = [
     'translateDirectly',
-    'showButtonAfterSelect',
     'translateWithKeyPress',
     'hideButtonAfterFixedTime',
     'hideButtonFixedTime',
     'respondToSeparateWindow',
     'translateDirectlyWhilePinning',
-    'doNotRespondInTextBox'
+    'doNotRespondInTextBox',
+    'translateButtons'
 ];
 
-const calculateBtnPos = ({ x, y }: Position) => {
+const calculateBtnPos = ({ x, y }: Position, translateButtonElement: HTMLDivElement | null) => {
     const { btnPosition } = getOptions();
+    const rect = translateButtonElement?.getBoundingClientRect();
+    const btnHeight = rect?.height ?? 22;
+    const btnWidth = rect?.width ?? 22;
     let tmpX = x + btnPosition.x, tmpY = y + btnPosition.y;
 
     const dH = document.documentElement.clientHeight;
@@ -61,6 +63,11 @@ const calculateBtnPos = ({ x, y }: Position) => {
     if (bR > dW) tmpX = x - 5 - btnWidth;
     if (bL < 0) tmpX = x + 5;
 
+    if (tmpX + btnWidth + 5 > dW) tmpX = dW - btnWidth - 5;
+    if (tmpX < 5) tmpX = 5;
+    if (tmpY + btnHeight + 5 > dH) tmpY = dH - btnHeight - 5;
+    if (tmpY < 5) tmpY = 5;
+
     return { x: tmpX, y: tmpY };
 };
 
@@ -72,18 +79,19 @@ const TsBtn: React.FC = () => {
     const ctrlPressing = useRef(false);
     const debounceHideButtonAfterFixedTime = useRef<ReturnType<typeof debounce>>();
     const oldChromeMsg = useRef<any>(null);
+    const translateButtonEleRef = useRef<HTMLDivElement>(null);
 
     const { pinning } = useAppSelector(state => state.panelStatus);
 
     const {
         translateDirectly,
-        showButtonAfterSelect,
         translateWithKeyPress,
         hideButtonAfterFixedTime,
         hideButtonFixedTime,
         respondToSeparateWindow,
         translateDirectlyWhilePinning,
-        doNotRespondInTextBox
+        doNotRespondInTextBox,
+        translateButtons
     } = useOptions<PickedOptions>(useOptionsDependency);
 
     const isEnableTranslate = useIsEnable('translate', window.location.host);
@@ -101,6 +109,23 @@ const TsBtn: React.FC = () => {
         dispatch(showPanelAndSetPosition({ position }));
         getOptions().multipleTranslateMode ? dispatch(mtSetText({ text })) : dispatch(stSetText({ text }));
     }, [dispatch, respondToSeparateWindow]);
+
+    const handleTranslateButtonClick = (translateButton: string) => {
+        setShowBtn(false);
+
+        switch (translateButton) {
+            case TRANSLATE_BUTTON_TRANSLATE:
+                handleForwardTranslate(text, pos);
+                break;
+            case TRANSLATE_BUTTON_LISTEN:
+                sendAudio(text, {});
+                break;
+            case TRANSLATE_BUTTON_COPY:
+                navigator.clipboard.writeText(text);
+                break;
+            default: break;
+        }
+    };
 
     useEffect(() => {
         if (!translateWithKeyPress) return;
@@ -158,18 +183,19 @@ const TsBtn: React.FC = () => {
 
         if (doNotRespondInTextBox && document.activeElement && isTextBox(document.activeElement)) { return; }
 
-        const nextPos = calculateBtnPos(pos);
-
         if ((translateWithKeyPress && ctrlPressing.current) || translateDirectly || (pinning && translateDirectlyWhilePinning)) {
-            handleForwardTranslate(text, nextPos);
+            handleForwardTranslate(text, calculateBtnPos(pos, null));
             return;
         }
 
-        setPos(nextPos);
         setText(text);
-        if (showButtonAfterSelect) {
+        if (translateButtons.length > 0) {
             setShowBtn(true);
+            setPos(calculateBtnPos(pos, translateButtonEleRef.current));
             hideButtonAfterFixedTime && debounceHideButtonAfterFixedTime.current?.();
+        }
+        else {
+            setPos(calculateBtnPos(pos, null));
         }
 
         dispatch(requestToHidePanel());
@@ -185,20 +211,22 @@ const TsBtn: React.FC = () => {
 
     return (
         <div
+            ref={translateButtonEleRef}
             className='translate-button'
             style={{
-                display: isEnableTranslate && showBtn ? 'block' : 'none',
+                display: isEnableTranslate && showBtn && translateButtons.length > 0 ? 'flex' : 'none',
                 left: `${pos.x}px`,
                 top: `${pos.y}px`
             }}
-            onMouseUp={(e) => {
-                setShowBtn(false);
-                handleForwardTranslate(text, pos);
-                e.stopPropagation();
-            }}
+            onMouseUp={e => e.stopPropagation()}
             onMouseDown={e => e.stopPropagation()}
         >
-            <IconFont iconName='#icon-MdTranslate' style={{display: 'block'}} />
+            {translateButtons.map((translateButton) => (translateButtonContext[translateButton].type === 'icon' && <div
+                className='translate-button__item iconfont--enable'
+                onClick={() => handleTranslateButtonClick(translateButton)}
+            >
+                <IconFont iconName={translateButtonContext[translateButton].iconName} />
+            </div>))}
         </div>
     );
 };

@@ -86,6 +86,9 @@
     "optionsShowButtonAfterSelect": {
         "message": "テキストを選択した後にボタンを表示"
     },
+    "optionsShowButtonAfterSelectDescription": {
+        "message": "テキストを選択した後にマウスの左ボタンを離すと、下でチェックしたボタンが表示されます。ボタンの順序は、チェックした順序に関連しています。ボタンを表示したくない場合は、すべてのボタンのチェックを外してください。"
+    },
     "optionsAudio": {
         "message": "音声"
     },
@@ -307,6 +310,18 @@
     },
     "optionsCustomizeStyleNotice": {
         "message": "注意：要素とクラス名が変更されないという保証はありません。要素とクラス名が変更されると、入力したCSSによって「スタイルの乱れ」が発生する可能性があるため、ここで入力したCSSを調整する必要がある場合があります。"
+    },
+    "optionsPreview": {
+        "message": "プレビュー："
+    },
+    "optionsButtonTranslate": {
+        "message": "翻訳"
+    },
+    "optionsButtonListen": {
+        "message": "音声を聞く"
+    },
+    "optionsButtonCopy": {
+        "message": "コピー"
     },
     "themePreset": {
         "message": "プリセット"

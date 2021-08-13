@@ -3,7 +3,8 @@ import defaultOptions from '../../constants/defaultOptions';
 import { getLocalStorage } from '../../public/chrome-call';
 import { defaultStyleVars } from '../../constants/defaultStyleVars';
 import { TRANSLATE_CURRENT_PAGE, TRANSLATE_SELECTION_TEXT } from '../../constants/contextMenusIds';
-import { DefaultOptions } from '../../types';
+import { DefaultOptions, DeprecatedOptions } from '../../types';
+import { TRANSLATE_BUTTON_TRANSLATE } from '../../constants/translateButtonTypes';
 
 const initStorageOnInstalled = (userLang: string, update: boolean) => {
 
@@ -25,7 +26,7 @@ const initStorageOnInstalled = (userLang: string, update: boolean) => {
     preferredLangCode[LANG_ZH_CN].some((v) => (v.code === userLang)) && (defaultSet.preferredLanguage = userLang);
     defaultSet.preferredLanguage === 'en' && (defaultSet.secondPreferredLanguage = 'es');
 
-    getLocalStorage<DefaultOptions & { [key: string]: any }>(Object.keys(defaultOptions), (data) => {
+    getLocalStorage<DefaultOptions & DeprecatedOptions>(null, (data) => {
         // in new version, use 'useDotCn' instead of 'xxx.cn'
         if (update && (data.defaultTranslateSource === 'google.cn' || data.defaultTranslateSource === 'bing.cn' || data.defaultAudioSource === 'google.cn')) {
             data.useDotCn = true;
@@ -37,7 +38,7 @@ const initStorageOnInstalled = (userLang: string, update: boolean) => {
         if (update && 'enableContextMenus' in data && !('contextMenus' in data)) {
             const index = defaultSet.contextMenus.findIndex(v => v.id === TRANSLATE_SELECTION_TEXT);
             if (index >= 0) {
-                defaultSet.contextMenus[index].enabled = data.enableContextMenus as boolean;
+                defaultSet.contextMenus[index].enabled = (data as DeprecatedOptions).enableContextMenus;
             }
         }
 
@@ -46,6 +47,11 @@ const initStorageOnInstalled = (userLang: string, update: boolean) => {
             if (index === -1) {
                 data.contextMenus = data.contextMenus.concat({ id: TRANSLATE_CURRENT_PAGE, enabled: false });
             }
+        }
+
+        // In 3.9.0, remake translate button
+        if (update && 'showButtonAfterSelect' in data && !('translateButtons' in data)) {
+            (data as DefaultOptions).translateButtons = (data as DeprecatedOptions).showButtonAfterSelect ? [TRANSLATE_BUTTON_TRANSLATE] : [];
         }
 
         if (data.styleVarsList?.[0]?.styleVars) {

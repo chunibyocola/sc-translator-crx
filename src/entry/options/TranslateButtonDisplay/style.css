@@ -1,0 +1,13 @@
+.translate-button-display__preview {
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+.translate-button-display__preview span {
+    margin-right: 10px;
+}
+.translate-button-display__item {
+    margin: 5px 10px 5px 0;
+    display: inline-flex;
+    align-items: center;
+}

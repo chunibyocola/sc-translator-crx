@@ -7,6 +7,7 @@ import BetaIcon from '../../BetaIcon';
 import BtnPostion from '../../BtnPosition';
 import HostList from '../../HostList';
 import OptionToggle from '../../OptionToggle';
+import TranslateButtonDisplay from '../../TranslateButtonDisplay';
 
 const marksHideButtonFixedTime: SliderMarks = [
     { value: 500, label: '0.50s' },
@@ -21,7 +22,6 @@ type TranslateProps = GenericOptionsProps<Pick<
     DefaultOptions,
     'translateWithKeyPress' |
     'translateDirectly' |
-    'showButtonAfterSelect' |
     'btnPosition' |
     'hideButtonAfterFixedTime' |
     'hideButtonFixedTime' |
@@ -31,14 +31,14 @@ type TranslateProps = GenericOptionsProps<Pick<
     'translateDirectlyWhilePinning' |
     'doNotRespondInTextBox' |
     'enableInsertResult' |
-    'autoInsertResult'
+    'autoInsertResult' |
+    'translateButtons'
 >>;
 
 const Translate: React.FC<TranslateProps> = ({
     updateStorage,
     translateWithKeyPress,
     translateDirectly,
-    showButtonAfterSelect,
     btnPosition,
     hideButtonAfterFixedTime,
     hideButtonFixedTime,
@@ -48,7 +48,8 @@ const Translate: React.FC<TranslateProps> = ({
     translateDirectlyWhilePinning,
     doNotRespondInTextBox,
     enableInsertResult,
-    autoInsertResult
+    autoInsertResult,
+    translateButtons
 }) => {
     return (
         <div className='opt-section'>
@@ -69,12 +70,14 @@ const Translate: React.FC<TranslateProps> = ({
                 />
             </div>
             <div className='opt-section-row'>
-                <OptionToggle
-                    id='show-button-after-select-checkbox'
-                    message='optionsShowButtonAfterSelect'
-                    checked={showButtonAfterSelect}
-                    onClick={() => updateStorage('showButtonAfterSelect', !showButtonAfterSelect)}
-                />
+                {getMessage('optionsShowButtonAfterSelect')}
+                <div className='item-description'>{getMessage('optionsShowButtonAfterSelectDescription')}</div>
+                <div className='mt10-ml30'>
+                    <TranslateButtonDisplay
+                        translateButtons={translateButtons}
+                        onUpdate={value => updateStorage('translateButtons', value)}
+                    />
+                </div>
             </div>
             <div className='opt-section-row'>
                 {getMessage('optionsButtonsPosition')}

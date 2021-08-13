@@ -52,7 +52,6 @@ export type DefaultOptions = {
     translateHostList: string[];
     historyBlackListMode: boolean;
     historyHostList: string[];
-    showButtonAfterSelect: boolean;
     defaultAudioSource: string;
     translateWithKeyPress: boolean;
     useDotCn: boolean;
@@ -95,4 +94,12 @@ export type DefaultOptions = {
     textPreprocessingRegExpList: TextPreprocessingRegExp[];
     textPreprocessingPreset: TextPreprocessingPreset;
     customizeStyleText: string;
+    translateButtons: string[];
+};
+
+// Only work in "src/entry/background/install.ts".
+// Use for updating and deal with the deprecated options in `initStorageOnInstalled()`.
+export type DeprecatedOptions = {
+    showButtonAfterSelect: boolean;
+    enableContextMenus: boolean;
 };

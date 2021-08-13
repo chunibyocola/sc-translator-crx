@@ -86,6 +86,9 @@
     "optionsShowButtonAfterSelect": {
         "message": "选择文本后展示按钮"
     },
+    "optionsShowButtonAfterSelectDescription": {
+        "message": "当你选择一些文本并释放鼠标左键后，将显示你在下方所勾选的按钮。按钮的顺序与你勾选的顺序相关。如果你不想显示任何按钮，只需取消勾选所有按钮即可。"
+    },
     "optionsAudio": {
         "message": "朗读"
     },
@@ -307,6 +310,18 @@
     },
     "optionsCustomizeStyleNotice": {
         "message": "注意：不能保证元素和类名不会更改。一旦元素和类名被更改了，你在此输入的 CSS 可能会造成样式错乱，然后你可能会需要调整你所输入的 CSS。"
+    },
+    "optionsPreview": {
+        "message": "预览："
+    },
+    "optionsButtonTranslate": {
+        "message": "翻译"
+    },
+    "optionsButtonListen": {
+        "message": "朗读"
+    },
+    "optionsButtonCopy": {
+        "message": "复制"
     },
     "themePreset": {
         "message": "预设"
