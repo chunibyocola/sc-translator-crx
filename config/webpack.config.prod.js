@@ -102,7 +102,7 @@ module.exports = {
           filename: 'static/css/[name].css'
         }),
         new ESLintPlugin({
-          extensions: ['js', 'mjs', 'jsx'],
+          extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
           eslintPath: require.resolve('eslint'),
           context: paths.appSrc,
         }),

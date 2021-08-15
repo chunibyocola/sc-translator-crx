@@ -46,7 +46,6 @@ const newPageTranslateItem = (text: string, nodes: Node[]) => {
     
     const range = document.createRange();
     range.selectNode(textNodes[0]);
-    range.getBoundingClientRect().y
     const firstTextNodeClientY = range.getBoundingClientRect().top + window.scrollY;
 
     waitingList.push({
@@ -86,9 +85,9 @@ const dealWithPreElement = (pre: HTMLPreElement) => {
 
 const isPureInlineElement = (inlineElement: HTMLElement) => {
     let nodeStack: { node: Node; index: number }[] = [{ node: inlineElement, index: 0 }];
-    let currentNode: { node: Node; index: number } | undefined = undefined;
+    let currentNode: { node: Node; index: number } | undefined = nodeStack.shift();
 
-    while (currentNode = nodeStack.shift()) {
+    while (currentNode) {
         for (let i = currentNode.index; i < currentNode.node.childNodes.length; i++) {
             const node = currentNode.node.childNodes[i];
             if (/#comment|#text/.test(node.nodeName)) {
@@ -105,6 +104,8 @@ const isPureInlineElement = (inlineElement: HTMLElement) => {
                 break;
             }
         }
+
+        currentNode = nodeStack.shift();
     }
     return true;
 };
@@ -112,26 +113,28 @@ const isPureInlineElement = (inlineElement: HTMLElement) => {
 const getTextNodesFromNodes = (nodes: Node[]) => {
     let textNodes: Text[] = [];
     let nodeStack: { node: Node; index: number }[] = nodes.map((v) => ({ node: v, index: 0 }));
-    let currentNode: { node: Node; index: number } | undefined;
+    let currentNode: { node: Node; index: number } | undefined = nodeStack.shift();
 
-    while (currentNode = nodeStack.shift()) {
+    while (currentNode) {
         if (currentNode.node.nodeName === '#text' && currentNode.node.nodeValue?.trimLeft()) {
             textNodes.push(currentNode.node as Text);
-            continue;
+        }
+        else {
+            for (let i = currentNode.index; i < currentNode.node.childNodes.length; i++) {
+                if (skipTagRegExp.test(currentNode.node.childNodes[i].nodeName)) {
+                    continue;
+                }
+                else if (currentNode.node.childNodes[i].nodeName === '#text' && currentNode.node.childNodes[i].nodeValue?.trimLeft()) {
+                    textNodes.push(currentNode.node.childNodes[i] as Text);
+                }
+                else {
+                    nodeStack.unshift({ node: currentNode.node.childNodes[i], index: 0 }, { node: currentNode.node, index: ++i });
+                    break;
+                }
+            }
         }
 
-        for (let i = currentNode.index; i < currentNode.node.childNodes.length; i++) {
-            if (skipTagRegExp.test(currentNode.node.childNodes[i].nodeName)) {
-                continue;
-            }
-            else if (currentNode.node.childNodes[i].nodeName === '#text' && currentNode.node.childNodes[i].nodeValue?.trimLeft()) {
-                textNodes.push(currentNode.node.childNodes[i] as Text);
-            }
-            else {
-                nodeStack.unshift({ node: currentNode.node.childNodes[i], index: 0 }, { node: currentNode.node, index: ++i });
-                break;
-            }
-        }
+        currentNode = nodeStack.shift();
     }
 
     return textNodes;
@@ -142,9 +145,9 @@ const getAllTextFromElement = (element: HTMLElement) => {
     let elementArr: Node[] = [];
     let text = '';
     let nodeStack: { node: Node; index: number }[] = [{ node: element, index: 0 }];
-    let currentNode: { node: Node; index: number } | undefined = undefined;
+    let currentNode: { node: Node; index: number } | undefined = nodeStack.shift();
 
-    while (currentNode = nodeStack.shift()) {
+    while (currentNode) {
         for (let i = currentNode.index; i < currentNode.node.childNodes.length; i++) {
             const node = currentNode.node.childNodes[i];
             if (ignoreTagRegExp.test(node.nodeName)) {
@@ -194,6 +197,8 @@ const getAllTextFromElement = (element: HTMLElement) => {
 
         elementArr = [];
         text = '';
+
+        currentNode = nodeStack.shift();
     }
 };
 
@@ -346,7 +351,7 @@ const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[
 
     const tempCloseFlag = closeFlag;
 
-    translateList.map((item) => {
+    translateList.forEach((item) => {
         const dealWithResult = (result: string[][]) => {
             item.pageTranslateList.forEach((v, i) => {
                 v.result = result[i];
@@ -429,7 +434,7 @@ const googleWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[], 
 
     const tempCloseFlag = closeFlag;
 
-    translateList.map((item) => {
+    translateList.forEach((item) => {
         const dealWithResult = (result: string[][]) => {
             item.pageTranslateList.forEach((v, i) => {
                 v.result = result[i];
@@ -521,20 +526,20 @@ const dealWithFontsStyle = (originalFont: HTMLFontElement, resultFont: HTMLFontE
 };
 
 export const escapeText = (text: string) => {
-    return text.replace(/\<|\>|\&|\"|\'/g, (match) => {
+    return text.replace(/<|>|&|"|'/g, (match) => {
         switch (match) {
             case '<': return '&lt;';
             case '>': return '&gt;';
             case '&': return '&amp;';
             case '"': return '&quot;';
             case '\'': return '&#39;';
-            default: return match;    
+            default: return match;
         }
     });
 };
 
 export const unescapeText = (text: string) => {
-    return text.replace(/\&[^;]+;/g, (match) => {
+    return text.replace(/&[^;]+;/g, (match) => {
         switch (match) {
             case '&lt;': return '<';
             case '&gt;': return '>';

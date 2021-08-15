@@ -63,7 +63,7 @@ const toResult = (rawResult: string) => {
     let result: string[] = [];
     let matchArray = rawResult.match(/(?<=<b)[0-9]+>[\s\S]*?(?=<\/b[0-9]+>)/g);
     if (matchArray) {
-        matchArray.map(v => {
+        matchArray.forEach(v => {
             const [index, rawResult] = v.split('>');
             result[Number(index)] = (result[Number(index)] ?? '') + unescapeText(rawResult);
         });

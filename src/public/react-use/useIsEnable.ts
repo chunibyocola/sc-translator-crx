@@ -32,7 +32,7 @@ const useIsEnable = (enableType: 'translate' | 'history', host?: string) => {
                 });
             }
         },
-        [translateHostList, historyHostList, translateBlackListMode, historyBlackListMode, host]
+        [translateHostList, historyHostList, translateBlackListMode, historyBlackListMode, host, enableType]
     );
 
     return enable;
