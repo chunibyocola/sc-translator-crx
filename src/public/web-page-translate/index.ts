@@ -312,7 +312,7 @@ const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[
 
         const request = currentItem.textNodes.length === 1 ?
             (currentItem.textNodes[0].nodeValue ?? '') :
-            currentItem.textNodes.reduce((t, v, i) => (t + `<b${i}>${escapeText(v.nodeValue ?? '')}</b${i}>`), '');
+            currentItem.textNodes.reduce((t, v, i) => (t + `<b${i}>${microsoftEscapeText(v.nodeValue ?? '')}</b${i}>`), '');
         
         if (request in resultCache) {
             currentItem.result = resultCache[request];
@@ -525,7 +525,7 @@ const dealWithFontsStyle = (originalFont: HTMLFontElement, resultFont: HTMLFontE
     }
 };
 
-export const escapeText = (text: string) => {
+const escapeText = (text: string) => {
     return text.replace(/<|>|&|"|'/g, (match) => {
         switch (match) {
             case '<': return '&lt;';
@@ -533,6 +533,17 @@ export const escapeText = (text: string) => {
             case '&': return '&amp;';
             case '"': return '&quot;';
             case '\'': return '&#39;';
+            default: return match;
+        }
+    });
+};
+
+const microsoftEscapeText = (text: string) => {
+    return text.replace(/<|>|&/g, (match) => {
+        switch (match) {
+            case '<': return '&lt;';
+            case '>': return '&gt;';
+            case '&': return '&amp;';
             default: return match;
         }
     });
