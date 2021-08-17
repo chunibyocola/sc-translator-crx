@@ -1,6 +1,7 @@
 import { GOOGLE_COM, MICROSOFT_COM } from '../../constants/translateSource';
 import { bingSwitchLangCode } from '../switch-lang-code';
 import { translate as googleWebTranslate } from './google/translate';
+import { getAuthorization } from './microsoft/getAuthorization';
 import { translate as microsoftWebTranslate } from './microsoft/translate';
 
 type PageTranslateItemEnity = {
@@ -351,31 +352,38 @@ const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[
 
     const tempCloseFlag = closeFlag;
 
-    translateList.forEach((item) => {
-        const dealWithResult = (result: string[][]) => {
-            item.pageTranslateList.forEach((v, i) => {
-                v.result = result[i];
-                v.status = 'finished';
-                v.textNodes.forEach((textNode, i) => {
-                    if (!textNode.parentElement || !v.result?.[i]) { return; }
-    
-                    const fonts = insertResultAndWrapOriginalTextNode(textNode, v.result[i]);
-                    fonts && v.fontsNodes.push(fonts);
+    getAuthorization().then(() => {
+        translateList.forEach((item) => {
+            const dealWithResult = (result: string[][]) => {
+                item.pageTranslateList.forEach((v, i) => {
+                    v.result = result[i];
+                    v.status = 'finished';
+                    v.textNodes.forEach((textNode, i) => {
+                        if (!textNode.parentElement || !v.result?.[i]) { return; }
+        
+                        const fonts = insertResultAndWrapOriginalTextNode(textNode, v.result[i]);
+                        fonts && v.fontsNodes.push(fonts);
+                    });
                 });
+            };
+    
+            microsoftWebTranslate(item.requestArray, targetLanguage).then((result) => {
+                item.textList.length === result.length && item.textList.forEach((v, i) => (resultCache[v] = result[i]));
+    
+                // if not the same, means web page translate has been closed.
+                tempCloseFlag === closeFlag && dealWithResult(result);
+            }).catch((reason) => {
+                item.pageTranslateList.forEach(v => v.status = 'error');
+                errorCallback?.(reason.code);
             });
-        };
-
-        microsoftWebTranslate(item.requestArray, targetLanguage).then((result) => {
-            item.textList.length === result.length && item.textList.forEach((v, i) => (resultCache[v] = result[i]));
-
-            // if not the same, means web page translate has been closed.
-            tempCloseFlag === closeFlag && dealWithResult(result);
-        }).catch((reason) => {
-            item.pageTranslateList.forEach(v => v.status = 'error');
-            errorCallback?.(reason.code);
+    
+            item.pageTranslateList.forEach(v => v.status = 'loading');
         });
-
-        item.pageTranslateList.forEach(v => v.status = 'loading');
+    }).catch(() => {
+        translateList.forEach((list) => {
+            list.pageTranslateList.forEach(v => v.status = 'error');
+        });
+        errorCallback?.('Microsoft: get authorization failed.');
     });
 };
 
