@@ -9,6 +9,7 @@ const menusItems = [
     { title: getMessage('optionsTheme'), id: 'theme' },
     { title: 'PDF', id: 'pdf' },
     { title: getMessage('optionsClipboard'), id: 'clipboard' },
+    { title: getMessage('optionsWebPageTranslating'), id: 'web-page-translating' },
     { title: getMessage('optionsAudio'), id: 'audio' },
     { title: getMessage('titleSeparateWindow'), id: 'separate-window' },
     { title: getMessage('optionsTranslatePanel'), id: 'translate-panel' },

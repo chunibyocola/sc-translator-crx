@@ -5,7 +5,7 @@ import LanguageSelect from '../../../components/LanguageSelect';
 import SourceSelect from '../../../components/SourceSelect';
 import { SCTS_TRANSLATE_CURRENT_PAGE } from '../../../constants/chromeSendMessageTypes';
 import { LangCodes, preferredLangCode } from '../../../constants/langCode';
-import { GOOGLE_COM, webPageTranslateSource } from '../../../constants/translateSource';
+import { webPageTranslateSource as webPageTranslateSourceList } from '../../../constants/translateSource';
 import { getMessage } from '../../../public/i18n';
 import { getOptions } from '../../../public/options';
 import { useOnExtensionMessage } from '../../../public/react-use';
@@ -63,7 +63,7 @@ const wPTReducer = (state: WPTReducerState, action: WPTReducerAction): WPTReduce
         default:
             return state;
     }
-}
+};
 
 const WebPageTranslate: React.FC = () => {
     const [langCodes, setLangCodes] = useState<LangCodes>([]);
@@ -77,7 +77,9 @@ const WebPageTranslate: React.FC = () => {
     }, [dispach]);
 
     useEffectOnce(() => {
-        dispach({ type: 'init', source: GOOGLE_COM, targetLanguage: getOptions().preferredLanguage });
+        dispach({ type: 'init', source: getOptions().webPageTranslateSource, targetLanguage: getOptions().webPageTranslateTo });
+
+        switchWayOfFontsDisplaying(getOptions().webPageTranslateDisplayMode);
     });
 
     useEffect(() => {
@@ -126,7 +128,7 @@ const WebPageTranslate: React.FC = () => {
             <SourceSelect
                 className='web-page-translate__select border-bottom-select'
                 source={source}
-                sourceList={webPageTranslateSource}
+                sourceList={webPageTranslateSourceList}
                 onChange={source => dispach({ type: 'change-source', source })}
             />
             <LanguageSelect

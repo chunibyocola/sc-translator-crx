@@ -323,6 +323,18 @@
     "optionsButtonCopy": {
         "message": "Copy"
     },
+    "optionsWebPageTranslating": {
+        "message": "Web page translating"
+    },
+    "optionsDisplayMode": {
+        "message": "The display mode of translate results"
+    },
+    "optionsOriginalText": {
+        "message": "Original text"
+    },
+    "optionsTranslation": {
+        "message": "Translation"
+    },
     "themePreset": {
         "message": "Preset"
     },

@@ -323,6 +323,18 @@
     "optionsButtonCopy": {
         "message": "コピー"
     },
+    "optionsWebPageTranslating": {
+        "message": "Webページ翻訳"
+    },
+    "optionsDisplayMode": {
+        "message": "翻訳結果の表示モード"
+    },
+    "optionsOriginalText": {
+        "message": "原文"
+    },
+    "optionsTranslation": {
+        "message": "訳文"
+    },
     "themePreset": {
         "message": "プリセット"
     },

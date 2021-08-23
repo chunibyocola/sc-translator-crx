@@ -95,6 +95,9 @@ export type DefaultOptions = {
     textPreprocessingPreset: TextPreprocessingPreset;
     customizeStyleText: string;
     translateButtons: string[];
+    webPageTranslateSource: string;
+    webPageTranslateTo: string;
+    webPageTranslateDisplayMode: number;
 };
 
 // Only work in "src/entry/background/install.ts".

@@ -25,6 +25,7 @@ const initStorageOnInstalled = (userLang: string, update: boolean) => {
 
     preferredLangCode[LANG_ZH_CN].some((v) => (v.code === userLang)) && (defaultSet.preferredLanguage = userLang);
     defaultSet.preferredLanguage === 'en' && (defaultSet.secondPreferredLanguage = 'es');
+    defaultSet.webPageTranslateTo = defaultSet.preferredLanguage;
 
     getLocalStorage<DefaultOptions & DeprecatedOptions>(null, (data) => {
         // in new version, use 'useDotCn' instead of 'xxx.cn'

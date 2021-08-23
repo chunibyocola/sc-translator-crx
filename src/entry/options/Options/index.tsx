@@ -19,6 +19,7 @@ import TranslatePanel from './sections/TranslatePanel';
 import Clipboard from './sections/Clipboard';
 import './style.css';
 import { DefaultOptions } from '../../../types';
+import WebPageTranslating from './sections/WebPageTranslating';
 
 export type GenericOptionsProps<T> = {
     updateStorage: (key: string, value: any) => void;
@@ -73,7 +74,10 @@ const Options: React.FC = () => {
         textPreprocessingRegExpList,
         textPreprocessingPreset,
         customizeStyleText,
-        translateButtons
+        translateButtons,
+        webPageTranslateSource,
+        webPageTranslateTo,
+        webPageTranslateDisplayMode
     } = useOptions<DefaultOptions>(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -101,6 +105,14 @@ const Options: React.FC = () => {
                 updateStorage={updateStorage}
                 clipboardReadPermission={clipboardReadPermission}
                 autoPasteInTheInputBox={autoPasteInTheInputBox}
+            />
+            <div className='sub-title' id='web-page-translating'>{getMessage('optionsWebPageTranslating')}</div>
+            <WebPageTranslating
+                updateStorage={updateStorage}
+                webPageTranslateSource={webPageTranslateSource}
+                webPageTranslateTo={webPageTranslateTo}
+                webPageTranslateDisplayMode={webPageTranslateDisplayMode}
+                userLanguage={userLanguage}
             />
             <div className='sub-title' id='audio'>{getMessage('optionsAudio')}</div>
             <Audio
