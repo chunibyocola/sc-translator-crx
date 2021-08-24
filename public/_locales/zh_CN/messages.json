@@ -335,6 +335,15 @@
     "optionsTranslation": {
         "message": "译文"
     },
+    "optionsWebPageTranslatingDescription": {
+        "message": "“网页翻译”是一种可以用你想要的语言翻译整个网页的功能。你可以通过右键菜单或键盘快捷键激活网页翻译。激活网页翻译后，页面右下角会出现一个控制栏。"
+    },
+    "optionsWebPageTranslateDirectly": {
+        "message": "激活网页翻译后直接翻译"
+    },
+    "optionsWebPageTranslateDirectlyDescription": {
+        "message": "启用此选项并激活网页翻译后，你无需点击“开始网页翻译”按钮，网页将被自动翻译。"
+    },
     "themePreset": {
         "message": "预设"
     },

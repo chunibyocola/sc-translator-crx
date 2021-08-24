@@ -335,6 +335,15 @@
     "optionsTranslation": {
         "message": "訳文"
     },
+    "optionsWebPageTranslatingDescription": {
+        "message": "「Webページ翻訳」は、Webページ全体を選択した言語に翻訳できる機能です。コンテキストメニューまたはキーボードショートカットを使用して、「Webページ翻訳」をアクティブ化できます。「Webページ翻訳」をアクティブ化にすると、ページの右下隅にコントロールバーが表示されます。"
+    },
+    "optionsWebPageTranslateDirectly": {
+        "message": "「Webページ翻訳」をアクティブ化にした直後に翻訳する"
+    },
+    "optionsWebPageTranslateDirectlyDescription": {
+        "message": "このオプションを有効にして「Webページ翻訳」をアクティブ化にした後、「Webページ翻訳を開始する」ボタンをクリックする必要はありません。Webページは自動的に翻訳されます。"
+    },
     "themePreset": {
         "message": "プリセット"
     },

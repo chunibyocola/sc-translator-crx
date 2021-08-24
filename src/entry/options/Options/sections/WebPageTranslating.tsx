@@ -6,6 +6,7 @@ import { webPageTranslateSource as webPageTranslateSourceList } from '../../../.
 import { getMessage } from '../../../../public/i18n';
 import { DefaultOptions } from '../../../../types';
 import DefaultSelect from '../../DefaultSelect';
+import OptionToggle from '../../OptionToggle';
 import WebPageTranslateDisplayMode from '../../WebPageTranslateDisplayMode';
 
 type WebPageTranslatingProps = GenericOptionsProps<Pick<
@@ -13,7 +14,8 @@ type WebPageTranslatingProps = GenericOptionsProps<Pick<
     'webPageTranslateSource' |
     'webPageTranslateTo' |
     'webPageTranslateDisplayMode' |
-    'userLanguage'
+    'userLanguage' |
+    'webPageTranslateDirectly'
 >>;
 
 const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
@@ -21,10 +23,16 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
     webPageTranslateSource,
     webPageTranslateTo,
     userLanguage,
-    webPageTranslateDisplayMode
+    webPageTranslateDisplayMode,
+    webPageTranslateDirectly
 }) => {
     return (
         <div className='opt-section'>
+            <div className='opt-section-row'>
+                <div className='item-description'>
+                    {getMessage('optionsWebPageTranslatingDescription')}
+                </div>
+            </div>
             <div className='opt-section-row'>
                 {getMessage('optionsSource')}
                 <SourceSelect
@@ -51,6 +59,17 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
                         update={displayMode => updateStorage('webPageTranslateDisplayMode', displayMode)}
                         displayMode={webPageTranslateDisplayMode}
                     />
+                </div>
+            </div>
+            <div className='opt-section-row'>
+                <OptionToggle
+                    id='web-page-translate-directly'
+                    message='optionsWebPageTranslateDirectly'
+                    checked={webPageTranslateDirectly}
+                    onClick={() => updateStorage('webPageTranslateDirectly', !webPageTranslateDirectly)}
+                />
+                <div className='item-description'>
+                    {getMessage('optionsWebPageTranslateDirectlyDescription')}
                 </div>
             </div>
         </div>

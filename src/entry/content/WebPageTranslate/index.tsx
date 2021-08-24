@@ -95,6 +95,20 @@ const WebPageTranslate: React.FC = () => {
 
     const chromeMsg = useOnExtensionMessage();
 
+    const startProcessing = useCallback(() => {
+        if (source === workingSourceAndLanguage.source && targetLanguage === workingSourceAndLanguage.targetLanguage) { return; }
+
+        closeWebPageTranslating();
+        const startSuccess = startWebPageTranslating(document.body, source, targetLanguage, handleError);
+        if (startSuccess) {
+            setWorkingSourceAndLanguage({ source, targetLanguage });
+            dispach({ type: 'process-success' });
+        }
+        else {
+            dispach({ type: 'change-error', error: 'Process failed!' });
+        }
+    }, [source, targetLanguage, workingSourceAndLanguage, dispach, handleError]);
+
     useEffect(() => {
         if (oldChromeMsg.current === chromeMsg) { return; }
 
@@ -102,13 +116,17 @@ const WebPageTranslate: React.FC = () => {
 
         switch (type) {
             case SCTS_TRANSLATE_CURRENT_PAGE:
-                !working && dispach({ type: 'active-wpt' });
+                if (!working) {
+                    dispach({ type: 'active-wpt' });
+
+                    getOptions().webPageTranslateDirectly && startProcessing();
+                }
                 break;
             default: break;
         }
 
         oldChromeMsg.current = chromeMsg;
-    }, [chromeMsg, working, dispach]);
+    }, [chromeMsg, working, dispach, startProcessing]);
 
     return (<div className='web-page-translate'
         style={show ? {} : {display: 'none'}}
@@ -153,19 +171,7 @@ const WebPageTranslate: React.FC = () => {
                 iconName='#icon-start'
                 className={source === workingSourceAndLanguage.source && targetLanguage === workingSourceAndLanguage.targetLanguage ? 'iconfont--disable' : 'iconfont--enable'}
                 title={wPTI18nCache.startWebPageTranslating}
-                onClick={() => {
-                    if (source === workingSourceAndLanguage.source && targetLanguage === workingSourceAndLanguage.targetLanguage) { return; }
-
-                    closeWebPageTranslating();
-                    const startSuccess = startWebPageTranslating(document.body, source, targetLanguage, handleError);
-                    if (startSuccess) {
-                        setWorkingSourceAndLanguage({ source, targetLanguage });
-                        dispach({ type: 'process-success' });
-                    }
-                    else {
-                        dispach({ type: 'change-error', error: 'Process failed!' });
-                    }
-                }}
+                onClick={startProcessing}
             />
             <IconFont
                 iconName='#icon-GoX'

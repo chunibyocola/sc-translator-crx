@@ -335,6 +335,15 @@
     "optionsTranslation": {
         "message": "譯文"
     },
+    "optionsWebPageTranslatingDescription": {
+        "message": "「網頁翻譯」是一種可以用你想要的語言翻譯整個網頁的功能。你可以通過右鍵菜單或鍵盤快捷鍵啟動網頁翻譯。啟動網頁翻譯後，頁面右下角會出現一個控制欄。"
+    },
+    "optionsWebPageTranslateDirectly": {
+        "message": "啟動網頁翻譯後直接翻譯"
+    },
+    "optionsWebPageTranslateDirectlyDescription": {
+        "message": "啟用此選項並啟動網頁翻譯后，你無需點擊「開始網頁翻譯」按鈕，網頁將被自動翻譯。"
+    },
     "themePreset": {
         "message": "預設"
     },

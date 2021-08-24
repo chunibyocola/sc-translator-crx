@@ -98,6 +98,7 @@ export type DefaultOptions = {
     webPageTranslateSource: string;
     webPageTranslateTo: string;
     webPageTranslateDisplayMode: number;
+    webPageTranslateDirectly: boolean;
 };
 
 // Only work in "src/entry/background/install.ts".

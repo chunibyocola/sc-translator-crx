@@ -335,6 +335,15 @@
     "optionsTranslation": {
         "message": "Translation"
     },
+    "optionsWebPageTranslatingDescription": {
+        "message": "\"Webpage translating\" is a feature that can translate the whole webpage with the language you want. You can activate webpage translating through context menu or keyboard shortcut. After activating webpage translating, there will be a control bar in the bottom right corner of the page."
+    },
+    "optionsWebPageTranslateDirectly": {
+        "message": "Translate directly after activating webpage translating"
+    },
+    "optionsWebPageTranslateDirectlyDescription": {
+        "message": "After enabling this option and you activating webpage translating, you don't need to click the \"Start webpage translating\" button, the webpage will be automatically translated."
+    },
     "themePreset": {
         "message": "Preset"
     },

@@ -60,7 +60,8 @@ const defaultOptions: DefaultOptions = {
     translateButtons: defaultTranslateButtons,
     webPageTranslateSource: GOOGLE_COM,
     webPageTranslateTo: LANG_EN,
-    webPageTranslateDisplayMode: 1
+    webPageTranslateDisplayMode: 1,
+    webPageTranslateDirectly: false
 };
 
 export default defaultOptions;
