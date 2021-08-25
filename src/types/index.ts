@@ -99,6 +99,7 @@ export type DefaultOptions = {
     webPageTranslateTo: string;
     webPageTranslateDisplayMode: number;
     webPageTranslateDirectly: boolean;
+    noControlBarWhileFirstActivating: boolean;
 };
 
 // Only work in "src/entry/background/install.ts".

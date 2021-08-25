@@ -344,6 +344,12 @@
     "optionsWebPageTranslateDirectlyDescription": {
         "message": "このオプションを有効にして「Webページ翻訳」をアクティブ化にした後、「Webページ翻訳を開始する」ボタンをクリックする必要はありません。Webページは自動的に翻訳されます。"
     },
+    "optionsNoControlBarWhileFirstActivating": {
+        "message": "初アクティブ化にしたときにコントロールバーを表示しない"
+    },
+    "optionsNoControlBarWhileFirstActivatingDescription": {
+        "message": "このオプションは、「『Webページ翻訳』をアクティブ化にした直後に翻訳する」オプションを有効にした場合にのみ使用できます。このオプションを有効にすると、「Webページ翻訳」が初アクティブ化にしたときにコントロールバーが表示されなくなります。初アクティブ化後、「Webページ翻訳」を再びアクティブにすると、コントロールバーを表示または非表示にできます。"
+    },
     "themePreset": {
         "message": "プリセット"
     },

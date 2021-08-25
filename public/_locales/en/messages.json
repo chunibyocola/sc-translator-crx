@@ -344,6 +344,12 @@
     "optionsWebPageTranslateDirectlyDescription": {
         "message": "After enabling this option and you activating webpage translating, you don't need to click the \"Start webpage translating\" button, the webpage will be automatically translated."
     },
+    "optionsNoControlBarWhileFirstActivating": {
+        "message": "Not displaying control bar while first activating"
+    },
+    "optionsNoControlBarWhileFirstActivatingDescription": {
+        "message": "This option is only available when you enable the \"Translate directly after activating webpage translating\" option. After enabling this option, the control bar will not be displayed while the first time of \"Webpage translating\" activating. After first activating, you can activate \"Webpage translating\" again to display or hide the control bar."
+    },
     "themePreset": {
         "message": "Preset"
     },

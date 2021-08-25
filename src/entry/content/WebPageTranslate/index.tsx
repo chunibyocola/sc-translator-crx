@@ -26,22 +26,26 @@ type WPTReducerState = {
     targetLanguage: string;
     working: boolean;
     error: string;
+    activated: boolean;
 };
 type WPTReducerAction = 
 | { type: 'init'; source: string; targetLanguage: string; }
-| { type: 'active-wpt'; }
+| { type: 'active-wpt'; show: boolean; }
 | { type: 'change-error'; error: string; }
 | { type: 'process-success'; }
 | { type: 'close-wpt'; }
 | { type: 'change-source'; source: string; }
-| { type: 'change-targer-language'; targetLanguage: string; };
+| { type: 'change-targer-language'; targetLanguage: string; }
+| { type: 'show-control-bar'; }
+| { type: 'hide-control-bar'; };
 
 const initWPTState: WPTReducerState = {
     show: false,
     source: '',
     targetLanguage: '',
     working: false,
-    error: ''
+    error: '',
+    activated: false
 };
 
 const wPTReducer = (state: WPTReducerState, action: WPTReducerAction): WPTReducerState => {
@@ -49,17 +53,21 @@ const wPTReducer = (state: WPTReducerState, action: WPTReducerAction): WPTReduce
         case 'init':
             return { ...state, source: action.source, targetLanguage: action.targetLanguage };
         case 'active-wpt':
-            return { ...state, show: true, error: '', working: false };
+            return { ...state, show: action.show, error: '', working: false, activated: true };
         case 'change-error':
             return { ...state, error: action.error };
         case 'process-success':
             return { ...state, working: true };
         case 'close-wpt':
-            return { ...state, show: false, working: false };
+            return { ...state, show: false, working: false, activated: false };
         case 'change-source':
             return { ...state, source: action.source };
         case 'change-targer-language':
             return { ...state, targetLanguage: action.targetLanguage };
+        case 'show-control-bar':
+            return { ...state, show: true };
+        case 'hide-control-bar':
+            return { ...state, show: false };
         default:
             return state;
     }
@@ -70,7 +78,7 @@ const WebPageTranslate: React.FC = () => {
     const [langLocal, setLangLocal] = useState<{ [key: string]: string; }>({});
     const [workingSourceAndLanguage, setWorkingSourceAndLanguage] = useState({ source: '', targetLanguage: '' });
 
-    const [{ show, source, targetLanguage, working, error }, dispach] = useReducer(wPTReducer, initWPTState);
+    const [{ show, source, targetLanguage, working, error, activated }, dispach] = useReducer(wPTReducer, initWPTState);
 
     const handleError = useCallback((errorReason: string) => {
         errorReason && dispach({ type: 'change-error', error: errorReason });
@@ -117,16 +125,20 @@ const WebPageTranslate: React.FC = () => {
         switch (type) {
             case SCTS_TRANSLATE_CURRENT_PAGE:
                 if (!working) {
-                    dispach({ type: 'active-wpt' });
+                    dispach({ type: 'active-wpt', show: !(getOptions().webPageTranslateDirectly && getOptions().noControlBarWhileFirstActivating) });
 
                     getOptions().webPageTranslateDirectly && startProcessing();
+                }
+
+                if (activated && getOptions().webPageTranslateDirectly && getOptions().noControlBarWhileFirstActivating) {
+                    show ? dispach({ type: 'hide-control-bar' }) : dispach({ type: 'show-control-bar' });
                 }
                 break;
             default: break;
         }
 
         oldChromeMsg.current = chromeMsg;
-    }, [chromeMsg, working, dispach, startProcessing]);
+    }, [chromeMsg, working, dispach, startProcessing, activated, show]);
 
     return (<div className='web-page-translate'
         style={show ? {} : {display: 'none'}}

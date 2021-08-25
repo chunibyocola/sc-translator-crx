@@ -78,7 +78,8 @@ const Options: React.FC = () => {
         webPageTranslateSource,
         webPageTranslateTo,
         webPageTranslateDisplayMode,
-        webPageTranslateDirectly
+        webPageTranslateDirectly,
+        noControlBarWhileFirstActivating
     } = useOptions<DefaultOptions>(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -115,6 +116,7 @@ const Options: React.FC = () => {
                 webPageTranslateDisplayMode={webPageTranslateDisplayMode}
                 userLanguage={userLanguage}
                 webPageTranslateDirectly={webPageTranslateDirectly}
+                noControlBarWhileFirstActivating={noControlBarWhileFirstActivating}
             />
             <div className='sub-title' id='audio'>{getMessage('optionsAudio')}</div>
             <Audio

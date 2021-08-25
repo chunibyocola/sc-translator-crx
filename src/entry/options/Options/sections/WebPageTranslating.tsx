@@ -15,7 +15,8 @@ type WebPageTranslatingProps = GenericOptionsProps<Pick<
     'webPageTranslateTo' |
     'webPageTranslateDisplayMode' |
     'userLanguage' |
-    'webPageTranslateDirectly'
+    'webPageTranslateDirectly' |
+    'noControlBarWhileFirstActivating'
 >>;
 
 const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
@@ -24,7 +25,8 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
     webPageTranslateTo,
     userLanguage,
     webPageTranslateDisplayMode,
-    webPageTranslateDirectly
+    webPageTranslateDirectly,
+    noControlBarWhileFirstActivating
 }) => {
     return (
         <div className='opt-section'>
@@ -70,6 +72,17 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
                 />
                 <div className='item-description'>
                     {getMessage('optionsWebPageTranslateDirectlyDescription')}
+                </div>
+                <div className='mt10-ml30'>
+                    <OptionToggle
+                        id='no-control-bar-while-first-activating'
+                        message='optionsNoControlBarWhileFirstActivating'
+                        checked={noControlBarWhileFirstActivating}
+                        onClick={() => updateStorage('noControlBarWhileFirstActivating', !noControlBarWhileFirstActivating)}
+                    />
+                    <div className='item-description'>
+                        {getMessage('optionsNoControlBarWhileFirstActivatingDescription')}
+                    </div>
                 </div>
             </div>
         </div>

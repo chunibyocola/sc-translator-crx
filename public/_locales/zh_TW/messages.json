@@ -344,6 +344,12 @@
     "optionsWebPageTranslateDirectlyDescription": {
         "message": "啟用此選項並啟動網頁翻譯后，你無需點擊「開始網頁翻譯」按鈕，網頁將被自動翻譯。"
     },
+    "optionsNoControlBarWhileFirstActivating": {
+        "message": "首次啟動時不顯示控制欄"
+    },
+    "optionsNoControlBarWhileFirstActivatingDescription": {
+        "message": "只有當“啟動網頁翻譯後直接翻譯”選項啟用後此選項才會生效。啟用此選項後，首次啟動「網頁翻譯」將不會展示控制欄。首次啟動後，再次啟動「網頁翻譯」可以展示或隱藏控制欄。"
+    },
     "themePreset": {
         "message": "預設"
     },

@@ -61,7 +61,8 @@ const defaultOptions: DefaultOptions = {
     webPageTranslateSource: GOOGLE_COM,
     webPageTranslateTo: LANG_EN,
     webPageTranslateDisplayMode: 1,
-    webPageTranslateDirectly: false
+    webPageTranslateDirectly: false,
+    noControlBarWhileFirstActivating: false
 };
 
 export default defaultOptions;

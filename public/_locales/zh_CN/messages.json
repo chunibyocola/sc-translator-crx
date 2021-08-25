@@ -344,6 +344,12 @@
     "optionsWebPageTranslateDirectlyDescription": {
         "message": "启用此选项并激活网页翻译后，你无需点击“开始网页翻译”按钮，网页将被自动翻译。"
     },
+    "optionsNoControlBarWhileFirstActivating": {
+        "message": "首次激活时不显示控制栏"
+    },
+    "optionsNoControlBarWhileFirstActivatingDescription": {
+        "message": "只有当“激活网页翻译后直接翻译”选项启用后此选项才会生效。启用此选项后，首次激活“网页翻译”将不会展示控制栏。首次激活后，再次激活“网页翻译”可以展示或隐藏控制栏。"
+    },
     "themePreset": {
         "message": "预设"
     },
