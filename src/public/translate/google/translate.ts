@@ -39,6 +39,8 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
             params.sl = data.src;
             params.tl = secondPreferredLanguage;
 
+            to = secondPreferredLanguage;
+
             const newRes = await fetchData(url + getQueryString(params));
 
             data = await newRes.json();
