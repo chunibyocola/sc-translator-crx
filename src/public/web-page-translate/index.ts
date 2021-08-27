@@ -170,6 +170,9 @@ const getAllTextFromElement = (element: HTMLElement) => {
                     text += node.nodeValue;
                 }
             }
+            else if ((node as HTMLElement).classList.contains('notranslate')) {
+                continue;
+            }
             else if (window.getComputedStyle(node as HTMLElement).display === 'inline' && isPureInlineElement(node as HTMLElement) && (node as HTMLElement).innerText.trimLeft()) {
                 elementArr.push(node);
                 text += (node as HTMLElement).innerText;
@@ -328,7 +331,7 @@ const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[
             continue;
         }
 
-        if (text.length + request.length < 1024 && requestCount <= 100) {
+        if (text.length + request.length < 1024 && requestCount <= 80) {
             requestArray.push({ Text: request });
             pageTranslateList.push(currentItem);
             textList.push(request);
