@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Draggable from '../../../components/Draggable';
 import IconFont from '../../../components/IconFont';
 import { getMessage } from '../../../public/i18n';
 import { TextPreprocessingRegExp } from '../../../types';
@@ -19,6 +20,11 @@ const RegExpList: React.FC<RegExpListProps> = ({ textPreprocessingRegExpList, on
     const flagsEleRef = useRef<HTMLInputElement>(null);
     const replacementEleRef = useRef<HTMLInputElement>(null);
 
+    const onDraggableChange = useCallback((values: TextPreprocessingRegExp[]) => {
+        setRegExpList(values);
+        setUpdated(true);
+    }, []);
+
     useEffect(() => {
         setRegExpList(textPreprocessingRegExpList);
     }, [textPreprocessingRegExpList]);
@@ -33,19 +39,24 @@ const RegExpList: React.FC<RegExpListProps> = ({ textPreprocessingRegExpList, on
                 <span>{getMessage('optionsFlags')}</span>
                 <span>{getMessage('optionsReplacement')}</span>
             </div>
-            {regExpList.map((v, i) => (<div className='regexp-list__grid' key={i + timestamp}>
-                <input type='text' disabled defaultValue={v.pattern} />
-                <input type='text' disabled defaultValue={v.flags} />
-                <input type='text' disabled defaultValue={v.replacement} />
-                {modifyMode && <IconFont
-                    iconName='#icon-MdDelete'
-                    className='button'
-                    onClick={() => {
-                        setRegExpList(regExpList.filter(v1 => v1 !== v));
-                        setUpdated(true);
-                    }}
-                />}
-            </div>))}
+            <Draggable values={regExpList} onChange={onDraggableChange}>
+                {regExpList.map((v, i) => (<div className='regexp-list__grid' key={i + timestamp} draggable-id={i + timestamp}>
+                    <input type='text' disabled value={v.pattern} />
+                    <input type='text' disabled value={v.flags} />
+                    <input type='text' disabled value={v.replacement} />
+                    {modifyMode && <span>
+                        <IconFont
+                            iconName='#icon-MdDelete'
+                            className='button'
+                            onClick={() => {
+                                setRegExpList(regExpList.filter(v1 => v1 !== v));
+                                setUpdated(true);
+                            }}
+                        />
+                        <IconFont iconName='#icon-move' className='draggable-move' />
+                    </span>}
+                </div>))}
+            </Draggable>
             {modifyMode && <div className='regexp-list__grid'>
                 <input type='text' ref={patternEleRef} placeholder={getMessage('optionsPatternCanNotBeEmpty')}/>
                 <input type='text' ref={flagsEleRef} />

@@ -1,9 +1,13 @@
-.regexp-list>* {
-    margin: 5px;
-}
 .regexp-list__grid {
     display: grid;
     grid-template-columns: 50% 10% 20% auto;
     grid-column-gap: 1%;
-    margin: 5px;
+    padding: 3px;
+    align-items: center;
+}
+.regexp-list__grid .iconfont + .iconfont {
+    margin-left: 10px;
+}
+.regexp-list__grid .draggable-move {
+    cursor: move;
 }
