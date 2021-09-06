@@ -264,16 +264,13 @@
         "message": "啟用此選項後，擴充功能將在翻譯請求完成並可以插入時自動在網頁中插入翻譯結果。你可以通過使用「切換『自動在網頁中插入翻譯結果』選項」鍵盤快速鍵來切換此選項。"
     },
     "optionsTextPreprocessing": {
-        "message": "文字預處理"
+        "message": "文本預處理"
     },
     "optionsTextPreprocessingDescription": {
-        "message": "你要翻譯的文字將在發送翻譯請求之前進行處理。"
+        "message": "「文本預處理」通過正則表達式來匹配字符串，並在匹配後將其替換。如果你不熟悉正則表達式，則不建議自己編寫正則表達式。"
     },
     "optionsReplaceWithRegExp": {
         "message": "用正則表達式替換"
-    },
-    "optionsReplaceWithRegExpDescription": {
-        "message": "使用正則表達式來匹配你所想要匹配的字串，並把匹配的字串替換成你所想替換的字串。如果你不熟悉正則表達式，則不建議自己編寫正則表達式。"
     },
     "optionsPattern": {
         "message": "模式"
@@ -291,7 +288,7 @@
         "message": "模式不能為空。"
     },
     "optionsTestSomeText": {
-        "message": "測試一些文字"
+        "message": "測試一些文本"
     },
     "optionsTestSomeTextDescription": {
         "message": "在下方左邊的文本框裡輸入文本後會在右邊的文本框裡展示處理後的文本。"
@@ -349,6 +346,12 @@
     },
     "optionsNoControlBarWhileFirstActivatingDescription": {
         "message": "只有當“啟動網頁翻譯後直接翻譯”選項啟用後此選項才會生效。啟用此選項後，首次啟動「網頁翻譯」將不會展示控制欄。首次啟動後，再次啟動「網頁翻譯」可以展示或隱藏控制欄。"
+    },
+    "optionsBeforeSendingTranslateRequest": {
+        "message": "在發送翻譯請求之前"
+    },
+    "optionsBeforeSendingTranslateRequestDescription": {
+        "message": "你要翻譯的文本將在發送翻譯請求之前進行處理。"
     },
     "themePreset": {
         "message": "預設"

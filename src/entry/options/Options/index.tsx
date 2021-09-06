@@ -20,6 +20,7 @@ import Clipboard from './sections/Clipboard';
 import './style.css';
 import { DefaultOptions } from '../../../types';
 import WebPageTranslating from './sections/WebPageTranslating';
+import TextPreprocessing from './sections/TextPreprocessing';
 
 export type GenericOptionsProps<T> = {
     updateStorage: (key: string, value: any) => void;
@@ -154,6 +155,10 @@ const Options: React.FC = () => {
                 defaultTranslateFrom={defaultTranslateFrom}
                 defaultTranslateTo={defaultTranslateTo}
                 useDotCn={useDotCn}
+            />
+            <div className='sub-title' id='text-preprocessing'>{getMessage('optionsTextPreprocessing')}</div>
+            <TextPreprocessing
+                updateStorage={updateStorage}
                 textPreprocessingRegExpList={textPreprocessingRegExpList}
                 textPreprocessingPreset={textPreprocessingPreset}
             />

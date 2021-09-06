@@ -267,13 +267,10 @@
         "message": "文本预处理"
     },
     "optionsTextPreprocessingDescription": {
-        "message": "你要翻译的文本将在发送翻译请求之前进行处理。"
+        "message": "“文本预处理”通过正则表达式来匹配字符串，并在匹配后将其替换。如果你不熟悉正则表达式，则不建议自己编写正则表达式。"
     },
     "optionsReplaceWithRegExp": {
         "message": "用正则表达式替换"
-    },
-    "optionsReplaceWithRegExpDescription": {
-        "message": "使用正则表达式来匹配你所想要匹配的字符串，并把匹配的字符串替换成你所想替换的字符串。如果你不熟悉正则表达式，则不建议自己编写正则表达式。"
     },
     "optionsPattern": {
         "message": "模式"
@@ -349,6 +346,12 @@
     },
     "optionsNoControlBarWhileFirstActivatingDescription": {
         "message": "只有当“激活网页翻译后直接翻译”选项启用后此选项才会生效。启用此选项后，首次激活“网页翻译”将不会展示控制栏。首次激活后，再次激活“网页翻译”可以展示或隐藏控制栏。"
+    },
+    "optionsBeforeSendingTranslateRequest": {
+        "message": "在发送翻译请求之前"
+    },
+    "optionsBeforeSendingTranslateRequestDescription": {
+        "message": "你要翻译的文本将在发送翻译请求之前进行处理。"
     },
     "themePreset": {
         "message": "预设"

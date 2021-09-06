@@ -267,13 +267,10 @@
         "message": "Text preprocessing"
     },
     "optionsTextPreprocessingDescription": {
-        "message": "The text you want to translate will be processed before sending a translate request."
+        "message": "\"Text preprocessing\" use the regular expressions to match the string and then replace them. If you are not familiar with regular expressions, you are not recommended to write your own regular expressions."
     },
     "optionsReplaceWithRegExp": {
         "message": "Replace with regular expression"
-    },
-    "optionsReplaceWithRegExpDescription": {
-        "message": "Use regular expressions to match the string you want to match, and replace the matched string with the string you want to replace. If you are not familiar with regular expressions, you are not recommended to write your own regular expressions."
     },
     "optionsPattern": {
         "message": "Pattern"
@@ -349,6 +346,12 @@
     },
     "optionsNoControlBarWhileFirstActivatingDescription": {
         "message": "This option is only available when you enable the \"Translate directly after activating webpage translating\" option. After enabling this option, the control bar will not be displayed while the first time of \"Webpage translating\" activating. After first activating, you can activate \"Webpage translating\" again to display or hide the control bar."
+    },
+    "optionsBeforeSendingTranslateRequest": {
+        "message": "Before sending translate request"
+    },
+    "optionsBeforeSendingTranslateRequestDescription": {
+        "message": "The text you want to translate will be processed before sending a translate request."
     },
     "themePreset": {
         "message": "Preset"

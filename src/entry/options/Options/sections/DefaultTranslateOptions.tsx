@@ -6,11 +6,8 @@ import { translateSource } from '../../../../constants/translateSource';
 import { getMessage } from '../../../../public/i18n';
 import { switchTranslateSource } from '../../../../public/switch-translate-source';
 import { DefaultOptions } from '../../../../types';
-import BetaIcon from '../../BetaIcon';
 import DefaultSelect from '../../DefaultSelect';
 import OptionToggle from '../../OptionToggle';
-import RegExpList from '../../RegExpList';
-import TestTextProcessing from '../../TestTextPreprocessing';
 import TransferList from '../../TransferList';
 
 type DefaultTranslateOptionsProps = GenericOptionsProps<Pick<
@@ -25,9 +22,7 @@ type DefaultTranslateOptionsProps = GenericOptionsProps<Pick<
     'defaultTranslateSource' |
     'defaultTranslateFrom' |
     'defaultTranslateTo' |
-    'useDotCn' |
-    'textPreprocessingRegExpList' |
-    'textPreprocessingPreset'
+    'useDotCn'
 >>;
 
 const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
@@ -42,9 +37,7 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
     defaultTranslateSource,
     defaultTranslateFrom,
     defaultTranslateTo,
-    useDotCn,
-    textPreprocessingRegExpList,
-    textPreprocessingPreset
+    useDotCn
 }) => {
     return (
         <div className='opt-section'>
@@ -162,50 +155,6 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
                     />
                 </div>
             </>}
-            <div className='opt-section-row'>
-                <div className='flex-align-items-center'>
-                    {getMessage('optionsTextPreprocessing')} <BetaIcon />
-                </div>
-                <div className='item-description'>
-                    {getMessage('optionsTextPreprocessingDescription')}
-                    <a
-                        target='_blank'
-                        href='https://github.com/chunibyocola/sc-translator-crx/discussions/17'
-                        rel='noreferrer'
-                    >
-                        {getMessage('optionsLearnMoreAboutTextPreprocessing')}
-                    </a>
-                </div>
-                <div className='mt10-ml30'>
-                    {getMessage('optionsReplaceWithRegExp')}
-                    <div className='item-description'>{getMessage('optionsReplaceWithRegExpDescription')}</div>
-                    <div className='mt10-ml30'>
-                        <RegExpList
-                            textPreprocessingRegExpList={textPreprocessingRegExpList}
-                            onSave={value => updateStorage('textPreprocessingRegExpList', value)}
-                        />
-                    </div>
-                </div>
-                <div className='mt10-ml30'>
-                    {getMessage('themePreset')}
-                    <div className='mt10-ml30'>
-                        <OptionToggle
-                            id='convert-camel-case'
-                            message='optionsConvertCamelCase'
-                            checked={textPreprocessingPreset.convertCamelCase}
-                            onClick={() => updateStorage('textPreprocessingPreset', { ...textPreprocessingPreset, 'convertCamelCase': !textPreprocessingPreset.convertCamelCase })}
-                        />
-                        <div className='item-description'>{'"aCamelCaseText" => "a camel case text"'}</div>
-                    </div>
-                </div>
-                <div className='mt10-ml30'>
-                    {getMessage('optionsTestSomeText')}
-                    <div className='item-description'>{getMessage('optionsTestSomeTextDescription')}</div>
-                    <div className='mt10-ml30'>
-                        <TestTextProcessing />
-                    </div>
-                </div>
-            </div>
         </div>
     );
 };

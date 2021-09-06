@@ -267,13 +267,10 @@
         "message": "テキストの前処理"
     },
     "optionsTextPreprocessingDescription": {
-        "message": "翻訳するテキストは、翻訳リクエストを送信する前に処理されます。"
+        "message": "「テキストの前処理」は正規表現を使用して、マッチしたテキストを置き換えます。正規表現に慣れていない場合は、自分で正規表現を作成することはお勧めしません。"
     },
     "optionsReplaceWithRegExp": {
         "message": "正規表現で置き換える"
-    },
-    "optionsReplaceWithRegExpDescription": {
-        "message": "正規表現を使用して、マッチしたい文字にマッチさせ、マッチした文字を置き換えしたい文字に置き換えます。正規表現に慣れていない場合は、自分で正規表現を作成することはお勧めしません。"
     },
     "optionsPattern": {
         "message": "パターン"
@@ -349,6 +346,12 @@
     },
     "optionsNoControlBarWhileFirstActivatingDescription": {
         "message": "このオプションは、「『Webページ翻訳』をアクティブ化にした直後に翻訳する」オプションを有効にした場合にのみ使用できます。このオプションを有効にすると、「Webページ翻訳」が初アクティブ化にしたときにコントロールバーが表示されなくなります。初アクティブ化後、「Webページ翻訳」を再びアクティブにすると、コントロールバーを表示または非表示にできます。"
+    },
+    "optionsBeforeSendingTranslateRequest": {
+        "message": "翻訳リクエストを送信する前に"
+    },
+    "optionsBeforeSendingTranslateRequestDescription": {
+        "message": "翻訳したいテキストはリクエストを送信する前に処理されます。"
     },
     "themePreset": {
         "message": "プリセット"
