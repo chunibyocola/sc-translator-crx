@@ -62,7 +62,8 @@ const defaultOptions: DefaultOptions = {
     webPageTranslateTo: LANG_EN,
     webPageTranslateDisplayMode: 1,
     webPageTranslateDirectly: false,
-    noControlBarWhileFirstActivating: false
+    noControlBarWhileFirstActivating: false,
+    afterSelectingTextRegExpList: []
 };
 
 export default defaultOptions;

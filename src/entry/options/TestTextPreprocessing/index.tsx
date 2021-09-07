@@ -1,10 +1,14 @@
 import React, { useRef, useState } from 'react';
 import IconFont from '../../../components/IconFont';
 import { useDebounce } from '../../../public/react-use';
-import { textPreprocessing } from '../../../public/text-preprocessing';
+import { textPreprocessing, selectedTextPreprocessing } from '../../../public/text-preprocessing';
 import './style.css';
 
-const TestTextProcessing: React.FC = () => {
+type TestTextProcessingProps = {
+    preprocessType: 'before-sending-request' | 'after-selecting-text'
+};
+
+const TestTextProcessing: React.FC<TestTextProcessingProps> = ({ preprocessType }) => {
     const [testText, setTestText] = useState('');
 
     const resultEleRef = useRef<HTMLTextAreaElement>(null);
@@ -12,7 +16,12 @@ const TestTextProcessing: React.FC = () => {
     useDebounce(() => {
         if (!resultEleRef.current) { return; }
     
-        resultEleRef.current.value = textPreprocessing(testText);
+        if (preprocessType === 'before-sending-request') {
+            resultEleRef.current.value = textPreprocessing(testText);
+        }
+        else if (preprocessType === 'after-selecting-text') {
+            resultEleRef.current.value = selectedTextPreprocessing(testText);
+        }
     }, 100, [testText])
 
     return (

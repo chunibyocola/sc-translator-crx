@@ -80,7 +80,8 @@ const Options: React.FC = () => {
         webPageTranslateTo,
         webPageTranslateDisplayMode,
         webPageTranslateDirectly,
-        noControlBarWhileFirstActivating
+        noControlBarWhileFirstActivating,
+        afterSelectingTextRegExpList
     } = useOptions<DefaultOptions>(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -161,6 +162,7 @@ const Options: React.FC = () => {
                 updateStorage={updateStorage}
                 textPreprocessingRegExpList={textPreprocessingRegExpList}
                 textPreprocessingPreset={textPreprocessingPreset}
+                afterSelectingTextRegExpList={afterSelectingTextRegExpList}
             />
             <div className='sub-title' id='in-web-page'>{getMessage('optionsInWebPage')}</div>
             <Translate

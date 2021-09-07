@@ -353,6 +353,12 @@
     "optionsBeforeSendingTranslateRequestDescription": {
         "message": "The text you want to translate will be processed before sending a translate request."
     },
+    "optionsAfterSelectingText": {
+        "message": "After selecting text"
+    },
+    "optionsAfterSelectingTextDescription": {
+        "message": "The text you selected in the webpage will be processed. When the text is emptied through regular expressions, the button will not be displayed, and the text will not be automatically translated. Non-letter has been replaced as empty by default."
+    },
     "themePreset": {
         "message": "Preset"
     },

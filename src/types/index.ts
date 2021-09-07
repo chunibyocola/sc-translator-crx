@@ -100,6 +100,7 @@ export type DefaultOptions = {
     webPageTranslateDisplayMode: number;
     webPageTranslateDirectly: boolean;
     noControlBarWhileFirstActivating: boolean;
+    afterSelectingTextRegExpList: TextPreprocessingRegExp[];
 };
 
 // Only work in "src/entry/background/install.ts".

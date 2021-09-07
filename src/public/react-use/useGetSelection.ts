@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Position } from '../../types';
 import { setSelectionRange } from '../insert-result';
-import { textPreprocessing } from '../text-preprocessing';
+import { selectedTextPreprocessing } from '../text-preprocessing';
 import { isTextBox } from '../utils';
 import { getSelectedText } from '../utils/get-selection';
 
@@ -23,14 +23,14 @@ const useGetSelection = (selectCallback: (params: { pos: Position, text: string 
             setTimeout(() => {
                 const text = getSelectedText();
 
-                if (!text || lastSelectionTextRef.current === text || !textPreprocessing(text)) { return; }
+                if (lastSelectionTextRef.current === text || !selectedTextPreprocessing(text)) { return; }
 
                 // insert result
                 let selection = window.getSelection();
                 if (selection && selection.rangeCount > 0 && document.activeElement && !isTextBox(document.activeElement)) {
                     let selectionRange = selection.getRangeAt(0).cloneRange();
                     selectionRange.collapse(false);
-                   setSelectionRange(selectionRange, text);
+                    setSelectionRange(selectionRange, text);
                 }
 
                 lastSelectionTextRef.current = text;

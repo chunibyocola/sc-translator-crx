@@ -9,13 +9,15 @@ import TestTextProcessing from '../../TestTextPreprocessing';
 type TextPreprocessingProps = GenericOptionsProps<Pick<
     DefaultOptions,
     'textPreprocessingRegExpList' |
-    'textPreprocessingPreset'
+    'textPreprocessingPreset' |
+    'afterSelectingTextRegExpList'
 >>;
 
 const TextPreprocessing: React.FC<TextPreprocessingProps> = ({
     updateStorage,
     textPreprocessingPreset,
-    textPreprocessingRegExpList
+    textPreprocessingRegExpList,
+    afterSelectingTextRegExpList
 }) => {
     return (
         <div className='opt-section'>
@@ -59,7 +61,31 @@ const TextPreprocessing: React.FC<TextPreprocessingProps> = ({
                     {getMessage('optionsTestSomeText')}
                     <div className='item-description'>{getMessage('optionsTestSomeTextDescription')}</div>
                     <div className='mt10-ml30'>
-                        <TestTextProcessing />
+                        <TestTextProcessing
+                            preprocessType='before-sending-request'
+                        />
+                    </div>
+                </div>
+            </div>
+            <div className='opt-section-row'>
+                {getMessage('optionsAfterSelectingText')}
+                <div className='item-description'>{getMessage('optionsAfterSelectingTextDescription')}</div>
+                <div className='mt10-ml30'>
+                    {getMessage('optionsReplaceWithRegExp')}
+                    <div className='mt10-ml30'>
+                        <RegExpList
+                            textPreprocessingRegExpList={afterSelectingTextRegExpList}
+                            onSave={value => updateStorage('afterSelectingTextRegExpList', value)}
+                        />
+                    </div>
+                </div>
+                <div className='mt10-ml30'>
+                    {getMessage('optionsTestSomeText')}
+                    <div className='item-description'>{getMessage('optionsTestSomeTextDescription')}</div>
+                    <div className='mt10-ml30'>
+                        <TestTextProcessing
+                            preprocessType='after-selecting-text'
+                        />
                     </div>
                 </div>
             </div>

@@ -353,6 +353,12 @@
     "optionsBeforeSendingTranslateRequestDescription": {
         "message": "你要翻译的文本将在发送翻译请求之前进行处理。"
     },
+    "optionsAfterSelectingText": {
+        "message": "选择文本后"
+    },
+    "optionsAfterSelectingTextDescription": {
+        "message": "你在网页中选择的文本将会被处理。文本通过正则表达式被置为空后，按钮将不会被展示，文本也不会被自动翻译。非文字已被默认置换为空。"
+    },
     "themePreset": {
         "message": "预设"
     },
