@@ -1,8 +1,9 @@
-import { getQueryString, fetchData, getError } from '../utils';
+import { getQueryString, getError } from '../utils';
 import { langCode } from './lang-code';
-import { RESULT_ERROR, LANGUAGE_NOT_SOPPORTED } from '../error-codes';
+import { RESULT_ERROR, LANGUAGE_NOT_SOPPORTED, CONNECTION_TIMED_OUT, BAD_REQUEST } from '../error-codes';
 import { TranslateParams } from '../translate-types';
 import { TranslateResult } from '../../../types';
+import { getTk } from '../../web-page-translate/google/getTk';
 
 export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '' }: TranslateParams) => {
     preferredLanguage = preferredLanguage || 'en';
@@ -14,9 +15,8 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
 
     if (!(from in langCode) || !(to in langCode)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
 
-    let url = `https://translate.googleapis.com/translate_a/single`;
     let params = {
-        client: 'gtx',
+        client: 'webapp',
         sl: from,
         tl: to,
         hl: preferredLanguage || to,
@@ -24,10 +24,11 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
         ie: 'UTF-8',
         oe: 'UTF-8',
         dj: 1,
-        q: encodeURIComponent(text)
+        q: encodeURIComponent(text),
+        tk: getTk(text)
     };
 
-    const res = await fetchData(url + getQueryString(params));
+    const res = await fetchGoogle(params);
 
     try {
         let data = await res.json();
@@ -41,7 +42,7 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
 
             to = secondPreferredLanguage;
 
-            const newRes = await fetchData(url + getQueryString(params));
+            const newRes = await fetchGoogle(params);
 
             data = await newRes.json();
         }
@@ -60,4 +61,34 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
     } catch (err) {
         throw getError(RESULT_ERROR);
     }
+};
+
+let expiry = 0;
+
+const fetchGoogle = async (params: { [key: string]: string | number | (string | number)[]; }): Promise<Response> => {
+    const url = 'https://translate.googleapis.com/translate_a/single';
+    const timpstamp = Number(new Date());
+
+    if (expiry > timpstamp) {
+        params.client = 'gtx';
+    }
+
+    let res = await fetch(url + getQueryString(params)).catch(() => { throw getError(CONNECTION_TIMED_OUT) });
+
+    if (!res.ok) {
+        if (res.status === 429 && expiry < timpstamp) {
+            expiry = timpstamp + 600000;
+            params.client = 'gtx';
+
+            res = await fetch(url + getQueryString(params)).catch(() => { throw getError(CONNECTION_TIMED_OUT) });
+
+            if (res.ok) {
+                return res;
+            }
+        }
+
+        throw getError(`${BAD_REQUEST} (http ${res.status})`);
+    }
+
+    return res;
 };
