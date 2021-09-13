@@ -1,3 +1,8 @@
+# 3.11.0 (2021-09-13)
+- Add text preprocessing of "after selecting text". ([08cf862](https://github.com/chunibyocola/sc-translator-crx/commit/08cf862ba3341d35a201dba4a6bf6073b6c54e51))
+- Make the item of "text preprocessing" draggable in modify mode. ([abed9e8](https://github.com/chunibyocola/sc-translator-crx/commit/abed9e880698119b865cc8f742bd0d1e9a688876))
+- New section of options page named "Text preprocessing". ([d3a533b](https://github.com/chunibyocola/sc-translator-crx/commit/d3a533bbc292e2ef9fac8438db8c17a44059a3d1))
+- Reduce the probability of "BAD_REQUEST (http 429) from Google translate". ([93126c7](https://github.com/chunibyocola/sc-translator-crx/commit/93126c719fc1b66616b3418fb20ab2fe1093ea3c))
 # 3.10.0 (2021-08-31)
 - Add "Not displaying control bar while first activating" option. ([39d0e79](https://github.com/chunibyocola/sc-translator-crx/commit/39d0e7937a17e6f23038731c1b70da5608565f9b))
 - Add "Translate directly after activating webpage translating" option. ([735e871](https://github.com/chunibyocola/sc-translator-crx/commit/735e87106dd3dcb4efe67f161339d8aefadba577))
