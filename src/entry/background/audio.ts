@@ -34,8 +34,8 @@ export const playAudio = (srcList: string | string[]) => {
 type PickedOptions = Pick<DefaultOptions, 'audioVolume' | 'audioPlaybackRate'>;
 const keys: (keyof PickedOptions)[] = ['audioVolume', 'audioPlaybackRate'];
 getLocalStorage<PickedOptions>(keys, (storage) => {
-    audioPlayer.volume = storage.audioVolume / 100;
-    audioPlayer.defaultPlaybackRate = storage.audioPlaybackRate;
+    storage.audioVolume !== undefined && (audioPlayer.volume = storage.audioVolume / 100);
+    storage.audioPlaybackRate !== undefined && (audioPlayer.defaultPlaybackRate = storage.audioPlaybackRate);
 });
 listenOptionsChange<PickedOptions>(keys, (changes) => {
     changes.audioVolume !== undefined && (audioPlayer.volume = changes.audioVolume / 100);
