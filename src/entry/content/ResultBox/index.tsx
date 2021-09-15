@@ -111,7 +111,7 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
         });
     }, [rememberPositionOfPinnedPanel, changePinPos, pinPos, pinning]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (oldPos.current === position || !mtEle.current) { return; }
 
         !pinning && calculatePosition(mtEle.current, position, changePinPos);
