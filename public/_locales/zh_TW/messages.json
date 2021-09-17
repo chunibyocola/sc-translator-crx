@@ -359,6 +359,9 @@
     "optionsAfterSelectingTextDescription": {
         "message": "你在網頁中選擇的文本將會被處理。文本通過正則表達式被置為空後，按鈕將不會被展示，文本也不會被自動翻譯。非文字已被默認置換為空。"
     },
+    "optionsTranslateToTargetLanguage": {
+        "message": "翻譯為目標語言"
+    },
     "themePreset": {
         "message": "預設"
     },

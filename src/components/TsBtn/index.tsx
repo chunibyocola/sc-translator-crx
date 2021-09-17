@@ -15,9 +15,17 @@ import { getOptions } from '../../public/options';
 import { debounce, isTextBox } from '../../public/utils';
 import { DefaultOptions, Position } from '../../types';
 import { callOutPanel, closePanel, requestToHidePanel, showPanelAndSetPosition } from '../../redux/slice/panelStatusSlice';
-import { mtSetText } from '../../redux/slice/multipleTranslateSlice';
-import { stSetText } from '../../redux/slice/singleTranslateSlice';
-import { translateButtonContext, TRANSLATE_BUTTON_COPY, TRANSLATE_BUTTON_LISTEN, TRANSLATE_BUTTON_TRANSLATE } from '../../constants/translateButtonTypes';
+import { mtSetText, mtSetTo } from '../../redux/slice/multipleTranslateSlice';
+import { stSetText, stSetTo } from '../../redux/slice/singleTranslateSlice';
+import {
+    translateButtonContext,
+    TRANSLATE_BUTTON_COPY,
+    TRANSLATE_BUTTON_LISTEN,
+    TRANSLATE_BUTTON_TL_FIRST,
+    TRANSLATE_BUTTON_TL_SECOND,
+    TRANSLATE_BUTTON_TL_THIRD,
+    TRANSLATE_BUTTON_TRANSLATE
+} from '../../constants/translateButtonTypes';
 
 const initText = '';
 const initPos = { x: 5, y: 5 };
@@ -31,7 +39,8 @@ type PickedOptions = Pick<
     'respondToSeparateWindow' |
     'translateDirectlyWhilePinning' |
     'doNotRespondInTextBox' |
-    'translateButtons'
+    'translateButtons' |
+    'translateButtonsTL'
 >;
 const useOptionsDependency: (keyof PickedOptions)[] = [
     'translateDirectly',
@@ -41,7 +50,8 @@ const useOptionsDependency: (keyof PickedOptions)[] = [
     'respondToSeparateWindow',
     'translateDirectlyWhilePinning',
     'doNotRespondInTextBox',
-    'translateButtons'
+    'translateButtons',
+    'translateButtonsTL'
 ];
 
 const calculateBtnPos = ({ x, y }: Position, translateButtonElement: HTMLDivElement | null) => {
@@ -91,7 +101,8 @@ const TsBtn: React.FC = () => {
         respondToSeparateWindow,
         translateDirectlyWhilePinning,
         doNotRespondInTextBox,
-        translateButtons
+        translateButtons,
+        translateButtonsTL
     } = useOptions<PickedOptions>(useOptionsDependency);
 
     const isEnableTranslate = useIsEnable('translate', window.location.host);
@@ -100,13 +111,16 @@ const TsBtn: React.FC = () => {
 
     const dispatch = useAppDispatch();
 
-    const handleForwardTranslate = useCallback((text: string, position: Position) => {
+    const handleForwardTranslate = useCallback((text: string, position: Position, to: undefined | string = undefined) => {
         if (respondToSeparateWindow) {
             sendSeparate(text);
             return;
         }
 
         dispatch(showPanelAndSetPosition({ position }));
+
+        to !== undefined && (getOptions().multipleTranslateMode ? dispatch(mtSetTo({ to })) : dispatch(stSetTo({ to })));
+
         getOptions().multipleTranslateMode ? dispatch(mtSetText({ text })) : dispatch(stSetText({ text }));
     }, [dispatch, respondToSeparateWindow]);
 
@@ -122,6 +136,15 @@ const TsBtn: React.FC = () => {
                 break;
             case TRANSLATE_BUTTON_COPY:
                 navigator.clipboard.writeText(text);
+                break;
+            case TRANSLATE_BUTTON_TL_FIRST:
+                handleForwardTranslate(text, pos, translateButtonsTL.first);
+                break;
+            case TRANSLATE_BUTTON_TL_SECOND:
+                handleForwardTranslate(text, pos, translateButtonsTL.second);
+                break;
+            case TRANSLATE_BUTTON_TL_THIRD:
+                handleForwardTranslate(text, pos, translateButtonsTL.third);
                 break;
             default: break;
         }

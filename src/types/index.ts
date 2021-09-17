@@ -42,6 +42,12 @@ export type OptionsContextMenu = { id: string; enabled: boolean };
 export type TextPreprocessingRegExp = { pattern: string; flags: string; replacement: string };
 export type TextPreprocessingPreset = { convertCamelCase: boolean };
 
+export type TranslateButtonsTL = {
+    first: string;
+    second: string;
+    third: string;
+};
+
 export type DefaultOptions = {
     userLanguage: string;
     defaultTranslateSource: string;
@@ -101,6 +107,7 @@ export type DefaultOptions = {
     webPageTranslateDirectly: boolean;
     noControlBarWhileFirstActivating: boolean;
     afterSelectingTextRegExpList: TextPreprocessingRegExp[];
+    translateButtonsTL: TranslateButtonsTL;
 };
 
 // Only work in "src/entry/background/install.ts".

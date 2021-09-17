@@ -359,6 +359,9 @@
     "optionsAfterSelectingTextDescription": {
         "message": "The text you selected in the webpage will be processed. When the text is emptied through regular expressions, the button will not be displayed, and the text will not be automatically translated. Non-letter has been replaced as empty by default."
     },
+    "optionsTranslateToTargetLanguage": {
+        "message": "Translate to target language"
+    },
     "themePreset": {
         "message": "Preset"
     },

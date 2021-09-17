@@ -32,7 +32,9 @@ type TranslateProps = GenericOptionsProps<Pick<
     'doNotRespondInTextBox' |
     'enableInsertResult' |
     'autoInsertResult' |
-    'translateButtons'
+    'translateButtons' |
+    'translateButtonsTL' |
+    'userLanguage'
 >>;
 
 const Translate: React.FC<TranslateProps> = ({
@@ -49,7 +51,9 @@ const Translate: React.FC<TranslateProps> = ({
     doNotRespondInTextBox,
     enableInsertResult,
     autoInsertResult,
-    translateButtons
+    translateButtons,
+    translateButtonsTL,
+    userLanguage
 }) => {
     return (
         <div className='opt-section'>
@@ -75,7 +79,10 @@ const Translate: React.FC<TranslateProps> = ({
                 <div className='mt10-ml30'>
                     <TranslateButtonDisplay
                         translateButtons={translateButtons}
-                        onUpdate={value => updateStorage('translateButtons', value)}
+                        translateButtonsTL={translateButtonsTL}
+                        onTranslateButtonsUpdate={value => updateStorage('translateButtons', value)}
+                        onTranslateButtonsTLUpdate={value => updateStorage('translateButtonsTL', value)}
+                        userLanguage={userLanguage}
                     />
                 </div>
             </div>

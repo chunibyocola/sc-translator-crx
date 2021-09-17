@@ -56,10 +56,13 @@ export const singleTranslateSlice = createSlice({
             state.from = payload.from;
             state.to = payload.to;
             state.translateId += 1;
+        },
+        stSetTo: (state, { payload }: PayloadAction<{ to: string }>) => {
+            state.to = payload.to;
         }
     }
 });
 
-export const { stSetText, stRequestStart, stRequestFinish, stRequestError, stSetFromAndTo, stInit, stSetSourceFromTo } = singleTranslateSlice.actions;
+export const { stSetText, stRequestStart, stRequestFinish, stRequestError, stSetFromAndTo, stInit, stSetSourceFromTo, stSetTo } = singleTranslateSlice.actions;
 
 export default singleTranslateSlice.reducer;

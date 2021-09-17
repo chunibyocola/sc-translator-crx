@@ -63,7 +63,8 @@ const defaultOptions: DefaultOptions = {
     webPageTranslateDisplayMode: 1,
     webPageTranslateDirectly: false,
     noControlBarWhileFirstActivating: false,
-    afterSelectingTextRegExpList: []
+    afterSelectingTextRegExpList: [],
+    translateButtonsTL: { first: '', second: LANG_EN, third: LANG_EN }
 };
 
 export default defaultOptions;

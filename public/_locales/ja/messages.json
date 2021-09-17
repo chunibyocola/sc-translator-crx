@@ -359,6 +359,9 @@
     "optionsAfterSelectingTextDescription": {
         "message": "Webページで選択したテキストが処理されます。テキストは正規表現を通して空にされると、ボタンは表示されず、テキストは自動的に翻訳されません。非文字はデフォルトで空に置き換えられます。"
     },
+    "optionsTranslateToTargetLanguage": {
+        "message": "目標言語に翻訳します"
+    },
     "themePreset": {
         "message": "プリセット"
     },

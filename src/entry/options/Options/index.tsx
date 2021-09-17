@@ -81,7 +81,8 @@ const Options: React.FC = () => {
         webPageTranslateDisplayMode,
         webPageTranslateDirectly,
         noControlBarWhileFirstActivating,
-        afterSelectingTextRegExpList
+        afterSelectingTextRegExpList,
+        translateButtonsTL
     } = useOptions<DefaultOptions>(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -180,6 +181,8 @@ const Options: React.FC = () => {
                 enableInsertResult={enableInsertResult}
                 autoInsertResult={autoInsertResult}
                 translateButtons={translateButtons}
+                translateButtonsTL={translateButtonsTL}
+                userLanguage={userLanguage}
             />
             <div className='sub-title' id='history'>{getMessage('optionsHistory')}</div>
             <History

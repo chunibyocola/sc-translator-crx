@@ -87,10 +87,13 @@ export const multipleTranslateSlice = createSlice({
                 source: v,
                 translateRequest: { status: 'init' }
             }));
+        },
+        mtSetTo: (state, { payload }: PayloadAction<{ to: string }>) => {
+            state.to = payload.to;
         }
     }
 });
 
-export const { mtSetText, mtRequestStart, mtRequestFinish, mtRequestError, mtAddSource, mtRemoveSource, mtSetFromAndTo, mtInit } = multipleTranslateSlice.actions;
+export const { mtSetText, mtRequestStart, mtRequestFinish, mtRequestError, mtAddSource, mtRemoveSource, mtSetFromAndTo, mtInit, mtSetTo } = multipleTranslateSlice.actions;
 
 export default multipleTranslateSlice.reducer;
