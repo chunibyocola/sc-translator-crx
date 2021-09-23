@@ -173,24 +173,32 @@ const getAllTextFromElement = (element: HTMLElement) => {
             else if ((node as HTMLElement).classList.contains('notranslate')) {
                 continue;
             }
-            else if (window.getComputedStyle(node as HTMLElement).display === 'inline' && isPureInlineElement(node as HTMLElement) && (node as HTMLElement).innerText.trimLeft()) {
-                elementArr.push(node);
-                text += (node as HTMLElement).innerText;
-            }
+            // Below, node is definitely a HTMLElement
             else {
-                if (elementArr.length > 0 && text.trimLeft()) {
-                    newPageTranslateItem(text, elementArr);
+                const shadowRoot = (node as HTMLElement).shadowRoot;
+                if (shadowRoot) {
+                    nodeStack.unshift({ node: shadowRoot, index: 0 });
                 }
-    
-                elementArr = [];
-                text = '';
-    
-                if (node.nodeName === 'PRE') {
-                    dealWithPreElement(node as HTMLPreElement);
+
+                if (window.getComputedStyle(node as HTMLElement).display === 'inline' && isPureInlineElement(node as HTMLElement) && (node as HTMLElement).innerText.trimLeft()) {
+                    elementArr.push(node);
+                    text += (node as HTMLElement).innerText;
                 }
                 else {
-                    nodeStack.unshift({ node, index: 0 }, { node: currentNode.node, index: ++i });
-                    break;
+                    if (elementArr.length > 0 && text.trimLeft()) {
+                        newPageTranslateItem(text, elementArr);
+                    }
+
+                    elementArr = [];
+                    text = '';
+
+                    if (node.nodeName === 'PRE') {
+                        dealWithPreElement(node as HTMLPreElement);
+                    }
+                    else {
+                        nodeStack.unshift({ node, index: 0 }, { node: currentNode.node, index: ++i });
+                        break;
+                    }
                 }
             }
         }
