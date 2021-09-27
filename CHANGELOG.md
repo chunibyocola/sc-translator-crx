@@ -1,3 +1,8 @@
+# 3.12.0 (2021-09-27)
+- Add three "Translate to target language" buttons. ([9791fb4](https://github.com/chunibyocola/sc-translator-crx/commit/9791fb400e31f775401139b8454dac9e43463453))
+- Webpage translating will treanslate the text in shadow dom now. ([03ff2a3](https://github.com/chunibyocola/sc-translator-crx/commit/03ff2a3a685a4a90a7f2d3a293efb949ca7d1d25))
+- Fix panel will be "flash" before displaying it. ([5cc3a02](https://github.com/chunibyocola/sc-translator-crx/commit/5cc3a028c815420d259bc3ec1a140eefc4348dac))
+- Fix translate source "Bing" unavailable. ([837196e](https://github.com/chunibyocola/sc-translator-crx/commit/837196e18817207e2fb032c600299a40e4a9d0f7))
 # 3.11.0 (2021-09-13)
 - Add text preprocessing of "after selecting text". ([08cf862](https://github.com/chunibyocola/sc-translator-crx/commit/08cf862ba3341d35a201dba4a6bf6073b6c54e51))
 - Make the item of "text preprocessing" draggable in modify mode. ([abed9e8](https://github.com/chunibyocola/sc-translator-crx/commit/abed9e880698119b865cc8f742bd0d1e9a688876))
