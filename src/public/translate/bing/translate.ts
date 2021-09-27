@@ -69,9 +69,9 @@ type FetchFromBingParams = {
 };
 
 const fetchDictFromBing = async ({ text, from, to, com }: FetchFromBingParams) => {
-    const url = `https://${com ? 'www' : 'cn'}.bing.com/tlookupv3`;
+    const { token, key, IG, IID } = await getTokenAndKey(com);
 
-    const { token, key } = await getTokenAndKey(com);
+    const url = `https://${com ? 'www' : 'cn'}.bing.com/tlookupv3?isVertical=1&IG=${IG}&IID=${IID}`;
 
     const searchParams = new URLSearchParams();
     searchParams.append('from', from);
@@ -90,9 +90,9 @@ const fetchDictFromBing = async ({ text, from, to, com }: FetchFromBingParams) =
 };
 
 const fetchResultFromBing = async ({ text, from, to, com }: FetchFromBingParams) => {
-    const url = `https://${com ? 'www' : 'cn'}.bing.com/ttranslatev3`;
+    const { token, key, IG, IID } = await getTokenAndKey(com);
 
-    const { token, key } = await getTokenAndKey(com);
+    const url = `https://${com ? 'www' : 'cn'}.bing.com/ttranslatev3?isVertical=1&IG=${IG}&IID=${IID}`;
 
     const searchParams = new URLSearchParams();
     searchParams.append('fromLang', from);

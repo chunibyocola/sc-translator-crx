@@ -4,9 +4,9 @@ import { getTokenAndKey } from './getTokenAndKey';
 import { DetectParams } from '../translate-types';
 
  export const detect = async ({ text, com = true }: DetectParams) => {
-    const url = `https://${com ? 'www' : 'cn'}.bing.com/ttranslatev3`;
+    const { token, key, IG, IID } = await getTokenAndKey(com);
 
-    const { token, key } = await getTokenAndKey(com);
+    const url = `https://${com ? 'www' : 'cn'}.bing.com/ttranslatev3?isVertical=1&IG=${IG}&IID=${IID}`;
 
     let searchParams = new URLSearchParams();
     searchParams.append('fromLang', 'auto-detect');
