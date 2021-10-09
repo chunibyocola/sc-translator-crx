@@ -1,7 +1,7 @@
-import { getQueryString, getError } from '../utils';
+import { getQueryString, getError, blobToDataURL, fetchData } from '../utils';
 import { detect } from './detect';
 import { langCode } from './lang-code';
-import { LANGUAGE_NOT_SOPPORTED } from '../error-codes';
+import { LANGUAGE_NOT_SOPPORTED, RESULT_ERROR } from '../error-codes';
 import { AudioParams } from '../translate-types';
 
 export const audio = async ({ text, from = '' }: AudioParams) => {
@@ -17,7 +17,16 @@ export const audio = async ({ text, from = '' }: AudioParams) => {
         spd: 3,
         source: 'web'
     };
-    url += getQueryString(params);
 
-    return url;
+    const res = await fetchData(url + getQueryString(params));
+
+    try {
+        const blob = await res.blob();
+
+        const dataURL: string = await blobToDataURL(blob);
+        
+        return dataURL;
+    } catch (err) {
+        throw getError(RESULT_ERROR);
+    }
 };

@@ -10,7 +10,7 @@ import {
 } from '../../constants/chromeSendMessageTypes';
 import IconFont from '../IconFont';
 import './style.css';
-import { sendAudio, sendSeparate } from '../../public/send';
+import { sendSeparate } from '../../public/send';
 import { getOptions } from '../../public/options';
 import { debounce, isTextBox } from '../../public/utils';
 import { DefaultOptions, Position } from '../../types';
@@ -26,6 +26,7 @@ import {
     TRANSLATE_BUTTON_TL_THIRD,
     TRANSLATE_BUTTON_TRANSLATE
 } from '../../constants/translateButtonTypes';
+import { playAudio } from '../../public/play-audio';
 
 const initText = '';
 const initPos = { x: 5, y: 5 };
@@ -132,7 +133,7 @@ const TsBtn: React.FC = () => {
                 handleForwardTranslate(text, pos);
                 break;
             case TRANSLATE_BUTTON_LISTEN:
-                sendAudio(text, {});
+                playAudio({ text });
                 break;
             case TRANSLATE_BUTTON_COPY:
                 navigator.clipboard.writeText(text);
@@ -187,7 +188,7 @@ const TsBtn: React.FC = () => {
                 break;
             case SCTS_AUDIO_COMMAND_KEY_PRESSED:
                 text = getSelectedText();
-                text && sendAudio(text, {});
+                text && playAudio({ text });
                 break;
             case SCTS_CALL_OUT_COMMAND_KEY_PRESSED:
                 dispatch(callOutPanel());

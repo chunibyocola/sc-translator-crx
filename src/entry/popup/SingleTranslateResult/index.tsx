@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import LanguageSelection from '../../../components/LanguageSelection';
-import { sendAudio, sendTranslate } from '../../../public/send';
+import { sendTranslate } from '../../../public/send';
 import RawText from '../../../components/RawText';
 import TsResult from '../../../components/TsResult';
 import { langCode } from '../../../constants/langCode';
@@ -11,6 +11,7 @@ import { textPreprocessing } from '../../../public/text-preprocessing';
 import { useAppDispatch, useAppSelector } from '../../../public/react-use';
 import { stRequestError, stRequestFinish, stRequestStart, stSetFromAndTo, stSetSourceFromTo, stSetText } from '../../../redux/slice/singleTranslateSlice';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
+import { playAudio } from '../../../public/play-audio';
 
 type SingleTranslateResultProps = {
     autoTranslateAfterInput: boolean;
@@ -47,7 +48,7 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ autoTrans
     }, [dispatch]);
 
     const handleReadText = useCallback((text: string, from: string) => {
-        sendAudio(text, { source, from });
+        playAudio({ text, source, from });
     }, [source]);
 
     const handleSourceChange = useCallback((targetSource: string) => {

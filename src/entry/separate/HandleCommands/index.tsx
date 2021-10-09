@@ -7,8 +7,8 @@ import {
     SCTS_SEPARATE_WINDOW_SET_TEXT,
     SCTS_TRANSLATE_COMMAND_KEY_PRESSED
 } from '../../../constants/chromeSendMessageTypes';
+import { playAudio } from '../../../public/play-audio';
 import { useAppDispatch, useOnExtensionMessage } from '../../../public/react-use';
-import { sendAudio } from '../../../public/send';
 import { getSelectedText } from '../../../public/utils/get-selection';
 import { mtSetText } from '../../../redux/slice/multipleTranslateSlice';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
@@ -33,7 +33,7 @@ const HandleCommands: React.FC = () => {
                 break;
             case SCTS_AUDIO_COMMAND_KEY_PRESSED:
                 text = getSelectedText();
-                text && sendAudio(text, {});
+                text && playAudio({ text });
                 break;
             case SCTS_CALL_OUT_COMMAND_KEY_PRESSED:
                 dispatch(callOutPanel());

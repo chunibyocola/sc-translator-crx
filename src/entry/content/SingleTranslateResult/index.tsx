@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useRef, useLayoutEffect, useState } from 'react';
-import { sendTranslate, sendAudio } from '../../../public/send';
+import { sendTranslate } from '../../../public/send';
 import TsResult from '../../../components/TsResult';
 import LanguageSelection from '../../../components/LanguageSelection';
 import RawText from '../../../components/RawText';
@@ -11,6 +11,7 @@ import './style.css';
 import { textPreprocessing } from '../../../public/text-preprocessing';
 import { stRequestError, stRequestFinish, stRequestStart, stSetFromAndTo, stSetSourceFromTo, stSetText } from '../../../redux/slice/singleTranslateSlice';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/slice/translateHistorySlice';
+import { playAudio } from '../../../public/play-audio';
 
 type SingleTranslateResultProps = {
     showRtAndLs: boolean;
@@ -80,7 +81,7 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ showRtAnd
     }, [dispatch]);
 
     const handleReadText = useCallback((text: string, from: string) => {
-        text && sendAudio(text, { source, from });
+        text && playAudio({ text, source, from });
     }, [source]);
 
     const handleRetry = useCallback(() => {

@@ -6,7 +6,7 @@ import MtResult from '../../../components/MtResult';
 import RawText from '../../../components/RawText';
 import { mtLangCode } from '../../../constants/langCode';
 import { openOptionsPage, setLocalStorage } from '../../../public/chrome-call';
-import { sendAudio, sendTranslate } from '../../../public/send';
+import { sendTranslate } from '../../../public/send';
 import './style.css';
 import '../../../components/PopupHeader/style.css';
 import { useAppDispatch, useAppSelector, useOptions } from '../../../public/react-use';
@@ -16,6 +16,7 @@ import { textPreprocessing } from '../../../public/text-preprocessing';
 import { mtAddSource, mtRemoveSource, mtRequestError, mtRequestFinish, mtRequestStart, mtSetFromAndTo, mtSetText } from '../../../redux/slice/multipleTranslateSlice';
 import { DefaultOptions } from '../../../types';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
+import { playAudio } from '../../../public/play-audio';
 
 type PickedOptions = Pick<DefaultOptions, 'styleVarsList' | 'styleVarsIndex' | 'rememberStwSizeAndPosition' | 'autoTranslateAfterInput'>;
 const useOptionsDependency: (keyof PickedOptions)[] = ['styleVarsList', 'styleVarsIndex', 'rememberStwSizeAndPosition', 'autoTranslateAfterInput'];
@@ -159,7 +160,7 @@ const Separate: React.FC = () => {
                             translateRequest={translateRequest}
                             key={source}
                             remove={() => handleRemoveSource(source)}
-                            readText={(text, from) => sendAudio(text, { source, from })}
+                            readText={(text, from) => playAudio({ text, source, from })}
                             retry={() => handleRetry(source)}
                             setText={handleSetText}
                         />

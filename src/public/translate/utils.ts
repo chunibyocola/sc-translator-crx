@@ -18,6 +18,15 @@ export const getQueryString = (params: { [key: string]: string | number | (strin
     return search;
 };
 
+export const blobToDataURL = (blob: Blob): Promise<string> => {
+    return new Promise((resolve) => {
+        var reader = new FileReader();
+        reader.onload = () => {
+            resolve(reader.result as string);
+        };
+        reader.readAsDataURL(blob);
+    });
+};
 
 export const getError = (code: string): Error & { code: string } => {
     let error: Error = new Error();

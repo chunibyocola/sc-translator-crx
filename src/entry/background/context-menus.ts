@@ -1,5 +1,5 @@
 import { listenOptionsChange } from '../../public/options';
-import { SCTS_CONTEXT_MENUS_CLICKED, SCTS_TRANSLATE_CURRENT_PAGE } from '../../constants/chromeSendMessageTypes';
+import { SCTS_AUDIO_COMMAND_KEY_PRESSED, SCTS_CONTEXT_MENUS_CLICKED, SCTS_TRANSLATE_CURRENT_PAGE } from '../../constants/chromeSendMessageTypes';
 import { createNewTab, getI18nMessage, getLocalStorage } from '../../public/chrome-call';
 import { createSeparateWindow } from './separate-window';
 import { getIsContentScriptEnabled } from '../../public/utils';
@@ -11,8 +11,6 @@ import {
     TRANSLATE_CURRENT_PAGE,
     TRANSLATE_SELECTION_TEXT
 } from '../../constants/contextMenusIds';
-import { playAudio } from './audio';
-import { audio } from '../../public/request';
 import { DefaultOptions, OptionsContextMenu } from '../../types';
 
 type OnContextMenuClick = (info: chrome.contextMenus.OnClickData, tab?: chrome.tabs.Tab | undefined) => void;
@@ -31,16 +29,13 @@ const translateSelectionText: OnContextMenuClick = async ({ selectionText }, tab
     }
 };
 
-const listenSelectionText: OnContextMenuClick = ({ selectionText }) => {
+const listenSelectionText: OnContextMenuClick = async ({ selectionText }, tab) => {
     if (!selectionText) { return; }
 
-    type PickedOptions = Pick<DefaultOptions, 'defaultAudioSource' | 'useDotCn'>;
-    const tmpKeys: (keyof PickedOptions)[] = ['defaultAudioSource', 'useDotCn'];
-    getLocalStorage<PickedOptions>(tmpKeys, (storage) => {
-        const defaultAudioSource = storage.defaultAudioSource;
-        const useDotCn = storage.useDotCn;
-        audio({ source: defaultAudioSource, defaultSource: defaultAudioSource, requestObj: { text: selectionText, com: !useDotCn } }, uri => playAudio(uri));
-    });
+    if (tab?.id && tab.id >= 0) {
+        const enabled = await getIsContentScriptEnabled(tab.id);
+        enabled && chrome.tabs.sendMessage(tab.id, { type: SCTS_AUDIO_COMMAND_KEY_PRESSED });
+    }
 };
 
 const openThisPageWithPdfViewer: OnContextMenuClick = (info, tab) => {
@@ -102,7 +97,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
             translateSelectionText(info, tab);
             return;
         case LISTEN_SELECTION_TEXT:
-            listenSelectionText(info);
+            listenSelectionText(info, tab);
             return;
         case OPEN_SEPARATE_WINDOW:
             openSeparateTranslateWindow();

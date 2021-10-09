@@ -2,8 +2,7 @@ import {
 	GOOGLE_COM,
 	BING_COM,
 	MOJIDICT_COM,
-	BAIDU_COM,
-	audioSource
+	BAIDU_COM
 } from '../constants/translateSource';
 import google from '../public/translate/google';
 import bing from '../public/translate/bing';
@@ -11,7 +10,7 @@ import mojidict from '../public/translate/mojidict';
 import baidu from '../public/translate/baidu';
 import { bingSwitchLangCode, baiduSwitchLangCode } from '../public/switch-lang-code';
 import { SOURCE_ERROR } from '../constants/errorCodes';
-import { TranslateCallback } from './send';
+import { AudioCallback, DetectCallback, TranslateCallback } from './send';
 import { getError } from './translate/utils';
 
 type TranslateRequestObject = {
@@ -66,36 +65,60 @@ export const translate = ({ source, translateId, requestObj }: TranslateRequestO
 
 type AudioRequestObject = {
 	source: string;
-	defaultSource: string;
-	requestObj: {
-		text: string;
-		from?: string;
-		com?: boolean;
-	}
-}
+	text: string;
+	from: string;
+	com: boolean;
+	index: number;
+};
 
-export const audio = ({ source, requestObj, defaultSource }: AudioRequestObject, cb: (uri: string | string[]) => void) => {
-	audioSource.findIndex(v => v.source === source) < 0 && (source = defaultSource);
-
+export const audio = (requestObject: AudioRequestObject, cb: AudioCallback) => {
 	let audio;
-	switch (source) {
+	switch (requestObject.source) {
 		case GOOGLE_COM:
 			audio = google.audio;
 			break;
 		case BING_COM:
 			audio = bing.audio;
-			requestObj.from = bingSwitchLangCode(requestObj.from ?? '');
+			requestObject.from = bingSwitchLangCode(requestObject.from ?? '');
 			break;
 		case BAIDU_COM:
 			audio = baidu.audio;
-			requestObj.from = baiduSwitchLangCode(requestObj.from ?? '');
+			requestObject.from = baiduSwitchLangCode(requestObject.from ?? '');
 			break;
 		default:
 			audio = google.audio;
 			break;
 	}
 
-	audio(requestObj)
-		.then(uri => cb && cb(uri))
-		.catch(err => console.error(err.code));
+	audio(requestObject)
+		.then(dataUri => cb({ suc: true, data: dataUri, text: requestObject.text, index: requestObject.index }))
+		.catch(err => cb({ suc: false, code: err.code, text: requestObject.text, index: requestObject.index }));
+};
+
+type DetectRequestObject = {
+	source: string;
+	text: string;
+	com: boolean;
+};
+
+export const detect = (requestObject: DetectRequestObject, cb: DetectCallback) => {
+	let detect;
+	switch (requestObject.source) {
+		case GOOGLE_COM:
+			detect = google.detect;
+			break;
+		case BING_COM:
+			detect = bing.detect;
+			break;
+		case BAIDU_COM:
+			detect = baidu.detect;
+			break;
+		default:
+			detect = google.detect;
+			break;
+	}
+
+	detect(requestObject)
+		.then(langCode => cb({ suc: true, text: requestObject.text, data: langCode }))
+		.catch(err => cb({ suc: false, code: err.code, text: requestObject.text }));
 };

@@ -4,7 +4,7 @@ import Slider, { SliderFormat, SliderMarks } from '../../../../components/Slider
 import SourceSelect from '../../../../components/SourceSelect';
 import { audioSource } from '../../../../constants/translateSource';
 import { getMessage } from '../../../../public/i18n';
-import { sendAudio } from '../../../../public/send';
+import { playAudio } from '../../../../public/play-audio';
 import { DefaultOptions } from '../../../../types';
 
 const marksVolume: SliderMarks = [
@@ -75,7 +75,7 @@ const Audio: React.FC<AudioProps> = ({ updateStorage, defaultAudioSource, audioV
                 />
             </div>
             <div className='opt-section-row'>
-                <button onClick={() => sendAudio('this is a test audio', { from: 'en' })}>{getMessage('optionsPlayTestAudio')}</button>
+                <button onClick={() => playAudio({ text: 'this is a test audio', from: 'en' })}>{getMessage('optionsPlayTestAudio')}</button>
             </div>
         </div>
     );

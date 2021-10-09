@@ -1,14 +1,11 @@
 import * as types from '../../constants/chromeSendMessageTypes';
-import { translate, audio } from '../../public/request';
-import { playAudio } from './audio';
+import { translate, audio, detect } from '../../public/request';
 import { listenOptionsChange } from '../../public/options';
 import { getLocalStorage } from '../../public/chrome-call';
-import { GOOGLE_COM } from '../../constants/translateSource';
 import { LANG_EN } from '../../constants/langCode';
 import { createSeparateWindow } from './separate-window';
 import { DefaultOptions } from '../../types';
 
-let defaultAudioSource = GOOGLE_COM;
 let useDotCn = false;
 let preferredLanguage = LANG_EN;
 let secondPreferredLanguage = LANG_EN;
@@ -16,13 +13,11 @@ let secondPreferredLanguage = LANG_EN;
 type PickedOptions = Pick<DefaultOptions, 'defaultAudioSource' | 'useDotCn' | 'preferredLanguage' | 'secondPreferredLanguage'>;
 const keys: (keyof PickedOptions)[] = ['defaultAudioSource', 'useDotCn', 'preferredLanguage', 'secondPreferredLanguage'];
 getLocalStorage<PickedOptions>(keys, (storage) => {
-    defaultAudioSource = storage.defaultAudioSource;
     useDotCn = storage.useDotCn;
     preferredLanguage = storage.preferredLanguage;
     secondPreferredLanguage = storage.secondPreferredLanguage;
 });
 listenOptionsChange<PickedOptions>(keys, (changes) => {
-    changes.defaultAudioSource !== undefined && (defaultAudioSource = changes.defaultAudioSource);
     changes.useDotCn !== undefined && (useDotCn = changes.useDotCn);
     changes.preferredLanguage !== undefined && (preferredLanguage = changes.preferredLanguage);
     changes.secondPreferredLanguage !== undefined && (secondPreferredLanguage = changes.secondPreferredLanguage);
@@ -44,12 +39,20 @@ chrome.runtime.onMessage.addListener(
                 return true;
             case types.SCTS_AUDIO:
                 if (payload) {
-                    payload.requestObj.com = !useDotCn;
-                    !payload.source && (payload.source = defaultAudioSource);
-                    payload.defaultSource = defaultAudioSource;
-                    audio(payload, uri => playAudio(uri));
+                    payload.com = !useDotCn;
+                    audio(payload, (result) => {
+                        sendResponse(result);
+                    });
                 }
-                return false;
+                return true;
+            case types.SCTS_DETECT:
+                if (payload) {
+                    payload.com = !useDotCn;
+                    detect(payload, (result) => {
+                        sendResponse(result);
+                    });
+                }
+                return true;
             case types.SCTS_SEND_TEXT_TO_SEPARATE_WINDOW:
                 payload?.text && createSeparateWindow(payload.text);
                 return false;

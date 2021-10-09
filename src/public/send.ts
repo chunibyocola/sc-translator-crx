@@ -11,8 +11,31 @@ type TranslateResponse = {
     data: TranslateResult;
     translateId: number;
 };
+type AudioResponse = {
+    suc: false;
+    text: string;
+    index: number;
+    code: string;
+} | {
+    suc: true;
+    text: string;
+    index: number;
+    data: string;
+};
+type DetectResponse = {
+    suc: false;
+    text: string;
+    code: string;
+} | {
+    suc: true;
+    text: string;
+    data: string;
+};
 
 export type TranslateCallback = (response: TranslateResponse) => void;
+export type AudioCallback = (response: AudioResponse) => void;
+export type DetectCallback = (response: DetectResponse) => void;
+
 type SendTranslatePayload = {
     source: string;
     translateId: number;
@@ -46,13 +69,32 @@ export const sendTranslate = (text: string, { source, from, to, translateId }: {
     chromeSendMessage(action, cb);
 };
 
-export const sendAudio = (text: string, { source = '', from = '' }) => {
+export const sendAudio = ({ text, source, from, index }: { text: string; source: string; from: string; index: number }, cb: AudioCallback) => {
     const action = {
         type: types.SCTS_AUDIO,
-        payload: packData(text, { source, from })
+        payload: { text, source, from, index }
     };
 
-    chromeSendMessage(action);
+    try {
+        chrome.runtime.sendMessage(action, cb);
+    }
+    catch {
+        cb({ suc: false, text, code: EXTENSION_UPDATED, index });
+    }
+};
+
+export const sendDetect = ({ text, source }: { text: string; source: string; }, cb: DetectCallback) => {
+    const action = {
+        type: types.SCTS_DETECT,
+        payload: { text, source }
+    };
+
+    try {
+        chrome.runtime.sendMessage(action, cb);
+    }
+    catch {
+        cb({ suc: false, text, code: EXTENSION_UPDATED });
+    }
 };
 
 export const sendSeparate = (text: string) => {

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import './style.css';
 import RawText from '../../../components/RawText';
 import LanguageSelection from '../../../components/LanguageSelection';
-import { sendTranslate, sendAudio } from '../../../public/send';
+import { sendTranslate } from '../../../public/send';
 import MtAddSource from '../../../components/MtAddSource';
 import MtResult from '../../../components/MtResult';
 import { mtLangCode } from '../../../constants/langCode';
@@ -12,6 +12,7 @@ import { textPreprocessing } from '../../../public/text-preprocessing';
 import { useAppDispatch, useAppSelector } from '../../../public/react-use';
 import { mtAddSource, mtRemoveSource, mtRequestError, mtRequestFinish, mtRequestStart, mtSetFromAndTo, mtSetText } from '../../../redux/slice/multipleTranslateSlice';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
+import { playAudio } from '../../../public/play-audio';
 
 type MultipleTranslateResultProps = {
     autoTranslateAfterInput: boolean;
@@ -105,7 +106,7 @@ const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = ({ autoT
                         translateRequest={translateRequest}
                         key={source}
                         remove={() => handleRemoveSource(source)}
-                        readText={(text, from) => sendAudio(text, { source, from })}
+                        readText={(text, from) => playAudio({ text, source, from })}
                         retry={() => handleRetry(source)}
                         setText={handleSetText}
                     />

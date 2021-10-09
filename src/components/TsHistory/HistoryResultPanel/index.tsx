@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { sendAudio } from '../../../public/send';
+import { playAudio } from '../../../public/play-audio';
 import { calculatePosition } from '../../../public/utils';
 import { Translation } from '../../../redux/slice/multipleTranslateSlice';
 import IconFont from '../../IconFont';
@@ -47,7 +47,7 @@ const HistoryResultPanel: React.FC<HistoryResultPanelProps> = ({ translations, t
                                 <IconFont
                                     className='iconbutton button'
                                     iconName='#icon-GoUnmute'
-                                    onClick={(e) => { e.stopPropagation(); sendAudio(translateRequest.result.text, { source, from: translateRequest.result.from }); }}
+                                    onClick={(e) => { e.stopPropagation(); playAudio({ text: translateRequest.result.text, source, from: translateRequest.result.from }); }}
                                 />
                             </>}
                         </span>
@@ -55,7 +55,7 @@ const HistoryResultPanel: React.FC<HistoryResultPanelProps> = ({ translations, t
                     <div className='dividing-line'></div>
                     <TranslateResult
                         translateRequest={translateRequest}
-                        readText={(text, from) => sendAudio(text, { source, from })}
+                        readText={(text, from) => playAudio({ text, source, from })}
                     />
                 </div>))}
             </div>
