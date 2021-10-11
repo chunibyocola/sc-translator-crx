@@ -54,43 +54,45 @@ const TransferList: React.FC<TransferListProps> = ({ enabledList, onChange }) =>
     return (
         <div className='transfer-list'>
             {getMessage('optionsSourceList')}
-            <div className='transfer-content'>
-                <div className='transfer-content__box'>
-                    <div className='transfer-content__box-head'>{getMessage('optionsEnabled')}</div>
-                    <hr />
-                    <div className='transfer-content__box-list'>
-                        {enabledList.map(v => (
-                            <div
-                                className='transfer-content__box-list-item'
-                                key={v}
-                                onClick={() => handleCheckToggle(v, true)}
-                            >
-                                <input type='checkbox' checked={leftChecked.indexOf(v) !== -1} />
-                                <SourceFavicon source={v} />
-                            </div>
-                        ))}
+            <div className='mt10-ml30'>
+                <div className='transfer-content'>
+                    <div className='transfer-content__box'>
+                        <div className='transfer-content__box-head'>{getMessage('optionsEnabled')}</div>
+                        <hr />
+                        <div className='transfer-content__box-list'>
+                            {enabledList.map(v => (
+                                <div
+                                    className='transfer-content__box-list-item'
+                                    key={v}
+                                    onClick={() => handleCheckToggle(v, true)}
+                                >
+                                    <input type='checkbox' checked={leftChecked.indexOf(v) !== -1} />
+                                    <SourceFavicon source={v} />
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
-                <div className='transfer-content__operation-panel'>
-                    <button onClick={() => handleTransferAll(false)}>≫</button>
-                    <button onClick={() => handleTransfer(false)} disabled={leftChecked.length === 0}>&gt;</button>
-                    <button onClick={() => handleTransfer(true)} disabled={rightChecked.length === 0}>&lt;</button>
-                    <button onClick={() => handleTransferAll(true)}>≪</button>
-                </div>
-                <div className='transfer-content__box'>
-                    <div className='transfer-content__box-head'>{getMessage('optionsNotEnabled')}</div>
-                    <hr />
-                    <div className='transfer-content__box-list'>
-                        {notEnabledList.map(v => (
-                            <div
-                                className='transfer-content__box-list-item'
-                                key={v}
-                                onClick={() => handleCheckToggle(v, false)}
-                            >
-                                <input type='checkbox' checked={rightChecked.indexOf(v) !== -1} />
-                                <SourceFavicon source={v} />
-                            </div>
-                        ))}
+                    <div className='transfer-content__operation-panel'>
+                        <button onClick={() => handleTransferAll(false)}>≫</button>
+                        <button onClick={() => handleTransfer(false)} disabled={leftChecked.length === 0}>&gt;</button>
+                        <button onClick={() => handleTransfer(true)} disabled={rightChecked.length === 0}>&lt;</button>
+                        <button onClick={() => handleTransferAll(true)}>≪</button>
+                    </div>
+                    <div className='transfer-content__box'>
+                        <div className='transfer-content__box-head'>{getMessage('optionsNotEnabled')}</div>
+                        <hr />
+                        <div className='transfer-content__box-list'>
+                            {notEnabledList.map(v => (
+                                <div
+                                    className='transfer-content__box-list-item'
+                                    key={v}
+                                    onClick={() => handleCheckToggle(v, false)}
+                                >
+                                    <input type='checkbox' checked={rightChecked.indexOf(v) !== -1} />
+                                    <SourceFavicon source={v} />
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
