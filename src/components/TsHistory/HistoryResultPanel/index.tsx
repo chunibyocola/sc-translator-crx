@@ -1,8 +1,8 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { playAudio } from '../../../public/play-audio';
 import { calculatePosition } from '../../../public/utils';
 import { Translation } from '../../../redux/slice/multipleTranslateSlice';
 import IconFont from '../../IconFont';
+import ListenButton from '../../ListenButton';
 import SourceFavicon from '../../SourceFavicon';
 import TranslateResult from '../../TranslateResult';
 import './style.css';
@@ -44,10 +44,10 @@ const HistoryResultPanel: React.FC<HistoryResultPanelProps> = ({ translations, t
                                     style={{marginLeft: '5px'}}
                                     onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(translateRequest.result.text); }}
                                 />
-                                <IconFont
-                                    className='iconbutton button'
-                                    iconName='#icon-GoUnmute'
-                                    onClick={(e) => { e.stopPropagation(); playAudio({ text: translateRequest.result.text, source, from: translateRequest.result.from }); }}
+                                <ListenButton
+                                    text={translateRequest.result.text}
+                                    source={source}
+                                    from={translateRequest.result.from}
                                 />
                             </>}
                         </span>
@@ -55,7 +55,7 @@ const HistoryResultPanel: React.FC<HistoryResultPanelProps> = ({ translations, t
                     <div className='dividing-line'></div>
                     <TranslateResult
                         translateRequest={translateRequest}
-                        readText={(text, from) => playAudio({ text, source, from })}
+                        source={source}
                     />
                 </div>))}
             </div>

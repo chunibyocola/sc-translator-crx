@@ -11,7 +11,6 @@ import './style.css';
 import { textPreprocessing } from '../../../public/text-preprocessing';
 import { stRequestError, stRequestFinish, stRequestStart, stSetFromAndTo, stSetSourceFromTo, stSetText } from '../../../redux/slice/singleTranslateSlice';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/slice/translateHistorySlice';
-import { playAudio } from '../../../public/play-audio';
 
 type SingleTranslateResultProps = {
     showRtAndLs: boolean;
@@ -80,10 +79,6 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ showRtAnd
         text && dispatch(stSetText({ text }));
     }, [dispatch]);
 
-    const handleReadText = useCallback((text: string, from: string) => {
-        text && playAudio({ text, source, from });
-    }, [source]);
-
     const handleRetry = useCallback(() => {
         handleTranslate();
     }, [handleTranslate]);
@@ -121,7 +116,7 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ showRtAnd
             <div className='single-result scrollbar' style={{maxHeight: `${resultMaxHeight}px`}} ref={resultContainerEle}>
                 <TsResult
                     translateRequest={translateRequest}
-                    readText={handleReadText}
+                    source={source}
                     retry={handleRetry}
                     setText={handleSetText}
                     insertResult={canInsertResult ? result => insertResultToggle(translateId, source, result) : undefined}

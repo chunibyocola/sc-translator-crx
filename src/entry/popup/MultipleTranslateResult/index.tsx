@@ -12,7 +12,6 @@ import { textPreprocessing } from '../../../public/text-preprocessing';
 import { useAppDispatch, useAppSelector } from '../../../public/react-use';
 import { mtAddSource, mtRemoveSource, mtRequestError, mtRequestFinish, mtRequestStart, mtSetFromAndTo, mtSetText } from '../../../redux/slice/multipleTranslateSlice';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
-import { playAudio } from '../../../public/play-audio';
 
 type MultipleTranslateResultProps = {
     autoTranslateAfterInput: boolean;
@@ -106,7 +105,6 @@ const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = ({ autoT
                         translateRequest={translateRequest}
                         key={source}
                         remove={() => handleRemoveSource(source)}
-                        readText={(text, from) => playAudio({ text, source, from })}
                         retry={() => handleRetry(source)}
                         setText={handleSetText}
                     />

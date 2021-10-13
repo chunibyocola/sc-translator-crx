@@ -11,7 +11,6 @@ import { textPreprocessing } from '../../../public/text-preprocessing';
 import { useAppDispatch, useAppSelector } from '../../../public/react-use';
 import { stRequestError, stRequestFinish, stRequestStart, stSetFromAndTo, stSetSourceFromTo, stSetText } from '../../../redux/slice/singleTranslateSlice';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
-import { playAudio } from '../../../public/play-audio';
 
 type SingleTranslateResultProps = {
     autoTranslateAfterInput: boolean;
@@ -46,10 +45,6 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ autoTrans
     const handleSetText = useCallback((text: string) => {
         text && dispatch(stSetText({ text }));
     }, [dispatch]);
-
-    const handleReadText = useCallback((text: string, from: string) => {
-        playAudio({ text, source, from });
-    }, [source]);
 
     const handleSourceChange = useCallback((targetSource: string) => {
         dispatch(stSetSourceFromTo(switchTranslateSource(targetSource, { source, from, to })));
@@ -99,7 +94,7 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ autoTrans
                 <div className='scrollbar' style={{maxHeight: '300px', overflowY: 'auto'}}>
                     <TsResult
                         translateRequest={translateRequest}
-                        readText={handleReadText}
+                        source={source}
                         retry={handleRetry}
                         setText={handleSetText}
                     />

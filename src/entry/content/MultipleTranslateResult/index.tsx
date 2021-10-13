@@ -11,7 +11,6 @@ import { useAppDispatch, useAppSelector, useInsertResult, useIsEnable } from '..
 import { textPreprocessing } from '../../../public/text-preprocessing';
 import { mtAddSource, mtRemoveSource, mtRequestError, mtRequestFinish, mtRequestStart, mtSetFromAndTo, mtSetText } from '../../../redux/slice/multipleTranslateSlice';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/slice/translateHistorySlice';
-import { playAudio } from '../../../public/play-audio';
 
 type MultipleTranslateResultProps = {
     showRtAndLs: boolean;
@@ -126,7 +125,6 @@ const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = ({ showR
                         translateRequest={translateRequest}
                         key={source}
                         remove={() => handleRemoveSource(source)}
-                        readText={(text, from) => playAudio({ text, source, from })}
                         retry={() => handleRetry(source)}
                         setText={handleSetText}
                         insertResult={canInsertResult ? result => insertResultToggle(translateId, source, result) : undefined}

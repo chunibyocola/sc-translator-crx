@@ -4,18 +4,18 @@ import IconFont from '../IconFont';
 import SourceFavicon from '../SourceFavicon';
 import { TranslateRequest } from '../../types';
 import TranslateResult from '../TranslateResult';
+import ListenButton from '../ListenButton';
 
 type MtResultProps = {
     source: string;
     translateRequest: TranslateRequest;
     remove: () => void;
-    readText: (text: string, from: string) => void;
     retry: () => void;
     setText: (text: string) => void;
     insertResult?: (result: string) => void;
 };
 
-const MtResult: React.FC<MtResultProps> = ({ source, translateRequest, remove, readText, retry, setText, insertResult }) => {
+const MtResult: React.FC<MtResultProps> = ({ source, translateRequest, remove, retry, setText, insertResult }) => {
     const [fold, setFold] = useState(false);
 
     return (
@@ -34,10 +34,10 @@ const MtResult: React.FC<MtResultProps> = ({ source, translateRequest, remove, r
                             style={{marginLeft: '5px'}}
                             onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(translateRequest.result.text); }}
                         />
-                        <IconFont
-                            className='iconbutton'
-                            iconName='#icon-GoUnmute'
-                            onClick={(e) => { e.stopPropagation(); readText(translateRequest.result.text, translateRequest.result.from); }}
+                        <ListenButton
+                            text={translateRequest.result.text}
+                            source={source}
+                            from={translateRequest.result.from}
                         />
                     </>}
                 </span>
@@ -56,8 +56,8 @@ const MtResult: React.FC<MtResultProps> = ({ source, translateRequest, remove, r
             <div className='dividing-line' style={fold ? {display: 'none'} : {}}></div>
             <TranslateResult
                 translateRequest={translateRequest}
+                source={source}
                 style={fold ? {display: 'none'} : {}}
-                readText={readText}
                 retry={retry}
                 insertResult={insertResult}
                 setText={setText}

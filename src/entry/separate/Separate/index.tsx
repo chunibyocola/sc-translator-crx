@@ -16,7 +16,6 @@ import { textPreprocessing } from '../../../public/text-preprocessing';
 import { mtAddSource, mtRemoveSource, mtRequestError, mtRequestFinish, mtRequestStart, mtSetFromAndTo, mtSetText } from '../../../redux/slice/multipleTranslateSlice';
 import { DefaultOptions } from '../../../types';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
-import { playAudio } from '../../../public/play-audio';
 
 type PickedOptions = Pick<DefaultOptions, 'styleVarsList' | 'styleVarsIndex' | 'rememberStwSizeAndPosition' | 'autoTranslateAfterInput'>;
 const useOptionsDependency: (keyof PickedOptions)[] = ['styleVarsList', 'styleVarsIndex', 'rememberStwSizeAndPosition', 'autoTranslateAfterInput'];
@@ -160,7 +159,6 @@ const Separate: React.FC = () => {
                             translateRequest={translateRequest}
                             key={source}
                             remove={() => handleRemoveSource(source)}
-                            readText={(text, from) => playAudio({ text, source, from })}
                             retry={() => handleRetry(source)}
                             setText={handleSetText}
                         />

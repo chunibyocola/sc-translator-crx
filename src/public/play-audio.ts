@@ -17,6 +17,7 @@ type AudioCache = {
     dataUriList: string[];
     index: number;
     requesting: boolean;
+    manuallyPaused: boolean;
     onPause: undefined | (() => void);
     id: number;
 };
@@ -30,6 +31,7 @@ let audioCache: AudioCache = {
     dataUriList: [],
     index: 0,
     requesting: false,
+    manuallyPaused: false,
     onPause: undefined,
     id: 0
 };
@@ -45,6 +47,7 @@ export const playAudio = ({ text, source, from = '' }: { text: string, source?: 
 
     if (audioCache.text === text && audioCache.source === source && audioCache.from === from && audioCache.detectedFrom) {
         audioCache.index = 0;
+        audioCache.manuallyPaused = false;
         audioCache.onPause = onPause;
         startPlaying();
         return;
@@ -69,6 +72,7 @@ export const playAudio = ({ text, source, from = '' }: { text: string, source?: 
     audioCache.dataUriList = [];
     audioCache.index = 0;
     audioCache.requesting = false;
+    audioCache.manuallyPaused = false;
     audioCache.onPause = onPause;
     audioCache.id = audioCache.id + 1;
 
@@ -87,6 +91,7 @@ export const playAudio = ({ text, source, from = '' }: { text: string, source?: 
 
 export const pauseAudio = () => {
     audio.pause();
+    audioCache.manuallyPaused = true;
     audioCache.onPause?.();
 };
 
@@ -108,7 +113,7 @@ const startPlaying = () => {
             if (id === audioCache.id) {
                 if (result.suc) {
                     audioCache.dataUriList[index] = result.data;
-                    play(result.data);
+                    !audioCache.manuallyPaused && play(result.data);
                 }
                 audioCache.requesting = false;
             }

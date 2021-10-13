@@ -5,17 +5,18 @@ import { resultToString } from '../../public/utils';
 import { TranslateRequest } from '../../types';
 import ErrorMessage from '../ErrorMessage';
 import IconFont from '../IconFont';
+import ListenButton from '../ListenButton';
 import './style.css';
 
 type TranslateResultProps = {
     translateRequest: TranslateRequest;
+    source: string;
     retry?: () => void;
     insertResult?: (result: string) => void;
-    readText: (text: string, from: string) => void;
     setText?: (text: string) => void;
 } & Pick<React.HTMLAttributes<HTMLDivElement>, 'style' | 'className'>;
 
-const TranslateResult: React.FC<TranslateResultProps> = ({ translateRequest, style, className, retry, insertResult, readText, setText }) => {
+const TranslateResult: React.FC<TranslateResultProps> = ({ translateRequest, source, style, className, retry, insertResult, setText }) => {
     return (
         <div className={`translate-result${className ? ' ' + className : ''}`} style={style}>
             {translateRequest.status === 'loading' ?
@@ -41,10 +42,10 @@ const TranslateResult: React.FC<TranslateResultProps> = ({ translateRequest, sty
                             iconName='#icon-copy'
                             onClick={() => navigator.clipboard.writeText(resultToString(translateRequest.result.result))}
                         />
-                        <IconFont
-                            className='iconbutton button'
-                            iconName='#icon-GoUnmute'
-                            onClick={() => readText(resultToString(translateRequest.result.result), translateRequest.result.to)}
+                        <ListenButton
+                            text={resultToString(translateRequest.result.result)}
+                            source={source}
+                            from={translateRequest.result.to}
                         />
                     </span>
                 </div>

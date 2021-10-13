@@ -6,16 +6,17 @@ import './style.css';
 import { getMessage } from '../../public/i18n';
 import ErrorMessage from '../ErrorMessage';
 import { TranslateRequest } from '../../types';
+import ListenButton from '../ListenButton';
 
 type TsResultProps = {
     translateRequest: TranslateRequest;
-    readText: (text: string, from: string) => void;
+    source: string;
     retry: () => void;
     setText: (text: string) => void;
     insertResult?: (result: string) => void;
 };
 
-const TsResult: React.FC<TsResultProps> = ({ translateRequest, readText, retry, setText, insertResult }) => {
+const TsResult: React.FC<TsResultProps> = ({ translateRequest, source, retry, setText, insertResult }) => {
     return (
         <div className='st-result'>
             {translateRequest.status === 'loading' ?
@@ -38,10 +39,10 @@ const TsResult: React.FC<TsResultProps> = ({ translateRequest, readText, retry, 
                             iconName='#icon-copy'
                             onClick={() => navigator.clipboard.writeText(resultToString(translateRequest.result.result))}
                         />
-                        <IconFont
-                            className='iconbutton button'
-                            iconName='#icon-GoUnmute'
-                            onClick={() => readText(resultToString(translateRequest.result.result), translateRequest.result.to)}
+                        <ListenButton
+                            text={resultToString(translateRequest.result.result)}
+                            source={source}
+                            from={translateRequest.result.to}
                         />
                     </span>
                 </div>
@@ -62,10 +63,10 @@ const TsResult: React.FC<TsResultProps> = ({ translateRequest, readText, retry, 
                         iconName='#icon-copy'
                         onClick={() => navigator.clipboard.writeText(translateRequest.result.text)}
                     />
-                    <IconFont
-                        className='iconbutton button'
-                        iconName='#icon-GoUnmute'
-                        onClick={() => readText(translateRequest.result.text, translateRequest.result.from)}
+                    <ListenButton
+                        text={translateRequest.result.text}
+                        source={source}
+                        from={translateRequest.result.from}
                     />
                 </div>
                 {translateRequest.result.phonetic && translateRequest.result.from === LANG_EN && <div>
