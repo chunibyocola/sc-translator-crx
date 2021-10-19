@@ -76,7 +76,8 @@
   "incognito": "split",
   "web_accessible_resources":[
     "/pdf-viewer/*",
-    "/static/css/content.css"
+    "/static/css/content.css",
+    "audio.html"
   ],
   "content_security_policy": "script-src 'self'; object-src 'self'"
 }

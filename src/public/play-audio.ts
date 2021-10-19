@@ -36,10 +36,33 @@ let audioCache: AudioCache = {
     id: 0
 };
 
+let audioIframe: undefined | HTMLIFrameElement;
+
+// DataUrl can't be used in a CSP(media-src) contained website, use iframe to get rid of this.
+export const appendAudioIframe = (element: HTMLElement | ShadowRoot) => {
+    audioIframe = document.createElement('iframe');
+    audioIframe.src = chrome.runtime.getURL('audio.html');
+    audioIframe.allow = 'autoplay';
+    audioIframe.style.display = 'none';
+
+    element.appendChild(audioIframe);
+
+    window.addEventListener('message', (e) => {
+        if ('sc-translator-audio' in e.data) {
+            const { type } = e.data['sc-translator-audio'];
+
+            switch (type) {
+                case 'ended':
+                    startPlaying();
+                    break;
+                default: break;
+            }
+        }
+    });
+};
+
 export const playAudio = ({ text, source, from = '' }: { text: string, source?: string, from?: string }, onPause?: () => void) => {
-    if (!audio.paused) {
-        pauseAudio();
-    }
+    pauseAudio();
 
     if (!source) {
         source = defaultAudioSource;
@@ -90,7 +113,13 @@ export const playAudio = ({ text, source, from = '' }: { text: string, source?: 
 };
 
 export const pauseAudio = () => {
-    audio.pause();
+    if (audioIframe) {
+        audioIframe.contentWindow?.postMessage({ type: 'pause' }, '*');
+    }
+    else {
+        audio.pause();
+    }
+
     audioCache.manuallyPaused = true;
     audioCache.onPause?.();
 };
@@ -128,8 +157,13 @@ audio.addEventListener('ended', () => {
 });
 
 const play = (dataURL: string) => {
-    audio.src = dataURL;
-    audio.play().catch();
+    if (audioIframe) {
+        audioIframe.contentWindow?.postMessage({ type: 'play', payload: dataURL }, '*');
+    }
+    else {
+        audio.src = dataURL;
+        audio.play().catch();
+    }
 
     ++audioCache.index;
 };
