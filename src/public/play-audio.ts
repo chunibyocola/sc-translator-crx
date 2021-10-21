@@ -48,7 +48,7 @@ export const appendAudioIframe = (element: HTMLElement | ShadowRoot) => {
     element.appendChild(audioIframe);
 
     window.addEventListener('message', (e) => {
-        if ('sc-translator-audio' in e.data) {
+        if (e.origin + '/' === chrome.runtime.getURL('/')) {
             const { type } = e.data['sc-translator-audio'];
 
             switch (type) {
