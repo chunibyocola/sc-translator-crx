@@ -1,3 +1,6 @@
+# 3.13.0 (2021-10-21)
+- Remake the mechanism of playing audio. ([8ad0aa1](https://github.com/chunibyocola/sc-translator-crx/commit/8ad0aa10013bbd0dde0e9b9afd5e7188f6657c60)) ([178214b](https://github.com/chunibyocola/sc-translator-crx/commit/178214b3e2c07c6c1f31ac3eb7b2267e93c56447)) ([18bc15f](https://github.com/chunibyocola/sc-translator-crx/commit/18bc15f643a6805c35cd949a3a0d1ec6336daa29))
+- Audio is able to pause now. ([83a634f](https://github.com/chunibyocola/sc-translator-crx/commit/83a634fbb3b0c27982a5a7ce96f6e3cc7033c489))
 # 3.12.0 (2021-09-27)
 - Add three "Translate to target language" buttons. ([9791fb4](https://github.com/chunibyocola/sc-translator-crx/commit/9791fb400e31f775401139b8454dac9e43463453))
 - Webpage translating will treanslate the text in shadow dom now. ([03ff2a3](https://github.com/chunibyocola/sc-translator-crx/commit/03ff2a3a685a4a90a7f2d3a293efb949ca7d1d25))
