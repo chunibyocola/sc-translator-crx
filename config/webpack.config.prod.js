@@ -22,7 +22,7 @@ module.exports = {
     entry: {
         popup: [require.resolve('./polyfills'), path.resolve(paths.appSrc, 'entry', 'popup')],
         content: [require.resolve('./polyfills'), path.resolve(paths.appSrc, 'entry', 'content')],
-        background: [require.resolve('./polyfills'), path.resolve(paths.appSrc, 'entry', 'background')],
+        background: [path.resolve(paths.appSrc, 'entry', 'background')],
         options:  [require.resolve('./polyfills'), path.resolve(paths.appSrc, 'entry', 'options')],
         separate: [require.resolve('./polyfills'), path.resolve(paths.appSrc, 'entry', 'separate')],
         audio: [require.resolve('./polyfills'), path.resolve(paths.appSrc, 'entry', 'audio')]

@@ -1,18 +1,20 @@
-import { getLocalStorage } from '../../public/chrome-call';
-import { listenOptionsChange } from '../../public/options';
+import { getLocalStorageAsync } from '../../public/utils';
 import { DefaultOptions } from '../../types';
+
+type PickedOptions = Pick<DefaultOptions, 'enablePdfViewer'>;
+const keys: (keyof PickedOptions)[] = ['enablePdfViewer'];
 
 const viewerURL = chrome.runtime.getURL('/pdf-viewer/web/viewer.html');
 
-const getRedirectBlocking = (url: string) => ({
-    redirectUrl: `${viewerURL}?file=${encodeURIComponent(url)}`
-});
+const getRedirectURL = (url: string) => (`${viewerURL}?file=${encodeURIComponent(url)}`);
 
-const onBeforeRequest: (details: chrome.webRequest.WebRequestBodyDetails) => void = ({ url }) => {
-    return getRedirectBlocking(url);
+const onBeforeRequest: (details: chrome.webRequest.WebRequestBodyDetails) => void = async ({ url, tabId }) => {
+    const { enablePdfViewer } = await getLocalStorageAsync<PickedOptions>(keys);
+
+    enablePdfViewer && tabId >= 0 && chrome.tabs.update(tabId, { url: getRedirectURL(url) });
 };
 
-const onHeadersReceived: (details: chrome.webRequest.WebResponseHeadersDetails) => void = ({ responseHeaders, url, method }) => {
+const onHeadersReceived: (details: chrome.webRequest.WebResponseHeadersDetails) => void = async ({ responseHeaders, url, method, tabId }) => {
     if (method.toLowerCase() !== 'get' || !responseHeaders) { return; }
 
     const contentType = responseHeaders.find(({ name }) => (name.toLowerCase() === 'content-type'));
@@ -21,27 +23,17 @@ const onHeadersReceived: (details: chrome.webRequest.WebResponseHeadersDetails) 
 
     const value = contentType.value.toLowerCase();
     if (value.includes('application/pdf') || (value.includes('application/octet-stream') && url.toLowerCase().endsWith('.pdf'))) {
-        return getRedirectBlocking(url);
+        const { enablePdfViewer } = await getLocalStorageAsync<PickedOptions>(keys);
+
+        enablePdfViewer && tabId >= 0 && chrome.tabs.update(tabId, { url: getRedirectURL(url) });
     }
 };
 
-const enablePdfUrlRedirect = () => {
-    chrome.webRequest.onBeforeRequest.addListener(onBeforeRequest, {
-        urls: ['ftp://*/*.pdf', 'ftp://*/*.PDF', 'file://*/*.pdf', 'file://*/*.PDF'],
-        types: ['main_frame', 'sub_frame']
-    }, ['blocking']);
-    chrome.webRequest.onHeadersReceived.addListener(onHeadersReceived, {
-        urls: ['https://*/*', 'http://*/*'],
-        types: ['main_frame', 'sub_frame']
-    }, ['blocking', 'responseHeaders']);
-};
-
-const disablePdfUrlRedirect = () => {
-    chrome.webRequest.onBeforeRequest.removeListener(onBeforeRequest);
-    chrome.webRequest.onHeadersReceived.removeListener(onHeadersReceived);
-};
-
-type PickedOptions = Pick<DefaultOptions, 'enablePdfViewer'>;
-const keys: (keyof PickedOptions)[] = ['enablePdfViewer'];
-getLocalStorage<PickedOptions>(keys, options => options.enablePdfViewer ? enablePdfUrlRedirect() : disablePdfUrlRedirect());
-listenOptionsChange<PickedOptions>(keys, changes => changes.enablePdfViewer !== undefined && (changes.enablePdfViewer ? enablePdfUrlRedirect() : disablePdfUrlRedirect()));
+chrome.webRequest.onBeforeRequest.addListener(onBeforeRequest, {
+    urls: ['ftp://*/*.pdf', 'ftp://*/*.PDF', 'file://*/*.pdf', 'file://*/*.PDF'],
+    types: ['main_frame']
+}, []);
+chrome.webRequest.onHeadersReceived.addListener(onHeadersReceived, {
+    urls: ['https://*/*', 'http://*/*'],
+    types: ['main_frame']
+}, ['responseHeaders']);

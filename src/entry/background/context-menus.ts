@@ -1,8 +1,6 @@
-import { listenOptionsChange } from '../../public/options';
 import { SCTS_AUDIO_COMMAND_KEY_PRESSED, SCTS_CONTEXT_MENUS_CLICKED, SCTS_TRANSLATE_CURRENT_PAGE } from '../../constants/chromeSendMessageTypes';
-import { createNewTab, getI18nMessage, getLocalStorage } from '../../public/chrome-call';
 import { createSeparateWindow } from './separate-window';
-import { getIsContentScriptEnabled } from '../../public/utils';
+import { getIsContentScriptEnabled, getLocalStorageAsync } from '../../public/utils';
 import {
     contextMenusContexts,
     LISTEN_SELECTION_TEXT,
@@ -13,16 +11,75 @@ import {
 } from '../../constants/contextMenusIds';
 import { DefaultOptions, OptionsContextMenu } from '../../types';
 
+// Google dosen't provide "chrome.i18n.getMessage" in service worker.
+type I18nLocaleCode = 'en' | 'ja' | 'zh_CN' | 'zh_TW';
+type I18nMessageKey =
+    | 'contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER'
+    | 'contextMenus_OPEN_SEPARATE_WINDOW'
+    | 'contextMenus_TRANSLATE_SELECTION_TEXT'
+    | 'contextMenus_LISTEN_SELECTION_TEXT'
+    | 'contextMenus_TRANSLATE_CURRENT_PAGE';
+const i18nMessage: { [P in I18nLocaleCode]: { [K in I18nMessageKey]: string; } } = {
+    'en': {
+        contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER: 'Open this page with PDF viewer',
+        contextMenus_OPEN_SEPARATE_WINDOW: 'Open separate translate window',
+        contextMenus_TRANSLATE_SELECTION_TEXT: 'Translate the text you select',
+        contextMenus_LISTEN_SELECTION_TEXT: 'Listen the text you select',
+        contextMenus_TRANSLATE_CURRENT_PAGE: 'Translate the current page'
+    },
+    'ja': {
+        contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER: 'PDFビューアでこのページを開く',
+        contextMenus_OPEN_SEPARATE_WINDOW: 'スタンドアロン翻訳ウィンドウを開く',
+        contextMenus_TRANSLATE_SELECTION_TEXT: '選択したテキストを翻訳する',
+        contextMenus_LISTEN_SELECTION_TEXT: '選択したテキストの音声を聞く',
+        contextMenus_TRANSLATE_CURRENT_PAGE: '現在のページを翻訳する'
+    },
+    'zh_CN': {
+        contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER: '用 PDF 阅读器打开此页面',
+        contextMenus_OPEN_SEPARATE_WINDOW: '打开独立翻译窗口',
+        contextMenus_TRANSLATE_SELECTION_TEXT: '翻译您选择的文本',
+        contextMenus_LISTEN_SELECTION_TEXT: '朗读您选择的文本',
+        contextMenus_TRANSLATE_CURRENT_PAGE: '翻译当前页面'
+    },
+    'zh_TW': {
+        contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER: '用 PDF 閱讀器打開此頁面',
+        contextMenus_OPEN_SEPARATE_WINDOW: '打開獨立翻譯視窗',
+        contextMenus_TRANSLATE_SELECTION_TEXT: '翻譯您選擇的文字',
+        contextMenus_LISTEN_SELECTION_TEXT: '讀讀您選擇的文字',
+        contextMenus_TRANSLATE_CURRENT_PAGE: '翻譯當前頁面'
+    }
+};
+const getI18nMessage = (message: I18nMessageKey) => {
+    const language = navigator.language;
+    let localeCode: I18nLocaleCode = 'en';
+
+    if (language === 'ja') {
+        localeCode = 'ja';
+    }
+    else if (language === 'zh-HK' || language === 'zh-TW') {
+        localeCode = 'zh_TW'
+    }
+    else if (language.includes('zh')) {
+        localeCode = 'zh_CN';
+    }
+
+    return i18nMessage[localeCode][message];
+};
+
 type OnContextMenuClick = (info: chrome.contextMenus.OnClickData, tab?: chrome.tabs.Tab | undefined) => void;
 
 const translateSelectionText: OnContextMenuClick = async ({ selectionText }, tab) => {
     if (!selectionText) { return; }
 
-    if (tab?.id && tab.id >= 0) {
+    if (tab?.id !== undefined && tab.id >= 0) {
         const enabled = await getIsContentScriptEnabled(tab.id);
-        enabled
-            ? chrome.tabs.sendMessage(tab.id, { type: SCTS_CONTEXT_MENUS_CLICKED, payload: { selectionText } })
-            : createSeparateWindow(selectionText);
+
+        if (enabled) {
+            chrome.tabs.sendMessage(tab.id, { type: SCTS_CONTEXT_MENUS_CLICKED, payload: { selectionText } });
+        }
+        else {
+            createSeparateWindow(selectionText);
+        }
     }
     else {
         createSeparateWindow(selectionText);
@@ -32,14 +89,14 @@ const translateSelectionText: OnContextMenuClick = async ({ selectionText }, tab
 const listenSelectionText: OnContextMenuClick = async ({ selectionText }, tab) => {
     if (!selectionText) { return; }
 
-    if (tab?.id && tab.id >= 0) {
+    if (tab?.id !== undefined && tab.id >= 0) {
         const enabled = await getIsContentScriptEnabled(tab.id);
         enabled && chrome.tabs.sendMessage(tab.id, { type: SCTS_AUDIO_COMMAND_KEY_PRESSED });
     }
 };
 
 const openThisPageWithPdfViewer: OnContextMenuClick = (info, tab) => {
-    tab?.url && createNewTab(`${chrome.runtime.getURL('/pdf-viewer/web/viewer.html')}?file=${encodeURIComponent(tab.url)}`);
+    tab?.url && chrome.tabs.create({ url: `${chrome.runtime.getURL('/pdf-viewer/web/viewer.html')}?file=${encodeURIComponent(tab.url)}` });
 };
 
 const openSeparateTranslateWindow = () => {
@@ -75,21 +132,25 @@ const updateContextMenus = (contextMenus: OptionsContextMenu[]) => {
     });
 };
 
-// open separate window
-chrome.contextMenus.create({
-    id: 'separate_window',
-    title: getI18nMessage('extOpenSeparateWindowDescription'),
-    contexts: ['browser_action'],
-    onclick: openSeparateTranslateWindow
-});
+export const initContextMenus = () => {
+    chrome.contextMenus.removeAll(() => {
+        // open separate window
+        chrome.contextMenus.create({
+            id: 'action_separate_window',
+            title: getI18nMessage('contextMenus_OPEN_SEPARATE_WINDOW'),
+            contexts: ['action']
+        }, () => { if (chrome.runtime.lastError) {} });
 
-// open this page with pdf viewer
-chrome.contextMenus.create({
-    id: 'open_this_page_with_pdf_viewer',
-    title: getI18nMessage('extOpenWithPdfViewerDescription'),
-    contexts: ['browser_action'],
-    onclick: openThisPageWithPdfViewer
-});
+        // open this page with pdf viewer
+        chrome.contextMenus.create({
+            id: 'action_open_this_page_with_pdf_viewer',
+            title: getI18nMessage('contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER'),
+            contexts: ['action']
+        }, () => { if (chrome.runtime.lastError) {} });
+
+        getLocalStorageAsync<Pick<DefaultOptions, 'contextMenus'>>(['contextMenus']).then(options => updateContextMenus(options.contextMenus));
+    });
+};
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
     switch (info.menuItemId) {
@@ -108,11 +169,18 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         case TRANSLATE_CURRENT_PAGE:
             translateCurrentPage(info, tab);
             return;
+        case 'action_separate_window':
+            openSeparateTranslateWindow();
+            return;
+        case 'action_open_this_page_with_pdf_viewer':
+            openThisPageWithPdfViewer(info, tab);
+            return;
         default: return;
     }
 });
 
-type PickedOptions = Pick<DefaultOptions, 'contextMenus'>;
-const keys: (keyof PickedOptions)[] = ['contextMenus'];
-getLocalStorage<PickedOptions>(keys, options => options.contextMenus && updateContextMenus(options.contextMenus));
-listenOptionsChange<PickedOptions>(keys, changes => changes.contextMenus !== undefined && updateContextMenus(changes.contextMenus));
+chrome.storage.onChanged.addListener((changes) => {
+    if ('contextMenus' in changes) {
+        updateContextMenus(changes['contextMenus'].newValue);
+    }
+});

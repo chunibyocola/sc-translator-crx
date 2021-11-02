@@ -38,5 +38,19 @@ const init = (options: DefaultOptions) => {
 getLocalStorage<DefaultOptions>(defaultOptions, init);
 
 onExtensionMessage((request, sender, sendResponse) => {
-    if (request === 'Are you enabled?') sendResponse('Yes!');
+    if (request === 'Are you enabled?') {
+        sendResponse('Yes!');
+    }
+    else if (request === 'Are you separate window?') {
+        chrome.tabs.getCurrent().then((tab) => {
+            if (tab) {
+                sendResponse({ tabId: tab.id, windowId: tab.windowId });
+            }
+            else {
+                sendResponse(null);
+            }
+        });
+
+        return true;
+    }
 });

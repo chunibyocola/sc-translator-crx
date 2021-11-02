@@ -9,12 +9,12 @@
     "48": "image/icon-48.png",
     "128": "image/icon-128.png"
   },
-  "manifest_version": 2,
+  "manifest_version": 3,
   "homepage_url": "https://github.com/chunibyocola/sc-translator-crx",
   "background": {
-    "scripts": ["/static/js/background.js"]
+    "service_worker": "/static/js/background.js"
   },
-  "browser_action": {
+  "action": {
     "default_title": "__MSG_extName__",
     "default_popup": "popup.html"
   },
@@ -55,29 +55,30 @@
     }
   },
   "permissions": [
-    "<all_urls>",
     "storage",
     "contextMenus",
-    "webRequest",
-    "webRequestBlocking"
+    "webRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
   ],
   "optional_permissions": [
     "clipboardRead"
   ],
   "content_scripts" : [
     {
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ],
+      "matches": ["http://*/*", "https://*/*"],
       "js": ["/static/js/content.js"]
     }
   ],
   "incognito": "split",
   "web_accessible_resources":[
-    "/pdf-viewer/*",
-    "/static/css/content.css",
-    "audio.html"
+    {
+      "resources": ["/pdf-vierer/web/viewer.html", "/static/css/content.css", "audio.html"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
   ],
-  "content_security_policy": "script-src 'self'; object-src 'self'"
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
 }

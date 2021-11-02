@@ -1,3 +1,5 @@
+import { DefaultOptions } from "../types";
+
 export const openOptionsPage = () => {
     chrome.runtime.openOptionsPage();
 };
@@ -6,7 +8,7 @@ export const getLocalStorage = <T = any>(keys: string | Object | string[] | null
     chrome.storage.local.get(keys, (data) => { cb && cb(data as T); });
 };
 
-export const setLocalStorage = (changes: Object) => {
+export const setLocalStorage = (changes: Partial<DefaultOptions>) => {
     chrome.storage.local.set(changes);
 };
 

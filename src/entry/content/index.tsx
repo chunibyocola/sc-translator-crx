@@ -16,7 +16,7 @@ import '../../styles/global.css';
 import { appendColorVarsStyle, appendCustomizeStyle, appendFontSizeStyle } from '../../public/inject-style';
 import { DefaultOptions } from '../../types';
 import WebPageTranslate from './WebPageTranslate';
-import { appendAudioIframe } from '../../public/play-audio';
+// import { appendAudioIframe } from '../../public/play-audio';
 
 const init = (options: DefaultOptions) => {
     initOptions(options);
@@ -39,7 +39,7 @@ const init = (options: DefaultOptions) => {
     appendFontSizeStyle(shadowRoot);
     appendCustomizeStyle(shadowRoot);
 
-    appendAudioIframe(shadowRoot);
+    // appendAudioIframe(shadowRoot);
 
     const div = document.createElement('div');
     div.setAttribute('style', 'all: initial;');

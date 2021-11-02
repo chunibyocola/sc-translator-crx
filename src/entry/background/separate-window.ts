@@ -1,57 +1,46 @@
 import { SCTS_CALL_OUT_COMMAND_KEY_PRESSED, SCTS_SEPARATE_WINDOW_SET_TEXT } from "../../constants/chromeSendMessageTypes";
-import { getLocalStorage, sendMessageToTab } from "../../public/chrome-call";
-import { listenOptionsChange } from "../../public/options";
 import { getQueryString } from "../../public/translate/utils";
-import { getIsContentScriptEnabled } from "../../public/utils";
+import { getLocalStorageAsync } from "../../public/utils";
 import { DefaultOptions } from "../../types";
 
-const initSize = { width: 286, height: 439, left: 550, top: 250 };
-let rememberStwSizeAndPosition = false;
-let stwSizeAndPosition = { ...initSize };
+type PickedOptions = Pick<DefaultOptions, 'rememberStwSizeAndPosition' | 'stwSizeAndPosition'>;
+const keys: (keyof PickedOptions)[] = ['rememberStwSizeAndPosition', 'stwSizeAndPosition'];
 
-let tabId: number | null = null;
-let windowId: number | null = null;
+const initSize = { width: 286, height: 439, left: 550, top: 250 };
 
 const swUrl = chrome.runtime.getURL('/separate.html');
 
-export const createSeparateWindow = async (text?: string) => {
-    const enabled = !!tabId && await getIsContentScriptEnabled(tabId)
+const isSeparateWindowCreated = async (): Promise<null | { tabId: number, windowId: number }> => {
+    return await new Promise((resolve) => {
+        chrome.runtime.sendMessage('Are you separate window?', (data: { tabId: number, windowId: number }) => {
+            chrome.runtime.lastError && resolve(null);
 
-    if (enabled && windowId && tabId) {
+            resolve(data);
+        });
+    });
+};
+
+export const createSeparateWindow = async (text?: string) => {
+    const separateWindowInfo = await isSeparateWindowCreated();
+
+    if (separateWindowInfo) {
+        const { tabId, windowId } = separateWindowInfo;
+
         chrome.windows.update(windowId, { focused: true });
 
-        sendMessageToTab(tabId, { type: SCTS_CALL_OUT_COMMAND_KEY_PRESSED });
+        chrome.tabs.sendMessage(tabId, { type: SCTS_CALL_OUT_COMMAND_KEY_PRESSED });
 
-        text && sendMessageToTab(tabId, { type: SCTS_SEPARATE_WINDOW_SET_TEXT, payload: { text } });
+        text && chrome.tabs.sendMessage(tabId, { type: SCTS_SEPARATE_WINDOW_SET_TEXT, payload: { text } });
     }
     else {
-        let query = '';
-        text && (query = getQueryString({ text }));
+        const { rememberStwSizeAndPosition, stwSizeAndPosition } = await getLocalStorageAsync<PickedOptions>(keys);
 
         const createData: chrome.windows.CreateData = {
-            url: swUrl + query,
+            url: swUrl + ((text && getQueryString({ text })) ?? ''),
             type: 'popup',
             ...(rememberStwSizeAndPosition ? stwSizeAndPosition : initSize)
         };
 
-        chrome.windows.create(createData, (window) => {
-            if (!window?.tabs) { return; }
-
-            tabId = window.tabs[0]?.id ?? null;
-            windowId = window.tabs[0]?.windowId;
-        });
+        chrome.windows.create(createData);
     }
-
-    return enabled;
 };
-
-type PickedOptions = Pick<DefaultOptions, 'rememberStwSizeAndPosition' | 'stwSizeAndPosition'>;
-const keys: (keyof PickedOptions)[] = ['rememberStwSizeAndPosition', 'stwSizeAndPosition'];
-getLocalStorage<PickedOptions>(keys, (storage) => {
-    rememberStwSizeAndPosition = storage.rememberStwSizeAndPosition;
-    stwSizeAndPosition = storage.stwSizeAndPosition;
-});
-listenOptionsChange<PickedOptions>(keys, (changes) => {
-    changes.rememberStwSizeAndPosition !== undefined && (rememberStwSizeAndPosition = changes.rememberStwSizeAndPosition);
-    changes.stwSizeAndPosition !== undefined && (stwSizeAndPosition = changes.stwSizeAndPosition);
-});

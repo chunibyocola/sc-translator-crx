@@ -1,4 +1,4 @@
-import { Position } from '../../types';
+import { DefaultOptions, Position } from '../../types';
 import { queryTabs, sendMessageToTab } from '../chrome-call';
 
 export const resultToString = (result: string[]) => (result.reduce((t, c) => (t + c), ''));
@@ -22,6 +22,12 @@ export const getIsContentScriptEnabled = async (tabId?: number):Promise<boolean>
         catch {
             resolve(false);
         }
+    });
+};
+
+export const getLocalStorageAsync = <T extends Partial<DefaultOptions>>(keys: (keyof T)[]): Promise<T> => {
+    return new Promise((resolve) => {
+        chrome.storage.local.get(keys, data => resolve(data as T));
     });
 };
 

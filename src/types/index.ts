@@ -37,7 +37,13 @@ export type Position = {
 
 export type HistoryPanelStatus = { pin: boolean; width: number };
 
-export type OptionsContextMenu = { id: string; enabled: boolean };
+export type OptionsContextMenuId =
+    | 'OPEN_THIS_PAGE_WITH_PDF_VIEWER'
+    | 'OPEN_SEPARATE_WINDOW'
+    | 'TRANSLATE_SELECTION_TEXT'
+    | 'LISTEN_SELECTION_TEXT'
+    | 'TRANSLATE_CURRENT_PAGE';
+export type OptionsContextMenu = { id: OptionsContextMenuId; enabled: boolean };
 
 export type TextPreprocessingRegExp = { pattern: string; flags: string; replacement: string };
 export type TextPreprocessingPreset = { convertCamelCase: boolean };
