@@ -4,6 +4,7 @@ import { styleVarsList } from './defaultStyleVars';
 import { defaultContextMenus } from './contextMenusIds';
 import { DefaultOptions } from '../types';
 import { defaultTranslateButtons } from './translateButtonTypes';
+import { initSourceParams } from './sourceParams';
 
 const defaultOptions: DefaultOptions = {
     userLanguage: LANG_EN,
@@ -64,7 +65,8 @@ const defaultOptions: DefaultOptions = {
     webPageTranslateDirectly: false,
     noControlBarWhileFirstActivating: false,
     afterSelectingTextRegExpList: [],
-    translateButtonsTL: { first: '', second: LANG_EN, third: LANG_EN }
+    translateButtonsTL: { first: '', second: LANG_EN, third: LANG_EN },
+    sourceParamsCache: initSourceParams
 };
 
 export default defaultOptions;

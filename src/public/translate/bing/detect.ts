@@ -1,10 +1,10 @@
 import { fetchData, getError } from '../utils';
 import { RESULT_ERROR } from '../error-codes';
-import { getTokenAndKey } from './getTokenAndKey';
 import { DetectParams } from '../translate-types';
+import { getTranslateParams } from './get-params';
 
- export const detect = async ({ text, com = true }: DetectParams) => {
-    const { token, key, IG, IID } = await getTokenAndKey(com);
+export const detect = async ({ text, com = true }: DetectParams) => {
+    const { token, key, IG, IID } = await getTranslateParams(com);
 
     const url = `https://${com ? 'www' : 'cn'}.bing.com/ttranslatev3?isVertical=1&IG=${IG}&IID=${IID}`;
 

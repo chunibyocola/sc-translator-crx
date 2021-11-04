@@ -1,9 +1,9 @@
 import { fetchData, getError } from '../utils';
 import { langCode } from './lang-code';
 import { LANGUAGE_NOT_SOPPORTED, RESULT_ERROR } from '../error-codes';
-import { getTokenAndKey } from './getTokenAndKey';
 import { TranslateParams } from '../translate-types';
 import { TranslateResult } from '../../../types';
+import { getTranslateParams } from './get-params';
 
 export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '', com = true　}: TranslateParams) => {
     preferredLanguage = preferredLanguage || 'en';
@@ -69,7 +69,7 @@ type FetchFromBingParams = {
 };
 
 const fetchDictFromBing = async ({ text, from, to, com }: FetchFromBingParams) => {
-    const { token, key, IG, IID } = await getTokenAndKey(com);
+    const { token, key, IG, IID } = await getTranslateParams(com);
 
     const url = `https://${com ? 'www' : 'cn'}.bing.com/tlookupv3?isVertical=1&IG=${IG}&IID=${IID}`;
 
@@ -90,7 +90,7 @@ const fetchDictFromBing = async ({ text, from, to, com }: FetchFromBingParams) =
 };
 
 const fetchResultFromBing = async ({ text, from, to, com }: FetchFromBingParams) => {
-    const { token, key, IG, IID } = await getTokenAndKey(com);
+    const { token, key, IG, IID } = await getTranslateParams(com);
 
     const url = `https://${com ? 'www' : 'cn'}.bing.com/ttranslatev3?isVertical=1&IG=${IG}&IID=${IID}`;
 

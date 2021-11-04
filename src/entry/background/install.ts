@@ -6,6 +6,7 @@ import { TRANSLATE_CURRENT_PAGE, TRANSLATE_SELECTION_TEXT } from '../../constant
 import { DefaultOptions, DeprecatedOptions } from '../../types';
 import { TRANSLATE_BUTTON_TRANSLATE } from '../../constants/translateButtonTypes';
 import { initContextMenus } from './context-menus';
+import { initSourceParams } from '../../constants/sourceParams';
 
 const initStorageOnInstalled = (userLang: string, update: boolean) => {
 
@@ -61,7 +62,7 @@ const initStorageOnInstalled = (userLang: string, update: boolean) => {
             (data.styleVarsList[0].styleVars = defaultStyleVars);
         }
 
-        chrome.storage.local.set({ ...defaultSet, ...data }, () => {
+        chrome.storage.local.set({ ...defaultSet, ...data, sourceParamsCache: initSourceParams }, () => {
             initContextMenus();
         });
     });

@@ -1,5 +1,3 @@
-import { fetchData } from '../utils';
-
 /* eslint-disable */
 const a = (t) => {
     if(Array.isArray(t)) {
@@ -53,20 +51,8 @@ const e = (r) => {
     p %= 1e6,
     p.toString() + "." + (p ^ m)
 };
-/* eslint-enable */
 
-let token ='';
-
-export const getTokenAndSign = async (query) => {
-    const sign = e(query);
-
-    if (token) { return { token, sign }; }
-
-    const res = await fetchData('https://fanyi.baidu.com/');
-    const text = await res.text();
-    const code = text.match(/token:.*?',/g);
-
-    if (code) { token = code[0].split('\'')[1]; }
-
-    return { token, sign };
+export const getSign = (text) => {
+    return e(text);
 };
+/* eslint-enable */

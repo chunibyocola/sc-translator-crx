@@ -1,10 +1,10 @@
-import { getTokenAndSign } from './getTokenAndSign';
 import { fetchData, getError } from '../utils';
 import { detect } from './detect';
 import { RESULT_ERROR, LANGUAGE_NOT_SOPPORTED } from '../error-codes';
 import { langCode } from './lang-code';
 import { TranslateParams } from '../translate-types';
 import { TranslateResult } from '../../../types';
+import { getTranslateParams } from './get-params';
 
 export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '' }: TranslateParams) => {
     preferredLanguage = preferredLanguage || 'en';
@@ -14,7 +14,7 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
 
     if (!(from in langCode) || !(to in langCode)) { throw getError(LANGUAGE_NOT_SOPPORTED); };
 
-    const { token, sign } = await getTokenAndSign(text);
+    const { token, sign } = await getTranslateParams(text);
 
     let searchParams = new URLSearchParams();
     searchParams.append('from', from);

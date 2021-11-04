@@ -1,4 +1,5 @@
 import { StyleVarsList } from "../constants/defaultStyleVars";
+import { SourceParams } from "../constants/sourceParams";
 
 export type TranslateResult = {
     text: string;
@@ -114,6 +115,7 @@ export type DefaultOptions = {
     noControlBarWhileFirstActivating: boolean;
     afterSelectingTextRegExpList: TextPreprocessingRegExp[];
     translateButtonsTL: TranslateButtonsTL;
+    sourceParamsCache: SourceParams;
 };
 
 // Only work in "src/entry/background/install.ts".

@@ -1,13 +1,13 @@
 import { fetchData, getError } from '../utils';
 import { detect } from './detect';
 import { LANGUAGE_NOT_SOPPORTED, RESULT_ERROR } from '../error-codes';
-import { getTokenAndKey } from './getTokenAndKey';
 import { AudioParams } from '../translate-types';
+import { getAudioParams } from './get-params';
 
 export const audio = async ({ text, from = '', com = true }: AudioParams) => {
     from = from || await detect({ text, com });
 
-    const { region, token } = await getAuthorization(com);
+    const { region, token } = await getAudioParams(com);
 
     const url = `https://${region}.tts.speech.microsoft.com/cognitiveservices/v1`;
     const { lang, gender, name } = getXMLParams(from);
@@ -43,42 +43,6 @@ export const audio = async ({ text, from = '', com = true }: AudioParams) => {
         });
         
         return dataURL;
-    } catch (err) {
-        throw getError(RESULT_ERROR);
-    }
-};
-
-let authorization = {
-    expiry: 0,
-    region: '',
-    token: ''
-};
-const getAuthorization = async (com: boolean) => {
-    const timestamp = Number(new Date());
-
-    if (timestamp < authorization.expiry) { return authorization; }
-
-    const { token, key, IG, IID } = await getTokenAndKey(com);
-
-    const url = `https://${com ? 'www' : 'cn'}.bing.com/tfetspktok?isVertical=1&IG=${IG}&IID=${IID}`;
-
-    const searchParams = new URLSearchParams();
-    searchParams.append('token', token);
-    searchParams.append('key', key.toString());
-    const res = await fetchData(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: searchParams.toString()
-    });
-
-    try {
-        const data = await res.json();
-
-        authorization = { expiry: timestamp + Number(data.expiryDurationInMS), region: data.region, token: data.token };
-
-        return authorization;
     } catch (err) {
         throw getError(RESULT_ERROR);
     }
