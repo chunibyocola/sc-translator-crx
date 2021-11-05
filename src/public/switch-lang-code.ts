@@ -1,68 +1,25 @@
+type SwitchLangCodesObject = { [K: string]: string; };
+
 // switch lang code for bing
+const googleToBingLangCodes: SwitchLangCodesObject = {'zh-CN':'zh-Hans','zh-TW':'zh-Hant','tl':'fil','iw':'he','hmn':'mww','sr':'sr-Cyrl'};
+const bingToGoogleLangCodes: SwitchLangCodesObject = {'zh-Hans':'zh-CN','zh-Hant':'zh-TW','fil':'tl','he':'iw','mww':'hmn','sr-Cyrl':'sr'};
+
 export const bingSwitchLangCode = (code: string) => {
-	switch (code) {
-		case 'zh-CN': return 'zh-Hans';
-		case 'zh-TW': return 'zh-Hant';
-		case 'tl': return 'fil';
-		case 'iw': return 'he';
-		case 'hmn': return 'mww';
-		case 'sr': return 'sr-Cyrl';
-		default: return code;
-	}
+    return googleToBingLangCodes[code] ?? code;
+};
+
+export const bingSwitchToGoogleLangCode = (code: string) => {
+    return bingToGoogleLangCodes[code] ?? code;
 };
 
 // switch lang code for baidu
+const googleToBaiduLangCodes: SwitchLangCodesObject = {'zh-CN':'zh','en':'en','ja':'jp','th':'th','es':'spa','ar':'ara','fr':'fra','ko':'kor','ru':'ru','de':'de','pt':'pt','it':'it','el':'el','nl':'nl','pl':'pl','fi':'fin','cs':'cs','bg':'bul','da':'dan','et':'est','hu':'hu','ro':'rom','sv':'swe','vi':'vie','zh-TW':'cht','be':'bel','my':'bur','tl':'fil','hi':'hi','is':'ice','id':'id','ga':'gle','kk':'kaz','lo':'lao','la':'lat','lb':'ltz','mk':'mac','ms':'may','ne':'nep','fa':'per','sr':'srp','sk':'sk','tr':'tr','uk':'ukr','uz':'uzb','haw':'haw','mi':'mao','no':'nor','eo':'epo'};
+const baiduToGoogleLangCodes: SwitchLangCodesObject = {'zh':'zh-CN','en':'en','jp':'ja','th':'th','spa':'es','ara':'ar','fra':'fr','kor':'ko','ru':'ru','de':'de','pt':'pt','it':'it','el':'el','nl':'nl','pl':'pl','fin':'fi','cs':'cs','bul':'bg','dan':'da','est':'et','hu':'hu','rom':'ro','swe':'sv','vie':'vi','cht':'zh-TW','bel':'be','bur':'my','fil':'tl','hi':'hi','ice':'is','id':'id','gle':'ga','kaz':'kk','lao':'lo','lat':'la','ltz':'lb','mac':'mk','may':'ms','nep':'ne','per':'fa','srp':'sr','sk':'sk','tr':'tr','ukr':'uk','uzb':'uz','haw':'haw','mao':'mi','nor':'no','epo':'eo'};
+
 export const baiduSwitchLangCode = (code: string) => {
-    switch (code) {
-        case 'zh-CN': return 'zh';
-        case 'en': return 'en';
-        case 'ja': return 'jp';
-        case 'th': return 'th';
-        case 'es': return 'spa';
-        case 'ar': return 'ara';
-        case 'fr': return 'fra';
-        case 'ko': return 'kor';
-        case 'ru': return 'ru';
-        case 'de': return 'de';
-        case 'pt': return 'pt';
-        case 'it': return 'it';
-        case 'el': return 'el';
-        case 'nl': return 'nl';
-        case 'pl': return 'pl';
-        case 'fi': return 'fin';
-        case 'cs': return 'cs';
-        case 'bg': return 'bul';
-        case 'da': return 'dan';
-        case 'et': return 'est';
-        case 'hu': return 'hu';
-        case 'ro': return 'rom';
-        case 'sv': return 'swe';
-        case 'vi': return 'vie';
-        case 'zh-TW': return 'cht';
-        case 'be': return 'bel';
-        case 'my': return 'bur';
-        case 'tl': return 'fil';
-        case 'hi': return 'hi';
-        case 'is': return 'ice';
-        case 'id': return 'id';
-        case 'ga': return 'gle';
-        case 'kk': return 'kaz';
-        case 'lo': return 'lao';
-        case 'la': return 'lat';
-        case 'lb': return 'ltz';
-        case 'mk': return 'mac';
-        case 'ms': return 'may';
-        case 'ne': return 'nep';
-        case 'fa': return 'per';
-        case 'sr': return 'srp';
-        case 'sk': return 'sk';
-        case 'tr': return 'tr';
-        case 'uk': return 'ukr';
-        case 'uz': return 'uzb';
-        case 'haw': return 'haw';
-        case 'mi': return 'mao';
-		case 'no': return 'nor';
-		case 'eo': return 'epo';
-        default: return code;
-    }
+    return googleToBaiduLangCodes[code] ?? code;
+};
+
+export const baiduSwitchToGoogleLangCode = (code: string) => {
+    return baiduToGoogleLangCodes[code] ?? code;
 };

@@ -34,8 +34,8 @@ export const translate = async ({ text }: TranslateParams) => {
 
         return result;
     } catch (err) {
-        if (err.code === NO_RESULT) {
-            throw getError(NO_RESULT);
+        if ((err as ReturnType<typeof getError>).code === NO_RESULT) {
+            throw err;
         }
         else {
             throw getError(RESULT_ERROR);

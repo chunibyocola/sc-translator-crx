@@ -73,7 +73,7 @@
   ],
   "web_accessible_resources":[
     {
-      "resources": ["/pdf-vierer/web/viewer.html", "/static/css/content.css", "audio.html"],
+      "resources": ["/pdf-vierer/web/viewer.html", "/static/css/content.css"],
       "matches": ["http://*/*", "https://*/*"]
     }
   ],

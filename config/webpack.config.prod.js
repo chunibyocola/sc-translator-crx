@@ -25,7 +25,6 @@ module.exports = {
         background: [path.resolve(paths.appSrc, 'entry', 'background')],
         options:  [require.resolve('./polyfills'), path.resolve(paths.appSrc, 'entry', 'options')],
         separate: [require.resolve('./polyfills'), path.resolve(paths.appSrc, 'entry', 'separate')],
-        audio: [require.resolve('./polyfills'), path.resolve(paths.appSrc, 'entry', 'audio')]
     },
     output: {
         path: paths.appBuild,
@@ -76,7 +75,7 @@ module.exports = {
                     from: paths.appPublic,
                     to: paths.appBuild,
                     filter: (path) => {
-                        return !/popup|options|separate|audio\.html/.test(path);
+                        return !/(popup|options|separate)\.html/.test(path);
                     },
                 },
             ],
@@ -98,12 +97,6 @@ module.exports = {
           template: path.resolve(paths.appPublic, 'separate.html'),
           chunks: ['separate'],
           filename: 'separate.html',
-        }),
-        new HtmlWebpackPlugin({
-            inject: true,
-            template: path.resolve(paths.appPublic, 'audio.html'),
-            chunks: ['audio'],
-            filename: 'audio.html',
         }),
         new MiniCssExtractPlugin({
           filename: 'static/css/[name].css'

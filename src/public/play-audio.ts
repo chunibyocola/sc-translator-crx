@@ -1,8 +1,9 @@
-import { GOOGLE_COM } from '../constants/translateSource';
+import { BAIDU_COM, BING_COM, GOOGLE_COM } from '../constants/translateSource';
 import { DefaultOptions } from '../types';
 import { getLocalStorage } from './chrome-call';
 import { listenOptionsChange } from './options';
 import { sendDetect, sendAudio } from './send';
+import { baiduSwitchToGoogleLangCode, bingSwitchToGoogleLangCode } from './switch-lang-code';
 
 const audio = new Audio();
 
@@ -36,30 +37,8 @@ let audioCache: AudioCache = {
     id: 0
 };
 
-let audioIframe: undefined | HTMLIFrameElement;
-
-// DataUrl can't be used in a CSP(media-src) contained website, use iframe to get rid of this.
-export const appendAudioIframe = (element: HTMLElement | ShadowRoot) => {
-    audioIframe = document.createElement('iframe');
-    audioIframe.src = chrome.runtime.getURL('audio.html');
-    audioIframe.allow = 'autoplay';
-    audioIframe.style.display = 'none';
-
-    element.appendChild(audioIframe);
-
-    window.addEventListener('message', (e) => {
-        if (e.origin + '/' === chrome.runtime.getURL('/')) {
-            const { type } = e.data['sc-translator-audio'];
-
-            switch (type) {
-                case 'ended':
-                    startPlaying();
-                    break;
-                default: break;
-            }
-        }
-    });
-};
+let violateCSP = false;
+const utter = new SpeechSynthesisUtterance();
 
 export const playAudio = ({ text, source, from = '' }: { text: string, source?: string, from?: string }, onPause?: () => void) => {
     pauseAudio();
@@ -113,8 +92,8 @@ export const playAudio = ({ text, source, from = '' }: { text: string, source?: 
 };
 
 export const pauseAudio = () => {
-    if (audioIframe) {
-        audioIframe.contentWindow?.postMessage({ type: 'pause' }, '*');
+    if (violateCSP) {
+        window.speechSynthesis.cancel();
     }
     else {
         audio.pause();
@@ -129,6 +108,11 @@ const startPlaying = () => {
 
     if (index >= textList.length) {
         audioCache.onPause?.();
+        return;
+    }
+
+    if (violateCSP) {
+        play(textList[index]);
         return;
     }
 
@@ -156,13 +140,35 @@ audio.addEventListener('ended', () => {
     startPlaying();
 });
 
+audio.addEventListener('error', () => {
+    if (audio.error?.code === 4 && !violateCSP) {
+        violateCSP = true;
+        --audioCache.index;
+        startPlaying();
+    }
+});
+
+utter.addEventListener('end', () => {
+    startPlaying();
+});
+
 const play = (dataURL: string) => {
-    if (audioIframe) {
-        audioIframe.contentWindow?.postMessage({ type: 'play', payload: dataURL }, '*');
+    if (violateCSP) {
+        utter.text = dataURL;
+        if (audioCache.source === BING_COM) {
+            utter.lang = bingSwitchToGoogleLangCode(audioCache.from);
+        }
+        else if (audioCache.source === BAIDU_COM) {
+            utter.lang = baiduSwitchToGoogleLangCode(audioCache.from);
+        }
+        else {
+            utter.lang = audioCache.detectedFrom;
+        }
+        window.speechSynthesis.speak(utter);
     }
     else {
         audio.src = dataURL;
-        audio.play().catch();
+        audio.play();
     }
 
     ++audioCache.index;
@@ -215,10 +221,21 @@ const keys: (keyof PickedOptions)[] = ['audioVolume', 'audioPlaybackRate', 'defa
 getLocalStorage<PickedOptions>(keys, (storage) => {
     audio.volume = storage.audioVolume / 100;
     audio.defaultPlaybackRate = storage.audioPlaybackRate;
+
+    utter.volume = storage.audioVolume / 100;
+    utter.rate = storage.audioPlaybackRate;
+
     defaultAudioSource = storage.defaultAudioSource;
 });
 listenOptionsChange<PickedOptions>(keys, (changes) => {
-    changes.audioVolume !== undefined && (audio.volume = changes.audioVolume / 100);
-    changes.audioPlaybackRate !== undefined && (audio.defaultPlaybackRate = changes.audioPlaybackRate);
+    if (changes.audioVolume !== undefined) {
+        audio.volume = changes.audioVolume / 100;
+        utter.volume = changes.audioVolume / 100;
+    }
+
+    if (changes.audioPlaybackRate !== undefined) {
+        audio.defaultPlaybackRate = changes.audioPlaybackRate;
+        utter.rate = changes.audioPlaybackRate;
+    }
     changes.defaultAudioSource !== undefined && (defaultAudioSource = changes.defaultAudioSource);
 });
