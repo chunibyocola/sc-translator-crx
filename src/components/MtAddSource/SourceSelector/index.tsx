@@ -35,7 +35,8 @@ const SourceSelector: React.FC<SourceSelectorProps> = ({ show, hideCallback, tra
             style={{display: show ? 'block': 'none'}}
             onMouseLeave={hideCallback}
         >
-            {sourceList.map(v => (<div
+            {sourceList.map((v, i) => (<div
+                key={v.source + i}
                 className='source-selector__item button'
                 onClick={() => handleAddSourcePush(v.source)}
             >

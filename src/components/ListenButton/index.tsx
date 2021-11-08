@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { pauseAudio, playAudio } from '../../public/play-audio';
 import IconFont from '../IconFont';
 
@@ -11,6 +11,18 @@ type ListenButtonProps = {
 const ListenButton: React.FC<ListenButtonProps> = ({ text, source, from }) => {
     const [playing, setPlaying] = useState(false);
 
+    const isMounted = useRef(false);
+
+    useEffect(() => {
+        isMounted.current = true;
+
+        return () => { isMounted.current = false; }
+    });
+
+    const onAudioPaused = useCallback(() => {
+        isMounted.current && setPlaying(false);
+    }, []);
+
     const onListenButtonClick: React.MouseEventHandler<SVGSVGElement> = useCallback((e) => {
         e.stopPropagation();
 
@@ -18,10 +30,10 @@ const ListenButton: React.FC<ListenButtonProps> = ({ text, source, from }) => {
             pauseAudio();
         }
         else {
-            playAudio({ text, source, from }, () => setPlaying(false));
+            playAudio({ text, source, from }, onAudioPaused);
             setPlaying(true);
         }
-    }, [text, source, from, playing]);
+    }, [text, source, from, playing, onAudioPaused]);
 
     return (
         <IconFont

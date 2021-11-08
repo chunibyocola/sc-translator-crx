@@ -56,11 +56,8 @@ export const translate = ({ source, translateId, requestObj }: TranslateRequestO
 	}
 	
 	translate(requestObj)
-		.then((result) => {
-			'raw' in result && delete result['raw'];
-			cb && cb({ suc: true, data: result, translateId });
-		})
-		.catch(err => cb && cb({ suc: false, data: err, translateId }));
+		.then(result => cb({ suc: true, data: result, translateId }))
+		.catch(err => cb({ suc: false, data: err, translateId }));
 };
 
 type AudioRequestObject = {

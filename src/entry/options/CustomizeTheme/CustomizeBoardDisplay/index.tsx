@@ -49,7 +49,7 @@ const CustomizeBoardDisplay: React.FC<CustomizeBoardDisplayProps> = ({ styleVars
                 <div className="panel__content">
                     <div style={{color: styleVars['--text-normal']}}>
                         <div className="raw-text">
-                            <textarea placeholder="Input here" className="raw-text__textarea">welcome</textarea>
+                            <textarea placeholder="Input here" className="raw-text__textarea" defaultValue='welcome'></textarea>
                         </div>
                         <div className="language-selection">
                             <div className="language-select language-selection__select border-bottom-select" style={{color: styleVars['--text-normal']}}>
@@ -123,7 +123,7 @@ const CustomizeBoardDisplay: React.FC<CustomizeBoardDisplayProps> = ({ styleVars
                 </div>
                 <div className="popup-container__content" style={{color: styleVars['--text-normal']}}>
                     <div className="raw-text">
-                        <textarea placeholder="Input here" className="raw-text__textarea">welcome</textarea>
+                        <textarea placeholder="Input here" className="raw-text__textarea" defaultValue='welcome'></textarea>
                     </div>
                     <div className="language-selection">
                         <div className="language-select language-selection__select border-bottom-select" style={{color: styleVars['--text-normal'], background: styleVars['--bg-select-focus']}}>

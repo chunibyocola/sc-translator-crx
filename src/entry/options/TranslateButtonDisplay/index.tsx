@@ -58,6 +58,7 @@ const TranslateButtonDisplay: React.FC<TranslateButtonDisplayProps> = ({
                     onClick={() => {
                         presetCheckList[index] ? onTranslateButtonsUpdate(translateButtons.filter(v => v !== button)) : onTranslateButtonsUpdate(translateButtons.concat(button))
                     }}
+                    readOnly
                 />
                 <label htmlFor={button} className='flex-align-items-center button'>
                     {translateButtonContext[button].type === 'icon' && <>
@@ -74,6 +75,7 @@ const TranslateButtonDisplay: React.FC<TranslateButtonDisplayProps> = ({
                     onClick={() => {
                         tlCheckList[index] ? onTranslateButtonsUpdate(translateButtons.filter(v => v !== button)) : onTranslateButtonsUpdate(translateButtons.concat(button))
                     }}
+                    readOnly
                 />
                 <label htmlFor={button} className='flex-align-items-center button'>
                     {translateButtonContext[button].type === 'icon' && <>
@@ -94,6 +96,7 @@ const TranslateButtonDisplay: React.FC<TranslateButtonDisplayProps> = ({
                 <span>{getMessage('optionsPreview')}</span>
                 {translateButtons.length > 0 ? <div className='translate-button' style={{position: 'relative', display: 'flex', zIndex: 1}}>
                     {translateButtons.map((button) => (translateButtonContext[button].type === 'icon' && <div
+                        key={button}
                         className='translate-button__item iconfont--enable'
                     >
                         <IconFont iconName={translateButtonContext[button].iconName} />

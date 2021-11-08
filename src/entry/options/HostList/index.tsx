@@ -63,6 +63,7 @@ const HostList: React.FC<HostListProps> = ({ list, updateList }) => {
                         <input
                             type='checkbox'
                             checked={i in checked}
+                            readOnly
                         />
                         <span>{v}</span>
                     </div>
@@ -73,6 +74,7 @@ const HostList: React.FC<HostListProps> = ({ list, updateList }) => {
                     type='checkbox'
                     checked={checkAll}
                     onClick={handleCheckAllToggle}
+                    readOnly
                 />
                 <button
                     onClick={handleRemoveBtnClick}

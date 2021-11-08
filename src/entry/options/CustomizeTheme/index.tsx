@@ -48,6 +48,7 @@ const CustomizeTheme: React.FC<CustomizeThemeProps> = ({ styleVarsList, styleVar
     return (
         <div className='customize-theme'>
             {styleVarsList.map(({ name, styleVars, editable }, i) => (<div
+                key={i}
                 className='customize-theme__item'
                 onMouseEnter={() => setHoverIndex(i)}
                 onMouseLeave={() => {

@@ -18,6 +18,8 @@ import { DefaultOptions } from '../../types';
 document.title = `${getI18nMessage('titleSeparateWindow')} - ${getI18nMessage('extName')}`;
 
 const init = (options: DefaultOptions) => {
+    document.body.id = 'sc-translator-root';
+
     initOptions(options);
 
     appendColorVarsStyle(document.head);
@@ -31,7 +33,7 @@ const init = (options: DefaultOptions) => {
             <HandleCommand />
             <Separate />
         </Provider>,
-        document.body
+        document.getElementById('root')
     );
 };
 

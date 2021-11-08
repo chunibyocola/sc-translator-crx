@@ -94,7 +94,7 @@ const RegExpList: React.FC<RegExpListProps> = ({ textPreprocessingRegExpList, on
                             setErrorMessage('');
                         }
                         catch (err) {
-                            setErrorMessage(`Error: ${err.message}`);
+                            setErrorMessage(`Error: ${(err as Error).message}`);
                         }
                     }}
                 />

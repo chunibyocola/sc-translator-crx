@@ -66,7 +66,7 @@ const TransferList: React.FC<TransferListProps> = ({ enabledList, onChange }) =>
                                     key={v}
                                     onClick={() => handleCheckToggle(v, true)}
                                 >
-                                    <input type='checkbox' checked={leftChecked.indexOf(v) !== -1} />
+                                    <input type='checkbox' checked={leftChecked.indexOf(v) !== -1} readOnly />
                                     <SourceFavicon source={v} />
                                 </div>
                             ))}
@@ -88,7 +88,7 @@ const TransferList: React.FC<TransferListProps> = ({ enabledList, onChange }) =>
                                     key={v}
                                     onClick={() => handleCheckToggle(v, false)}
                                 >
-                                    <input type='checkbox' checked={rightChecked.indexOf(v) !== -1} />
+                                    <input type='checkbox' checked={rightChecked.indexOf(v) !== -1} readOnly />
                                     <SourceFavicon source={v} />
                                 </div>
                             ))}

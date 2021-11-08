@@ -246,6 +246,7 @@ const TsBtn: React.FC = () => {
             onMouseDown={e => e.stopPropagation()}
         >
             {translateButtons.map((translateButton) => (translateButtonContext[translateButton].type === 'icon' && <div
+                key={translateButton}
                 className='translate-button__item iconfont--enable'
                 onClick={() => handleTranslateButtonClick(translateButton)}
             >

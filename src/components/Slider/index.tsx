@@ -81,10 +81,9 @@ const Slider: React.FC<SliderProps> = ({ defaultValue, min, max, step, marks, va
             >
                 {valueLabelFormat?.(value) ?? value}
             </div>}
-            {marks?.map((v, i) => (<>
+            {marks?.map((v, i) => (<React.Fragment key={i}>
                 <span className={`slider__mark${value > v.value ? ' slider__mark-active' : ''}`} style={{left: `${calculatePointerLeftByValue(v.value)}%`}}></span>
                 <span
-                    key={i}
                     className='slider__mark-label'
                     style={{left: `${calculatePointerLeftByValue(v.value)}%`}}
                     onMouseDown={(e) => {
@@ -94,7 +93,7 @@ const Slider: React.FC<SliderProps> = ({ defaultValue, min, max, step, marks, va
                 >
                     {v.label}
                 </span>
-            </>))}
+            </React.Fragment>))}
         </div>
     );
 };

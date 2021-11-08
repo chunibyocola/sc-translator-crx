@@ -16,6 +16,7 @@ const OptionToggle: React.FC<OptionToggleProps> = ({ id, message, checked, onCli
                 type='checkbox'
                 checked={checked}
                 onClick={onClick}
+                readOnly
             />
             <label htmlFor={id} className='button'>
                 {getMessage(message)}

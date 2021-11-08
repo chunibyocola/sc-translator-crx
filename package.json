@@ -13,7 +13,9 @@
   },
   "homepage": "https://github.com/chunibyocola/sc-translator-crx",
   "scripts": {
-    "build": "webpack --config config/webpack.config.prod.js"
+    "build": "webpack --env production --config config/webpack.config.js",
+    "dev": "webpack --env development --config config/webpack.config.js",
+    "check-types": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.0",
@@ -28,14 +30,11 @@
   },
   "babel": {
     "presets": [
-      "react-app",
-      "@babel/preset-env",
-      "@babel/preset-react"
+      "react-app"
     ],
-    "plugins": [
-      ["@babel/plugin-proposal-private-methods", { "loose": true }],
-      ["@babel/plugin-proposal-class-properties", { "loose": true }]
-    ]
+    "targets": {
+      "chrome": "88"
+    }
   },
   "eslintConfig": {
     "extends": "react-app",

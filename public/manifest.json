@@ -10,6 +10,7 @@
     "128": "image/icon-128.png"
   },
   "manifest_version": 3,
+  "minimum_chrome_version": "88",
   "homepage_url": "https://github.com/chunibyocola/sc-translator-crx",
   "background": {
     "service_worker": "/static/js/background.js"

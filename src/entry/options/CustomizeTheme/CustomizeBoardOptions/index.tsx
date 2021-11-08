@@ -75,7 +75,7 @@ const CustomizeBoardOptions: React.FC<CustomizeBoardOptionsProps> = ({ styleVars
                     />
                 </div>
                 <p className='customize-board-options__colors-head'>{getMessage('themeTextColor')}</p>
-                {textKeyList.map((v) => (<div className='customize-board-options__colors-title'>
+                {textKeyList.map((v) => (<div key={v} className='customize-board-options__colors-title'>
                     <span className='customize-board-options__colors-label' style={{color: v === changing.targetColor ? '#1F88D6' : '#666666'}}>{i18nMessage[v]}</span>
                     <div
                         className='customize-board-options__colors-color button'
@@ -84,7 +84,7 @@ const CustomizeBoardOptions: React.FC<CustomizeBoardOptionsProps> = ({ styleVars
                     />
                 </div>))}
                 <p className='customize-board-options__colors-head'>{getMessage('themeBackgroundColor')}</p>
-                {bgKeyList.map((v) => (<div className='customize-board-options__colors-title'>
+                {bgKeyList.map((v) => (<div key={v} className='customize-board-options__colors-title'>
                     <span className='customize-board-options__colors-label' style={{color: v === changing.targetColor ? '#1F88D6' : '#666666'}}>{i18nMessage[v]}</span>
                     <div
                         className='customize-board-options__colors-color button'
