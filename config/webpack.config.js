@@ -37,7 +37,7 @@ module.exports = (env) => {
         entry: {
             popup: [path.resolve(paths.appSrc, 'entry', 'popup')],
             content: [path.resolve(paths.appSrc, 'entry', 'content')],
-            background: [path.resolve(paths.appSrc, 'entry', 'background')],
+            background: { import: path.resolve(paths.appSrc, 'entry', 'background'), filename: '[name].js' },
             options:  [path.resolve(paths.appSrc, 'entry', 'options')],
             separate: [path.resolve(paths.appSrc, 'entry', 'separate')],
         },

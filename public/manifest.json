@@ -13,7 +13,7 @@
   "minimum_chrome_version": "88",
   "homepage_url": "https://github.com/chunibyocola/sc-translator-crx",
   "background": {
-    "service_worker": "/static/js/background.js"
+    "service_worker": "background.js"
   },
   "action": {
     "default_title": "__MSG_extName__",
