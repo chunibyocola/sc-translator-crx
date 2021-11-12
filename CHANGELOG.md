@@ -1,3 +1,6 @@
+# 3.14.0 (2021-11-12)
+- Migrate to Manifest Version 3. ([9ee0f39](https://github.com/chunibyocola/sc-translator-crx/commit/9ee0f39112243dad29c6dad0c7f11470abdebb9b))
+- Use Web Speech API to play audio if the normal way failed. ([725f501](https://github.com/chunibyocola/sc-translator-crx/commit/725f5014d8d0089afff510939ec817d20a6f094f))
 # 3.13.0 (2021-10-21)
 - Remake the mechanism of playing audio. ([8ad0aa1](https://github.com/chunibyocola/sc-translator-crx/commit/8ad0aa10013bbd0dde0e9b9afd5e7188f6657c60)) ([178214b](https://github.com/chunibyocola/sc-translator-crx/commit/178214b3e2c07c6c1f31ac3eb7b2267e93c56447)) ([18bc15f](https://github.com/chunibyocola/sc-translator-crx/commit/18bc15f643a6805c35cd949a3a0d1ec6336daa29))
 - Audio is able to pause now. ([83a634f](https://github.com/chunibyocola/sc-translator-crx/commit/83a634fbb3b0c27982a5a7ce96f6e3cc7033c489))
