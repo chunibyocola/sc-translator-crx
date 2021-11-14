@@ -1,3 +1,6 @@
+# 3.14.1 (2021-11-14)
+- Remove optional permission "clipboardRead". ([cd9fab9](https://github.com/chunibyocola/sc-translator-crx/commit/cd9fab9223ffbb8a85abc9a1b0ad51972046fb08))
+- Remove "Allow extension to read clipboard" option. ([cd9fab9](https://github.com/chunibyocola/sc-translator-crx/commit/cd9fab9223ffbb8a85abc9a1b0ad51972046fb08))
 # 3.14.0 (2021-11-12)
 - Migrate to Manifest Version 3. ([9ee0f39](https://github.com/chunibyocola/sc-translator-crx/commit/9ee0f39112243dad29c6dad0c7f11470abdebb9b))
 - Use Web Speech API to play audio if the normal way failed. ([725f501](https://github.com/chunibyocola/sc-translator-crx/commit/725f5014d8d0089afff510939ec817d20a6f094f))
