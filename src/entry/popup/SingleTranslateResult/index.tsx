@@ -73,7 +73,7 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ autoTrans
             dispatch(callOutPanel());
         };
 
-        getOptions().autoPasteInTheInputBox && chrome.permissions.contains({ permissions: ['clipboardRead'] }, result => result && readClipboardText());
+        getOptions().autoPasteInTheInputBox && readClipboardText();
     }, [dispatch]);
 
     return (

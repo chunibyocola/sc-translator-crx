@@ -100,7 +100,6 @@ export type DefaultOptions = {
     doNotRespondInTextBox: boolean;
     autoTranslateAfterInput: boolean;
     contextMenus: OptionsContextMenu[];
-    clipboardReadPermission: boolean;
     autoPasteInTheInputBox: boolean;
     enableInsertResult: boolean;
     autoInsertResult: boolean;
@@ -123,4 +122,5 @@ export type DefaultOptions = {
 export type DeprecatedOptions = {
     showButtonAfterSelect: boolean;
     enableContextMenus: boolean;
+    clipboardReadPermission: boolean;
 };

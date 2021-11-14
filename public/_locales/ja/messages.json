@@ -362,6 +362,9 @@
     "optionsTranslateToTargetLanguage": {
         "message": "目標言語に翻訳します"
     },
+    "optionsAutoPasteInTheInputBoxErrorDescription": {
+        "message": "エラー：クリップボードの読み取り許可を取得できませんでした。クリップボードを読み取りの許可はこの拡張機能にとっては必要でございます。URLバーの右側のアイコンをクリックして拡張機能のクリップボードへのアクセスを許可できます。次のリンクでも許可を管理できます："
+    },
     "themePreset": {
         "message": "プリセット"
     },

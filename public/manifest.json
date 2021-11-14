@@ -63,9 +63,6 @@
   "host_permissions": [
     "<all_urls>"
   ],
-  "optional_permissions": [
-    "clipboardRead"
-  ],
   "content_scripts" : [
     {
       "matches": ["http://*/*", "https://*/*"],

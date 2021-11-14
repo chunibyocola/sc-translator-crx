@@ -51,7 +51,6 @@ const defaultOptions: DefaultOptions = {
     doNotRespondInTextBox: false,
     autoTranslateAfterInput: true,
     contextMenus: defaultContextMenus,
-    clipboardReadPermission: false,
     autoPasteInTheInputBox: false,
     enableInsertResult: false,
     autoInsertResult: false,

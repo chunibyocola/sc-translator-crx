@@ -92,7 +92,7 @@ const Separate: React.FC = () => {
         };
 
         if (getOptions().autoPasteInTheInputBox && !text) {
-            chrome.permissions.contains({ permissions: ['clipboardRead'] }, result => result && readClipboardText());
+            readClipboardText();
         }
         else {
             dispatch(callOutPanel());

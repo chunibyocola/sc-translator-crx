@@ -68,7 +68,6 @@ const Options: React.FC = () => {
         doNotRespondInTextBox,
         autoTranslateAfterInput,
         contextMenus,
-        clipboardReadPermission,
         autoPasteInTheInputBox,
         enableInsertResult,
         autoInsertResult,
@@ -108,7 +107,6 @@ const Options: React.FC = () => {
             <div className='sub-title' id='clipboard'>{getMessage('optionsClipboard')}</div>
             <Clipboard
                 updateStorage={updateStorage}
-                clipboardReadPermission={clipboardReadPermission}
                 autoPasteInTheInputBox={autoPasteInTheInputBox}
             />
             <div className='sub-title' id='web-page-translating'>{getMessage('optionsWebPageTranslating')}</div>
