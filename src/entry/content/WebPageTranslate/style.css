@@ -7,6 +7,7 @@
     border-radius: 10px;
     color: var(--text-normal);
     background: var(--bg-content);
+    z-index: 2147483647;
 }
 .web-page-translate__error {
     margin-bottom: 10px;
