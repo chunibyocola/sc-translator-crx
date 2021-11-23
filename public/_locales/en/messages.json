@@ -365,6 +365,9 @@
     "optionsAutoPasteInTheInputBoxErrorDescription": {
         "message": "Error: Failed to get the permission of reading clipboard. You need to allow extension to read your clipboard. You can click on the icon on the right of the URL bar to allow this extension to read the clipboard. You can also allow the requestion in the following link:"
     },
+    "optionsMultipleTranslateSourceListDescription": {
+        "message": "The source you check will be displayed in panel by default. The order of the sources is related to the order in which you checked."
+    },
     "themePreset": {
         "message": "Preset"
     },

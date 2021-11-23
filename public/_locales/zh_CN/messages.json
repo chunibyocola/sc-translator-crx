@@ -365,6 +365,9 @@
     "optionsAutoPasteInTheInputBoxErrorDescription": {
         "message": "错误：未能获得读取剪贴板的许可。你需要允许该扩展读取剪贴板。你可以点击 URL 栏右边的图标来允许该扩展访问剪贴板。同样你可以通过以下链接来管理剪贴板权限："
     },
+    "optionsMultipleTranslateSourceListDescription": {
+        "message": "你勾选的源将默认被展示在面板中。源的顺序与你勾选的顺序相关。"
+    },
     "themePreset": {
         "message": "预设"
     },

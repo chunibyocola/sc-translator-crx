@@ -7,8 +7,8 @@ import { getMessage } from '../../../../public/i18n';
 import { switchTranslateSource } from '../../../../public/switch-translate-source';
 import { DefaultOptions } from '../../../../types';
 import DefaultSelect from '../../DefaultSelect';
+import MultipleSourcesDisplay from '../../MultipleSourcesDisplay';
 import OptionToggle from '../../OptionToggle';
-import TransferList from '../../TransferList';
 
 type DefaultTranslateOptionsProps = GenericOptionsProps<Pick<
     DefaultOptions,
@@ -90,10 +90,14 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
             </div>
             {multipleTranslateMode ? <>
                 <div className='opt-section-row'>
-                    <TransferList
-                        enabledList={multipleTranslateSourceList}
-                        onChange={value => updateStorage('multipleTranslateSourceList', value)}
-                    />
+                    {getMessage('optionsSourceList')}
+                    <div className='item-description'>{getMessage('optionsMultipleTranslateSourceListDescription')}</div>
+                    <div className='mt10-ml30'>
+                        <MultipleSourcesDisplay
+                            sources={multipleTranslateSourceList}
+                            onChange={value => updateStorage('multipleTranslateSourceList', value)}
+                        />
+                    </div>
                 </div>
                 <div className='opt-section-row'>
                     <DefaultSelect

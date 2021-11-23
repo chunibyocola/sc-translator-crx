@@ -1,0 +1,11 @@
+.multiple-sources-display__item {
+    margin: 5px 10px 5px 0;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+}
+.multiple-sources-display__preview {
+    grid-template-columns: max-content auto;
+    display: grid;
+    min-height: 30px;
+}
