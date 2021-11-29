@@ -24,8 +24,8 @@ const MtResult: React.FC<MtResultProps> = ({ source, translateRequest, remove, r
                 className='mt-result__head button flex-justify-content-space-between'
                 onClick={() => setFold(!fold)}
             >
-                <span className='flex-align-items-center'>
-                    <SourceFavicon source={source} />
+                <span className='mt-result__head__left'>
+                    <SourceFavicon source={source} className='mt-result__head__badge' />
                     {translateRequest.status === 'loading' && <IconsLoadingSkeleton />}
                     {translateRequest.status === 'finished' && <>
                         <IconFont

@@ -4,6 +4,7 @@ import { TranslateSource, translateSource } from '../../../constants/translateSo
 import SourceFavicon from '../../SourceFavicon';
 import './style.css';
 import { Translation } from '../../../redux/slice/multipleTranslateSlice';
+import { getOptions } from '../../../public/options';
 
 type SourceSelectorProps = {
     show: boolean;
@@ -26,7 +27,7 @@ const SourceSelector: React.FC<SourceSelectorProps> = ({ show, hideCallback, tra
     }, [addSource, hideCallback]);
 
     useEffect(() => {
-        setSourceList(translateSource.filter(v => translations.findIndex(v1 => v1.source === v.source) < 0));
+        setSourceList(translateSource.concat(getOptions().customTranslateSourceList).filter(v => translations.findIndex(v1 => v1.source === v.source) < 0));
     }, [translations]);
 
     return (

@@ -7,6 +7,7 @@ export const MICROSOFT_COM = 'microsofttranslator.com';
 export type TranslateSource = {
     source: string;
     url: string;
+    name?: string;
 };
 
 export const translateSource: TranslateSource[] = [

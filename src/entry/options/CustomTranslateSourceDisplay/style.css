@@ -1,0 +1,7 @@
+.custom-translate-source__item {
+    display: grid;
+    grid-template-columns: 45% 35% auto;
+    grid-column-gap: 1%;
+    align-items: center;
+    padding: 3px;
+}

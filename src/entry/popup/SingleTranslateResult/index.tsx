@@ -3,7 +3,7 @@ import LanguageSelection from '../../../components/LanguageSelection';
 import { sendTranslate } from '../../../public/send';
 import RawText from '../../../components/RawText';
 import TsResult from '../../../components/TsResult';
-import { langCode } from '../../../constants/langCode';
+import { googleLangCode, langCode } from '../../../constants/langCode';
 import TsVia from '../../../components/TsVia';
 import { switchTranslateSource } from '../../../public/switch-translate-source';
 import { getOptions } from '../../../public/options';
@@ -88,7 +88,7 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ autoTrans
                 onChange={handleSelectionChange}
                 from={from}
                 to={to}
-                languageCodes={langCode[source]}
+                languageCodes={langCode[source] ?? googleLangCode}
             />
             <div style={{minHeight: '250px'}}>
                 <div className='scrollbar' style={{maxHeight: '300px', overflowY: 'auto'}}>

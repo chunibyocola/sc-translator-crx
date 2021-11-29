@@ -38,9 +38,10 @@ const RegExpList: React.FC<RegExpListProps> = ({ textPreprocessingRegExpList, on
                 <span>{getMessage('optionsPattern')}</span>
                 <span>{getMessage('optionsFlags')}</span>
                 <span>{getMessage('optionsReplacement')}</span>
+                <button onClick={() => setModifyMode(true)} disabled={modifyMode}>{getMessage('optionsModify')}</button>
             </div>
             <Draggable values={regExpList} onChange={onDraggableChange}>
-                {regExpList.map((v, i) => (<div className='regexp-list__grid' key={i + timestamp} draggable-id={i + timestamp}>
+                {regExpList.length > 0 ? regExpList.map((v, i) => (<div className='regexp-list__grid' key={i + timestamp} draggable-id={i + timestamp}>
                     <input type='text' disabled value={v.pattern} />
                     <input type='text' disabled value={v.flags} />
                     <input type='text' disabled value={v.replacement} />
@@ -55,7 +56,7 @@ const RegExpList: React.FC<RegExpListProps> = ({ textPreprocessingRegExpList, on
                         />
                         <IconFont iconName='#icon-move' className='draggable-move' />
                     </span>}
-                </div>))}
+                </div>)) : <div className='item-description'>{getMessage('contentNoRecord')}</div>}
             </Draggable>
             {modifyMode && <div className='regexp-list__grid'>
                 <input type='text' ref={patternEleRef} placeholder={getMessage('optionsPatternCanNotBeEmpty')}/>
@@ -100,22 +101,20 @@ const RegExpList: React.FC<RegExpListProps> = ({ textPreprocessingRegExpList, on
                 />
             </div>}
             {errorMessage && <div>{errorMessage}</div>}
-            <div>
-                {modifyMode ? <>
-                    <button disabled={!updated} onClick={() => {
-                        onSave(regExpList);
-                        setUpdated(false);
-                        setErrorMessage('');
-                        setModifyMode(false);
-                    }}>{getMessage('wordSave')}</button>
-                    <button onClick={() => {
-                        setUpdated(false);
-                        setRegExpList(textPreprocessingRegExpList);
-                        setErrorMessage('');
-                        setModifyMode(false);
-                    }}>{getMessage('wordCancel')}</button>
-                </> : <button onClick={() => setModifyMode(true)}>{getMessage('optionsModify')}</button>}
-            </div>
+            {modifyMode && <div>
+                <button disabled={!updated} onClick={() => {
+                    onSave(regExpList);
+                    setUpdated(false);
+                    setErrorMessage('');
+                    setModifyMode(false);
+                }}>{getMessage('wordSave')}</button>
+                <button onClick={() => {
+                    setUpdated(false);
+                    setRegExpList(textPreprocessingRegExpList);
+                    setErrorMessage('');
+                    setModifyMode(false);
+                }}>{getMessage('wordCancel')}</button>
+            </div>}
         </div>
     );
 };

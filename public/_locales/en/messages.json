@@ -368,6 +368,18 @@
     "optionsMultipleTranslateSourceListDescription": {
         "message": "The source you check will be displayed in panel by default. The order of the sources is related to the order in which you checked."
     },
+    "optionsCustomTranslateSource": {
+        "message": "Custom translate source"
+    },
+    "optionsCustomTranslateSourceDescription": {
+        "message": "You can add custom translate sources which built by yourself or others."
+    },
+    "optionsCustomTranslateSourceLearn": {
+        "message": "Learn more about custom translate source."
+    },
+    "optionsURLCanNotBeEmpty": {
+        "message": "URL can not be empty."
+    },
     "themePreset": {
         "message": "Preset"
     },
@@ -451,6 +463,9 @@
     },
     "wordRelated": {
         "message": "Related"
+    },
+    "wordName": {
+        "message": "Name"
     },
     "sentenceAddTranslateSource": {
         "message": "Please add a translate source."

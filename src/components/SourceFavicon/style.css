@@ -7,3 +7,12 @@
     width: 20px;
     height: 20px;
 }
+.favicon--mock {
+    justify-content: center;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 5px;
+    color: #fff;
+    background: #999;
+    font-weight: bold;
+}

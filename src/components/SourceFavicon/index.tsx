@@ -6,34 +6,33 @@ import mojidict from './favicons/mojidict.png';
 import baidu from './favicons/baidu.png';
 import microsoft from './favicons/microsofttranslator.png';
 import './style.css';
+import { getOptions } from '../../public/options';
 
 type SourceFaviconProps = {
     source: string;
-};
+} & Pick<React.HtmlHTMLAttributes<HTMLSpanElement>, 'className'>;
 
-const SourceFavicon: React.FC<SourceFaviconProps> = ({ source }) => {
+const SourceFavicon: React.FC<SourceFaviconProps> = ({ source, className }) => {
     return (
-        <>
-            <img
-                className='favicon'
-                src={getFavicon(source)}
-                alt='favicon'
-            />
+        <span className={className}>
+            {getFavicon(source)}
             {getName(source)}
-        </>
+        </span>
     );
 };
 
 const getFavicon = (source: string) => {
     switch (source) {
-        case GOOGLE_COM: return google;
-        case BING_COM: return bing;
-        case MOJIDICT_COM: return mojidict;
-        case BAIDU_COM: return baidu;
-        case MICROSOFT_COM: return microsoft;
-        default: return;
+        case GOOGLE_COM: return FaviconImg(google);
+        case BING_COM: return FaviconImg(bing);
+        case MOJIDICT_COM: return FaviconImg(mojidict);
+        case BAIDU_COM: return FaviconImg(baidu);
+        case MICROSOFT_COM: return FaviconImg(microsoft);
+        default: return (<div className='favicon favicon--mock'>{(getOptions().customTranslateSourceList.find(v => v.source === source)?.name ?? source)[0]}</div>);
     }
 };
+
+const FaviconImg = (src: string) => (<img className='favicon' src={src} alt='favicon' />);
 
 const getName = (source: string) => {
     switch (source) {
@@ -42,8 +41,8 @@ const getName = (source: string) => {
         case MOJIDICT_COM: return 'Mojidict';
         case BAIDU_COM: return 'Baidu';
         case MICROSOFT_COM: return 'Microsoft';
-        default: return;
+        default: return getOptions().customTranslateSourceList.find(v => v.source === source)?.name ?? source;
     }
-}
+};
 
 export default SourceFavicon;

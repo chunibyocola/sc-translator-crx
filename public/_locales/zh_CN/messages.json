@@ -368,6 +368,18 @@
     "optionsMultipleTranslateSourceListDescription": {
         "message": "你勾选的源将默认被展示在面板中。源的顺序与你勾选的顺序相关。"
     },
+    "optionsCustomTranslateSource": {
+        "message": "自定义翻译源"
+    },
+    "optionsCustomTranslateSourceDescription": {
+        "message": "你可以添加自己或是其他人构造的自定义翻译源。"
+    },
+    "optionsCustomTranslateSourceLearn": {
+        "message": "深入了解自定义翻译源。"
+    },
+    "optionsURLCanNotBeEmpty": {
+        "message": "URL 不能为空。"
+    },
     "themePreset": {
         "message": "预设"
     },
@@ -451,6 +463,9 @@
     },
     "wordRelated": {
         "message": "相关"
+    },
+    "wordName": {
+        "message": "名称"
     },
     "sentenceAddTranslateSource": {
         "message": "请添加翻译源。"

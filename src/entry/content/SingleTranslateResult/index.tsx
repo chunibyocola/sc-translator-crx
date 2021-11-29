@@ -3,7 +3,7 @@ import { sendTranslate } from '../../../public/send';
 import TsResult from '../../../components/TsResult';
 import LanguageSelection from '../../../components/LanguageSelection';
 import RawText from '../../../components/RawText';
-import { langCode } from '../../../constants/langCode';
+import { googleLangCode, langCode } from '../../../constants/langCode';
 import TsVia from '../../../components/TsVia';
 import { switchTranslateSource } from '../../../public/switch-translate-source';
 import { useAppDispatch, useAppSelector, useInsertResult, useIsEnable } from '../../../public/react-use';
@@ -110,7 +110,7 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ showRtAnd
                     onChange={handleSelectionChange}
                     from={from}
                     to={to}
-                    languageCodes={langCode[source]}
+                    languageCodes={langCode[source] ?? googleLangCode}
                 />
             </div>
             <div className='single-result scrollbar' style={{maxHeight: `${resultMaxHeight}px`}} ref={resultContainerEle}>

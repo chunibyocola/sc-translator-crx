@@ -8,10 +8,9 @@ import google from '../public/translate/google';
 import bing from '../public/translate/bing';
 import mojidict from '../public/translate/mojidict';
 import baidu from '../public/translate/baidu';
+import custom from '../public/translate/custom';
 import { bingSwitchLangCode, baiduSwitchLangCode } from '../public/switch-lang-code';
-import { SOURCE_ERROR } from '../constants/errorCodes';
 import { AudioCallback, DetectCallback, TranslateCallback } from './send';
-import { getError } from './translate/utils';
 
 type TranslateRequestObject = {
 	source: string;
@@ -50,8 +49,9 @@ export const translate = ({ source, translateId, requestObj }: TranslateRequestO
 			requestObj.secondPreferredLanguage = baiduSwitchLangCode(requestObj.secondPreferredLanguage);
 			break;
 		default:
-			const err = getError(SOURCE_ERROR);
-			cb?.({ suc: false, data: err, translateId });
+			custom.translate(requestObj, source)
+				.then(result => cb({ suc: true, data: result, translateId }))
+				.catch(err => cb({ suc: false, data: err, translateId }));
 			return;
 	}
 	

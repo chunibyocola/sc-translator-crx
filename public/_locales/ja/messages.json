@@ -368,6 +368,18 @@
     "optionsMultipleTranslateSourceListDescription": {
         "message": "チェックしたソースは、デフォルトでパネルに表示されます。ソースの順序は、チェックした順序に関連しています。"
     },
+    "optionsCustomTranslateSource": {
+        "message": "カスタム翻訳ソース"
+    },
+    "optionsCustomTranslateSourceDescription": {
+        "message": "自分や他の人が作成したカスタム翻訳ソースを追加できます。"
+    },
+    "optionsCustomTranslateSourceLearn": {
+        "message": "カスタム翻訳ソースをもっと知る。"
+    },
+    "optionsURLCanNotBeEmpty": {
+        "message": "URLを空にすることはできません。"
+    },
     "themePreset": {
         "message": "プリセット"
     },
@@ -451,6 +463,9 @@
     },
     "wordRelated": {
         "message": "関連"
+    },
+    "wordName": {
+        "message": "名称"
     },
     "sentenceAddTranslateSource": {
         "message": "翻訳ソースを追加してください。"

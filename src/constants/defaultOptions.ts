@@ -65,7 +65,8 @@ const defaultOptions: DefaultOptions = {
     noControlBarWhileFirstActivating: false,
     afterSelectingTextRegExpList: [],
     translateButtonsTL: { first: '', second: LANG_EN, third: LANG_EN },
-    sourceParamsCache: initSourceParams
+    sourceParamsCache: initSourceParams,
+    customTranslateSourceList: []
 };
 
 export default defaultOptions;

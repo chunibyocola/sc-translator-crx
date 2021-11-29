@@ -55,6 +55,12 @@ export type TranslateButtonsTL = {
     third: string;
 };
 
+export type CustomTranslateSource = {
+    name: string;
+    url: string;
+    source: string;
+};
+
 export type DefaultOptions = {
     userLanguage: string;
     defaultTranslateSource: string;
@@ -115,6 +121,7 @@ export type DefaultOptions = {
     afterSelectingTextRegExpList: TextPreprocessingRegExp[];
     translateButtonsTL: TranslateButtonsTL;
     sourceParamsCache: SourceParams;
+    customTranslateSourceList: CustomTranslateSource[];
 };
 
 // Only work in "src/entry/background/install.ts".

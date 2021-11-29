@@ -22,6 +22,9 @@ export const switchTranslateSource = (targetSource: string, { source, from, to }
             from = baiduSwitchLangCode(from) in baiduLangCode ? from : '';
             to = baiduSwitchLangCode(to) in baiduLangCode ? to : '';
             return { source: targetSource, from, to };
-        default: return { source, from, to };
+        default:
+            from = from in googleLangCode ? from : '';
+            to = to in googleLangCode ? to : '';
+            return { source: targetSource, from, to };
     }
 };

@@ -34,9 +34,9 @@ const HistoryResultPanel: React.FC<HistoryResultPanelProps> = ({ translations, t
                 ref={panelEle}
             >
                 {translations.map(({ source, translateRequest }) => (<div className='mt-result' key={source}>
-                    <div className='mt-result__head'>
-                        <span className='flex-align-items-center'>
-                            <SourceFavicon source={source} />
+                    <div className='mt-result__head flex-justify-content-space-between'>
+                        <span className='mt-result__head__left'>
+                            <SourceFavicon source={source} className='mt-result__head__badge' />
                             {translateRequest.status === 'finished' && <>
                                 <IconFont
                                     className='iconbutton button'

@@ -1,11 +1,13 @@
 import React from 'react';
 import { GenericOptionsProps } from '..';
 import SourceSelect from '../../../../components/SourceSelect';
-import { langCode, mtLangCode, preferredLangCode, userLangs } from '../../../../constants/langCode';
-import { translateSource } from '../../../../constants/translateSource';
+import { googleLangCode, langCode, mtLangCode, preferredLangCode, userLangs } from '../../../../constants/langCode';
+import { GOOGLE_COM, translateSource } from '../../../../constants/translateSource';
 import { getMessage } from '../../../../public/i18n';
 import { switchTranslateSource } from '../../../../public/switch-translate-source';
 import { DefaultOptions } from '../../../../types';
+import BetaIcon from '../../BetaIcon';
+import CustomTranslateSourceDisplay from '../../CustomTranslateSourceDisplay';
 import DefaultSelect from '../../DefaultSelect';
 import MultipleSourcesDisplay from '../../MultipleSourcesDisplay';
 import OptionToggle from '../../OptionToggle';
@@ -22,7 +24,8 @@ type DefaultTranslateOptionsProps = GenericOptionsProps<Pick<
     'defaultTranslateSource' |
     'defaultTranslateFrom' |
     'defaultTranslateTo' |
-    'useDotCn'
+    'useDotCn' |
+    'customTranslateSourceList'
 >>;
 
 const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
@@ -37,7 +40,8 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
     defaultTranslateSource,
     defaultTranslateFrom,
     defaultTranslateTo,
-    useDotCn
+    useDotCn,
+    customTranslateSourceList
 }) => {
     return (
         <div className='opt-section'>
@@ -81,6 +85,32 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
                 <div className='item-description'>{getMessage('optionsPreferredLanguageDescription')}</div>
             </div>
             <div className='opt-section-row'>
+                {getMessage('optionsCustomTranslateSource')}<BetaIcon />
+                <div className='item-description'>
+                    {getMessage('optionsCustomTranslateSourceDescription')}
+                    <a
+                        target='_blank'
+                        href='https://github.com/chunibyocola/sc-translator-crx/discussions/31'
+                        rel='noreferrer'
+                    >
+                        {getMessage('optionsCustomTranslateSourceLearn')}
+                    </a>
+                </div>
+                <div className='mt10-ml30'>
+                    <CustomTranslateSourceDisplay
+                        customTranslateSources={customTranslateSourceList}
+                        onChange={(value) => {
+                            // If user delete the using custom sources, remove them from options(multipleTranslateSourceList/defaultTranslateSource).
+                            const availableSources = translateSource.concat(value).map(v => v.source);
+                            updateStorage('multipleTranslateSourceList', multipleTranslateSourceList.filter(v => availableSources.includes(v)));
+                            updateStorage('defaultTranslateSource', availableSources.includes(defaultTranslateSource) ? defaultTranslateSource : GOOGLE_COM);
+
+                            updateStorage('customTranslateSourceList', value)
+                        }}
+                    />
+                </div>
+            </div>
+            <div className='opt-section-row'>
                 <OptionToggle
                     id='multiple-translate-mode'
                     message='optionsMultipleTranslateMode'
@@ -94,7 +124,8 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
                     <div className='item-description'>{getMessage('optionsMultipleTranslateSourceListDescription')}</div>
                     <div className='mt10-ml30'>
                         <MultipleSourcesDisplay
-                            sources={multipleTranslateSourceList}
+                            enabledSources={multipleTranslateSourceList}
+                            sources={translateSource.concat(customTranslateSourceList)}
                             onChange={value => updateStorage('multipleTranslateSourceList', value)}
                         />
                     </div>
@@ -124,7 +155,7 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
                     {getMessage('optionsSource')}
                     <SourceSelect
                         className='border-bottom-select opt-source-select'
-                        sourceList={translateSource}
+                        sourceList={translateSource.concat(customTranslateSourceList)}
                         source={defaultTranslateSource}
                         onChange={value => {
                             const { source, from, to } = switchTranslateSource(value, {
@@ -143,7 +174,7 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
                         message='optionsFrom'
                         value={defaultTranslateFrom}
                         onChange={value => updateStorage('defaultTranslateFrom', value)}
-                        options={langCode[defaultTranslateSource][userLanguage]}
+                        options={(langCode[defaultTranslateSource] ?? googleLangCode)[userLanguage]}
                         optionValue='code'
                         optionLabel='name'
                     />
@@ -153,7 +184,7 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
                         message='optionsTo'
                         value={defaultTranslateTo}
                         onChange={value => updateStorage('defaultTranslateTo', value)}
-                        options={langCode[defaultTranslateSource][userLanguage]}
+                        options={(langCode[defaultTranslateSource] ?? googleLangCode)[userLanguage]}
                         optionValue='code'
                         optionLabel='name'
                     />

@@ -11,6 +11,16 @@
     color: var(--text-normal);
     font-size: 14px;
 }
+.mt-result__head__left {
+    display: grid;
+    grid-template-columns: auto max-content max-content;
+    align-items: center;
+}
 .mt-result__head-icons {
     margin-right: 5px;
+}
+.mt-result__head__badge {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
