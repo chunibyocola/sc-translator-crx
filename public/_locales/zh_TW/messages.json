@@ -3,7 +3,7 @@
         "message": "Sc翻譯"
     },
     "extDescription": {
-        "message": "多個翻譯源，豐富的選項，簡潔且注重細節。支持網頁翻譯、PDF 閱讀器。"
+        "message": "多個翻譯源，豐富的選項，簡潔且注重細節。支持網頁翻譯、PDF 閱讀器、自定義翻譯源。"
     },
     "extActivateExtensionDescription": {
         "message": "啟用擴充功能"

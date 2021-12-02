@@ -3,7 +3,7 @@
         "message": "Sc翻訳"
     },
     "extDescription": {
-        "message": "複数の翻訳ソース、様々なオプション、簡潔かつ詳細を重視します。「Webページ翻訳」、「PDFビューア」をサポートします。"
+        "message": "複数の翻訳ソース、様々なオプション、簡潔かつ詳細を重視します。「Webページ翻訳」、「PDFビューア」、「カスタム翻訳ソース」をサポートします。"
     },
     "extActivateExtensionDescription": {
         "message": "拡張機能のアクティブ化"

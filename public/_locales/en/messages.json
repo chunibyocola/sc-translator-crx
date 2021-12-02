@@ -3,7 +3,7 @@
         "message": "ScTranslator"
     },
     "extDescription": {
-        "message": "Multiple translation sources, various options, concise and attention to detail. Support webpage translate, PDF viewer."
+        "message": "Multiple sources, various options, concise and attention to detail. Support webpage translate, PDF viewer, custom source."
     },
     "extActivateExtensionDescription": {
         "message": "Activate the extension"
