@@ -1,5 +1,6 @@
 import React from 'react';
 import { GenericOptionsProps } from '..';
+import Button from '../../../../components/Button';
 import { getMessage } from '../../../../public/i18n';
 import { DefaultOptions } from '../../../../types';
 import OptionToggle from '../../OptionToggle';
@@ -16,8 +17,6 @@ const SeparateWindow: React.FC<SeparateWindowProps> = ({ updateStorage, remember
         <div className='opt-section'>
             <div className='opt-section-row'>
                 <div className='item-description'>{getMessage('optionsStwDescription')}</div>
-            </div>
-            <div className='opt-section-row'>
                 <div className='item-description'>{getMessage('optionsStwAutoRespondDescription')}</div>
             </div>
             <div className='opt-section-row'>
@@ -29,9 +28,9 @@ const SeparateWindow: React.FC<SeparateWindowProps> = ({ updateStorage, remember
                 />
             </div>
             <div className='opt-section-row'>
-                <button onClick={() => updateStorage('stwSizeAndPosition', initSizeAndPosition)}>
+                <Button variant='outlined' onClick={() => updateStorage('stwSizeAndPosition', initSizeAndPosition)}>
                     {getMessage('optionsResetSizeAndPosition')}
-                </button>
+                </Button>
             </div>
         </div>
     );

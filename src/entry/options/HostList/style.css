@@ -11,7 +11,7 @@
     flex: 1;
 }
 .host-list__add button {
-    width: 50px;
+    margin-left: 5px;
 }
 .host-list__box {
     height: 150px;

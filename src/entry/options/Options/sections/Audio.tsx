@@ -1,5 +1,6 @@
 import React from 'react';
 import { GenericOptionsProps } from '..';
+import Button from '../../../../components/Button';
 import Slider, { SliderFormat, SliderMarks } from '../../../../components/Slider';
 import SourceSelect from '../../../../components/SourceSelect';
 import { audioSource } from '../../../../constants/translateSource';
@@ -75,7 +76,7 @@ const Audio: React.FC<AudioProps> = ({ updateStorage, defaultAudioSource, audioV
                 />
             </div>
             <div className='opt-section-row'>
-                <button onClick={() => playAudio({ text: 'this is a test audio', from: 'en' })}>{getMessage('optionsPlayTestAudio')}</button>
+                <Button variant='outlined' onClick={() => playAudio({ text: 'this is a test audio', from: 'en' })}>{getMessage('optionsPlayTestAudio')}</Button>
             </div>
         </div>
     );

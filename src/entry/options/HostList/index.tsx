@@ -1,4 +1,5 @@
 import React, { useRef, useCallback, useState } from 'react';
+import Button from '../../../components/Button';
 import IconFont from '../../../components/IconFont';
 import './style.css';
 
@@ -53,9 +54,9 @@ const HostList: React.FC<HostListProps> = ({ list, updateList }) => {
         <div className='host-list'>
             <div className='host-list__add'>
                 <input ref={textEle} type='text' />
-                <button onClick={handleAddHostBtnClick}>
+                <Button variant='icon' onClick={handleAddHostBtnClick}>
                     <IconFont iconName='#icon-MdAdd' />
-                </button>
+                </Button>
             </div>
             <div className='host-list__box'>
                 {list.map((v, i) => (
@@ -76,11 +77,12 @@ const HostList: React.FC<HostListProps> = ({ list, updateList }) => {
                     onClick={handleCheckAllToggle}
                     readOnly
                 />
-                <button
+                <Button
+                    variant='outlined'
                     onClick={handleRemoveBtnClick}
                 >
                     <IconFont iconName='#icon-MdDelete' />
-                </button>
+                </Button>
             </div>
         </div>
     );

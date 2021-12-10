@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Button from '../../../components/Button';
 import IconFont from '../../../components/IconFont';
 import defaultOptions from '../../../constants/defaultOptions';
 import { getMessage } from '../../../public/i18n';
@@ -102,31 +103,36 @@ const CustomTranslateSourceDisplay: React.FC<CustomTranslateSourceDisplayProps> 
                 <div className='custom-translate-source__item'>
                     <div>URL</div>
                     <div>{getMessage('wordName')}</div>
-                    <button disabled={modifying} onClick={() => setModifying(true)}>{getMessage('optionsModify')}</button>
+                    <Button variant='contained' disabled={modifying} onClick={() => setModifying(true)}>{getMessage('optionsModify')}</Button>
                 </div>
                 {customSources.length > 0 ? customSources.map(({ url, name, source }, i) => (<div className='custom-translate-source__item' key={source}>
                     <input value={url} disabled type='text' />
                     <input value={name} disabled type='text' />
                     {modifying && <div>
-                        <IconFont
-                            iconName='#icon-MdDelete'
-                            className='button'
+                        <Button
+                            variant='icon'
                             onClick={() => {
                                 setCustomSources(customSources.filter((value, j) => (i !== j)));
                                 setUpdated(true);
                             }}
-                        />
+                        >
+                            <IconFont iconName='#icon-MdDelete' />
+                        </Button>
                     </div>}
                 </div>)) : <div className='item-description'>{getMessage('contentNoRecord')}</div>}
                 {modifying && <div className='custom-translate-source__item'>
                     <input ref={urlInputRef} placeholder={getMessage('optionsURLCanNotBeEmpty')} />
                     <input ref={nameInputRef} placeholder='Custom source' />
-                    <IconFont iconName='#icon-MdAdd' className='button' onClick={onAddBtnClick} />
+                    <div>
+                        <Button variant='icon' onClick={onAddBtnClick}>
+                            <IconFont iconName='#icon-MdAdd' />
+                        </Button>
+                    </div>
                 </div>}
                 {message && <div>{message}</div>}
                 {modifying && <div>
-                    <button disabled={!updated} onClick={onSaveBtnClick}>{getMessage('wordSave')}</button>
-                    <button onClick={onCancelBtnClick}>{getMessage('wordCancel')}</button>
+                    <Button variant='contained' disabled={!updated} onClick={onSaveBtnClick}>{getMessage('wordSave')}</Button>
+                    <Button variant='text' onClick={onCancelBtnClick}>{getMessage('wordCancel')}</Button>
                 </div>}
             </div>
         </div>

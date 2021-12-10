@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import Button from '../../../components/Button';
 import { getMessage } from '../../../public/i18n';
 import './style.css';
 
@@ -22,7 +23,8 @@ const CustomizeStyleTextarea: React.FC<CustomizeStyleTextareaProps> = ({ customi
                     !changed && customizeStyleText !== textareaEleRef.current?.value && setChanged(true);
                 }}
             ></textarea>
-            <button
+            <Button
+                variant='contained'
                 disabled={!changed}
                 onClick={() => {
                     textareaEleRef.current && onSave(textareaEleRef.current.value);
@@ -30,8 +32,9 @@ const CustomizeStyleTextarea: React.FC<CustomizeStyleTextareaProps> = ({ customi
                 }}
             >
                 {getMessage('wordSave')}
-            </button>
-            <button
+            </Button>
+            <Button
+                variant='text'
                 disabled={!changed}
                 onClick={() => {
                     textareaEleRef.current && (textareaEleRef.current.value = customizeStyleText);
@@ -39,7 +42,7 @@ const CustomizeStyleTextarea: React.FC<CustomizeStyleTextareaProps> = ({ customi
                 }}
             >
                 {getMessage('wordCancel')}
-            </button>
+            </Button>
         </div>
     )
 };

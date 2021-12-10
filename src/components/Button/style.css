@@ -15,7 +15,7 @@
     border-radius: 4px;
     font-family: Roboto, sans-serif;
     font-weight: 500;
-    height: 36px;
+    height: 32px;
     font-size: 14px;
     line-height: 1.75;
     --color-default: rgb(25, 118, 210);
@@ -43,6 +43,19 @@
     padding: 0 15px;
     background-color: transparent;
     color: var(--color-default);
+}
+.btn--icon {
+    padding: 6px;
+    border-radius: 50%;
+    color: var(--color-default);
+    background-color: transparent;
+    height: auto;
+    width: auto;
+    overflow: hidden;
+    min-width: unset;
+}
+.btn--icon .iconfont {
+    pointer-events: none;
 }
 .btn--contained:hover {
     box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
@@ -100,7 +113,7 @@
 .btn.btn--activation .btn__ripple::after {
     animation: mdc-ripple-fg-radius-in 225ms forwards, mdc-ripple-fg-opacity-in 75ms forwards;
 }
-.btn:not(.btn--activation) .btn__ripple::after {
+.btn.btn--deactivation .btn__ripple::after {
     animation: mdc-ripple-fg-opacity-out 150ms;
     transform: translate(var(--ripple-translate-end, 0)) scale(1.8);
 }

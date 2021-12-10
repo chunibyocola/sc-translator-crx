@@ -5,6 +5,7 @@ import '../../../components/TsBtn/style.css';
 import { pointerDrag } from '../ColorSelector/utils';
 import { getMessage } from '../../../public/i18n';
 import { Position } from '../../../types';
+import Button from '../../../components/Button';
 
 type BtnPostionProps = {
     currentPos: Position;
@@ -52,8 +53,8 @@ const BtnPostion: React.FC<BtnPostionProps> = ({ currentPos, updateBtnPosition }
                     <IconFont iconName='#icon-MdTranslate' style={{display: 'block'}} />
                 </div>
             </div>
-            <button onClick={() => updateBtnPosition(pos)} disabled={pos.x === currentPos.x && pos.y === currentPos.y}>{getMessage('wordSave')}</button>
-            <button onClick={() => setPos(currentPos)} disabled={pos.x === currentPos.x && pos.y === currentPos.y}>{getMessage('wordCancel')}</button>
+            <Button variant='contained' onClick={() => updateBtnPosition(pos)} disabled={pos.x === currentPos.x && pos.y === currentPos.y}>{getMessage('wordSave')}</Button>
+            <Button variant='text' onClick={() => setPos(currentPos)} disabled={pos.x === currentPos.x && pos.y === currentPos.y}>{getMessage('wordCancel')}</Button>
         </div>
     );
 };

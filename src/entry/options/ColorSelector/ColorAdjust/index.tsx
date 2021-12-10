@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { RGB } from '..';
+import Button from '../../../../components/Button';
 import Slider from '../../../../components/Slider';
 import { getMessage } from '../../../../public/i18n';
 import { hexToRgb, rgbToHex } from '../utils';
@@ -80,7 +81,7 @@ const ColorAdjust: React.FC<ColorAdjustProps> = ({ selectedColor, adjust, opacit
                 mouseDownCallback={v => opacityChange(Number(v.toFixed(2)))}
                 mouseMoveCallback={v => opacityChange(Number(v.toFixed(2)))}
             />
-            <button className='color-adjust__save-btn' onClick={handleSaveBtnClick}>{getMessage('themeSaveColor')}</button>
+            <Button variant='text' className='color-adjust__save-btn' onClick={handleSaveBtnClick}>{getMessage('themeSaveColor')}</Button>
         </div>
     );
 };

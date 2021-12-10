@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Button from '../../../components/Button';
 import Draggable from '../../../components/Draggable';
 import IconFont from '../../../components/IconFont';
 import { getMessage } from '../../../public/i18n';
@@ -38,7 +39,7 @@ const RegExpList: React.FC<RegExpListProps> = ({ textPreprocessingRegExpList, on
                 <span>{getMessage('optionsPattern')}</span>
                 <span>{getMessage('optionsFlags')}</span>
                 <span>{getMessage('optionsReplacement')}</span>
-                <button onClick={() => setModifyMode(true)} disabled={modifyMode}>{getMessage('optionsModify')}</button>
+                <Button variant='contained' onClick={() => setModifyMode(true)} disabled={modifyMode}>{getMessage('optionsModify')}</Button>
             </div>
             <Draggable values={regExpList} onChange={onDraggableChange}>
                 {regExpList.length > 0 ? regExpList.map((v, i) => (<div className='regexp-list__grid' key={i + timestamp} draggable-id={i + timestamp}>
@@ -46,14 +47,15 @@ const RegExpList: React.FC<RegExpListProps> = ({ textPreprocessingRegExpList, on
                     <input type='text' disabled value={v.flags} />
                     <input type='text' disabled value={v.replacement} />
                     {modifyMode && <span>
-                        <IconFont
-                            iconName='#icon-MdDelete'
-                            className='button'
+                        <Button
+                            variant='icon'
                             onClick={() => {
                                 setRegExpList(regExpList.filter(v1 => v1 !== v));
                                 setUpdated(true);
                             }}
-                        />
+                        >
+                            <IconFont iconName='#icon-MdDelete' />
+                        </Button>
                         <IconFont iconName='#icon-move' className='draggable-move' />
                     </span>}
                 </div>)) : <div className='item-description'>{getMessage('contentNoRecord')}</div>}
@@ -62,58 +64,65 @@ const RegExpList: React.FC<RegExpListProps> = ({ textPreprocessingRegExpList, on
                 <input type='text' ref={patternEleRef} placeholder={getMessage('optionsPatternCanNotBeEmpty')}/>
                 <input type='text' ref={flagsEleRef} />
                 <input type='text' ref={replacementEleRef} />
-                <IconFont
-                    iconName='#icon-MdAdd'
-                    className='button'
-                    onClick={() => {
-                        if (!patternEleRef.current || !flagsEleRef.current || !replacementEleRef.current) { return; }
+                <div>
+                    <Button
+                        variant='icon'
+                        onClick={() => {
+                            if (!patternEleRef.current || !flagsEleRef.current || !replacementEleRef.current) { return; }
 
-                        if (!patternEleRef.current.value) {
-                            setErrorMessage(getMessage('optionsPatternCanNotBeEmpty'))
-                            return;
-                        }
+                            if (!patternEleRef.current.value) {
+                                setErrorMessage(getMessage('optionsPatternCanNotBeEmpty'))
+                                return;
+                            }
 
-                        const pattern = patternEleRef.current.value;
-                        const flags = Object.keys(Array.from(flagsEleRef.current.value.replace(/[^gimsuy]/g, '')).reduce((t, c) => ({ ...t, [c]: c }), {})).join('');
-                        const replacement = replacementEleRef.current.value;
+                            const pattern = patternEleRef.current.value;
+                            const flags = Object.keys(Array.from(flagsEleRef.current.value.replace(/[^gimsuy]/g, '')).reduce((t, c) => ({ ...t, [c]: c }), {})).join('');
+                            const replacement = replacementEleRef.current.value;
 
-                        try {
-                            // Test this statement without error.
-                            'test text'.replace(new RegExp(pattern, flags), replacement);
+                            try {
+                                // Test this statement without error.
+                                'test text'.replace(new RegExp(pattern, flags), replacement);
 
-                            patternEleRef.current.value && setRegExpList((v) => ([...v, {
-                                pattern,
-                                flags,
-                                replacement
-                            }]));
+                                patternEleRef.current.value && setRegExpList((v) => ([...v, {
+                                    pattern,
+                                    flags,
+                                    replacement
+                                }]));
 
-                            patternEleRef.current.value = '';
-                            flagsEleRef.current.value = '';
-                            replacementEleRef.current.value = '';
+                                patternEleRef.current.value = '';
+                                flagsEleRef.current.value = '';
+                                replacementEleRef.current.value = '';
 
-                            setUpdated(true);
-                            setErrorMessage('');
-                        }
-                        catch (err) {
-                            setErrorMessage(`Error: ${(err as Error).message}`);
-                        }
-                    }}
-                />
+                                setUpdated(true);
+                                setErrorMessage('');
+                            }
+                            catch (err) {
+                                setErrorMessage(`Error: ${(err as Error).message}`);
+                            }
+                        }}
+                    >
+                        <IconFont iconName='#icon-MdAdd' />
+                    </Button>
+                </div>
             </div>}
             {errorMessage && <div>{errorMessage}</div>}
             {modifyMode && <div>
-                <button disabled={!updated} onClick={() => {
+                <Button variant='contained' disabled={!updated} onClick={() => {
                     onSave(regExpList);
                     setUpdated(false);
                     setErrorMessage('');
                     setModifyMode(false);
-                }}>{getMessage('wordSave')}</button>
-                <button onClick={() => {
+                }}>
+                    {getMessage('wordSave')}
+                </Button>
+                <Button variant='text' onClick={() => {
                     setUpdated(false);
                     setRegExpList(textPreprocessingRegExpList);
                     setErrorMessage('');
                     setModifyMode(false);
-                }}>{getMessage('wordCancel')}</button>
+                }}>
+                    {getMessage('wordCancel')}
+                </Button>
             </div>}
         </div>
     );

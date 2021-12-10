@@ -1,4 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
+import Button from '../../../../components/Button';
 import { defaultStyleVars, darkStyleVars, StyleVars } from '../../../../constants/defaultStyleVars';
 import { getMessage } from '../../../../public/i18n';
 import ColorSelector from '../../ColorSelector';
@@ -95,7 +96,7 @@ const CustomizeBoardOptions: React.FC<CustomizeBoardOptionsProps> = ({ styleVars
                 <p className='customize-board-options__colors-head'>{getMessage('themeThemeName')}</p>
                 <input className='customize-board-options__colors-theme-name' ref={themeNameEle} type='text' defaultValue={themeName} />
                 <div className='dividing-line' style={{background: '#000', margin: '10px 0'}}></div>
-                <button className='customize-board-options__colors-save' onClick={() => handleSaveBtnClick()}>{getMessage('wordSave')}</button>
+                <Button variant='outlined' className='customize-board-options__colors-save' onClick={() => handleSaveBtnClick()}>{getMessage('wordSave')}</Button>
             </div>
             {changing.targetColor && <ColorSelector
                 initColor={changing.offsetColor}
