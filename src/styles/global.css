@@ -100,3 +100,62 @@
 .iconfont--disable {
     opacity: 0.4;
 }
+.ripple {
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    left: 0;
+    top: 0;
+    border-radius: 4px;
+}
+.ripple::before, .ripple::after {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    content: "";
+    background-color: currentColor;
+}
+.ripple::before {
+    transition: opacity 15ms linear, background-color 15ms linear;
+    z-index: 1;
+    top: calc(50% - 100%);
+    left: calc(50% - 100%);
+    width: 200%;
+    height: 200%;
+}
+.ripple::after {
+    width: var(--ripple-size, 100%);
+    height: var(--ripple-size, 100%);
+    top: 0;
+    left: 0;
+}
+@keyframes mdc-ripple-fg-radius-in {
+    from {
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translate(var(--ripple-translate-start, 0)) scale(0.5);
+    }
+    to {
+        transform: translate(var(--ripple-translate-end, 0)) scale(1.8);
+    }
+}
+@keyframes mdc-ripple-fg-opacity-in {
+    from {
+        animation-timing-function: linear;
+        opacity: 0;
+    }
+    to {
+        opacity: 0.12;
+    }
+}
+@keyframes mdc-ripple-fg-opacity-out {
+    from {
+        animation-timing-function: linear;
+        opacity: 0.12;
+    }
+    to {
+        opacity: 0;
+    }
+}

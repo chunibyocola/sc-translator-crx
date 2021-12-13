@@ -7,16 +7,15 @@ type ButtonProps = {
 } & Pick<React.HtmlHTMLAttributes<HTMLButtonElement>, 'onClick' | 'children' | 'className'>
 
 const Button: React.FC<ButtonProps> = ({ variant, onClick, children, disabled, className }) => {
-    const [activing, setActived] = useState(false);
+    const [activing, setActiving] = useState(false);
 
-    const buttonEleRef = useRef<HTMLButtonElement>(null);
     const activedRef = useRef(false);
 
     useEffect(() => {
         if (!activing) { return; }
 
         const onMouseUp = () => {
-            setActived(false);
+            setActiving(false);
         };
 
         window.addEventListener('mouseup', onMouseUp);
@@ -26,7 +25,6 @@ const Button: React.FC<ButtonProps> = ({ variant, onClick, children, disabled, c
 
     return (
         <button
-            ref={buttonEleRef}
             className={`btn btn--${variant}${activedRef.current ? activing ? ' btn--activation' : ' btn--deactivation' : ''}${className ? ' ' + className : ''}`}
             onClick={onClick}
             onMouseDown={(e) => {
@@ -47,12 +45,12 @@ const Button: React.FC<ButtonProps> = ({ variant, onClick, children, disabled, c
                 target.setAttribute('style', `--ripple-size:${size}px;--ripple-translate-start:${start.x}px,${start.y}px;--ripple-translate-end:${end.x}px,${end.y}px;`);
 
                 activedRef.current = true;
-                setActived(true);
+                setActiving(true);
             }}
             disabled={disabled}
         >
             {children}
-            <div className='btn__ripple'></div>
+            <div className='ripple'></div>
         </button>
     );
 };
