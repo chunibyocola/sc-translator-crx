@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { GenericOptionsProps } from '..';
+import Switch from '../../../../components/Switch';
 import { getMessage } from '../../../../public/i18n';
 import { DefaultOptions } from '../../../../types';
-import OptionToggle from '../../OptionToggle';
 
 type ClipboardProps = GenericOptionsProps<Pick<
     DefaultOptions,
@@ -15,11 +15,10 @@ const Clipboard: React.FC<ClipboardProps> = ({ updateStorage, autoPasteInTheInpu
     return (
         <div className='opt-section'>
             <div className='opt-section-row'>
-                <OptionToggle
-                    id='read-clipboard-automatically'
-                    message='optionsReadClipboardAutomatically'
+                <Switch
+                    label={getMessage('optionsReadClipboardAutomatically')}
                     checked={autoPasteInTheInputBox}
-                    onClick={() => {
+                    onChange={() => {
                         if (autoPasteInTheInputBox) {
                             updateStorage('autoPasteInTheInputBox', false);
                         }

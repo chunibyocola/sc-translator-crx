@@ -1,9 +1,9 @@
 import React from 'react';
 import { GenericOptionsProps } from '..';
 import Slider, { SliderFormat, SliderMarks } from '../../../../components/Slider';
+import Switch from '../../../../components/Switch';
 import { getMessage } from '../../../../public/i18n';
 import { DefaultOptions } from '../../../../types';
-import OptionToggle from '../../OptionToggle';
 
 const marksPercentage: SliderMarks = [
     { value: 10, label: '10%' },
@@ -64,11 +64,10 @@ const TranslatePanel: React.FC<TranslatePanelProps> = ({
             <div className='opt-section-row'>
                 <div className='options-mode'>
                     {getMessage('optionsMaxHeightOfTranslatePanel')}
-                    <OptionToggle
-                        id='max-height-percentage'
-                        message='optionsPercentage'
+                    <Switch
+                        label={getMessage('optionsPercentage')}
                         checked={hPercentage}
-                        onClick={() => updateStorage('translatePanelMaxHeight', { ...translatePanelMaxHeight, percentage: !hPercentage })}
+                        onChange={v => updateStorage('translatePanelMaxHeight', { ...translatePanelMaxHeight, percentage: v })}
                     />
                 </div>
                 {hPercentage ? <Slider
@@ -94,11 +93,10 @@ const TranslatePanel: React.FC<TranslatePanelProps> = ({
             <div className='opt-section-row'>
                 <div className='options-mode'>
                     {getMessage('optionsWidthOfTranslatePanel')}
-                    <OptionToggle
-                        id='width-percentage'
-                        message='optionsPercentage'
+                    <Switch
+                        label={getMessage('optionsPercentage')}
                         checked={wPercentage}
-                        onClick={() => updateStorage('translatePanelWidth', { ...translatePanelWidth, percentage: !wPercentage })}
+                        onChange={v => updateStorage('translatePanelWidth', { ...translatePanelWidth, percentage: v })}
                     />
                 </div>
                 {wPercentage ? <Slider
@@ -135,29 +133,26 @@ const TranslatePanel: React.FC<TranslatePanelProps> = ({
                 />
             </div>
             <div className='opt-section-row'>
-                <OptionToggle
-                    id='pin-the-panel-after-translating'
-                    message='optionsPinThePanelWhileOpeningIt'
+                <Switch
+                    label={getMessage('optionsPinThePanelWhileOpeningIt')}
                     checked={pinThePanelWhileOpeningIt}
-                    onClick={() => updateStorage('pinThePanelWhileOpeningIt', !pinThePanelWhileOpeningIt)}
+                    onChange={v => updateStorage('pinThePanelWhileOpeningIt', v)}
                 />
                 <div className='item-description'>{getMessage('optionsPinThePanelWhileOpeningItDescription')}</div>
             </div>
             <div className='opt-section-row'>
-                <OptionToggle
-                    id='remember-position-of-pinned-panel'
-                    message='optionsRememberPositionOfPinnedPanel'
+                <Switch
+                    label={getMessage('optionsRememberPositionOfPinnedPanel')}
                     checked={rememberPositionOfPinnedPanel}
-                    onClick={() => updateStorage('rememberPositionOfPinnedPanel', !rememberPositionOfPinnedPanel)}
+                    onChange={v => updateStorage('rememberPositionOfPinnedPanel', v)}
                 />
                 <div className='item-description'>{getMessage('optionsRememberPositionOfPinnedPanelDescription')}</div>
             </div>
             <div className='opt-section-row'>
-                <OptionToggle
-                    id='auto-translate-after-input'
-                    message='optionsAutoTranslateAfterInput'
+                <Switch
+                    label={getMessage('optionsAutoTranslateAfterInput')}
                     checked={autoTranslateAfterInput}
-                    onClick={() => updateStorage('autoTranslateAfterInput', !autoTranslateAfterInput)}
+                    onChange={v => updateStorage('autoTranslateAfterInput', v)}
                 />
                 <div className='item-description'>{getMessage('optionsAutoTranslateAfterInputDescription')}</div>
             </div>

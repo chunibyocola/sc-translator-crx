@@ -1,9 +1,9 @@
 import React from 'react';
 import { GenericOptionsProps } from '..';
 import Button from '../../../../components/Button';
+import Switch from '../../../../components/Switch';
 import { getMessage } from '../../../../public/i18n';
 import { DefaultOptions } from '../../../../types';
-import OptionToggle from '../../OptionToggle';
 
 const initSizeAndPosition = { width: 286, height: 439, left: 550, top: 250 };
 
@@ -20,11 +20,10 @@ const SeparateWindow: React.FC<SeparateWindowProps> = ({ updateStorage, remember
                 <div className='item-description'>{getMessage('optionsStwAutoRespondDescription')}</div>
             </div>
             <div className='opt-section-row'>
-                <OptionToggle
-                    id='remember-separate-window-size-and-position'
-                    message='optionsRememberStwSizeAndPosition'
+                <Switch
+                    label={getMessage('optionsRememberStwSizeAndPosition')}
                     checked={rememberStwSizeAndPosition}
-                    onClick={() => updateStorage('rememberStwSizeAndPosition', !rememberStwSizeAndPosition)}
+                    onChange={v => updateStorage('rememberStwSizeAndPosition', v)}
                 />
             </div>
             <div className='opt-section-row'>

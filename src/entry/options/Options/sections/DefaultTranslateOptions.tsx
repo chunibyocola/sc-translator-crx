@@ -1,6 +1,7 @@
 import React from 'react';
 import { GenericOptionsProps } from '..';
 import SourceSelect from '../../../../components/SourceSelect';
+import Switch from '../../../../components/Switch';
 import { googleLangCode, langCode, mtLangCode, preferredLangCode, userLangs } from '../../../../constants/langCode';
 import { GOOGLE_COM, translateSource } from '../../../../constants/translateSource';
 import { getMessage } from '../../../../public/i18n';
@@ -10,7 +11,6 @@ import BetaIcon from '../../BetaIcon';
 import CustomTranslateSourceDisplay from '../../CustomTranslateSourceDisplay';
 import DefaultSelect from '../../DefaultSelect';
 import MultipleSourcesDisplay from '../../MultipleSourcesDisplay';
-import OptionToggle from '../../OptionToggle';
 
 type DefaultTranslateOptionsProps = GenericOptionsProps<Pick<
     DefaultOptions,
@@ -46,11 +46,10 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
     return (
         <div className='opt-section'>
             <div className='opt-section-row'>
-                <OptionToggle
-                    id='use-dot-cn'
-                    message='optionsUseDotCn'
+                <Switch
+                    label={getMessage('optionsUseDotCn')}
                     checked={useDotCn}
-                    onClick={() => updateStorage('useDotCn', !useDotCn)}
+                    onChange={v => updateStorage('useDotCn', v)}
                 />
             </div>
             <div className='opt-section-row'>
@@ -111,11 +110,10 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
                 </div>
             </div>
             <div className='opt-section-row'>
-                <OptionToggle
-                    id='multiple-translate-mode'
-                    message='optionsMultipleTranslateMode'
+                <Switch
+                    label={getMessage('optionsMultipleTranslateMode')}
                     checked={multipleTranslateMode}
-                    onClick={() => updateStorage('multipleTranslateMode', !multipleTranslateMode)}
+                    onChange={v => updateStorage('multipleTranslateMode', v)}
                 />
             </div>
             {multipleTranslateMode ? <>

@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import './style.css';
 
 type SwitchProps = {
-    label?: React.ReactChild;
+    label?: string | number | React.ReactElement;
     checked?: boolean;
     onChange?: (checked: boolean) => void;
 } & Pick<React.HtmlHTMLAttributes<HTMLInputElement>, 'className'>;

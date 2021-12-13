@@ -1,12 +1,12 @@
 import React from 'react';
 import { GenericOptionsProps } from '..';
 import SourceSelect from '../../../../components/SourceSelect';
+import Switch from '../../../../components/Switch';
 import { preferredLangCode } from '../../../../constants/langCode';
 import { webPageTranslateSource as webPageTranslateSourceList } from '../../../../constants/translateSource';
 import { getMessage } from '../../../../public/i18n';
 import { DefaultOptions } from '../../../../types';
 import DefaultSelect from '../../DefaultSelect';
-import OptionToggle from '../../OptionToggle';
 import WebPageTranslateDisplayMode from '../../WebPageTranslateDisplayMode';
 
 type WebPageTranslatingProps = GenericOptionsProps<Pick<
@@ -64,21 +64,19 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
                 </div>
             </div>
             <div className='opt-section-row'>
-                <OptionToggle
-                    id='web-page-translate-directly'
-                    message='optionsWebPageTranslateDirectly'
+                <Switch
+                    label={getMessage('optionsWebPageTranslateDirectly')}
                     checked={webPageTranslateDirectly}
-                    onClick={() => updateStorage('webPageTranslateDirectly', !webPageTranslateDirectly)}
+                    onChange={v => updateStorage('webPageTranslateDirectly', v)}
                 />
                 <div className='item-description'>
                     {getMessage('optionsWebPageTranslateDirectlyDescription')}
                 </div>
                 <div className='mt10-ml30'>
-                    <OptionToggle
-                        id='no-control-bar-while-first-activating'
-                        message='optionsNoControlBarWhileFirstActivating'
+                    <Switch
+                        label={getMessage('optionsNoControlBarWhileFirstActivating')}
                         checked={noControlBarWhileFirstActivating}
-                        onClick={() => updateStorage('noControlBarWhileFirstActivating', !noControlBarWhileFirstActivating)}
+                        onChange={v => updateStorage('noControlBarWhileFirstActivating', v)}
                     />
                     <div className='item-description'>
                         {getMessage('optionsNoControlBarWhileFirstActivatingDescription')}

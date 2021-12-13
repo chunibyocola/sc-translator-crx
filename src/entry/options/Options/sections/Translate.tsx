@@ -1,12 +1,12 @@
 import React from 'react';
 import { GenericOptionsProps } from '..';
 import Slider, { SliderFormat, SliderMarks } from '../../../../components/Slider';
+import Switch from '../../../../components/Switch';
 import { getMessage } from '../../../../public/i18n';
 import { DefaultOptions } from '../../../../types';
 import BetaIcon from '../../BetaIcon';
 import BtnPostion from '../../BtnPosition';
 import HostList from '../../HostList';
-import OptionToggle from '../../OptionToggle';
 import TranslateButtonDisplay from '../../TranslateButtonDisplay';
 
 const marksHideButtonFixedTime: SliderMarks = [
@@ -58,19 +58,17 @@ const Translate: React.FC<TranslateProps> = ({
     return (
         <div className='opt-section'>
             <div className='opt-section-row'>
-                <OptionToggle
-                    id='translate-with-key-press-checkbox'
-                    message='optionsTranslateWithKeyPress'
+                <Switch
+                    label={getMessage('optionsTranslateWithKeyPress')}
                     checked={translateWithKeyPress}
-                    onClick={() => updateStorage('translateWithKeyPress', !translateWithKeyPress)}
+                    onChange={v => updateStorage('translateWithKeyPress', v)}
                 />
             </div>
             <div className='opt-section-row'>
-                <OptionToggle
-                    id='translate-directly-checkbox'
-                    message='optionsTranslateDirectly'
+                <Switch
+                    label={getMessage('optionsTranslateDirectly')}
                     checked={translateDirectly}
-                    onClick={() => updateStorage('translateDirectly', !translateDirectly)}
+                    onChange={v => updateStorage('translateDirectly', v)}
                 />
             </div>
             <div className='opt-section-row'>
@@ -93,11 +91,10 @@ const Translate: React.FC<TranslateProps> = ({
                 </div>
             </div>
             <div className='opt-section-row'>
-                <OptionToggle
-                    id='hide-button-after-fixed-time'
-                    message='optionsHideButtonAfterFixedTime'
+                <Switch
+                    label={getMessage('optionsHideButtonAfterFixedTime')}
                     checked={hideButtonAfterFixedTime}
-                    onClick={() => updateStorage('hideButtonAfterFixedTime', !hideButtonAfterFixedTime)}
+                    onChange={v => updateStorage('hideButtonAfterFixedTime', v)}
                 />
             </div>
             <div className='opt-section-row'>
@@ -114,47 +111,42 @@ const Translate: React.FC<TranslateProps> = ({
                 />
             </div>
             <div className='opt-section-row'>
-                <OptionToggle
-                    id='respond-to-separate-window'
-                    message='optionsRespondToSeparateWindow'
+                <Switch
+                    label={getMessage('optionsRespondToSeparateWindow')}
                     checked={respondToSeparateWindow}
-                    onClick={() => updateStorage('respondToSeparateWindow', !respondToSeparateWindow)}
+                    onChange={v => updateStorage('respondToSeparateWindow', v)}
                 />
             </div>
             <div className='opt-section-row'>
-                <OptionToggle
-                    id='translate-directly-while-pinning'
-                    message='optionsTranslateDirectlyWhilePinning'
+                <Switch
+                    label={getMessage('optionsTranslateDirectlyWhilePinning')}
                     checked={translateDirectlyWhilePinning}
-                    onClick={() => updateStorage('translateDirectlyWhilePinning', !translateDirectlyWhilePinning)}
+                    onChange={v => updateStorage('translateDirectlyWhilePinning', v)}
                 />
             </div>
             <div className='opt-section-row'>
-                <OptionToggle
-                    id='do-not-respond-in-text-box'
-                    message='optionsDoNotRespondInTextBox'
+                <Switch
+                    label={getMessage('optionsDoNotRespondInTextBox')}
                     checked={doNotRespondInTextBox}
-                    onClick={() => updateStorage('doNotRespondInTextBox', !doNotRespondInTextBox)}
+                    onChange={v => updateStorage('doNotRespondInTextBox', v)}
                 />
                 <div className='item-description'>{getMessage('optionsDoNotRespondInTextBoxDescription')}</div>
             </div>
             <div className='opt-section-row'>
                 <div className='flex-align-items-center'>
-                    <OptionToggle
-                        id='enable-insert-result'
-                        message='optionsEnableInsertResult'
+                    <Switch
+                        label={getMessage('optionsEnableInsertResult')}
                         checked={enableInsertResult}
-                        onClick={() => updateStorage('enableInsertResult', !enableInsertResult)}
+                        onChange={v => updateStorage('enableInsertResult', v)}
                     />
                     <BetaIcon />
                 </div>
                 <div className='item-description'>{getMessage('optionsEnableInsertResultDescription')}</div>
                 <div className='mt10-ml30'>
-                    <OptionToggle
-                        id='auto-insert-result'
-                        message='optionsAutoInsertResult'
+                    <Switch
+                        label={getMessage('optionsAutoInsertResult')}
                         checked={autoInsertResult}
-                        onClick={() => updateStorage('autoInsertResult', !autoInsertResult)}
+                        onChange={v => updateStorage('autoInsertResult', v)}
                     />
                     <div className='item-description'>{getMessage('optionsAutoInsertResultDescription')}</div>
                 </div>
@@ -162,11 +154,10 @@ const Translate: React.FC<TranslateProps> = ({
             <div className='opt-section-row'>
                 <div className='options-mode'>
                     {getMessage('optionsDomainfilter')}
-                    <OptionToggle
-                        id='translate-black-list-mode-checkbox'
-                        message='optionsTranslateBlackListMode'
+                    <Switch
+                        label={getMessage('optionsTranslateBlackListMode')}
                         checked={translateBlackListMode}
-                        onClick={() => updateStorage('translateBlackListMode', !translateBlackListMode)}
+                        onChange={v => updateStorage('translateBlackListMode', v)}
                     />
                 </div>
                 <div className='mt10-ml30'>

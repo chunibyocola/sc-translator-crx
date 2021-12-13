@@ -1,8 +1,8 @@
 import React from 'react';
 import { GenericOptionsProps } from '..';
+import Switch from '../../../../components/Switch';
 import { getMessage } from '../../../../public/i18n';
 import { DefaultOptions } from '../../../../types';
-import OptionToggle from '../../OptionToggle';
 
 type PdfProps = GenericOptionsProps<Pick<
     DefaultOptions,
@@ -13,11 +13,10 @@ const Pdf: React.FC<PdfProps> = ({ updateStorage, enablePdfViewer }) => {
     return (
         <div className='opt-section'>
             <div className='opt-section-row'>
-                <OptionToggle
-                    id='enalbe-pdf-viewer'
-                    message='optionsEnablePdfViewer'
+                <Switch
+                    label={getMessage('optionsEnablePdfViewer')}
                     checked={enablePdfViewer}
-                    onClick={() => updateStorage('enablePdfViewer', !enablePdfViewer)}
+                    onChange={v => updateStorage('enablePdfViewer', v)}
                 />
                 <div className='item-description'>{getMessage('optionsEnablePdfViewerDescription')}</div>
             </div>

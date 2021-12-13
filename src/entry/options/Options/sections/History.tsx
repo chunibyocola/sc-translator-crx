@@ -1,9 +1,9 @@
 import React from 'react';
 import { GenericOptionsProps } from '..';
+import Switch from '../../../../components/Switch';
 import { getMessage } from '../../../../public/i18n';
 import { DefaultOptions } from '../../../../types';
 import HostList from '../../HostList';
-import OptionToggle from '../../OptionToggle';
 
 type HistoryProps = GenericOptionsProps<Pick<
     DefaultOptions,
@@ -16,21 +16,19 @@ const History: React.FC<HistoryProps> = ({ updateStorage, historyBlackListMode, 
     return (
         <div className='opt-section'>
             <div className='opt-section-row'>
-                <OptionToggle
-                    id='history-status'
-                    message='optionsRememberHistoryPanelStatus'
+                <Switch
+                    label={getMessage('optionsRememberHistoryPanelStatus')}
                     checked={rememberHistoryPanelStatus}
-                    onClick={() => updateStorage('rememberHistoryPanelStatus', !rememberHistoryPanelStatus)}
+                    onChange={v => updateStorage('rememberHistoryPanelStatus', v)}
                 />
             </div>
             <div className='opt-section-row'>
                 <div className='options-mode'>
                     {getMessage('optionsDomainfilter')}
-                    <OptionToggle
-                        id='history-black-list-mode-checkbox'
-                        message='optionsHistoryBlackListMode'
+                    <Switch
+                        label={getMessage('optionsHistoryBlackListMode')}
                         checked={historyBlackListMode}
-                        onClick={() => updateStorage('historyBlackListMode', !historyBlackListMode)}
+                        onChange={v => updateStorage('historyBlackListMode', v)}
                     />
                 </div>
                 <div className='mt10-ml30'>
