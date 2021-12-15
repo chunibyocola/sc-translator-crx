@@ -1,0 +1,92 @@
+/* Styles from material design */
+.radio {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    --color-default: rgb(25, 118, 210);
+    cursor: pointer;
+}
+.radio-root {
+    display: inline-flex;
+    overflow: hidden;
+    position: relative;
+    vertical-align: middle;
+    justify-content: center;
+    z-index: 0;
+    color: rgba(0, 0, 0, 0.6);
+    user-select: none;
+    padding: 8px;
+    border-radius: 50%;
+}
+.radio--checked {
+    color: var(--color-default);
+}
+.radio-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: inherit;
+    opacity: 0;
+    margin: 0;
+}
+.radio-thumb {
+    width: 20px;
+    height: 20px;
+    position: relative;
+}
+.radio-thumb::before, .radio-thumb::after {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    content: "";
+    box-sizing: inherit;
+}
+.radio-thumb::before {
+    border: 2px solid currentColor;
+    background-color: transparent;
+}
+.radio-thumb::after {
+    transform: scale(0);
+    background-color: currentColor;
+}
+.radio--checked .radio-thumb::after {
+    animation: mdc-radio-radius-in 225ms forwards;
+}
+.radio-root:not(.radio--checked) .radio-thumb::after {
+    animation: mdc-radio-radius-out 150ms;
+}
+@keyframes mdc-radio-radius-in {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(0.5);
+    }
+}
+@keyframes mdc-radio-radius-out {
+    from {
+        transform: scale(0.5);
+    }
+    to {
+        transform: scale(0);
+    }
+}
+.radio-root .ripple::before {
+    background-color: var(--color-default);
+}
+.radio-root:hover .ripple::before {
+    opacity: 0.04;
+}
+.radio--activation .ripple::after {
+    animation: mdc-ripple-fg-radius-in 225ms forwards, mdc-ripple-fg-opacity-in 75ms forwards;
+}
+.radio--deactivation .ripple::after {
+    animation: mdc-ripple-fg-opacity-out 150ms;
+    transform: translate(var(--ripple-translate-end, 0)) scale(1.8);
+}
