@@ -1,4 +1,6 @@
 .default-select__select {
     width: 150px;
     margin-left: 10px;
+    display: inline-block;
+    padding: 6px 0 6px 3px;
 }

@@ -1,9 +1,8 @@
-import React, { useCallback } from 'react';
-import { getMessage } from '../../../public/i18n';
+import React, { useMemo } from 'react';
+import LanguageSelect from '../../../components/LanguageSelect';
 import './style.css';
 
 type DefaultSelectProps = {
-    message: string;
     onChange: (value: string) => void;
     value: string;
     options: { [key: string]: string }[];
@@ -11,32 +10,19 @@ type DefaultSelectProps = {
     optionLabel: string;
 };
 
-const DefaultSelect: React.FC<DefaultSelectProps> = ({ message, onChange, value, options, optionValue, optionLabel }) => {
-    const handleOnChange = useCallback(e => {
-        const ele =  e.target;
-        const curValue = ele.options[ele.selectedIndex].value;
+const DefaultSelect: React.FC<DefaultSelectProps> = ({ onChange, value, options, optionValue, optionLabel }) => {
+    const langCodes = useMemo(() => options.map((v) => ({ code: v[optionValue], name: v[optionLabel] })), [options, optionValue, optionLabel]);
+    const langLocal = useMemo(() => options.reduce((total, current) => ({ ...total, [current[optionValue]]: current[optionLabel] }), {}), [options, optionValue, optionLabel]);
 
-        onChange(curValue);
-    }, [onChange]);
-    
     return (
-        <div className='default-select'>
-            {getMessage(message)}
-            <select
-                className='default-select__select'
-                value={value}
-                onChange={handleOnChange}
-            >
-                {options.map(v => (
-                    <option
-                        value={v[optionValue]}
-                        key={v[optionValue]}
-                    >
-                        {v[optionLabel]}
-                    </option>
-                ))}
-            </select>
-        </div>
+        <LanguageSelect
+            className='default-select__select border-bottom-select'
+            value={value}
+            onChange={onChange}
+            langCodes={langCodes}
+            langLocal={langLocal}
+            recentLangs={[]}
+        />
     )
 };
 
