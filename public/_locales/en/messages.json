@@ -63,7 +63,7 @@
         "message": "Target language"
     },
     "optionsTranslateDirectly": {
-        "message": "Translate directly"
+        "message": "Translate directly after selecting text"
     },
     "optionsTranslateBlackListMode": {
         "message": "Black list mode"
@@ -379,6 +379,9 @@
     },
     "optionsURLCanNotBeEmpty": {
         "message": "URL can not be empty."
+    },
+    "optionsEncourage": {
+        "message": "If you find \"ScTranslator\" helpful, you can encourage the developer by giving a five-star rating on the extension store or clicking the \"Star\" button on the GitHub page, thank you very much!"
     },
     "themePreset": {
         "message": "Preset"

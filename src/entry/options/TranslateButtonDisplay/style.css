@@ -7,7 +7,7 @@
     margin-right: 10px;
 }
 .translate-button-display__item {
-    margin: 5px 10px 5px 0;
+    margin-right: 10px;
     display: inline-flex;
     align-items: center;
 }

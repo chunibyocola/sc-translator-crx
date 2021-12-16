@@ -45,8 +45,8 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
                 />
             </div>
             <div className='opt-section-row'>
+                {getMessage('optionsTo')}
                 <DefaultSelect
-                    message='optionsTo'
                     value={webPageTranslateTo}
                     onChange={value => updateStorage('webPageTranslateTo', value)}
                     options={preferredLangCode[userLanguage]}

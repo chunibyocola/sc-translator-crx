@@ -1,7 +1,8 @@
 .draggable-item {
     width: 100%;
-    padding: 16px 24px;
+    padding: 8px 24px;
 }
 .draggable-item .iconfont {
     cursor: move;
+    font-size: 24px;
 }

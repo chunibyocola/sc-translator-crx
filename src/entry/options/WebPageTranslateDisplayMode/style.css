@@ -1,4 +1,3 @@
 .wpt-display-mode__item {
-    margin: 5px 10px 5px 0;
-    display: inline-flex;
+    margin-right: 10px;
 }

@@ -63,7 +63,7 @@
         "message": "目标语言"
     },
     "optionsTranslateDirectly": {
-        "message": "直接翻译"
+        "message": "选择文本后直接翻译"
     },
     "optionsTranslateBlackListMode": {
         "message": "黑名单模式"
@@ -379,6 +379,9 @@
     },
     "optionsURLCanNotBeEmpty": {
         "message": "URL 不能为空。"
+    },
+    "optionsEncourage": {
+        "message": "如果觉得“Sc翻译”对你有帮助，可以通过在扩展商店给出五星评价或者点击 GitHub 页面上的 Star 按钮来鼓励开发者，非常感谢！"
     },
     "themePreset": {
         "message": "预设"

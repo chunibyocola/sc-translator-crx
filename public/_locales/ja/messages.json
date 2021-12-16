@@ -1,6 +1,6 @@
 {
     "extName": {
-        "message": "Sc翻訳"
+        "message": "サイ翻訳"
     },
     "extDescription": {
         "message": "複数の翻訳ソース、様々なオプション、簡潔かつ詳細を重視します。「Webページ翻訳」、「PDFビューア」、「カスタム翻訳ソース」をサポートします。"
@@ -63,7 +63,7 @@
         "message": "目標言語"
     },
     "optionsTranslateDirectly": {
-        "message": "直接翻訳する"
+        "message": "テキストを選択後で直接翻訳する"
     },
     "optionsTranslateBlackListMode": {
         "message": "ブラックリストモード"
@@ -379,6 +379,9 @@
     },
     "optionsURLCanNotBeEmpty": {
         "message": "URLを空にすることはできません。"
+    },
+    "optionsEncourage": {
+        "message": "もし「サイ翻訳」が役に立つと思ったら、拡張機能ストアで星五つの評価をするか、GitHubページの「Star」ボタンをクリックして、開発者を励むことができます、ありがとうございます！"
     },
     "themePreset": {
         "message": "プリセット"

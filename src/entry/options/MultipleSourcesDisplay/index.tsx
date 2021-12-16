@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
+import Checkbox from '../../../components/Checkbox';
 import IconFont from '../../../components/IconFont';
 import SourceFavicon from '../../../components/SourceFavicon';
 import { TranslateSource } from '../../../constants/translateSource';
@@ -29,10 +30,11 @@ const MultipleSourcesDisplay: React.FC<MultipleSourcesDisplayProps> = ({ enabled
         <div className='multiple-sources-display'>
             <div className='multiple-sources-display__list'>
                 {sources.map(({ source }) => (<div className='multiple-sources-display__item' key={'msd_' + source}>
-                    <input id={'msd_' + source} type='checkbox' readOnly checked={source in enabledSourcesMap} onClick={() => onSourceItemClick(source)} />
-                    <label htmlFor={'msd_' + source} className='button'>
-                        <SourceFavicon source={source} />
-                    </label>
+                    <Checkbox
+                        label={<SourceFavicon source={source} />}
+                        checked={source in enabledSourcesMap}
+                        onChange={() => onSourceItemClick(source)}
+                    />
                 </div>))}
             </div>
             <div className='multiple-sources-display__preview'>

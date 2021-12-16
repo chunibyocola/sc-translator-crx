@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import Checkbox from '../../../components/Checkbox';
 import Draggable from '../../../components/Draggable';
 import IconFont from '../../../components/IconFont';
+import { getMessage } from '../../../public/i18n';
 import { OptionsContextMenu } from '../../../types';
-import OptionToggle from '../OptionToggle';
 import './style.css';
 
 type ContextMenusDraggableProps = {
@@ -27,12 +28,11 @@ const ContextMenusDraggable: React.FC<ContextMenusDraggableProps> = ({ contextMe
             <Draggable onChange={onChange} values={contextMenus}>
                 {tempContextMenus.map((value, index) => (<div key={value.id} draggable-id={value.id}>
                     <div className='flex-justify-content-space-between draggable-item'>
-                        <OptionToggle
-                            id={value.id}
-                            message={`contextMenus_${value.id}`}
+                        <Checkbox
+                            label={getMessage(`contextMenus_${value.id}`)}
                             checked={value.enabled}
-                            onClick={() => {
-                                update([...contextMenus.slice(0, index), { ...value, enabled: !value.enabled }, ...contextMenus.slice(index + 1, contextMenus.length)]);
+                            onChange={(v) => {
+                                update([...contextMenus.slice(0, index), { ...value, enabled: v }, ...contextMenus.slice(index + 1, contextMenus.length)]);
                             }}
                         />
                         <IconFont iconName='#icon-move' className='draggable-move' />

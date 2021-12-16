@@ -1,4 +1,5 @@
 import React from 'react';
+import Radio from '../../../components/Radio';
 import { getMessage } from '../../../public/i18n';
 import './style.css';
 
@@ -24,17 +25,15 @@ type WebPageTranslateDisplayModeProps = {
 const WebPageTranslateDisplayMode: React.FC<WebPageTranslateDisplayModeProps> = ({ update, displayMode }) => {
     return (
         <div className='wpt-display-mode'>
-            {dataOfDisplayMode.map((item) => (<div key={item.id} className='wpt-display-mode__item'>
-                <input
-                    type='radio'
-                    name='wpt-display-mode'
-                    value={item.value}
-                    id={item.id}
+            {dataOfDisplayMode.map((item) => (<span key={item.id} className='wpt-display-mode__item'>
+                <Radio
+                    name='webpage-translate-display-mode'
+                    value={item.value.toString()}
+                    label={item.message}
                     checked={displayMode === item.value}
                     onChange={() => update(item.value)}
                 />
-                <label htmlFor={item.id} className='button'>{item.message}</label>
-            </div>))}
+            </span>))}
         </div>
     );
 };

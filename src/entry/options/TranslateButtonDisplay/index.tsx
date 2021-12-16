@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import Checkbox from '../../../components/Checkbox';
 import IconFont from '../../../components/IconFont';
 import { googleLangCode } from '../../../constants/langCode';
 import {
@@ -51,40 +52,29 @@ const TranslateButtonDisplay: React.FC<TranslateButtonDisplayProps> = ({
     return (
         <div className='translate-button-display'>
             {presetButtons.map((button, index) => (<div className='translate-button-display__item' key={button}>
-                <input
-                    id={button}
-                    type='checkbox'
-                    checked={presetCheckList[index]}
-                    onClick={() => {
-                        presetCheckList[index] ? onTranslateButtonsUpdate(translateButtons.filter(v => v !== button)) : onTranslateButtonsUpdate(translateButtons.concat(button))
-                    }}
-                    readOnly
-                />
-                <label htmlFor={button} className='flex-align-items-center button'>
-                    {translateButtonContext[button].type === 'icon' && <>
+                <Checkbox
+                    label={<span className='flex-align-items-center'>
                         <IconFont iconName={translateButtonContext[button].iconName} style={{marginRight: '5px'}} />
                         {i18n[button]}
-                    </>}
-                </label>
+                    </span>}
+                    checked={presetCheckList[index]}
+                    onChange={() => {
+                        presetCheckList[index] ? onTranslateButtonsUpdate(translateButtons.filter(v => v !== button)) : onTranslateButtonsUpdate(translateButtons.concat(button))
+                    }}
+                />
             </div>))}
             {tlButtons.map((button, index) => (<div className='translate-button-display__item' key={button} style={{display: 'flex'}}>
-                <input
-                    id={button}
-                    type='checkbox'
-                    checked={tlCheckList[index]}
-                    onClick={() => {
-                        tlCheckList[index] ? onTranslateButtonsUpdate(translateButtons.filter(v => v !== button)) : onTranslateButtonsUpdate(translateButtons.concat(button))
-                    }}
-                    readOnly
-                />
-                <label htmlFor={button} className='flex-align-items-center button'>
-                    {translateButtonContext[button].type === 'icon' && <>
+                <Checkbox
+                    label={<span className='flex-align-items-center'>
                         <IconFont iconName={translateButtonContext[button].iconName} style={{marginRight: '5px'}} />
                         {getMessage('optionsTranslateToTargetLanguage')}
-                    </>}
-                </label>
+                    </span>}
+                    checked={tlCheckList[index]}
+                    onChange={() => {
+                        tlCheckList[index] ? onTranslateButtonsUpdate(translateButtons.filter(v => v !== button)) : onTranslateButtonsUpdate(translateButtons.concat(button))
+                    }}
+                />
                 <DefaultSelect
-                    message=''
                     value={translateButtonsTL[tlButtonsMap[button]]}
                     options={googleLangCode[userLanguage]}
                     optionLabel='name'

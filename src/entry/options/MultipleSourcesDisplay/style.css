@@ -1,5 +1,5 @@
 .multiple-sources-display__item {
-    margin: 5px 10px 5px 0;
+    margin-right: 10px;
     display: inline-flex;
     align-items: center;
     vertical-align: middle;
@@ -8,4 +8,7 @@
     grid-template-columns: max-content auto;
     display: grid;
     min-height: 30px;
+}
+.multiple-sources-display__preview .multiple-sources-display__item {
+    margin-top: 5px;
 }

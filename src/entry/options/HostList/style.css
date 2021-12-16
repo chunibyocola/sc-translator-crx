@@ -18,9 +18,10 @@
     overflow-y: auto;
 }
 .host-list__item {
+    overflow: hidden;
     cursor: pointer;
     display: flex;
-    padding: 5px;
+    align-items: center;
 }
 .host-list__item:hover {
     background-color: var(--bg-item-hover);
@@ -28,25 +29,8 @@
 .host-list__item:not(:last-child) {
     border-bottom: 1px solid #999;
 }
-.host-list__item input {
-    flex: 1;
-}
-.host-list__item span {
-    vertical-align: middle;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    flex: 8;
-}
 .host-list__menu {
     margin-top: 3px;
     border-top: 1px solid #999;
     padding-top: 3px;
-}
-.host-list__menu input {
-    margin-left: 10px;
-    margin-right: 20px;
-}
-.host-list__menu button {
-    width: 50px;
 }

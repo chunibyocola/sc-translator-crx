@@ -63,7 +63,7 @@
         "message": "目標語言"
     },
     "optionsTranslateDirectly": {
-        "message": "直接翻譯"
+        "message": "選擇文本後直接翻譯"
     },
     "optionsTranslateBlackListMode": {
         "message": "黑名單模式"
@@ -345,7 +345,7 @@
         "message": "首次啟動時不顯示控制欄"
     },
     "optionsNoControlBarWhileFirstActivatingDescription": {
-        "message": "只有當“啟動網頁翻譯後直接翻譯”選項啟用後此選項才會生效。啟用此選項後，首次啟動「網頁翻譯」將不會展示控制欄。首次啟動後，再次啟動「網頁翻譯」可以展示或隱藏控制欄。"
+        "message": "只有當「啟動網頁翻譯後直接翻譯」選項啟用後此選項才會生效。啟用此選項後，首次啟動「網頁翻譯」將不會展示控制欄。首次啟動後，再次啟動「網頁翻譯」可以展示或隱藏控制欄。"
     },
     "optionsBeforeSendingTranslateRequest": {
         "message": "在發送翻譯請求之前"
@@ -379,6 +379,9 @@
     },
     "optionsURLCanNotBeEmpty": {
         "message": "URL 不能為空。"
+    },
+    "optionsEncourage": {
+        "message": "如果覺得「Sc翻譯」對你有幫助，可以通過在擴充功能商店給出五星評價或者點擊 GitHub 頁面上的 Star 按鈕來鼓勵開發者，非常感謝！"
     },
     "themePreset": {
         "message": "預設"

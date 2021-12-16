@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Button from '../../../../components/Button';
 import {
     EXECUTE_BROWSER_ACTION,
     SC_AUDIO, SC_CALL_OUT,
@@ -54,10 +55,10 @@ const KeyboardShortcut: React.FC = () => {
                 {getMessage('extTranslateCurrentPageDescription')}
                 <span className='keyboard-shortcut'>{commands[SC_TRANSLATE_CURRENT_PAGE]}</span>
             </div>
-            <div className='item-description opt-section-row'>
-                <span onClick={() => createNewTab('chrome://extensions/shortcuts')} className='span-link'>
+            <div className='opt-section-row'>
+                <Button variant='outlined' onClick={() => createNewTab('chrome://extensions/shortcuts')}>
                     {getMessage('optionsCustomizeHere')}
-                </span>
+                </Button>
             </div>
         </div>
     );

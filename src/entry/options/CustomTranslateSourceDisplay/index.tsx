@@ -121,8 +121,8 @@ const CustomTranslateSourceDisplay: React.FC<CustomTranslateSourceDisplayProps> 
                     </div>}
                 </div>)) : <div className='item-description'>{getMessage('contentNoRecord')}</div>}
                 {modifying && <div className='custom-translate-source__item'>
-                    <input ref={urlInputRef} placeholder={getMessage('optionsURLCanNotBeEmpty')} />
-                    <input ref={nameInputRef} placeholder='Custom source' />
+                    <input ref={urlInputRef} type='text' placeholder={getMessage('optionsURLCanNotBeEmpty')} />
+                    <input ref={nameInputRef} type='text' placeholder='Custom source' />
                     <div>
                         <Button variant='icon' onClick={onAddBtnClick}>
                             <IconFont iconName='#icon-MdAdd' />

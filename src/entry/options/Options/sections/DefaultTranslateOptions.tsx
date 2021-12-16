@@ -53,8 +53,8 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
                 />
             </div>
             <div className='opt-section-row'>
+                {getMessage('optionsLanguage')}
                 <DefaultSelect
-                    message='optionsLanguage'
                     value={userLanguage}
                     onChange={value => updateStorage('userLanguage', value)}
                     options={userLangs}
@@ -63,8 +63,8 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
                 />
             </div>
             <div className='opt-section-row'>
+                {getMessage('optionsPreferredLanguage')}
                 <DefaultSelect
-                    message='optionsPreferredLanguage'
                     value={preferredLanguage}
                     onChange={value => updateStorage('preferredLanguage', value)}
                     options={preferredLangCode[userLanguage]}
@@ -73,8 +73,8 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
                 />
             </div>
             <div className='opt-section-row'>
+                {getMessage('optionsSecondPreferredLanguage')}
                 <DefaultSelect
-                    message='optionsSecondPreferredLanguage'
                     value={secondPreferredLanguage}
                     onChange={value => updateStorage('secondPreferredLanguage', value)}
                     options={preferredLangCode[userLanguage]}
@@ -129,8 +129,8 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
                     </div>
                 </div>
                 <div className='opt-section-row'>
+                    {getMessage('optionsFrom')}
                     <DefaultSelect
-                        message='optionsFrom'
                         value={multipleTranslateFrom}
                         onChange={value => updateStorage('multipleTranslateFrom', value)}
                         options={mtLangCode[userLanguage]}
@@ -139,8 +139,8 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
                     />
                 </div>
                 <div className='opt-section-row'>
+                    {getMessage('optionsTo')}
                     <DefaultSelect
-                        message='optionsTo'
                         value={multipleTranslateTo}
                         onChange={value => updateStorage('multipleTranslateTo', value)}
                         options={mtLangCode[userLanguage]}
@@ -168,8 +168,8 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
                     />
                 </div>
                 <div className='opt-section-row'>
+                    {getMessage('optionsFrom')}
                     <DefaultSelect
-                        message='optionsFrom'
                         value={defaultTranslateFrom}
                         onChange={value => updateStorage('defaultTranslateFrom', value)}
                         options={(langCode[defaultTranslateSource] ?? googleLangCode)[userLanguage]}
@@ -178,8 +178,8 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
                     />
                 </div>
                 <div className='opt-section-row'>
+                    {getMessage('optionsTo')}
                     <DefaultSelect
-                        message='optionsTo'
                         value={defaultTranslateTo}
                         onChange={value => updateStorage('defaultTranslateTo', value)}
                         options={(langCode[defaultTranslateSource] ?? googleLangCode)[userLanguage]}

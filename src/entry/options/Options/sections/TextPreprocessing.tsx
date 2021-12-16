@@ -1,8 +1,8 @@
 import React from 'react';
 import { GenericOptionsProps } from '..';
+import Checkbox from '../../../../components/Checkbox';
 import { getMessage } from '../../../../public/i18n';
 import { DefaultOptions } from '../../../../types';
-import OptionToggle from '../../OptionToggle';
 import RegExpList from '../../RegExpList';
 import TestTextProcessing from '../../TestTextPreprocessing';
 
@@ -48,11 +48,10 @@ const TextPreprocessing: React.FC<TextPreprocessingProps> = ({
                 <div className='mt10-ml30'>
                     {getMessage('themePreset')}
                     <div className='mt10-ml30'>
-                        <OptionToggle
-                            id='convert-camel-case'
-                            message='optionsConvertCamelCase'
+                        <Checkbox
+                            label={getMessage('optionsConvertCamelCase')}
                             checked={textPreprocessingPreset.convertCamelCase}
-                            onClick={() => updateStorage('textPreprocessingPreset', { ...textPreprocessingPreset, 'convertCamelCase': !textPreprocessingPreset.convertCamelCase })}
+                            onChange={v => updateStorage('textPreprocessingPreset', { ...textPreprocessingPreset, 'convertCamelCase': v })}
                         />
                         <div className='item-description'>{'"aCamelCaseText" => "a camel case text"'}</div>
                     </div>

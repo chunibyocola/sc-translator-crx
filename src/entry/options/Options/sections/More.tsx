@@ -5,6 +5,9 @@ const More: React.FC = () => {
     return (
         <div className='opt-section'>
             <div className='opt-section-row'>
+                <div className='item-description'>{getMessage('optionsEncourage')}</div>
+            </div>
+            <div className='opt-section-row'>
                 <a
                     target='_blank'
                     href='https://github.com/chunibyocola/sc-translator-crx/issues'

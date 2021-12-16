@@ -8,6 +8,7 @@
     background: var(--bg-content);
     color: var(--text-normal);
     border-radius: 5px;
+    box-shadow: rgb(60 64 67 / 30%) 0 1px 2px 0, rgb(60 64 67 / 15%) 0 1px 3px 1px;
 }
 .mt10-ml30 {
     margin-top: 10px;
@@ -64,4 +65,7 @@
     left: 0;
     right: 0;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+input[type=text] {
+    padding: 5px;
 }

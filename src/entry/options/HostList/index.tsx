@@ -1,5 +1,6 @@
 import React, { useRef, useCallback, useState } from 'react';
 import Button from '../../../components/Button';
+import Checkbox from '../../../components/Checkbox';
 import IconFont from '../../../components/IconFont';
 import './style.css';
 
@@ -41,7 +42,7 @@ const HostList: React.FC<HostListProps> = ({ list, updateList }) => {
     }, [list, checked, updateList]);
 
     const handleAddHostBtnClick = useCallback(() => {
-        if (!textEle.current) { return; }
+        if (!textEle.current || !textEle.current.value) { return; }
 
         updateList([...list, textEle.current.value]);
 
@@ -61,21 +62,17 @@ const HostList: React.FC<HostListProps> = ({ list, updateList }) => {
             <div className='host-list__box'>
                 {list.map((v, i) => (
                     <div className='host-list__item' key={i} onClick={() => handleCheckBoxChange(i)}>
-                        <input
-                            type='checkbox'
+                        <Checkbox
                             checked={i in checked}
-                            readOnly
                         />
                         <span>{v}</span>
                     </div>
                 ))}
             </div>
             <div className='host-list__menu'>
-                <input
-                    type='checkbox'
+                <Checkbox
                     checked={checkAll}
-                    onClick={handleCheckAllToggle}
-                    readOnly
+                    onChange={handleCheckAllToggle}
                 />
                 <Button
                     variant='outlined'
