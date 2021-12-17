@@ -1,3 +1,5 @@
+# 3.15.1 (2021-12-17)
+- Redesign options page with Material Design. ([6d353fb](https://github.com/chunibyocola/sc-translator-crx/commit/6d353fbad68e519736e5ac48779f3b448182b6b8)) ([2210c0f](https://github.com/chunibyocola/sc-translator-crx/commit/2210c0f45038f644340441f6118d2d75174597e4)) ([8885cc1](https://github.com/chunibyocola/sc-translator-crx/commit/8885cc15de4f44297cfe3bdbe0584430b9e37ae8))
 # 3.15.0 (2021-12-02)
 - Add "custom translate source". ([5579df6](https://github.com/chunibyocola/sc-translator-crx/commit/5579df6d5487bb2a45265788cb524e2136ab3fbd))
 - Make modify "multiple translate sources" simpler. ([8766291](https://github.com/chunibyocola/sc-translator-crx/commit/8766291daaaa3a360bb971523c7951da250eb450))
