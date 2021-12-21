@@ -4,6 +4,7 @@ import {
     EXECUTE_BROWSER_ACTION,
     SC_AUDIO, SC_CALL_OUT,
     SC_CLOSE, SC_OPEN_SEPARATE_WINDOW,
+    SC_SWITCH_WT_DISPLAY_MODE,
     SC_TOGGLE_AUTO_INSERT_RESULT,
     SC_TRANSLATE,
     SC_TRANSLATE_CURRENT_PAGE
@@ -54,6 +55,10 @@ const KeyboardShortcut: React.FC = () => {
             <div className='opt-section-row'>
                 {getMessage('extTranslateCurrentPageDescription')}
                 <span className='keyboard-shortcut'>{commands[SC_TRANSLATE_CURRENT_PAGE]}</span>
+            </div>
+            <div className='opt-section-row'>
+                {getMessage('extSwitchWTDisplayModeDescription')}
+                <span className='keyboard-shortcut'>{commands[SC_SWITCH_WT_DISPLAY_MODE]}</span>
             </div>
             <div className='opt-section-row'>
                 <Button variant='outlined' onClick={() => createNewTab('chrome://extensions/shortcuts')}>

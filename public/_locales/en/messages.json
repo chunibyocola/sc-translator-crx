@@ -32,6 +32,9 @@
     "extOpenWithPdfViewerDescription": {
         "message": "Open this page with PDF viewer"
     },
+    "extSwitchWTDisplayModeDescription": {
+        "message": "Switch the display mode of webpage translations inside the webpage"
+    },
     "titleSeparateWindow": {
         "message": "Separate translate window"
     },

@@ -53,6 +53,9 @@
     },
     "sc-translate-current-page": {
       "description": "__MSG_extTranslateCurrentPageDescription__"
+    },
+    "sc-switch-wt-display-mode": {
+      "description": "__MSG_extSwitchWTDisplayModeDescription__"
     }
   },
   "permissions": [

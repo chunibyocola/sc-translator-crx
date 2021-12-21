@@ -32,6 +32,9 @@
     "extOpenWithPdfViewerDescription": {
         "message": "PDFビューアでこのページを開く"
     },
+    "extSwitchWTDisplayModeDescription": {
+        "message": "Webページ内でWebページ翻訳結果の表示モードを切り変えます"
+    },
     "titleSeparateWindow": {
         "message": "スタンドアロン翻訳ウィンドウ"
     },

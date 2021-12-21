@@ -3,7 +3,7 @@ import ErrorMessage from '../../../components/ErrorMessage';
 import IconFont from '../../../components/IconFont';
 import LanguageSelect from '../../../components/LanguageSelect';
 import SourceSelect from '../../../components/SourceSelect';
-import { SCTS_TRANSLATE_CURRENT_PAGE } from '../../../constants/chromeSendMessageTypes';
+import { SCTS_SWITCH_WT_DISPLAY_MODE, SCTS_TRANSLATE_CURRENT_PAGE } from '../../../constants/chromeSendMessageTypes';
 import { LangCodes, preferredLangCode } from '../../../constants/langCode';
 import { webPageTranslateSource as webPageTranslateSourceList } from '../../../constants/translateSource';
 import { getMessage } from '../../../public/i18n';
@@ -133,6 +133,9 @@ const WebPageTranslate: React.FC = () => {
                 if (activated && getOptions().webPageTranslateDirectly && getOptions().noControlBarWhileFirstActivating) {
                     show ? dispach({ type: 'hide-control-bar' }) : dispach({ type: 'show-control-bar' });
                 }
+                break;
+            case SCTS_SWITCH_WT_DISPLAY_MODE:
+                working && switchWayOfFontsDisplaying();
                 break;
             default: break;
         }

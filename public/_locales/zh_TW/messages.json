@@ -32,6 +32,9 @@
     "extOpenWithPdfViewerDescription": {
         "message": "用 PDF 閱讀器打開此頁面"
     },
+    "extSwitchWTDisplayModeDescription": {
+        "message": "切換網頁內網頁翻譯結果的顯示方式"
+    },
     "titleSeparateWindow": {
         "message": "獨立翻譯視窗"
     },
