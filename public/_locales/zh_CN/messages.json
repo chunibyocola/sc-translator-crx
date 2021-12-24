@@ -386,6 +386,12 @@
     "optionsEncourage": {
         "message": "如果觉得“Sc翻译”对你有帮助，可以通过在扩展商店给出五星评价或者点击 GitHub 页面上的 Star 按钮来鼓励开发者，非常感谢！"
     },
+    "optionsSyncSettingsToOtherBrowsers": {
+        "message": "同步设置到其它浏览器"
+    },
+    "optionsSyncSettingsToOtherBrowsersDescription": {
+        "message": "你需要在不同环境中的相同浏览器中登录相同账号以启用此功能。同时，你需要确认你的账号已启用扩展的同步功能。"
+    },
     "themePreset": {
         "message": "预设"
     },

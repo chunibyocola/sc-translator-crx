@@ -131,3 +131,5 @@ export type DeprecatedOptions = {
     enableContextMenus: boolean;
     clipboardReadPermission: boolean;
 };
+
+export type SyncOptions = Omit<DefaultOptions, 'sourceParamsCache'>;

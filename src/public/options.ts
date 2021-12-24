@@ -1,4 +1,3 @@
-import {onStorageChanged} from './chrome-call';
 import defaultOptions from '../constants/defaultOptions';
 import { DefaultOptions } from '../types';
 
@@ -30,6 +29,6 @@ export const listenOptionsChange = <T>(keys: (keyof DefaultOptions)[], listener:
     };
 };
 
-onStorageChanged(
-    changes => listeners.map(v => v && v(changes))
-);
+chrome.storage.onChanged.addListener((changes, areaName) => {
+    areaName === 'local' && listeners.map(listener => listener(changes));
+});

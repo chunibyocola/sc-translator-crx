@@ -1,5 +1,8 @@
 import React from 'react';
+import Button from '../../../../components/Button';
+import { SCTS_SYNC_SETTINGS_TO_OTHER_BROWSERS } from '../../../../constants/chromeSendMessageTypes';
 import { getMessage } from '../../../../public/i18n';
+import BetaIcon from '../../BetaIcon';
 
 const More: React.FC = () => {
     return (
@@ -24,6 +27,16 @@ const More: React.FC = () => {
                 >
                     {getMessage('optionsChangeLog')}
                 </a>
+            </div>
+            <div className='opt-section-row'>
+                <Button
+                    variant='outlined'
+                    onClick={() => chrome.runtime.sendMessage({ type: SCTS_SYNC_SETTINGS_TO_OTHER_BROWSERS })}
+                >
+                    {getMessage('optionsSyncSettingsToOtherBrowsers')}
+                </Button>
+                <BetaIcon />
+                <div className='item-description'>{getMessage('optionsSyncSettingsToOtherBrowsersDescription')}</div>
             </div>
         </div>
     );

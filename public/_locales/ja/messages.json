@@ -386,6 +386,12 @@
     "optionsEncourage": {
         "message": "もし「サイ翻訳」が役に立つと思ったら、拡張機能ストアで星五つの評価をするか、GitHubページの「Star」ボタンをクリックして、開発者を励むことができます、ありがとうございます！"
     },
+    "optionsSyncSettingsToOtherBrowsers": {
+        "message": "設定を他のブラウザに同期する"
+    },
+    "optionsSyncSettingsToOtherBrowsersDescription": {
+        "message": "この機能を有効にするには、異なる環境で同じブラウザで同じアカウントにログインする必要があります。また、アカウントで拡張機能の同期が有効になっていることを確認する必要があります。"
+    },
     "themePreset": {
         "message": "プリセット"
     },

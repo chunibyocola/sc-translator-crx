@@ -27,7 +27,9 @@ const updateBadge = async (tabId?: number) => {
 chrome.tabs.onUpdated.addListener(onTabsUpdated);
 chrome.tabs.onActivated.addListener(onTabsActivated);
 
-chrome.storage.onChanged.addListener((changes) => {
+chrome.storage.onChanged.addListener((changes, areaName) => {
+    if (areaName !== 'local') { return; }
+
     if ('translateBlackListMode' in changes || 'translateHostList' in changes) {
         updateBadge();
     }

@@ -386,6 +386,12 @@
     "optionsEncourage": {
         "message": "If you find \"ScTranslator\" helpful, you can encourage the developer by giving a five-star rating on the extension store or clicking the \"Star\" button on the GitHub page, thank you very much!"
     },
+    "optionsSyncSettingsToOtherBrowsers": {
+        "message": "Sync settings to other browsers"
+    },
+    "optionsSyncSettingsToOtherBrowsersDescription": {
+        "message": "You need to log in to the same account in the same browser in different environments to enable this feature. And you need to make sure that your account has enabled the sync of extensions."
+    },
     "themePreset": {
         "message": "Preset"
     },

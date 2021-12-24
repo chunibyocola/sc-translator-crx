@@ -4,3 +4,4 @@ import './on-message';
 import './tabs';
 import './commands';
 import './web-request';
+import './sync';

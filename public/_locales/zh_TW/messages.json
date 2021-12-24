@@ -386,6 +386,12 @@
     "optionsEncourage": {
         "message": "如果覺得「Sc翻譯」對你有幫助，可以通過在擴充功能商店給出五星評價或者點擊 GitHub 頁面上的 Star 按鈕來鼓勵開發者，非常感謝！"
     },
+    "optionsSyncSettingsToOtherBrowsers": {
+        "message": "同步設置到其它瀏覽器"
+    },
+    "optionsSyncSettingsToOtherBrowsersDescription": {
+        "message": "你需要在不同環境中的相同瀏覽器中登錄相同帳號以啟用此功能。同時，你需要確認你的帳號已啟用擴展的同步功能。"
+    },
     "themePreset": {
         "message": "預設"
     },
