@@ -1,3 +1,6 @@
+# 3.16.0 (2021-12-31)
+- Add "Switch the display mode of webpage translations inside the webpage" keyboard shortcut. ([d46a957](https://github.com/chunibyocola/sc-translator-crx/commit/d46a9578b13488cb2f5273a6b6e4a71ce022bb4f))
+- Add "Sync settings to other browsers" button. ([81a58f8](https://github.com/chunibyocola/sc-translator-crx/commit/81a58f83b7f9f15096ac4e6e0cc5060286dd7aac))
 # 3.15.1 (2021-12-17)
 - Redesign options page with Material Design. ([6d353fb](https://github.com/chunibyocola/sc-translator-crx/commit/6d353fbad68e519736e5ac48779f3b448182b6b8)) ([2210c0f](https://github.com/chunibyocola/sc-translator-crx/commit/2210c0f45038f644340441f6118d2d75174597e4)) ([8885cc1](https://github.com/chunibyocola/sc-translator-crx/commit/8885cc15de4f44297cfe3bdbe0584430b9e37ae8))
 # 3.15.0 (2021-12-02)
