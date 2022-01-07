@@ -14,4 +14,4 @@ yarn install
 yarn build
 ```
 ## License
-Apache Version 2.0
+[GNU General Public License Version 3](https://github.com/chunibyocola/sc-translator-crx/blob/master/LICENSE)
