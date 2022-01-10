@@ -21,6 +21,7 @@ import './style.css';
 import { DefaultOptions } from '../../../types';
 import WebPageTranslating from './sections/WebPageTranslating';
 import TextPreprocessing from './sections/TextPreprocessing';
+import SyncSettings from './sections/SyncSettings';
 
 export type GenericOptionsProps<T> = {
     updateStorage: (key: string, value: any) => void;
@@ -198,6 +199,8 @@ const Options: React.FC = () => {
             />
             <div className='sub-title' id='keyboard-shortcut'>{getMessage('optionsKeyboardShortcut')}</div>
             <KeyboardShortcut />
+            <div className='sub-title' id='sync-settings'>{getMessage('optionsSyncSettings')}</div>
+            <SyncSettings />
             <div className='sub-title' id='more'>{getMessage('optionsMore')}</div>
             <More />
             <OverScroll />

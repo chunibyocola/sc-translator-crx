@@ -392,6 +392,9 @@
     "optionsSyncSettingsToOtherBrowsersDescription": {
         "message": "你需要在不同环境中的相同浏览器中登录相同账号以启用此功能。同时，你需要确认你的账号已启用扩展的同步功能。"
     },
+    "optionsSyncSettings": {
+        "message": "同步设置"
+    },
     "themePreset": {
         "message": "预设"
     },

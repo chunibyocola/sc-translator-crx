@@ -392,6 +392,9 @@
     "optionsSyncSettingsToOtherBrowsersDescription": {
         "message": "この機能を有効にするには、異なる環境で同じブラウザで同じアカウントにログインする必要があります。また、アカウントで拡張機能の同期が有効になっていることを確認する必要があります。"
     },
+    "optionsSyncSettings": {
+        "message": "設定の同期"
+    },
     "themePreset": {
         "message": "プリセット"
     },

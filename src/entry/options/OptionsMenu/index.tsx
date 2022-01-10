@@ -19,6 +19,7 @@ const menusItems = [
     { title: getMessage('optionsHistory'), id: 'history' },
     { title: getMessage('optionsContextMenus'), id: 'context-menus' },
     { title: getMessage('optionsKeyboardShortcut'), id: 'keyboard-shortcut' },
+    { title: getMessage('optionsSyncSettings'), id: 'sync-settings' },
     { title: getMessage('optionsMore'), id: 'more' }
 ];
 

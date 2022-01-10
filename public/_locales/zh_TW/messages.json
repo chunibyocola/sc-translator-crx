@@ -392,6 +392,9 @@
     "optionsSyncSettingsToOtherBrowsersDescription": {
         "message": "你需要在不同環境中的相同瀏覽器中登錄相同帳號以啟用此功能。同時，你需要確認你的帳號已啟用擴展的同步功能。"
     },
+    "optionsSyncSettings": {
+        "message": "同步設置"
+    },
     "themePreset": {
         "message": "預設"
     },
