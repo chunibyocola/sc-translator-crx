@@ -69,6 +69,19 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
             related = data.dict_result.simple_means.exchange.word_proto;
         }
 
+        let example: string[] | undefined = undefined;
+        if (data?.liju_result?.double) {
+            try {
+                const double = (JSON.parse(data.liju_result.double).slice(0, 3) as any[]).map(v => v[0]) as [string, string, string, number, string | undefined][][];
+                example = double.map(v => v.reduce((total, item) => (
+                    `${total}${(item[3] ? '<b>' : '') + item[0] + (item[3] ? '</b>' : '') + (item[4] ?? '')}`
+                ), ''));
+            }
+            catch {
+                example = undefined;
+            }
+        }
+
         const result: TranslateResult = {
             text,
             from: data.trans_result.from,
@@ -76,7 +89,8 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
             dict,
             phonetic,
             result: data.trans_result.data.map((v: any) => (v.dst)),
-            related
+            related,
+            example
         };
 
         return result;
