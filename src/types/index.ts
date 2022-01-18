@@ -9,6 +9,7 @@ export type TranslateResult = {
     dict?: string[];
     phonetic?: string;
     related?: string[];
+    example?: string[];
 };
 
 export type TranslateRequestInit = {

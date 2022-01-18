@@ -54,7 +54,8 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
             result: data.sentences?.reduce((t: string[], v: any) => (v.trans ? t.concat(v.trans) : t), []),
             dict: data.dict?.reduce((t: string[], v: any) => (t.concat(v.pos + ': ' + v.terms.join(', '))), []),
             phonetic: data.sentences?.[1]?.src_translit && `[${data.sentences[1].src_translit}]`,
-            related: data.related_words?.word
+            related: data.related_words?.word,
+            example: (data.examples?.example as { text: string }[] | undefined)?.slice(0, 3).map(v => v.text)
         };
 
         return result;
