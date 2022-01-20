@@ -59,6 +59,17 @@ const TranslateResult: React.FC<TranslateResultProps> = ({ translateRequest, sou
                         {i !== 0 && ', '}<span className={setText && 'span-link'} onClick={() => setText?.(v)}>{v}</span>
                     </span>))}
                 </div>}
+                {translateRequest.result.example && translateRequest.result.example.length > 0 && <div className='translate-result__item-stack'>
+                    {translateRequest.result.example.map((v, i) => (
+                        <div key={i}>
+                            <IconFont
+                                iconName='#icon-quote'
+                                style={{cursor: 'default', marginLeft: '0', marginRight: '5px'}}
+                            />
+                            {v.split(/<\/?b>/).map((v1, i1) => (i1 % 2 === 0 ? v1 : <b key={i1}>{v1}</b>))}
+                        </div>
+                    ))}
+                </div>}
             </>}
         </div>
     );
