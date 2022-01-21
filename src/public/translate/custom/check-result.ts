@@ -51,6 +51,16 @@ export const checkResultFromCustomSource = (result: any) => {
     if ('phonetic' in result && typeof result.phonetic !== 'string') {
         throw new Error('Error: "phonetic" is not string.');
     }
+
+    // check "example"
+    if ('example' in result) {
+        if (!Array.isArray(result.example)) {
+            throw new Error('Error: "example" is not an array.');
+        }
+        else if (!isAllStringInArray(result.example)) {
+            throw new Error('Error: "example" must be an array of strings.');
+        }
+    }
 };
 
 const isAllStringInArray = (array: any[]) => {

@@ -25,6 +25,7 @@ type FetchCustomSourceJSON = {
 //     dict?: string[];
 //     phonetic?: string;
 //     related?: string[];
+//     example?: string[];
 // } | {
 //     code: string;
 // };
@@ -94,7 +95,8 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
             result: data.result,
             dict: data.dict,
             phonetic: data.phonetic,
-            related: data.related
+            related: data.related,
+            example: data.example
         };
 
         return result;
