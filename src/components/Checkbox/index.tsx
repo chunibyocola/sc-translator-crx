@@ -5,6 +5,7 @@ type ChcekboxProps = {
     label?: string | number | React.ReactElement;
     checked?: boolean;
     onChange?: (checked: boolean) => void;
+    disabled?: boolean;
 } & Pick<React.HtmlHTMLAttributes<HTMLInputElement>, 'className'>;
 
 // Will replace will React built-in "useId" while migrating to React-18.0.0 (stable).
@@ -16,7 +17,7 @@ const useId = () => {
     return id;
 };
 
-const Checkbox: React.FC<ChcekboxProps> = ({ label, checked, onChange }) => {
+const Checkbox: React.FC<ChcekboxProps> = ({ label, checked, onChange, disabled }) => {
     const [activing, setActiving] = useState(false);
 
     const activedRef = useRef(false);
@@ -37,12 +38,12 @@ const Checkbox: React.FC<ChcekboxProps> = ({ label, checked, onChange }) => {
     }, [activing]);
 
     return (
-        <label htmlFor={id} className='checkbox'>
+        <label htmlFor={id} className={`checkbox${disabled ? ' checkbox--disabled' : ''}`}>
             <span
                 ref={checkboxRootRef}
                 className={`checkbox-root${activedRef.current ? activing ? ' checkbox--activation' : ' checkbox--deactivation' : ''}${checked ? ' checkbox--checked' : ''}`}
                 onMouseDown={() => {
-                    if (!checkboxRootRef.current) { return; }
+                    if (!checkboxRootRef.current || disabled) { return; }
 
                     const target = checkboxRootRef.current;
 
@@ -58,7 +59,7 @@ const Checkbox: React.FC<ChcekboxProps> = ({ label, checked, onChange }) => {
                     setActiving(true);
                 }}
             >
-                <input id={id} className='checkbox-input' onChange={e => onChange?.(e.target.checked)} type='checkbox' checked={checked} />
+                <input id={id} className='checkbox-input' onChange={e => onChange?.(e.target.checked)} type='checkbox' checked={checked} disabled={disabled} />
                 <svg className='iconfont' viewBox='0 0 24 24'>
                     <path
                         d={checked
@@ -69,7 +70,7 @@ const Checkbox: React.FC<ChcekboxProps> = ({ label, checked, onChange }) => {
                 </svg>
                 <div className='ripple'></div>
             </span>
-            {label && <span>{label}</span>}
+            {label && <span className='checkbox__label'>{label}</span>}
         </label>
     );
 };

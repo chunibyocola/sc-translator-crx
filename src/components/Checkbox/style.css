@@ -31,13 +31,22 @@
     opacity: 0;
     margin: 0;
 }
+.checkbox.checkbox--disabled {
+    cursor: default;
+}
+.checkbox.checkbox--disabled .checkbox-root {
+    color: rgba(0, 0, 0, 0.26);
+}
+.checkbox.checkbox--disabled .checkbox__label {
+    color: rgba(0, 0, 0, 0.38);
+}
 .checkbox-root .iconfont {
     font-size: 24px;
 }
 .checkbox-root .ripple::before {
     background-color: var(--color-default);
 }
-.checkbox-root:hover .ripple::before {
+.checkbox:not(.checkbox--disabled) .checkbox-root:hover .ripple::before {
     opacity: 0.04;
 }
 .checkbox--activation .ripple::after {
