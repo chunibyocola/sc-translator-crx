@@ -83,7 +83,8 @@ const Options: React.FC = () => {
         noControlBarWhileFirstActivating,
         afterSelectingTextRegExpList,
         translateButtonsTL,
-        customTranslateSourceList
+        customTranslateSourceList,
+        displayOfTranslation
     } = useOptions<DefaultOptions>(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -158,6 +159,7 @@ const Options: React.FC = () => {
                 defaultTranslateTo={defaultTranslateTo}
                 useDotCn={useDotCn}
                 customTranslateSourceList={customTranslateSourceList}
+                displayOfTranslation={displayOfTranslation}
             />
             <div className='sub-title' id='text-preprocessing'>{getMessage('optionsTextPreprocessing')}</div>
             <TextPreprocessing

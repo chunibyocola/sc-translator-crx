@@ -395,6 +395,12 @@
     "optionsSyncSettings": {
         "message": "同步设置"
     },
+    "optionsDisplayOfTranslation": {
+        "message": "翻译结果的展示"
+    },
+    "optionsDisplayOfTranslationDescription": {
+        "message": "你可以决定在翻译面板上展示哪些内容。"
+    },
     "themePreset": {
         "message": "预设"
     },
@@ -481,6 +487,18 @@
     },
     "wordName": {
         "message": "名称"
+    },
+    "wordResult": {
+        "message": "结果"
+    },
+    "wordDictionary": {
+        "message": "字典"
+    },
+    "wordPhonetic": {
+        "message": "发音"
+    },
+    "wordExample": {
+        "message": "示例"
     },
     "sentenceAddTranslateSource": {
         "message": "请添加翻译源。"

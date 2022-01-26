@@ -395,6 +395,12 @@
     "optionsSyncSettings": {
         "message": "設定の同期"
     },
+    "optionsDisplayOfTranslation": {
+        "message": "翻訳結果の表示"
+    },
+    "optionsDisplayOfTranslationDescription": {
+        "message": "どのようなコンテンツは、翻訳パネルに表示されるかを決めることができます。"
+    },
     "themePreset": {
         "message": "プリセット"
     },
@@ -481,6 +487,18 @@
     },
     "wordName": {
         "message": "名称"
+    },
+    "wordResult": {
+        "message": "結果"
+    },
+    "wordDictionary": {
+        "message": "辞書"
+    },
+    "wordPhonetic": {
+        "message": "発音"
+    },
+    "wordExample": {
+        "message": "例"
     },
     "sentenceAddTranslateSource": {
         "message": "翻訳ソースを追加してください。"

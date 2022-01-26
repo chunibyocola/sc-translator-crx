@@ -395,6 +395,12 @@
     "optionsSyncSettings": {
         "message": "Sync settings"
     },
+    "optionsDisplayOfTranslation": {
+        "message": "Display of translation"
+    },
+    "optionsDisplayOfTranslationDescription": {
+        "message": "You can decide what content will be displayed on the translation panel."
+    },
     "themePreset": {
         "message": "Preset"
     },
@@ -481,6 +487,18 @@
     },
     "wordName": {
         "message": "Name"
+    },
+    "wordResult": {
+        "message": "Result"
+    },
+    "wordDictionary": {
+        "message": "Dictionary"
+    },
+    "wordPhonetic": {
+        "message": "Phonetic"
+    },
+    "wordExample": {
+        "message": "Example"
     },
     "sentenceAddTranslateSource": {
         "message": "Please add a translate source."

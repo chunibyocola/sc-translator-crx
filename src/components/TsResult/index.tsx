@@ -7,6 +7,7 @@ import { getMessage } from '../../public/i18n';
 import ErrorMessage from '../ErrorMessage';
 import { TranslateRequest } from '../../types';
 import ListenButton from '../ListenButton';
+import { getOptions } from '../../public/options';
 
 type TsResultProps = {
     translateRequest: TranslateRequest;
@@ -17,6 +18,8 @@ type TsResultProps = {
 };
 
 const TsResult: React.FC<TsResultProps> = ({ translateRequest, source, retry, setText, insertResult }) => {
+    const { displayOfTranslation } = getOptions();
+
     return (
         <div className='st-result'>
             {translateRequest.status === 'loading' ?
@@ -46,17 +49,17 @@ const TsResult: React.FC<TsResultProps> = ({ translateRequest, source, retry, se
                         />
                     </span>
                 </div>
-                {translateRequest.result.dict && translateRequest.result.dict.length > 0 && <div className='st-result__item-stack'>
+                {displayOfTranslation.dict && translateRequest.result.dict && translateRequest.result.dict.length > 0 && <div className='st-result__item-stack'>
                     {translateRequest.result.dict.map((v, i) => (
                         <div key={i}>{v}</div>
                     ))}
                 </div>}
-                {translateRequest.result.related && translateRequest.result.from === LANG_EN && <div className='st-result__item-stack'>
+                {displayOfTranslation.related && translateRequest.result.related && translateRequest.result.from === LANG_EN && <div className='st-result__item-stack'>
                     {getMessage('wordRelated')}: {translateRequest.result.related.map((v, i) => (<span key={`${v}${i}`}>
                         {i !== 0 && ', '}<span className='span-link' onClick={() => setText(v)}>{v}</span>
                     </span>))}
                 </div>}
-                {translateRequest.result.example && translateRequest.result.example.length > 0 && <div className='st-result__item-stack'>
+                {displayOfTranslation.example && translateRequest.result.example && translateRequest.result.example.length > 0 && <div className='st-result__item-stack'>
                     {translateRequest.result.example.map((v, i) => (
                         <div key={i}>
                             <IconFont
@@ -80,7 +83,7 @@ const TsResult: React.FC<TsResultProps> = ({ translateRequest, source, retry, se
                         from={translateRequest.result.from}
                     />
                 </div>
-                {translateRequest.result.phonetic && translateRequest.result.from === LANG_EN && <div>
+                {displayOfTranslation.phonetic && translateRequest.result.phonetic && translateRequest.result.from === LANG_EN && <div>
                     {translateRequest.result.phonetic}
                 </div>}
             </>}

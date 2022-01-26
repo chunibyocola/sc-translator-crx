@@ -66,7 +66,8 @@ const defaultOptions: DefaultOptions = {
     afterSelectingTextRegExpList: [],
     translateButtonsTL: { first: '', second: LANG_EN, third: LANG_EN },
     sourceParamsCache: initSourceParams,
-    customTranslateSourceList: []
+    customTranslateSourceList: [],
+    displayOfTranslation: { result: true, dict: true, phonetic: true, related: true, example: false }
 };
 
 export default defaultOptions;

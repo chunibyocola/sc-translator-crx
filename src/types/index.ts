@@ -62,6 +62,14 @@ export type CustomTranslateSource = {
     source: string;
 };
 
+export type DisplayOfTranslation = {
+    result: boolean;
+    dict: boolean;
+    phonetic: boolean;
+    related: boolean;
+    example: boolean;
+};
+
 export type DefaultOptions = {
     userLanguage: string;
     defaultTranslateSource: string;
@@ -123,6 +131,7 @@ export type DefaultOptions = {
     translateButtonsTL: TranslateButtonsTL;
     sourceParamsCache: SourceParams;
     customTranslateSourceList: CustomTranslateSource[];
+    displayOfTranslation: DisplayOfTranslation;
 };
 
 // Only work in "src/entry/background/install.ts".

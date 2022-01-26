@@ -1,6 +1,7 @@
 import React from 'react';
 import { LANG_EN } from '../../constants/langCode';
 import { getMessage } from '../../public/i18n';
+import { getOptions } from '../../public/options';
 import { resultToString } from '../../public/utils';
 import { TranslateRequest } from '../../types';
 import ErrorMessage from '../ErrorMessage';
@@ -17,6 +18,8 @@ type TranslateResultProps = {
 } & Pick<React.HTMLAttributes<HTMLDivElement>, 'style' | 'className'>;
 
 const TranslateResult: React.FC<TranslateResultProps> = ({ translateRequest, source, style, className, retry, insertResult, setText }) => {
+    const { displayOfTranslation } = getOptions();
+
     return (
         <div className={`translate-result${className ? ' ' + className : ''}`} style={style}>
             {translateRequest.status === 'loading' ?
@@ -26,7 +29,7 @@ const TranslateResult: React.FC<TranslateResultProps> = ({ translateRequest, sou
             translateRequest.status === 'error' ?
                 <ErrorMessage errorCode={translateRequest.errorCode} retry={retry} /> :
             <>
-                {translateRequest.result.phonetic && translateRequest.result.from === LANG_EN && <div className='translate-result__item-stack'>
+                {displayOfTranslation.phonetic && translateRequest.result.phonetic && translateRequest.result.from === LANG_EN && <div className='translate-result__item-stack'>
                     {translateRequest.result.phonetic}
                 </div>}
                 <div className='translate-result__item-stack'>
@@ -49,17 +52,17 @@ const TranslateResult: React.FC<TranslateResultProps> = ({ translateRequest, sou
                         />
                     </span>
                 </div>
-                {translateRequest.result.dict && translateRequest.result.dict.length > 0 && <div className='translate-result__item-stack'>
+                {displayOfTranslation.dict && translateRequest.result.dict && translateRequest.result.dict.length > 0 && <div className='translate-result__item-stack'>
                     {translateRequest.result.dict.map((v, i) => (
                         <div key={i}>{v}</div>
                     ))}
                 </div>}
-                {translateRequest.result.related && translateRequest.result.from === LANG_EN && <div className='translate-result__item-stack'>
+                {displayOfTranslation.related && translateRequest.result.related && translateRequest.result.from === LANG_EN && <div className='translate-result__item-stack'>
                     {getMessage('wordRelated')}: {translateRequest.result.related.map((v, i) => (<span key={`${v}${i}`}>
                         {i !== 0 && ', '}<span className={setText && 'span-link'} onClick={() => setText?.(v)}>{v}</span>
                     </span>))}
                 </div>}
-                {translateRequest.result.example && translateRequest.result.example.length > 0 && <div className='translate-result__item-stack'>
+                {displayOfTranslation.example && translateRequest.result.example && translateRequest.result.example.length > 0 && <div className='translate-result__item-stack'>
                     {translateRequest.result.example.map((v, i) => (
                         <div key={i}>
                             <IconFont

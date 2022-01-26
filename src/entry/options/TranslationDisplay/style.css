@@ -1,0 +1,13 @@
+.translation-display__list .checkbox:not(:last-child) {
+    margin-right: 10px;
+}
+.translation-display__preview__item + .translation-display__preview__item {
+    margin-block-start: 0.8em;
+}
+.translation-display__preview__content {
+    width: 350px;
+    padding: 10px;
+    box-shadow: rgb(0 0 0 / 80%) 0px 0px 5px 0px;
+    border-radius: 5px;
+    margin-top: 10px;
+}

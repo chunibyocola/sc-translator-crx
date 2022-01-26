@@ -11,6 +11,7 @@ import BetaIcon from '../../BetaIcon';
 import CustomTranslateSourceDisplay from '../../CustomTranslateSourceDisplay';
 import DefaultSelect from '../../DefaultSelect';
 import MultipleSourcesDisplay from '../../MultipleSourcesDisplay';
+import TranslationDisplay from '../../TranslationDisplay';
 
 type DefaultTranslateOptionsProps = GenericOptionsProps<Pick<
     DefaultOptions,
@@ -25,7 +26,8 @@ type DefaultTranslateOptionsProps = GenericOptionsProps<Pick<
     'defaultTranslateFrom' |
     'defaultTranslateTo' |
     'useDotCn' |
-    'customTranslateSourceList'
+    'customTranslateSourceList' |
+    'displayOfTranslation'
 >>;
 
 const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
@@ -41,7 +43,8 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
     defaultTranslateFrom,
     defaultTranslateTo,
     useDotCn,
-    customTranslateSourceList
+    customTranslateSourceList,
+    displayOfTranslation
 }) => {
     return (
         <div className='opt-section'>
@@ -188,6 +191,16 @@ const DefaultTranslateOptions: React.FC<DefaultTranslateOptionsProps> = ({
                     />
                 </div>
             </>}
+            <div className='opt-section-row'>
+                {getMessage('optionsDisplayOfTranslation')}
+                <div className='item-description'>{getMessage('optionsDisplayOfTranslationDescription')}</div>
+                <div className='mt10-ml30'>
+                    <TranslationDisplay
+                        displayOfTranslation={displayOfTranslation}
+                        onChange={v => updateStorage('displayOfTranslation', v)}
+                    />
+                </div>
+            </div>
         </div>
     );
 };
