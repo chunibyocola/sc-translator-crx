@@ -1,3 +1,6 @@
+# 3.17.0 (2022-01-27)
+- Add examples in translation panel. ([4962f9d](https://github.com/chunibyocola/sc-translator-crx/commit/4962f9d8f0f57de82d903d04ce7d60668f05e526))
+- Add "Display of translation". ([f5365e9](https://github.com/chunibyocola/sc-translator-crx/commit/f5365e9ceec3d2e7ad5b471ca99dcc8330de6619))
 # 3.16.0 (2021-12-31)
 - Add "Switch the display mode of webpage translations inside the webpage" keyboard shortcut. ([d46a957](https://github.com/chunibyocola/sc-translator-crx/commit/d46a9578b13488cb2f5273a6b6e4a71ce022bb4f))
 - Add "Sync settings to other browsers" button. ([81a58f8](https://github.com/chunibyocola/sc-translator-crx/commit/81a58f83b7f9f15096ac4e6e0cc5060286dd7aac))
