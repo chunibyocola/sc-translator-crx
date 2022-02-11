@@ -19,14 +19,11 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.0",
-    "object-assign": "^4.1.1",
-    "promise": "^8.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.4",
     "react-signal-slot": "^1.0.1",
-    "redux": "^4.0.5",
-    "whatwg-fetch": "^3.6.2"
+    "redux": "^4.0.5"
   },
   "babel": {
     "presets": [
@@ -44,8 +41,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.13.8",
-    "@babel/preset-env": "^7.13.8",
-    "@babel/preset-react": "^7.12.13",
     "@types/chrome": "^0.0.145",
     "@types/react-dom": "^17.0.8",
     "@typescript-eslint/eslint-plugin": "^4.0.0",
