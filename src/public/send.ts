@@ -1,5 +1,6 @@
 import * as types from '../constants/chromeSendMessageTypes';
 import { EXTENSION_UPDATED } from '../constants/errorCodes';
+import { Translation } from '../redux/slice/multipleTranslateSlice';
 import { TranslateResult } from '../types';
 
 type TranslateResponse = {
@@ -31,10 +32,17 @@ type DetectResponse = {
     text: string;
     data: string;
 };
+type IsCollectResponse = {
+    text: string;
+    isCollected: boolean;
+} | {
+    code: string;
+};
 
 export type TranslateCallback = (response: TranslateResponse) => void;
 export type AudioCallback = (response: AudioResponse) => void;
 export type DetectCallback = (response: DetectResponse) => void;
+export type IsCollectCallback = (response: IsCollectResponse) => void;
 
 type SendTranslatePayload = {
     source: string;
@@ -59,6 +67,19 @@ type SendAction = {
     type: string;
     payload: SendTranslatePayload | SendAudioPayload | SendSeparatePayload;
 };
+
+type GenericMessage<ActionType, ActionPayload> = {
+    type: ActionType;
+    payload: ActionPayload;
+}
+type ChromeRuntimeMessage = GenericMessage<typeof types.SCTS_IS_COLLECTED, {
+    text: string;
+}> | GenericMessage<typeof types.SCTS_ADD_TO_COLLECTION, {
+    text: string;
+    translations: Translation[];
+}> | GenericMessage<typeof types.SCTS_REMOVE_FROM_COLLECTION, {
+    text: string;
+}>;
 
 export const sendTranslate = (text: string, { source, from, to, translateId }: { source: string, from: string, to: string, translateId: number }, cb?: TranslateCallback) => {
     const action = {
@@ -104,6 +125,18 @@ export const sendSeparate = (text: string) => {
     });
 };
 
+export const sendIsCollected = (text: string, callback: IsCollectCallback) => {
+    chromeRuntimeSendMessage({ type: types.SCTS_IS_COLLECTED, payload: { text } }, callback);
+};
+
+export const sendAddToCollection = (text: string, translations: Translation[]) => {
+    chromeRuntimeSendMessage({ type: types.SCTS_ADD_TO_COLLECTION, payload: { text, translations } });
+};
+
+export const sendRemoveFromCollection = (text: string) => {
+    chromeRuntimeSendMessage({ type: types.SCTS_REMOVE_FROM_COLLECTION, payload: { text } });
+};
+
 const packData = (text: string, { source, from, to, translateId }: { source: string, from: string, to?: string, translateId?: number }) => ({
     source,
     translateId,
@@ -113,6 +146,16 @@ const packData = (text: string, { source, from, to, translateId }: { source: str
         to
 	}
 });
+
+// New send message API here. Will be combined with `chromeSendMessage`.
+const chromeRuntimeSendMessage = (message: ChromeRuntimeMessage, callback?: (response: any) => void) => {
+    try {
+        chrome.runtime.sendMessage(message, callback);
+    }
+    catch {
+        callback?.({ code: EXTENSION_UPDATED });
+    }
+};
 
 const chromeSendMessage = (action: SendAction, cb?: TranslateCallback) => {
     try {
