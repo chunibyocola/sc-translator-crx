@@ -1,4 +1,4 @@
-import { TranslateResult } from '../types';
+import { TranslateRequest } from '../types';
 
 const DB_NAME = 'ScTranslator';
 const DB_VERSION = 1;
@@ -8,9 +8,10 @@ export const DB_STORE_COLLECTION = 'collection';
 export type StoreCollectionValue = {
     text: string;
     date: number;
-    translations: (TranslateResult & {
+    translations: {
+        translateRequest: TranslateRequest;
         source: string;
-    })[]
+    }[]
 };
 
 const scIndexedDB = (() => {
@@ -45,7 +46,7 @@ const scIndexedDB = (() => {
     };
 
     return {
-        get: async <T = any>(storeName: string, query: IDBValidKey | IDBKeyRange): Promise<T> => {
+        get: async <T = any>(storeName: string, query: IDBValidKey | IDBKeyRange): Promise<undefined | T> => {
             const [store, done] = await withStore(storeName, 'readonly');
 
             let request = store.get(query);
@@ -63,7 +64,7 @@ const scIndexedDB = (() => {
 
             return request.result;
         },
-        add: async (storeName: string, value: any, key?: IDBValidKey ) => {
+        add: async <T = any>(storeName: string, value: T, key?: IDBValidKey ) => {
             const [store] = await withStore(storeName, 'readwrite');
 
             store.put(value, key);

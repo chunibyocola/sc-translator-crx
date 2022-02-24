@@ -72,7 +72,7 @@ type GenericMessage<ActionType, ActionPayload> = {
     type: ActionType;
     payload: ActionPayload;
 }
-type ChromeRuntimeMessage = GenericMessage<typeof types.SCTS_IS_COLLECTED, {
+export type ChromeRuntimeMessage = GenericMessage<typeof types.SCTS_IS_COLLECTED, {
     text: string;
 }> | GenericMessage<typeof types.SCTS_ADD_TO_COLLECTION, {
     text: string;
