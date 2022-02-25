@@ -16,6 +16,7 @@ import { textPreprocessing } from '../../../public/text-preprocessing';
 import { mtAddSource, mtRemoveSource, mtRequestError, mtRequestFinish, mtRequestStart, mtSetFromAndTo, mtSetText } from '../../../redux/slice/multipleTranslateSlice';
 import { DefaultOptions } from '../../../types';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
+import CollectButton from '../../../components/CollectButton';
 
 type PickedOptions = Pick<DefaultOptions, 'styleVarsList' | 'styleVarsIndex' | 'rememberStwSizeAndPosition' | 'autoTranslateAfterInput'>;
 const useOptionsDependency: (keyof PickedOptions)[] = ['styleVarsList', 'styleVarsIndex', 'rememberStwSizeAndPosition', 'autoTranslateAfterInput'];
@@ -123,6 +124,7 @@ const Separate: React.FC = () => {
             <div className="popup-header flex-justify-content-space-between">
                 <div className='popup-header__logo flex-align-items-center'>Sc</div>
                 <div className='popup-header__icons flex-align-items-center'>
+                    <CollectButton />
                     <IconFont
                         iconName='#icon-theme'
                         className='iconfont--enable'

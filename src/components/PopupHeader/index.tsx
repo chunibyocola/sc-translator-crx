@@ -6,6 +6,7 @@ import { getCurrentTabHost } from '../../public/utils';
 import './style.css';
 import { getMessage } from '../../public/i18n';
 import { DefaultOptions } from '../../types';
+import CollectButton from '../CollectButton';
 
 type PickedOptions = Pick<DefaultOptions, 'translateBlackListMode' | 'translateHostList' | 'historyBlackListMode' | 'historyHostList' | 'styleVarsList' | 'styleVarsIndex'>;
 const useOptionsDependency: (keyof PickedOptions)[] = ['translateBlackListMode', 'translateHostList', 'historyBlackListMode', 'historyHostList', 'styleVarsList', 'styleVarsIndex'];
@@ -50,6 +51,7 @@ const PopupHeader: React.FC = () => {
         <div className="popup-header flex-justify-content-space-between">
             <div className='popup-header__logo flex-align-items-center'>Sc</div>
             <div className='popup-header__icons flex-align-items-center'>
+                <CollectButton />
                 <IconFont
                     iconName='#icon-theme'
                     className='iconfont--enable'

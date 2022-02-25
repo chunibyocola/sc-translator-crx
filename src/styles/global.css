@@ -92,10 +92,10 @@
 }
 .iconfont--enable {
     opacity: 0.7;
+    cursor: pointer;
 }
 .iconfont--enable:hover {
     opacity: 1;
-    cursor: pointer;
 }
 .iconfont--disable {
     opacity: 0.4;

@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { getOptions } from '../../public/options';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useAppSelector } from '../../public/react-use';
 import { sendAddToCollection, sendIsCollected, sendRemoveFromCollection } from '../../public/send';
 import { Translation } from '../../redux/slice/multipleTranslateSlice';
@@ -31,27 +30,27 @@ const useIsCollected = (text: string) => {
         });
     }, [text]);
 
-    return { modifiable, isCollected };
+    return { modifiable, isCollected, setIsCollected };
 };
 
 const CollectButton: React.FC<CollectButtonProps> = () => {
-    const [text, setText] = useState('');
-    const [collected, setCollected] = useState(false);
     const { text: multipleText, translations: multipleTranslations } = useAppSelector(state => state.multipleTranslate);
     const { text: singleText, translateRequest: singleTranslateRequest, source: singleSource } = useAppSelector(state => state.singleTranslate);
 
-    const { modifiable, isCollected } = useIsCollected(text);
+    const text = useMemo(() => singleText || multipleText, [singleText, multipleText]);
+
+    const { modifiable, isCollected, setIsCollected } = useIsCollected(text);
 
     const onCollectButtonClick = () => {
         if (!modifiable) { return; }
 
-        if (collected) {
+        if (isCollected) {
             sendRemoveFromCollection(text)
         }
         else {
             let translations: Translation[] = [];
 
-            if (getOptions().multipleTranslateMode) {
+            if (multipleText) {
                 translations = multipleTranslations.reduce((total: Translation[], current) => {
                     if (current.translateRequest.status === 'finished') {
                         total = total.concat(current);
@@ -60,28 +59,21 @@ const CollectButton: React.FC<CollectButtonProps> = () => {
                     return total;
                 }, []);
             }
-            else if (singleTranslateRequest.status === 'finished') {
+            else if (singleText && singleTranslateRequest.status === 'finished') {
                 translations = [{ source: singleSource, translateRequest: singleTranslateRequest }];
             }
 
             sendAddToCollection(text, translations);
         }
 
-        setCollected(value => !value);
+        setIsCollected(value => !value);
     };
-
-    useEffect(() => {
-        setText(singleText || multipleText);
-    }, [singleText, multipleText]);
-
-    useEffect(() => {
-        setCollected(isCollected);
-    }, [isCollected]);
 
     return (
         <IconFont
             iconName='#icon-collect'
-            className={(modifiable && collected) ? 'iconfont--enable' : 'iconfont--disable'}
+            className={modifiable ? isCollected ? 'iconfont--enable' : 'iconfont--disable button' : 'iconfont--disable'}
+            style={modifiable ? undefined : {cursor: 'default'}}
             onClick={onCollectButtonClick}
         />
     );

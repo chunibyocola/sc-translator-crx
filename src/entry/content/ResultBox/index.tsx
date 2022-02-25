@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import CollectButton from '../../../components/CollectButton';
 import IconFont from '../../../components/IconFont';
 import { setLocalStorage } from '../../../public/chrome-call';
 import { useAppDispatch, useAppSelector, useOptions, useWindowSize } from '../../../public/react-use';
@@ -143,16 +144,17 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
             >
                 <span className='panel__header-logo flex-align-items-center'>Sc</span>
                 <span className='panel__header-icons flex-align-items-center'>
+                    <CollectButton />
                     <IconFont
                         iconName='#icon-GoChevronDown'
                         onClick={() => setShowRtAndLs(!showRtAndLs)}
-                        style={showRtAndLs ? {transform: 'rotate(180deg)', opacity: '1'} : {}}
+                        style={showRtAndLs ? {transform: 'rotate(180deg)', opacity: '1'} : {opacity: '0.6'}}
                         className='button'
                     />
                     <IconFont
                         iconName='#icon-GoPin'
                         onClick={() => handleSetPinning(!pinning)}
-                        style={pinning ? {transform: 'rotate(-45deg)', opacity: '1'} : {}}
+                        style={pinning ? {transform: 'rotate(-45deg)', opacity: '1'} : {opacity: '0.6'}}
                         className='button'
                     />
                     <IconFont
