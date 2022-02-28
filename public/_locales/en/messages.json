@@ -440,6 +440,12 @@
     "contentCloseWebPageTranslating": {
         "message": "Close web page translating"
     },
+    "contentAddToCollection": {
+        "message": "Add the current translation(s) to collection"
+    },
+    "contentRemoveFromCollection": {
+        "message": "Remove from collection"
+    },
     "popupEnableTranslate": {
         "message": "Enable translate on this website"
     },

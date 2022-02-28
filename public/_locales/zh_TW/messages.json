@@ -440,6 +440,12 @@
     "contentCloseWebPageTranslating": {
         "message": "關閉網頁翻譯"
     },
+    "contentAddToCollection": {
+        "message": "將當前翻譯添加到收藏中"
+    },
+    "contentRemoveFromCollection": {
+        "message": "從收藏中刪除"
+    },
     "popupEnableTranslate": {
         "message": "在此網站啟用翻譯"
     },

@@ -440,6 +440,12 @@
     "contentCloseWebPageTranslating": {
         "message": "Webページ翻訳を閉じる"
     },
+    "contentAddToCollection": {
+        "message": "現在の翻訳をコレクションに追加する"
+    },
+    "contentRemoveFromCollection": {
+        "message": "コレクションから削除する"
+    },
     "popupEnableTranslate": {
         "message": "このサイトで翻訳を有効にする"
     },

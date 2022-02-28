@@ -1,10 +1,16 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { getMessage } from '../../public/i18n';
 import { useAppSelector } from '../../public/react-use';
 import { sendAddToCollection, sendIsCollected, sendRemoveFromCollection } from '../../public/send';
 import { Translation } from '../../redux/slice/multipleTranslateSlice';
 import IconFont from '../IconFont';
 
 type CollectButtonProps = {};
+
+const collectionMessage = {
+    addToCollection: getMessage('contentAddToCollection'),
+    removeFromCollection: getMessage('contentRemoveFromCollection')
+};
 
 const useIsCollected = (text: string) => {
     const [modifiable, setModifiable] = useState(false);
@@ -74,6 +80,7 @@ const CollectButton: React.FC<CollectButtonProps> = () => {
             iconName='#icon-collect'
             className={modifiable ? isCollected ? 'iconfont--enable' : 'iconfont--disable button' : 'iconfont--disable'}
             style={modifiable ? undefined : {cursor: 'default'}}
+            title={isCollected ? collectionMessage.removeFromCollection : collectionMessage.addToCollection}
             onClick={onCollectButtonClick}
         />
     );
