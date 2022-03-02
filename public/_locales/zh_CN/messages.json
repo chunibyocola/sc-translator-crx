@@ -473,6 +473,9 @@
     "popupSwitchToTheNextTheme": {
         "message": "切换到下一个主题"
     },
+    "collectionTitle": {
+        "message": "收藏"
+    },
     "wordTranslate": {
         "message": "翻译"
     },

@@ -10,13 +10,14 @@ import { getOptions } from '../../public/options';
 
 type SourceFaviconProps = {
     source: string;
+    faviconOnly?: boolean;
 } & Pick<React.HtmlHTMLAttributes<HTMLSpanElement>, 'className'>;
 
-const SourceFavicon: React.FC<SourceFaviconProps> = ({ source, className }) => {
+const SourceFavicon: React.FC<SourceFaviconProps> = ({ source, className, faviconOnly }) => {
     return (
         <span className={className}>
             {getFavicon(source)}
-            {getName(source)}
+            {!faviconOnly && <span>{getName(source)}</span>}
         </span>
     );
 };

@@ -473,6 +473,9 @@
     "popupSwitchToTheNextTheme": {
         "message": "次のテーマに切り替える"
     },
+    "collectionTitle": {
+        "message": "コレクション"
+    },
     "wordTranslate": {
         "message": "翻訳"
     },

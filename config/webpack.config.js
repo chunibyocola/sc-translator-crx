@@ -40,6 +40,7 @@ module.exports = (env) => {
             background: { import: path.resolve(paths.appSrc, 'entry', 'background'), filename: '[name].js' },
             options:  [path.resolve(paths.appSrc, 'entry', 'options')],
             separate: [path.resolve(paths.appSrc, 'entry', 'separate')],
+            collection: [path.resolve(paths.appSrc, 'entry', 'collection')],
         },
         output: {
             path: paths.appBuild,
@@ -90,7 +91,7 @@ module.exports = (env) => {
                         from: paths.appPublic,
                         to: paths.appBuild,
                         filter: (path) => {
-                            return !/(popup|options|separate)\.html/.test(path);
+                            return !/(popup|options|separate|collection)\.html/.test(path);
                         },
                     },
                 ],
@@ -112,6 +113,12 @@ module.exports = (env) => {
                 template: path.resolve(paths.appPublic, 'separate.html'),
                 chunks: ['separate'],
                 filename: 'separate.html',
+            }),
+            new HtmlWebpackPlugin({
+                inject: true,
+                template: path.resolve(paths.appPublic, 'collection.html'),
+                chunks: ['collection'],
+                filename: 'collection.html',
             }),
             new MiniCssExtractPlugin({
                 filename: 'static/css/[name].css'

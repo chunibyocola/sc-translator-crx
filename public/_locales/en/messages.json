@@ -473,6 +473,9 @@
     "popupSwitchToTheNextTheme": {
         "message": "Switch to the next theme"
     },
+    "collectionTitle": {
+        "message": "Collection"
+    },
     "wordTranslate": {
         "message": "Translate"
     },

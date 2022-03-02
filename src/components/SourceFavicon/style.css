@@ -1,6 +1,5 @@
 .favicon {
     vertical-align: bottom;
-    margin: 0 5px 0 0;
     user-select: none;
     display: inline-block;
     padding: 0;
@@ -15,4 +14,7 @@
     color: #fff;
     background: #999;
     font-weight: bold;
+}
+.favicon + span {
+    margin-left: 5px;
 }
