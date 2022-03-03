@@ -13,10 +13,20 @@
     top: 0;
     left: 0;
     right: 0;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+.toolbar {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-content);
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
+    padding-left: 10px;
+}
+.toolbar > .checkbox {
+    margin-right: 25px;
 }
 .main-title {
-    font-size: 115%;
+    font-size: 150%;
     font-weight: 500;
 }
 .container {
@@ -29,6 +39,20 @@
     height: 100%;
     overflow-y: auto;
 }
+.cards__item {
+    display: flex;
+    box-shadow: inset 0 -1px 0 0 rgb(100 121 143 / 12%);
+    padding-left: 10px;
+}
+.cards__item:hover {
+    box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+}
+.cards__item > .checkbox {
+    opacity: 0.3;
+}
+.cards__item:hover > .checkbox {
+    opacity: 1;
+}
 .main {
     flex: 1;
     padding: 20px;
@@ -36,17 +60,11 @@
 }
 .card {
     width: 250px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 4px;
     overflow: hidden;
-    background-color: var(--bg-content);
-    margin: 5px;
-}
-.card:hover {
-    background-color: var(--bg-item-hover);
 }
 .card__content {
-    padding: 8px 16px;
+    padding: 8px 16px 0 16px;
 }
 .card__title {
     font-size: 24px;
@@ -91,4 +109,5 @@
     background-color: var(--bg-content);
     padding: 16px;
     border-radius: 8px;
+    box-shadow: rgb(60 64 67 / 30%) 0 1px 2px 0, rgb(60 64 67 / 15%) 0 1px 3px 1px;
 }

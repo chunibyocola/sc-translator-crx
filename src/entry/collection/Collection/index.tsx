@@ -1,4 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import Button from '../../../components/Button';
+import Checkbox from '../../../components/Checkbox';
 import IconFont from '../../../components/IconFont';
 import ListenButton from '../../../components/ListenButton';
 import SourceFavicon from '../../../components/SourceFavicon';
@@ -77,10 +79,20 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
 const Collection: React.FC = () => {
     const [collectionValues, setCollectionValues] = useState<StoreCollectionValue[]>([]);
     const [currentValue, setCurrentValue] = useState<StoreCollectionValue>();
+    const [checked, setChecked] = useState<boolean[]>([]);
+    const checkedLength = useMemo(() => checked.reduce((total, current) => (total + (current ? 1 : 0)), 0), [checked]);
 
-    useEffect(() => {
+    const refreshCollectionValues = useCallback(() => {
         scIndexedDB.getAll('collection').then(data => setCollectionValues(data));
     }, []);
+
+    useEffect(() => {
+        refreshCollectionValues();
+    }, [refreshCollectionValues]);
+
+    useEffect(() => {
+        setChecked(new Array(collectionValues.length).fill(false));
+    }, [collectionValues]);
 
     return (
         <div className='collection'>
@@ -90,14 +102,52 @@ const Collection: React.FC = () => {
                 </div>
             </div>
             <div style={{height: '1px'}}></div>
+            <div className='toolbar'>
+                <Checkbox
+                    checked={checkedLength > 0 && checkedLength === checked.length}
+                    indeterminate={checkedLength > 0}
+                    onChange={() => setChecked(checkedLength > 0 ? checked.map(() => false) : checked.map(() => true))}
+                />
+                {checkedLength > 0 && <Button
+                    variant='icon'
+                    onClick={() => {
+                        const deleteQueries: string[] = [];
+
+                        checked.forEach((value, index) => {
+                            value && collectionValues[index] && deleteQueries.push(collectionValues[index].text);
+                        });
+
+                        deleteQueries.length > 0 && scIndexedDB.delete('collection', deleteQueries).then(() => refreshCollectionValues());
+                    }}
+                >
+                    <IconFont
+                        iconName='#icon-MdDelete'
+                        style={{fontSize: '24px'}}
+                    />
+                </Button>}
+            </div>
+            <div style={{height: '2px'}}></div>
             <div className='container'>
                 <div className='left'>
-                    <div className='text-list'>
-                        {collectionValues.map((collectionValue) => (<CollectionValueCard
+                    <div className='cards'>
+                        {collectionValues.map((collectionValue, index) => (<div
                             key={collectionValue.text}
-                            collectionValue={collectionValue}
-                            onClick={() => setCurrentValue(collectionValue)}
-                        />))}
+                            className={'cards__item'}
+                        >
+                            <Checkbox
+                                checked={checked[index] ?? false}
+                                onChange={checked => setChecked((value) => {
+                                    value[index] = checked;
+                                    return [...value];
+                                })}
+                            />
+                            <div>
+                                <CollectionValueCard
+                                    collectionValue={collectionValue}
+                                    onClick={() => setCurrentValue(collectionValue)}
+                                />
+                            </div>
+                        </div>))}
                     </div>
                 </div>
                 <div className='main'>
