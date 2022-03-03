@@ -69,10 +69,12 @@ const scIndexedDB = (() => {
 
             store.put(value, key);
         },
-        delete: async (storeName: string, query: IDBValidKey | IDBKeyRange) => {
-            const [store] = await withStore(storeName, 'readwrite');
+        delete: async (storeName: string, query: IDBValidKey | IDBKeyRange | (IDBValidKey | IDBKeyRange)[]) => {
+            const [store, done] = await withStore(storeName, 'readwrite');
 
-            store.delete(query);
+            Array.isArray(query) ? query.forEach((value) => store.delete(value)) : store.delete(query);
+
+            await done;
         }
     }
 })();
