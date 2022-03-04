@@ -104,23 +104,35 @@ const Collection: React.FC = () => {
                     indeterminate={checkedLength > 0}
                     onChange={() => setChecked(checkedLength > 0 ? checked.map(() => false) : checked.map(() => true))}
                 />
-                {checkedLength > 0 && <Button
-                    variant='icon'
-                    onClick={() => {
-                        const deleteQueries: string[] = [];
+                {checkedLength > 0 ? <>
+                    <Button
+                        variant='icon'
+                        onClick={() => {
+                            const deleteQueries: string[] = [];
 
-                        checked.forEach((value, index) => {
-                            value && collectionValues[index] && deleteQueries.push(collectionValues[index].text);
-                        });
+                            checked.forEach((value, index) => {
+                                value && collectionValues[index] && deleteQueries.push(collectionValues[index].text);
+                            });
 
-                        deleteQueries.length > 0 && scIndexedDB.delete('collection', deleteQueries).then(() => refreshCollectionValues());
-                    }}
-                >
-                    <IconFont
-                        iconName='#icon-MdDelete'
-                        style={{fontSize: '24px'}}
-                    />
-                </Button>}
+                            deleteQueries.length > 0 && scIndexedDB.delete('collection', deleteQueries).then(() => refreshCollectionValues());
+                        }}
+                    >
+                        <IconFont
+                            iconName='#icon-MdDelete'
+                            style={{fontSize: '24px'}}
+                        />
+                    </Button>
+                </> : <>
+                    <Button
+                        variant='icon'
+                        onClick={() => refreshCollectionValues()}
+                    >
+                        <IconFont
+                            iconName='#icon-refresh'
+                            style={{fontSize: '24px'}}
+                        />
+                    </Button>
+                </>}
             </div>
             <div style={{height: '2px'}}></div>
             <div className='container'>
