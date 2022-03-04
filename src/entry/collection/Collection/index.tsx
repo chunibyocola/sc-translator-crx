@@ -12,9 +12,8 @@ import './style.css';
 
 type CollectionValueCardProps = {
     collectionValue: StoreCollectionValue;
-    onClick: (collectionValue: StoreCollectionValue) => void;
 };
-const CollectionValueCard: React.FC<CollectionValueCardProps> = ({ collectionValue, onClick }) => {
+const CollectionValueCard: React.FC<CollectionValueCardProps> = React.memo(({ collectionValue }) => {
     const dateString = useMemo(() => {
         const date = new Date(collectionValue.date);
 
@@ -22,10 +21,7 @@ const CollectionValueCard: React.FC<CollectionValueCardProps> = ({ collectionVal
     }, [collectionValue.date]);
 
     return (
-        <div
-            className='card button'
-            onClick={() => onClick(collectionValue)}
-        >
+        <div className='card button'>
             <div className='card__content'>
                 <div className='card__title'>{collectionValue.text}</div>
                 {collectionValue.translations[0]?.translateRequest.status === 'finished' && <div className='card__translation'>
@@ -44,7 +40,7 @@ const CollectionValueCard: React.FC<CollectionValueCardProps> = ({ collectionVal
             </div>
         </div>
     );
-};
+});
 
 type TranslationsContainerProps = {
     collectionValue: StoreCollectionValue;
@@ -141,11 +137,8 @@ const Collection: React.FC = () => {
                                     return [...value];
                                 })}
                             />
-                            <div>
-                                <CollectionValueCard
-                                    collectionValue={collectionValue}
-                                    onClick={() => setCurrentValue(collectionValue)}
-                                />
+                            <div onClick={() => setCurrentValue(collectionValue)}>
+                                <CollectionValueCard collectionValue={collectionValue} />
                             </div>
                         </div>))}
                     </div>
