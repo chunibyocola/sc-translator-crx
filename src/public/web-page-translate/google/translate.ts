@@ -15,21 +15,11 @@ export const translate = async (searchParams: URLSearchParams, totalQText: strin
     });
 
     try {
-        const data: string | [string, string] | [string, string][] = await res.json();
-        
-        if (Array.isArray(data)) {
-            if (Array.isArray(data[0])) {
-                return data.map((v) => {
-                    return toResult(v[0]);
-                });
-            }
-            else {
-                return [toResult(data[0])];
-            }
-        }
-        else {
-            return [];
-        }
+        const data: string | string[] = await res.json();
+
+        if (!Array.isArray(data)) { return []; }
+
+        return data.map(v => toResult(v));
     }
     catch {
         throw getError(RESULT_ERROR);
