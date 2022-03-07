@@ -99,40 +99,42 @@ const Collection: React.FC = () => {
             </div>
             <div style={{height: '1px'}}></div>
             <div className='toolbar'>
-                <Checkbox
-                    checked={checkedLength > 0 && checkedLength === checked.length}
-                    indeterminate={checkedLength > 0}
-                    onChange={() => setChecked(checkedLength > 0 ? checked.map(() => false) : checked.map(() => true))}
-                />
-                {checkedLength > 0 ? <>
-                    <Button
-                        variant='icon'
-                        onClick={() => {
-                            const deleteQueries: string[] = [];
+                <div className='toolbar-wrapper'>
+                    <Checkbox
+                        checked={checkedLength > 0 && checkedLength === checked.length}
+                        indeterminate={checkedLength > 0}
+                        onChange={() => setChecked(checkedLength > 0 ? checked.map(() => false) : checked.map(() => true))}
+                    />
+                    {checkedLength > 0 ? <>
+                        <Button
+                            variant='icon'
+                            onClick={() => {
+                                const deleteQueries: string[] = [];
 
-                            checked.forEach((value, index) => {
-                                value && collectionValues[index] && deleteQueries.push(collectionValues[index].text);
-                            });
+                                checked.forEach((value, index) => {
+                                    value && collectionValues[index] && deleteQueries.push(collectionValues[index].text);
+                                });
 
-                            deleteQueries.length > 0 && scIndexedDB.delete('collection', deleteQueries).then(() => refreshCollectionValues());
-                        }}
-                    >
-                        <IconFont
-                            iconName='#icon-MdDelete'
-                            style={{fontSize: '24px'}}
-                        />
-                    </Button>
-                </> : <>
-                    <Button
-                        variant='icon'
-                        onClick={() => refreshCollectionValues()}
-                    >
-                        <IconFont
-                            iconName='#icon-refresh'
-                            style={{fontSize: '24px'}}
-                        />
-                    </Button>
-                </>}
+                                deleteQueries.length > 0 && scIndexedDB.delete('collection', deleteQueries).then(() => refreshCollectionValues());
+                            }}
+                        >
+                            <IconFont
+                                iconName='#icon-MdDelete'
+                                style={{fontSize: '24px'}}
+                            />
+                        </Button>
+                    </> : <>
+                        <Button
+                            variant='icon'
+                            onClick={() => refreshCollectionValues()}
+                        >
+                            <IconFont
+                                iconName='#icon-refresh'
+                                style={{fontSize: '24px'}}
+                            />
+                        </Button>
+                    </>}
+                </div>
             </div>
             <div style={{height: '2px'}}></div>
             <div className='container'>

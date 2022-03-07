@@ -20,9 +20,14 @@
     align-items: center;
     background-color: var(--bg-content);
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
+}
+.toolbar-wrapper {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
     padding-left: 10px;
 }
-.toolbar > .checkbox {
+.toolbar-wrapper > .checkbox {
     margin-right: 25px;
 }
 .main-title {
@@ -34,6 +39,9 @@
     flex: 1;
     display: flex;
     overflow: hidden;
+    max-width: 1440px;
+    margin: 0 auto;
+    min-width: 600px;
 }
 .left {
     height: 100%;
@@ -57,6 +65,7 @@
     flex: 1;
     padding: 20px;
     overflow-y: auto;
+    max-width: 816px;
 }
 .card {
     width: 250px;
