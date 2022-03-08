@@ -4,7 +4,7 @@ import { createSeparateWindow } from './separate-window';
 import { DefaultOptions } from '../../types';
 import { getLocalStorageAsync } from '../../public/utils';
 import { syncSettingsToOtherBrowsers } from './sync';
-import scIndexedDB, { StoreCollectionValue } from '../../public/sc-indexed-db';
+import scIndexedDB, { DB_STORE_COLLECTION, StoreCollectionValue } from '../../public/sc-indexed-db';
 import { ChromeRuntimeMessage } from '../../public/send';
 
 type TranslatePickedOptions = Pick<DefaultOptions, 'useDotCn' | 'preferredLanguage' | 'secondPreferredLanguage'>;
@@ -65,7 +65,7 @@ chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sen
 
             text = text.trimLeft().trimRight();
 
-            text && scIndexedDB.get<StoreCollectionValue>('collection', text)
+            text && scIndexedDB.get<StoreCollectionValue>(DB_STORE_COLLECTION, text)
                 .then(value => sendResponse({ text: message.payload.text, isCollected: !!value }))
                 .catch(() => sendResponse({ code: '' }));
 
@@ -76,7 +76,7 @@ chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sen
 
             text = text.trimLeft().trimRight();
 
-            text && scIndexedDB.add<StoreCollectionValue>('collection', { text, date: Number(new Date()), translations });
+            text && scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { text, date: Number(new Date()), translations });
 
             return false;
         }
@@ -85,7 +85,7 @@ chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sen
 
             text = text.trimLeft().trimRight();
 
-            text && scIndexedDB.delete('collection', text);
+            text && scIndexedDB.delete(DB_STORE_COLLECTION, text);
 
             return false;
         }

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Button from '../../../components/Button';
 import Checkbox from '../../../components/Checkbox';
 import IconFont from '../../../components/IconFont';
@@ -6,7 +6,7 @@ import ListenButton from '../../../components/ListenButton';
 import SourceFavicon from '../../../components/SourceFavicon';
 import TranslateResult from '../../../components/TranslateResult';
 import { getMessage } from '../../../public/i18n';
-import scIndexedDB, { StoreCollectionValue } from '../../../public/sc-indexed-db';
+import scIndexedDB, { DB_STORE_COLLECTION, StoreCollectionValue } from '../../../public/sc-indexed-db';
 import { resultToString } from '../../../public/utils';
 import './style.css';
 
@@ -72,14 +72,71 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
     );
 });
 
+// will be replaced with React18's built-in startTransition
+const startTransition = (fn: () => void) => {
+    setTimeout(fn, 0);
+};
+
+type SearchFieldProps = {
+    onChange: (search: string) => void;
+};
+
+const SearchField: React.FC<SearchFieldProps> = React.memo(({ onChange }) => {
+    const searchElementRef = useRef<HTMLInputElement>(null);
+
+    return (
+        <div className='search-field'>
+            <Button
+                variant='icon'
+                onClick={() => {
+                    if (!searchElementRef.current) { return; }
+
+                    searchElementRef.current.select();
+                }}
+            >
+                <IconFont
+                    iconName='#icon-search'
+                    style={{fontSize: '20px'}}
+                />
+            </Button>
+            <input
+                type='text'
+                ref={searchElementRef}
+                defaultValue={''}
+                placeholder={getMessage('collectionSearchText')}
+                onChange={e => startTransition(() => onChange((e.target as HTMLInputElement).value))}
+            />
+            <Button
+                variant='icon'
+                className='search-field__close-btn'
+                onClick={() => {
+                    if (!searchElementRef.current) { return; }
+
+                    searchElementRef.current.value = '';
+                    searchElementRef.current.blur();
+                    onChange('');
+                }}
+            >
+                <IconFont
+                    iconName='#icon-GoX'
+                    style={{fontSize: '20px'}}
+                />
+            </Button>
+        </div>
+    );
+});
+
 const Collection: React.FC = () => {
     const [collectionValues, setCollectionValues] = useState<StoreCollectionValue[]>([]);
     const [currentValue, setCurrentValue] = useState<StoreCollectionValue>();
     const [checked, setChecked] = useState<boolean[]>([]);
-    const checkedLength = useMemo(() => checked.reduce((total, current) => (total + (current ? 1 : 0)), 0), [checked]);
+    const [search, setSearch] = useState('');
+    const [filteredValues, setFilteredValues] = useState<StoreCollectionValue[]>([]);
+
+    const checkedLength = useMemo(() => checked.reduce((total, current) => (total + Number(current)), 0), [checked]);
 
     const refreshCollectionValues = useCallback(() => {
-        scIndexedDB.getAll('collection').then(data => setCollectionValues(data));
+        scIndexedDB.getAll(DB_STORE_COLLECTION).then(data => setCollectionValues(data));
     }, []);
 
     useEffect(() => {
@@ -87,15 +144,24 @@ const Collection: React.FC = () => {
     }, [refreshCollectionValues]);
 
     useEffect(() => {
-        setChecked(new Array(collectionValues.length).fill(false));
-    }, [collectionValues]);
+        const lowerCaseSearch = search.toLowerCase();
+        const nextFilteredValues = lowerCaseSearch ? collectionValues.filter(v => v.text.toLowerCase().includes(lowerCaseSearch)) : collectionValues;
+        setChecked(new Array(nextFilteredValues.length).fill(false));
+        setFilteredValues(nextFilteredValues);
+    }, [collectionValues, search]);
 
     return (
         <div className='collection'>
-            <div className='nav-bar'>
-                <div className='main-title'>
-                    <span style={{fontWeight: 'bold', marginRight: '10px'}}>Sc</span>{getMessage('collectionTitle')}
+            <div className='navbar'>
+                <div className='navbar-left'>
+                    <div className='main-title'>
+                        <span style={{fontWeight: 'bold', marginRight: '10px'}}>Sc</span>{getMessage('collectionTitle')}
+                    </div>
                 </div>
+                <div className='navbar-center'>
+                    <SearchField onChange={setSearch} />
+                </div>
+                <div className='navbar-right'></div>
             </div>
             <div style={{height: '1px'}}></div>
             <div className='toolbar'>
@@ -112,10 +178,10 @@ const Collection: React.FC = () => {
                                 const deleteQueries: string[] = [];
 
                                 checked.forEach((value, index) => {
-                                    value && collectionValues[index] && deleteQueries.push(collectionValues[index].text);
+                                    value && filteredValues[index] && deleteQueries.push(filteredValues[index].text);
                                 });
 
-                                deleteQueries.length > 0 && scIndexedDB.delete('collection', deleteQueries).then(() => refreshCollectionValues());
+                                deleteQueries.length > 0 && scIndexedDB.delete(DB_STORE_COLLECTION, deleteQueries).then(() => refreshCollectionValues());
                             }}
                         >
                             <IconFont
@@ -140,7 +206,7 @@ const Collection: React.FC = () => {
             <div className='container'>
                 <div className='left'>
                     <div className='cards'>
-                        {collectionValues.map((collectionValue, index) => (<div
+                        {filteredValues.map((collectionValue, index) => (<div
                             key={collectionValue.text}
                             className={'cards__item'}
                         >
@@ -151,10 +217,11 @@ const Collection: React.FC = () => {
                                     return [...value];
                                 })}
                             />
-                            <div onClick={() => setCurrentValue(collectionValue)}>
+                            <div className='card-wrapper' onClick={() => setCurrentValue(collectionValue)}>
                                 <CollectionValueCard collectionValue={collectionValue} />
                             </div>
                         </div>))}
+                        {filteredValues.length === 0 && <div className='no-record'>{getMessage('contentNoRecord')}</div>}
                     </div>
                 </div>
                 <div className='main'>

@@ -476,6 +476,9 @@
     "collectionTitle": {
         "message": "コレクション"
     },
+    "collectionSearchText": {
+        "message": "検索テキスト"
+    },
     "wordTranslate": {
         "message": "翻訳"
     },

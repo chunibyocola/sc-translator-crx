@@ -476,6 +476,9 @@
     "collectionTitle": {
         "message": "Collection"
     },
+    "collectionSearchText": {
+        "message": "Search text"
+    },
     "wordTranslate": {
         "message": "Translate"
     },

@@ -476,6 +476,9 @@
     "collectionTitle": {
         "message": "收藏"
     },
+    "collectionSearchText": {
+        "message": "搜索文本"
+    },
     "wordTranslate": {
         "message": "翻译"
     },
