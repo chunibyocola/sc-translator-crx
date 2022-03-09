@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import Button from '../../../components/Button';
 import Checkbox from '../../../components/Checkbox';
 import IconFont from '../../../components/IconFont';
@@ -132,6 +132,7 @@ const Collection: React.FC = () => {
     const [checked, setChecked] = useState<boolean[]>([]);
     const [search, setSearch] = useState('');
     const [filteredValues, setFilteredValues] = useState<StoreCollectionValue[]>([]);
+    const [orderIndicate, setOrderIndicate] = useState(0); // 0: order by date reverse, 1: order by date, 2: order by text reverse, 3: order by text
 
     const checkedLength = useMemo(() => checked.reduce((total, current) => (total + Number(current)), 0), [checked]);
 
@@ -143,12 +144,23 @@ const Collection: React.FC = () => {
         refreshCollectionValues();
     }, [refreshCollectionValues]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const lowerCaseSearch = search.toLowerCase();
-        const nextFilteredValues = lowerCaseSearch ? collectionValues.filter(v => v.text.toLowerCase().includes(lowerCaseSearch)) : collectionValues;
+        let nextFilteredValues = lowerCaseSearch ? collectionValues.filter(v => v.text.toLowerCase().includes(lowerCaseSearch)) : [...collectionValues];
+
+        if (orderIndicate === 0) {
+            nextFilteredValues.sort((a, b) => (b.date - a.date));
+        }
+        else if (orderIndicate === 1) {
+            nextFilteredValues.sort((a, b) => (a.date - b.date));
+        }
+        else if (orderIndicate === 2) {
+            nextFilteredValues.reverse();
+        }
+
         setChecked(new Array(nextFilteredValues.length).fill(false));
         setFilteredValues(nextFilteredValues);
-    }, [collectionValues, search]);
+    }, [collectionValues, search, orderIndicate]);
 
     return (
         <div className='collection'>
@@ -199,6 +211,42 @@ const Collection: React.FC = () => {
                                 style={{fontSize: '24px'}}
                             />
                         </Button>
+                        <Button
+                            variant='text'
+                            onClick={() => setOrderIndicate(v => v === 3 ? 2 : 3)}
+                        >
+                            <span className='order-btn__content'>
+                                {getMessage('wordText')}
+                                <span className='order-btn__content__icons'>
+                                    <IconFont
+                                        iconName='#icon-GoChevronDown'
+                                        style={{transform: 'rotate(180deg)', ...(orderIndicate !== 3 ? { opacity: 0.3 } : undefined)}}
+                                    />
+                                    <IconFont
+                                        iconName='#icon-GoChevronDown'
+                                        style={orderIndicate !== 2 ? { opacity: 0.3 } : undefined}
+                                    />
+                                </span>
+                            </span>
+                        </Button>
+                        <Button
+                            variant='text'
+                            onClick={() => setOrderIndicate(v => v === 1 ? 0 : 1)}
+                        >
+                            <span className='order-btn__content'>
+                                {getMessage('wordDate')}
+                                <span className='order-btn__content__icons'>
+                                    <IconFont
+                                        iconName='#icon-GoChevronDown'
+                                        style={{transform: 'rotate(180deg)', ...(orderIndicate !== 1 ? { opacity: 0.3 } : undefined)}}
+                                    />
+                                    <IconFont
+                                        iconName='#icon-GoChevronDown'
+                                        style={orderIndicate !== 0 ? { opacity: 0.3 } : undefined}
+                                    />
+                                </span>
+                            </span>
+                        </Button>
                     </>}
                 </div>
             </div>
@@ -208,7 +256,7 @@ const Collection: React.FC = () => {
                     <div className='cards'>
                         {filteredValues.map((collectionValue, index) => (<div
                             key={collectionValue.text}
-                            className={'cards__item'}
+                            className='cards__item'
                         >
                             <Checkbox
                                 checked={checked[index] ?? false}

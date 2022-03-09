@@ -512,6 +512,12 @@
     "wordExample": {
         "message": "例"
     },
+    "wordText": {
+        "message": "テキスト"
+    },
+    "wordDate": {
+        "message": "日付"
+    },
     "sentenceAddTranslateSource": {
         "message": "翻訳ソースを追加してください。"
     },

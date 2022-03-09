@@ -512,6 +512,12 @@
     "wordExample": {
         "message": "示例"
     },
+    "wordText": {
+        "message": "文本"
+    },
+    "wordDate": {
+        "message": "日期"
+    },
     "sentenceAddTranslateSource": {
         "message": "请添加翻译源。"
     },

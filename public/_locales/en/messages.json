@@ -512,6 +512,12 @@
     "wordExample": {
         "message": "Example"
     },
+    "wordText": {
+        "message": "Text"
+    },
+    "wordDate": {
+        "message": "Date"
+    },
     "sentenceAddTranslateSource": {
         "message": "Please add a translate source."
     },

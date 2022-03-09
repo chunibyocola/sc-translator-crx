@@ -65,6 +65,17 @@
 .toolbar-wrapper > .checkbox {
     margin-right: 25px;
 }
+.order-btn__content {
+    display: inline-flex; 
+    align-items: center;
+    pointer-events: none;
+}
+.order-btn__content__icons {
+    display: inline-flex;
+    line-height: 0;
+    margin-left: 5px;
+    flex-direction: column;
+}
 .main-title {
     font-size: 150%;
     font-weight: 500;
