@@ -18,35 +18,40 @@ type I18nMessageKey =
     | 'contextMenus_OPEN_SEPARATE_WINDOW'
     | 'contextMenus_TRANSLATE_SELECTION_TEXT'
     | 'contextMenus_LISTEN_SELECTION_TEXT'
-    | 'contextMenus_TRANSLATE_CURRENT_PAGE';
+    | 'contextMenus_TRANSLATE_CURRENT_PAGE'
+    | 'contextMenus_OPEN_COLLECTION_PAGE';
 const i18nMessage: { [P in I18nLocaleCode]: { [K in I18nMessageKey]: string; } } = {
     'en': {
         contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER: 'Open this page with PDF viewer',
         contextMenus_OPEN_SEPARATE_WINDOW: 'Open separate translate window',
         contextMenus_TRANSLATE_SELECTION_TEXT: 'Translate the text you select',
         contextMenus_LISTEN_SELECTION_TEXT: 'Listen the text you select',
-        contextMenus_TRANSLATE_CURRENT_PAGE: 'Translate the current page'
+        contextMenus_TRANSLATE_CURRENT_PAGE: 'Translate the current page',
+        contextMenus_OPEN_COLLECTION_PAGE: 'Open collection page'
     },
     'ja': {
         contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER: 'PDFビューアでこのページを開く',
         contextMenus_OPEN_SEPARATE_WINDOW: 'スタンドアロン翻訳ウィンドウを開く',
         contextMenus_TRANSLATE_SELECTION_TEXT: '選択したテキストを翻訳する',
         contextMenus_LISTEN_SELECTION_TEXT: '選択したテキストの音声を聞く',
-        contextMenus_TRANSLATE_CURRENT_PAGE: '現在のページを翻訳する'
+        contextMenus_TRANSLATE_CURRENT_PAGE: '現在のページを翻訳する',
+        contextMenus_OPEN_COLLECTION_PAGE: 'コレクションページを開く'
     },
     'zh_CN': {
         contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER: '用 PDF 阅读器打开此页面',
         contextMenus_OPEN_SEPARATE_WINDOW: '打开独立翻译窗口',
         contextMenus_TRANSLATE_SELECTION_TEXT: '翻译您选择的文本',
         contextMenus_LISTEN_SELECTION_TEXT: '朗读您选择的文本',
-        contextMenus_TRANSLATE_CURRENT_PAGE: '翻译当前页面'
+        contextMenus_TRANSLATE_CURRENT_PAGE: '翻译当前页面',
+        contextMenus_OPEN_COLLECTION_PAGE: '打开收藏页面'
     },
     'zh_TW': {
         contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER: '用 PDF 閱讀器打開此頁面',
         contextMenus_OPEN_SEPARATE_WINDOW: '打開獨立翻譯視窗',
         contextMenus_TRANSLATE_SELECTION_TEXT: '翻譯您選擇的文字',
         contextMenus_LISTEN_SELECTION_TEXT: '讀讀您選擇的文字',
-        contextMenus_TRANSLATE_CURRENT_PAGE: '翻譯當前頁面'
+        contextMenus_TRANSLATE_CURRENT_PAGE: '翻譯當前頁面',
+        contextMenus_OPEN_COLLECTION_PAGE: '打開收藏頁面'
     }
 };
 const getI18nMessage = (message: I18nMessageKey) => {
@@ -107,6 +112,10 @@ const translateCurrentPage: OnContextMenuClick = (info, tab) => {
     tab?.id !== undefined && tab.id >= 0 && chrome.tabs.sendMessage(tab.id, { type: SCTS_TRANSLATE_CURRENT_PAGE });
 };
 
+const openCollectionPage = () => {
+    chrome.tabs.create({ url: chrome.runtime.getURL('/collection.html') });
+};
+
 const updateContextMenus = (contextMenus: OptionsContextMenu[]) => {
     // To fix the issue of context menus disappear after opening incognito page.
     // Replace chrome.contextMenus.removeAll() with the below codes.
@@ -148,6 +157,13 @@ export const initContextMenus = () => {
             contexts: ['action']
         }, () => { if (chrome.runtime.lastError) {} });
 
+        // open collection page
+        chrome.contextMenus.create({
+            id: 'action_open_collection_page',
+            title: getI18nMessage('contextMenus_OPEN_COLLECTION_PAGE'),
+            contexts: ['action']
+        }, () => { if (chrome.runtime.lastError) {} });
+
         getLocalStorageAsync<Pick<DefaultOptions, 'contextMenus'>>(['contextMenus']).then(options => updateContextMenus(options.contextMenus));
     });
 };
@@ -174,6 +190,9 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
             return;
         case 'action_open_this_page_with_pdf_viewer':
             openThisPageWithPdfViewer(info, tab);
+            return;
+        case 'action_open_collection_page':
+            openCollectionPage();
             return;
         default: return;
     }
