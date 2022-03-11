@@ -48,11 +48,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         case types.SCTS_SEND_TEXT_TO_SEPARATE_WINDOW:
             payload?.text && createSeparateWindow(payload.text);
 
-            return false;
+            sendResponse();
+
+            return true;
         case types.SCTS_SYNC_SETTINGS_TO_OTHER_BROWSERS:
             syncSettingsToOtherBrowsers();
 
-            return false;
+            sendResponse();
+
+            return true;
         default: break;
     }
 });
@@ -65,9 +69,14 @@ chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sen
 
             text = text.trimLeft().trimRight();
 
-            text && scIndexedDB.get<StoreCollectionValue>(DB_STORE_COLLECTION, text)
-                .then(value => sendResponse({ text: message.payload.text, isCollected: !!value }))
-                .catch(() => sendResponse({ code: '' }));
+            if (text) {
+                scIndexedDB.get<StoreCollectionValue>(DB_STORE_COLLECTION, text)
+                    .then(value => sendResponse({ text: message.payload.text, isCollected: !!value }))
+                    .catch(() => sendResponse({ code: '' }));
+            }
+            else {
+                sendResponse({ code: 'EMPTY_TEXT' });
+            }
 
             return true;
         }
@@ -78,7 +87,9 @@ chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sen
 
             text && scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { text, date: Number(new Date()), translations });
 
-            return false;
+            sendResponse();
+
+            return true;
         }
         case types.SCTS_REMOVE_FROM_COLLECTION: {
             let { text } = message.payload;
@@ -87,7 +98,9 @@ chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sen
 
             text && scIndexedDB.delete(DB_STORE_COLLECTION, text);
 
-            return false;
+            sendResponse();
+
+            return true;
         }
         default: return;
     }
