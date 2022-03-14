@@ -51,20 +51,19 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ showRtAnd
 
         dispatch(stRequestStart());
 
-        sendTranslate(preprocessedText, { source, from, to, translateId: translateIdRef.current }, (result) => {
-            if (result.translateId !== translateIdRef.current) { return; }
+        sendTranslate({ text: preprocessedText, source, from, to }, translateIdRef.current).then((response) => {
+            if (response.translateId !== translateIdRef.current) { return; }
 
-            if (result.suc) {
-                dispatch(updateHistoryFinish({ translateId: result.translateId, source, result: result.data }));
-                dispatch(stRequestFinish({ result: result.data }));
-                autoInsertResult(result.translateId, source, result.data.result);
+            if (!('code' in response)) {
+                dispatch(updateHistoryFinish({ translateId: response.translateId, source, result: response.translation }));
+                dispatch(stRequestFinish({ result: response.translation }));
+                autoInsertResult(response.translateId, source, response.translation.result);
             }
             else {
-                dispatch(updateHistoryError({ translateId: result.translateId, source, errorCode: result.data.code }));
-                dispatch(stRequestError({ errorCode: result.data.code }));
+                dispatch(updateHistoryError({ translateId: response.translateId, source, errorCode: response.code }));
+                dispatch(stRequestError({ errorCode: response.code }));
             }
         });
-
     }, [dispatch, text, source, from, to, autoInsertResult]);
 
     const handleSourceChange = useCallback((targetSource: string) => {

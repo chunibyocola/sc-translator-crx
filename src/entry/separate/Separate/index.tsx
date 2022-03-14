@@ -39,10 +39,10 @@ const Separate: React.FC = () => {
 
         dispatch(mtRequestStart({ source }));
 
-        sendTranslate(preprocessedText, { source, from, to, translateId: translateIdRef.current }, (result) => {
-            if (result.translateId !== translateIdRef.current) { return; }
+        sendTranslate({ text: preprocessedText, source, from, to }, translateIdRef.current).then((response) => {
+            if (response.translateId !== translateIdRef.current) { return; }
 
-            result.suc ? dispatch(mtRequestFinish({ source, result: result.data})) : dispatch(mtRequestError({ source, errorCode: result.data.code }));
+            !('code' in response) ? dispatch(mtRequestFinish({ source, result: response.translation})) : dispatch(mtRequestError({ source, errorCode: response.code }));
         });
     }, [text, from, to, dispatch]);
 

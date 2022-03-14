@@ -82,9 +82,13 @@ export const playAudio = ({ text, source, from = '' }: { text: string, source?: 
         startPlaying();
     }
     else {
-        sendDetect({ text: audioCache.textList[0], source }, (result) => {
-            if (result.suc && result.text === audioCache.textList[0] && source === audioCache.source) {
-                audioCache.detectedFrom = result.data;
+        const detectingText = audioCache.textList[0];
+
+        sendDetect(detectingText, source).then((response) => {
+            if ('code' in response) { return; }
+
+            if (detectingText === audioCache.textList[0] && source === audioCache.source) {
+                audioCache.detectedFrom = response.langCode;
                 startPlaying();
             }
         });
@@ -122,11 +126,11 @@ const startPlaying = () => {
     }
 
     if (!audioCache.requesting) {
-        sendAudio({ text: textList[index], source, from: detectedFrom, index }, (result) => {
+        sendAudio(textList[index], source, detectedFrom).then((response) => {
             if (id === audioCache.id) {
-                if (result.suc) {
-                    audioCache.dataUriList[index] = result.data;
-                    !audioCache.manuallyPaused && play(result.data);
+                if (!('code' in response)) {
+                    audioCache.dataUriList[index] = response.dataUri;
+                    !audioCache.manuallyPaused && play(response.dataUri);
                 }
                 audioCache.requesting = false;
             }

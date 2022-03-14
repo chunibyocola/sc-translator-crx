@@ -26,13 +26,13 @@ const useIsCollected = (text: string) => {
 
         if (!text) { return; }
 
-        sendIsCollected(text, (result) => {
-            if ('code' in result) { return; }
+        sendIsCollected(text).then((response) => {
+            if ('code' in response) { return; }
 
-            if (result.text !== oldTextRef.current) { return; }
+            if (response.text !== oldTextRef.current) { return; }
 
             setModifiable(true);
-            setIsCollected(result.isCollected);
+            setIsCollected(response.isCollected);
         });
     }, [text]);
 

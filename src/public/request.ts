@@ -12,19 +12,17 @@ import custom from '../public/translate/custom';
 import { bingSwitchLangCode, baiduSwitchLangCode } from '../public/switch-lang-code';
 import { AudioCallback, DetectCallback, TranslateCallback } from './send';
 
-type TranslateRequestObject = {
+type TranslateRequestParams = {
 	source: string;
-	translateId: number;
-	requestObj: {
-		preferredLanguage: string;
-		secondPreferredLanguage: string;
-		text: string;
-		from: string;
-		to: string;
-	}
-}
+	text: string;
+	from: string;
+	to: string;
+	com: boolean;
+	preferredLanguage: string;
+	secondPreferredLanguage: string;
+};
 
-export const translate = ({ source, translateId, requestObj }: TranslateRequestObject, cb: TranslateCallback) => {
+export const translate = ({ source, ...requestParams }: TranslateRequestParams, cb: TranslateCallback) => {
 	let translate;
 
 	switch (source) {
@@ -33,74 +31,73 @@ export const translate = ({ source, translateId, requestObj }: TranslateRequestO
 			break;
 		case BING_COM:
 			translate = bing.translate;
-			requestObj.from = bingSwitchLangCode(requestObj.from);
-			requestObj.to = bingSwitchLangCode(requestObj.to);
-			requestObj.preferredLanguage = bingSwitchLangCode(requestObj.preferredLanguage);
-			requestObj.secondPreferredLanguage = bingSwitchLangCode(requestObj.secondPreferredLanguage);
+			requestParams.from = bingSwitchLangCode(requestParams.from);
+			requestParams.to = bingSwitchLangCode(requestParams.to);
+			requestParams.preferredLanguage = bingSwitchLangCode(requestParams.preferredLanguage);
+			requestParams.secondPreferredLanguage = bingSwitchLangCode(requestParams.secondPreferredLanguage);
 			break;
 		case MOJIDICT_COM:
 			translate = mojidict.translate;
 			break;
 		case BAIDU_COM:
 			translate = baidu.translate;
-			requestObj.from = baiduSwitchLangCode(requestObj.from);
-			requestObj.to = baiduSwitchLangCode(requestObj.to);
-			requestObj.preferredLanguage = baiduSwitchLangCode(requestObj.preferredLanguage);
-			requestObj.secondPreferredLanguage = baiduSwitchLangCode(requestObj.secondPreferredLanguage);
+			requestParams.from = baiduSwitchLangCode(requestParams.from);
+			requestParams.to = baiduSwitchLangCode(requestParams.to);
+			requestParams.preferredLanguage = baiduSwitchLangCode(requestParams.preferredLanguage);
+			requestParams.secondPreferredLanguage = baiduSwitchLangCode(requestParams.secondPreferredLanguage);
 			break;
 		default:
-			custom.translate(requestObj, source)
-				.then(result => cb({ suc: true, data: result, translateId }))
-				.catch(err => cb({ suc: false, data: err, translateId }));
+			custom.translate(requestParams, source)
+				.then(translation => cb({ translation }))
+				.catch(err => cb({ code: err }));
 			return;
 	}
 	
-	translate(requestObj)
-		.then(result => cb({ suc: true, data: result, translateId }))
-		.catch(err => cb({ suc: false, data: err, translateId }));
+	translate(requestParams)
+		.then(translation => cb({ translation }))
+		.catch(err => cb({ code: err }));
 };
 
-type AudioRequestObject = {
+type AudioRequestParams = {
 	source: string;
 	text: string;
 	from: string;
 	com: boolean;
-	index: number;
 };
 
-export const audio = (requestObject: AudioRequestObject, cb: AudioCallback) => {
+export const audio = (requestParams: AudioRequestParams, cb: AudioCallback) => {
 	let audio;
-	switch (requestObject.source) {
+	switch (requestParams.source) {
 		case GOOGLE_COM:
 			audio = google.audio;
 			break;
 		case BING_COM:
 			audio = bing.audio;
-			requestObject.from = bingSwitchLangCode(requestObject.from ?? '');
+			requestParams.from = bingSwitchLangCode(requestParams.from ?? '');
 			break;
 		case BAIDU_COM:
 			audio = baidu.audio;
-			requestObject.from = baiduSwitchLangCode(requestObject.from ?? '');
+			requestParams.from = baiduSwitchLangCode(requestParams.from ?? '');
 			break;
 		default:
 			audio = google.audio;
 			break;
 	}
 
-	audio(requestObject)
-		.then(dataUri => cb({ suc: true, data: dataUri, text: requestObject.text, index: requestObject.index }))
-		.catch(err => cb({ suc: false, code: err.code, text: requestObject.text, index: requestObject.index }));
+	audio(requestParams)
+		.then(dataUri => cb({ dataUri }))
+		.catch(err => cb({ code: err.code }));
 };
 
-type DetectRequestObject = {
+type DetectRequestParams = {
 	source: string;
 	text: string;
 	com: boolean;
 };
 
-export const detect = (requestObject: DetectRequestObject, cb: DetectCallback) => {
+export const detect = (requestParams: DetectRequestParams, cb: DetectCallback) => {
 	let detect;
-	switch (requestObject.source) {
+	switch (requestParams.source) {
 		case GOOGLE_COM:
 			detect = google.detect;
 			break;
@@ -115,7 +112,7 @@ export const detect = (requestObject: DetectRequestObject, cb: DetectCallback) =
 			break;
 	}
 
-	detect(requestObject)
-		.then(langCode => cb({ suc: true, text: requestObject.text, data: langCode }))
-		.catch(err => cb({ suc: false, code: err.code, text: requestObject.text }));
+	detect(requestParams)
+		.then(langCode => cb({ langCode }))
+		.catch(err => cb({ code: err.code }));
 };

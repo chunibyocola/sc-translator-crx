@@ -35,10 +35,10 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ autoTrans
 
         dispatch(stRequestStart());
 
-        sendTranslate(preprocessedText, { source, from, to, translateId: translateIdRef.current }, (result) => {
-            if (result.translateId !== translateIdRef.current) { return; }
+        sendTranslate({ text: preprocessedText, source, from, to }, translateIdRef.current).then((response) => {
+            if (response.translateId !== translateIdRef.current) { return; }
 
-            result.suc ? dispatch(stRequestFinish({ result: result.data })) : dispatch(stRequestError({ errorCode: result.data.code }));
+            !('code' in response) ? dispatch(stRequestFinish({ result: response.translation })) : dispatch(stRequestError({ errorCode: response.code }));
         });
     }, [dispatch, text, source, from, to]);
 
