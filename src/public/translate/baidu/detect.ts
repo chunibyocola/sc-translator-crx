@@ -2,7 +2,7 @@ import { fetchData, getError } from '../utils';
 import { RESULT_ERROR } from '../error-codes';
 import { DetectParams } from '../translate-types';
 
-export const detect = async ({ text }: DetectParams) => {
+export const detect = async ({ text }: DetectParams): Promise<string> => {
     let searchParams = new URLSearchParams();
     searchParams.append('query', text);
 

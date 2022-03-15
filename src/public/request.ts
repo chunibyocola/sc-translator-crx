@@ -10,7 +10,8 @@ import mojidict from '../public/translate/mojidict';
 import baidu from '../public/translate/baidu';
 import custom from '../public/translate/custom';
 import { bingSwitchLangCode, baiduSwitchLangCode } from '../public/switch-lang-code';
-import { AudioCallback, DetectCallback, TranslateCallback } from './send';
+import { AudioResponse, DetectResponse, TranslateResponse } from './send';
+import { getError } from './translate/utils';
 
 type TranslateRequestParams = {
 	source: string;
@@ -22,7 +23,7 @@ type TranslateRequestParams = {
 	secondPreferredLanguage: string;
 };
 
-export const translate = ({ source, ...requestParams }: TranslateRequestParams, cb: TranslateCallback) => {
+export const translate = async ({ source, ...requestParams }: TranslateRequestParams): Promise<TranslateResponse> => {
 	let translate;
 
 	switch (source) {
@@ -47,15 +48,18 @@ export const translate = ({ source, ...requestParams }: TranslateRequestParams, 
 			requestParams.secondPreferredLanguage = baiduSwitchLangCode(requestParams.secondPreferredLanguage);
 			break;
 		default:
-			custom.translate(requestParams, source)
-				.then(translation => cb({ translation }))
-				.catch(err => cb({ code: err }));
-			return;
+			translate = custom.translate;
+			break;
 	}
 	
-	translate(requestParams)
-		.then(translation => cb({ translation }))
-		.catch(err => cb({ code: err }));
+	try {
+		const translation = await translate(requestParams, source);
+
+		return { translation };
+	}
+	catch (err) {
+		return { code: (err as ReturnType<typeof getError>).code };
+	}
 };
 
 type AudioRequestParams = {
@@ -65,7 +69,7 @@ type AudioRequestParams = {
 	com: boolean;
 };
 
-export const audio = (requestParams: AudioRequestParams, cb: AudioCallback) => {
+export const audio = async (requestParams: AudioRequestParams): Promise<AudioResponse> => {
 	let audio;
 	switch (requestParams.source) {
 		case GOOGLE_COM:
@@ -84,9 +88,14 @@ export const audio = (requestParams: AudioRequestParams, cb: AudioCallback) => {
 			break;
 	}
 
-	audio(requestParams)
-		.then(dataUri => cb({ dataUri }))
-		.catch(err => cb({ code: err.code }));
+	try {
+		const dataUri = await audio(requestParams);
+		
+		return { dataUri };
+	}
+	catch (err) {
+		return { code: (err as ReturnType<typeof getError>).code };
+	}
 };
 
 type DetectRequestParams = {
@@ -95,7 +104,7 @@ type DetectRequestParams = {
 	com: boolean;
 };
 
-export const detect = (requestParams: DetectRequestParams, cb: DetectCallback) => {
+export const detect = async (requestParams: DetectRequestParams): Promise<DetectResponse> => {
 	let detect;
 	switch (requestParams.source) {
 		case GOOGLE_COM:
@@ -112,7 +121,12 @@ export const detect = (requestParams: DetectRequestParams, cb: DetectCallback) =
 			break;
 	}
 
-	detect(requestParams)
-		.then(langCode => cb({ langCode }))
-		.catch(err => cb({ code: err.code }));
+	try {
+		const langCode = await detect(requestParams);
+
+		return { langCode };
+	}
+	catch (err) {
+		return { code: (err as ReturnType<typeof getError>).code };
+	}
 };

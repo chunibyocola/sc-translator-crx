@@ -7,24 +7,19 @@ type ErrorResponse = {
     code: string;
 };
 type GenericResponse<Response> = Response | ErrorResponse;
-type TranslateResponse = GenericResponse<{
+export type TranslateResponse = GenericResponse<{
     translation: TranslateResult;
 }>;
-type AudioResponse = GenericResponse<{
+export type AudioResponse = GenericResponse<{
     dataUri: string;
 }>;
-type DetectResponse = GenericResponse<{
+export type DetectResponse = GenericResponse<{
     langCode: string;
 }>;
-type IsCollectResponse = GenericResponse<{
+export type IsCollectResponse = GenericResponse<{
     text: string;
     isCollected: boolean;
 }>;
-
-export type TranslateCallback = (response: TranslateResponse) => void;
-export type AudioCallback = (response: AudioResponse) => void;
-export type DetectCallback = (response: DetectResponse) => void;
-export type IsCollectCallback = (response: IsCollectResponse) => void;
 
 type GenericMessage<ActionType, ActionPayload> = {
     type: ActionType;

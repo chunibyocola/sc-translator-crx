@@ -1,6 +1,7 @@
 import { fetchData, getError } from '../utils';
 import { RESULT_ERROR, NO_RESULT } from '../error-codes';
 import { TranslateParams } from '../translate-types';
+import { TranslateResult } from '../../../types';
 
 export const translate = async ({ text }: TranslateParams) => {
     const url = `https://api.mojidict.com/parse/functions/search_v3`;
@@ -24,7 +25,7 @@ export const translate = async ({ text }: TranslateParams) => {
 
         if (data.result.words.length === 0) { throw getError(NO_RESULT); }
 
-        const result = {
+        const result: TranslateResult = {
             text,
             from: '',
             to: 'ja',

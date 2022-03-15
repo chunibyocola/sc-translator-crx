@@ -5,41 +5,33 @@ import { DefaultOptions } from '../../types';
 import { getLocalStorageAsync } from '../../public/utils';
 import { syncSettingsToOtherBrowsers } from './sync';
 import scIndexedDB, { DB_STORE_COLLECTION, StoreCollectionValue } from '../../public/sc-indexed-db';
-import { ChromeRuntimeMessage } from '../../public/send';
+import { AudioResponse, ChromeRuntimeMessage, DetectResponse, IsCollectResponse, TranslateResponse } from '../../public/send';
 
-chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sendResponse) => {
+type TypedSendResponse = (response: TranslateResponse | AudioResponse | DetectResponse | IsCollectResponse) => void;
+
+chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sendResponse: TypedSendResponse) => {
     switch (message.type) {
         case types.SCTS_TRANSLATE: {
             type TranslatePickedOptions = Pick<DefaultOptions, 'useDotCn' | 'preferredLanguage' | 'secondPreferredLanguage'>;
             const translatePickedKeys: (keyof TranslatePickedOptions)[] = ['useDotCn', 'preferredLanguage', 'secondPreferredLanguage'];
 
-            getLocalStorageAsync<TranslatePickedOptions>(translatePickedKeys).then((storage) => {
-                const com = !storage.useDotCn;
-                const preferredLanguage = storage.preferredLanguage;
-                const secondPreferredLanguage = storage.secondPreferredLanguage;
-
-                translate({ ...message.payload, com, preferredLanguage, secondPreferredLanguage }, (result) => {
-                    sendResponse(result);
-                });
-            });
+            getLocalStorageAsync<TranslatePickedOptions>(translatePickedKeys)
+                .then(({ useDotCn, ...preferred }) => (translate({ ...message.payload, com: !useDotCn, ...preferred })))
+                .then(sendResponse);
 
             return true;
         }
         case types.SCTS_AUDIO: {
-            getLocalStorageAsync<Pick<DefaultOptions, 'useDotCn'>>(['useDotCn']).then((storage) => {
-                audio({ ...message.payload, com: !storage.useDotCn }, (result) => {
-                    sendResponse(result);
-                });
-            });
+            getLocalStorageAsync<Pick<DefaultOptions, 'useDotCn'>>(['useDotCn'])
+                .then(({ useDotCn }) => (audio({ ...message.payload, com: !useDotCn })))
+                .then(sendResponse);
 
             return true;
         }
         case types.SCTS_DETECT: {
-            getLocalStorageAsync<Pick<DefaultOptions, 'useDotCn'>>(['useDotCn']).then((storage) => {
-                detect({ ...message.payload, com: !storage.useDotCn }, (result) => {
-                    sendResponse(result);
-                });
-            });
+            getLocalStorageAsync<Pick<DefaultOptions, 'useDotCn'>>(['useDotCn'])
+                .then(({ useDotCn }) => (detect({ ...message.payload, com: !useDotCn })))
+                .then(sendResponse);
 
             return true;
         }
