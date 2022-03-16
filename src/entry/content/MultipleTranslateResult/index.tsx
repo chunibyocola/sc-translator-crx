@@ -13,12 +13,11 @@ import { mtAddSource, mtRemoveSource, mtRequestError, mtRequestFinish, mtRequest
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/slice/translateHistorySlice';
 
 type MultipleTranslateResultProps = {
-    showRtAndLs: boolean;
     maxHeightGap: number;
     autoTranslateAfterInput: boolean;
 };
 
-const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = ({ showRtAndLs, maxHeightGap, autoTranslateAfterInput }) => {
+const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = ({ maxHeightGap, autoTranslateAfterInput }) => {
     const [resultMaxHeight, setResultMaxHeight] = useState(500);
 
     const [canInsertResult, confirmInsertResult, insertResultToggle, autoInsertResult] = useInsertResult();
@@ -34,7 +33,7 @@ const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = ({ showR
         setResultMaxHeight(maxHeight < 40 ? 40 : maxHeight);
     }, [maxHeightGap]);
 
-    const { focusFlag } = useAppSelector(state => state.panelStatus);
+    const { focusFlag, displayEditArea } = useAppSelector(state => state.panelStatus);
     const { text, from, to, translations, translateId } = useAppSelector(state => state.multipleTranslate);
 
     const dispatch = useAppDispatch();
@@ -102,7 +101,7 @@ const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = ({ showR
 
     return (
         <>
-            <div style={showRtAndLs ? {height: 'auto'} : {height: '0px', overflow: 'hidden'}}>
+            <div style={displayEditArea ? {height: 'auto'} : {height: '0px', overflow: 'hidden'}}>
                 <RawText
                     defaultValue={text}
                     rawTextTranslate={handleSetText}

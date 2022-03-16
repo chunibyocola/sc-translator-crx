@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import CollectButton from '../../../components/CollectButton';
+import DisplayEditAreaButton from '../../../components/DisplayEditAreaButton';
 import IconFont from '../../../components/IconFont';
 import { setLocalStorage } from '../../../public/chrome-call';
 import { useAppDispatch, useAppSelector, useOptions, useWindowSize } from '../../../public/react-use';
@@ -36,7 +37,6 @@ type ResultBoxProps = {
 
 const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
     const [pinPos, setPinPos] = useState(initPos);
-    const [showRtAndLs, setShowRtAndLs] = useState(false);
     const [maxHeightGap, setMaxHeightGap] = useState(600);
 
     const pinPosRef = useRef(initPos);
@@ -44,7 +44,7 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
     const oldPos = useRef<Position>();
     const oldShow = useRef<boolean>();
 
-    const { show, position, focusFlag, pinning } = useAppSelector(state => state.panelStatus);
+    const { show, position, pinning, displayEditArea } = useAppSelector(state => state.panelStatus);
 
     const dispatch = useAppDispatch();
 
@@ -79,7 +79,7 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
 
         const maxHeight = translatePanelMaxHeight.percentage ? ~~(windowSize.height * translatePanelMaxHeight.percent / 100) : translatePanelMaxHeight.px;
         setMaxHeightGap(maxHeight - mtEle.current.offsetHeight);
-    }, [windowSize, translatePanelMaxHeight, showRtAndLs]);
+    }, [windowSize, translatePanelMaxHeight, displayEditArea]);
 
     useEffect(() => {
         if (oldShow.current === show) { return; }
@@ -88,11 +88,6 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
 
         oldShow.current = show;
     }, [show, pinThePanelWhileOpeningIt, handleSetPinning]);
-
-    // show 'RawText' and 'LanguageSelection' when "call out"'s keyboard shortcut pressed
-    useEffect(() => {
-        focusFlag && setShowRtAndLs(true);
-    }, [focusFlag]);
 
     // position start
     const changePinPos = useCallback((pos) => {
@@ -145,12 +140,7 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
                 <span className='panel__header-logo flex-align-items-center'>Sc</span>
                 <span className='panel__header-icons flex-align-items-center'>
                     <CollectButton />
-                    <IconFont
-                        iconName='#icon-GoChevronDown'
-                        onClick={() => setShowRtAndLs(!showRtAndLs)}
-                        style={showRtAndLs ? {transform: 'rotate(180deg)', opacity: '1'} : {opacity: '0.6'}}
-                        className='button'
-                    />
+                    <DisplayEditAreaButton />
                     <IconFont
                         iconName='#icon-GoPin'
                         onClick={() => handleSetPinning(!pinning)}
@@ -166,11 +156,9 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
             </div>
             <div className='panel__content'>
                 {multipleTranslateMode ? <MultipleTranslateResult
-                    showRtAndLs={showRtAndLs}
                     maxHeightGap={maxHeightGap}
                     autoTranslateAfterInput={autoTranslateAfterInput}
                 /> : <SingleTranslateResult
-                    showRtAndLs={showRtAndLs}
                     maxHeightGap={maxHeightGap}
                     autoTranslateAfterInput={autoTranslateAfterInput}
                 />}

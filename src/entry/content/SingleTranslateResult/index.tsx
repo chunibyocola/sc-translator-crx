@@ -13,19 +13,18 @@ import { stRequestError, stRequestFinish, stRequestStart, stSetFromAndTo, stSetS
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/slice/translateHistorySlice';
 
 type SingleTranslateResultProps = {
-    showRtAndLs: boolean;
     maxHeightGap: number;
     autoTranslateAfterInput: boolean;
 };
 
-const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ showRtAndLs, maxHeightGap, autoTranslateAfterInput }) => {
+const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ maxHeightGap, autoTranslateAfterInput }) => {
     const [resultMaxHeight, setResultMaxHeight] = useState(500);
 
     const [canInsertResult, confirmInsertResult, insertResultToggle, autoInsertResult] = useInsertResult();
 
     const { text, source, from, to, translateRequest, translateId } = useAppSelector(state => state.singleTranslate);
 
-    const { focusFlag } = useAppSelector(state => state.panelStatus);
+    const { focusFlag, displayEditArea } = useAppSelector(state => state.panelStatus);
 
     const translateIdRef = useRef(0);
     const oldTranslateIdRef = useRef(0);
@@ -98,7 +97,7 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ showRtAnd
 
     return (
         <>
-            <div style={showRtAndLs ? {height: 'auto'} : {height: '0px', overflow: 'hidden'}}>
+            <div style={displayEditArea ? {height: 'auto'} : {height: '0px', overflow: 'hidden'}}>
                 <RawText
                     defaultValue={text}
                     rawTextTranslate={handleSetText}

@@ -2,17 +2,19 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Position } from "../../types";
 
 type PanelStatusState = {
-    show: boolean,
-    position: Position,
-    pinning: boolean,
-    focusFlag: number
+    show: boolean;
+    position: Position;
+    pinning: boolean;
+    focusFlag: number;
+    displayEditArea: boolean;
 };
 
 const initialState: PanelStatusState = {
     show: false,
     position: { x: 5, y: 5 },
     pinning: false,
-    focusFlag: 0
+    focusFlag: 0,
+    displayEditArea: false
 };
 
 export const panelStatusSlice = createSlice({
@@ -29,6 +31,7 @@ export const panelStatusSlice = createSlice({
         callOutPanel: (state) => {
             state.show = true;
             state.focusFlag += 1;
+            state.displayEditArea = true;
         },
         closePanel: (state) => {
             state.show = false;
@@ -39,10 +42,21 @@ export const panelStatusSlice = createSlice({
         },
         setPanelPinning: (state, { payload }: PayloadAction<{ pinning: boolean }>) => {
             state.pinning = payload.pinning;
+        },
+        toggleDisplayEditArea: (state) => {
+            state.displayEditArea = !state.displayEditArea;
         }
     }
 });
 
-export const { showPanelAndSetPosition, hidePanel, callOutPanel, closePanel, requestToHidePanel, setPanelPinning } = panelStatusSlice.actions;
+export const {
+    showPanelAndSetPosition,
+    hidePanel,
+    callOutPanel,
+    closePanel,
+    requestToHidePanel,
+    setPanelPinning,
+    toggleDisplayEditArea
+} = panelStatusSlice.actions;
 
 export default panelStatusSlice.reducer;
