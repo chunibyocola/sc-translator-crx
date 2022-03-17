@@ -15,7 +15,6 @@ const initPos = { x: 5, y: 5 };
 
 type PickedOptions = Pick<
     DefaultOptions,
-    'pinThePanelWhileOpeningIt' |
     'rememberPositionOfPinnedPanel' |
     'positionOfPinnedPanel' |
     'translatePanelMaxHeight' |
@@ -23,7 +22,6 @@ type PickedOptions = Pick<
     'autoTranslateAfterInput'
 >;
 const useOptionsDependency: (keyof PickedOptions)[] = [
-    'pinThePanelWhileOpeningIt',
     'rememberPositionOfPinnedPanel',
     'positionOfPinnedPanel',
     'translatePanelMaxHeight',
@@ -42,14 +40,12 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
     const pinPosRef = useRef(initPos);
     const mtEle = useRef<HTMLDivElement>(null);
     const oldPos = useRef<Position>();
-    const oldShow = useRef<boolean>();
 
     const { show, position, pinning, displayEditArea } = useAppSelector(state => state.panelStatus);
 
     const dispatch = useAppDispatch();
 
     const {
-        pinThePanelWhileOpeningIt,
         rememberPositionOfPinnedPanel,
         positionOfPinnedPanel,
         translatePanelMaxHeight,
@@ -80,14 +76,6 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
         const maxHeight = translatePanelMaxHeight.percentage ? ~~(windowSize.height * translatePanelMaxHeight.percent / 100) : translatePanelMaxHeight.px;
         setMaxHeightGap(maxHeight - mtEle.current.offsetHeight);
     }, [windowSize, translatePanelMaxHeight, displayEditArea]);
-
-    useEffect(() => {
-        if (oldShow.current === show) { return; }
-
-        show && pinThePanelWhileOpeningIt && handleSetPinning(true);
-
-        oldShow.current = show;
-    }, [show, pinThePanelWhileOpeningIt, handleSetPinning]);
 
     // position start
     const changePinPos = useCallback((pos) => {

@@ -14,7 +14,7 @@ import { sendSeparate } from '../../public/send';
 import { getOptions } from '../../public/options';
 import { debounce, isTextBox } from '../../public/utils';
 import { DefaultOptions, Position } from '../../types';
-import { callOutPanel, closePanel, requestToHidePanel, showPanelAndSetPosition } from '../../redux/slice/panelStatusSlice';
+import { callOutPanelInContentScript, closePanel, requestToHidePanel, showPanelAndSetPosition } from '../../redux/slice/panelStatusSlice';
 import { mtSetText, mtSetTo } from '../../redux/slice/multipleTranslateSlice';
 import { stSetText, stSetTo } from '../../redux/slice/singleTranslateSlice';
 import {
@@ -41,7 +41,8 @@ type PickedOptions = Pick<
     'translateDirectlyWhilePinning' |
     'doNotRespondInTextBox' |
     'translateButtons' |
-    'translateButtonsTL'
+    'translateButtonsTL' |
+    'pinThePanelWhileOpeningIt'
 >;
 const useOptionsDependency: (keyof PickedOptions)[] = [
     'translateDirectly',
@@ -52,7 +53,8 @@ const useOptionsDependency: (keyof PickedOptions)[] = [
     'translateDirectlyWhilePinning',
     'doNotRespondInTextBox',
     'translateButtons',
-    'translateButtonsTL'
+    'translateButtonsTL',
+    'pinThePanelWhileOpeningIt'
 ];
 
 const calculateBtnPos = ({ x, y }: Position, translateButtonElement: HTMLDivElement | null) => {
@@ -103,7 +105,8 @@ const TsBtn: React.FC = () => {
         translateDirectlyWhilePinning,
         doNotRespondInTextBox,
         translateButtons,
-        translateButtonsTL
+        translateButtonsTL,
+        pinThePanelWhileOpeningIt
     } = useOptions<PickedOptions>(useOptionsDependency);
 
     const isEnableTranslate = useIsEnable('translate', window.location.host);
@@ -118,12 +121,12 @@ const TsBtn: React.FC = () => {
             return;
         }
 
-        dispatch(showPanelAndSetPosition({ position }));
+        dispatch(showPanelAndSetPosition({ position, pinThePanelWhileOpeningIt }));
 
         to !== undefined && (getOptions().multipleTranslateMode ? dispatch(mtSetTo({ to })) : dispatch(stSetTo({ to })));
 
         getOptions().multipleTranslateMode ? dispatch(mtSetText({ text })) : dispatch(stSetText({ text }));
-    }, [dispatch, respondToSeparateWindow]);
+    }, [dispatch, respondToSeparateWindow, pinThePanelWhileOpeningIt]);
 
     const handleTranslateButtonClick = (translateButton: string) => {
         setShowBtn(false);
@@ -191,7 +194,7 @@ const TsBtn: React.FC = () => {
                 text && playAudio({ text });
                 break;
             case SCTS_CALL_OUT_COMMAND_KEY_PRESSED:
-                dispatch(callOutPanel());
+                dispatch(callOutPanelInContentScript({ pinThePanelWhileOpeningIt }));
                 break;
             case SCTS_CLOSE_COMMAND_KEY_PRESSED:
                 dispatch(closePanel());
@@ -200,7 +203,7 @@ const TsBtn: React.FC = () => {
         }
 
         oldChromeMsg.current = chromeMsg;
-    }, [chromeMsg, isEnableTranslate, handleForwardTranslate, dispatch, pos]);
+    }, [chromeMsg, isEnableTranslate, handleForwardTranslate, dispatch, pos, pinThePanelWhileOpeningIt]);
 
     useGetSelection(({ text, pos }) => {
         if (!isEnableTranslate) { return; }
