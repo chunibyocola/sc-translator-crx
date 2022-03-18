@@ -11,8 +11,6 @@ import MultipleTranslateResult from '../MultipleTranslateResult';
 import SingleTranslateResult from '../SingleTranslateResult';
 import './style.css';
 
-const initPos = { x: 5, y: 5 };
-
 type PickedOptions = Pick<
     DefaultOptions,
     'rememberPositionOfPinnedPanel' |
@@ -34,12 +32,11 @@ type ResultBoxProps = {
 };
 
 const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
-    const [pinPos, setPinPos] = useState(initPos);
+    const [panelPosition, setPanelPosition] = useState<Position>({ x: 5, y: 5 });
     const [maxHeightGap, setMaxHeightGap] = useState(600);
 
-    const pinPosRef = useRef(initPos);
     const mtEle = useRef<HTMLDivElement>(null);
-    const oldPos = useRef<Position>();
+    const oldPositionRef = useRef<Position>();
 
     const { show, position, pinning, displayEditArea } = useAppSelector(state => state.panelStatus);
 
@@ -61,13 +58,12 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
 
     useEffect(() => {
         if (rememberPositionOfPinnedPanel && pinning && mtEle.current) {
-            pinPosRef.current = { ...positionOfPinnedPanel };
-            calculatePosition(mtEle.current, pinPosRef.current, setPinPos);
+            setPanelPosition(calculatePosition(mtEle.current, positionOfPinnedPanel));
         }
     }, [rememberPositionOfPinnedPanel, pinning, positionOfPinnedPanel]);
 
     useEffect(() => {
-        mtEle.current && calculatePosition(mtEle.current, pinPosRef.current, setPinPos);
+        setPanelPosition(panelPosition => mtEle.current ? calculatePosition(mtEle.current, panelPosition) : panelPosition);
     }, [windowSize]);
 
     useLayoutEffect(() => {
@@ -75,34 +71,29 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
 
         const maxHeight = translatePanelMaxHeight.percentage ? ~~(windowSize.height * translatePanelMaxHeight.percent / 100) : translatePanelMaxHeight.px;
         setMaxHeightGap(maxHeight - mtEle.current.offsetHeight);
-    }, [windowSize, translatePanelMaxHeight, displayEditArea]);
-
-    // position start
-    const changePinPos = useCallback((pos) => {
-        setPinPos(pos);
-        pinPosRef.current = pos;
-    }, []);
+    }, [windowSize.height, translatePanelMaxHeight, displayEditArea]);
 
     const handleMouseUpCallback = useCallback((pos: Position) => {
-        if (!mtEle.current) { return; }
+        setPanelPosition((panelPosition) => {
+            if (!mtEle.current) { return panelPosition; }
 
-        calculatePosition(mtEle.current, pos, (pos) => {
-            if (rememberPositionOfPinnedPanel && pinning && pinPos.x !== pos.x && pinPos.y !== pos.y) {
-                setLocalStorage({ 'positionOfPinnedPanel': pos });
+            const nextPosition = calculatePosition(mtEle.current, pos);
+
+            if (rememberPositionOfPinnedPanel && pinning && panelPosition.x !== nextPosition.x && panelPosition.y !== nextPosition.y) {
+                setLocalStorage({ positionOfPinnedPanel: nextPosition });
             }
 
-            changePinPos(pos);
+            return nextPosition;
         });
-    }, [rememberPositionOfPinnedPanel, changePinPos, pinPos, pinning]);
+    }, [rememberPositionOfPinnedPanel, pinning]);
 
     useLayoutEffect(() => {
-        if (oldPos.current === position || !mtEle.current) { return; }
+        if (oldPositionRef.current === position || !mtEle.current) { return; }
 
-        !pinning && calculatePosition(mtEle.current, position, changePinPos);
+        !pinning && setPanelPosition(calculatePosition(mtEle.current, position));
 
-        oldPos.current = position;
-    }, [position, pinning, changePinPos]);
-    // position end
+        oldPositionRef.current = position;
+    }, [position, pinning]);
 
     const handleCloseIconClick = useCallback(() => {
         dispatch(closePanel());
@@ -114,8 +105,8 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
             className='panel'
             style={{
                 display: show ? 'block' : 'none',
-                left: `${pinPos.x}px`,
-                top: `${pinPos.y}px`,
+                left: `${panelPosition.x}px`,
+                top: `${panelPosition.y}px`,
                 width: translatePanelWidth.percentage ? `calc(${translatePanelWidth.percent}% - 10px)` : `${translatePanelWidth.px}px`
             }}
             onMouseUp={e => e.stopPropagation()}
@@ -123,7 +114,7 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
         >
             <div
                 className='panel__header flex-justify-content-space-between'
-                onMouseDown={e => drag(e.nativeEvent, pinPos, changePinPos, handleMouseUpCallback)}
+                onMouseDown={e => drag(e.nativeEvent, panelPosition, setPanelPosition, handleMouseUpCallback)}
             >
                 <span className='panel__header-logo flex-align-items-center'>Sc</span>
                 <span className='panel__header-icons flex-align-items-center'>

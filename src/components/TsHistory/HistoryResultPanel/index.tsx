@@ -21,7 +21,7 @@ const HistoryResultPanel: React.FC<HistoryResultPanelProps> = ({ translations, t
     useLayoutEffect(() => {
         if (!panelEle.current) { return; }
 
-        calculatePosition(panelEle.current, { x: historyWidth - 5, y: top }, pos => setPos(pos));
+        setPos(calculatePosition(panelEle.current, { x: historyWidth - 5, y: top }));
     }, [top, historyWidth]);
 
     return (

@@ -77,8 +77,7 @@ export const drag = (event: MouseEvent, currentPosition: Position, mouseMoveCall
     document.addEventListener('mouseup', mouseUpListener, true);
 };
 
-const resultBoxMargin = 5;
-export const calculatePosition = (element: HTMLElement, { x, y }: Position, callback: (pos: Position) => void) => {
+export const calculatePosition = (element: HTMLElement, { x, y }: Position, margin = 5): Position => {
     const dH = document.documentElement.clientHeight;
     const dW = document.documentElement.clientWidth;
     const rbW = element.clientWidth;
@@ -88,11 +87,12 @@ export const calculatePosition = (element: HTMLElement, { x, y }: Position, call
     const rbB = rbT + rbH;
     const rbR = rbL + rbW;
     // show top and right prior
-    if (rbL < resultBoxMargin) x = resultBoxMargin;
-    if (rbR > dW) x = dW - resultBoxMargin - rbW;
-    if (rbB > dH) y = dH - resultBoxMargin - rbH;
-    if (y < resultBoxMargin) y = resultBoxMargin;
-    callback({ x, y });
+    if (rbL < margin) x = margin;
+    if (rbR > dW) x = dW - margin - rbW;
+    if (rbB > dH) y = dH - margin - rbH;
+    if (y < margin) y = margin;
+    
+    return { x, y };
 };
 
 export const debounce = (cb: Function, time: number) => {
