@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import CollectButton from '../../../components/CollectButton';
-import DisplayEditAreaButton from '../../../components/DisplayEditAreaButton';
-import IconFont from '../../../components/IconFont';
+import CollectButton from '../../../components/PanelIconButtons/CollectButton';
+import DisplayEditAreaButton from '../../../components/PanelIconButtons/DisplayEditAreaButton';
 import { setLocalStorage } from '../../../public/chrome-call';
-import { useAppDispatch, useAppSelector, useOptions, useWindowSize } from '../../../public/react-use';
+import { useAppSelector, useOptions, useWindowSize } from '../../../public/react-use';
 import { calculatePosition, drag } from '../../../public/utils';
-import { closePanel, setPanelPinning } from '../../../redux/slice/panelStatusSlice';
 import { DefaultOptions, Position } from '../../../types';
 import MultipleTranslateResult from '../MultipleTranslateResult';
 import SingleTranslateResult from '../SingleTranslateResult';
 import './style.css';
+import PinButton from '../../../components/PanelIconButtons/PinButton';
+import CloseButton from '../../../components/PanelIconButtons/CloseButton';
 
 type PickedOptions = Pick<
     DefaultOptions,
@@ -40,8 +40,6 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
 
     const { show, position, pinning, displayEditArea } = useAppSelector(state => state.panelStatus);
 
-    const dispatch = useAppDispatch();
-
     const {
         rememberPositionOfPinnedPanel,
         positionOfPinnedPanel,
@@ -51,10 +49,6 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
     } = useOptions<PickedOptions>(useOptionsDependency);
 
     const windowSize = useWindowSize();
-
-    const handleSetPinning = useCallback((pinning: boolean) => {
-        dispatch(setPanelPinning({ pinning }));
-    }, [dispatch]);
 
     useEffect(() => {
         if (rememberPositionOfPinnedPanel && pinning && mtEle.current) {
@@ -95,10 +89,6 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
         oldPositionRef.current = position;
     }, [position, pinning]);
 
-    const handleCloseIconClick = useCallback(() => {
-        dispatch(closePanel());
-    }, [dispatch]);
-
     return (
         <div
             ref={mtEle}
@@ -120,17 +110,8 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
                 <span className='panel__header-icons flex-align-items-center'>
                     <CollectButton />
                     <DisplayEditAreaButton />
-                    <IconFont
-                        iconName='#icon-GoPin'
-                        onClick={() => handleSetPinning(!pinning)}
-                        style={pinning ? {transform: 'rotate(-45deg)', opacity: '1'} : {opacity: '0.6'}}
-                        className='button'
-                    />
-                    <IconFont
-                        className='iconbutton button'
-                        iconName='#icon-GoX'
-                        onClick={handleCloseIconClick}
-                    />
+                    <PinButton />
+                    <CloseButton />
                 </span>
             </div>
             <div className='panel__content'>

@@ -16,7 +16,7 @@ import { textPreprocessing } from '../../../public/text-preprocessing';
 import { mtAddSource, mtRemoveSource, mtRequestError, mtRequestFinish, mtRequestStart, mtSetFromAndTo, mtSetText } from '../../../redux/slice/multipleTranslateSlice';
 import { DefaultOptions } from '../../../types';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
-import CollectButton from '../../../components/CollectButton';
+import CollectButton from '../../../components/PanelIconButtons/CollectButton';
 
 type PickedOptions = Pick<DefaultOptions, 'styleVarsList' | 'styleVarsIndex' | 'rememberStwSizeAndPosition' | 'autoTranslateAfterInput'>;
 const useOptionsDependency: (keyof PickedOptions)[] = ['styleVarsList', 'styleVarsIndex', 'rememberStwSizeAndPosition', 'autoTranslateAfterInput'];

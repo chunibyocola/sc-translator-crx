@@ -6,7 +6,7 @@ import { getCurrentTabHost } from '../../public/utils';
 import './style.css';
 import { getMessage } from '../../public/i18n';
 import { DefaultOptions } from '../../types';
-import CollectButton from '../CollectButton';
+import CollectButton from '../PanelIconButtons/CollectButton';
 
 type PickedOptions = Pick<DefaultOptions, 'translateBlackListMode' | 'translateHostList' | 'historyBlackListMode' | 'historyHostList' | 'styleVarsList' | 'styleVarsIndex'>;
 const useOptionsDependency: (keyof PickedOptions)[] = ['translateBlackListMode', 'translateHostList', 'historyBlackListMode', 'historyHostList', 'styleVarsList', 'styleVarsIndex'];

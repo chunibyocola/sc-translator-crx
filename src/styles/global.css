@@ -147,13 +147,13 @@
         opacity: 0;
     }
     to {
-        opacity: 0.12;
+        opacity: var(--ripple-max-opa, 0.12);
     }
 }
 @keyframes mdc-ripple-fg-opacity-out {
     from {
         animation-timing-function: linear;
-        opacity: 0.12;
+        opacity: var(--ripple-max-opa, 0.12);
     }
     to {
         opacity: 0;

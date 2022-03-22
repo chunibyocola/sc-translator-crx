@@ -2,6 +2,7 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../public/react-use';
 import { toggleDisplayEditArea } from '../../redux/slice/panelStatusSlice';
 import IconFont from '../IconFont';
+import PanelIconButtonWrapper from './PanelIconButtonWrapper';
 
 const DisplayEditAreaButton: React.FC = () => {
     const { displayEditArea } = useAppSelector(store => store.panelStatus);
@@ -9,12 +10,14 @@ const DisplayEditAreaButton: React.FC = () => {
     const dispatch = useAppDispatch();
 
     return (
-        <IconFont
-            iconName='#icon-GoChevronDown'
+        <PanelIconButtonWrapper
             onClick={() => dispatch(toggleDisplayEditArea())}
-            style={displayEditArea ? {transform: 'rotate(180deg)', opacity: '1'} : {opacity: '0.6'}}
-            className='button'
-        />
+        >
+            <IconFont
+                iconName='#icon-GoChevronDown'
+                style={displayEditArea ? {transform: 'rotate(180deg)', opacity: '1'} : {opacity: '0.6'}}
+            />
+        </PanelIconButtonWrapper>
     );
 };
 

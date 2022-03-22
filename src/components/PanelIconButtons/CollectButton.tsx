@@ -4,8 +4,7 @@ import { useAppSelector } from '../../public/react-use';
 import { sendAddToCollection, sendIsCollected, sendRemoveFromCollection } from '../../public/send';
 import { Translation } from '../../redux/slice/multipleTranslateSlice';
 import IconFont from '../IconFont';
-
-type CollectButtonProps = {};
+import PanelIconButtonWrapper from './PanelIconButtonWrapper';
 
 const collectionMessage = {
     addToCollection: getMessage('contentAddToCollection'),
@@ -39,7 +38,7 @@ const useIsCollected = (text: string) => {
     return { modifiable, isCollected, setIsCollected };
 };
 
-const CollectButton: React.FC<CollectButtonProps> = () => {
+const CollectButton: React.FC = () => {
     const { text: multipleText, translations: multipleTranslations } = useAppSelector(state => state.multipleTranslate);
     const { text: singleText, translateRequest: singleTranslateRequest, source: singleSource } = useAppSelector(state => state.singleTranslate);
 
@@ -57,13 +56,7 @@ const CollectButton: React.FC<CollectButtonProps> = () => {
             let translations: Translation[] = [];
 
             if (multipleText) {
-                translations = multipleTranslations.reduce((total: Translation[], current) => {
-                    if (current.translateRequest.status === 'finished') {
-                        total = total.concat(current);
-                    }
-
-                    return total;
-                }, []);
+                translations = multipleTranslations.filter(v => v.translateRequest.status === 'finished');
             }
             else if (singleText && singleTranslateRequest.status === 'finished') {
                 translations = [{ source: singleSource, translateRequest: singleTranslateRequest }];
@@ -76,13 +69,16 @@ const CollectButton: React.FC<CollectButtonProps> = () => {
     };
 
     return (
-        <IconFont
-            iconName='#icon-collect'
-            className={modifiable ? isCollected ? 'iconfont--enable' : 'iconfont--disable button' : 'iconfont--disable'}
-            style={modifiable ? undefined : {cursor: 'default'}}
-            title={isCollected ? collectionMessage.removeFromCollection : collectionMessage.addToCollection}
+        <PanelIconButtonWrapper
+            disabled={!modifiable}
             onClick={onCollectButtonClick}
-        />
+        >
+            <IconFont
+                iconName='#icon-collect'
+                title={isCollected ? collectionMessage.removeFromCollection : collectionMessage.addToCollection}
+                style={modifiable ? {opacity: isCollected ? 0.7 : 0.4} : undefined}
+            />
+        </PanelIconButtonWrapper>
     );
 };
 
