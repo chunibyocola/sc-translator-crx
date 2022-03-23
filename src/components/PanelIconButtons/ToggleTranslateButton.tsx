@@ -38,11 +38,11 @@ const ToggleTranslateButton: React.FC<ToggleTranslateButtonProps> = ({ host }) =
                     setLocalStorage({ translateHostList: translateHostList.concat(host) });
                 }
             }}
+            title={getMessage(host ? translateEnabled ? 'popupDisableTranslate' : 'popupEnableTranslate' : 'popupNotAvailable')}
         >
             <IconFont
                 iconName='#icon-MdTranslate'
                 style={host ? { opacity: translateEnabled ? 0.7 : 0.4 } : undefined}
-                title={getMessage(host ? translateEnabled ? 'popupDisableTranslate' : 'popupEnableTranslate' : 'popupNotAvailable')}
             />
         </PanelIconButtonWrapper>
     );

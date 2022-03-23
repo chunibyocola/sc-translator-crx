@@ -3,9 +3,9 @@ import './style.css';
 
 type PanelIconButtonWrapperProps = {
     disabled?: boolean;
-} & Pick<React.HtmlHTMLAttributes<HTMLSpanElement>, 'onClick' | 'children'>
+} & Pick<React.HtmlHTMLAttributes<HTMLSpanElement>, 'onClick' | 'children' | 'title'>
 
-const PanelIconButtonWrapper: React.FC<PanelIconButtonWrapperProps> = ({ onClick, disabled, children }) => {
+const PanelIconButtonWrapper: React.FC<PanelIconButtonWrapperProps> = ({ onClick, disabled, children, title }) => {
     const [activateClassName, setActivateClassName] = useState('');
 
     const clearClassTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
@@ -28,6 +28,7 @@ const PanelIconButtonWrapper: React.FC<PanelIconButtonWrapperProps> = ({ onClick
                 clearClassTimeoutRef.current = setTimeout(() => setActivateClassName(''), 200);
             }}
             onClick={(e) => !disabled && onClick?.(e)}
+            title={title}
         >
             {children}
             <div className='ripple'></div>

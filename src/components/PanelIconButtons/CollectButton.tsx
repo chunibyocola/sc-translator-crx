@@ -72,10 +72,10 @@ const CollectButton: React.FC = () => {
         <PanelIconButtonWrapper
             disabled={!modifiable}
             onClick={onCollectButtonClick}
+            title={isCollected ? collectionMessage.removeFromCollection : collectionMessage.addToCollection}
         >
             <IconFont
                 iconName='#icon-collect'
-                title={isCollected ? collectionMessage.removeFromCollection : collectionMessage.addToCollection}
                 style={modifiable ? {opacity: isCollected ? 0.7 : 0.4} : undefined}
             />
         </PanelIconButtonWrapper>
