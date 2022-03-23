@@ -1,47 +1,26 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import IconFont from '../IconFont';
 import { setLocalStorage, openOptionsPage } from '../../public/chrome-call';
-import { useIsEnable, useOptions } from '../../public/react-use';
+import { useOptions } from '../../public/react-use';
 import { getCurrentTabHost } from '../../public/utils';
 import './style.css';
 import { getMessage } from '../../public/i18n';
 import { DefaultOptions } from '../../types';
 import CollectButton from '../PanelIconButtons/CollectButton';
 import ToggleTranslateButton from '../PanelIconButtons/ToggleTranslateButton';
+import ToggleHistoryButton from '../PanelIconButtons/ToggleHistoryButton';
 
-type PickedOptions = Pick<DefaultOptions, 'historyBlackListMode' | 'historyHostList' | 'styleVarsList' | 'styleVarsIndex'>;
-const useOptionsDependency: (keyof PickedOptions)[] = ['historyBlackListMode', 'historyHostList', 'styleVarsList', 'styleVarsIndex'];
+type PickedOptions = Pick<DefaultOptions, 'styleVarsList' | 'styleVarsIndex'>;
+const useOptionsDependency: (keyof PickedOptions)[] = ['styleVarsList', 'styleVarsIndex'];
 
 const PopupHeader: React.FC = () => {
-    const [isContentScriptEnabled, setIsContentScriptEnabled] = useState(false);
     const [host, setHost] = useState('');
 
-    const isEnableHistory = useIsEnable('history');
-
-    const { historyBlackListMode, historyHostList, styleVarsList, styleVarsIndex } = useOptions<PickedOptions>(useOptionsDependency);
+    const { styleVarsList, styleVarsIndex } = useOptions<PickedOptions>(useOptionsDependency);
 
     useEffect(() => {
-        getCurrentTabHost().then((tabHost) => {
-            setIsContentScriptEnabled(!!tabHost);
-            setHost(tabHost);
-        });
+        getCurrentTabHost().then(tabHost => setHost(tabHost));
     }, []);
-
-    const handleIsEnableToggle = useCallback((list: string[], bMode: boolean, isEnable: boolean, key: 'historyHostList' | 'translateHostList') => {
-        if (!host) { return; }
-
-        if ((isEnable && !bMode) || (!isEnable && bMode)) {
-            const indexArr = list.reduce((t: number[], v, i) => (
-                host.endsWith(v) ? t.concat(i) : t
-            ), []).reverse();
-            indexArr.map((v) => (list.splice(v, 1)));
-            setLocalStorage({ [key]: list });
-        }
-        else {
-            list.push(host);
-            setLocalStorage({ [key]: list });
-        }
-    }, [host]);
 
     const handleThemeToggle = useCallback(() => {
         setLocalStorage({ 'styleVarsIndex': styleVarsIndex >= styleVarsList.length - 1 ? 0 : styleVarsIndex + 1 });
@@ -59,17 +38,7 @@ const PopupHeader: React.FC = () => {
                     title={getMessage('popupSwitchToTheNextTheme')}
                 />
                 <ToggleTranslateButton host={host} />
-                <IconFont
-                    iconName='#icon-MdHistory'
-                    className={`${isEnableHistory && isContentScriptEnabled ? 'iconfont--enable' : 'iconfont--disable'}`}
-                    onClick={() => isContentScriptEnabled && handleIsEnableToggle(
-                        historyHostList,
-                        historyBlackListMode,
-                        isEnableHistory,
-                        'historyHostList'
-                    )}
-                    title={isContentScriptEnabled ? isEnableHistory ? getMessage('popupDisableHistory') : getMessage('popupEnableHistory') : getMessage('popupNotAvailable')}
-                />
+                <ToggleHistoryButton host={host} />
                 <IconFont
                     iconName='#icon-MdSettings'
                     className='iconfont--enable'

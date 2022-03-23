@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { setLocalStorage } from '../../public/chrome-call';
 import { getMessage } from '../../public/i18n';
 import { useOptions } from '../../public/react-use';
+import { getIsEnabled } from '../../public/utils';
 import { DefaultOptions } from '../../types';
 import IconFont from '../IconFont';
 import PanelIconButtonWrapper from './PanelIconButtonWrapper';
@@ -18,11 +19,7 @@ const ToggleTranslateButton: React.FC<ToggleTranslateButtonProps> = ({ host }) =
     const { translateBlackListMode, translateHostList } = useOptions<PickedOptions>(useOptionsDependency);
 
     const translateEnabled = useMemo(() => {
-        if (!host) { return false; }
-
-        const found = translateHostList.some(v => host.endsWith(v));
-
-        return translateBlackListMode ? !found : found;
+        return !!host && getIsEnabled(host, translateHostList, translateBlackListMode);
     }, [host, translateBlackListMode, translateHostList]);
 
     return (
