@@ -7,18 +7,18 @@ import './style.css';
 import { getMessage } from '../../public/i18n';
 import { DefaultOptions } from '../../types';
 import CollectButton from '../PanelIconButtons/CollectButton';
+import ToggleTranslateButton from '../PanelIconButtons/ToggleTranslateButton';
 
-type PickedOptions = Pick<DefaultOptions, 'translateBlackListMode' | 'translateHostList' | 'historyBlackListMode' | 'historyHostList' | 'styleVarsList' | 'styleVarsIndex'>;
-const useOptionsDependency: (keyof PickedOptions)[] = ['translateBlackListMode', 'translateHostList', 'historyBlackListMode', 'historyHostList', 'styleVarsList', 'styleVarsIndex'];
+type PickedOptions = Pick<DefaultOptions, 'historyBlackListMode' | 'historyHostList' | 'styleVarsList' | 'styleVarsIndex'>;
+const useOptionsDependency: (keyof PickedOptions)[] = ['historyBlackListMode', 'historyHostList', 'styleVarsList', 'styleVarsIndex'];
 
 const PopupHeader: React.FC = () => {
     const [isContentScriptEnabled, setIsContentScriptEnabled] = useState(false);
     const [host, setHost] = useState('');
 
-    const isEnableTranslate = useIsEnable('translate');
     const isEnableHistory = useIsEnable('history');
 
-    const { translateBlackListMode, translateHostList, historyBlackListMode, historyHostList, styleVarsList, styleVarsIndex } = useOptions<PickedOptions>(useOptionsDependency);
+    const { historyBlackListMode, historyHostList, styleVarsList, styleVarsIndex } = useOptions<PickedOptions>(useOptionsDependency);
 
     useEffect(() => {
         getCurrentTabHost().then((tabHost) => {
@@ -58,17 +58,7 @@ const PopupHeader: React.FC = () => {
                     onClick={() => handleThemeToggle()}
                     title={getMessage('popupSwitchToTheNextTheme')}
                 />
-                <IconFont
-                    iconName='#icon-MdTranslate'
-                    className={`${isEnableTranslate && isContentScriptEnabled? 'iconfont--enable': 'iconfont--disable'}`}
-                    onClick={() => isContentScriptEnabled && handleIsEnableToggle(
-                        translateHostList,
-                        translateBlackListMode,
-                        isEnableTranslate,
-                        'translateHostList'
-                    )}
-                    title={isContentScriptEnabled ? isEnableTranslate ? getMessage('popupDisableTranslate') : getMessage('popupEnableTranslate') : getMessage('popupNotAvailable')}
-                />
+                <ToggleTranslateButton host={host} />
                 <IconFont
                     iconName='#icon-MdHistory'
                     className={`${isEnableHistory && isContentScriptEnabled ? 'iconfont--enable' : 'iconfont--disable'}`}
