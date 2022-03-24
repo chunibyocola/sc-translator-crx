@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import IconFont from '../../../components/IconFont';
 import LanguageSelection from '../../../components/LanguageSelection';
 import MtAddSource from '../../../components/MtAddSource';
 import MtResult from '../../../components/MtResult';
@@ -18,9 +17,10 @@ import { DefaultOptions } from '../../../types';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
 import CollectButton from '../../../components/PanelIconButtons/CollectButton';
 import OpenOptionsPageButton from '../../../components/PanelIconButtons/OpenOptionsPageButton';
+import SwitchThemeButton from '../../../components/PanelIconButtons/SwitchThemeButton';
 
-type PickedOptions = Pick<DefaultOptions, 'styleVarsList' | 'styleVarsIndex' | 'rememberStwSizeAndPosition' | 'autoTranslateAfterInput'>;
-const useOptionsDependency: (keyof PickedOptions)[] = ['styleVarsList', 'styleVarsIndex', 'rememberStwSizeAndPosition', 'autoTranslateAfterInput'];
+type PickedOptions = Pick<DefaultOptions, 'rememberStwSizeAndPosition' | 'autoTranslateAfterInput'>;
+const useOptionsDependency: (keyof PickedOptions)[] = ['rememberStwSizeAndPosition', 'autoTranslateAfterInput'];
 
 const Separate: React.FC = () => {
     const { text, from, to, translations, translateId } = useAppSelector(state => state.multipleTranslate);
@@ -76,11 +76,7 @@ const Separate: React.FC = () => {
         oldTranslateIdRef.current = translateId;
     }, [translateId, text, handleTranslate, translations, dispatch]);
 
-    const { styleVarsList, styleVarsIndex, rememberStwSizeAndPosition, autoTranslateAfterInput } = useOptions<PickedOptions>(useOptionsDependency);
-
-    const handleThemeToggle = useCallback(() => {
-        setLocalStorage({'styleVarsIndex': styleVarsIndex >= styleVarsList.length - 1 ? 0 : styleVarsIndex + 1});
-    }, [styleVarsList, styleVarsIndex]);
+    const { rememberStwSizeAndPosition, autoTranslateAfterInput } = useOptions<PickedOptions>(useOptionsDependency);
 
     useEffect(() => {
         const text = new URL(window.location.href).searchParams.get('text');
@@ -126,12 +122,7 @@ const Separate: React.FC = () => {
                 <div className='popup-header__logo flex-align-items-center'>Sc</div>
                 <div className='popup-header__icons flex-align-items-center'>
                     <CollectButton />
-                    <IconFont
-                        iconName='#icon-theme'
-                        className='iconfont--enable'
-                        onClick={() => handleThemeToggle()}
-                        title={getMessage('popupSwitchToTheNextTheme')}
-                    />
+                    <SwitchThemeButton />
                     <OpenOptionsPageButton />
                 </div>
             </div>
