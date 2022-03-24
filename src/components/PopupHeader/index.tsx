@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import IconFont from '../IconFont';
-import { setLocalStorage, openOptionsPage } from '../../public/chrome-call';
+import { setLocalStorage } from '../../public/chrome-call';
 import { useOptions } from '../../public/react-use';
 import { getCurrentTabHost } from '../../public/utils';
 import './style.css';
@@ -9,6 +9,7 @@ import { DefaultOptions } from '../../types';
 import CollectButton from '../PanelIconButtons/CollectButton';
 import ToggleTranslateButton from '../PanelIconButtons/ToggleTranslateButton';
 import ToggleHistoryButton from '../PanelIconButtons/ToggleHistoryButton';
+import OpenOptionsPageButton from '../PanelIconButtons/OpenOptionsPageButton';
 
 type PickedOptions = Pick<DefaultOptions, 'styleVarsList' | 'styleVarsIndex'>;
 const useOptionsDependency: (keyof PickedOptions)[] = ['styleVarsList', 'styleVarsIndex'];
@@ -39,12 +40,7 @@ const PopupHeader: React.FC = () => {
                 />
                 <ToggleTranslateButton host={host} />
                 <ToggleHistoryButton host={host} />
-                <IconFont
-                    iconName='#icon-MdSettings'
-                    className='iconfont--enable'
-                    onClick={openOptionsPage}
-                    title={getMessage('popupOpenOptionsPage')}
-                />
+                <OpenOptionsPageButton />
             </div>
         </div>
     );

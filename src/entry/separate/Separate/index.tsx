@@ -5,7 +5,7 @@ import MtAddSource from '../../../components/MtAddSource';
 import MtResult from '../../../components/MtResult';
 import RawText from '../../../components/RawText';
 import { mtLangCode } from '../../../constants/langCode';
-import { openOptionsPage, setLocalStorage } from '../../../public/chrome-call';
+import { setLocalStorage } from '../../../public/chrome-call';
 import { sendTranslate } from '../../../public/send';
 import './style.css';
 import '../../../components/PopupHeader/style.css';
@@ -17,6 +17,7 @@ import { mtAddSource, mtRemoveSource, mtRequestError, mtRequestFinish, mtRequest
 import { DefaultOptions } from '../../../types';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
 import CollectButton from '../../../components/PanelIconButtons/CollectButton';
+import OpenOptionsPageButton from '../../../components/PanelIconButtons/OpenOptionsPageButton';
 
 type PickedOptions = Pick<DefaultOptions, 'styleVarsList' | 'styleVarsIndex' | 'rememberStwSizeAndPosition' | 'autoTranslateAfterInput'>;
 const useOptionsDependency: (keyof PickedOptions)[] = ['styleVarsList', 'styleVarsIndex', 'rememberStwSizeAndPosition', 'autoTranslateAfterInput'];
@@ -131,12 +132,7 @@ const Separate: React.FC = () => {
                         onClick={() => handleThemeToggle()}
                         title={getMessage('popupSwitchToTheNextTheme')}
                     />
-                    <IconFont
-                        iconName='#icon-MdSettings'
-                        className='iconfont--enable'
-                        onClick={openOptionsPage}
-                        title={getMessage('popupOpenOptionsPage')}
-                    />
+                    <OpenOptionsPageButton />
                 </div>
             </div>
             <div className="separate-container__content">
