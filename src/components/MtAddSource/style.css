@@ -7,4 +7,5 @@
 }
 .add-source__badge {
     color: var(--text-icon);
+    font-size: 18px;
 }

@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Translation } from '../../redux/slice/multipleTranslateSlice';
 import IconFont from '../IconFont';
+import PanelIconButtonWrapper from '../PanelIconButtons/PanelIconButtonWrapper';
 import SourceSelector from './SourceSelector';
 import './style.css';
 
@@ -22,11 +23,14 @@ const MtAddSource: React.FC<MtAddSourceProps> = ({ translations, addSource }) =>
 
     return (
         <div className='add-source'>
-            <IconFont
-                iconName='#icon-plus'
+            <PanelIconButtonWrapper
                 onClick={plusOnClick}
-                className='add-source__badge button'
-            />
+            >
+                <IconFont
+                    iconName='#icon-plus'
+                    className='add-source__badge'
+                />
+            </PanelIconButtonWrapper>
             <SourceSelector
                 show={showSourceSelector}
                 hideCallback={hideCallback}
