@@ -27,7 +27,7 @@ const ToggleHistoryButton: React.FC<ToggleHistoryButtonProps> = ({ host }) => {
             disabled={!host}
             onClick={() => {
                 if (!host) { return; }
-        
+
                 if ((historyEnabled && !historyBlackListMode) || (!historyEnabled && historyBlackListMode)) {
                     setLocalStorage({ historyHostList: historyHostList.filter(v => !host.endsWith(v)) });
                 }
@@ -36,10 +36,10 @@ const ToggleHistoryButton: React.FC<ToggleHistoryButtonProps> = ({ host }) => {
                 }
             }}
             title={getMessage(host ? historyEnabled ? 'popupDisableHistory' : 'popupEnableHistory' : 'popupNotAvailable')}
+            iconGrey={!historyEnabled}
         >
             <IconFont
                 iconName='#icon-MdHistory'
-                style={host ? { opacity: historyEnabled ? 0.7 : 0.4 } : undefined}
             />
         </PanelIconButtonWrapper>
     );

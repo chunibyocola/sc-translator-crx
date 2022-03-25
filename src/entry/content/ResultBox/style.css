@@ -21,8 +21,8 @@
 }
 .panel__header-logo {
     font-weight: bold;
-    font-size: 14px;
+    font-size: 16px;
 }
-.panel__header-icons {
-    margin-right: 5px;
+.panel__header-icons .iconfont {
+    font-size: 18px;
 }

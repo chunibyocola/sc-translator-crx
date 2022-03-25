@@ -27,7 +27,7 @@ const ToggleTranslateButton: React.FC<ToggleTranslateButtonProps> = ({ host }) =
             disabled={!host}
             onClick={() => {
                 if (!host) { return; }
-        
+
                 if ((translateEnabled && !translateBlackListMode) || (!translateEnabled && translateBlackListMode)) {
                     setLocalStorage({ translateHostList: translateHostList.filter(v => !host.endsWith(v)) });
                 }
@@ -36,10 +36,10 @@ const ToggleTranslateButton: React.FC<ToggleTranslateButtonProps> = ({ host }) =
                 }
             }}
             title={getMessage(host ? translateEnabled ? 'popupDisableTranslate' : 'popupEnableTranslate' : 'popupNotAvailable')}
+            iconGrey={!translateEnabled}
         >
             <IconFont
                 iconName='#icon-MdTranslate'
-                style={host ? { opacity: translateEnabled ? 0.7 : 0.4 } : undefined}
             />
         </PanelIconButtonWrapper>
     );

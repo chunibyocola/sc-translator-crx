@@ -12,10 +12,11 @@ const DisplayEditAreaButton: React.FC = () => {
     return (
         <PanelIconButtonWrapper
             onClick={() => dispatch(toggleDisplayEditArea())}
+            iconGrey={!displayEditArea}
         >
             <IconFont
                 iconName='#icon-GoChevronDown'
-                style={displayEditArea ? {transform: 'rotate(180deg)', opacity: '1'} : {opacity: '0.6'}}
+                style={displayEditArea ? {transform: 'rotate(180deg)'} : undefined}
             />
         </PanelIconButtonWrapper>
     );

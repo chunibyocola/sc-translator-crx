@@ -12,10 +12,11 @@ const PinButton: React.FC = () => {
     return (
         <PanelIconButtonWrapper
             onClick={() => dispatch(setPanelPinning({ pinning: !pinning }))}
+            iconGrey={!pinning}
         >
             <IconFont
                 iconName='#icon-GoPin'
-                style={pinning ? {transform: 'rotate(-45deg)', opacity: '1'} : {opacity: '0.6'}}
+                style={pinning ? {transform: 'rotate(-45deg)'} : undefined}
             />
         </PanelIconButtonWrapper>
     );

@@ -20,5 +20,10 @@
 }
 .panel-icon-btn.panel-icon-btn--disabled {
     cursor: default;
+}
+.panel-icon-btn .iconfont {
+    opacity: 0.8;
+}
+.panel-icon-btn.panel-icon-btn--disabled .iconfont, .panel-icon-btn.panel-icon-btn--icon-grey .iconfont {
     opacity: 0.4;
 }
