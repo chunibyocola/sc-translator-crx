@@ -10,6 +10,7 @@ import {
     TRANSLATE_SELECTION_TEXT
 } from '../../constants/contextMenusIds';
 import { DefaultOptions, OptionsContextMenu } from '../../types';
+import { chromeTabsSendMessage } from '../../public/send';
 
 // Google dosen't provide "chrome.i18n.getMessage" in service worker.
 type I18nLocaleCode = 'en' | 'ja' | 'zh_CN' | 'zh_TW';
@@ -80,7 +81,7 @@ const translateSelectionText: OnContextMenuClick = async ({ selectionText }, tab
         const enabled = await getIsContentScriptEnabled(tab.id);
 
         if (enabled) {
-            chrome.tabs.sendMessage(tab.id, { type: SCTS_CONTEXT_MENUS_CLICKED, payload: { selectionText } });
+            chromeTabsSendMessage(tab.id, { type: SCTS_CONTEXT_MENUS_CLICKED, payload: { text: selectionText } });
         }
         else {
             createSeparateWindow(selectionText);

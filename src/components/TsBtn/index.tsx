@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback, useRef} from 'react';
 import { getSelectedText } from '../../public/utils/get-selection';
-import { useOptions, useOnExtensionMessage, useIsEnable, useGetSelection, useAppSelector, useAppDispatch } from '../../public/react-use';
+import { useOptions, useIsEnable, useGetSelection, useAppSelector, useAppDispatch, useOnRuntimeMessage } from '../../public/react-use';
 import {
     SCTS_CONTEXT_MENUS_CLICKED,
     SCTS_TRANSLATE_COMMAND_KEY_PRESSED,
@@ -91,7 +91,6 @@ const TsBtn: React.FC = () => {
 
     const ctrlPressing = useRef(false);
     const debounceHideButtonAfterFixedTime = useRef<ReturnType<typeof debounce>>();
-    const oldChromeMsg = useRef<any>(null);
     const translateButtonEleRef = useRef<HTMLDivElement>(null);
 
     const { pinning } = useAppSelector(state => state.panelStatus);
@@ -110,8 +109,6 @@ const TsBtn: React.FC = () => {
     } = useOptions<PickedOptions>(useOptionsDependency);
 
     const isEnableTranslate = useIsEnable('translate', window.location.host);
-
-    const chromeMsg = useOnExtensionMessage();
 
     const dispatch = useAppDispatch();
 
@@ -173,37 +170,38 @@ const TsBtn: React.FC = () => {
         }
     }, [translateWithKeyPress]);
 
-    useEffect(() => {
-        if (oldChromeMsg.current === chromeMsg || !isEnableTranslate) { return; }
-
-        const { type, payload } = chromeMsg;
-        let text;
+    useOnRuntimeMessage(({ type, payload }) => {
+        if (!isEnableTranslate) { return; }
 
         switch (type) {
-            case SCTS_CONTEXT_MENUS_CLICKED:
+            case SCTS_CONTEXT_MENUS_CLICKED: {
                 setShowBtn(false);
-                handleForwardTranslate(payload.selectionText, pos);
-                break;
-            case SCTS_TRANSLATE_COMMAND_KEY_PRESSED:
-                setShowBtn(false);
-                text = getSelectedText();
+                const { text } = payload;
                 text && handleForwardTranslate(text, pos);
                 break;
-            case SCTS_AUDIO_COMMAND_KEY_PRESSED:
-                text = getSelectedText();
+            }
+            case SCTS_TRANSLATE_COMMAND_KEY_PRESSED: {
+                setShowBtn(false);
+                const text = getSelectedText();
+                text && handleForwardTranslate(text, pos);
+                break;
+            }
+            case SCTS_AUDIO_COMMAND_KEY_PRESSED: {
+                const text = getSelectedText();
                 text && playAudio({ text });
                 break;
-            case SCTS_CALL_OUT_COMMAND_KEY_PRESSED:
+            }
+            case SCTS_CALL_OUT_COMMAND_KEY_PRESSED: {
                 dispatch(callOutPanelInContentScript({ pinThePanelWhileOpeningIt }));
                 break;
-            case SCTS_CLOSE_COMMAND_KEY_PRESSED:
+            }
+            case SCTS_CLOSE_COMMAND_KEY_PRESSED: {
                 dispatch(closePanel());
                 break;
+            }
             default: break;
         }
-
-        oldChromeMsg.current = chromeMsg;
-    }, [chromeMsg, isEnableTranslate, handleForwardTranslate, dispatch, pos, pinThePanelWhileOpeningIt]);
+    });
 
     useGetSelection(({ text, pos }) => {
         if (!isEnableTranslate) { return; }

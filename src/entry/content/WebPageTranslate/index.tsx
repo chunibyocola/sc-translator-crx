@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import ErrorMessage from '../../../components/ErrorMessage';
 import IconFont from '../../../components/IconFont';
 import LanguageSelect from '../../../components/LanguageSelect';
@@ -8,7 +8,7 @@ import { LangCodes, preferredLangCode } from '../../../constants/langCode';
 import { webPageTranslateSource as webPageTranslateSourceList } from '../../../constants/translateSource';
 import { getMessage } from '../../../public/i18n';
 import { getOptions } from '../../../public/options';
-import { useOnExtensionMessage } from '../../../public/react-use';
+import { useOnRuntimeMessage } from '../../../public/react-use';
 import useEffectOnce from '../../../public/react-use/useEffectOnce';
 import { closeWebPageTranslating, errorRetry, startWebPageTranslating, switchWayOfFontsDisplaying } from '../../../public/web-page-translate';
 import './style.css';
@@ -99,10 +99,6 @@ const WebPageTranslate: React.FC = () => {
         }, {}));
     }, [source]);
 
-    const oldChromeMsg = useRef<any>(null);
-
-    const chromeMsg = useOnExtensionMessage();
-
     const startProcessing = useCallback(() => {
         if (source === workingSourceAndLanguage.source && targetLanguage === workingSourceAndLanguage.targetLanguage) { return; }
 
@@ -117,11 +113,7 @@ const WebPageTranslate: React.FC = () => {
         }
     }, [source, targetLanguage, workingSourceAndLanguage, dispach, handleError]);
 
-    useEffect(() => {
-        if (oldChromeMsg.current === chromeMsg) { return; }
-
-        const { type } = chromeMsg;
-
+    useOnRuntimeMessage(({ type }) => {
         switch (type) {
             case SCTS_TRANSLATE_CURRENT_PAGE:
                 if (!working) {
@@ -139,9 +131,7 @@ const WebPageTranslate: React.FC = () => {
                 break;
             default: break;
         }
-
-        oldChromeMsg.current = chromeMsg;
-    }, [chromeMsg, working, dispach, startProcessing, activated, show]);
+    });
 
     return (<div className='web-page-translate'
         style={show ? {} : {display: 'none'}}

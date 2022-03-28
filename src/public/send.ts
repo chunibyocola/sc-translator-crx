@@ -21,7 +21,7 @@ export type IsCollectResponse = GenericResponse<{
     isCollected: boolean;
 }>;
 
-type GenericMessage<ActionType, ActionPayload> = {
+type GenericMessage<ActionType, ActionPayload = undefined> = {
     type: ActionType;
     payload: ActionPayload;
 }
@@ -87,6 +87,35 @@ const chromeRuntimeSendMessage = <T = null>(message: ChromeRuntimeMessage): Prom
     return new Promise((resolve) => {
         try {
             chrome.runtime.sendMessage(message, (response: T) => {
+                if (chrome.runtime.lastError) {
+                    resolve({ code: chrome.runtime.lastError.message ?? 'UNKNOWN_ERROR' });
+                }
+
+                resolve(response);
+            });
+        }
+        catch {
+            resolve({ code: EXTENSION_UPDATED });
+        }
+    });
+};
+
+export type ChromeTabsMessage = GenericMessage<typeof types.SCTS_CONTEXT_MENUS_CLICKED, {
+    text: string;
+}> | GenericMessage<typeof types.SCTS_AUDIO_COMMAND_KEY_PRESSED>
+| GenericMessage<typeof types.SCTS_TRANSLATE_CURRENT_PAGE>
+| GenericMessage<typeof types.SCTS_TRANSLATE_COMMAND_KEY_PRESSED>
+| GenericMessage<typeof types.SCTS_CALL_OUT_COMMAND_KEY_PRESSED>
+| GenericMessage<typeof types.SCTS_CLOSE_COMMAND_KEY_PRESSED>
+| GenericMessage<typeof types.SCTS_SWITCH_WT_DISPLAY_MODE>
+| GenericMessage<typeof types.SCTS_SEPARATE_WINDOW_SET_TEXT, {
+    text: string;
+}>;
+
+export const chromeTabsSendMessage = <T = null>(tabId: number, message: ChromeTabsMessage): Promise<T | ErrorResponse> => {
+    return new Promise((resolve) => {
+        try {
+            chrome.tabs.sendMessage(tabId, message, (response: T) => {
                 if (chrome.runtime.lastError) {
                     resolve({ code: chrome.runtime.lastError.message ?? 'UNKNOWN_ERROR' });
                 }
