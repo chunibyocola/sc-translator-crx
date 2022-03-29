@@ -1,4 +1,3 @@
-import { SCTS_AUDIO_COMMAND_KEY_PRESSED, SCTS_CONTEXT_MENUS_CLICKED, SCTS_TRANSLATE_CURRENT_PAGE } from '../../constants/chromeSendMessageTypes';
 import { createSeparateWindow } from './separate-window';
 import { getIsContentScriptEnabled, getLocalStorageAsync } from '../../public/utils';
 import {
@@ -10,7 +9,7 @@ import {
     TRANSLATE_SELECTION_TEXT
 } from '../../constants/contextMenusIds';
 import { DefaultOptions, OptionsContextMenu } from '../../types';
-import { chromeTabsSendMessage } from '../../public/send';
+import { sendTabsAudioCommandKeyPressed, sendTabsContextMenusClicked, sendTabsTranslateCurrentPage } from '../../public/send';
 
 // Google dosen't provide "chrome.i18n.getMessage" in service worker.
 type I18nLocaleCode = 'en' | 'ja' | 'zh_CN' | 'zh_TW';
@@ -81,7 +80,7 @@ const translateSelectionText: OnContextMenuClick = async ({ selectionText }, tab
         const enabled = await getIsContentScriptEnabled(tab.id);
 
         if (enabled) {
-            chromeTabsSendMessage(tab.id, { type: SCTS_CONTEXT_MENUS_CLICKED, payload: { text: selectionText } });
+            sendTabsContextMenusClicked(tab.id, selectionText);
         }
         else {
             createSeparateWindow(selectionText);
@@ -97,7 +96,7 @@ const listenSelectionText: OnContextMenuClick = async ({ selectionText }, tab) =
 
     if (tab?.id !== undefined && tab.id >= 0) {
         const enabled = await getIsContentScriptEnabled(tab.id);
-        enabled && chrome.tabs.sendMessage(tab.id, { type: SCTS_AUDIO_COMMAND_KEY_PRESSED });
+        enabled && sendTabsAudioCommandKeyPressed(tab.id);
     }
 };
 
@@ -110,7 +109,7 @@ const openSeparateTranslateWindow = () => {
 };
 
 const translateCurrentPage: OnContextMenuClick = (info, tab) => {
-    tab?.id !== undefined && tab.id >= 0 && chrome.tabs.sendMessage(tab.id, { type: SCTS_TRANSLATE_CURRENT_PAGE });
+    tab?.id !== undefined && tab.id >= 0 && sendTabsTranslateCurrentPage(tab.id);
 };
 
 const openCollectionPage = () => {

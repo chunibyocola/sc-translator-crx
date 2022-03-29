@@ -1,4 +1,4 @@
-import { SCTS_CALL_OUT_COMMAND_KEY_PRESSED, SCTS_SEPARATE_WINDOW_SET_TEXT } from "../../constants/chromeSendMessageTypes";
+import { sendTabsCallOutCommandKeyPressed, sendTabsSeparateWindowSetText } from "../../public/send";
 import { getQueryString } from "../../public/translate/utils";
 import { getLocalStorageAsync } from "../../public/utils";
 import { DefaultOptions } from "../../types";
@@ -28,9 +28,9 @@ export const createSeparateWindow = async (text?: string) => {
 
         chrome.windows.update(windowId, { focused: true });
 
-        chrome.tabs.sendMessage(tabId, { type: SCTS_CALL_OUT_COMMAND_KEY_PRESSED });
+        sendTabsCallOutCommandKeyPressed(tabId);
 
-        text && chrome.tabs.sendMessage(tabId, { type: SCTS_SEPARATE_WINDOW_SET_TEXT, payload: { text } });
+        text && sendTabsSeparateWindowSetText(tabId, text);
     }
     else {
         const { rememberStwSizeAndPosition, stwSizeAndPosition } = await getLocalStorageAsync<PickedOptions>(keys);

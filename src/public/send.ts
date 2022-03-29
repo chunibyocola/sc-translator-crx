@@ -21,10 +21,10 @@ export type IsCollectResponse = GenericResponse<{
     isCollected: boolean;
 }>;
 
-type GenericMessage<ActionType, ActionPayload = undefined> = {
+type GenericMessage<ActionType, ActionPayload> = {
     type: ActionType;
     payload: ActionPayload;
-}
+};
 export type ChromeRuntimeMessage = GenericMessage<typeof types.SCTS_IS_COLLECTED, {
     text: string;
 }> | GenericMessage<typeof types.SCTS_ADD_TO_COLLECTION, {
@@ -102,15 +102,47 @@ const chromeRuntimeSendMessage = <T = null>(message: ChromeRuntimeMessage): Prom
 
 export type ChromeTabsMessage = GenericMessage<typeof types.SCTS_CONTEXT_MENUS_CLICKED, {
     text: string;
-}> | GenericMessage<typeof types.SCTS_AUDIO_COMMAND_KEY_PRESSED>
-| GenericMessage<typeof types.SCTS_TRANSLATE_CURRENT_PAGE>
-| GenericMessage<typeof types.SCTS_TRANSLATE_COMMAND_KEY_PRESSED>
-| GenericMessage<typeof types.SCTS_CALL_OUT_COMMAND_KEY_PRESSED>
-| GenericMessage<typeof types.SCTS_CLOSE_COMMAND_KEY_PRESSED>
-| GenericMessage<typeof types.SCTS_SWITCH_WT_DISPLAY_MODE>
-| GenericMessage<typeof types.SCTS_SEPARATE_WINDOW_SET_TEXT, {
+}> | GenericMessage<typeof types.SCTS_AUDIO_COMMAND_KEY_PRESSED, {
+}> | GenericMessage<typeof types.SCTS_TRANSLATE_CURRENT_PAGE, {
+}> | GenericMessage<typeof types.SCTS_TRANSLATE_COMMAND_KEY_PRESSED, {
+}> | GenericMessage<typeof types.SCTS_CALL_OUT_COMMAND_KEY_PRESSED, {
+}> | GenericMessage<typeof types.SCTS_CLOSE_COMMAND_KEY_PRESSED, {
+}> | GenericMessage<typeof types.SCTS_SWITCH_WT_DISPLAY_MODE, {
+}> | GenericMessage<typeof types.SCTS_SEPARATE_WINDOW_SET_TEXT, {
     text: string;
 }>;
+
+export const sendTabsContextMenusClicked = (tabId: number, text: string) => {
+    return chromeTabsSendMessage(tabId, { type: types.SCTS_CONTEXT_MENUS_CLICKED, payload: { text } });
+};
+
+export const sendTabsAudioCommandKeyPressed = (tabId: number) => {
+    return chromeTabsSendMessage(tabId, { type: types.SCTS_AUDIO_COMMAND_KEY_PRESSED, payload: {} });
+};
+
+export const sendTabsTranslateCurrentPage = (tabId: number) => {
+    return chromeTabsSendMessage(tabId, { type: types.SCTS_TRANSLATE_CURRENT_PAGE, payload: {} });
+};
+
+export const sendTabsTranslateCommandKeyPressed = (tabId: number) => {
+    return chromeTabsSendMessage(tabId, { type: types.SCTS_TRANSLATE_COMMAND_KEY_PRESSED, payload: {} });
+};
+
+export const sendTabsCallOutCommandKeyPressed = (tabId: number) => {
+    return chromeTabsSendMessage(tabId, { type: types.SCTS_CALL_OUT_COMMAND_KEY_PRESSED, payload: {} });
+};
+
+export const sendTabsCloseCommandKeyPressed = (tabId: number) => {
+    return chromeTabsSendMessage(tabId, { type: types.SCTS_CLOSE_COMMAND_KEY_PRESSED, payload: {} });
+};
+
+export const sendTabsSwitchWtDisplayMode = (tabId: number) => {
+    return chromeTabsSendMessage(tabId, { type: types.SCTS_SWITCH_WT_DISPLAY_MODE, payload: {} });
+};
+
+export const sendTabsSeparateWindowSetText = (tabId: number, text: string) => {
+    return chromeTabsSendMessage(tabId, { type: types.SCTS_SEPARATE_WINDOW_SET_TEXT, payload: { text } });
+};
 
 export const chromeTabsSendMessage = <T = null>(tabId: number, message: ChromeTabsMessage): Promise<T | ErrorResponse> => {
     return new Promise((resolve) => {
