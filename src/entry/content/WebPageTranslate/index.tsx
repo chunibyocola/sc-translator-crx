@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import ErrorMessage from '../../../components/ErrorMessage';
 import IconFont from '../../../components/IconFont';
 import LanguageSelect from '../../../components/LanguageSelect';
+import PanelIconButtonWrapper from '../../../components/PanelIconButtons/PanelIconButtonWrapper';
 import SourceSelect from '../../../components/SourceSelect';
 import { SCTS_SWITCH_WT_DISPLAY_MODE, SCTS_TRANSLATE_CURRENT_PAGE } from '../../../constants/chromeSendMessageTypes';
 import { LangCodes, preferredLangCode } from '../../../constants/langCode';
@@ -162,32 +163,34 @@ const WebPageTranslate: React.FC = () => {
                 onChange={targetLanguage => dispach({ type: 'change-targer-language', targetLanguage })}
                 recentLangs={[]}
             />
-            <IconFont
-                iconName='#icon-switch'
-                className={working ? 'iconfont--enable' : 'iconfont--disable'}
-                title={wPTI18nCache.switchDisplayModeOfResult}
+            <PanelIconButtonWrapper
                 onClick={() => {
                     if (!working) { return; }
 
                     switchWayOfFontsDisplaying();
                 }}
-            />
-            <IconFont
-                iconName='#icon-start'
-                className={source === workingSourceAndLanguage.source && targetLanguage === workingSourceAndLanguage.targetLanguage ? 'iconfont--disable' : 'iconfont--enable'}
-                title={wPTI18nCache.startWebPageTranslating}
+                disabled={!working}
+                title={wPTI18nCache.switchDisplayModeOfResult}
+            >
+                <IconFont iconName='#icon-switch' />
+            </PanelIconButtonWrapper>
+            <PanelIconButtonWrapper
                 onClick={startProcessing}
-            />
-            <IconFont
-                iconName='#icon-GoX'
-                className='iconfont--enable'
-                title={wPTI18nCache.closeWebPageTranslating}
+                disabled={source === workingSourceAndLanguage.source && targetLanguage === workingSourceAndLanguage.targetLanguage}
+                title={wPTI18nCache.startWebPageTranslating}
+            >
+                <IconFont iconName='#icon-start' />
+            </PanelIconButtonWrapper>
+            <PanelIconButtonWrapper
                 onClick={() => {
                     closeWebPageTranslating();
                     setWorkingSourceAndLanguage({ source: '', targetLanguage: '' });
                     dispach({ type: 'close-wpt' });
                 }}
-            />
+                title={wPTI18nCache.closeWebPageTranslating}
+            >
+                <IconFont iconName='#icon-GoX' />
+            </PanelIconButtonWrapper>
         </div>
     </div>);
 };
