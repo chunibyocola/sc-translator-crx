@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import IconFont from '../IconFont';
-import { useAppDispatch, useAppSelector, useIsEnable, useOptions } from '../../public/react-use';
+import { useAppDispatch, useAppSelector, useIsHistoryEnabled, useIsTranslateEnabled, useOptions } from '../../public/react-use';
 import './style.css';
 import { getMessage } from '../../public/i18n';
 import HistoryResultPanel from './HistoryResultPanel';
@@ -27,8 +27,8 @@ const TsHistory: React.FC = () => {
 
     const { rememberHistoryPanelStatus, historyPanelStatus } = useOptions<PickedOptions>(useOptionsDependency);
 
-    const isEnableHistory = useIsEnable('history', window.location.host);
-    const isEnableTranslate = useIsEnable('translate', window.location.host);
+    const historyEnabled = useIsHistoryEnabled(window.location.host);
+    const translateEnabled = useIsTranslateEnabled(window.location.host);
 
     const foldTimeDelay = useRef<ReturnType<typeof setTimeout>>();
 
@@ -54,7 +54,7 @@ const TsHistory: React.FC = () => {
     return (
         <div
             className={`history${fold ? '' : ' history--show'}`}
-            style={{display: isEnableHistory && isEnableTranslate ? 'block' : 'none', width: `${historyWidth}px`}}
+            style={{display: historyEnabled && translateEnabled ? 'block' : 'none', width: `${historyWidth}px`}}
             onMouseEnter={() => {
                 if (pinning) { return; }
 

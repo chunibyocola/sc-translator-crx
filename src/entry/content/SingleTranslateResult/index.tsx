@@ -6,7 +6,7 @@ import RawText from '../../../components/RawText';
 import { googleLangCode, langCode } from '../../../constants/langCode';
 import TsVia from '../../../components/TsVia';
 import { switchTranslateSource } from '../../../public/switch-translate-source';
-import { useAppDispatch, useAppSelector, useInsertResult, useIsEnable } from '../../../public/react-use';
+import { useAppDispatch, useAppSelector, useInsertResult, useIsHistoryEnabled } from '../../../public/react-use';
 import './style.css';
 import { textPreprocessing } from '../../../public/text-preprocessing';
 import { stRequestError, stRequestFinish, stRequestStart, stSetFromAndTo, stSetSourceFromTo, stSetText } from '../../../redux/slice/singleTranslateSlice';
@@ -39,7 +39,7 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ maxHeight
 
     const dispatch = useAppDispatch();
 
-    const isEnableHistory = useIsEnable('history', window.location.host);
+    const historyEnabled = useIsHistoryEnabled(window.location.host);
 
     translateIdRef.current = translateId;
 
@@ -85,7 +85,7 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ maxHeight
         if (oldTranslateIdRef.current === translateId) { return; }
 
         if (text) {
-            isEnableHistory && dispatch(addHistory({ translateId, text, sourceList: [source] }));
+            historyEnabled && dispatch(addHistory({ translateId, text, sourceList: [source] }));
             handleTranslate();
 
             // insert result
@@ -93,7 +93,7 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ maxHeight
         }
 
         oldTranslateIdRef.current = translateId;
-    }, [text, handleTranslate, dispatch, translateId, source, isEnableHistory, confirmInsertResult]);
+    }, [text, handleTranslate, dispatch, translateId, source, historyEnabled, confirmInsertResult]);
 
     return (
         <>

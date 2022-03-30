@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback, useRef} from 'react';
 import { getSelectedText } from '../../public/utils/get-selection';
-import { useOptions, useIsEnable, useGetSelection, useAppSelector, useAppDispatch, useOnRuntimeMessage } from '../../public/react-use';
+import { useOptions, useGetSelection, useAppSelector, useAppDispatch, useOnRuntimeMessage, useIsTranslateEnabled } from '../../public/react-use';
 import {
     SCTS_CONTEXT_MENUS_CLICKED,
     SCTS_TRANSLATE_COMMAND_KEY_PRESSED,
@@ -108,7 +108,7 @@ const TsBtn: React.FC = () => {
         pinThePanelWhileOpeningIt
     } = useOptions<PickedOptions>(useOptionsDependency);
 
-    const isEnableTranslate = useIsEnable('translate', window.location.host);
+    const translateEnabled = useIsTranslateEnabled(window.location.host);
 
     const dispatch = useAppDispatch();
 
@@ -171,7 +171,7 @@ const TsBtn: React.FC = () => {
     }, [translateWithKeyPress]);
 
     useOnRuntimeMessage(({ type, payload }) => {
-        if (!isEnableTranslate) { return; }
+        if (!translateEnabled) { return; }
 
         switch (type) {
             case SCTS_CONTEXT_MENUS_CLICKED: {
@@ -204,7 +204,7 @@ const TsBtn: React.FC = () => {
     });
 
     useGetSelection(({ text, pos }) => {
-        if (!isEnableTranslate) { return; }
+        if (!translateEnabled) { return; }
 
         if (doNotRespondInTextBox && document.activeElement && isTextBox(document.activeElement)) { return; }
 
@@ -239,7 +239,7 @@ const TsBtn: React.FC = () => {
             ref={translateButtonEleRef}
             className='translate-button'
             style={{
-                display: isEnableTranslate && showBtn && translateButtons.length > 0 ? 'flex' : 'none',
+                display: translateEnabled && showBtn && translateButtons.length > 0 ? 'flex' : 'none',
                 left: `${pos.x}px`,
                 top: `${pos.y}px`
             }}

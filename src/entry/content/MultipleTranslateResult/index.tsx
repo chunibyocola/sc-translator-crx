@@ -7,7 +7,7 @@ import { sendTranslate } from '../../../public/send';
 import { mtLangCode } from '../../../constants/langCode';
 import './style.css';
 import { getMessage } from '../../../public/i18n';
-import { useAppDispatch, useAppSelector, useInsertResult, useIsEnable } from '../../../public/react-use';
+import { useAppDispatch, useAppSelector, useInsertResult, useIsHistoryEnabled } from '../../../public/react-use';
 import { textPreprocessing } from '../../../public/text-preprocessing';
 import { mtAddSource, mtRemoveSource, mtRequestError, mtRequestFinish, mtRequestStart, mtSetFromAndTo, mtSetText } from '../../../redux/slice/multipleTranslateSlice';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/slice/translateHistorySlice';
@@ -38,7 +38,7 @@ const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = ({ maxHe
 
     const dispatch = useAppDispatch();
 
-    const isEnableHistory = useIsEnable('history', window.location.host);
+    const historyEnabled = useIsHistoryEnabled(window.location.host);
 
     translateIdRef.current = translateId;
 
@@ -89,7 +89,7 @@ const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = ({ maxHe
         if (oldTranslateIdRef.current === translateId) { return; }
 
         if (text) {
-            isEnableHistory && dispatch(addHistory({ translateId, text, sourceList: translations.map(({ source }) => (source)) }));
+            historyEnabled && dispatch(addHistory({ translateId, text, sourceList: translations.map(({ source }) => (source)) }));
             translations.map(({ source }) => (handleTranslate(source)));
 
             // insert result
@@ -97,7 +97,7 @@ const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = ({ maxHe
         }
 
         oldTranslateIdRef.current = translateId;
-    }, [translateId, text, handleTranslate, translations, dispatch, isEnableHistory, confirmInsertResult]);
+    }, [translateId, text, handleTranslate, translations, dispatch, historyEnabled, confirmInsertResult]);
 
     return (
         <>
