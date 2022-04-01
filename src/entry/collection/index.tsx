@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import * as ReactDOMClient from 'react-dom/client';
 import defaultOptions from '../../constants/defaultOptions';
 import { getMessage } from '../../public/i18n';
 import { initOptions } from '../../public/options';
@@ -16,8 +16,9 @@ getLocalStorageAsync<DefaultOptions>(Object.keys(defaultOptions) as (keyof Defau
 
     initOptions(options);
 
-    ReactDOM.render(
-        <Collection />,
-        document.getElementById('root')
+    const rootElement = document.getElementById('root');
+
+    rootElement && ReactDOMClient.createRoot(rootElement).render(
+        <Collection />
     );
 });

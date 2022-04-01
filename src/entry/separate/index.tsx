@@ -1,13 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import * as ReactDOMClient from 'react-dom/client';
 import './style.css';
 import '../../styles/global.css';
-
 import { Provider } from 'react-redux';
 import store from '../../redux/store';
 import { initMultipleTranslate } from '../../redux/init';
 import { initOptions } from '../../public/options';
-import { getLocalStorage, onExtensionMessage } from '../../public/chrome-call';
+import { getLocalStorage } from '../../public/chrome-call';
 import defaultOptions from '../../constants/defaultOptions';
 import HandleCommand from './HandleCommands';
 import Separate from './Separate';
@@ -28,18 +27,19 @@ const init = (options: DefaultOptions) => {
 
     initMultipleTranslate(options);
 
-    ReactDOM.render(
+    const rootElement = document.getElementById('root');
+
+    rootElement && ReactDOMClient.createRoot(rootElement).render(
         <Provider store={store}>
             <HandleCommand />
             <Separate />
-        </Provider>,
-        document.getElementById('root')
+        </Provider>
     );
 };
 
 getLocalStorage<DefaultOptions>(defaultOptions, init);
 
-onExtensionMessage((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request === 'Are you enabled?') {
         sendResponse('Yes!');
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import * as ReactDOMClient from 'react-dom/client';
 import './style.css';
 import '../../styles/global.css';
 import { Provider } from 'react-redux';
@@ -21,11 +21,12 @@ const init = (options: DefaultOptions) => {
 
     options.multipleTranslateMode ? initMultipleTranslate(options) : initSingleTranslate(options);
 
-    ReactDOM.render(
+    const rootElement = document.getElementById('root');
+
+    rootElement && ReactDOMClient.createRoot(rootElement).render(
         <Provider store={store}>
             <ResultBox multipleTranslateMode={options.multipleTranslateMode} />
-        </Provider>,
-        document.getElementById('root')
+        </Provider>
     );
 };
 

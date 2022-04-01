@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import * as ReactDOMClient from 'react-dom/client';
 import Options from './Options';
 import './style.css';
 import '../../styles/global.css';
@@ -15,8 +15,9 @@ document.title = `${getI18nMessage('optionsTitle')} - ${getI18nMessage('extName'
 getLocalStorageAsync<DefaultOptions>(Object.keys(defaultOptions) as (keyof DefaultOptions)[]).then((options) => {
     initOptions(options);
 
-    ReactDOM.render(
-        <Options />,
-        document.getElementById('root')
+    const rootElement = document.getElementById('root');
+
+    rootElement && ReactDOMClient.createRoot(rootElement).render(
+        <Options />
     );
 })

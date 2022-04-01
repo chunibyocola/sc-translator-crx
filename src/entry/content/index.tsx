@@ -1,22 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import * as ReactDOMClient from 'react-dom/client';
 import TsBtn from '../../components/TsBtn';
 import TsHistory from '../../components/TsHistory';
 import ResultBox from './ResultBox';
-
 import { Provider } from 'react-redux';
 import store from '../../redux/store';
-
 import { initMultipleTranslate, initSingleTranslate } from '../../redux/init';
 import { initOptions } from '../../public/options';
-import { getExtensionURL, getLocalStorage, onExtensionMessage } from '../../public/chrome-call';
+import { getExtensionURL, getLocalStorage } from '../../public/chrome-call';
 import defaultOptions from '../../constants/defaultOptions';
-
 import '../../styles/global.css';
 import { appendColorVarsStyle, appendCustomizeStyle, appendFontSizeStyle } from '../../public/inject-style';
 import { DefaultOptions } from '../../types';
 import WebPageTranslate from './WebPageTranslate';
-// import { appendAudioIframe } from '../../public/play-audio';
 
 const init = (options: DefaultOptions) => {
     initOptions(options);
@@ -39,29 +35,26 @@ const init = (options: DefaultOptions) => {
     appendFontSizeStyle(shadowRoot);
     appendCustomizeStyle(shadowRoot);
 
-    // appendAudioIframe(shadowRoot);
+    const rootWrapper = document.createElement('div');
+    rootWrapper.setAttribute('style', 'all: initial;');
+    shadowRoot.appendChild(rootWrapper);
 
-    const div = document.createElement('div');
-    div.setAttribute('style', 'all: initial;');
-    shadowRoot.appendChild(div);
+    const rootElement = document.createElement('div');
+    rootElement.id = 'sc-translator-root';
+    rootWrapper.appendChild(rootElement);
 
-    const app = document.createElement('div');
-    app.id = 'sc-translator-root';
-    div.appendChild(app);
-
-    contentStyle.onload = () => ReactDOM.render(
+    contentStyle.onload = () => ReactDOMClient.createRoot(rootElement).render(
         <Provider store={store}>
             <TsBtn />
             <TsHistory />
             <ResultBox multipleTranslateMode={options.multipleTranslateMode} />
             <WebPageTranslate />
-        </Provider>,
-        app
+        </Provider>
     );
 };
 
 getLocalStorage<DefaultOptions>(defaultOptions, init);
 
-onExtensionMessage((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request === 'Are you enabled?') sendResponse({ host: window.location.host });
 });
