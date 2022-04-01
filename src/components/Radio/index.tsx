@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 import './style.css';
 
 type RadioProps = {
@@ -8,15 +8,6 @@ type RadioProps = {
     checked?: boolean;
     onChange?: (value: string) => void;
 } & Pick<React.HtmlHTMLAttributes<HTMLInputElement>, 'className'>;
-
-// Will replace will React built-in "useId" while migrating to React-18.0.0 (stable).
-const useId = () => {
-    const id = useMemo(() => {
-        return Math.random().toString().substring(2);
-    }, []);
-
-    return id;
-};
 
 const Radio: React.FC<RadioProps> = ({ value, name, label, checked, onChange }) => {
     const [activing, setActiving] = useState(false);

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 import './style.css';
 
 type ChcekboxProps = {
@@ -8,15 +8,6 @@ type ChcekboxProps = {
     onChange?: (checked: boolean) => void;
     disabled?: boolean;
 } & Pick<React.HtmlHTMLAttributes<HTMLInputElement>, 'className'>;
-
-// Will replace will React built-in "useId" while migrating to React-18.0.0 (stable).
-const useId = () => {
-    const id = useMemo(() => {
-        return Math.random().toString().substring(2);
-    }, []);
-
-    return id;
-};
 
 const Checkbox: React.FC<ChcekboxProps> = ({ label, checked, indeterminate, onChange, disabled }) => {
     const [activing, setActiving] = useState(false);

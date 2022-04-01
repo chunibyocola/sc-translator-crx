@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 import './style.css';
 
 type SwitchProps = {
@@ -6,15 +6,6 @@ type SwitchProps = {
     checked?: boolean;
     onChange?: (checked: boolean) => void;
 } & Pick<React.HtmlHTMLAttributes<HTMLInputElement>, 'className'>;
-
-// Will replace will React built-in "useId" while migrating to React-18.0.0 (stable).
-const useId = () => {
-    const id = useMemo(() => {
-        return Math.random().toString().substring(2);
-    }, []);
-
-    return id;
-};
 
 const Switch: React.FC<SwitchProps> = ({ label, onChange, checked }) => {
     const [activing, setActiving] = useState(false);
