@@ -15,7 +15,9 @@ const useDebounce = (fn: () => void, ms: number, deps: DependencyList) => {
             timerRef.current = setTimeout(callbackRef.current, ms);
         };
 
-        return () => timerRef.current && clearTimeout(timerRef.current);
+        return () => {
+            timerRef.current && clearTimeout(timerRef.current)
+        };
     }, [ms]);
 
     useEffect(() => {
