@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { pauseAudio, playAudio } from '../../public/play-audio';
 import IconFont from '../IconFont';
 
@@ -11,16 +11,8 @@ type ListenButtonProps = {
 const ListenButton: React.FC<ListenButtonProps> = ({ text, source, from }) => {
     const [playing, setPlaying] = useState(false);
 
-    const isMounted = useRef(false);
-
-    useEffect(() => {
-        isMounted.current = true;
-
-        return () => { isMounted.current = false; }
-    });
-
     const onAudioPaused = useCallback(() => {
-        isMounted.current && setPlaying(false);
+        setPlaying(false);
     }, []);
 
     const onListenButtonClick: React.MouseEventHandler<SVGSVGElement> = useCallback((e) => {
