@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { startTransition, useCallback, useEffect, useRef, useState } from 'react';
 import { LangCodes } from '../../constants/langCode';
 import { getMessage } from '../../public/i18n';
-import { useDebounce } from '../../public/react-use';
 import IconFont from '../IconFont';
 import SelectOptions from '../SelectOptions';
 import './style.css';
@@ -19,8 +18,6 @@ const LanguageSelect: React.FC<LanguageSelectProps> = ({ value, onChange, classN
     const [showOptions, setShowOptions] = useState(false);
     const [searchLangCodes, setSearchLangCodes] = useState<LangCodes>([]);
     const [searchText, setSearchText] = useState('');
-
-    useDebounce(() => setSearchLangCodes(langCodes.filter(v => v['name'].indexOf(searchText) >= 0)), 300, [langCodes, searchText]);
 
     const searchInputElementRef = useRef<HTMLInputElement>(null);
     const languageSelectElementRef = useRef<HTMLDivElement>(null);
@@ -51,6 +48,12 @@ const LanguageSelect: React.FC<LanguageSelectProps> = ({ value, onChange, classN
         searchInputElementRef.current.focus();
         searchInputElementRef.current.select();
     }, []);
+
+    useEffect(() => {
+        startTransition(() => {
+            setSearchLangCodes(langCodes.filter(v => v.name.includes(searchText)));
+        });
+    }, [langCodes, searchText]);
 
     useEffect(() => {
         showOptions ? window.addEventListener('mousedown', onMouseDownRef.current, true) : window.removeEventListener('mousedown', onMouseDownRef.current, true);
