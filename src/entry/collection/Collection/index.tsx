@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { startTransition, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import Button from '../../../components/Button';
 import Checkbox from '../../../components/Checkbox';
 import IconFont from '../../../components/IconFont';
@@ -71,11 +71,6 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
         </div>
     );
 });
-
-// will be replaced with React18's built-in startTransition
-const startTransition = (fn: () => void) => {
-    setTimeout(fn, 0);
-};
 
 type SearchFieldProps = {
     onChange: (search: string) => void;
