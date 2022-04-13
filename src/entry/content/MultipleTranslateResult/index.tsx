@@ -17,7 +17,7 @@ type MultipleTranslateResultProps = {
     autoTranslateAfterInput: boolean;
 };
 
-const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = ({ maxHeightGap, autoTranslateAfterInput }) => {
+const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = React.memo(({ maxHeightGap, autoTranslateAfterInput }) => {
     const [resultMaxHeight, setResultMaxHeight] = useState(500);
 
     const [canInsertResult, confirmInsertResult, insertResultToggle, autoInsertResult] = useInsertResult();
@@ -133,6 +133,6 @@ const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = ({ maxHe
             <MtAddSource translations={translations} addSource={handleAddSource} />
         </>
     );
-};
+});
 
 export default MultipleTranslateResult;

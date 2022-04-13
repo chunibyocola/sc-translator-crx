@@ -17,7 +17,7 @@ type SingleTranslateResultProps = {
     autoTranslateAfterInput: boolean;
 };
 
-const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ maxHeightGap, autoTranslateAfterInput }) => {
+const SingleTranslateResult: React.FC<SingleTranslateResultProps> = React.memo(({ maxHeightGap, autoTranslateAfterInput }) => {
     const [resultMaxHeight, setResultMaxHeight] = useState(500);
 
     const [canInsertResult, confirmInsertResult, insertResultToggle, autoInsertResult] = useInsertResult();
@@ -126,6 +126,6 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ maxHeight
             />
         </>
     );
-};
+});
 
 export default SingleTranslateResult;
