@@ -14,10 +14,9 @@ import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../re
 
 type MultipleTranslateResultProps = {
     maxHeightGap: number;
-    autoTranslateAfterInput: boolean;
 };
 
-const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = React.memo(({ maxHeightGap, autoTranslateAfterInput }) => {
+const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = React.memo(({ maxHeightGap }) => {
     const [resultMaxHeight, setResultMaxHeight] = useState(500);
 
     const [canInsertResult, confirmInsertResult, insertResultToggle, autoInsertResult] = useInsertResult();
@@ -33,7 +32,7 @@ const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = React.me
         setResultMaxHeight(maxHeight < 40 ? 40 : maxHeight);
     }, [maxHeightGap]);
 
-    const { focusFlag, displayEditArea } = useAppSelector(state => state.panelStatus);
+    const { displayEditArea } = useAppSelector(state => state.panelStatus);
     const { text, from, to, translations, translateId } = useAppSelector(state => state.multipleTranslate);
 
     const dispatch = useAppDispatch();
@@ -105,8 +104,6 @@ const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = React.me
                 <RawText
                     defaultValue={text}
                     rawTextTranslate={handleSetText}
-                    focusDependency={focusFlag}
-                    autoTranslateAfterInput={autoTranslateAfterInput}
                 />
                 <LanguageSelection
                     onChange={handleSelectionChange}

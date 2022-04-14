@@ -19,12 +19,11 @@ import CollectButton from '../../../components/PanelIconButtons/CollectButton';
 import OpenOptionsPageButton from '../../../components/PanelIconButtons/OpenOptionsPageButton';
 import SwitchThemeButton from '../../../components/PanelIconButtons/SwitchThemeButton';
 
-type PickedOptions = Pick<DefaultOptions, 'rememberStwSizeAndPosition' | 'autoTranslateAfterInput'>;
-const useOptionsDependency: (keyof PickedOptions)[] = ['rememberStwSizeAndPosition', 'autoTranslateAfterInput'];
+type PickedOptions = Pick<DefaultOptions, 'rememberStwSizeAndPosition'>;
+const useOptionsDependency: (keyof PickedOptions)[] = ['rememberStwSizeAndPosition'];
 
 const Separate: React.FC = () => {
     const { text, from, to, translations, translateId } = useAppSelector(state => state.multipleTranslate);
-    const { focusFlag } = useAppSelector(state => state.panelStatus);
 
     const translateIdRef = useRef(0);
     const oldTranslateIdRef = useRef(0);
@@ -76,7 +75,7 @@ const Separate: React.FC = () => {
         oldTranslateIdRef.current = translateId;
     }, [translateId, text, handleTranslate, translations, dispatch]);
 
-    const { rememberStwSizeAndPosition, autoTranslateAfterInput } = useOptions<PickedOptions>(useOptionsDependency);
+    const { rememberStwSizeAndPosition } = useOptions<PickedOptions>(useOptionsDependency);
 
     useEffect(() => {
         const text = new URL(window.location.href).searchParams.get('text');
@@ -130,8 +129,6 @@ const Separate: React.FC = () => {
                 <RawText
                     defaultValue={text}
                     rawTextTranslate={handleSetText}
-                    focusDependency={focusFlag}
-                    autoTranslateAfterInput={autoTranslateAfterInput}
                 />
                 <LanguageSelection
                     onChange={handleSelectionChange}

@@ -12,13 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../../public/react-use';
 import { stRequestError, stRequestFinish, stRequestStart, stSetFromAndTo, stSetSourceFromTo, stSetText } from '../../../redux/slice/singleTranslateSlice';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
 
-type SingleTranslateResultProps = {
-    autoTranslateAfterInput: boolean;
-};
-
-const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ autoTranslateAfterInput }) => {
-    const { focusFlag } = useAppSelector(state => state.panelStatus);
-
+const SingleTranslateResult: React.FC = () => {
     const { translateRequest, source, from, to, text, translateId } = useAppSelector(state => state.singleTranslate);
 
     const translateIdRef = useRef(0);
@@ -81,8 +75,6 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = ({ autoTrans
             <RawText
                 defaultValue={text}
                 rawTextTranslate={handleSetText}
-                focusDependency={focusFlag}
-                autoTranslateAfterInput={autoTranslateAfterInput}
             />
             <LanguageSelection
                 onChange={handleSelectionChange}

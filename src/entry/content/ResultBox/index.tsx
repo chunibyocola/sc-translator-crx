@@ -16,15 +16,13 @@ type PickedOptions = Pick<
     'rememberPositionOfPinnedPanel' |
     'positionOfPinnedPanel' |
     'translatePanelMaxHeight' |
-    'translatePanelWidth' |
-    'autoTranslateAfterInput'
+    'translatePanelWidth'
 >;
 const useOptionsDependency: (keyof PickedOptions)[] = [
     'rememberPositionOfPinnedPanel',
     'positionOfPinnedPanel',
     'translatePanelMaxHeight',
-    'translatePanelWidth',
-    'autoTranslateAfterInput'
+    'translatePanelWidth'
 ];
 
 type ResultBoxProps = {
@@ -45,7 +43,6 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
         positionOfPinnedPanel,
         translatePanelMaxHeight,
         translatePanelWidth,
-        autoTranslateAfterInput
     } = useOptions<PickedOptions>(useOptionsDependency);
 
     const windowSize = useWindowSize();
@@ -117,10 +114,8 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
             <div className='panel__content'>
                 {multipleTranslateMode ? <MultipleTranslateResult
                     maxHeightGap={maxHeightGap}
-                    autoTranslateAfterInput={autoTranslateAfterInput}
                 /> : <SingleTranslateResult
                     maxHeightGap={maxHeightGap}
-                    autoTranslateAfterInput={autoTranslateAfterInput}
                 />}
             </div>
         </div>

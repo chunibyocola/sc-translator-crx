@@ -1,18 +1,24 @@
 import React, { useRef, useCallback, useState, useEffect, useLayoutEffect } from 'react';
 import { getMessage } from '../../public/i18n';
+import { useAppSelector, useOptions } from '../../public/react-use';
 import useDebounce from '../../public/react-use/useDebounce';
 import { textPreprocessing } from '../../public/text-preprocessing';
+import { DefaultOptions } from '../../types';
 import './style.css';
 
 type RawTextProps = {
     defaultValue: string;
     rawTextTranslate: (text: string) => void;
-    focusDependency: number;
-    autoTranslateAfterInput: boolean;
 };
 
-const RawText: React.FC<RawTextProps> = ({ defaultValue, rawTextTranslate, focusDependency, autoTranslateAfterInput }) => {
+type PickedOptions = Pick<DefaultOptions, 'autoTranslateAfterInput'>;
+const useOptionsDependency: (keyof PickedOptions)[] = ['autoTranslateAfterInput'];
+
+const RawText: React.FC<RawTextProps> = ({ defaultValue, rawTextTranslate }) => {
     const [debounceDependency, setDebounceDependency] = useState(0);
+
+    const { autoTranslateAfterInput } = useOptions<PickedOptions>(useOptionsDependency);
+    const { focusFlag } = useAppSelector(state => state.panelStatus);
 
     const lastTextRef = useRef('');
     const textareaEl = useRef<HTMLTextAreaElement>(null);
@@ -59,9 +65,8 @@ const RawText: React.FC<RawTextProps> = ({ defaultValue, rawTextTranslate, focus
     useEffect(() => {
         if (!textareaEl.current) { return; }
 
-        textareaEl.current.focus();
         textareaEl.current.select();
-    }, [focusDependency]);
+    }, [focusFlag]);
 
     useLayoutEffect(() => {
         if (!textareaEl.current) { return; }

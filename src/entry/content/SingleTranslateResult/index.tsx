@@ -14,17 +14,16 @@ import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../re
 
 type SingleTranslateResultProps = {
     maxHeightGap: number;
-    autoTranslateAfterInput: boolean;
 };
 
-const SingleTranslateResult: React.FC<SingleTranslateResultProps> = React.memo(({ maxHeightGap, autoTranslateAfterInput }) => {
+const SingleTranslateResult: React.FC<SingleTranslateResultProps> = React.memo(({ maxHeightGap }) => {
     const [resultMaxHeight, setResultMaxHeight] = useState(500);
 
     const [canInsertResult, confirmInsertResult, insertResultToggle, autoInsertResult] = useInsertResult();
 
     const { text, source, from, to, translateRequest, translateId } = useAppSelector(state => state.singleTranslate);
 
-    const { focusFlag, displayEditArea } = useAppSelector(state => state.panelStatus);
+    const { displayEditArea } = useAppSelector(state => state.panelStatus);
 
     const translateIdRef = useRef(0);
     const oldTranslateIdRef = useRef(0);
@@ -101,8 +100,6 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = React.memo((
                 <RawText
                     defaultValue={text}
                     rawTextTranslate={handleSetText}
-                    focusDependency={focusFlag}
-                    autoTranslateAfterInput={autoTranslateAfterInput}
                 />
                 <LanguageSelection
                     onChange={handleSelectionChange}

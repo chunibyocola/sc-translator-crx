@@ -13,13 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../../public/react-use';
 import { mtAddSource, mtRemoveSource, mtRequestError, mtRequestFinish, mtRequestStart, mtSetFromAndTo, mtSetText } from '../../../redux/slice/multipleTranslateSlice';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
 
-type MultipleTranslateResultProps = {
-    autoTranslateAfterInput: boolean;
-};
-
-const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = ({ autoTranslateAfterInput }) => {
-    const { focusFlag } = useAppSelector(state => state.panelStatus);
-
+const MultipleTranslateResult: React.FC = () => {
     const { text, from, to, translations, translateId } = useAppSelector(state => state.multipleTranslate);
 
     const translateIdRef = useRef(0);
@@ -87,8 +81,6 @@ const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = ({ autoT
             <RawText
                 defaultValue={text}
                 rawTextTranslate={handleSetText}
-                focusDependency={focusFlag}
-                autoTranslateAfterInput={autoTranslateAfterInput}
             />
             <LanguageSelection
                 onChange={handleSelectionChange}
