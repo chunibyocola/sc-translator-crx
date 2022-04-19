@@ -22,6 +22,7 @@ import { DefaultOptions } from '../../../types';
 import WebPageTranslating from './sections/WebPageTranslating';
 import TextPreprocessing from './sections/TextPreprocessing';
 import SyncSettings from './sections/SyncSettings';
+import Logo from '../../../components/Logo';
 
 export type GenericOptionsProps<T> = {
     updateStorage: (key: string, value: any) => void;
@@ -93,7 +94,12 @@ const Options: React.FC = () => {
         <div className='options'>
             <div className='opt-nav-bar'>
                 <OptionsMenu />
-                <div className='main-title'><span style={{fontWeight: 'bold', marginRight: '10px'}}>Sc</span>{getMessage('optionsTitle')}</div>
+                <div className='main-title'>
+                    <div className='flex-align-items-center'>
+                        <Logo style={{fontSize: '30px', marginRight: '10px'}} />
+                        {getMessage('optionsTitle')}
+                    </div>
+                </div>
             </div>
             <div className='sub-title'  id='theme'>{getMessage('optionsTheme')}</div>
             <Theme

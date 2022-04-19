@@ -10,6 +10,7 @@ import SingleTranslateResult from '../SingleTranslateResult';
 import './style.css';
 import PinButton from '../../../components/PanelIconButtons/PinButton';
 import CloseButton from '../../../components/PanelIconButtons/CloseButton';
+import Logo from '../../../components/Logo';
 
 type PickedOptions = Pick<
     DefaultOptions,
@@ -103,7 +104,9 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
                 className='panel__header flex-justify-content-space-between'
                 onMouseDown={e => drag(e.nativeEvent, panelPosition, setPanelPosition, handleMouseUpCallback)}
             >
-                <span className='panel__header-logo flex-align-items-center'>Sc</span>
+                <span className='panel__header-logo flex-align-items-center'>
+                    <Logo />
+                </span>
                 <span className='panel__header-icons flex-align-items-center'>
                     <CollectButton />
                     <DisplayEditAreaButton />

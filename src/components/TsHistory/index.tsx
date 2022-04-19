@@ -10,6 +10,7 @@ import { setLocalStorage } from '../../public/chrome-call';
 import { DefaultOptions } from '../../types';
 import { Translation } from '../../redux/slice/multipleTranslateSlice';
 import { removeHistory } from '../../redux/slice/translateHistorySlice';
+import Logo from '../Logo';
 
 const midInThree = (min: number, num: number, max: number) => (Math.min(max, Math.max(min, num)));
 
@@ -71,7 +72,7 @@ const TsHistory: React.FC = () => {
         >
             <div className='history__unfold'>
                 <IconFont iconName='#icon-GoChevronRight' />
-                <span className='history__unfold-text'>Sc</span>
+                <Logo style={{transform: 'rotate(-90deg)'}} />
             </div>
             <div className='history__head'>
                 {getMessage('contentHistoryTitle')}

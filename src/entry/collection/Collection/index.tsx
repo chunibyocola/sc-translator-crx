@@ -3,6 +3,7 @@ import Button from '../../../components/Button';
 import Checkbox from '../../../components/Checkbox';
 import IconFont from '../../../components/IconFont';
 import ListenButton from '../../../components/ListenButton';
+import Logo from '../../../components/Logo';
 import SourceFavicon from '../../../components/SourceFavicon';
 import TranslateResult from '../../../components/TranslateResult';
 import { getMessage } from '../../../public/i18n';
@@ -162,7 +163,10 @@ const Collection: React.FC = () => {
             <div className='navbar'>
                 <div className='navbar-left'>
                     <div className='main-title'>
-                        <span style={{fontWeight: 'bold', marginRight: '10px'}}>Sc</span>{getMessage('collectionTitle')}
+                        <div className='flex-align-items-center'>
+                            <Logo style={{fontSize: '30px', marginRight: '10px'}} />
+                            {getMessage('collectionTitle')}
+                        </div>
                     </div>
                 </div>
                 <div className='navbar-center'>
