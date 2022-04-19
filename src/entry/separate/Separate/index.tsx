@@ -18,6 +18,7 @@ import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
 import CollectButton from '../../../components/PanelIconButtons/CollectButton';
 import OpenOptionsPageButton from '../../../components/PanelIconButtons/OpenOptionsPageButton';
 import SwitchThemeButton from '../../../components/PanelIconButtons/SwitchThemeButton';
+import OpenCollectionPageButton from '../../../components/PanelIconButtons/OpenCollectionPageButton';
 
 type PickedOptions = Pick<DefaultOptions, 'rememberStwSizeAndPosition'>;
 const useOptionsDependency: (keyof PickedOptions)[] = ['rememberStwSizeAndPosition'];
@@ -118,9 +119,10 @@ const Separate: React.FC = () => {
     return (
         <div id="sc-translator-root" className='separate-container'>
             <div className="popup-header flex-justify-content-space-between">
-                <div className='popup-header__logo flex-align-items-center'>Sc</div>
+                <div className='popup-header__logo flex-align-items-center'></div>
                 <div className='popup-header__icons flex-align-items-center'>
                     <CollectButton />
+                    <OpenCollectionPageButton />
                     <SwitchThemeButton />
                     <OpenOptionsPageButton />
                 </div>

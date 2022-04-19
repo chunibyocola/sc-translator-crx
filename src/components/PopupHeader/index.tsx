@@ -6,6 +6,7 @@ import ToggleTranslateButton from '../PanelIconButtons/ToggleTranslateButton';
 import ToggleHistoryButton from '../PanelIconButtons/ToggleHistoryButton';
 import OpenOptionsPageButton from '../PanelIconButtons/OpenOptionsPageButton';
 import SwitchThemeButton from '../PanelIconButtons/SwitchThemeButton';
+import OpenCollectionPageButton from '../PanelIconButtons/OpenCollectionPageButton';
 
 const PopupHeader: React.FC = () => {
     const [host, setHost] = useState('');
@@ -16,9 +17,10 @@ const PopupHeader: React.FC = () => {
 
     return (
         <div className="popup-header flex-justify-content-space-between">
-            <div className='popup-header__logo flex-align-items-center'>Sc</div>
+            <div className='popup-header__logo flex-align-items-center'></div>
             <div className='popup-header__icons flex-align-items-center'>
                 <CollectButton />
+                <OpenCollectionPageButton />
                 <SwitchThemeButton />
                 <ToggleTranslateButton host={host} />
                 <ToggleHistoryButton host={host} />

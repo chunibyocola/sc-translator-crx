@@ -473,6 +473,9 @@
     "popupSwitchToTheNextTheme": {
         "message": "切换到下一个主题"
     },
+    "popupOpenCollectionPage": {
+        "message": "打开收藏页面"
+    },
     "collectionTitle": {
         "message": "收藏"
     },

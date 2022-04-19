@@ -473,6 +473,9 @@
     "popupSwitchToTheNextTheme": {
         "message": "次のテーマに切り替える"
     },
+    "popupOpenCollectionPage": {
+        "message": "コレクションページを開く"
+    },
     "collectionTitle": {
         "message": "コレクション"
     },
