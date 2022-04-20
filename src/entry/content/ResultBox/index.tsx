@@ -36,6 +36,7 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
 
     const mtEle = useRef<HTMLDivElement>(null);
     const oldPositionRef = useRef<Position>();
+    const lastStablePanelPositionRef = useRef<Position>({ x: 5, y: 5 });
 
     const { show, position, pinning, displayEditArea } = useAppSelector(state => state.panelStatus);
 
@@ -51,11 +52,13 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
     useEffect(() => {
         if (rememberPositionOfPinnedPanel && pinning && mtEle.current) {
             setPanelPosition(calculatePosition(mtEle.current, positionOfPinnedPanel));
+
+            lastStablePanelPositionRef.current = { ...positionOfPinnedPanel };
         }
     }, [rememberPositionOfPinnedPanel, pinning, positionOfPinnedPanel]);
 
     useEffect(() => {
-        setPanelPosition(panelPosition => mtEle.current ? calculatePosition(mtEle.current, panelPosition) : panelPosition);
+        mtEle.current && setPanelPosition(calculatePosition(mtEle.current, lastStablePanelPositionRef.current));
     }, [windowSize]);
 
     useLayoutEffect(() => {
@@ -66,23 +69,27 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
     }, [windowSize.height, translatePanelMaxHeight, displayEditArea]);
 
     const handleMouseUpCallback = useCallback((pos: Position) => {
-        setPanelPosition((panelPosition) => {
-            if (!mtEle.current) { return panelPosition; }
+        if (!mtEle.current) { return; }
 
-            const nextPosition = calculatePosition(mtEle.current, pos);
+        const nextPosition = calculatePosition(mtEle.current, pos);
 
-            if (rememberPositionOfPinnedPanel && pinning && panelPosition.x !== nextPosition.x && panelPosition.y !== nextPosition.y) {
-                setLocalStorage({ positionOfPinnedPanel: nextPosition });
-            }
+        if (rememberPositionOfPinnedPanel && pinning && (panelPosition.x !== nextPosition.x || panelPosition.y !== nextPosition.y)) {
+            setLocalStorage({ positionOfPinnedPanel: nextPosition });
+        }
 
-            return nextPosition;
-        });
-    }, [rememberPositionOfPinnedPanel, pinning]);
+        lastStablePanelPositionRef.current = nextPosition;
+        setPanelPosition(nextPosition);
+    }, [rememberPositionOfPinnedPanel, pinning, panelPosition]);
 
     useLayoutEffect(() => {
         if (oldPositionRef.current === position || !mtEle.current) { return; }
 
-        !pinning && setPanelPosition(calculatePosition(mtEle.current, position));
+        if (!pinning) {
+            const nextPanelPosition = calculatePosition(mtEle.current, position);
+
+            setPanelPosition(nextPanelPosition);
+            lastStablePanelPositionRef.current = nextPanelPosition;
+        }
 
         oldPositionRef.current = position;
     }, [position, pinning]);
@@ -105,7 +112,7 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
                 onMouseDown={e => drag(e.nativeEvent, panelPosition, setPanelPosition, handleMouseUpCallback)}
             >
                 <span className='panel__header-logo flex-align-items-center'>
-                    <Logo />
+                    <Logo style={{pointerEvents: 'none'}} />
                 </span>
                 <span className='panel__header-icons flex-align-items-center'>
                     <CollectButton />
