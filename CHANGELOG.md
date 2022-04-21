@@ -1,3 +1,8 @@
+# 4.0.0 (2022-04-20)
+- Add translation collection.
+- Optimize performance.
+- Change logo. ([626c816](https://github.com/chunibyocola/sc-translator-crx/commit/626c8168350e3462ffdb81a280aeda729c35f6c5))
+- Fix webpage translation source error. ([00f49db](https://github.com/chunibyocola/sc-translator-crx/commit/00f49dba3b081efbb6d0a0d0b654e559cdc5fef4))
 # 3.17.0 (2022-01-27)
 - Add examples in translation panel. ([4962f9d](https://github.com/chunibyocola/sc-translator-crx/commit/4962f9d8f0f57de82d903d04ce7d60668f05e526))
 - Add "Display of translation". ([f5365e9](https://github.com/chunibyocola/sc-translator-crx/commit/f5365e9ceec3d2e7ad5b471ca99dcc8330de6619))
