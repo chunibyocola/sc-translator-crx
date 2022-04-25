@@ -535,7 +535,7 @@ const dealWithFontsStyle = (originalFont: HTMLFontElement, resultFont: HTMLFontE
             return;
         case 1:
             originalFont.setAttribute('style', '');
-            resultFont.setAttribute('style', 'margin: 0 5px;');
+            resultFont.setAttribute('style', 'margin: 0 5px; border-bottom: 2px solid #72ECE9; padding: 0 2px;');
             return;
         default:
             originalFont.setAttribute('style', 'display: none;');
