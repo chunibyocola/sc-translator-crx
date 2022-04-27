@@ -236,17 +236,34 @@ export const startWebPageTranslating = (element: HTMLElement, translateSource: s
 
     handleDelay();
 
-    window.addEventListener('scroll', onWindowScroll);
+    window.addEventListener('scroll', onWindowScroll, true);
 
     return true;
 };
 
-const onWindowScroll = () => {
-    if (window.scrollY - 100 < minViewPort) {
-        minViewPort = window.scrollY - 500;
+const onWindowScroll = (e: Event) => {
+    const element = e.target as HTMLElement;
+
+    if (!element.contains(document.documentElement)) {
+        waitingList.forEach((v) => {
+            if (!element.contains(v.textNodes[0])) { return ; }
+
+            const range = document.createRange();
+            range.selectNode(v.textNodes[0]);
+            const { top } = range.getBoundingClientRect();
+
+            if (top > -500 && top < window.innerHeight + 500) {
+                v.firstTextNodeClientY = minViewPort + 100;
+            }
+        });
     }
-    if (window.scrollY + window.innerHeight + 100 > maxViewPort) {
-        maxViewPort = window.scrollY + window.innerHeight + 500;
+    else {
+        if (window.scrollY - 100 < minViewPort) {
+            minViewPort = window.scrollY - 500;
+        }
+        if (window.scrollY + window.innerHeight + 100 > maxViewPort) {
+            maxViewPort = window.scrollY + window.innerHeight + 500;
+        }
     }
 
     handleDelay();
@@ -275,7 +292,7 @@ export const closeWebPageTranslating = () => {
     waitingList = [];
     updatedList = [];
 
-    window.removeEventListener('scroll', onWindowScroll);
+    window.removeEventListener('scroll', onWindowScroll, true);
 };
 
 const delay = (fn: () => void, ms: number) => {
