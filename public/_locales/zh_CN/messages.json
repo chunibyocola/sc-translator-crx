@@ -401,6 +401,12 @@
     "optionsDisplayOfTranslationDescription": {
         "message": "你可以决定在翻译面板上展示哪些内容。"
     },
+    "optionsEnhancementOfDisplay": {
+        "message": "增强展示"
+    },
+    "optionsAddUnderlineToTranslations": {
+        "message": "将下划线添加到译文"
+    },
     "themePreset": {
         "message": "预设"
     },

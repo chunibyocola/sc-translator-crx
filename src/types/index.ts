@@ -70,6 +70,10 @@ export type DisplayOfTranslation = {
     example: boolean;
 };
 
+export type DisplayModeEnhancement = {
+    oAndT_Underline: boolean;
+};
+
 export type DefaultOptions = {
     userLanguage: string;
     defaultTranslateSource: string;
@@ -132,6 +136,7 @@ export type DefaultOptions = {
     sourceParamsCache: SourceParams;
     customTranslateSourceList: CustomTranslateSource[];
     displayOfTranslation: DisplayOfTranslation;
+    displayModeEnhancement: DisplayModeEnhancement;
 };
 
 // Only work in "src/entry/background/install.ts".

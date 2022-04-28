@@ -85,7 +85,8 @@ const Options: React.FC = () => {
         afterSelectingTextRegExpList,
         translateButtonsTL,
         customTranslateSourceList,
-        displayOfTranslation
+        displayOfTranslation,
+        displayModeEnhancement
     } = useOptions<DefaultOptions>(useOptionsDependency);
 
     const updateStorage = useCallback((key, value) => (setLocalStorage({[key]: value})), []);
@@ -127,6 +128,7 @@ const Options: React.FC = () => {
                 userLanguage={userLanguage}
                 webPageTranslateDirectly={webPageTranslateDirectly}
                 noControlBarWhileFirstActivating={noControlBarWhileFirstActivating}
+                displayModeEnhancement={displayModeEnhancement}
             />
             <div className='sub-title' id='audio'>{getMessage('optionsAudio')}</div>
             <Audio

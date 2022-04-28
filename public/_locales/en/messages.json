@@ -401,6 +401,12 @@
     "optionsDisplayOfTranslationDescription": {
         "message": "You can decide what content will be displayed on the translation panel."
     },
+    "optionsEnhancementOfDisplay": {
+        "message": "Enhancement of display"
+    },
+    "optionsAddUnderlineToTranslations": {
+        "message": "Add underline to translations"
+    },
     "themePreset": {
         "message": "Preset"
     },

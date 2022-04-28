@@ -67,7 +67,8 @@ const defaultOptions: DefaultOptions = {
     translateButtonsTL: { first: '', second: LANG_EN, third: LANG_EN },
     sourceParamsCache: initSourceParams,
     customTranslateSourceList: [],
-    displayOfTranslation: { result: true, dict: true, phonetic: true, related: true, example: false }
+    displayOfTranslation: { result: true, dict: true, phonetic: true, related: true, example: false },
+    displayModeEnhancement: { oAndT_Underline: false }
 };
 
 export default defaultOptions;

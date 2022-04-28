@@ -1,4 +1,5 @@
 import { GOOGLE_COM, MICROSOFT_COM } from '../../constants/translateSource';
+import { DisplayModeEnhancement } from '../../types';
 import { bingSwitchLangCode } from '../switch-lang-code';
 import { translate as googleWebTranslate } from './google/translate';
 import { getAuthorization } from './microsoft/getAuthorization';
@@ -40,6 +41,10 @@ let source = '';
 let language = '';
 
 let errorCallback: ((errorReason: string) => void) | undefined;
+
+let displayModeEnhancement: DisplayModeEnhancement = {
+    oAndT_Underline: false
+};
 
 const newPageTranslateItem = (text: string, nodes: Node[]) => {
     const searchIndex = text.search(/[^\s]/);
@@ -214,7 +219,13 @@ const getAllTextFromElement = (element: HTMLElement) => {
     }
 };
 
-export const startWebPageTranslating = (element: HTMLElement, translateSource: string, targetLanguage: string, errorCb?: (errorReason: string) => void) => {
+export const startWebPageTranslating = (
+    element: HTMLElement,
+    translateSource: string,
+    targetLanguage: string,
+    enhancement: DisplayModeEnhancement,
+    errorCb?: (errorReason: string) => void,
+) => {
     if (startFlag === closeFlag) { return false; }
 
     errorCb && (errorCallback = errorCb);
@@ -226,6 +237,8 @@ export const startWebPageTranslating = (element: HTMLElement, translateSource: s
         resultCacheLanguage = language;
         resultCacheSource = source;
     }
+
+    displayModeEnhancement = enhancement;
 
     ++startFlag;
 
@@ -552,7 +565,7 @@ const dealWithFontsStyle = (originalFont: HTMLFontElement, resultFont: HTMLFontE
             return;
         case 1:
             originalFont.setAttribute('style', '');
-            resultFont.setAttribute('style', 'margin: 0 5px; border-bottom: 2px solid #72ECE9; padding: 0 2px;');
+            resultFont.setAttribute('style', `margin: 0 5px;${displayModeEnhancement.oAndT_Underline ? ' border-bottom: 2px solid #72ECE9; padding: 0 2px;' : ''}`);
             return;
         default:
             originalFont.setAttribute('style', 'display: none;');

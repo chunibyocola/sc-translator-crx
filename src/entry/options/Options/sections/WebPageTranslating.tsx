@@ -1,5 +1,6 @@
 import React from 'react';
 import { GenericOptionsProps } from '..';
+import Checkbox from '../../../../components/Checkbox';
 import SourceSelect from '../../../../components/SourceSelect';
 import Switch from '../../../../components/Switch';
 import { preferredLangCode } from '../../../../constants/langCode';
@@ -16,7 +17,8 @@ type WebPageTranslatingProps = GenericOptionsProps<Pick<
     'webPageTranslateDisplayMode' |
     'userLanguage' |
     'webPageTranslateDirectly' |
-    'noControlBarWhileFirstActivating'
+    'noControlBarWhileFirstActivating' |
+    'displayModeEnhancement'
 >>;
 
 const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
@@ -26,7 +28,8 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
     userLanguage,
     webPageTranslateDisplayMode,
     webPageTranslateDirectly,
-    noControlBarWhileFirstActivating
+    noControlBarWhileFirstActivating,
+    displayModeEnhancement
 }) => {
     return (
         <div className='opt-section'>
@@ -61,6 +64,19 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
                         update={displayMode => updateStorage('webPageTranslateDisplayMode', displayMode)}
                         displayMode={webPageTranslateDisplayMode}
                     />
+                </div>
+            </div>
+            <div className='opt-section-row'>
+                {getMessage('optionsEnhancementOfDisplay')}
+                <div className='mt10-ml30'>
+                    {`${getMessage('optionsOriginalText')} + ${getMessage('optionsTranslation')}`}
+                    <div className='mt10-ml30'>
+                        <Checkbox
+                            label={getMessage('optionsAddUnderlineToTranslations')}
+                            checked={displayModeEnhancement.oAndT_Underline}
+                            onChange={v => updateStorage('displayModeEnhancement', { ...displayModeEnhancement, oAndT_Underline: v })}
+                        />
+                    </div>
                 </div>
             </div>
             <div className='opt-section-row'>

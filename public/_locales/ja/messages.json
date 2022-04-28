@@ -401,6 +401,12 @@
     "optionsDisplayOfTranslationDescription": {
         "message": "どのようなコンテンツは、翻訳パネルに表示されるかを決めることができます。"
     },
+    "optionsEnhancementOfDisplay": {
+        "message": "表示の強化"
+    },
+    "optionsAddUnderlineToTranslations": {
+        "message": "訳文に下線を追加します"
+    },
     "themePreset": {
         "message": "プリセット"
     },
