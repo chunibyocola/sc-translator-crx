@@ -407,6 +407,9 @@
     "optionsAddUnderlineToTranslations": {
         "message": "Add underline to translations"
     },
+    "optionsMouserHoverOverTranslation": {
+        "message": "Display the original text when the mouse hovers over the translation"
+    },
     "themePreset": {
         "message": "Preset"
     },

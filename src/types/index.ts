@@ -72,6 +72,7 @@ export type DisplayOfTranslation = {
 
 export type DisplayModeEnhancement = {
     oAndT_Underline: boolean;
+    t_Hovering: boolean;
 };
 
 export type DefaultOptions = {

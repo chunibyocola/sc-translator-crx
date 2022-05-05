@@ -78,6 +78,16 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
                         />
                     </div>
                 </div>
+                <div className='mt10-ml30'>
+                    {getMessage('optionsTranslation')}
+                    <div className='mt10-ml30'>
+                        <Checkbox
+                            label={getMessage('optionsMouserHoverOverTranslation')}
+                            checked={displayModeEnhancement.t_Hovering}
+                            onChange={v => updateStorage('displayModeEnhancement', { ...displayModeEnhancement, t_Hovering: v })}
+                        />
+                    </div>
+                </div>
             </div>
             <div className='opt-section-row'>
                 <Switch

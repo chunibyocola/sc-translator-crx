@@ -1,18 +1,22 @@
 import { GOOGLE_COM, MICROSOFT_COM } from '../../constants/translateSource';
 import { DisplayModeEnhancement } from '../../types';
+import { getMessage } from '../i18n';
 import { bingSwitchLangCode } from '../switch-lang-code';
 import { translate as googleWebTranslate } from './google/translate';
 import { getAuthorization } from './microsoft/getAuthorization';
 import { translate as microsoftWebTranslate } from './microsoft/translate';
+
+type ScWebpageTranslationElement = HTMLElement & { _ScWebpageTranslationKey?: number; };
 
 type PageTranslateItemEnity = {
     prefix: string;
     text: string;
     result?: string[];
     textNodes: Text[];
-    fontsNodes: [HTMLFontElement, HTMLFontElement][];
+    fontsNodes: [ScWebpageTranslationElement, ScWebpageTranslationElement][];
     firstTextNodeClientY: number;
     status: 'init' | 'loading' | 'error' | 'finished';
+    mapIndex: number;
 };
 
 
@@ -43,7 +47,28 @@ let language = '';
 let errorCallback: ((errorReason: string) => void) | undefined;
 
 let displayModeEnhancement: DisplayModeEnhancement = {
-    oAndT_Underline: false
+    oAndT_Underline: false,
+    t_Hovering: false
+};
+
+let pageTranslateItemMap: { [key: number]: PageTranslateItemEnity; } = {};
+let itemMapIndex = 0;
+
+let displayingItem: null | number = null;
+let hoveringItem: null | number = null;
+let showPanelTimeout: ReturnType<typeof setTimeout> | null = null;
+let hidePanelTimeout: ReturnType<typeof setTimeout> | null = null;
+let panelElement: HTMLDivElement | null = null;
+
+const clearAllTimeout = () => {
+    if (hidePanelTimeout) {
+        clearTimeout(hidePanelTimeout);
+        hidePanelTimeout = null;
+    }
+    if (showPanelTimeout) {
+        clearTimeout(showPanelTimeout);
+        showPanelTimeout = null;
+    }
 };
 
 const newPageTranslateItem = (text: string, nodes: Node[]) => {
@@ -54,14 +79,21 @@ const newPageTranslateItem = (text: string, nodes: Node[]) => {
     range.selectNode(textNodes[0]);
     const firstTextNodeClientY = range.getBoundingClientRect().top + window.scrollY;
 
-    waitingList.push({
+    itemMapIndex += 1;
+
+    const item: PageTranslateItemEnity = {
         prefix: text.substring(0, searchIndex),
         text: text.substring(searchIndex).replace('\n', ' '),
         textNodes,
         fontsNodes: [],
         firstTextNodeClientY,
-        status: 'init'
-    });
+        status: 'init',
+        mapIndex: itemMapIndex
+    };
+
+    waitingList.push(item);
+
+    pageTranslateItemMap[itemMapIndex] = item;
 };
 
 const dealWithPreElement = (pre: HTMLPreElement) => {
@@ -251,6 +283,8 @@ export const startWebPageTranslating = (
 
     window.addEventListener('scroll', onWindowScroll, true);
 
+    wayOfFontsDisplaying === 2 && displayModeEnhancement.t_Hovering && window.addEventListener('mousemove', onWindowMouseMove);
+
     return true;
 };
 
@@ -282,6 +316,105 @@ const onWindowScroll = (e: Event) => {
     handleDelay();
 };
 
+const onWindowMouseMove = (e: MouseEvent) => {
+    const element = e.target as HTMLElement;
+    const key = (element as ScWebpageTranslationElement)._ScWebpageTranslationKey;
+
+    if (element.tagName === 'FONT' && key) {
+        if (displayingItem && key === displayingItem) {
+            clearAllTimeout();
+        }
+        else if (hoveringItem !== key) {
+            clearAllTimeout();
+
+            showPanelTimeout = setTimeout(() => {
+                if (!panelElement?.parentElement) {
+                    panelElement = document.createElement('div');
+                    document.body.parentElement?.insertBefore(panelElement, document.body.nextElementSibling);
+                    panelElement.id = 'sc-webpage-translation-panel'
+                    panelElement.style.backgroundColor = '#ffffff';
+                    panelElement.style.padding = '10px 14px';
+                    panelElement.style.fontSize = '14px';
+                    panelElement.style.display = 'none';
+                    panelElement.style.position = 'fixed';
+                    panelElement.style.width = '400px';
+                    panelElement.style.boxShadow = 'rgb(0 0 0 / 20%) 0px 0px 15px';
+                    panelElement.addEventListener('mousemove', (e: MouseEvent) => {
+                        clearAllTimeout();
+                        e.stopPropagation();
+                    });
+                }
+
+                if (displayingItem) {
+                    if (wayOfFontsDisplaying === 2) {
+                        pageTranslateItemMap[displayingItem].fontsNodes.forEach(([, v]) => {
+                            v.style.backgroundColor = '';
+                            v.style.boxShadow = '';
+                        });
+                    }
+                }
+
+                displayingItem = key;
+
+                const titleElement: HTMLElement = panelElement.querySelector('.sc-webpage-translation__title') ?? document.createElement('div');
+                titleElement.className = 'sc-webpage-translation__title';
+                titleElement.style.color = '#999';
+                const contentElement: HTMLElement = panelElement.querySelector('.sc-webpage-translation__content') ?? document.createElement('div');
+                contentElement.className = 'sc-webpage-translation__content';
+                contentElement.style.maxHeight = '100px';
+                contentElement.style.overflowY = 'auto';
+                contentElement.style.marginTop = '10px';
+                contentElement.style.color = '#000000';
+
+                if (wayOfFontsDisplaying === 2) {
+                    titleElement.innerText = getMessage('optionsOriginalText');
+                    contentElement.innerText = pageTranslateItemMap[displayingItem].text;
+                    pageTranslateItemMap[displayingItem].fontsNodes.forEach(([, v]) => {
+                        v.style.backgroundColor = '#c9d7f1';
+                        v.style.boxShadow = '2px 2px 4px #9999aa';
+                    });
+                }
+
+                panelElement.appendChild(titleElement);
+                panelElement.appendChild(contentElement);
+
+                panelElement.style.display = '';
+                const { width, height } = panelElement.getBoundingClientRect();
+                panelElement.style.left = `${Math.max(e.clientX + 25 - Math.max((e.clientX + 35 + width) - window.innerWidth, 0), 10)}px`;
+                panelElement.style.top = `${e.clientY + 15 - Math.max((e.clientY + 25 + height) - window.innerHeight, 0)}px`;
+
+                showPanelTimeout = null;
+            }, 1000);
+        }
+
+        hoveringItem = key;
+    }
+    else if ((displayingItem || showPanelTimeout) && !hidePanelTimeout) {
+        clearAllTimeout();
+
+        hoveringItem = null;
+        hidePanelTimeout = setTimeout(() => {
+            if (displayingItem) {
+                if (wayOfFontsDisplaying === 2) {
+                    pageTranslateItemMap[displayingItem].fontsNodes.forEach(([, v]) => {
+                        v.style.backgroundColor = '';
+                        v.style.boxShadow = '';
+                    });
+                }
+            }
+            displayingItem = null;
+            if (panelElement) {
+                panelElement.style.display = 'none';
+            }
+
+            hidePanelTimeout = null;
+        }, 500);
+    }
+    else if (hoveringItem) {
+        hoveringItem = null;
+    }
+};
+
 export const closeWebPageTranslating = () => {
     if (closeFlag > startFlag) { return; }
 
@@ -305,7 +438,22 @@ export const closeWebPageTranslating = () => {
     waitingList = [];
     updatedList = [];
 
+    pageTranslateItemMap = {};
+    itemMapIndex = 0;
+
+    displayingItem = null;
+    hoveringItem = null;
+    
+    clearAllTimeout();
+
+    if (panelElement) {
+        panelElement.parentElement?.removeChild(panelElement);
+        panelElement = null;
+    }
+
     window.removeEventListener('scroll', onWindowScroll, true);
+
+    window.removeEventListener('mousemove', onWindowMouseMove);
 };
 
 const delay = (fn: () => void, ms: number) => {
@@ -362,7 +510,7 @@ const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[
             currentItem.textNodes.forEach((textNode, i) => {
                 if (!textNode.parentElement || !currentItem.result?.[i]) { return; }
 
-                const fonts = insertResultAndWrapOriginalTextNode(textNode, currentItem.result[i]);
+                const fonts = insertResultAndWrapOriginalTextNode(textNode, currentItem.result[i], currentItem.mapIndex);
                 fonts && currentItem.fontsNodes.push(fonts);
             });
 
@@ -402,7 +550,7 @@ const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[
                     v.textNodes.forEach((textNode, i) => {
                         if (!textNode.parentElement || !v.result?.[i]) { return; }
         
-                        const fonts = insertResultAndWrapOriginalTextNode(textNode, v.result[i]);
+                        const fonts = insertResultAndWrapOriginalTextNode(textNode, v.result[i], v.mapIndex);
                         fonts && v.fontsNodes.push(fonts);
                     });
                 });
@@ -451,7 +599,7 @@ const googleWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[], 
             currentItem.textNodes.forEach((textNode, i) => {
                 if (!textNode.parentElement || !currentItem.result?.[i]) { return; }
 
-                const fonts = insertResultAndWrapOriginalTextNode(textNode, currentItem.result[i]);
+                const fonts = insertResultAndWrapOriginalTextNode(textNode, currentItem.result[i], currentItem.mapIndex);
                 fonts && currentItem.fontsNodes.push(fonts);
             });
 
@@ -491,7 +639,7 @@ const googleWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[], 
                 v.textNodes.forEach((textNode, i) => {
                     if (!textNode.parentElement || !v.result?.[i]) { return; }
     
-                    const fonts = insertResultAndWrapOriginalTextNode(textNode, v.result[i]);
+                    const fonts = insertResultAndWrapOriginalTextNode(textNode, v.result[i], v.mapIndex);
                     fonts && v.fontsNodes.push(fonts);
                 });
             });
@@ -527,11 +675,14 @@ export const errorRetry = () => {
     }
 };
 
-const insertResultAndWrapOriginalTextNode = (textNode: Text, result: string): [HTMLFontElement, HTMLFontElement] | void => {
+const insertResultAndWrapOriginalTextNode = (textNode: Text, result: string, mapIndex: number): [ScWebpageTranslationElement, ScWebpageTranslationElement] | void => {
     if (!textNode.parentElement) { return; }
 
-    const originalFont = document.createElement('font');
-    const resultFont = document.createElement('font');
+    const originalFont: ScWebpageTranslationElement = document.createElement('font');
+    const resultFont: ScWebpageTranslationElement = document.createElement('font');
+
+    originalFont._ScWebpageTranslationKey = mapIndex;
+    resultFont._ScWebpageTranslationKey = mapIndex;
 
     dealWithFontsStyle(originalFont, resultFont);
 
@@ -552,12 +703,27 @@ export const switchWayOfFontsDisplaying = (way?: number) => {
         wayOfFontsDisplaying = Math.floor(way) % 3
     }
 
+    if (wayOfFontsDisplaying === 2 && displayModeEnhancement.t_Hovering) {
+        window.addEventListener('mousemove', onWindowMouseMove);
+    }
+    else {
+        clearAllTimeout();
+
+        hoveringItem = null;
+        displayingItem = null;
+        if (panelElement) {
+            panelElement.style.display = 'none';
+        }
+
+        window.removeEventListener('mousemove', onWindowMouseMove);
+    }
+
     updatedList.forEach((item) => {
         item.fontsNodes.forEach(v => dealWithFontsStyle(v[0], v[1]));
     });
 };
 
-const dealWithFontsStyle = (originalFont: HTMLFontElement, resultFont: HTMLFontElement) => {
+const dealWithFontsStyle = (originalFont: ScWebpageTranslationElement, resultFont: ScWebpageTranslationElement) => {
     switch (wayOfFontsDisplaying) {
         case 0:
             originalFont.setAttribute('style', '');

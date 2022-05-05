@@ -407,6 +407,9 @@
     "optionsAddUnderlineToTranslations": {
         "message": "訳文に下線を追加します"
     },
+    "optionsMouserHoverOverTranslation": {
+        "message": "訳文の上にマウスを置いたときに原文を表示します"
+    },
     "themePreset": {
         "message": "プリセット"
     },

@@ -407,6 +407,9 @@
     "optionsAddUnderlineToTranslations": {
         "message": "將下劃線添加到譯文"
     },
+    "optionsMouserHoverOverTranslation": {
+        "message": "滑鼠懸停在譯文上時顯示原文"
+    },
     "themePreset": {
         "message": "預設"
     },
