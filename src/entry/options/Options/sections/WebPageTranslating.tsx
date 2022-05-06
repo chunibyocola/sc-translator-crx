@@ -7,6 +7,7 @@ import { preferredLangCode } from '../../../../constants/langCode';
 import { webPageTranslateSource as webPageTranslateSourceList } from '../../../../constants/translateSource';
 import { getMessage } from '../../../../public/i18n';
 import { DefaultOptions } from '../../../../types';
+import BetaIcon from '../../BetaIcon';
 import DefaultSelect from '../../DefaultSelect';
 import WebPageTranslateDisplayMode from '../../WebPageTranslateDisplayMode';
 
@@ -68,6 +69,17 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
             </div>
             <div className='opt-section-row'>
                 {getMessage('optionsEnhancementOfDisplay')}
+                <BetaIcon />
+                <div className='mt10-ml30'>
+                    {getMessage('optionsTranslation')}
+                    <div className='mt10-ml30'>
+                        <Checkbox
+                            label={getMessage('optionsMouseHoverOverOriginalText')}
+                            checked={displayModeEnhancement.o_Hovering}
+                            onChange={v => updateStorage('displayModeEnhancement', { ...displayModeEnhancement, o_Hovering: v })}
+                        />
+                    </div>
+                </div>
                 <div className='mt10-ml30'>
                     {`${getMessage('optionsOriginalText')} + ${getMessage('optionsTranslation')}`}
                     <div className='mt10-ml30'>
@@ -82,7 +94,7 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
                     {getMessage('optionsTranslation')}
                     <div className='mt10-ml30'>
                         <Checkbox
-                            label={getMessage('optionsMouserHoverOverTranslation')}
+                            label={getMessage('optionsMouseHoverOverTranslation')}
                             checked={displayModeEnhancement.t_Hovering}
                             onChange={v => updateStorage('displayModeEnhancement', { ...displayModeEnhancement, t_Hovering: v })}
                         />

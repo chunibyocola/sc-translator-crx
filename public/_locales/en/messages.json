@@ -407,8 +407,11 @@
     "optionsAddUnderlineToTranslations": {
         "message": "Add underline to translations"
     },
-    "optionsMouserHoverOverTranslation": {
+    "optionsMouseHoverOverTranslation": {
         "message": "Display the original text when the mouse hovers over the translation"
+    },
+    "optionsMouseHoverOverOriginalText": {
+        "message": "Display the translation when the mouse hovers over the original text"
     },
     "themePreset": {
         "message": "Preset"

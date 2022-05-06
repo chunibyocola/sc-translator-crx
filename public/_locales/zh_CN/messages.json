@@ -407,8 +407,11 @@
     "optionsAddUnderlineToTranslations": {
         "message": "将下划线添加到译文"
     },
-    "optionsMouserHoverOverTranslation": {
+    "optionsMouseHoverOverTranslation": {
         "message": "鼠标悬停在译文上时显示原文"
+    },
+    "optionsMouseHoverOverOriginalText": {
+        "message": "鼠标悬停在原文上时显示译文"
     },
     "themePreset": {
         "message": "预设"

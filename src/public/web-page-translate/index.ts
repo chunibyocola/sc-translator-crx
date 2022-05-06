@@ -47,6 +47,7 @@ let language = '';
 let errorCallback: ((errorReason: string) => void) | undefined;
 
 let displayModeEnhancement: DisplayModeEnhancement = {
+    o_Hovering: false,
     oAndT_Underline: false,
     t_Hovering: false
 };
@@ -283,7 +284,9 @@ export const startWebPageTranslating = (
 
     window.addEventListener('scroll', onWindowScroll, true);
 
-    wayOfFontsDisplaying === 2 && displayModeEnhancement.t_Hovering && window.addEventListener('mousemove', onWindowMouseMove);
+    if ((wayOfFontsDisplaying === 0 && displayModeEnhancement.o_Hovering) || (wayOfFontsDisplaying === 2 && displayModeEnhancement.t_Hovering)) {
+        window.addEventListener('mousemove', onWindowMouseMove);
+    }
 
     return true;
 };
@@ -346,7 +349,13 @@ const onWindowMouseMove = (e: MouseEvent) => {
                 }
 
                 if (displayingItem) {
-                    if (wayOfFontsDisplaying === 2) {
+                    if (wayOfFontsDisplaying === 0) {
+                        pageTranslateItemMap[displayingItem].fontsNodes.forEach(([v]) => {
+                            v.style.backgroundColor = '';
+                            v.style.boxShadow = '';
+                        });
+                    }
+                    else if (wayOfFontsDisplaying === 2) {
                         pageTranslateItemMap[displayingItem].fontsNodes.forEach(([, v]) => {
                             v.style.backgroundColor = '';
                             v.style.boxShadow = '';
@@ -366,7 +375,15 @@ const onWindowMouseMove = (e: MouseEvent) => {
                 contentElement.style.marginTop = '10px';
                 contentElement.style.color = '#000000';
 
-                if (wayOfFontsDisplaying === 2) {
+                if (wayOfFontsDisplaying === 0) {
+                    titleElement.innerText = getMessage('optionsTranslation');
+                    contentElement.innerText = pageTranslateItemMap[displayingItem].fontsNodes.reduce((t, [, v]) => (t + v.innerText), '');
+                    pageTranslateItemMap[displayingItem].fontsNodes.forEach(([v]) => {
+                        v.style.backgroundColor = '#c9d7f1';
+                        v.style.boxShadow = '2px 2px 4px #9999aa';
+                    });
+                }
+                else if (wayOfFontsDisplaying === 2) {
                     titleElement.innerText = getMessage('optionsOriginalText');
                     contentElement.innerText = pageTranslateItemMap[displayingItem].text;
                     pageTranslateItemMap[displayingItem].fontsNodes.forEach(([, v]) => {
@@ -395,7 +412,13 @@ const onWindowMouseMove = (e: MouseEvent) => {
         hoveringItem = null;
         hidePanelTimeout = setTimeout(() => {
             if (displayingItem) {
-                if (wayOfFontsDisplaying === 2) {
+                if (wayOfFontsDisplaying === 0) {
+                    pageTranslateItemMap[displayingItem].fontsNodes.forEach(([v]) => {
+                        v.style.backgroundColor = '';
+                        v.style.boxShadow = '';
+                    });
+                }
+                else if (wayOfFontsDisplaying === 2) {
                     pageTranslateItemMap[displayingItem].fontsNodes.forEach(([, v]) => {
                         v.style.backgroundColor = '';
                         v.style.boxShadow = '';
@@ -703,19 +726,18 @@ export const switchWayOfFontsDisplaying = (way?: number) => {
         wayOfFontsDisplaying = Math.floor(way) % 3
     }
 
-    if (wayOfFontsDisplaying === 2 && displayModeEnhancement.t_Hovering) {
-        window.addEventListener('mousemove', onWindowMouseMove);
+    clearAllTimeout();
+
+    hoveringItem = null;
+    displayingItem = null;
+    if (panelElement) {
+        panelElement.style.display = 'none';
     }
-    else {
-        clearAllTimeout();
 
-        hoveringItem = null;
-        displayingItem = null;
-        if (panelElement) {
-            panelElement.style.display = 'none';
-        }
+    window.removeEventListener('mousemove', onWindowMouseMove);
 
-        window.removeEventListener('mousemove', onWindowMouseMove);
+    if ((wayOfFontsDisplaying === 0 && displayModeEnhancement.o_Hovering) || (wayOfFontsDisplaying === 2 && displayModeEnhancement.t_Hovering)) {
+        window.addEventListener('mousemove', onWindowMouseMove);
     }
 
     updatedList.forEach((item) => {
