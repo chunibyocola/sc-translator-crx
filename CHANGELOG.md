@@ -1,3 +1,8 @@
+# 4.1.0 (2022-05-09)
+- Add "Display the translation when the mouse hovers over the original text" option. ([95753cf](https://github.com/chunibyocola/sc-translator-crx/commit/95753cfc7b4aa5ccc268e563788ab67a5e88397b))
+- Add "Display the original text when the mouse hovers over the translation" option. ([52af34c](https://github.com/chunibyocola/sc-translator-crx/commit/52af34cd0344c4188a7208539bf3c128a0067349))
+- Add "Add underline to translation" option. ([e83c3c2](https://github.com/chunibyocola/sc-translator-crx/commit/e83c3c2f277bf35f649544aca84f63eacaa8e94d))
+- Fix webpage translation not repond to the scroll in elements. ([2ce3ef2](https://github.com/chunibyocola/sc-translator-crx/commit/2ce3ef2f1d0330ff72f86c76021994a65517b361))
 # 4.0.0 (2022-04-20)
 - Add translation collection.
 - Optimize performance.

@@ -71,7 +71,7 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
                 {getMessage('optionsEnhancementOfDisplay')}
                 <BetaIcon />
                 <div className='mt10-ml30'>
-                    {getMessage('optionsTranslation')}
+                    {getMessage('optionsOriginalText')}
                     <div className='mt10-ml30'>
                         <Checkbox
                             label={getMessage('optionsMouseHoverOverOriginalText')}
