@@ -1,17 +1,18 @@
 import React from 'react';
-import { GenericOptionsProps } from '..';
 import Checkbox from '../../../../components/Checkbox';
 import SourceSelect from '../../../../components/SourceSelect';
 import Switch from '../../../../components/Switch';
 import { preferredLangCode } from '../../../../constants/langCode';
 import { webPageTranslateSource as webPageTranslateSourceList } from '../../../../constants/translateSource';
+import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
+import { useOptions } from '../../../../public/react-use';
 import { DefaultOptions } from '../../../../types';
 import BetaIcon from '../../BetaIcon';
 import DefaultSelect from '../../DefaultSelect';
 import WebPageTranslateDisplayMode from '../../WebPageTranslateDisplayMode';
 
-type WebPageTranslatingProps = GenericOptionsProps<Pick<
+type PickedOptions = Pick<
     DefaultOptions,
     'webPageTranslateSource' |
     'webPageTranslateTo' |
@@ -20,18 +21,28 @@ type WebPageTranslatingProps = GenericOptionsProps<Pick<
     'webPageTranslateDirectly' |
     'noControlBarWhileFirstActivating' |
     'displayModeEnhancement'
->>;
+>;
+const useOptionsDependency: (keyof PickedOptions)[] = [
+    'webPageTranslateSource',
+    'webPageTranslateTo',
+    'webPageTranslateDisplayMode',
+    'userLanguage',
+    'webPageTranslateDirectly',
+    'noControlBarWhileFirstActivating',
+    'displayModeEnhancement'
+];
 
-const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
-    updateStorage,
-    webPageTranslateSource,
-    webPageTranslateTo,
-    userLanguage,
-    webPageTranslateDisplayMode,
-    webPageTranslateDirectly,
-    noControlBarWhileFirstActivating,
-    displayModeEnhancement
-}) => {
+const WebPageTranslating: React.FC = () => {
+    const {
+        webPageTranslateSource,
+        webPageTranslateTo,
+        userLanguage,
+        webPageTranslateDisplayMode,
+        webPageTranslateDirectly,
+        noControlBarWhileFirstActivating,
+        displayModeEnhancement
+    } = useOptions<PickedOptions>(useOptionsDependency);
+
     return (
         <div className='opt-section'>
             <div className='opt-section-row'>
@@ -45,14 +56,14 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
                     className='border-bottom-select opt-source-select'
                     sourceList={webPageTranslateSourceList}
                     source={webPageTranslateSource}
-                    onChange={value => updateStorage('webPageTranslateSource', value)}
+                    onChange={value => setLocalStorage({ webPageTranslateSource: value })}
                 />
             </div>
             <div className='opt-section-row'>
                 {getMessage('optionsTo')}
                 <DefaultSelect
                     value={webPageTranslateTo}
-                    onChange={value => updateStorage('webPageTranslateTo', value)}
+                    onChange={value => setLocalStorage({ webPageTranslateTo: value })}
                     options={preferredLangCode[userLanguage]}
                     optionValue='code'
                     optionLabel='name'
@@ -62,7 +73,7 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
                 {getMessage('optionsDisplayMode')}
                 <div className='mt10-ml30'>
                     <WebPageTranslateDisplayMode
-                        update={displayMode => updateStorage('webPageTranslateDisplayMode', displayMode)}
+                        update={displayMode => setLocalStorage({ webPageTranslateDisplayMode: displayMode })}
                         displayMode={webPageTranslateDisplayMode}
                     />
                 </div>
@@ -76,7 +87,7 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
                         <Checkbox
                             label={getMessage('optionsMouseHoverOverOriginalText')}
                             checked={displayModeEnhancement.o_Hovering}
-                            onChange={v => updateStorage('displayModeEnhancement', { ...displayModeEnhancement, o_Hovering: v })}
+                            onChange={v => setLocalStorage({ displayModeEnhancement: { ...displayModeEnhancement, o_Hovering: v } })}
                         />
                     </div>
                 </div>
@@ -86,7 +97,7 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
                         <Checkbox
                             label={getMessage('optionsAddUnderlineToTranslations')}
                             checked={displayModeEnhancement.oAndT_Underline}
-                            onChange={v => updateStorage('displayModeEnhancement', { ...displayModeEnhancement, oAndT_Underline: v })}
+                            onChange={v => setLocalStorage({ displayModeEnhancement: { ...displayModeEnhancement, oAndT_Underline: v } })}
                         />
                     </div>
                 </div>
@@ -96,7 +107,7 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
                         <Checkbox
                             label={getMessage('optionsMouseHoverOverTranslation')}
                             checked={displayModeEnhancement.t_Hovering}
-                            onChange={v => updateStorage('displayModeEnhancement', { ...displayModeEnhancement, t_Hovering: v })}
+                            onChange={v => setLocalStorage({ displayModeEnhancement: { ...displayModeEnhancement, t_Hovering: v } })}
                         />
                     </div>
                 </div>
@@ -105,7 +116,7 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
                 <Switch
                     label={getMessage('optionsWebPageTranslateDirectly')}
                     checked={webPageTranslateDirectly}
-                    onChange={v => updateStorage('webPageTranslateDirectly', v)}
+                    onChange={v => setLocalStorage({ webPageTranslateDirectly: v })}
                 />
                 <div className='item-description'>
                     {getMessage('optionsWebPageTranslateDirectlyDescription')}
@@ -114,7 +125,7 @@ const WebPageTranslating: React.FC<WebPageTranslatingProps> = ({
                     <Switch
                         label={getMessage('optionsNoControlBarWhileFirstActivating')}
                         checked={noControlBarWhileFirstActivating}
-                        onChange={v => updateStorage('noControlBarWhileFirstActivating', v)}
+                        onChange={v => setLocalStorage({ noControlBarWhileFirstActivating: v })}
                     />
                     <div className='item-description'>
                         {getMessage('optionsNoControlBarWhileFirstActivatingDescription')}

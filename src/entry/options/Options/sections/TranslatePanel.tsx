@@ -1,8 +1,9 @@
 import React from 'react';
-import { GenericOptionsProps } from '..';
 import Slider, { SliderFormat, SliderMarks } from '../../../../components/Slider';
 import Switch from '../../../../components/Switch';
+import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
+import { useOptions } from '../../../../public/react-use';
 import { DefaultOptions } from '../../../../types';
 
 const marksPercentage: SliderMarks = [
@@ -37,7 +38,7 @@ const marksFontSize: SliderMarks = [
 ];
 const pxLabelFormat: SliderFormat = v => `${v}px`
 
-type TranslatePanelProps = GenericOptionsProps<Pick<
+type PickedOptions = Pick<
     DefaultOptions,
     'pinThePanelWhileOpeningIt' |
     'rememberPositionOfPinnedPanel' |
@@ -45,17 +46,26 @@ type TranslatePanelProps = GenericOptionsProps<Pick<
     'translatePanelWidth' |
     'translatePanelFontSize' |
     'autoTranslateAfterInput'
->>;
+>;
+const useOptionsDependency: (keyof PickedOptions)[] = [
+    'pinThePanelWhileOpeningIt',
+    'rememberPositionOfPinnedPanel',
+    'translatePanelMaxHeight',
+    'translatePanelWidth',
+    'translatePanelFontSize',
+    'autoTranslateAfterInput'
+];
 
-const TranslatePanel: React.FC<TranslatePanelProps> = ({
-    updateStorage,
-    pinThePanelWhileOpeningIt,
-    rememberPositionOfPinnedPanel,
-    translatePanelMaxHeight,
-    translatePanelWidth,
-    translatePanelFontSize,
-    autoTranslateAfterInput
-}) => {
+const TranslatePanel: React.FC = () => {
+    const {
+        pinThePanelWhileOpeningIt,
+        rememberPositionOfPinnedPanel,
+        translatePanelMaxHeight,
+        translatePanelWidth,
+        translatePanelFontSize,
+        autoTranslateAfterInput
+    } = useOptions<PickedOptions>(useOptionsDependency);
+
     const { percentage: hPercentage, px: hPx, percent: hPercent } = translatePanelMaxHeight;
     const { percentage: wPercentage, px: wPx, percent: wPercent } = translatePanelWidth;
 
@@ -67,7 +77,7 @@ const TranslatePanel: React.FC<TranslatePanelProps> = ({
                     <Switch
                         label={getMessage('optionsPercentage')}
                         checked={hPercentage}
-                        onChange={v => updateStorage('translatePanelMaxHeight', { ...translatePanelMaxHeight, percentage: v })}
+                        onChange={v => setLocalStorage({ translatePanelMaxHeight: { ...translatePanelMaxHeight, percentage: v } })}
                     />
                 </div>
                 {hPercentage ? <Slider
@@ -78,7 +88,7 @@ const TranslatePanel: React.FC<TranslatePanelProps> = ({
                     marks={marksPercentage}
                     valueLabelDisplay
                     valueLabelFormat={percentageLabelFormat}
-                    mouseUpCallback={v => updateStorage('translatePanelMaxHeight', { ...translatePanelMaxHeight, 'percent': v })}
+                    mouseUpCallback={v => setLocalStorage({ translatePanelMaxHeight: { ...translatePanelMaxHeight, 'percent': v } })}
                 /> : <Slider
                     defaultValue={hPx}
                     min={100}
@@ -87,7 +97,7 @@ const TranslatePanel: React.FC<TranslatePanelProps> = ({
                     marks={marksPx}
                     valueLabelDisplay
                     valueLabelFormat={pxLabelFormat}
-                    mouseUpCallback={v => updateStorage('translatePanelMaxHeight', { ...translatePanelMaxHeight, 'px': v })}
+                    mouseUpCallback={v => setLocalStorage({ translatePanelMaxHeight: { ...translatePanelMaxHeight, 'px': v } })}
                 />}
             </div>
             <div className='opt-section-row'>
@@ -96,7 +106,7 @@ const TranslatePanel: React.FC<TranslatePanelProps> = ({
                     <Switch
                         label={getMessage('optionsPercentage')}
                         checked={wPercentage}
-                        onChange={v => updateStorage('translatePanelWidth', { ...translatePanelWidth, percentage: v })}
+                        onChange={v => setLocalStorage({ translatePanelWidth: { ...translatePanelWidth, percentage: v } })}
                     />
                 </div>
                 {wPercentage ? <Slider
@@ -107,7 +117,7 @@ const TranslatePanel: React.FC<TranslatePanelProps> = ({
                     marks={marksPercentage}
                     valueLabelDisplay
                     valueLabelFormat={percentageLabelFormat}
-                    mouseUpCallback={v => updateStorage('translatePanelWidth', { ...translatePanelWidth, 'percent': v })}
+                    mouseUpCallback={v => setLocalStorage({ translatePanelWidth: { ...translatePanelWidth, 'percent': v } })}
                 /> : <Slider
                     defaultValue={wPx}
                     min={250}
@@ -116,7 +126,7 @@ const TranslatePanel: React.FC<TranslatePanelProps> = ({
                     marks={marksWidthPx}
                     valueLabelDisplay
                     valueLabelFormat={pxLabelFormat}
-                    mouseUpCallback={v => updateStorage('translatePanelWidth', { ...translatePanelWidth, 'px': v })}
+                    mouseUpCallback={v => setLocalStorage({ translatePanelWidth: { ...translatePanelWidth, 'px': v } })}
                 />}
             </div>
             <div className='opt-section-row'>
@@ -129,14 +139,14 @@ const TranslatePanel: React.FC<TranslatePanelProps> = ({
                     marks={marksFontSize}
                     valueLabelDisplay
                     valueLabelFormat={pxLabelFormat}
-                    mouseUpCallback={v => updateStorage('translatePanelFontSize', v)}
+                    mouseUpCallback={v => setLocalStorage({ translatePanelFontSize: v })}
                 />
             </div>
             <div className='opt-section-row'>
                 <Switch
                     label={getMessage('optionsPinThePanelWhileOpeningIt')}
                     checked={pinThePanelWhileOpeningIt}
-                    onChange={v => updateStorage('pinThePanelWhileOpeningIt', v)}
+                    onChange={v => setLocalStorage({ pinThePanelWhileOpeningIt: v })}
                 />
                 <div className='item-description'>{getMessage('optionsPinThePanelWhileOpeningItDescription')}</div>
             </div>
@@ -144,7 +154,7 @@ const TranslatePanel: React.FC<TranslatePanelProps> = ({
                 <Switch
                     label={getMessage('optionsRememberPositionOfPinnedPanel')}
                     checked={rememberPositionOfPinnedPanel}
-                    onChange={v => updateStorage('rememberPositionOfPinnedPanel', v)}
+                    onChange={v => setLocalStorage({ rememberPositionOfPinnedPanel: v })}
                 />
                 <div className='item-description'>{getMessage('optionsRememberPositionOfPinnedPanelDescription')}</div>
             </div>
@@ -152,7 +162,7 @@ const TranslatePanel: React.FC<TranslatePanelProps> = ({
                 <Switch
                     label={getMessage('optionsAutoTranslateAfterInput')}
                     checked={autoTranslateAfterInput}
-                    onChange={v => updateStorage('autoTranslateAfterInput', v)}
+                    onChange={v => setLocalStorage({ autoTranslateAfterInput: v })}
                 />
                 <div className='item-description'>{getMessage('optionsAutoTranslateAfterInputDescription')}</div>
             </div>

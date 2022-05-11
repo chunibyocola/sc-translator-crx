@@ -1,11 +1,12 @@
 import React from 'react';
-import { GenericOptionsProps } from '..';
 import Button from '../../../../components/Button';
 import Slider, { SliderFormat, SliderMarks } from '../../../../components/Slider';
 import SourceSelect from '../../../../components/SourceSelect';
 import { audioSource } from '../../../../constants/translateSource';
+import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { playAudio } from '../../../../public/play-audio';
+import { useOptions } from '../../../../public/react-use';
 import { DefaultOptions } from '../../../../types';
 
 const marksVolume: SliderMarks = [
@@ -25,19 +26,31 @@ const marksPlaybackRate: SliderMarks = [
     { value: 1.75, label: '1.75x' },
     { value: 2, label: '2.00x' }
 ];
-const volumeFormat: SliderFormat = v => Number(Number(v).toFixed(0));
-const playbackRateFormat: SliderFormat = v => Number(Number(v).toFixed(2));
+const volumeFormat = (v: number) => Number(Number(v).toFixed(0));
+const playbackRateFormat = (v: number) => Number(Number(v).toFixed(2));
 const volumeLabelFormat: SliderFormat = v => `${Number(v).toFixed(0)}`;
 const playbackRateLabelFormat: SliderFormat = v => `${Number(v).toFixed(2)}x`;
 
-type AudioProps = GenericOptionsProps<Pick<
+
+type PickedOptions = Pick<
     DefaultOptions,
     'defaultAudioSource' |
     'audioVolume' |
     'audioPlaybackRate'
->>;
+>;
+const useOptionsDependency: (keyof PickedOptions)[] = [
+    'defaultAudioSource',
+    'audioVolume',
+    'audioPlaybackRate'
+];
 
-const Audio: React.FC<AudioProps> = ({ updateStorage, defaultAudioSource, audioVolume, audioPlaybackRate }) => {
+const Audio: React.FC = () => {
+    const {
+        defaultAudioSource,
+        audioVolume,
+        audioPlaybackRate
+    } = useOptions<PickedOptions>(useOptionsDependency);
+
     return (
         <div className='opt-section'>
             <div className='opt-section-row'>
@@ -46,7 +59,7 @@ const Audio: React.FC<AudioProps> = ({ updateStorage, defaultAudioSource, audioV
                     className='border-bottom-select opt-source-select'
                     sourceList={audioSource}
                     source={defaultAudioSource}
-                    onChange={value => updateStorage('defaultAudioSource', value)}
+                    onChange={value => setLocalStorage({ defaultAudioSource: value })}
                 />
             </div>
             <div className='opt-section-row'>
@@ -58,7 +71,7 @@ const Audio: React.FC<AudioProps> = ({ updateStorage, defaultAudioSource, audioV
                     step={5}
                     marks={marksVolume}
                     valueLabelDisplay
-                    mouseUpCallback={v => updateStorage('audioVolume', volumeFormat(v))}
+                    mouseUpCallback={v => setLocalStorage({ audioVolume: volumeFormat(v) })}
                     valueLabelFormat={volumeLabelFormat}
                 />
             </div>
@@ -71,7 +84,7 @@ const Audio: React.FC<AudioProps> = ({ updateStorage, defaultAudioSource, audioV
                     step={0.25}
                     marks={marksPlaybackRate}
                     valueLabelDisplay
-                    mouseUpCallback={v => updateStorage('audioPlaybackRate', playbackRateFormat(v))}
+                    mouseUpCallback={v => setLocalStorage({ audioPlaybackRate: playbackRateFormat(v) })}
                     valueLabelFormat={playbackRateLabelFormat}
                 />
             </div>

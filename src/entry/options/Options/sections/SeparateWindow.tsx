@@ -1,18 +1,26 @@
 import React from 'react';
-import { GenericOptionsProps } from '..';
 import Button from '../../../../components/Button';
 import Switch from '../../../../components/Switch';
+import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
+import { useOptions } from '../../../../public/react-use';
 import { DefaultOptions } from '../../../../types';
 
 const initSizeAndPosition = { width: 286, height: 439, left: 550, top: 250 };
 
-type SeparateWindowProps = GenericOptionsProps<Pick<
+type PickedOptions = Pick<
     DefaultOptions,
     'rememberStwSizeAndPosition'
->>;
+>;
+const useOptionsDependency: (keyof PickedOptions)[] = [
+    'rememberStwSizeAndPosition'
+];
 
-const SeparateWindow: React.FC<SeparateWindowProps> = ({ updateStorage, rememberStwSizeAndPosition }) => {
+const SeparateWindow: React.FC = () => {
+    const {
+        rememberStwSizeAndPosition
+    } = useOptions<PickedOptions>(useOptionsDependency);
+
     return (
         <div className='opt-section'>
             <div className='opt-section-row'>
@@ -23,11 +31,11 @@ const SeparateWindow: React.FC<SeparateWindowProps> = ({ updateStorage, remember
                 <Switch
                     label={getMessage('optionsRememberStwSizeAndPosition')}
                     checked={rememberStwSizeAndPosition}
-                    onChange={v => updateStorage('rememberStwSizeAndPosition', v)}
+                    onChange={v => setLocalStorage({ rememberStwSizeAndPosition: v })}
                 />
             </div>
             <div className='opt-section-row'>
-                <Button variant='outlined' onClick={() => updateStorage('stwSizeAndPosition', initSizeAndPosition)}>
+                <Button variant='outlined' onClick={() => setLocalStorage({ stwSizeAndPosition: initSizeAndPosition })}>
                     {getMessage('optionsResetSizeAndPosition')}
                 </Button>
             </div>

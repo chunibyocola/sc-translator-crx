@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
-import { GenericOptionsProps } from '..';
 import Switch from '../../../../components/Switch';
+import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
+import { useOptions } from '../../../../public/react-use';
 import { DefaultOptions } from '../../../../types';
 
-type ClipboardProps = GenericOptionsProps<Pick<
+type PickedOptions = Pick<
     DefaultOptions,
     'autoPasteInTheInputBox'
->>;
+>;
+const useOptionsDependency: (keyof PickedOptions)[] = [
+    'autoPasteInTheInputBox'
+];
 
-const Clipboard: React.FC<ClipboardProps> = ({ updateStorage, autoPasteInTheInputBox }) => {
+const Clipboard: React.FC = () => {
     const [error, setError] = useState(false);
+
+    const {
+        autoPasteInTheInputBox
+    } = useOptions<PickedOptions>(useOptionsDependency);
 
     return (
         <div className='opt-section'>
@@ -20,12 +28,12 @@ const Clipboard: React.FC<ClipboardProps> = ({ updateStorage, autoPasteInTheInpu
                     checked={autoPasteInTheInputBox}
                     onChange={() => {
                         if (autoPasteInTheInputBox) {
-                            updateStorage('autoPasteInTheInputBox', false);
+                            setLocalStorage({ autoPasteInTheInputBox: false });
                         }
                         else {
                             navigator.clipboard.readText().then(() => {
                                 error && setError(false);
-                                updateStorage('autoPasteInTheInputBox', true);
+                                setLocalStorage({ autoPasteInTheInputBox: true });
                             }).catch(() => {
                                 setError(true);
                             });

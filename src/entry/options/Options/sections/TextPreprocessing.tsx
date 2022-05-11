@@ -1,24 +1,31 @@
 import React from 'react';
-import { GenericOptionsProps } from '..';
 import Checkbox from '../../../../components/Checkbox';
+import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
+import { useOptions } from '../../../../public/react-use';
 import { DefaultOptions } from '../../../../types';
 import RegExpList from '../../RegExpList';
 import TestTextProcessing from '../../TestTextPreprocessing';
 
-type TextPreprocessingProps = GenericOptionsProps<Pick<
+type PickedOptions = Pick<
     DefaultOptions,
     'textPreprocessingRegExpList' |
     'textPreprocessingPreset' |
     'afterSelectingTextRegExpList'
->>;
+>;
+const useOptionsDependency: (keyof PickedOptions)[] = [
+    'textPreprocessingRegExpList',
+    'textPreprocessingPreset',
+    'afterSelectingTextRegExpList'
+];
 
-const TextPreprocessing: React.FC<TextPreprocessingProps> = ({
-    updateStorage,
-    textPreprocessingPreset,
-    textPreprocessingRegExpList,
-    afterSelectingTextRegExpList
-}) => {
+const TextPreprocessing: React.FC = () => {
+    const {
+        textPreprocessingPreset,
+        textPreprocessingRegExpList,
+        afterSelectingTextRegExpList
+    } = useOptions<PickedOptions>(useOptionsDependency);
+
     return (
         <div className='opt-section'>
             <div className='opt-section-row'>
@@ -41,7 +48,7 @@ const TextPreprocessing: React.FC<TextPreprocessingProps> = ({
                     <div className='mt10-ml30'>
                         <RegExpList
                             textPreprocessingRegExpList={textPreprocessingRegExpList}
-                            onSave={value => updateStorage('textPreprocessingRegExpList', value)}
+                            onSave={value => setLocalStorage({ textPreprocessingRegExpList: value })}
                         />
                     </div>
                 </div>
@@ -51,7 +58,7 @@ const TextPreprocessing: React.FC<TextPreprocessingProps> = ({
                         <Checkbox
                             label={getMessage('optionsConvertCamelCase')}
                             checked={textPreprocessingPreset.convertCamelCase}
-                            onChange={v => updateStorage('textPreprocessingPreset', { ...textPreprocessingPreset, 'convertCamelCase': v })}
+                            onChange={v => setLocalStorage({ textPreprocessingPreset: { ...textPreprocessingPreset, convertCamelCase: v } })}
                         />
                         <div className='item-description'>{'"aCamelCaseText" => "a camel case text"'}</div>
                     </div>
@@ -74,7 +81,7 @@ const TextPreprocessing: React.FC<TextPreprocessingProps> = ({
                     <div className='mt10-ml30'>
                         <RegExpList
                             textPreprocessingRegExpList={afterSelectingTextRegExpList}
-                            onSave={value => updateStorage('afterSelectingTextRegExpList', value)}
+                            onSave={value => setLocalStorage({ afterSelectingTextRegExpList: value })}
                         />
                     </div>
                 </div>
