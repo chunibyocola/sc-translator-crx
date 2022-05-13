@@ -5,7 +5,7 @@ import TsHistory from '../../components/TsHistory';
 import ResultBox from './ResultBox';
 import { Provider } from 'react-redux';
 import store from '../../redux/store';
-import { initMultipleTranslate, initSingleTranslate } from '../../redux/init';
+import { initTranslation } from '../../redux/init';
 import { initOptions } from '../../public/options';
 import { getExtensionURL, getLocalStorage } from '../../public/chrome-call';
 import defaultOptions from '../../constants/defaultOptions';
@@ -17,7 +17,11 @@ import WebPageTranslate from './WebPageTranslate';
 const init = (options: DefaultOptions) => {
     initOptions(options);
 
-    options.multipleTranslateMode ? initMultipleTranslate(options) : initSingleTranslate(options);
+    initTranslation({
+        sourceList: options.multipleTranslateMode ? options.multipleTranslateSourceList : [options.defaultTranslateSource],
+        from: options.multipleTranslateMode ? options.multipleTranslateFrom : options.defaultTranslateFrom,
+        to: options.multipleTranslateMode ? options.multipleTranslateTo : options.defaultTranslateTo
+    });
 
     const root = document.createElement('div');
     root.id = 'sc-translator-shadow';

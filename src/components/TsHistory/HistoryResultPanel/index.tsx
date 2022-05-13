@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { calculatePosition } from '../../../public/utils';
-import { Translation } from '../../../redux/slice/multipleTranslateSlice';
+import { Translation } from '../../../types';
 import IconFont from '../../IconFont';
 import ListenButton from '../../ListenButton';
 import SourceFavicon from '../../SourceFavicon';

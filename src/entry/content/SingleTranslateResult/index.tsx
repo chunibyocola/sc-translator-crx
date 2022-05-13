@@ -9,8 +9,8 @@ import { switchTranslateSource } from '../../../public/switch-translate-source';
 import { useAppDispatch, useAppSelector, useInsertResult, useIsHistoryEnabled } from '../../../public/react-use';
 import './style.css';
 import { textPreprocessing } from '../../../public/text-preprocessing';
-import { stRequestError, stRequestFinish, stRequestStart, stSetFromAndTo, stSetSourceFromTo, stSetText } from '../../../redux/slice/singleTranslateSlice';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/slice/translateHistorySlice';
+import { nextTranslaion, requestError, requestFinish, requestStart, singleChangeSource } from '../../../redux/slice/translationSlice';
 
 type SingleTranslateResultProps = {
     maxHeightGap: number;
@@ -21,7 +21,8 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = React.memo((
 
     const [canInsertResult, confirmInsertResult, insertResultToggle, autoInsertResult] = useInsertResult();
 
-    const { text, source, from, to, translateRequest, translateId } = useAppSelector(state => state.singleTranslate);
+    const { translations, text, from, to, translateId } = useAppSelector(state => state.translation);
+    const { source, translateRequest } = translations[0];
 
     const { displayEditArea } = useAppSelector(state => state.panelStatus);
 
@@ -47,33 +48,33 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = React.memo((
 
         if (!preprocessedText) { return; }
 
-        dispatch(stRequestStart());
+        dispatch(requestStart({ source }));
 
         sendTranslate({ text: preprocessedText, source, from, to }, translateIdRef.current).then((response) => {
             if (response.translateId !== translateIdRef.current) { return; }
 
             if (!('code' in response)) {
                 dispatch(updateHistoryFinish({ translateId: response.translateId, source, result: response.translation }));
-                dispatch(stRequestFinish({ result: response.translation }));
+                dispatch(requestFinish({ source, result: response.translation }));
                 autoInsertResult(response.translateId, source, response.translation.result);
             }
             else {
                 dispatch(updateHistoryError({ translateId: response.translateId, source, errorCode: response.code }));
-                dispatch(stRequestError({ errorCode: response.code }));
+                dispatch(requestError({ source, errorCode: response.code }));
             }
         });
     }, [dispatch, text, source, from, to, autoInsertResult]);
 
     const handleSourceChange = useCallback((targetSource: string) => {
-        dispatch(stSetSourceFromTo(switchTranslateSource(targetSource, { source, from, to })));
+        dispatch(singleChangeSource(switchTranslateSource(targetSource, { source, from, to })));
     }, [dispatch, source, from, to]);
 
     const handleSelectionChange = useCallback((from: string, to: string) => {
-        dispatch(stSetFromAndTo({ from, to }));
+        dispatch(nextTranslaion({ from, to }));
     }, [dispatch]);
 
     const handleSetText = useCallback((text: string) => {
-        text && dispatch(stSetText({ text }));
+        text && dispatch(nextTranslaion({ text }));
     }, [dispatch]);
 
     const handleRetry = useCallback(() => {

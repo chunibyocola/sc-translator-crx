@@ -12,19 +12,19 @@ import { useAppDispatch, useAppSelector, useOptions } from '../../../public/reac
 import { getMessage } from '../../../public/i18n';
 import { getOptions } from '../../../public/options';
 import { textPreprocessing } from '../../../public/text-preprocessing';
-import { mtAddSource, mtRemoveSource, mtRequestError, mtRequestFinish, mtRequestStart, mtSetFromAndTo, mtSetText } from '../../../redux/slice/multipleTranslateSlice';
 import { DefaultOptions } from '../../../types';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
 import CollectButton from '../../../components/PanelIconButtons/CollectButton';
 import OpenOptionsPageButton from '../../../components/PanelIconButtons/OpenOptionsPageButton';
 import SwitchThemeButton from '../../../components/PanelIconButtons/SwitchThemeButton';
 import OpenCollectionPageButton from '../../../components/PanelIconButtons/OpenCollectionPageButton';
+import { addSource, nextTranslaion, removeSource, requestError, requestFinish, requestStart } from '../../../redux/slice/translationSlice';
 
 type PickedOptions = Pick<DefaultOptions, 'rememberStwSizeAndPosition'>;
 const useOptionsDependency: (keyof PickedOptions)[] = ['rememberStwSizeAndPosition'];
 
 const Separate: React.FC = () => {
-    const { text, from, to, translations, translateId } = useAppSelector(state => state.multipleTranslate);
+    const { text, from, to, translations, translateId } = useAppSelector(state => state.translation);
 
     const translateIdRef = useRef(0);
     const oldTranslateIdRef = useRef(0);
@@ -38,25 +38,25 @@ const Separate: React.FC = () => {
 
         if (!preprocessedText) { return; }
 
-        dispatch(mtRequestStart({ source }));
+        dispatch(requestStart({ source }));
 
         sendTranslate({ text: preprocessedText, source, from, to }, translateIdRef.current).then((response) => {
             if (response.translateId !== translateIdRef.current) { return; }
 
-            !('code' in response) ? dispatch(mtRequestFinish({ source, result: response.translation})) : dispatch(mtRequestError({ source, errorCode: response.code }));
+            !('code' in response) ? dispatch(requestFinish({ source, result: response.translation})) : dispatch(requestError({ source, errorCode: response.code }));
         });
     }, [text, from, to, dispatch]);
 
     const handleSetText = useCallback((text: string) => {
-        text && dispatch(mtSetText({ text }));
+        text && dispatch(nextTranslaion({ text }));
     }, [dispatch]);
 
     const handleSelectionChange = useCallback((from: string, to: string) => {
-        dispatch(mtSetFromAndTo({ from, to }));
+        dispatch(nextTranslaion({ from, to }));
     }, [dispatch]);
 
     const handleRemoveSource = useCallback((source: string) => {
-        dispatch(mtRemoveSource({ source }));
+        dispatch(removeSource({ source }));
     }, [dispatch]);
 
     const handleRetry = useCallback((source: string) => {
@@ -64,7 +64,7 @@ const Separate: React.FC = () => {
     }, [handleTranslate]);
 
     const handleAddSource = useCallback((source: string, addType: number) => {
-        dispatch(mtAddSource({ source, addType }));
+        dispatch(addSource({ source, addType }));
         text && handleTranslate(source);
     }, [dispatch, text, handleTranslate]);
 
@@ -74,18 +74,18 @@ const Separate: React.FC = () => {
         text && translations.map(({ source }) => (handleTranslate(source)));
 
         oldTranslateIdRef.current = translateId;
-    }, [translateId, text, handleTranslate, translations, dispatch]);
+    }, [translateId, text, handleTranslate, translations]);
 
     const { rememberStwSizeAndPosition } = useOptions<PickedOptions>(useOptionsDependency);
 
     useEffect(() => {
         const text = new URL(window.location.href).searchParams.get('text');
-        text && dispatch(mtSetText({ text }));
+        text && dispatch(nextTranslaion({ text }));
 
         // read clipboard
         const readClipboardText = async () => {
             const clipboardText = await navigator.clipboard.readText();
-            clipboardText && dispatch(mtSetText({ text: clipboardText }));
+            clipboardText && dispatch(nextTranslaion({ text: clipboardText }));
             dispatch(callOutPanel());
         };
 

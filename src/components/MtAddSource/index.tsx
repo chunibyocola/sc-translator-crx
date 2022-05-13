@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Translation } from '../../redux/slice/multipleTranslateSlice';
+import { Translation } from '../../types';
 import IconFont from '../IconFont';
 import PanelIconButtonWrapper from '../PanelIconButtons/PanelIconButtonWrapper';
 import SourceSelector from './SourceSelector';

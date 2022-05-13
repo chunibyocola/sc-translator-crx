@@ -9,11 +9,12 @@ import { switchTranslateSource } from '../../../public/switch-translate-source';
 import { getOptions } from '../../../public/options';
 import { textPreprocessing } from '../../../public/text-preprocessing';
 import { useAppDispatch, useAppSelector } from '../../../public/react-use';
-import { stRequestError, stRequestFinish, stRequestStart, stSetFromAndTo, stSetSourceFromTo, stSetText } from '../../../redux/slice/singleTranslateSlice';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
+import { nextTranslaion, requestError, requestFinish, requestStart, singleChangeSource } from '../../../redux/slice/translationSlice';
 
 const SingleTranslateResult: React.FC = () => {
-    const { translateRequest, source, from, to, text, translateId } = useAppSelector(state => state.singleTranslate);
+    const { translations, from, to, text, translateId } = useAppSelector(state => state.translation);
+    const { source, translateRequest } = translations[0];
 
     const translateIdRef = useRef(0);
     const oldTranslateIdRef = useRef(0);
@@ -27,25 +28,25 @@ const SingleTranslateResult: React.FC = () => {
 
         if (!preprocessedText) { return; }
 
-        dispatch(stRequestStart());
+        dispatch(requestStart({ source }));
 
         sendTranslate({ text: preprocessedText, source, from, to }, translateIdRef.current).then((response) => {
             if (response.translateId !== translateIdRef.current) { return; }
 
-            !('code' in response) ? dispatch(stRequestFinish({ result: response.translation })) : dispatch(stRequestError({ errorCode: response.code }));
+            !('code' in response) ? dispatch(requestFinish({ source, result: response.translation })) : dispatch(requestError({ source, errorCode: response.code }));
         });
     }, [dispatch, text, source, from, to]);
 
     const handleSetText = useCallback((text: string) => {
-        text && dispatch(stSetText({ text }));
+        text && dispatch(nextTranslaion({ text }));
     }, [dispatch]);
 
     const handleSourceChange = useCallback((targetSource: string) => {
-        dispatch(stSetSourceFromTo(switchTranslateSource(targetSource, { source, from, to })));
+        dispatch(singleChangeSource(switchTranslateSource(targetSource, { source, from, to })));
     }, [dispatch, source, from, to]);
 
     const handleSelectionChange = useCallback((from: string, to: string) => {
-        dispatch(stSetFromAndTo({ from, to }));
+        dispatch(nextTranslaion({ from, to }));
     }, [dispatch]);
 
     const handleRetry = useCallback(() => {
@@ -63,7 +64,7 @@ const SingleTranslateResult: React.FC = () => {
     useEffect(() => {
         const readClipboardText = async () => {
             const clipboardText = await navigator.clipboard.readText();
-            clipboardText && dispatch(stSetText({ text: clipboardText }));
+            clipboardText && dispatch(nextTranslaion({ text: clipboardText }));
             dispatch(callOutPanel());
         };
 

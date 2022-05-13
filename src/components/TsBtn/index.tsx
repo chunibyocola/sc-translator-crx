@@ -15,8 +15,6 @@ import { getOptions } from '../../public/options';
 import { debounce, isTextBox } from '../../public/utils';
 import { DefaultOptions, Position } from '../../types';
 import { callOutPanelInContentScript, closePanel, requestToHidePanel, showPanelAndSetPosition } from '../../redux/slice/panelStatusSlice';
-import { mtSetText, mtSetTo } from '../../redux/slice/multipleTranslateSlice';
-import { stSetText, stSetTo } from '../../redux/slice/singleTranslateSlice';
 import {
     translateButtonContext,
     TRANSLATE_BUTTON_COPY,
@@ -27,6 +25,7 @@ import {
     TRANSLATE_BUTTON_TRANSLATE
 } from '../../constants/translateButtonTypes';
 import { playAudio } from '../../public/play-audio';
+import { nextTranslaion } from '../../redux/slice/translationSlice';
 
 const initText = '';
 const initPos = { x: 5, y: 5 };
@@ -120,9 +119,7 @@ const TsBtn: React.FC = () => {
 
         dispatch(showPanelAndSetPosition({ position, pinThePanelWhileOpeningIt }));
 
-        to !== undefined && (getOptions().multipleTranslateMode ? dispatch(mtSetTo({ to })) : dispatch(stSetTo({ to })));
-
-        getOptions().multipleTranslateMode ? dispatch(mtSetText({ text })) : dispatch(stSetText({ text }));
+        dispatch(nextTranslaion({ text, to }));
     }, [dispatch, respondToSeparateWindow, pinThePanelWhileOpeningIt]);
 
     const handleTranslateButtonClick = (translateButton: string) => {

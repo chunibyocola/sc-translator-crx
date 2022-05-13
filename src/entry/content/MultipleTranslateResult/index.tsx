@@ -9,8 +9,8 @@ import './style.css';
 import { getMessage } from '../../../public/i18n';
 import { useAppDispatch, useAppSelector, useInsertResult, useIsHistoryEnabled } from '../../../public/react-use';
 import { textPreprocessing } from '../../../public/text-preprocessing';
-import { mtAddSource, mtRemoveSource, mtRequestError, mtRequestFinish, mtRequestStart, mtSetFromAndTo, mtSetText } from '../../../redux/slice/multipleTranslateSlice';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/slice/translateHistorySlice';
+import { addSource, nextTranslaion, removeSource, requestError, requestFinish, requestStart } from '../../../redux/slice/translationSlice';
 
 type MultipleTranslateResultProps = {
     maxHeightGap: number;
@@ -33,7 +33,7 @@ const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = React.me
     }, [maxHeightGap]);
 
     const { displayEditArea } = useAppSelector(state => state.panelStatus);
-    const { text, from, to, translations, translateId } = useAppSelector(state => state.multipleTranslate);
+    const { text, from, to, translations, translateId } = useAppSelector(state => state.translation);
 
     const dispatch = useAppDispatch();
 
@@ -46,33 +46,33 @@ const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = React.me
 
         if (!preprocessedText) { return; }
 
-        dispatch(mtRequestStart({ source }));
+        dispatch(requestStart({ source }));
 
         sendTranslate({ text: preprocessedText, source, from, to }, translateIdRef.current).then((response) => {
             if (response.translateId !== translateIdRef.current) { return; }
 
             if (!('code' in response)) {
                 dispatch(updateHistoryFinish({ translateId: response.translateId, source, result: response.translation }));
-                dispatch(mtRequestFinish({ source, result: response.translation}));
+                dispatch(requestFinish({ source, result: response.translation}));
                 autoInsertResult(response.translateId, source, response.translation.result);
             }
             else {
                 dispatch(updateHistoryError({ translateId: response.translateId, source, errorCode: response.code }));
-                dispatch(mtRequestError({ source, errorCode: response.code }));
+                dispatch(requestError({ source, errorCode: response.code }));
             }
         });
     }, [text, from, to, dispatch, autoInsertResult]);
 
     const handleRemoveSource = useCallback((source: string) => {
-        dispatch(mtRemoveSource({ source }));
+        dispatch(removeSource({ source }));
     }, [dispatch]);
 
     const handleSetText = useCallback((text: string) => {
-        text && dispatch(mtSetText({ text }));
+        text && dispatch(nextTranslaion({ text }));
     }, [dispatch]);
 
     const handleSelectionChange = useCallback((from: string, to: string) => {
-        dispatch(mtSetFromAndTo({ from, to }));
+        dispatch(nextTranslaion({ from, to }));
     }, [dispatch]);
 
     const handleRetry = useCallback((source: string) => {
@@ -80,7 +80,7 @@ const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = React.me
     }, [handleTranslate]);
 
     const handleAddSource = useCallback((source: string, addType: number) => {
-        dispatch(mtAddSource({ source, addType }));
+        dispatch(addSource({ source, addType }));
         text && handleTranslate(source);
     }, [dispatch, text, handleTranslate]);
 

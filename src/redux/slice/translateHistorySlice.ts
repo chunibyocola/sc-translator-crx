@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TranslateResult } from '../../types';
+import { TranslateResult, Translation } from '../../types';
 import { resultToString } from '../../public/utils';
-import { Translation } from './multipleTranslateSlice';
 
 export type TranslateHistoryItem = {
     translateId: number,

@@ -1,7 +1,6 @@
 import * as types from '../constants/chromeSendMessageTypes';
 import { EXTENSION_UPDATED } from '../constants/errorCodes';
-import { Translation } from '../redux/slice/multipleTranslateSlice';
-import { TranslateResult } from '../types';
+import { TranslateResult, Translation } from '../types';
 
 type ErrorResponse = {
     code: string;

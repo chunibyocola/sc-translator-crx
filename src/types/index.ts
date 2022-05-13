@@ -32,6 +32,11 @@ export type TranslateRequestError = {
 
 export type TranslateRequest = TranslateRequestInit | TranslateRequestLoading | TranslateRequestFinished | TranslateRequestError;
 
+export type Translation = {
+    source: string;
+    translateRequest: TranslateRequest;
+};
+
 export type Position = {
     x: number;
     y: number;

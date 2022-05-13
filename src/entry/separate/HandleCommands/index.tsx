@@ -10,8 +10,8 @@ import {
 import { playAudio } from '../../../public/play-audio';
 import { useAppDispatch, useOnRuntimeMessage } from '../../../public/react-use';
 import { getSelectedText } from '../../../public/utils/get-selection';
-import { mtSetText } from '../../../redux/slice/multipleTranslateSlice';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
+import { nextTranslaion } from '../../../redux/slice/translationSlice';
 
 const HandleCommands: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -20,12 +20,12 @@ const HandleCommands: React.FC = () => {
         switch (type) {
             case SCTS_CONTEXT_MENUS_CLICKED: {
                 const { text } = payload;
-                text && dispatch(mtSetText({ text }));
+                text && dispatch(nextTranslaion({ text }));
                 break;
             }
             case SCTS_TRANSLATE_COMMAND_KEY_PRESSED: {
                 const text = getSelectedText();
-                text && dispatch(mtSetText({ text }));
+                text && dispatch(nextTranslaion({ text }));
                 break;
             }
             case SCTS_AUDIO_COMMAND_KEY_PRESSED: {
@@ -39,7 +39,7 @@ const HandleCommands: React.FC = () => {
             }
             case SCTS_SEPARATE_WINDOW_SET_TEXT: {
                 const { text } = payload;
-                text && dispatch(mtSetText({ text }));
+                text && dispatch(nextTranslaion({ text }));
                 break;
             }
             case SCTS_CLOSE_COMMAND_KEY_PRESSED: {

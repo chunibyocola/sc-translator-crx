@@ -7,8 +7,7 @@ import HistoryResultPanel from './HistoryResultPanel';
 import HistoryItem from './HistoryItem';
 import { mouseDrag } from '../../public/utils';
 import { setLocalStorage } from '../../public/chrome-call';
-import { DefaultOptions } from '../../types';
-import { Translation } from '../../redux/slice/multipleTranslateSlice';
+import { DefaultOptions, Translation } from '../../types';
 import { removeHistory } from '../../redux/slice/translateHistorySlice';
 import Logo from '../Logo';
 

@@ -1,8 +1,7 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { getMessage } from '../../public/i18n';
 import { useAppSelector } from '../../public/react-use';
 import { sendAddToCollection, sendIsCollected, sendRemoveFromCollection } from '../../public/send';
-import { Translation } from '../../redux/slice/multipleTranslateSlice';
 import IconFont from '../IconFont';
 import PanelIconButtonWrapper from './PanelIconButtonWrapper';
 
@@ -39,10 +38,7 @@ const useIsCollected = (text: string) => {
 };
 
 const CollectButton: React.FC = () => {
-    const { text: multipleText, translations: multipleTranslations } = useAppSelector(state => state.multipleTranslate);
-    const { text: singleText, translateRequest: singleTranslateRequest, source: singleSource } = useAppSelector(state => state.singleTranslate);
-
-    const text = useMemo(() => singleText || multipleText, [singleText, multipleText]);
+    const { text, translations } = useAppSelector(state => state.translation);
 
     const { modifiable, isCollected, setIsCollected } = useIsCollected(text);
 
@@ -53,16 +49,7 @@ const CollectButton: React.FC = () => {
             sendRemoveFromCollection(text)
         }
         else {
-            let translations: Translation[] = [];
-
-            if (multipleText) {
-                translations = multipleTranslations.filter(v => v.translateRequest.status === 'finished');
-            }
-            else if (singleText && singleTranslateRequest.status === 'finished') {
-                translations = [{ source: singleSource, translateRequest: singleTranslateRequest }];
-            }
-
-            sendAddToCollection(text, translations);
+            sendAddToCollection(text, translations.filter(v => v.translateRequest.status === 'finished'));
         }
 
         setIsCollected(value => !value);

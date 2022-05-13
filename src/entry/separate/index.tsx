@@ -4,7 +4,7 @@ import './style.css';
 import '../../styles/global.css';
 import { Provider } from 'react-redux';
 import store from '../../redux/store';
-import { initMultipleTranslate } from '../../redux/init';
+import { initTranslation } from '../../redux/init';
 import { initOptions } from '../../public/options';
 import { getLocalStorage } from '../../public/chrome-call';
 import defaultOptions from '../../constants/defaultOptions';
@@ -25,7 +25,11 @@ const init = (options: DefaultOptions) => {
     appendFontSizeStyle(document.head);
     appendCustomizeStyle(document.head);
 
-    initMultipleTranslate(options);
+    initTranslation({
+        sourceList: options.multipleTranslateSourceList,
+        from: options.multipleTranslateFrom,
+        to:options.multipleTranslateTo
+    });
 
     const rootElement = document.getElementById('root');
 

@@ -3,8 +3,8 @@ import IconFont from '../../IconFont';
 import { TranslateSource, translateSource } from '../../../constants/translateSource';
 import SourceFavicon from '../../SourceFavicon';
 import './style.css';
-import { Translation } from '../../../redux/slice/multipleTranslateSlice';
 import { getOptions } from '../../../public/options';
+import { Translation } from '../../../types';
 
 type SourceSelectorProps = {
     show: boolean;
