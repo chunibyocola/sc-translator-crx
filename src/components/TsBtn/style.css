@@ -1,19 +1,9 @@
 .translate-button {
     user-select: none;
     border-radius: 3px;
-    padding: 3px;
     box-shadow: 0px 0px 4px -1px rgba(0, 0, 0, .88) ;
     color: var(--text-normal);
     background: var(--bg-content);
     position: fixed;
     z-index: 2147483647;
-}
-.translate-button__item {
-    display: inline-flex;
-}
-.translate-button__item .iconfont {
-    display: block;
-}
-.translate-button__item + .translate-button__item {
-    margin-left: 3px;
 }

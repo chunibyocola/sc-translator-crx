@@ -26,6 +26,7 @@ import {
 } from '../../constants/translateButtonTypes';
 import { playAudio } from '../../public/play-audio';
 import { nextTranslaion } from '../../redux/slice/translationSlice';
+import PanelIconButtonWrapper from '../PanelIconButtons/PanelIconButtonWrapper';
 
 const initText = '';
 const initPos = { x: 5, y: 5 };
@@ -243,13 +244,12 @@ const TsBtn: React.FC = () => {
             onMouseUp={e => e.stopPropagation()}
             onMouseDown={e => e.stopPropagation()}
         >
-            {translateButtons.map((translateButton) => (translateButtonContext[translateButton].type === 'icon' && <div
+            {translateButtons.map((translateButton) => (translateButtonContext[translateButton].type === 'icon' && <PanelIconButtonWrapper
                 key={translateButton}
-                className='translate-button__item iconfont--enable'
                 onClick={() => handleTranslateButtonClick(translateButton)}
             >
                 <IconFont iconName={translateButtonContext[translateButton].iconName} />
-            </div>))}
+            </PanelIconButtonWrapper>))}
         </div>
     );
 };
