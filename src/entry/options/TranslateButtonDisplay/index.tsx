@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import Checkbox from '../../../components/Checkbox';
 import IconFont from '../../../components/IconFont';
+import PanelIconButtonWrapper from '../../../components/PanelIconButtons/PanelIconButtonWrapper';
 import { googleLangCode } from '../../../constants/langCode';
 import {
     translateButtonContext,
@@ -85,12 +86,11 @@ const TranslateButtonDisplay: React.FC<TranslateButtonDisplayProps> = ({
             <div className='translate-button-display__preview'>
                 <span>{getMessage('optionsPreview')}</span>
                 {translateButtons.length > 0 ? <div className='translate-button' style={{position: 'relative', display: 'flex', zIndex: 1}}>
-                    {translateButtons.map((button) => (translateButtonContext[button].type === 'icon' && <div
+                    {translateButtons.map((button) => (translateButtonContext[button].type === 'icon' && <PanelIconButtonWrapper
                         key={button}
-                        className='translate-button__item iconfont--enable'
                     >
                         <IconFont iconName={translateButtonContext[button].iconName} />
-                    </div>))}
+                    </PanelIconButtonWrapper>))}
                 </div> : '--'}
             </div>
         </div>

@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
 }
-.translate-button-display__preview span {
+.translate-button-display__preview>span {
     margin-right: 10px;
 }
 .translate-button-display__item {

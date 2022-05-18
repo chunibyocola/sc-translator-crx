@@ -6,6 +6,7 @@ import { pointerDrag } from '../ColorSelector/utils';
 import { getMessage } from '../../../public/i18n';
 import { Position } from '../../../types';
 import Button from '../../../components/Button';
+import PanelIconButtonWrapper from '../../../components/PanelIconButtons/PanelIconButtonWrapper';
 
 type BtnPostionProps = {
     currentPos: Position;
@@ -50,7 +51,9 @@ const BtnPostion: React.FC<BtnPostionProps> = ({ currentPos, updateBtnPosition }
                         zIndex: 1
                     }}
                 >
-                    <IconFont iconName='#icon-MdTranslate' style={{display: 'block'}} />
+                    <PanelIconButtonWrapper>
+                        <IconFont iconName='#icon-MdTranslate' />
+                    </PanelIconButtonWrapper>
                 </div>
             </div>
             <Button variant='contained' onClick={() => updateBtnPosition(pos)} disabled={pos.x === currentPos.x && pos.y === currentPos.y}>{getMessage('wordSave')}</Button>
