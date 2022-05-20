@@ -11,7 +11,6 @@ import {
 import IconFont from '../IconFont';
 import './style.css';
 import { sendSeparate } from '../../public/send';
-import { getOptions } from '../../public/options';
 import { debounce, isTextBox } from '../../public/utils';
 import { DefaultOptions, Position } from '../../types';
 import { callOutPanelInContentScript, closePanel, requestToHidePanel, showPanelAndSetPosition } from '../../redux/slice/panelStatusSlice';
@@ -42,7 +41,8 @@ type PickedOptions = Pick<
     'doNotRespondInTextBox' |
     'translateButtons' |
     'translateButtonsTL' |
-    'pinThePanelWhileOpeningIt'
+    'pinThePanelWhileOpeningIt' |
+    'btnPosition'
 >;
 const useOptionsDependency: (keyof PickedOptions)[] = [
     'translateDirectly',
@@ -54,15 +54,15 @@ const useOptionsDependency: (keyof PickedOptions)[] = [
     'doNotRespondInTextBox',
     'translateButtons',
     'translateButtonsTL',
-    'pinThePanelWhileOpeningIt'
+    'pinThePanelWhileOpeningIt',
+    'btnPosition'
 ];
 
 const calculateBtnPos = ({ x, y }: Position, translateButtonElement: HTMLDivElement | null) => {
-    const { btnPosition } = getOptions();
     const rect = translateButtonElement?.getBoundingClientRect();
     const btnHeight = rect?.height ?? 22;
     const btnWidth = rect?.width ?? 22;
-    let tmpX = x + btnPosition.x, tmpY = y + btnPosition.y;
+    let tmpX = x, tmpY = y;
 
     const dH = document.documentElement.clientHeight;
     const dW = document.documentElement.clientWidth;
@@ -105,7 +105,8 @@ const TsBtn: React.FC = () => {
         doNotRespondInTextBox,
         translateButtons,
         translateButtonsTL,
-        pinThePanelWhileOpeningIt
+        pinThePanelWhileOpeningIt,
+        btnPosition
     } = useOptions<PickedOptions>(useOptionsDependency);
 
     const translateEnabled = useIsTranslateEnabled(window.location.host);
@@ -206,19 +207,21 @@ const TsBtn: React.FC = () => {
 
         if (doNotRespondInTextBox && document.activeElement && isTextBox(document.activeElement)) { return; }
 
+        const posWithBtnPosition: Position = { x: pos.x + btnPosition.x, y: pos.y + btnPosition.y };
+
         if ((translateWithKeyPress && ctrlPressing.current) || translateDirectly || (pinning && translateDirectlyWhilePinning)) {
-            handleForwardTranslate(text, calculateBtnPos(pos, null));
+            handleForwardTranslate(text, calculateBtnPos(posWithBtnPosition, null));
             return;
         }
 
         setText(text);
         if (translateButtons.length > 0) {
             setShowBtn(true);
-            setPos(calculateBtnPos(pos, translateButtonEleRef.current));
+            setPos(calculateBtnPos(posWithBtnPosition, translateButtonEleRef.current));
             hideButtonAfterFixedTime && debounceHideButtonAfterFixedTime.current?.();
         }
         else {
-            setPos(calculateBtnPos(pos, null));
+            setPos(calculateBtnPos(posWithBtnPosition, null));
         }
 
         dispatch(requestToHidePanel());
