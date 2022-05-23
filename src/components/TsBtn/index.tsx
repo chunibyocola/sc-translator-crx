@@ -59,29 +59,23 @@ const useOptionsDependency: (keyof PickedOptions)[] = [
 ];
 
 const calculateBtnPos = ({ x, y }: Position, translateButtonElement: HTMLDivElement | null) => {
-    const rect = translateButtonElement?.getBoundingClientRect();
-    const btnHeight = rect?.height ?? 22;
-    const btnWidth = rect?.width ?? 22;
-    let tmpX = x, tmpY = y;
+    let btnHeight = 22;
+    let btnWidth = 22;
 
-    const dH = document.documentElement.clientHeight;
-    const dW = document.documentElement.clientWidth;
-    const bL = tmpX;
-    const bT = tmpY;
-    const bB = bT + btnHeight;
-    const bR = bL + btnWidth;
+    if (translateButtonElement) {
+        const originalDisplay = translateButtonElement.style.display;
+        translateButtonElement.style.display = 'flex';
+        const { width, height } = translateButtonElement?.getBoundingClientRect();
+        translateButtonElement.style.display = originalDisplay;
 
-    if (bB > dH) tmpY = y - 5 - btnHeight;
-    if (bT < 0) tmpY = y + 5;
-    if (bR > dW) tmpX = x - 5 - btnWidth;
-    if (bL < 0) tmpX = x + 5;
+        btnWidth = width;
+        btnHeight = height;
+    }
 
-    if (tmpX + btnWidth + 5 > dW) tmpX = dW - btnWidth - 5;
-    if (tmpX < 5) tmpX = 5;
-    if (tmpY + btnHeight + 5 > dH) tmpY = dH - btnHeight - 5;
-    if (tmpY < 5) tmpY = 5;
+    x = Math.max(5, x - Math.max(x + btnWidth + 5 - document.documentElement.clientWidth, 0));
+    y = Math.max(5, y - Math.max(y + btnHeight + 5 - document.documentElement.clientHeight, 0));
 
-    return { x: tmpX, y: tmpY };
+    return { x, y };
 };
 
 const TsBtn: React.FC = () => {
