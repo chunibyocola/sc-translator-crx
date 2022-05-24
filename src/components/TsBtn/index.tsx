@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback, useRef} from 'react';
 import { getSelectedText } from '../../public/utils/get-selection';
-import { useOptions, useGetSelection, useAppSelector, useAppDispatch, useOnRuntimeMessage, useIsTranslateEnabled } from '../../public/react-use';
+import { useOptions, useGetSelection, useAppSelector, useAppDispatch, useOnRuntimeMessage, useIsTranslateEnabled, useDebouncFn } from '../../public/react-use';
 import {
     SCTS_CONTEXT_MENUS_CLICKED,
     SCTS_TRANSLATE_COMMAND_KEY_PRESSED,
@@ -11,7 +11,7 @@ import {
 import IconFont from '../IconFont';
 import './style.css';
 import { sendSeparate } from '../../public/send';
-import { debounce, isTextBox } from '../../public/utils';
+import { isTextBox } from '../../public/utils';
 import { DefaultOptions, Position } from '../../types';
 import { callOutPanelInContentScript, closePanel, requestToHidePanel, showPanelAndSetPosition } from '../../redux/slice/panelStatusSlice';
 import {
@@ -84,7 +84,6 @@ const TsBtn: React.FC = () => {
     const [text, setText] = useState(initText);
 
     const ctrlPressing = useRef(false);
-    const debounceHideButtonAfterFixedTime = useRef<ReturnType<typeof debounce>>();
     const translateButtonEleRef = useRef<HTMLDivElement>(null);
 
     const { pinning } = useAppSelector(state => state.panelStatus);
@@ -102,6 +101,8 @@ const TsBtn: React.FC = () => {
         pinThePanelWhileOpeningIt,
         btnPosition
     } = useOptions<PickedOptions>(useOptionsDependency);
+
+    const debounceHideButtonAfterFixedTime = useDebouncFn(() => setShowBtn(false), hideButtonFixedTime, []);
 
     const translateEnabled = useIsTranslateEnabled(window.location.host);
 
@@ -212,7 +213,7 @@ const TsBtn: React.FC = () => {
         if (translateButtons.length > 0) {
             setShowBtn(true);
             setPos(calculateBtnPos(posWithBtnPosition, translateButtonEleRef.current));
-            hideButtonAfterFixedTime && debounceHideButtonAfterFixedTime.current?.();
+            hideButtonAfterFixedTime && debounceHideButtonAfterFixedTime();
         }
         else {
             setPos(calculateBtnPos(posWithBtnPosition, null));
@@ -224,10 +225,6 @@ const TsBtn: React.FC = () => {
 
         dispatch(requestToHidePanel());
     });
-
-    useEffect(() => {
-        debounceHideButtonAfterFixedTime.current = debounce(() => setShowBtn(false), hideButtonFixedTime);
-    }, [hideButtonFixedTime]);
 
     return (
         <div
