@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback, useRef} from 'react';
 import { getSelectedText } from '../../public/utils/get-selection';
-import { useOptions, useGetSelection, useAppSelector, useAppDispatch, useOnRuntimeMessage, useIsTranslateEnabled, useDebouncFn } from '../../public/react-use';
+import { useOptions, useGetSelection, useAppSelector, useAppDispatch, useOnRuntimeMessage, useIsTranslateEnabled, useDebounceFn } from '../../public/react-use';
 import {
     SCTS_CONTEXT_MENUS_CLICKED,
     SCTS_TRANSLATE_COMMAND_KEY_PRESSED,
@@ -102,7 +102,7 @@ const TsBtn: React.FC = () => {
         btnPosition
     } = useOptions<PickedOptions>(useOptionsDependency);
 
-    const debounceHideButtonAfterFixedTime = useDebouncFn(() => setShowBtn(false), hideButtonFixedTime, []);
+    const debounceHideButtonAfterFixedTime = useDebounceFn(() => setShowBtn(false), hideButtonFixedTime, []);
 
     const translateEnabled = useIsTranslateEnabled(window.location.host);
 

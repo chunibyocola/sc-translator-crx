@@ -1,7 +1,6 @@
-import React, { useRef, useCallback, useState, useEffect, useLayoutEffect } from 'react';
+import React, { useRef, useCallback, useEffect, useLayoutEffect } from 'react';
 import { getMessage } from '../../public/i18n';
-import { useAppSelector, useOptions } from '../../public/react-use';
-import useDebounce from '../../public/react-use/useDebounce';
+import { useAppSelector, useDebounceFn, useOptions } from '../../public/react-use';
 import { textPreprocessing } from '../../public/text-preprocessing';
 import { DefaultOptions } from '../../types';
 import './style.css';
@@ -15,8 +14,6 @@ type PickedOptions = Pick<DefaultOptions, 'autoTranslateAfterInput'>;
 const useOptionsDependency: (keyof PickedOptions)[] = ['autoTranslateAfterInput'];
 
 const RawText: React.FC<RawTextProps> = ({ defaultValue, rawTextTranslate }) => {
-    const [debounceDependency, setDebounceDependency] = useState(0);
-
     const { autoTranslateAfterInput } = useOptions<PickedOptions>(useOptionsDependency);
     const { focusFlag } = useAppSelector(state => state.panelStatus);
 
@@ -24,23 +21,19 @@ const RawText: React.FC<RawTextProps> = ({ defaultValue, rawTextTranslate }) => 
     const textareaEl = useRef<HTMLTextAreaElement>(null);
     const compositionStatus = useRef(false);
 
-    const rawTextChanged = useCallback(() => {
-        setDebounceDependency(v => v + 1);
-    }, []);
-
     const handleRawTextChanged = useCallback(() => {
         if (!textareaEl.current) { return; }
 
-        let text = textareaEl.current.value.trimLeft();
+        let text = textareaEl.current.value.trimStart();
 
-        if (!text || text.trimRight() === lastTextRef.current || !textPreprocessing(text)) { return; }
+        if (!text || text.trimEnd() === lastTextRef.current || !textPreprocessing(text)) { return; }
 
-        lastTextRef.current = text.trimRight();
+        lastTextRef.current = text.trimEnd();
 
         rawTextTranslate(text);
     }, [rawTextTranslate]);
 
-    useDebounce(handleRawTextChanged, 600, [debounceDependency]);
+    const debounceRawTextChanged = useDebounceFn(handleRawTextChanged, 600, [handleRawTextChanged]);
 
     const onCompositionStart = useCallback(() => {
         compositionStatus.current = true;
@@ -48,16 +41,16 @@ const RawText: React.FC<RawTextProps> = ({ defaultValue, rawTextTranslate }) => 
 
     const onCompositionEnd = useCallback(() => {
         compositionStatus.current = false;
-        autoTranslateAfterInput && rawTextChanged();
-    }, [rawTextChanged, autoTranslateAfterInput]);
+        autoTranslateAfterInput && debounceRawTextChanged();
+    }, [debounceRawTextChanged, autoTranslateAfterInput]);
 
     const onChange = useCallback(() => {
-        autoTranslateAfterInput && !compositionStatus.current && rawTextChanged();
-    }, [rawTextChanged, autoTranslateAfterInput]);
+        autoTranslateAfterInput && !compositionStatus.current && debounceRawTextChanged();
+    }, [debounceRawTextChanged, autoTranslateAfterInput]);
 
     useEffect(() => {
         if (defaultValue) {
-            lastTextRef.current = defaultValue.trimRight();
+            lastTextRef.current = defaultValue.trimEnd();
             textareaEl.current && (textareaEl.current.value = defaultValue);
         }
     }, [defaultValue]);
