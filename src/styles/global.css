@@ -135,10 +135,10 @@
 @keyframes mdc-ripple-fg-radius-in {
     from {
         animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        transform: translate(var(--ripple-translate-start, 0)) scale(0.5);
+        transform: translate(var(--ripple-translate-start, 0)) scale(var(--ripple-scale-start, 0.3));
     }
     to {
-        transform: translate(var(--ripple-translate-end, 0)) scale(1.8);
+        transform: translate(var(--ripple-translate-end, 0)) scale(var(--ripple-scale-end, 1.08));
     }
 }
 @keyframes mdc-ripple-fg-opacity-in {

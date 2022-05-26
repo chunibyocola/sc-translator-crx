@@ -16,12 +16,13 @@
 }
 .panel-icon-btn.panel-icon-btn--deactivation .ripple::after {
     animation: mdc-ripple-fg-opacity-out 150ms;
-    transform: translate(0) scale(1.8);
+    transform: scale(1.8);
 }
 .panel-icon-btn.panel-icon-btn--disabled {
     cursor: default;
 }
 .panel-icon-btn .iconfont {
+    pointer-events: none;
     opacity: 0.8;
 }
 .panel-icon-btn.panel-icon-btn--disabled .iconfont, .panel-icon-btn.panel-icon-btn--icon-grey .iconfont {
