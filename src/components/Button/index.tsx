@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
+import { useRippleActivationClassName } from '../../public/react-use';
 import './style.css';
 
 type ButtonProps = {
@@ -7,45 +8,32 @@ type ButtonProps = {
 } & Pick<React.HtmlHTMLAttributes<HTMLButtonElement>, 'onClick' | 'children' | 'className'>
 
 const Button: React.FC<ButtonProps> = ({ variant, onClick, children, disabled, className }) => {
-    const [activing, setActiving] = useState(false);
-
-    const activedRef = useRef(false);
-
-    useEffect(() => {
-        if (!activing) { return; }
-
-        const onMouseUp = () => {
-            setActiving(false);
-        };
-
-        window.addEventListener('mouseup', onMouseUp);
-
-        return () => window.removeEventListener('mouseup', onMouseUp);
-    }, [activing]);
+    const [activationClassName, onActivate] = useRippleActivationClassName(' btn--activation', ' btn--deactivation');
 
     return (
         <button
-            className={`btn btn--${variant}${activedRef.current ? activing ? ' btn--activation' : ' btn--deactivation' : ''}${className ? ' ' + className : ''}`}
+            className={`btn btn--${variant}${activationClassName}${className ? ' ' + className : ''}`}
             onClick={onClick}
             onMouseDown={(e) => {
-                const target = e.nativeEvent.target as HTMLButtonElement;
+                if (variant !== 'icon') {
+                    const target = e.nativeEvent.target as HTMLButtonElement;
 
-                const { offsetX, offsetY } = e.nativeEvent;
-                const { clientWidth, clientHeight } = target;
+                    const { offsetX, offsetY } = e.nativeEvent;
+                    const { clientWidth, clientHeight } = target;
 
-                let size = Math.floor(clientWidth * 0.6);
-                let start = { x: Math.floor(clientWidth * -0.3) + 1 + offsetX, y: Math.floor(clientWidth / -3.3) + offsetY };
-                let end = { x: Math.floor((clientWidth - 64) / 5 + 13), y: -Math.floor((clientWidth - 64) * 0.3) - 1 };
+                    const size = clientWidth * 0.6;
+                    const start = { x: offsetX - (size >> 1), y: offsetY - (size >> 1) };
+                    const end = { x: clientWidth * 0.2, y: (clientHeight - size) >> 1 };
 
-                if (variant === 'icon') {
-                    start = { x: clientWidth * 0.2, y: clientHeight * 0.2 };
-                    end = { x: clientWidth * 0.2, y: clientHeight * 0.2 };
+                    const styleValue = `--ripple-size:${size}px;`
+                        + `--ripple-translate-start:${start.x}px,${start.y}px;`
+                        + `--ripple-translate-end:${end.x}px,${end.y}px;`
+                        + `--ripple-scale-start:0.5;`
+                        + `--ripple-scale-end:1.8;`;
+                    target.setAttribute('style', styleValue);
                 }
 
-                target.setAttribute('style', `--ripple-size:${size}px;--ripple-translate-start:${start.x}px,${start.y}px;--ripple-translate-end:${end.x}px,${end.y}px;`);
-
-                activedRef.current = true;
-                setActiving(true);
+                onActivate();
             }}
             disabled={disabled}
         >

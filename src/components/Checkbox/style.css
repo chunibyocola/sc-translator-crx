@@ -54,5 +54,5 @@
 }
 .checkbox--deactivation .ripple::after {
     animation: mdc-ripple-fg-opacity-out 150ms;
-    transform: translate(var(--ripple-translate-end, 0)) scale(1.8);
+    transform: scale(1.8);
 }

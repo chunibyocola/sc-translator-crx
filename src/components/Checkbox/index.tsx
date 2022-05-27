@@ -1,4 +1,5 @@
-import React, { useEffect, useId, useRef, useState } from 'react';
+import React, { useId } from 'react';
+import { useRippleActivationClassName } from '../../public/react-use';
 import './style.css';
 
 type ChcekboxProps = {
@@ -10,45 +11,18 @@ type ChcekboxProps = {
 } & Pick<React.HtmlHTMLAttributes<HTMLInputElement>, 'className'>;
 
 const Checkbox: React.FC<ChcekboxProps> = ({ label, checked, indeterminate, onChange, disabled }) => {
-    const [activing, setActiving] = useState(false);
-
-    const activedRef = useRef(false);
-    const checkboxRootRef = useRef<HTMLSpanElement>(null);
+    const [activationClassName, onActivate] = useRippleActivationClassName(' checkbox--activation', ' checkbox--deactivation');
 
     const id = useId();
-
-    useEffect(() => {
-        if (!activing) { return; }
-
-        const onMouseUp = () => {
-            setActiving(false);
-        };
-
-        window.addEventListener('mouseup', onMouseUp);
-
-        return () => window.removeEventListener('mouseup', onMouseUp);
-    }, [activing]);
 
     return (
         <label htmlFor={id} className={`checkbox${disabled ? ' checkbox--disabled' : ''}`}>
             <span
-                ref={checkboxRootRef}
-                className={`checkbox-root${activedRef.current ? activing ? ' checkbox--activation' : ' checkbox--deactivation' : ''}${checked ? ' checkbox--checked' : ''}`}
+                className={`checkbox-root${activationClassName}${checked ? ' checkbox--checked' : ''}`}
                 onMouseDown={() => {
-                    if (!checkboxRootRef.current || disabled) { return; }
+                    if (disabled) { return; }
 
-                    const target = checkboxRootRef.current;
-
-                    const { clientWidth, clientHeight } = target;
-
-                    const size = Math.floor(clientWidth * 0.6);
-                    const start = { x: clientWidth * 0.2, y: clientHeight * 0.2 };
-                    const end = { x: clientWidth * 0.2, y: clientHeight * 0.2 };
-
-                    target.setAttribute('style', `--ripple-size:${size}px;--ripple-translate-start:${start.x}px,${start.y}px;--ripple-translate-end:${end.x}px,${end.y}px;`);
-
-                    activedRef.current = true;
-                    setActiving(true);
+                    onActivate();
                 }}
             >
                 <input id={id} className='checkbox-input' onChange={e => onChange?.(e.target.checked)} type='checkbox' checked={checked} disabled={disabled} />

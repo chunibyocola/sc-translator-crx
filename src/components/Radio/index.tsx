@@ -1,4 +1,5 @@
-import React, { useEffect, useId, useRef, useState } from 'react';
+import React, { useId, useRef } from 'react';
+import { useRippleActivationClassName } from '../../public/react-use';
 import './style.css';
 
 type RadioProps = {
@@ -10,45 +11,19 @@ type RadioProps = {
 } & Pick<React.HtmlHTMLAttributes<HTMLInputElement>, 'className'>;
 
 const Radio: React.FC<RadioProps> = ({ value, name, label, checked, onChange }) => {
-    const [activing, setActiving] = useState(false);
+    const [activationClassName, onActivate] = useRippleActivationClassName(' radio--activation', ' radio--deactivation');
 
-    const activedRef = useRef(false);
     const radioRootRef = useRef<HTMLSpanElement>(null);
 
     const id = useId();
-
-    useEffect(() => {
-        if (!activing) { return; }
-
-        const onMouseUp = () => {
-            setActiving(false);
-        };
-
-        window.addEventListener('mouseup', onMouseUp);
-
-        return () => window.removeEventListener('mouseup', onMouseUp);
-    }, [activing]);
 
     return (
         <label htmlFor={id} className='radio'>
             <span
                 ref={radioRootRef}
-                className={`radio-root${activedRef.current ? activing ? ' radio--activation' : ' radio--deactivation' : ''}${checked ? ' radio--checked' : ''}`}
+                className={`radio-root${activationClassName}${checked ? ' radio--checked' : ''}`}
                 onMouseDown={() => {
-                    if (!radioRootRef.current) { return; }
-
-                    const target = radioRootRef.current;
-
-                    const { clientWidth, clientHeight } = target;
-
-                    const size = Math.floor(clientWidth * 0.6);
-                    const start = { x: clientWidth * 0.2, y: clientHeight * 0.2 };
-                    const end = { x: clientWidth * 0.2, y: clientHeight * 0.2 };
-
-                    target.setAttribute('style', `--ripple-size:${size}px;--ripple-translate-start:${start.x}px,${start.y}px;--ripple-translate-end:${end.x}px,${end.y}px;`);
-
-                    activedRef.current = true;
-                    setActiving(true);
+                    onActivate();
                 }}
             >
                 <input id={id} name={name} value={value} className='radio-input' onChange={e => onChange?.(e.target.value)} type='radio' checked={checked} />

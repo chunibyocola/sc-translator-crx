@@ -1,4 +1,5 @@
-import React, { useEffect, useId, useRef, useState } from 'react';
+import React, { useId, useRef } from 'react';
+import { useRippleActivationClassName } from '../../public/react-use';
 import './style.css';
 
 type SwitchProps = {
@@ -8,44 +9,18 @@ type SwitchProps = {
 } & Pick<React.HtmlHTMLAttributes<HTMLInputElement>, 'className'>;
 
 const Switch: React.FC<SwitchProps> = ({ label, onChange, checked }) => {
-    const [activing, setActiving] = useState(false);
+    const [activationClassName, onActivate] = useRippleActivationClassName(' switch--activation', ' switch--deactivation');
 
-    const activedRef = useRef(false);
     const switchBaseRef = useRef<HTMLSpanElement>(null);
 
     const id = useId();
 
-    useEffect(() => {
-        if (!activing) { return; }
-
-        const onMouseUp = () => {
-            setActiving(false);
-        };
-
-        window.addEventListener('mouseup', onMouseUp);
-
-        return () => window.removeEventListener('mouseup', onMouseUp);
-    }, [activing]);
-
     return (
         <label htmlFor={id} className='switch'>
             <span
-                className={`switch-root${activedRef.current ? activing ? ' switch--activation' : ' switch--deactivation' : ''}${checked ? ' switch--checked' : ''}`}
+                className={`switch-root${activationClassName}${checked ? ' switch--checked' : ''}`}
                 onMouseDown={() => {
-                    if (!switchBaseRef.current) { return; }
-
-                    const target = switchBaseRef.current;
-
-                    const { clientWidth, clientHeight } = target;
-
-                    const size = Math.floor(clientWidth * 0.6);
-                    const start = { x: clientWidth * 0.2, y: clientHeight * 0.2 };
-                    const end = { x: clientWidth * 0.2, y: clientHeight * 0.2 };
-
-                    target.setAttribute('style', `--ripple-size:${size}px;--ripple-translate-start:${start.x}px,${start.y}px;--ripple-translate-end:${end.x}px,${end.y}px;`);
-
-                    activedRef.current = true;
-                    setActiving(true);
+                    onActivate();
                 }}
             >
                 <span className='switch-base' ref={switchBaseRef}>
