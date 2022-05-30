@@ -1,5 +1,6 @@
 import React, { useId, useRef } from 'react';
 import { useRippleActivationClassName } from '../../public/react-use';
+import { classNames } from '../../public/utils';
 import './style.css';
 
 type RadioProps = {
@@ -11,7 +12,7 @@ type RadioProps = {
 } & Pick<React.HtmlHTMLAttributes<HTMLInputElement>, 'className'>;
 
 const Radio: React.FC<RadioProps> = ({ value, name, label, checked, onChange }) => {
-    const [activationClassName, onActivate] = useRippleActivationClassName(' radio--activation', ' radio--deactivation');
+    const [activationClassName, onActivate] = useRippleActivationClassName('radio--activation', 'radio--deactivation');
 
     const radioRootRef = useRef<HTMLSpanElement>(null);
 
@@ -21,7 +22,7 @@ const Radio: React.FC<RadioProps> = ({ value, name, label, checked, onChange }) 
         <label htmlFor={id} className='radio'>
             <span
                 ref={radioRootRef}
-                className={`radio-root${activationClassName}${checked ? ' radio--checked' : ''}`}
+                className={classNames('radio-root', activationClassName, checked && 'radio--checked')}
                 onMouseDown={() => {
                     onActivate();
                 }}

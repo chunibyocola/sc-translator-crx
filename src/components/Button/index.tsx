@@ -1,18 +1,19 @@
 import React from 'react';
 import { useRippleActivationClassName } from '../../public/react-use';
+import { classNames } from '../../public/utils';
 import './style.css';
 
 type ButtonProps = {
     variant: 'contained' | 'text' | 'outlined' | 'icon';
     disabled?: boolean;
-} & Pick<React.HtmlHTMLAttributes<HTMLButtonElement>, 'onClick' | 'children' | 'className'>
+} & Pick<React.HtmlHTMLAttributes<HTMLButtonElement>, 'onClick' | 'children' | 'className'>;
 
 const Button: React.FC<ButtonProps> = ({ variant, onClick, children, disabled, className }) => {
-    const [activationClassName, onActivate] = useRippleActivationClassName(' btn--activation', ' btn--deactivation');
+    const [activationClassName, onActivate] = useRippleActivationClassName('btn--activation', 'btn--deactivation');
 
     return (
         <button
-            className={`btn btn--${variant}${activationClassName}${className ? ' ' + className : ''}`}
+            className={classNames('btn', `btn--${variant}`, activationClassName, className)}
             onClick={onClick}
             onMouseDown={(e) => {
                 if (variant !== 'icon') {

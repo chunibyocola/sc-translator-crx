@@ -5,7 +5,7 @@ import './style.css';
 import { getMessage } from '../../public/i18n';
 import HistoryResultPanel from './HistoryResultPanel';
 import HistoryItem from './HistoryItem';
-import { mouseDrag } from '../../public/utils';
+import { classNames, mouseDrag } from '../../public/utils';
 import { setLocalStorage } from '../../public/chrome-call';
 import { DefaultOptions, Translation } from '../../types';
 import { removeHistory } from '../../redux/slice/translateHistorySlice';
@@ -53,7 +53,7 @@ const TsHistory: React.FC = () => {
 
     return (
         <div
-            className={`history${fold ? '' : ' history--show'}`}
+            className={classNames('history', !fold && 'history--show')}
             style={{display: historyEnabled && translateEnabled ? 'block' : 'none', width: `${historyWidth}px`}}
             onMouseEnter={() => {
                 if (pinning) { return; }

@@ -1,5 +1,6 @@
 import React, { useId, useRef } from 'react';
 import { useRippleActivationClassName } from '../../public/react-use';
+import { classNames } from '../../public/utils';
 import './style.css';
 
 type SwitchProps = {
@@ -9,7 +10,7 @@ type SwitchProps = {
 } & Pick<React.HtmlHTMLAttributes<HTMLInputElement>, 'className'>;
 
 const Switch: React.FC<SwitchProps> = ({ label, onChange, checked }) => {
-    const [activationClassName, onActivate] = useRippleActivationClassName(' switch--activation', ' switch--deactivation');
+    const [activationClassName, onActivate] = useRippleActivationClassName('switch--activation', 'switch--deactivation');
 
     const switchBaseRef = useRef<HTMLSpanElement>(null);
 
@@ -18,7 +19,7 @@ const Switch: React.FC<SwitchProps> = ({ label, onChange, checked }) => {
     return (
         <label htmlFor={id} className='switch'>
             <span
-                className={`switch-root${activationClassName}${checked ? ' switch--checked' : ''}`}
+                className={classNames('switch-root', activationClassName, checked && 'switch--checked')}
                 onMouseDown={() => {
                     onActivate();
                 }}

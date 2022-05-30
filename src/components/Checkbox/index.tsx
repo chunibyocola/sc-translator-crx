@@ -1,5 +1,6 @@
 import React, { useId } from 'react';
 import { useRippleActivationClassName } from '../../public/react-use';
+import { classNames } from '../../public/utils';
 import './style.css';
 
 type ChcekboxProps = {
@@ -11,14 +12,14 @@ type ChcekboxProps = {
 } & Pick<React.HtmlHTMLAttributes<HTMLInputElement>, 'className'>;
 
 const Checkbox: React.FC<ChcekboxProps> = ({ label, checked, indeterminate, onChange, disabled }) => {
-    const [activationClassName, onActivate] = useRippleActivationClassName(' checkbox--activation', ' checkbox--deactivation');
+    const [activationClassName, onActivate] = useRippleActivationClassName('checkbox--activation', 'checkbox--deactivation');
 
     const id = useId();
 
     return (
-        <label htmlFor={id} className={`checkbox${disabled ? ' checkbox--disabled' : ''}`}>
+        <label htmlFor={id} className={classNames('checkbox', disabled && 'checkbox--disabled')}>
             <span
-                className={`checkbox-root${activationClassName}${checked ? ' checkbox--checked' : ''}`}
+                className={classNames('checkbox-root', activationClassName, checked && 'checkbox--checked')}
                 onMouseDown={() => {
                     if (disabled) { return; }
 

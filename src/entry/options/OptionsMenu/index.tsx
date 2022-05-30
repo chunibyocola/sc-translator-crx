@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSignal } from 'react-signal-slot';
 import IconFont from '../../../components/IconFont';
+import Logo from '../../../components/Logo';
 import { getMessage } from '../../../public/i18n';
 import { useWindowSize } from '../../../public/react-use';
+import { classNames } from '../../../public/utils';
 import './style.css';
 
 const menusItems = [
@@ -65,12 +67,12 @@ const NavBarMenu: React.FC<BarMenuProps> = ({ signal }) => {
     const [showNavBarMenu, setShowNavBarMenu] = useState(false);
 
     return (
-        <div className={`nav-bar-menu${showNavBarMenu ? ' nav-bar-menu--show' : ''}`}>
+        <div className={classNames('nav-bar-menu', showNavBarMenu && 'nav-bar-menu--show')}>
             <IconFont className='nav-bar-menu__icon button' onClick={() => setShowNavBarMenu(true)} iconName='#icon-menu' />
             <div className='nav-bar-menu__backdrop' onClick={() => setShowNavBarMenu(false)}></div>
             <div className='nav-bar-menu__sidebar'>
                 <div className='nav-bar-menu__sidebar-brand'>
-                    <span style={{fontWeight: 'bold', marginRight: '10px'}}>Sc</span>
+                    <Logo style={{fontSize: '30px', marginRight: '10px'}} />
                     {getMessage('optionsTitle')}
                 </div>
                 <div className='nav-bar-menu__sidebar-items'>

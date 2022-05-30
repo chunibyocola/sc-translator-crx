@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useWindowSize } from '../../public/react-use';
+import { classNames } from '../../public/utils';
 import './style.css';
 
 const calculateTranslateTop = (optionsElement: HTMLDivElement, optionsMaxHeight: number, optionsMaxWidth: number) => {
@@ -95,7 +96,7 @@ const SelectOptions: React.FC<SelectOptionsProps> = ({
 
     return (
         <div
-            className={`select-options${className ? ' ' + className : ''}`}
+            className={classNames('select-options', className)}
             ref={optionsElementRef}
             style={Object.assign({ display: showOptions ? 'block' : 'none' }, optionsStyle, style)}
             onMouseLeave={onMouseLeave}
