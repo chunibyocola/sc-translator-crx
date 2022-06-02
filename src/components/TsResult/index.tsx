@@ -83,7 +83,10 @@ const TsResult: React.FC<TsResultProps> = ({ translateRequest, source, retry, se
                         from={translateRequest.result.from}
                     />
                 </div>
-                {displayOfTranslation.phonetic && translateRequest.result.phonetic && translateRequest.result.from === LANG_EN && <div>
+                {((displayOfTranslation.phonetic && translateRequest.result.from === LANG_EN)
+                    || (displayOfTranslation.phonetic_nonEnglish && translateRequest.result.from !== LANG_EN))
+                    && translateRequest.result.phonetic
+                    && <div>
                     {translateRequest.result.phonetic}
                 </div>}
             </>}

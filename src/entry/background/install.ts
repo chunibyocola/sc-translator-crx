@@ -58,6 +58,10 @@ const initStorageOnInstalled = (userLang: string, update: boolean) => {
             (data as DefaultOptions).translateButtons = (data as DeprecatedOptions).showButtonAfterSelect ? [TRANSLATE_BUTTON_TRANSLATE] : [];
         }
 
+        if (update && data.displayOfTranslation) {
+            data.displayOfTranslation = { ...defaultSet.displayOfTranslation, ...data.displayOfTranslation };
+        }
+
         if (data.styleVarsList?.[0]?.styleVars) {
             (data.styleVarsList[0].styleVars = defaultStyleVars);
         }

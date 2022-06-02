@@ -533,6 +533,9 @@
     "wordDate": {
         "message": "Date"
     },
+    "wordNonEnglish": {
+        "message": "Non-English"
+    },
     "sentenceAddTranslateSource": {
         "message": "Please add a translate source."
     },

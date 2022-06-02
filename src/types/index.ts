@@ -73,6 +73,7 @@ export type DisplayOfTranslation = {
     phonetic: boolean;
     related: boolean;
     example: boolean;
+    phonetic_nonEnglish: boolean;
 };
 
 export type DisplayModeEnhancement = {

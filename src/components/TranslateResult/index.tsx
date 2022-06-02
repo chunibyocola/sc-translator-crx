@@ -29,7 +29,10 @@ const TranslateResult: React.FC<TranslateResultProps> = ({ translateRequest, sou
             translateRequest.status === 'error' ?
                 <ErrorMessage errorCode={translateRequest.errorCode} retry={retry} /> :
             <>
-                {displayOfTranslation.phonetic && translateRequest.result.phonetic && translateRequest.result.from === LANG_EN && <div className='translate-result__item-stack'>
+                {((displayOfTranslation.phonetic && translateRequest.result.from === LANG_EN)
+                    || (displayOfTranslation.phonetic_nonEnglish && translateRequest.result.from !== LANG_EN))
+                    && translateRequest.result.phonetic
+                    && <div className='translate-result__item-stack'>
                     {translateRequest.result.phonetic}
                 </div>}
                 <div className='translate-result__item-stack'>

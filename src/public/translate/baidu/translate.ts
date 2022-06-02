@@ -60,8 +60,8 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
             ), '').trimLeft();
         }
         else if (data?.dict_result?.simple_means?.symbols?.[0]) {
-            const { ph_am, ph_en } = data.dict_result.simple_means.symbols[0];
-            phonetic = `${ph_en ? ('UK: [' + ph_en + ']') : ''} ${ph_am ? ('US: [' + ph_am + ']') : ''}`.trimLeft();
+            const { ph_am, ph_en, word_symbol } = data.dict_result.simple_means.symbols[0];
+            phonetic = `${ph_en ? ('UK: [' + ph_en + ']') : ''} ${ph_am ? ('US: [' + ph_am + ']') : ''} ${word_symbol ? '[' + word_symbol + ']' : ''}`.trimStart();
         }
 
         let related = undefined;

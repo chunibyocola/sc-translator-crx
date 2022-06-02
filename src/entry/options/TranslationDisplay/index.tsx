@@ -27,22 +27,27 @@ const TranslationDisplay: React.FC<TranslationDisplayProps> = ({ displayOfTransl
                 <Checkbox
                     label={getMessage('wordDictionary')}
                     checked={displayOfTranslation.dict}
-                    onChange={v => onChange({ ...displayOfTranslation, 'dict': v })}
+                    onChange={v => onChange({ ...displayOfTranslation, dict: v })}
                 />
                 <Checkbox
                     label={getMessage('wordPhonetic')}
                     checked={displayOfTranslation.phonetic}
-                    onChange={v => onChange({ ...displayOfTranslation, 'phonetic': v })}
+                    onChange={v => onChange({ ...displayOfTranslation, phonetic: v })}
                 />
                 <Checkbox
                     label={getMessage('wordRelated')}
                     checked={displayOfTranslation.related}
-                    onChange={v => onChange({ ...displayOfTranslation, 'related': v })}
+                    onChange={v => onChange({ ...displayOfTranslation, related: v })}
                 />
                 <Checkbox
                     label={getMessage('wordExample')}
                     checked={displayOfTranslation.example}
-                    onChange={v => onChange({ ...displayOfTranslation, 'example': v })}
+                    onChange={v => onChange({ ...displayOfTranslation, example: v })}
+                />
+                <Checkbox
+                    label={`${getMessage('wordPhonetic')} (${getMessage('wordNonEnglish')})`}
+                    checked={displayOfTranslation.phonetic_nonEnglish}
+                    onChange={v => onChange({ ...displayOfTranslation, phonetic_nonEnglish: v })}
                 />
             </div>
             <div className='translation-display__preview'>
