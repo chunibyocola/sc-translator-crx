@@ -10,3 +10,4 @@ export { default as useIsHistoryEnabled } from './useIsHistoryEnabled';
 export { default as useIsTranslateEnabled } from './useIsTranslateEnabled';
 export { default as useDebounceFn } from './useDebounceFn';
 export { default as useRippleActivationClassName } from './useRippleActivationClassName';
+export { default as useMouseEventOutside } from './useMouseEventOutside';
