@@ -1,56 +1,56 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useImperativeHandle, useLayoutEffect, useRef, useState } from 'react';
 import { useWindowSize } from '../../public/react-use';
 import { classNames } from '../../public/utils';
 import './style.css';
 
-const calculateTranslateTop = (optionsElement: HTMLDivElement, optionsMaxHeight: number, optionsMaxWidth: number) => {
-    if (!optionsElement || !optionsElement.parentElement) { return {}; }
-
-    const relativeElement = optionsElement.parentElement;
+const calculateSelectOptionsStyle = (relativeElement: HTMLElement | null | undefined, optionsMaxHeight: number, optionsMaxWidth: number) => {
+    if (!relativeElement) { return {}; }
 
     const { top: relativeTop, height: relativeHeight, right: relativeRight, width: relativeWidth } = relativeElement.getBoundingClientRect();
-    const documentWidth = document.documentElement.clientWidth, documentHeight = document.documentElement.clientHeight
-    const maxWidth = documentWidth - 10;
+    const documentWidth = document.documentElement.clientWidth, documentHeight = document.documentElement.clientHeight;
 
     const bottomGap = documentHeight - relativeTop - relativeHeight - 5;
     const topGap = relativeTop - 5;
     const rightGap = documentWidth - relativeRight - 5;
     const widthGap = optionsMaxWidth - relativeWidth;
 
-    let maxHeight;
-    let top;
-    let bottom;
-    let left: undefined | number = 0;
-    let right;
-    let width = optionsMaxWidth;
+    const nextStyle: React.CSSProperties = {
+        left: 0,
+        maxHeight: undefined,
+        top: undefined,
+        bottom: undefined,
+        right: undefined,
+        maxWidth: Math.min(optionsMaxWidth, documentWidth - 10),
+        width: optionsMaxWidth
+    };
 
     if (bottomGap >= optionsMaxHeight) {
-        maxHeight = Math.min(optionsMaxHeight, bottomGap);
-        top = relativeHeight;
+        nextStyle.maxHeight = Math.min(optionsMaxHeight, bottomGap);
+        nextStyle.top = relativeHeight;
     }
     else if (topGap >= optionsMaxHeight) {
-        maxHeight = Math.min(optionsMaxHeight, topGap);
-        bottom = relativeHeight;
+        nextStyle.maxHeight = Math.min(optionsMaxHeight, topGap);
+        nextStyle.bottom = relativeHeight;
     }
     else if (bottomGap >= topGap) {
-        maxHeight = bottomGap;
-        top = relativeHeight;
+        nextStyle.maxHeight = bottomGap;
+        nextStyle.top = relativeHeight;
     }
     else {
-        maxHeight = topGap;
-        bottom = relativeHeight;
+        nextStyle.maxHeight = topGap;
+        nextStyle.bottom = relativeHeight;
     }
 
     if (optionsMaxWidth + 10 > documentWidth) {
-        left = undefined;
-        right = -rightGap;
+        nextStyle.left = undefined;
+        nextStyle.right = -rightGap;
     }
     else if (widthGap > rightGap) {
-        right = -rightGap;
-        left = undefined;
+        nextStyle.right = -rightGap;
+        nextStyle.left = undefined;
     }
 
-    return { maxHeight, maxWidth, top, bottom, left, right, width };
+    return nextStyle;
 };
 
 type SelectOptionsProps = {
@@ -60,7 +60,11 @@ type SelectOptionsProps = {
     onShow?: () => void;
 } & Pick<React.HTMLAttributes<HTMLDivElement>, 'children' | 'style' | 'className' | 'onMouseLeave' | 'onMouseDown' | 'onClick'>;
 
-const SelectOptions: React.FC<SelectOptionsProps> = ({
+export type SelectOptionsForwardRef = {
+    scrollToTop: () => void;
+};
+
+const SelectOptions = React.forwardRef<SelectOptionsForwardRef, SelectOptionsProps>(({
     children,
     maxHeight = 300,
     maxWidth = 200,
@@ -71,34 +75,30 @@ const SelectOptions: React.FC<SelectOptionsProps> = ({
     onMouseLeave,
     onMouseDown,
     onClick
-}) => {
+}, forwardedRef) => {
     const [optionsStyle, setOptionsStyle] = useState({});
-    const [showOptions, setShowOptions] = useState(false);
 
     const windowSize = useWindowSize();
 
     const optionsElementRef = useRef<HTMLDivElement>(null);
 
-    useLayoutEffect(() => {
-        if (!optionsElementRef.current) { return; }
+    useImperativeHandle(forwardedRef, () => ({
+        scrollToTop: () => optionsElementRef.current?.scrollTo({ top: 0 })
+    }));
 
-        show && setOptionsStyle(calculateTranslateTop(
-            optionsElementRef.current,
-            maxHeight,
-            maxWidth
-        ));
-        setShowOptions(show);
+    useLayoutEffect(() => {
+        show && setOptionsStyle(calculateSelectOptionsStyle(optionsElementRef.current?.parentElement, maxHeight, maxWidth));
     }, [show, maxHeight, maxWidth, windowSize]);
 
     useLayoutEffect(() => {
-        showOptions && onShow && onShow();
-    }, [showOptions, onShow]);
+        show && onShow?.();
+    }, [show, onShow]);
 
     return (
         <div
             className={classNames('select-options', className)}
             ref={optionsElementRef}
-            style={Object.assign({ display: showOptions ? 'block' : 'none' }, optionsStyle, style)}
+            style={Object.assign({ display: show ? 'block' : 'none' }, optionsStyle, style)}
             onMouseLeave={onMouseLeave}
             onMouseDown={onMouseDown}
             onClick={onClick}
@@ -106,6 +106,6 @@ const SelectOptions: React.FC<SelectOptionsProps> = ({
             {children}
         </div>
     );
-};
+});
 
 export default SelectOptions;
