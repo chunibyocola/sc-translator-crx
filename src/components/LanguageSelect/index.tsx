@@ -1,8 +1,10 @@
 import React, { startTransition, useCallback, useEffect, useRef, useState } from 'react';
 import { LangCodes } from '../../constants/langCode';
 import { getMessage } from '../../public/i18n';
+import { useMouseEventOutside } from '../../public/react-use';
+import { classNames } from '../../public/utils';
 import IconFont from '../IconFont';
-import SelectOptions from '../SelectOptions';
+import SelectOptions, { SelectOptionsForwardRef } from '../SelectOptions';
 import './style.css';
 
 type LanguageSelectProps = {
@@ -21,32 +23,22 @@ const LanguageSelect: React.FC<LanguageSelectProps> = ({ value, onChange, classN
 
     const searchInputElementRef = useRef<HTMLInputElement>(null);
     const languageSelectElementRef = useRef<HTMLDivElement>(null);
-    const onMouseDownRef = useRef((e: MouseEvent) => {
-        const path = e.composedPath?.();
+    const selectOptionsRef = useRef<SelectOptionsForwardRef>(null);
 
-        if (languageSelectElementRef.current && path.indexOf(languageSelectElementRef.current) >= 0) { return; }
+    useMouseEventOutside(() => setShowOptions(false), 'mousedown', languageSelectElementRef.current, showOptions);
 
-        setShowOptions(false);
-    });
-
-    const handleOptionClick = useCallback((value: string) => {
+    const onOptionClick = useCallback((value: string) => {
         onChange(value);
         setShowOptions(false);
     }, [onChange]);
 
-    const handleInputChange = useCallback(() => {
-        if (!searchInputElementRef.current) { return; }
-
-        setSearchText(searchInputElementRef.current.value);
+    const onSearchInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchText(e.target.value);
     }, []);
 
-    const handleOptionsShow = useCallback(() => {
-        if (!searchInputElementRef.current) { return; }
-
-        const tempElement = searchInputElementRef.current.parentElement?.parentElement?.parentElement;
-        tempElement && (tempElement.scrollTop = 0);
-        searchInputElementRef.current.focus();
-        searchInputElementRef.current.select();
+    const onSelectOptionsShow = useCallback(() => {
+        selectOptionsRef.current?.scrollToTop();
+        searchInputElementRef.current?.select();
     }, []);
 
     useEffect(() => {
@@ -55,13 +47,9 @@ const LanguageSelect: React.FC<LanguageSelectProps> = ({ value, onChange, classN
         });
     }, [langCodes, searchText]);
 
-    useEffect(() => {
-        showOptions ? window.addEventListener('mousedown', onMouseDownRef.current, true) : window.removeEventListener('mousedown', onMouseDownRef.current, true);
-    }, [showOptions]);
-
     return (
         <div
-            className={`language-select${className ? ' ' + className : ''}`}
+            className={classNames('language-select', className)}
             ref={languageSelectElementRef}
             tabIndex={-1}
             onClick={() => setShowOptions(v => !v)}
@@ -71,29 +59,30 @@ const LanguageSelect: React.FC<LanguageSelectProps> = ({ value, onChange, classN
                 <IconFont iconName='#icon-GoChevronDown' />
             </span>
             <SelectOptions
+                ref={selectOptionsRef}
                 show={showOptions}
-                onShow={handleOptionsShow}
+                onShow={onSelectOptionsShow}
                 onClick={e => e.stopPropagation()}
             >
                 {recentLangs?.map((v) => (v in langLocal && <div
                     className='language-select__option'
                     key={'recent-' + v}
-                    onClick={() => handleOptionClick(v)}
+                    onClick={() => onOptionClick(v)}
                 >
                     {langLocal[v]}
                 </div>))}
                 <div className='language-select__search'>
                     <IconFont iconName='#icon-search' />
                     <div className='language-select__search-input'>
-                        <input type='text' placeholder={getMessage('sentenceSearchLanguages')} onChange={handleInputChange} ref={searchInputElementRef} />
+                        <input type='text' placeholder={getMessage('sentenceSearchLanguages')} onChange={onSearchInputChange} ref={searchInputElementRef} />
                     </div>
                 </div>
                 {searchLangCodes.length > 0 ? searchLangCodes.map((v) => (<div
                     className='language-select__option'
-                    key={v['code']}
-                    onClick={() => handleOptionClick(v['code'])}
+                    key={v.code}
+                    onClick={() => onOptionClick(v.code)}
                 >
-                    {v['name']}
+                    {v.name}
                 </div>)) : <div className='language-select__no-result'>
                     {getMessage('sentenceNoResult')}
                 </div>}
