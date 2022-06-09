@@ -3,14 +3,16 @@ import { useWindowSize } from '../../public/react-use';
 import { classNames } from '../../public/utils';
 import './style.css';
 
-const calculateSelectOptionsStyle = (relativeElement: HTMLElement | null | undefined, optionsMaxHeight: number, optionsMaxWidth: number) => {
+const calculateSelectOptionsStyle = (relativeElement: HTMLElement | null | undefined, optionsMaxHeight: number, optionsMaxWidth: number, cover?: boolean) => {
     if (!relativeElement) { return {}; }
 
-    const { top: relativeTop, height: relativeHeight, right: relativeRight, width: relativeWidth } = relativeElement.getBoundingClientRect();
+    const { top: relativeTop, height: relativeHeight, right: relativeRight, width: relativeWidth, bottom: relativeBottom } = relativeElement.getBoundingClientRect();
     const documentWidth = document.documentElement.clientWidth, documentHeight = document.documentElement.clientHeight;
 
-    const bottomGap = documentHeight - relativeTop - relativeHeight - 5;
-    const topGap = relativeTop - 5;
+    const verticalRelativeDistance = cover ? 0 : relativeHeight;
+    const bottomGap = documentHeight - relativeTop - 5 - verticalRelativeDistance;
+    const topGap = relativeBottom - 5 - verticalRelativeDistance;
+
     const rightGap = documentWidth - relativeRight - 5;
     const widthGap = optionsMaxWidth - relativeWidth;
 
@@ -26,19 +28,19 @@ const calculateSelectOptionsStyle = (relativeElement: HTMLElement | null | undef
 
     if (bottomGap >= optionsMaxHeight) {
         nextStyle.maxHeight = Math.min(optionsMaxHeight, bottomGap);
-        nextStyle.top = relativeHeight;
+        nextStyle.top = verticalRelativeDistance + Math.max(0, -(relativeTop + verticalRelativeDistance - 5));
     }
     else if (topGap >= optionsMaxHeight) {
         nextStyle.maxHeight = Math.min(optionsMaxHeight, topGap);
-        nextStyle.bottom = relativeHeight;
+        nextStyle.bottom = verticalRelativeDistance + Math.max(0, -(documentHeight - relativeBottom + verticalRelativeDistance - 5));
     }
     else if (bottomGap >= topGap) {
-        nextStyle.maxHeight = bottomGap;
-        nextStyle.top = relativeHeight;
+        nextStyle.maxHeight = Math.min(bottomGap, documentHeight - 10);
+        nextStyle.top = verticalRelativeDistance + Math.max(0, -(relativeTop + verticalRelativeDistance - 5));
     }
     else {
-        nextStyle.maxHeight = topGap;
-        nextStyle.bottom = relativeHeight;
+        nextStyle.maxHeight = Math.min(topGap, documentHeight - 10);
+        nextStyle.bottom = verticalRelativeDistance + Math.max(0, -(documentHeight - relativeBottom + verticalRelativeDistance - 5));
     }
 
     if (optionsMaxWidth + 10 > documentWidth) {
@@ -57,6 +59,7 @@ type SelectOptionsProps = {
     maxHeight?: number;
     maxWidth?: number;
     show: boolean;
+    cover?: boolean;
     onShow?: () => void;
 } & Pick<React.HTMLAttributes<HTMLDivElement>, 'children' | 'style' | 'className' | 'onMouseLeave' | 'onMouseDown' | 'onClick'>;
 
@@ -69,6 +72,7 @@ const SelectOptions = React.forwardRef<SelectOptionsForwardRef, SelectOptionsPro
     maxHeight = 300,
     maxWidth = 200,
     show,
+    cover,
     style,
     className,
     onShow,
@@ -87,8 +91,8 @@ const SelectOptions = React.forwardRef<SelectOptionsForwardRef, SelectOptionsPro
     }));
 
     useLayoutEffect(() => {
-        show && setOptionsStyle(calculateSelectOptionsStyle(optionsElementRef.current?.parentElement, maxHeight, maxWidth));
-    }, [show, maxHeight, maxWidth, windowSize]);
+        show && setOptionsStyle(calculateSelectOptionsStyle(optionsElementRef.current?.parentElement, maxHeight, maxWidth, cover));
+    }, [show, maxHeight, maxWidth, windowSize, cover]);
 
     useLayoutEffect(() => {
         show && onShow?.();

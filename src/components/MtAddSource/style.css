@@ -5,7 +5,23 @@
     margin-bottom: 2px;
     font-size: 14px;
 }
+.add-source__wrapper {
+    display: inline-flex;
+}
 .add-source__badge {
     color: var(--text-icon);
     font-size: 18px;
+}
+.source-selector__item {
+    padding: 6px;
+    display: flex;
+    justify-content: space-between;
+}
+.source-selector__item:hover {
+    background: var(--bg-item-hover);
+}
+.source-selector__item-source {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

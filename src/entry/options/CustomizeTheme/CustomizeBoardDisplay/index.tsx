@@ -9,13 +9,13 @@ import '../../../../components/PopupHeader/style.css';
 import '../../../popup/ResultBox/style.css';
 import '../../../popup/MultipleTranslateResult/style.css';
 import '../../../../components/MtAddSource/style.css';
-import '../../../../components/MtAddSource/SourceSelector/style.css';
 import '../../../../components/MtResult/style.css';
 import '../../../../components/LanguageSelect/style.css';
 import '../../../../components/TranslateResult/style.css';
 import SourceFavicon from '../../../../components/SourceFavicon';
 import IconFont from '../../../../components/IconFont';
 import { StyleVars } from '../../../../constants/defaultStyleVars';
+import Logo from '../../../../components/Logo';
 
 type CustomizeBoardDisplayProps = {
     styleVars: StyleVars;
@@ -40,7 +40,7 @@ const CustomizeBoardDisplay: React.FC<CustomizeBoardDisplayProps> = ({ styleVars
                         color: styleVars['--text-icon']
                     }}
                 >
-                    <div className="panel__header-logo flex-align-items-center">Sc</div>
+                    <div className="panel__header-logo flex-align-items-center"></div>
                     <span className="panel__header-icons flex-align-items-center">
                         <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(180deg)', opacity: '1', color: styleVars['--text-icon']}} />
                         <IconFont iconName='#icon-GoPin' style={{color: styleVars['--text-icon']}} />
@@ -113,7 +113,9 @@ const CustomizeBoardDisplay: React.FC<CustomizeBoardDisplayProps> = ({ styleVars
                         color: styleVars['--text-icon']
                     }}
                 >
-                    <div className="popup-header__logo flex-align-items-center">Sc</div>
+                    <div className="popup-header__logo flex-align-items-center">
+                        <Logo />
+                    </div>
                     <div className="popup-header__icons flex-align-items-center">
                         <IconFont iconName='#icon-theme' className='iconfont--enable' style={{color: styleVars['--text-icon']}} />
                         <IconFont iconName='#icon-MdTranslate' className='iconfont--enable' style={{color: styleVars['--text-icon']}} />
@@ -195,13 +197,14 @@ const CustomizeBoardDisplay: React.FC<CustomizeBoardDisplayProps> = ({ styleVars
                 </div>
             </div>
             {/* SourceSelector */}
-            <div className="source-selector scrollbar"
+            <div className="select-options scrollbar"
                 style={{
                     background: styleVars['--bg-content'],
                     color: styleVars['--text-normal'],
                     maxHeight: '100%',
                     height: 'fit-content',
-                    position: 'unset'
+                    position: 'unset',
+                    width: '200px'
                 }}
             >
                 <div className="source-selector__item button">
