@@ -157,6 +157,13 @@ export const initContextMenus = () => {
             contexts: ['action']
         }, () => { if (chrome.runtime.lastError) {} });
 
+        // translate current page
+        chrome.contextMenus.create({
+            id: 'action_translate_current_page',
+            title: getI18nMessage('contextMenus_TRANSLATE_CURRENT_PAGE'),
+            contexts: ['action']
+        }, () => { if (chrome.runtime.lastError) {} });
+
         // open collection page
         chrome.contextMenus.create({
             id: 'action_open_collection_page',
@@ -190,6 +197,9 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
             return;
         case 'action_open_this_page_with_pdf_viewer':
             openThisPageWithPdfViewer(info, tab);
+            return;
+        case 'action_translate_current_page':
+            translateCurrentPage(info, tab);
             return;
         case 'action_open_collection_page':
             openCollectionPage();
