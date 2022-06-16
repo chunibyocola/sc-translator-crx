@@ -6,14 +6,20 @@ import { translate as googleWebTranslate } from './google/translate';
 import { getAuthorization } from './microsoft/getAuthorization';
 import { translate as microsoftWebTranslate } from './microsoft/translate';
 
+export type WebpageTranslateResult = {
+    translations: string[];
+    comparisons?: string[];
+};
+
 type ScWebpageTranslationElement = HTMLElement & { _ScWebpageTranslationKey?: number; };
+type ItemFonts = [ScWebpageTranslationElement, ScWebpageTranslationElement, ScWebpageTranslationElement];
 
 type PageTranslateItemEnity = {
     prefix: string;
     text: string;
-    result?: string[];
+    result?: WebpageTranslateResult;
     textNodes: Text[];
-    fontsNodes: [ScWebpageTranslationElement, ScWebpageTranslationElement][];
+    fontsNodes: ItemFonts[];
     firstTextNodeClientY: number;
     status: 'init' | 'loading' | 'error' | 'finished';
     mapIndex: number;
@@ -34,7 +40,7 @@ const skipTagRegExp = /^(CODE|#comment)$/i;
 let minViewPort = 0;
 let maxViewPort = 0;
 
-let resultCache: { [key: string]: string[] } = {};
+let resultCache: { [key: string]: WebpageTranslateResult } = {};
 let resultCacheLanguage = '';
 let resultCacheSource = '';
 
@@ -356,7 +362,7 @@ const onWindowMouseMove = (e: MouseEvent) => {
                         });
                     }
                     else if (wayOfFontsDisplaying === 2) {
-                        pageTranslateItemMap[displayingItem].fontsNodes.forEach(([, v]) => {
+                        pageTranslateItemMap[displayingItem].fontsNodes.forEach(([,, v]) => {
                             v.style.backgroundColor = '';
                             v.style.boxShadow = '';
                         });
@@ -377,7 +383,7 @@ const onWindowMouseMove = (e: MouseEvent) => {
 
                 if (wayOfFontsDisplaying === 0) {
                     titleElement.innerText = getMessage('optionsTranslation');
-                    contentElement.innerText = pageTranslateItemMap[displayingItem].fontsNodes.reduce((t, [, v]) => (t + v.innerText), '');
+                    contentElement.innerText = pageTranslateItemMap[displayingItem].fontsNodes.reduce((t, [,, v]) => (t + v.innerText), '');
                     pageTranslateItemMap[displayingItem].fontsNodes.forEach(([v]) => {
                         v.style.backgroundColor = '#c9d7f1';
                         v.style.boxShadow = '2px 2px 4px #9999aa';
@@ -386,7 +392,7 @@ const onWindowMouseMove = (e: MouseEvent) => {
                 else if (wayOfFontsDisplaying === 2) {
                     titleElement.innerText = getMessage('optionsOriginalText');
                     contentElement.innerText = pageTranslateItemMap[displayingItem].text;
-                    pageTranslateItemMap[displayingItem].fontsNodes.forEach(([, v]) => {
+                    pageTranslateItemMap[displayingItem].fontsNodes.forEach(([,, v]) => {
                         v.style.backgroundColor = '#c9d7f1';
                         v.style.boxShadow = '2px 2px 4px #9999aa';
                     });
@@ -419,7 +425,7 @@ const onWindowMouseMove = (e: MouseEvent) => {
                     });
                 }
                 else if (wayOfFontsDisplaying === 2) {
-                    pageTranslateItemMap[displayingItem].fontsNodes.forEach(([, v]) => {
+                    pageTranslateItemMap[displayingItem].fontsNodes.forEach(([,, v]) => {
                         v.style.backgroundColor = '';
                         v.style.boxShadow = '';
                     });
@@ -447,14 +453,12 @@ export const closeWebPageTranslating = () => {
     ++closeFlag;
 
     updatedList.forEach((item) => {
-        item.fontsNodes.forEach((fontsNode) => {
-            const originalFont = fontsNode[0];
-            const resultFont = fontsNode[1];
-
+        item.fontsNodes.forEach(([originalFont, comparisonFont, translationFont]) => {
             originalFont.childNodes.forEach(childNode => originalFont.parentElement?.insertBefore(childNode, originalFont));
 
             originalFont.parentElement?.removeChild(originalFont);
-            resultFont.parentElement?.removeChild(resultFont);
+            comparisonFont.parentElement?.removeChild(comparisonFont);
+            translationFont.parentElement?.removeChild(translationFont);
         });
     });
 
@@ -531,9 +535,9 @@ const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[
             currentItem.result = resultCache[request];
             currentItem.status = 'finished';
             currentItem.textNodes.forEach((textNode, i) => {
-                if (!textNode.parentElement || !currentItem.result?.[i]) { return; }
+                if (!textNode.parentElement || !currentItem.result) { return; }
 
-                const fonts = insertResultAndWrapOriginalTextNode(textNode, currentItem.result[i], currentItem.mapIndex);
+                const fonts = insertResultAndWrapOriginalTextNode(textNode, currentItem.mapIndex, currentItem.result.translations[i]);
                 fonts && currentItem.fontsNodes.push(fonts);
             });
 
@@ -568,19 +572,19 @@ const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[
         translateList.forEach((item) => {
             const dealWithResult = (result: string[][]) => {
                 item.pageTranslateList.forEach((v, i) => {
-                    v.result = result[i];
+                    v.result = { translations: result[i] };
                     v.status = 'finished';
                     v.textNodes.forEach((textNode, i) => {
-                        if (!textNode.parentElement || !v.result?.[i]) { return; }
+                        if (!textNode.parentElement || !v.result) { return; }
         
-                        const fonts = insertResultAndWrapOriginalTextNode(textNode, v.result[i], v.mapIndex);
+                        const fonts = insertResultAndWrapOriginalTextNode(textNode, v.mapIndex, v.result.translations[i]);
                         fonts && v.fontsNodes.push(fonts);
                     });
                 });
             };
     
             microsoftWebTranslate(item.requestArray, targetLanguage).then((result) => {
-                item.textList.length === result.length && item.textList.forEach((v, i) => (resultCache[v] = result[i]));
+                item.textList.length === result.length && item.textList.forEach((v, i) => (resultCache[v] = { translations: result[i] }));
     
                 // if not the same, means web page translate has been closed.
                 tempCloseFlag === closeFlag && dealWithResult(result);
@@ -620,9 +624,9 @@ const googleWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[], 
             currentItem.result = resultCache[q];
             currentItem.status = 'finished';
             currentItem.textNodes.forEach((textNode, i) => {
-                if (!textNode.parentElement || !currentItem.result?.[i]) { return; }
+                if (!textNode.parentElement || !currentItem.result) { return; }
 
-                const fonts = insertResultAndWrapOriginalTextNode(textNode, currentItem.result[i], currentItem.mapIndex);
+                const fonts = insertResultAndWrapOriginalTextNode(textNode, currentItem.mapIndex, currentItem.result.translations[i], currentItem.result.comparisons?.[i]);
                 fonts && currentItem.fontsNodes.push(fonts);
             });
 
@@ -655,14 +659,14 @@ const googleWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[], 
     const tempCloseFlag = closeFlag;
 
     translateList.forEach((item) => {
-        const dealWithResult = (result: string[][]) => {
+        const dealWithResult = (result: WebpageTranslateResult[]) => {
             item.pageTranslateList.forEach((v, i) => {
                 v.result = result[i];
                 v.status = 'finished';
                 v.textNodes.forEach((textNode, i) => {
-                    if (!textNode.parentElement || !v.result?.[i]) { return; }
+                    if (!textNode.parentElement || !v.result) { return; }
     
-                    const fonts = insertResultAndWrapOriginalTextNode(textNode, v.result[i], v.mapIndex);
+                    const fonts = insertResultAndWrapOriginalTextNode(textNode, v.mapIndex, v.result.translations[i], v.result.comparisons?.[i]);
                     fonts && v.fontsNodes.push(fonts);
                 });
             });
@@ -698,24 +702,32 @@ export const errorRetry = () => {
     }
 };
 
-const insertResultAndWrapOriginalTextNode = (textNode: Text, result: string, mapIndex: number): [ScWebpageTranslationElement, ScWebpageTranslationElement] | void => {
+const insertResultAndWrapOriginalTextNode = (textNode: Text, mapIndex: number, translation: string, comparision?: string): ItemFonts | void => {
     if (!textNode.parentElement) { return; }
 
+    comparision ??= translation;
+
     const originalFont: ScWebpageTranslationElement = document.createElement('font');
-    const resultFont: ScWebpageTranslationElement = document.createElement('font');
+    const comparisonFont: ScWebpageTranslationElement = document.createElement('font');
+    const translationFont: ScWebpageTranslationElement = document.createElement('font');
 
     originalFont._ScWebpageTranslationKey = mapIndex;
-    resultFont._ScWebpageTranslationKey = mapIndex;
-
-    dealWithFontsStyle(originalFont, resultFont);
+    comparisonFont._ScWebpageTranslationKey = mapIndex;
+    translationFont._ScWebpageTranslationKey = mapIndex;
 
     textNode.parentElement.insertBefore(originalFont, textNode);
-    textNode.parentElement.insertBefore(resultFont, textNode);
+    textNode.parentElement.insertBefore(comparisonFont, textNode);
+    textNode.parentElement.insertBefore(translationFont, textNode);
 
     originalFont.appendChild(textNode);
-    resultFont.appendChild(document.createTextNode(result));
+    comparisonFont.appendChild(document.createTextNode(comparision));
+    translationFont.appendChild(document.createTextNode(translation));
 
-    return [originalFont, resultFont];
+    const itemFonts: ItemFonts = [originalFont, comparisonFont, translationFont];
+
+    dealWithFontsStyle(itemFonts);
+
+    return itemFonts;
 };
 
 export const switchWayOfFontsDisplaying = (way?: number) => {
@@ -741,23 +753,26 @@ export const switchWayOfFontsDisplaying = (way?: number) => {
     }
 
     updatedList.forEach((item) => {
-        item.fontsNodes.forEach(v => dealWithFontsStyle(v[0], v[1]));
+        item.fontsNodes.forEach(dealWithFontsStyle);
     });
 };
 
-const dealWithFontsStyle = (originalFont: ScWebpageTranslationElement, resultFont: ScWebpageTranslationElement) => {
+const dealWithFontsStyle = ([originalFont, comparisonFont, translationFont]: ItemFonts) => {
     switch (wayOfFontsDisplaying) {
         case 0:
             originalFont.setAttribute('style', '');
-            resultFont.setAttribute('style', 'display: none;');
+            comparisonFont.setAttribute('style', 'display: none;');
+            translationFont.setAttribute('style', 'display: none;');
             return;
         case 1:
             originalFont.setAttribute('style', '');
-            resultFont.setAttribute('style', `margin: 0 5px;${displayModeEnhancement.oAndT_Underline ? ' border-bottom: 2px solid #72ECE9; padding: 0 2px;' : ''}`);
+            comparisonFont.setAttribute('style', `margin: 0 5px;${displayModeEnhancement.oAndT_Underline ? ' border-bottom: 2px solid #72ECE9; padding: 0 2px;' : ''}`);
+            translationFont.setAttribute('style', 'display: none;');
             return;
         default:
             originalFont.setAttribute('style', 'display: none;');
-            resultFont.setAttribute('style', '');
+            comparisonFont.setAttribute('style', 'display: none;');
+            translationFont.setAttribute('style', '');
             return;
     }
 };
