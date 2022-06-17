@@ -537,7 +537,7 @@ const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[
             currentItem.textNodes.forEach((textNode, i) => {
                 if (!textNode.parentElement || !currentItem.result) { return; }
 
-                const fonts = insertResultAndWrapOriginalTextNode(textNode, currentItem.mapIndex, currentItem.result.translations[i]);
+                const fonts = insertResultAndWrapOriginalTextNode(textNode, currentItem.mapIndex, currentItem.result.translations[i], currentItem.result.comparisons?.[i]);
                 fonts && currentItem.fontsNodes.push(fonts);
             });
 
@@ -570,21 +570,21 @@ const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[
 
     getAuthorization().then(() => {
         translateList.forEach((item) => {
-            const dealWithResult = (result: string[][]) => {
+            const dealWithResult = (result: WebpageTranslateResult[]) => {
                 item.pageTranslateList.forEach((v, i) => {
-                    v.result = { translations: result[i] };
+                    v.result = result[i];
                     v.status = 'finished';
                     v.textNodes.forEach((textNode, i) => {
                         if (!textNode.parentElement || !v.result) { return; }
         
-                        const fonts = insertResultAndWrapOriginalTextNode(textNode, v.mapIndex, v.result.translations[i]);
+                        const fonts = insertResultAndWrapOriginalTextNode(textNode, v.mapIndex, v.result.translations[i], v.result.comparisons?.[i]);
                         fonts && v.fontsNodes.push(fonts);
                     });
                 });
             };
     
             microsoftWebTranslate(item.requestArray, targetLanguage).then((result) => {
-                item.textList.length === result.length && item.textList.forEach((v, i) => (resultCache[v] = { translations: result[i] }));
+                item.textList.length === result.length && item.textList.forEach((v, i) => (resultCache[v] = result[i]));
     
                 // if not the same, means web page translate has been closed.
                 tempCloseFlag === closeFlag && dealWithResult(result);
