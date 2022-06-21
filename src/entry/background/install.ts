@@ -62,6 +62,10 @@ const initStorageOnInstalled = (userLang: string, update: boolean) => {
             data.displayOfTranslation = { ...defaultSet.displayOfTranslation, ...data.displayOfTranslation };
         }
 
+        if (update && data.displayModeEnhancement) {
+            data.displayModeEnhancement = { ...defaultSet.displayModeEnhancement, ...data.displayModeEnhancement };
+        }
+
         if (data.styleVarsList?.[0]?.styleVars) {
             (data.styleVarsList[0].styleVars = defaultStyleVars);
         }

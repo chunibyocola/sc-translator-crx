@@ -55,6 +55,7 @@ let errorCallback: ((errorReason: string) => void) | undefined;
 let displayModeEnhancement: DisplayModeEnhancement = {
     o_Hovering: false,
     oAndT_Underline: false,
+    oAndT_NonDiscrete: false,
     t_Hovering: false
 };
 

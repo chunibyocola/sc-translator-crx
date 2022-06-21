@@ -413,6 +413,9 @@
     "optionsMouseHoverOverOriginalText": {
         "message": "原文の上にマウスを置いたときに訳文を表示します"
     },
+    "optionsNotDisplayingTheTranslationsDiscretely": {
+        "message": "訳文を非離散的に表示します"
+    },
     "themePreset": {
         "message": "プリセット"
     },

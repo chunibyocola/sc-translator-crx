@@ -413,6 +413,9 @@
     "optionsMouseHoverOverOriginalText": {
         "message": "滑鼠懸停在原文上時顯示譯文"
     },
+    "optionsNotDisplayingTheTranslationsDiscretely": {
+        "message": "非離散地展示譯文"
+    },
     "themePreset": {
         "message": "預設"
     },

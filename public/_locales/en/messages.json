@@ -413,6 +413,9 @@
     "optionsMouseHoverOverOriginalText": {
         "message": "Display the translation when the mouse hovers over the original text"
     },
+    "optionsNotDisplayingTheTranslationsDiscretely": {
+        "message": "Not displaying the translations discretely"
+    },
     "themePreset": {
         "message": "Preset"
     },

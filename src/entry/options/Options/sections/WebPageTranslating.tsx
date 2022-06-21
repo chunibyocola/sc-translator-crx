@@ -100,6 +100,13 @@ const WebPageTranslating: React.FC = () => {
                             onChange={v => setLocalStorage({ displayModeEnhancement: { ...displayModeEnhancement, oAndT_Underline: v } })}
                         />
                     </div>
+                    <div className='mt10-ml30'>
+                        <Checkbox
+                            label={getMessage('optionsNotDisplayingTheTranslationsDiscretely')}
+                            checked={displayModeEnhancement.oAndT_NonDiscrete}
+                            onChange={v => setLocalStorage({ displayModeEnhancement: { ...displayModeEnhancement, oAndT_NonDiscrete: v } })}
+                        />
+                    </div>
                 </div>
                 <div className='mt10-ml30'>
                     {getMessage('optionsTranslation')}
