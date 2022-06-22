@@ -12,7 +12,7 @@ export type WebpageTranslateResult = {
 };
 
 type ScWebpageTranslationElement = HTMLElement & { _ScWebpageTranslationKey?: number; };
-type ItemFonts = [ScWebpageTranslationElement, ScWebpageTranslationElement, ScWebpageTranslationElement];
+type ItemFonts = [ScWebpageTranslationElement, ScWebpageTranslationElement | null, ScWebpageTranslationElement];
 
 type PageTranslateItemEnity = {
     prefix: string;
@@ -458,7 +458,7 @@ export const closeWebPageTranslating = () => {
             originalFont.childNodes.forEach(childNode => originalFont.parentElement?.insertBefore(childNode, originalFont));
 
             originalFont.parentElement?.removeChild(originalFont);
-            comparisonFont.parentElement?.removeChild(comparisonFont);
+            comparisonFont?.parentElement?.removeChild(comparisonFont);
             translationFont.parentElement?.removeChild(translationFont);
         });
     });
@@ -534,11 +534,12 @@ const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[
         
         if (request in resultCache) {
             currentItem.result = resultCache[request];
+            const comparisions = preprocessComparisons(currentItem.result);
             currentItem.status = 'finished';
             currentItem.textNodes.forEach((textNode, i) => {
                 if (!textNode.parentElement || !currentItem.result) { return; }
 
-                const fonts = insertResultAndWrapOriginalTextNode(textNode, currentItem.mapIndex, currentItem.result.translations[i], currentItem.result.comparisons?.[i]);
+                const fonts = insertResultAndWrapOriginalTextNode(textNode, currentItem.mapIndex, currentItem.result.translations[i], comparisions[i]);
                 fonts && currentItem.fontsNodes.push(fonts);
             });
 
@@ -574,11 +575,12 @@ const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[
             const dealWithResult = (result: WebpageTranslateResult[]) => {
                 item.pageTranslateList.forEach((v, i) => {
                     v.result = result[i];
+                    const comparisions = preprocessComparisons(v.result);
                     v.status = 'finished';
                     v.textNodes.forEach((textNode, i) => {
                         if (!textNode.parentElement || !v.result) { return; }
         
-                        const fonts = insertResultAndWrapOriginalTextNode(textNode, v.mapIndex, v.result.translations[i], v.result.comparisons?.[i]);
+                        const fonts = insertResultAndWrapOriginalTextNode(textNode, v.mapIndex, v.result.translations[i], comparisions[i]);
                         fonts && v.fontsNodes.push(fonts);
                     });
                 });
@@ -623,11 +625,12 @@ const googleWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[], 
 
         if (q in resultCache) {
             currentItem.result = resultCache[q];
+            const comparisions = preprocessComparisons(currentItem.result);
             currentItem.status = 'finished';
             currentItem.textNodes.forEach((textNode, i) => {
                 if (!textNode.parentElement || !currentItem.result) { return; }
 
-                const fonts = insertResultAndWrapOriginalTextNode(textNode, currentItem.mapIndex, currentItem.result.translations[i], currentItem.result.comparisons?.[i]);
+                const fonts = insertResultAndWrapOriginalTextNode(textNode, currentItem.mapIndex, currentItem.result.translations[i], comparisions[i]);
                 fonts && currentItem.fontsNodes.push(fonts);
             });
 
@@ -663,11 +666,12 @@ const googleWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[], 
         const dealWithResult = (result: WebpageTranslateResult[]) => {
             item.pageTranslateList.forEach((v, i) => {
                 v.result = result[i];
+                const comparisions = preprocessComparisons(v.result);
                 v.status = 'finished';
                 v.textNodes.forEach((textNode, i) => {
                     if (!textNode.parentElement || !v.result) { return; }
     
-                    const fonts = insertResultAndWrapOriginalTextNode(textNode, v.mapIndex, v.result.translations[i], v.result.comparisons?.[i]);
+                    const fonts = insertResultAndWrapOriginalTextNode(textNode, v.mapIndex, v.result.translations[i], comparisions[i]);
                     fonts && v.fontsNodes.push(fonts);
                 });
             });
@@ -703,25 +707,35 @@ export const errorRetry = () => {
     }
 };
 
-const insertResultAndWrapOriginalTextNode = (textNode: Text, mapIndex: number, translation: string, comparision?: string): ItemFonts | void => {
+const preprocessComparisons = (webpageTranslateResult: WebpageTranslateResult) => {
+    let comparisions = webpageTranslateResult.comparisons ?? webpageTranslateResult.translations;
+
+    if (displayModeEnhancement.oAndT_NonDiscrete) {
+        const length = webpageTranslateResult.translations.length;
+        comparisions = new Array(length).fill(null);
+        comparisions[length - 1] = webpageTranslateResult.translations.join('');
+    }
+
+    return comparisions;
+};
+
+const insertResultAndWrapOriginalTextNode = (textNode: Text, mapIndex: number, translation: string, comparision: string | null): ItemFonts | void => {
     if (!textNode.parentElement) { return; }
 
-    comparision ??= translation;
-
     const originalFont: ScWebpageTranslationElement = document.createElement('font');
-    const comparisonFont: ScWebpageTranslationElement = document.createElement('font');
+    const comparisonFont: ScWebpageTranslationElement | null = typeof comparision === 'string' ? document.createElement('font') : null;
     const translationFont: ScWebpageTranslationElement = document.createElement('font');
 
     originalFont._ScWebpageTranslationKey = mapIndex;
-    comparisonFont._ScWebpageTranslationKey = mapIndex;
+    comparisonFont && (comparisonFont._ScWebpageTranslationKey = mapIndex);
     translationFont._ScWebpageTranslationKey = mapIndex;
 
     textNode.parentElement.insertBefore(originalFont, textNode);
-    textNode.parentElement.insertBefore(comparisonFont, textNode);
+    comparisonFont && textNode.parentElement.insertBefore(comparisonFont, textNode);
     textNode.parentElement.insertBefore(translationFont, textNode);
 
     originalFont.appendChild(textNode);
-    comparisonFont.appendChild(document.createTextNode(comparision));
+    comparisonFont && comparision && comparisonFont.appendChild(document.createTextNode(comparision));
     translationFont.appendChild(document.createTextNode(translation));
 
     const itemFonts: ItemFonts = [originalFont, comparisonFont, translationFont];
@@ -762,17 +776,17 @@ const dealWithFontsStyle = ([originalFont, comparisonFont, translationFont]: Ite
     switch (wayOfFontsDisplaying) {
         case 0:
             originalFont.setAttribute('style', '');
-            comparisonFont.setAttribute('style', 'display: none;');
+            comparisonFont?.setAttribute('style', 'display: none;');
             translationFont.setAttribute('style', 'display: none;');
             return;
         case 1:
             originalFont.setAttribute('style', '');
-            comparisonFont.setAttribute('style', `margin: 0 5px;${displayModeEnhancement.oAndT_Underline ? ' border-bottom: 2px solid #72ECE9; padding: 0 2px;' : ''}`);
+            comparisonFont?.setAttribute('style', `margin: 0 5px;${displayModeEnhancement.oAndT_Underline ? ' border-bottom: 2px solid #72ECE9; padding: 0 2px;' : ''}`);
             translationFont.setAttribute('style', 'display: none;');
             return;
         default:
             originalFont.setAttribute('style', 'display: none;');
-            comparisonFont.setAttribute('style', 'display: none;');
+            comparisonFont?.setAttribute('style', 'display: none;');
             translationFont.setAttribute('style', '');
             return;
     }
