@@ -63,7 +63,7 @@ export const checkResultFromCustomSource = (result: any) => {
     }
 };
 
-const isAllStringInArray = (array: any[]) => {
+export const isAllStringInArray = (array: any[]) => {
     for (let i = 0; i < array.length; i++) {
         if (typeof array[i] !== 'string') { return false; }
     }

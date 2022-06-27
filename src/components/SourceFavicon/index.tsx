@@ -22,6 +22,10 @@ const SourceFavicon: React.FC<SourceFaviconProps> = ({ source, className, favico
     );
 };
 
+const getSourceNameFromCustomSources = (source: string) => {
+    return getOptions().customTranslateSourceList.concat(getOptions().customWebpageTranslateSourceList).find(v => v.source === source)?.name ?? source;
+}
+
 const getFavicon = (source: string) => {
     switch (source) {
         case GOOGLE_COM: return FaviconImg(google);
@@ -29,7 +33,7 @@ const getFavicon = (source: string) => {
         case MOJIDICT_COM: return FaviconImg(mojidict);
         case BAIDU_COM: return FaviconImg(baidu);
         case MICROSOFT_COM: return FaviconImg(microsoft);
-        default: return (<div className='favicon favicon--mock'>{(getOptions().customTranslateSourceList.find(v => v.source === source)?.name ?? source)[0]}</div>);
+        default: return (<div className='favicon favicon--mock'>{getSourceNameFromCustomSources(source)[0]}</div>);
     }
 };
 
@@ -42,7 +46,7 @@ const getName = (source: string) => {
         case MOJIDICT_COM: return 'Mojidict';
         case BAIDU_COM: return 'Baidu';
         case MICROSOFT_COM: return 'Microsoft';
-        default: return getOptions().customTranslateSourceList.find(v => v.source === source)?.name ?? source;
+        default: return getSourceNameFromCustomSources(source);
     }
 };
 

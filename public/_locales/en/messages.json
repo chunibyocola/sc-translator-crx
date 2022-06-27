@@ -416,6 +416,15 @@
     "optionsNotDisplayingTheTranslationsDiscretely": {
         "message": "Not displaying the translations discretely"
     },
+    "optionsCustomWebpageTranslateSource": {
+        "message": "Custom webpage translate source"
+    },
+    "optionsCustomWebpageTranslateSourceDescription": {
+        "message": "You can add custom webpage translate sources which built by yourself or others."
+    },
+    "optionsCustomWebpageTranslateSourceLearn": {
+        "message": "Learn more about custom webpage translate source."
+    },
     "themePreset": {
         "message": "Preset"
     },

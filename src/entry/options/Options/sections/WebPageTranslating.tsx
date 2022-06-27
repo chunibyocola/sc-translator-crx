@@ -3,12 +3,13 @@ import Checkbox from '../../../../components/Checkbox';
 import SourceSelect from '../../../../components/SourceSelect';
 import Switch from '../../../../components/Switch';
 import { preferredLangCode } from '../../../../constants/langCode';
-import { webPageTranslateSource as webPageTranslateSourceList } from '../../../../constants/translateSource';
+import { GOOGLE_COM, webPageTranslateSource as webPageTranslateSourceList } from '../../../../constants/translateSource';
 import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { DefaultOptions } from '../../../../types';
 import BetaIcon from '../../BetaIcon';
+import CustomTranslateSourceDisplay from '../../CustomTranslateSourceDisplay';
 import DefaultSelect from '../../DefaultSelect';
 import WebPageTranslateDisplayMode from '../../WebPageTranslateDisplayMode';
 
@@ -20,7 +21,8 @@ type PickedOptions = Pick<
     'userLanguage' |
     'webPageTranslateDirectly' |
     'noControlBarWhileFirstActivating' |
-    'displayModeEnhancement'
+    'displayModeEnhancement' |
+    'customWebpageTranslateSourceList'
 >;
 const useOptionsDependency: (keyof PickedOptions)[] = [
     'webPageTranslateSource',
@@ -29,7 +31,8 @@ const useOptionsDependency: (keyof PickedOptions)[] = [
     'userLanguage',
     'webPageTranslateDirectly',
     'noControlBarWhileFirstActivating',
-    'displayModeEnhancement'
+    'displayModeEnhancement',
+    'customWebpageTranslateSourceList'
 ];
 
 const WebPageTranslating: React.FC = () => {
@@ -40,7 +43,8 @@ const WebPageTranslating: React.FC = () => {
         webPageTranslateDisplayMode,
         webPageTranslateDirectly,
         noControlBarWhileFirstActivating,
-        displayModeEnhancement
+        displayModeEnhancement,
+        customWebpageTranslateSourceList
     } = useOptions<PickedOptions>(useOptionsDependency);
 
     return (
@@ -51,10 +55,36 @@ const WebPageTranslating: React.FC = () => {
                 </div>
             </div>
             <div className='opt-section-row'>
+                {getMessage('optionsCustomWebpageTranslateSource')}<BetaIcon />
+                <div className='item-description'>
+                    {getMessage('optionsCustomWebpageTranslateSourceDescription')}
+                    <a
+                        target='_blank'
+                        href='https://github.com/chunibyocola/sc-translator-crx/discussions/50'
+                        rel='noreferrer'
+                    >
+                        {getMessage('optionsCustomWebpageTranslateSourceLearn')}
+                    </a>
+                </div>
+                <div className='mt10-ml30'>
+                    <CustomTranslateSourceDisplay
+                        customTranslateSources={customWebpageTranslateSourceList}
+                        onChange={(value) => {
+                            const availableSources = webPageTranslateSourceList.concat(value).map(v => v.source);
+                            setLocalStorage({
+                                webPageTranslateSource: availableSources.includes(webPageTranslateSource) ? webPageTranslateSource : GOOGLE_COM,
+                                customWebpageTranslateSourceList: value
+                            });
+                        }}
+                        webpage
+                    />
+                </div>
+            </div>
+            <div className='opt-section-row'>
                 {getMessage('optionsSource')}
                 <SourceSelect
                     className='border-bottom-select opt-source-select'
-                    sourceList={webPageTranslateSourceList}
+                    sourceList={webPageTranslateSourceList.concat(customWebpageTranslateSourceList)}
                     source={webPageTranslateSource}
                     onChange={value => setLocalStorage({ webPageTranslateSource: value })}
                 />

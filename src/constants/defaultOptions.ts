@@ -68,7 +68,8 @@ const defaultOptions: DefaultOptions = {
     sourceParamsCache: initSourceParams,
     customTranslateSourceList: [],
     displayOfTranslation: { result: true, dict: true, phonetic: true, related: true, example: false, phonetic_nonEnglish: false },
-    displayModeEnhancement: { o_Hovering: false, oAndT_Underline: false, oAndT_NonDiscrete: false, t_Hovering: false }
+    displayModeEnhancement: { o_Hovering: false, oAndT_Underline: false, oAndT_NonDiscrete: false, t_Hovering: false },
+    customWebpageTranslateSourceList: []
 };
 
 export default defaultOptions;

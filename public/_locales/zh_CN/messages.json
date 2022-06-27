@@ -416,6 +416,15 @@
     "optionsNotDisplayingTheTranslationsDiscretely": {
         "message": "非离散地展示译文"
     },
+    "optionsCustomWebpageTranslateSource": {
+        "message": "自定义网页翻译源"
+    },
+    "optionsCustomWebpageTranslateSourceDescription": {
+        "message": "你可以添加自己或是其他人构造的自定义网页翻译源。"
+    },
+    "optionsCustomWebpageTranslateSourceLearn": {
+        "message": "深入了解自定义网页翻译源。"
+    },
     "themePreset": {
         "message": "预设"
     },

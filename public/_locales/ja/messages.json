@@ -416,6 +416,15 @@
     "optionsNotDisplayingTheTranslationsDiscretely": {
         "message": "訳文を非離散的に表示します"
     },
+    "optionsCustomWebpageTranslateSource": {
+        "message": "カスタムWebページ翻訳ソース"
+    },
+    "optionsCustomWebpageTranslateSourceDescription": {
+        "message": "自分や他の人が作成したカスタムWebページ翻訳ソースを追加できます。"
+    },
+    "optionsCustomWebpageTranslateSourceLearn": {
+        "message": "カスタムWebページ翻訳ソースをもっと知る。"
+    },
     "themePreset": {
         "message": "プリセット"
     },
