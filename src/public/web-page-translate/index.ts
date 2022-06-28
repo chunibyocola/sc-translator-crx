@@ -5,6 +5,8 @@ import { bingSwitchLangCode } from '../switch-lang-code';
 import { translate as googleWebTranslate } from './google/translate';
 import { getAuthorization } from './microsoft/getAuthorization';
 import { translate as microsoftWebTranslate } from './microsoft/translate';
+import { translate as customWebTranslate } from './custom/translate';
+import { getError } from '../translate/utils';
 
 export type WebpageTranslateResult = {
     translations: string[];
@@ -511,60 +513,102 @@ const handleDelay = delay(() => {
         case MICROSOFT_COM:
             microsoftWebTranslateProcess(nextTranslateList, bingSwitchLangCode(language));
             break;
-        default: break;
+        default:
+            customWebTranslateProcess(nextTranslateList, language, source);
+            break;
     }
 }, 500);
 
-const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[], targetLanguage: string) => {
-    if (nextTranslateList.length === 0) { return; }
+const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, result: WebpageTranslateResult) => {
+    pageTranslateItem.result = result;
+    const comparisons = preprocessComparisons(pageTranslateItem.result);
+    pageTranslateItem.status = 'finished';
+    pageTranslateItem.textNodes.forEach((textNode, i) => {
+        if (!textNode.parentElement || typeof pageTranslateItem.result?.translations[i] !== 'string') { return; }
 
-    let translateList: { requestArray: { Text: string }[], pageTranslateList: PageTranslateItemEnity[], textList: string[] }[] = [];
+        const fonts = insertResultAndWrapOriginalTextNode(textNode, pageTranslateItem.mapIndex, pageTranslateItem.result.translations[i], comparisons[i]);
+        fonts && pageTranslateItem.fontsNodes.push(fonts);
+    });
+};
 
-    let pageTranslateList: PageTranslateItemEnity[] = [];
+type KeyFormat = (paragraph: string[]) => string;
+type TranslateItem = {
+    paragraphs: string[][],
+    pageTranslateList: PageTranslateItemEnity[],
+    keys: string[]
+};
+const getTranslateList = (nextTranslateList: PageTranslateItemEnity[], keyFormat: KeyFormat, options = { maxParagraphCount: 100, maxTextLength: 1024 }) => {
+    if (nextTranslateList.length === 0) { return [] as TranslateItem[]; }
+
+    let translateList: TranslateItem[] = [{
+        paragraphs: [],
+        pageTranslateList: [],
+        keys: []
+    }];
+
     let text = '';
-    let requestCount = 0;
-    let requestArray: { Text: string }[] = [];
-    let textList: string[] = [];
-    for (let i = 0; i < nextTranslateList.length; i++) {
-        let currentItem = nextTranslateList[i];
 
-        const request = currentItem.textNodes.length === 1 ?
-            (currentItem.textNodes[0].nodeValue ?? '') :
-            currentItem.textNodes.reduce((t, v, i) => (t + `<b${i}>${microsoftEscapeText(v.nodeValue ?? '')}</b${i}>`), '');
-        
-        if (request in resultCache) {
-            currentItem.result = resultCache[request];
-            const comparisions = preprocessComparisons(currentItem.result);
-            currentItem.status = 'finished';
-            currentItem.textNodes.forEach((textNode, i) => {
-                if (!textNode.parentElement || !currentItem.result) { return; }
+    nextTranslateList.forEach((pageTranslateItem) => {
+        const paragraph = pageTranslateItem.textNodes.map(textNode => textNode.nodeValue ?? '');
+        const key = keyFormat(paragraph);
 
-                const fonts = insertResultAndWrapOriginalTextNode(textNode, currentItem.mapIndex, currentItem.result.translations[i], comparisions[i]);
-                fonts && currentItem.fontsNodes.push(fonts);
-            });
-
-            continue;
+        if (resultCache[key]) {
+            feedDataToPageTranslateItem(pageTranslateItem, resultCache[key]);
+            return;
         }
 
-        if (text.length + request.length < 1024 && requestCount <= 80) {
-            requestArray.push({ Text: request });
-            pageTranslateList.push(currentItem);
-            textList.push(request);
-            text += request;
-            ++requestCount;
+        const { paragraphs, pageTranslateList, keys } = translateList[translateList.length - 1];
+
+        if ((text.length + key.length < options.maxTextLength && paragraphs.length < options.maxParagraphCount) || pageTranslateList.length === 0) {
+            paragraphs.push(paragraph);
+            pageTranslateList.push(pageTranslateItem);
+            keys.push(key);
+            text += key;
         }
         else {
-            translateList.push({ requestArray, pageTranslateList, textList });
-            pageTranslateList = [currentItem];
-            requestArray = [{ Text: request }];
-            textList = [request];
-            text = request;
-            requestCount = 1;
+            translateList.push({ paragraphs: [paragraph], pageTranslateList: [pageTranslateItem], keys: [key] });
+            text = key;
         }
-    }
-    if (text) {
-        translateList.push({ requestArray, pageTranslateList, textList });
-    }
+    });
+
+    if (translateList.length === 1 && translateList[0].pageTranslateList.length === 0) { return [] as TranslateItem[]; }
+
+    return translateList;
+};
+
+const customWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[], targetLanguage: string, source: string) => {
+    const keyFormat: KeyFormat = paragraph => paragraph.join('<b />');
+    const translateList = getTranslateList(nextTranslateList, keyFormat);
+
+    if (translateList.length === 0) { return; }
+
+    const tempCloseFlag = closeFlag;
+
+    translateList.forEach((item) => {
+        customWebTranslate(item.paragraphs, targetLanguage, source).then((result) => {
+            // if not the same, means web page translate has been closed.
+            if (tempCloseFlag !== closeFlag) { return; }
+
+            if (item.keys.length !== result.length) { throw getError(`Error: "result"'s length is not the same as "paragraphs"'s.`); }
+
+            item.pageTranslateList.forEach((pageTranslateItem, i) => {
+                resultCache[item.keys[i]] = result[i];
+                feedDataToPageTranslateItem(pageTranslateItem, result[i]);
+            });
+        }).catch((reason) => {
+            item.pageTranslateList.forEach(v => v.status = 'error');
+            errorCallback?.(reason.code ?? reason.message ?? 'Error: Unknown Error.');
+        });
+
+        item.pageTranslateList.forEach(v => v.status = 'loading');
+    });
+};
+
+const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[], targetLanguage: string) => {
+    const keyFormat: KeyFormat = (paragraph) => {
+        return paragraph.length === 1 ? paragraph[0] : paragraph.reduce((t, v, i) => (t + `<b${i}>${microsoftEscapeText(v)}</b${i}>`), '');
+    };
+    const translateList = getTranslateList(nextTranslateList, keyFormat, { maxTextLength: 1024, maxParagraphCount: 80 });
 
     if (translateList.length === 0) { return; }
 
@@ -572,30 +616,21 @@ const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[
 
     getAuthorization().then(() => {
         translateList.forEach((item) => {
-            const dealWithResult = (result: WebpageTranslateResult[]) => {
-                item.pageTranslateList.forEach((v, i) => {
-                    v.result = result[i];
-                    const comparisions = preprocessComparisons(v.result);
-                    v.status = 'finished';
-                    v.textNodes.forEach((textNode, i) => {
-                        if (!textNode.parentElement || !v.result) { return; }
-        
-                        const fonts = insertResultAndWrapOriginalTextNode(textNode, v.mapIndex, v.result.translations[i], comparisions[i]);
-                        fonts && v.fontsNodes.push(fonts);
-                    });
-                });
-            };
-    
-            microsoftWebTranslate(item.requestArray, targetLanguage).then((result) => {
-                item.textList.length === result.length && item.textList.forEach((v, i) => (resultCache[v] = result[i]));
-    
+            microsoftWebTranslate(item.keys.map((key) => ({ Text: key })), targetLanguage).then((result) => {
                 // if not the same, means web page translate has been closed.
-                tempCloseFlag === closeFlag && dealWithResult(result);
+                if (tempCloseFlag !== closeFlag) { return; }
+
+                if (item.keys.length !== result.length) { throw getError(`Error: "result"'s length is not the same as "paragraphs"'s.`); }
+
+                item.pageTranslateList.forEach((pageTranslateItem, i) => {
+                    resultCache[item.keys[i]] = result[i];
+                    feedDataToPageTranslateItem(pageTranslateItem, result[i]);
+                });
             }).catch((reason) => {
                 item.pageTranslateList.forEach(v => v.status = 'error');
-                errorCallback?.(reason.code);
+                errorCallback?.(reason.code ?? reason.message ?? 'Error: Unknown Error.');
             });
-    
+
             item.pageTranslateList.forEach(v => v.status = 'loading');
         });
     }).catch(() => {
@@ -607,84 +642,31 @@ const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[
 };
 
 const googleWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[], targetLanguage: string) => {
-    if (nextTranslateList.length === 0) { return; }
-
-    let translateList: { searchParams: URLSearchParams, pageTranslateList: PageTranslateItemEnity[], totalQText: string, qList: string[] }[] = [];
-
-    let pageTranslateList: PageTranslateItemEnity[] = [];
-    let searchParams = new URLSearchParams();
-    let text = '';
-    let qCount = 0;
-    let qList: string[] = [];
-    for (let i = 0; i < nextTranslateList.length; i++) {
-        let currentItem = nextTranslateList[i];
-
-        const q = currentItem.textNodes.length === 1 ?
-            (currentItem.textNodes[0].nodeValue ?? '') :
-            currentItem.textNodes.reduce((t, v, i) => (t + `<a i=${i}>${escapeText(v.nodeValue ?? '')}</a>`), '');
-
-        if (q in resultCache) {
-            currentItem.result = resultCache[q];
-            const comparisions = preprocessComparisons(currentItem.result);
-            currentItem.status = 'finished';
-            currentItem.textNodes.forEach((textNode, i) => {
-                if (!textNode.parentElement || !currentItem.result) { return; }
-
-                const fonts = insertResultAndWrapOriginalTextNode(textNode, currentItem.mapIndex, currentItem.result.translations[i], comparisions[i]);
-                fonts && currentItem.fontsNodes.push(fonts);
-            });
-
-            continue;
-        }
-
-        if (text.length + q.length < 1024 && qCount <= 100) {
-            searchParams.append('q', q);
-            pageTranslateList.push(currentItem);
-            qList.push(q);
-            text += q;
-            ++qCount;
-        }
-        else {
-            translateList.push({ searchParams, pageTranslateList, totalQText: text, qList });
-            pageTranslateList = [currentItem];
-            searchParams = new URLSearchParams();
-            searchParams.append('q', q);
-            qList = [q];
-            text = q;
-            qCount = 1;
-        }
-    }
-    if (text) {
-        translateList.push({ searchParams, pageTranslateList, totalQText: text, qList });
-    }
+    const keyFormat: KeyFormat = (paragraph) => {
+        return paragraph.length === 1 ? paragraph[0] : paragraph.reduce((t, v, i) => (t + `<a i=${i}>${escapeText(v)}</a>`), '');
+    };
+    const translateList = getTranslateList(nextTranslateList, keyFormat);
 
     if (translateList.length === 0) { return; }
 
     const tempCloseFlag = closeFlag;
 
     translateList.forEach((item) => {
-        const dealWithResult = (result: WebpageTranslateResult[]) => {
-            item.pageTranslateList.forEach((v, i) => {
-                v.result = result[i];
-                const comparisions = preprocessComparisons(v.result);
-                v.status = 'finished';
-                v.textNodes.forEach((textNode, i) => {
-                    if (!textNode.parentElement || !v.result) { return; }
-    
-                    const fonts = insertResultAndWrapOriginalTextNode(textNode, v.mapIndex, v.result.translations[i], comparisions[i]);
-                    fonts && v.fontsNodes.push(fonts);
-                });
-            });
-        };
-
-        googleWebTranslate(item.searchParams, item.totalQText, targetLanguage).then((result) => {
-            item.qList.length === result.length && item.qList.forEach((v, i) => (resultCache[v] = result[i]));
-
+        const searchParams = new URLSearchParams();
+        item.keys.forEach(key => searchParams.append('q', key));
+        googleWebTranslate(searchParams, item.keys.join(''), targetLanguage).then((result) => {
             // if not the same, means web page translate has been closed.
-            tempCloseFlag === closeFlag && dealWithResult(result);
+            if (tempCloseFlag !== closeFlag) { return; }
+
+            if (item.keys.length !== result.length) { throw getError(`Error: "result"'s length is not the same as "paragraphs"'s.`); }
+
+            item.pageTranslateList.forEach((pageTranslateItem, i) => {
+                resultCache[item.keys[i]] = result[i];
+                feedDataToPageTranslateItem(pageTranslateItem, result[i]);
+            });
         }).catch((reason) => {
             item.pageTranslateList.forEach(v => v.status = 'error');
-            errorCallback?.(reason.code);
+            errorCallback?.(reason.code ?? reason.message ?? 'Error: Unknown Error.');
         });
 
         item.pageTranslateList.forEach(v => v.status = 'loading');
@@ -703,27 +685,29 @@ export const errorRetry = () => {
         case MICROSOFT_COM:
             microsoftWebTranslateProcess(nextTranslateList, bingSwitchLangCode(language));
             break;
-        default: break;
+        default:
+            customWebTranslateProcess(nextTranslateList, language, source);
+            break;
     }
 };
 
 const preprocessComparisons = (webpageTranslateResult: WebpageTranslateResult) => {
-    let comparisions = webpageTranslateResult.comparisons ?? webpageTranslateResult.translations;
+    let comparisons = webpageTranslateResult.comparisons ?? webpageTranslateResult.translations;
 
     if (displayModeEnhancement.oAndT_NonDiscrete) {
         const length = webpageTranslateResult.translations.length;
-        comparisions = new Array(length).fill(null);
-        comparisions[length - 1] = webpageTranslateResult.translations.join('');
+        comparisons = new Array(length).fill(null);
+        comparisons[length - 1] = webpageTranslateResult.translations.join('');
     }
 
-    return comparisions;
+    return comparisons;
 };
 
-const insertResultAndWrapOriginalTextNode = (textNode: Text, mapIndex: number, translation: string, comparision: string | null): ItemFonts | void => {
+const insertResultAndWrapOriginalTextNode = (textNode: Text, mapIndex: number, translation: string, comparison: string | null): ItemFonts | void => {
     if (!textNode.parentElement) { return; }
 
     const originalFont: ScWebpageTranslationElement = document.createElement('font');
-    const comparisonFont: ScWebpageTranslationElement | null = typeof comparision === 'string' ? document.createElement('font') : null;
+    const comparisonFont: ScWebpageTranslationElement | null = typeof comparison === 'string' ? document.createElement('font') : null;
     const translationFont: ScWebpageTranslationElement = document.createElement('font');
 
     originalFont._ScWebpageTranslationKey = mapIndex;
@@ -735,7 +719,7 @@ const insertResultAndWrapOriginalTextNode = (textNode: Text, mapIndex: number, t
     textNode.parentElement.insertBefore(translationFont, textNode);
 
     originalFont.appendChild(textNode);
-    comparisonFont && comparision && comparisonFont.appendChild(document.createTextNode(comparision));
+    comparisonFont && comparison && comparisonFont.appendChild(document.createTextNode(comparison));
     translationFont.appendChild(document.createTextNode(translation));
 
     const itemFonts: ItemFonts = [originalFont, comparisonFont, translationFont];

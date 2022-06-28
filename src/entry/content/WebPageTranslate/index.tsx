@@ -152,7 +152,7 @@ const WebPageTranslate: React.FC = () => {
             <SourceSelect
                 className='web-page-translate__select border-bottom-select'
                 source={source}
-                sourceList={webPageTranslateSourceList}
+                sourceList={webPageTranslateSourceList.concat(getOptions().customWebpageTranslateSourceList)}
                 onChange={source => dispach({ type: 'change-source', source })}
             />
             <LanguageSelect
