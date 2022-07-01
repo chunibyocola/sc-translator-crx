@@ -1,3 +1,11 @@
+# 4.2.0 (2022-07-01)
+- Add "custom webpage translate source".
+- Add "Not displaying the translations discretely" option.
+- Add "Translate current page" to "browser_action" context menu. ([3f3359b](https://github.com/chunibyocola/sc-translator-crx/commit/3f3359b43fdd7b82c20cdb601cf05750bc2afe49))
+- Add "Phonetic (Non-English)" option under "Display of translation". ([e337fae](https://github.com/chunibyocola/sc-translator-crx/commit/e337faed0e8e2659773658a77c3728d14ec4705b))
+- Improve the translate quality of webpage translation in translation only mode.
+- Fix extension will send translate request automatically after opening popup page and type into input box in 0.6s even though "Auto translate after input in input box" is not enabled. ([c626911](https://github.com/chunibyocola/sc-translator-crx/commit/c6269111f5945b08ee6f401f8e62df0d9754fe9d))
+- Fix translate button might be displayed outside the window. ([ebc6486](https://github.com/chunibyocola/sc-translator-crx/commit/ebc6486499dd159a685ccac82f7b6168021ae8ec)) 
 # 4.1.0 (2022-05-09)
 - Add "Display the translation when the mouse hovers over the original text" option. ([95753cf](https://github.com/chunibyocola/sc-translator-crx/commit/95753cfc7b4aa5ccc268e563788ab67a5e88397b))
 - Add "Display the original text when the mouse hovers over the translation" option. ([52af34c](https://github.com/chunibyocola/sc-translator-crx/commit/52af34cd0344c4188a7208539bf3c128a0067349))

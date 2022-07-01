@@ -2,7 +2,7 @@
   "short_name": "ScTranslator",
   "name": "__MSG_extName__",
   "default_locale": "en",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "description": "__MSG_extDescription__",
   "icons": {
     "16": "image/icon-16.png",
@@ -16,7 +16,6 @@
     "service_worker": "background.js"
   },
   "action": {
-    "default_title": "__MSG_extName__",
     "default_popup": "popup.html"
   },
   "options_ui": {
