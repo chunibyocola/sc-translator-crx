@@ -614,30 +614,23 @@ const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[
 
     const tempCloseFlag = closeFlag;
 
-    getAuthorization().then(() => {
-        translateList.forEach((item) => {
-            microsoftWebTranslate(item.keys.map((key) => ({ Text: key })), targetLanguage).then((result) => {
-                // if not the same, means web page translate has been closed.
-                if (tempCloseFlag !== closeFlag) { return; }
+    translateList.forEach((item) => {
+        microsoftWebTranslate(item.keys.map((key) => ({ Text: key })), targetLanguage).then((result) => {
+            // if not the same, means web page translate has been closed.
+            if (tempCloseFlag !== closeFlag) { return; }
 
-                if (item.keys.length !== result.length) { throw getError(`Error: "result"'s length is not the same as "paragraphs"'s.`); }
+            if (item.keys.length !== result.length) { throw getError(`Error: "result"'s length is not the same as "paragraphs"'s.`); }
 
-                item.pageTranslateList.forEach((pageTranslateItem, i) => {
-                    resultCache[item.keys[i]] = result[i];
-                    feedDataToPageTranslateItem(pageTranslateItem, result[i]);
-                });
-            }).catch((reason) => {
-                item.pageTranslateList.forEach(v => v.status = 'error');
-                errorCallback?.(reason.code ?? reason.message ?? 'Error: Unknown Error.');
+            item.pageTranslateList.forEach((pageTranslateItem, i) => {
+                resultCache[item.keys[i]] = result[i];
+                feedDataToPageTranslateItem(pageTranslateItem, result[i]);
             });
+        }).catch((reason) => {
+            item.pageTranslateList.forEach(v => v.status = 'error');
+            errorCallback?.(reason.code ?? reason.message ?? 'Error: Unknown Error.');
+        });
 
-            item.pageTranslateList.forEach(v => v.status = 'loading');
-        });
-    }).catch(() => {
-        translateList.forEach((list) => {
-            list.pageTranslateList.forEach(v => v.status = 'error');
-        });
-        errorCallback?.('Microsoft: get authorization failed.');
+        item.pageTranslateList.forEach(v => v.status = 'loading');
     });
 };
 

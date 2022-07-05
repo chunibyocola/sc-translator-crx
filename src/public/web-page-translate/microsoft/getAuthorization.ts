@@ -1,19 +1,40 @@
-import { fetchData } from '../../translate/utils';
+import { fetchData, getError } from '../../translate/utils';
 
 let authorization = '';
 let expiry = 0;
 
-export const getAuthorization = async (force = false) => {
-    const timestamp = Number(new Date());
+let fetchAuthorizationPromise: Promise<string> | null = null;
 
-    if (!force && expiry > timestamp && authorization) { return authorization; }
+const fetchAuthorization = async () => {
+    const timestamp = Number(new Date());
 
     const url = 'https://edge.microsoft.com/translate/auth';
 
-    const res = await fetchData(url);
+    try {
+        const res = await fetchData(url);
 
-    authorization = await res.text();
-    expiry = timestamp + 500000;
+        authorization = await res.text();
+        expiry = timestamp + 500000;
 
-    return authorization;
+        fetchAuthorizationPromise = null;
+
+        return authorization;
+    }
+    catch {
+        fetchAuthorizationPromise = null;
+
+        throw getError('Error: get authorization failed.');
+    }
+};
+
+export const getAuthorization = async (force = false) => {
+    const timestamp = Number(new Date());
+
+    if (fetchAuthorizationPromise) { return fetchAuthorizationPromise; }
+
+    if (!force && expiry > timestamp && authorization) { return authorization; }
+
+    fetchAuthorizationPromise = fetchAuthorization();
+
+    return await fetchAuthorizationPromise;
 };

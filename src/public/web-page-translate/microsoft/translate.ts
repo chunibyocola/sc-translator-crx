@@ -20,15 +20,20 @@ export const translate = async (requestArray: { Text: string }[], targetLanguage
                 return dealWithResult(data);
             }
             else {
-                throw data?.error?.code;
+                throw getError(`Error: ${data?.error?.code ?? 'Unknown'}`);
             }
         }
         else {
-            throw data?.error?.code;
+            throw getError(`Error: ${data?.error?.code ?? 'Unknown'}`);
         }
     }
-    catch {
-        throw getError(RESULT_ERROR);
+    catch (err) {
+        if ((err as ReturnType<typeof getError>).code) {
+            throw err;
+        }
+        else {
+            throw getError(RESULT_ERROR);
+        }
     }
 };
 
