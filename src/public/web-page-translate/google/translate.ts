@@ -1,11 +1,16 @@
-import { unescapeText, WebpageTranslateResult } from '..';
+import { unescapeText, WebpageTranslateFn } from '..';
 import { RESULT_ERROR } from '../../translate/error-codes';
 import { fetchData, getError } from '../../translate/utils';
 import { getTk } from './getTk';
 
-export const translate = async (searchParams: URLSearchParams, totalQText: string, targetLanguage: string): Promise<WebpageTranslateResult[]> => {
+export const translate: WebpageTranslateFn = async ({ keys, targetLanguage }) => {
+    const searchParams = new URLSearchParams();
+    keys.forEach(key => searchParams.append('q', key));
+
+    const totalQText = keys.join('');
+
     const url = `https://translate.googleapis.com/translate_a/t?anno=3&client=te_lib&format=html&v=1.0&key=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw&logld=vTE_20210503_00&sl=auto&tl=${targetLanguage}&tc=1&dom=1&sr=1&tk=${getTk(totalQText)}&mode=1`;
-    
+
     const res = await fetchData(url, {
         method: 'POST',
         headers: {

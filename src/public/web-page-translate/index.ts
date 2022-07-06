@@ -3,7 +3,6 @@ import { DisplayModeEnhancement } from '../../types';
 import { getMessage } from '../i18n';
 import { bingSwitchLangCode } from '../switch-lang-code';
 import { translate as googleWebTranslate } from './google/translate';
-import { getAuthorization } from './microsoft/getAuthorization';
 import { translate as microsoftWebTranslate } from './microsoft/translate';
 import { translate as customWebTranslate } from './custom/translate';
 import { getError } from '../translate/utils';
@@ -12,6 +11,12 @@ export type WebpageTranslateResult = {
     translations: string[];
     comparisons?: string[];
 };
+type WebpageTranslateParams = {
+    paragraphs: string[][];
+    keys: string[];
+    targetLanguage: string;
+};
+export type WebpageTranslateFn = (params: WebpageTranslateParams, source: string) => Promise<WebpageTranslateResult[]>;
 
 type ScWebpageTranslationElement = HTMLElement & { _ScWebpageTranslationKey?: number; };
 type ItemFonts = [ScWebpageTranslationElement, ScWebpageTranslationElement | null, ScWebpageTranslationElement];
@@ -506,17 +511,7 @@ const handleDelay = delay(() => {
     waitingList = waitingList.filter(v => !(v.firstTextNodeClientY >= minViewPort && v.firstTextNodeClientY <= maxViewPort));
     updatedList = updatedList.concat(nextTranslateList);
 
-    switch (source) {
-        case GOOGLE_COM:
-            googleWebTranslateProcess(nextTranslateList, language);
-            break;
-        case MICROSOFT_COM:
-            microsoftWebTranslateProcess(nextTranslateList, bingSwitchLangCode(language));
-            break;
-        default:
-            customWebTranslateProcess(nextTranslateList, language, source);
-            break;
-    }
+    startProcessing(nextTranslateList);
 }, 500);
 
 const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, result: WebpageTranslateResult) => {
@@ -576,93 +571,63 @@ const getTranslateList = (nextTranslateList: PageTranslateItemEnity[], keyFormat
     return translateList;
 };
 
-const customWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[], targetLanguage: string, source: string) => {
-    const keyFormat: KeyFormat = paragraph => paragraph.join('<b />');
-    const translateList = getTranslateList(nextTranslateList, keyFormat);
-
-    if (translateList.length === 0) { return; }
-
-    const tempCloseFlag = closeFlag;
-
-    translateList.forEach((item) => {
-        customWebTranslate(item.paragraphs, targetLanguage, source).then((result) => {
-            // if not the same, means web page translate has been closed.
-            if (tempCloseFlag !== closeFlag) { return; }
-
-            if (item.keys.length !== result.length) { throw getError(`Error: "result"'s length is not the same as "paragraphs"'s.`); }
-
-            item.pageTranslateList.forEach((pageTranslateItem, i) => {
-                resultCache[item.keys[i]] = result[i];
-                feedDataToPageTranslateItem(pageTranslateItem, result[i]);
-            });
-        }).catch((reason) => {
-            item.pageTranslateList.forEach(v => v.status = 'error');
-            errorCallback?.(reason.code ?? reason.message ?? 'Error: Unknown Error.');
-        });
-
-        item.pageTranslateList.forEach(v => v.status = 'loading');
-    });
+const googleWebTranslateKeyFormat: KeyFormat = (paragraph) => {
+    return paragraph.length === 1 ? paragraph[0] : paragraph.reduce((t, v, i) => (`${t}<a i=${i}>${escapeText(v)}</a>`), '');
+};
+const microsoftWebTranslateKeyFormat: KeyFormat = (paragraph) => {
+    return paragraph.length === 1 ? paragraph[0] : paragraph.reduce((t, v, i) => (`${t}<b${i}>${microsoftEscapeText(v)}</b${i}>`), '');
+};
+const customWebTranslateKeyFormat: KeyFormat = paragraph => paragraph.join('<b />');
+const getKeyFormatFn = () => {
+    if (source === GOOGLE_COM) {
+        return googleWebTranslateKeyFormat;
+    }
+    else if (source === MICROSOFT_COM) {
+        return microsoftWebTranslateKeyFormat;
+    }
+    else {
+        return customWebTranslateKeyFormat;
+    }
 };
 
-const microsoftWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[], targetLanguage: string) => {
-    const keyFormat: KeyFormat = (paragraph) => {
-        return paragraph.length === 1 ? paragraph[0] : paragraph.reduce((t, v, i) => (t + `<b${i}>${microsoftEscapeText(v)}</b${i}>`), '');
-    };
-    const translateList = getTranslateList(nextTranslateList, keyFormat, { maxTextLength: 1024, maxParagraphCount: 80 });
+const startProcessing = (nextTranslateList: PageTranslateItemEnity[]) => {
+    const translateList = getTranslateList(nextTranslateList, getKeyFormatFn());
 
     if (translateList.length === 0) { return; }
 
-    const tempCloseFlag = closeFlag;
+    let translate: WebpageTranslateFn;
+    let targetLanguage = language;
 
-    translateList.forEach((item) => {
-        microsoftWebTranslate(item.keys.map((key) => ({ Text: key })), targetLanguage).then((result) => {
-            // if not the same, means web page translate has been closed.
-            if (tempCloseFlag !== closeFlag) { return; }
-
-            if (item.keys.length !== result.length) { throw getError(`Error: "result"'s length is not the same as "paragraphs"'s.`); }
-
-            item.pageTranslateList.forEach((pageTranslateItem, i) => {
-                resultCache[item.keys[i]] = result[i];
-                feedDataToPageTranslateItem(pageTranslateItem, result[i]);
-            });
-        }).catch((reason) => {
-            item.pageTranslateList.forEach(v => v.status = 'error');
-            errorCallback?.(reason.code ?? reason.message ?? 'Error: Unknown Error.');
-        });
-
-        item.pageTranslateList.forEach(v => v.status = 'loading');
-    });
-};
-
-const googleWebTranslateProcess = (nextTranslateList: PageTranslateItemEnity[], targetLanguage: string) => {
-    const keyFormat: KeyFormat = (paragraph) => {
-        return paragraph.length === 1 ? paragraph[0] : paragraph.reduce((t, v, i) => (t + `<a i=${i}>${escapeText(v)}</a>`), '');
-    };
-    const translateList = getTranslateList(nextTranslateList, keyFormat);
-
-    if (translateList.length === 0) { return; }
+    if (source === GOOGLE_COM) {
+        translate = googleWebTranslate;
+    }
+    else if (source === MICROSOFT_COM) {
+        translate = microsoftWebTranslate;
+        targetLanguage = bingSwitchLangCode(language);
+    }
+    else {
+        translate = customWebTranslate;
+    }
 
     const tempCloseFlag = closeFlag;
 
-    translateList.forEach((item) => {
-        const searchParams = new URLSearchParams();
-        item.keys.forEach(key => searchParams.append('q', key));
-        googleWebTranslate(searchParams, item.keys.join(''), targetLanguage).then((result) => {
+    translateList.forEach(({ paragraphs, pageTranslateList, keys }) => {
+        translate({ paragraphs, keys, targetLanguage }, source).then((result) => {
             // if not the same, means web page translate has been closed.
             if (tempCloseFlag !== closeFlag) { return; }
 
-            if (item.keys.length !== result.length) { throw getError(`Error: "result"'s length is not the same as "paragraphs"'s.`); }
+            if (keys.length !== result.length) { throw getError(`Error: "result"'s length is not the same as "paragraphs"'s.`); }
 
-            item.pageTranslateList.forEach((pageTranslateItem, i) => {
-                resultCache[item.keys[i]] = result[i];
+            pageTranslateList.forEach((pageTranslateItem, i) => {
+                resultCache[keys[i]] = result[i];
                 feedDataToPageTranslateItem(pageTranslateItem, result[i]);
             });
         }).catch((reason) => {
-            item.pageTranslateList.forEach(v => v.status = 'error');
+            pageTranslateList.forEach(v => v.status = 'error');
             errorCallback?.(reason.code ?? reason.message ?? 'Error: Unknown Error.');
         });
 
-        item.pageTranslateList.forEach(v => v.status = 'loading');
+        pageTranslateList.forEach(v => v.status = 'loading');
     });
 };
 
@@ -671,17 +636,7 @@ export const errorRetry = () => {
 
     if (nextTranslateList.length === 0) { return; }
 
-    switch (source) {
-        case GOOGLE_COM:
-            googleWebTranslateProcess(nextTranslateList, language);
-            break;
-        case MICROSOFT_COM:
-            microsoftWebTranslateProcess(nextTranslateList, bingSwitchLangCode(language));
-            break;
-        default:
-            customWebTranslateProcess(nextTranslateList, language, source);
-            break;
-    }
+    startProcessing(nextTranslateList);
 };
 
 const preprocessComparisons = (webpageTranslateResult: WebpageTranslateResult) => {

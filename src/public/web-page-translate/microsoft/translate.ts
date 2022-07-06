@@ -2,10 +2,12 @@ import { LANGUAGE_NOT_SOPPORTED, RESULT_ERROR } from '../../translate/error-code
 import { getError } from '../../translate/utils';
 import { getAuthorization } from './getAuthorization';
 import { langCode } from '../../translate/bing/lang-code';
-import { unescapeText, WebpageTranslateResult } from '..';
+import { unescapeText, WebpageTranslateFn, WebpageTranslateResult } from '..';
 
-export const translate = async (requestArray: { Text: string }[], targetLanguage: string): Promise<WebpageTranslateResult[]> => {
+export const translate: WebpageTranslateFn = async ({ keys, targetLanguage }) => {
     if (!(targetLanguage in langCode)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
+
+    const requestArray = keys.map((key) => ({ Text: key }));
 
     try {
         let data = await fetchFromMicrosoft(requestArray, targetLanguage);

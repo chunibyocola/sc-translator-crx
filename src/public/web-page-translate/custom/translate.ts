@@ -1,4 +1,4 @@
-import { WebpageTranslateResult } from '..';
+import { WebpageTranslateFn } from '..';
 import { SOURCE_ERROR } from '../../../constants/errorCodes';
 import { DefaultOptions } from '../../../types';
 import { RESULT_ERROR } from '../../translate/error-codes';
@@ -20,7 +20,7 @@ type FetchCustomSourceJSON = {
 //     code: string;
 // };
 
-export const translate = async (paragraphs: string[][], targetLanguage: string, source: string): Promise<WebpageTranslateResult[]> => {
+export const translate: WebpageTranslateFn = async ({ paragraphs, targetLanguage }, source) => {
     const { customWebpageTranslateSourceList } = await getLocalStorageAsync<PickedOptions>(keys);
     const customTranslateSource = customWebpageTranslateSourceList.find(value => value.source === source);
 
