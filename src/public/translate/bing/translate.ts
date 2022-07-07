@@ -40,20 +40,23 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
         };
 
         let dict: undefined | string[] = undefined;
+        let example: undefined | string[] = undefined;
+
         try {
             if (!text.includes(' ') && (result.from === 'en' || to === 'en')) {
-                const dictRes = await fetchDictFromBing({ text, from: result.from, to, com });
-                const dictData = await dictRes.json();
-
-                const dictObject = dictData[0]?.translations.reduce((t: any, c: any) => ({ ...t, [c.posTag]: t[c.posTag] ? t[c.posTag].concat(c.normalizedTarget) : [c.normalizedTarget] }), {});
-                dict = dictObject && Object.keys(dictObject).map(v => `${v}: ${dictObject[v].join(', ')}`);
+                const params = { text, from: result.from, to, com, translation: result.result[0] };
+                const [dictP, exampleP] = await Promise.allSettled([fetchDictFromBing(params), fetchExampleFromBing(params)]);
+                dict = dictP.status === 'fulfilled' ? dictP.value : undefined;
+                example = exampleP.status === 'fulfilled' ? exampleP.value : undefined;
             }
         }
         catch {
             dict = undefined;
+            example = undefined;
         }
 
         result.dict = dict;
+        result.example = example;
 
         return result;
     } catch (err) {
@@ -68,7 +71,33 @@ type FetchFromBingParams = {
     com: boolean;
 };
 
-const fetchDictFromBing = async ({ text, from, to, com }: FetchFromBingParams) => {
+const fetchExampleFromBing = async ({ text, from, to, com, translation }: FetchFromBingParams & { translation: string; }): Promise<string[]> => {
+    const { token, key, IG, IID } = await getTranslateParams(com);
+
+    const url = `https://${com ? 'www' : 'cn'}.bing.com/texamplev3?isVertical=1&IG=${IG}&IID=${IID}`;
+
+    const searchParams = new URLSearchParams();
+    searchParams.append('from', from);
+    searchParams.append('text', text);
+    searchParams.append('to', to);
+    searchParams.append('token', token);
+    searchParams.append('key', key.toString());
+    searchParams.append('translation', translation);
+
+    const res = await fetchData(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: searchParams.toString()
+    });
+    
+    const data = await res.json();
+
+    return data[0]?.examples?.slice(0, 3).map(({ sourcePrefix, sourceTerm, sourceSuffix }: { [K: string]: string; }) => (`${sourcePrefix}${sourceTerm}${sourceSuffix}`));
+};
+
+const fetchDictFromBing = async ({ text, from, to, com }: FetchFromBingParams): Promise<string[]> => {
     const { token, key, IG, IID } = await getTranslateParams(com);
 
     const url = `https://${com ? 'www' : 'cn'}.bing.com/tlookupv3?isVertical=1&IG=${IG}&IID=${IID}`;
@@ -80,13 +109,19 @@ const fetchDictFromBing = async ({ text, from, to, com }: FetchFromBingParams) =
     searchParams.append('token', token);
     searchParams.append('key', key.toString());
 
-    return await fetchData(url, {
+    const res = await fetchData(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: searchParams.toString()
     });
+
+    const data = await res.json();
+
+    const dictObject = data[0]?.translations.reduce((t: any, c: any) => ({ ...t, [c.posTag]: t[c.posTag] ? t[c.posTag].concat(c.normalizedTarget) : [c.normalizedTarget] }), {});
+
+    return dictObject && Object.keys(dictObject).map(v => `${v}: ${dictObject[v].join(', ')}`);
 };
 
 const fetchResultFromBing = async ({ text, from, to, com }: FetchFromBingParams) => {
