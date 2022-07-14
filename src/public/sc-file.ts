@@ -30,7 +30,7 @@ const scFile = (() => {
 
             const data = JSON.parse(window.atob(text));
 
-            if (typeof data !== 'object') { throw new Error('Error: Data is not an "object"'); }
+            if (Array.isArray(data) || typeof data !== 'object') { throw new Error('Error: Data is not an "object"'); }
 
             return data as SerializableObject;
         }

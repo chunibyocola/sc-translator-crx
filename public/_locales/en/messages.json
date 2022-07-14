@@ -425,6 +425,9 @@
     "optionsCustomWebpageTranslateSourceLearn": {
         "message": "Learn more about custom webpage translate source."
     },
+    "optionsExportSettings": {
+        "message": "Export settings"
+    },
     "themePreset": {
         "message": "Preset"
     },

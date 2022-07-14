@@ -425,6 +425,9 @@
     "optionsCustomWebpageTranslateSourceLearn": {
         "message": "深入了解自定义网页翻译源。"
     },
+    "optionsExportSettings": {
+        "message": "导出设置"
+    },
     "themePreset": {
         "message": "预设"
     },

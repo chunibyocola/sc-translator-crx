@@ -425,6 +425,9 @@
     "optionsCustomWebpageTranslateSourceLearn": {
         "message": "カスタムWebページ翻訳ソースをもっと知る。"
     },
+    "optionsExportSettings": {
+        "message": "エクスポート設定"
+    },
     "themePreset": {
         "message": "プリセット"
     },

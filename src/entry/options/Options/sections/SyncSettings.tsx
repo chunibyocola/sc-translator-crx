@@ -3,6 +3,7 @@ import Button from '../../../../components/Button';
 import { getMessage } from '../../../../public/i18n';
 import { sendSyncSettingsToOtherBrowsers } from '../../../../public/send';
 import BetaIcon from '../../BetaIcon';
+import FileSync from '../../FileSync';
 
 type SyncSettingsProps = {};
 
@@ -20,6 +21,9 @@ const SyncSettings: React.FC<SyncSettingsProps> = () => {
                     {getMessage('optionsSyncSettingsToOtherBrowsers')}
                 </Button>
                 <BetaIcon />
+            </div>
+            <div className='opt-section-row'>
+                <FileSync />
             </div>
         </div>
     );
