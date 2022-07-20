@@ -1,7 +1,7 @@
-type SerializableObject = {
+export type SerializableObject = {
     [Key: string]: string | number | boolean | null | SerializableObject | SerializableArray;
 };
-type SerializableArray = (string | number | boolean | null | SerializableObject | SerializableArray)[];
+export type SerializableArray = (string | number | boolean | null | SerializableObject | SerializableArray)[];
 
 const SC_FILE_EXTENSION = 'sctranslator';
 const SC_FILE_NAME_SUFFIX = `.${SC_FILE_EXTENSION}`;
@@ -10,7 +10,7 @@ const scFile = (() => {
     return {
         saveAs: (serializableObject: SerializableObject, fileName: string) => {
             const downloadElement = document.createElement('a');
-            downloadElement.setAttribute('href', `data:text/plain;charset=utf-8,${window.btoa(JSON.stringify(serializableObject))}`);
+            downloadElement.setAttribute('href', `data:text/plain;charset=utf-8,${JSON.stringify(serializableObject)}`);
             downloadElement.setAttribute('download', `${fileName}${SC_FILE_NAME_SUFFIX}`);
             downloadElement.click();
         },
@@ -28,9 +28,9 @@ const scFile = (() => {
         read: async (file: File) => {
             const text = await file.text();
 
-            const data = JSON.parse(window.atob(text));
+            const data = JSON.parse(text);
 
-            if (Array.isArray(data) || typeof data !== 'object') { throw new Error('Error: Data is not an "object"'); }
+            if (!data || Array.isArray(data) || typeof data !== 'object') { throw new Error('Error: Data is not an "object"'); }
 
             return data as SerializableObject;
         }

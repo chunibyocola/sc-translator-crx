@@ -428,6 +428,9 @@
     "optionsExportSettings": {
         "message": "Export settings"
     },
+    "optionsImportSettings": {
+        "message": "Import settings"
+    },
     "themePreset": {
         "message": "Preset"
     },

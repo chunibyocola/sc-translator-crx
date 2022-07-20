@@ -428,6 +428,9 @@
     "optionsExportSettings": {
         "message": "導出設置"
     },
+    "optionsImportSettings": {
+        "message": "導入設置"
+    },
     "themePreset": {
         "message": "預設"
     },

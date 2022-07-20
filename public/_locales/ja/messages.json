@@ -428,6 +428,9 @@
     "optionsExportSettings": {
         "message": "エクスポート設定"
     },
+    "optionsImportSettings": {
+        "message": "インポート設定"
+    },
     "themePreset": {
         "message": "プリセット"
     },

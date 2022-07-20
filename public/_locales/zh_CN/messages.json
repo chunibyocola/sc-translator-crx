@@ -428,6 +428,9 @@
     "optionsExportSettings": {
         "message": "导出设置"
     },
+    "optionsImportSettings": {
+        "message": "导入设置"
+    },
     "themePreset": {
         "message": "预设"
     },

@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '../../../components/Button';
 import defaultOptions from '../../../constants/defaultOptions';
+import { setLocalStorage } from '../../../public/chrome-call';
 import { getMessage } from '../../../public/i18n';
 import scFile from '../../../public/sc-file';
 import { getLocalStorageAsync } from '../../../public/utils';
@@ -20,6 +21,17 @@ const FileSync: React.FC = () => {
                 }}
             >
                 {getMessage('optionsExportSettings')}
+            </Button>
+            <Button
+                variant='outlined'
+                onClick={async () => {
+                    scFile.open(async (file) => {
+                        const data = await scFile.read(file);
+                        setLocalStorage(data);
+                    })
+                }}
+            >
+                {getMessage('optionsImportSettings')}
             </Button>
         </div>
     )
