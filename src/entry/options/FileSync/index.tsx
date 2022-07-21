@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '../../../components/Button';
 import defaultOptions from '../../../constants/defaultOptions';
 import { setLocalStorage } from '../../../public/chrome-call';
+import { combineStorage } from '../../../public/combine-storage';
 import { getMessage } from '../../../public/i18n';
 import scFile from '../../../public/sc-file';
 import { getLocalStorageAsync } from '../../../public/utils';
@@ -17,7 +18,9 @@ const FileSync: React.FC = () => {
 
                     const syncOptions: SyncOptions = options;
 
-                    scFile.saveAs(syncOptions, `settings-v${chrome.runtime.getManifest().version}`);
+                    const date = new Date();
+
+                    scFile.saveAs(syncOptions, `settings-d${date.getFullYear()}${date.getMonth() + 1 < 10 ? '0' : ''}${date.getMonth() + 1}${date.getDate()}`);
                 }}
             >
                 {getMessage('optionsExportSettings')}
@@ -27,7 +30,10 @@ const FileSync: React.FC = () => {
                 onClick={async () => {
                     scFile.open(async (file) => {
                         const data = await scFile.read(file);
-                        setLocalStorage(data);
+                        
+                        const newStorage = await combineStorage(data);
+
+                        setLocalStorage(newStorage);
                     })
                 }}
             >
