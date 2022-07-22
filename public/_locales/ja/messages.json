@@ -431,6 +431,9 @@
     "optionsImportSettings": {
         "message": "インポート設定"
     },
+    "optionsFileSyncDescription": {
+        "message": "エクスポートされた設定は、明文でファイルに保存されます。"
+    },
     "themePreset": {
         "message": "プリセット"
     },

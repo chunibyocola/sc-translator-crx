@@ -431,6 +431,9 @@
     "optionsImportSettings": {
         "message": "Import settings"
     },
+    "optionsFileSyncDescription": {
+        "message": "The exported settings will be saved in clear text in the file."
+    },
     "themePreset": {
         "message": "Preset"
     },

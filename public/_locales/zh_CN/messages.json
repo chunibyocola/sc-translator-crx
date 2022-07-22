@@ -431,6 +431,9 @@
     "optionsImportSettings": {
         "message": "导入设置"
     },
+    "optionsFileSyncDescription": {
+        "message": "被导出的设置将会以明文的形式保存在文件中。"
+    },
     "themePreset": {
         "message": "预设"
     },

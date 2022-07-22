@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../../../components/Button';
+import IconFont from '../../../components/IconFont';
 import defaultOptions from '../../../constants/defaultOptions';
 import { setLocalStorage } from '../../../public/chrome-call';
 import { combineStorage } from '../../../public/combine-storage';
@@ -9,6 +10,8 @@ import { getLocalStorageAsync } from '../../../public/utils';
 import { DefaultOptions, SyncOptions } from '../../../types';
 
 const FileSync: React.FC = () => {
+    const [errorMessage, setErrorMessage] = useState('');
+
     return (
         <div>
             <Button
@@ -23,22 +26,39 @@ const FileSync: React.FC = () => {
                     scFile.saveAs(syncOptions, `settings-d${date.getFullYear()}${date.getMonth() + 1 < 10 ? '0' : ''}${date.getMonth() + 1}${date.getDate()}`);
                 }}
             >
+                <IconFont
+                    iconName='#icon-export'
+                    style={{fontSize: '24px', marginRight: '5px'}}
+                />
                 {getMessage('optionsExportSettings')}
             </Button>
             <Button
                 variant='outlined'
                 onClick={async () => {
                     scFile.open(async (file) => {
-                        const data = await scFile.read(file);
-                        
-                        const newStorage = await combineStorage(data);
+                        try {
+                            const data = await scFile.read(file);
+                            
+                            const newStorage = await combineStorage(data);
 
-                        setLocalStorage(newStorage);
-                    })
+                            setLocalStorage(newStorage);
+
+                            setErrorMessage('');
+                        }
+                        catch (err) {
+                            const message = (err as Error).message ?? '';
+                            setErrorMessage(message);
+                        }
+                    });
                 }}
             >
+                <IconFont
+                    iconName='#icon-import'
+                    style={{fontSize: '24px', marginRight: '5px'}}
+                />
                 {getMessage('optionsImportSettings')}
             </Button>
+            {errorMessage && <div>{errorMessage}</div>}
         </div>
     )
 };

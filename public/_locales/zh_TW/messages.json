@@ -431,6 +431,9 @@
     "optionsImportSettings": {
         "message": "導入設置"
     },
+    "optionsFileSyncDescription": {
+        "message": "被導出的設置將會以明文的形式保存在文件中。"
+    },
     "themePreset": {
         "message": "預設"
     },
