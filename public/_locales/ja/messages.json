@@ -479,6 +479,9 @@
     "contentRemoveFromCollection": {
         "message": "コレクションから削除する"
     },
+    "contentRestartWebpageTranslating": {
+        "message": "Webページ翻訳を再起動する"
+    },
     "popupEnableTranslate": {
         "message": "このサイトで翻訳を有効にする"
     },

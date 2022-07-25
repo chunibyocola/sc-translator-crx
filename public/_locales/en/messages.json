@@ -479,6 +479,9 @@
     "contentRemoveFromCollection": {
         "message": "Remove from collection"
     },
+    "contentRestartWebpageTranslating": {
+        "message": "Restart webpage translating"
+    },
     "popupEnableTranslate": {
         "message": "Enable translate on this website"
     },

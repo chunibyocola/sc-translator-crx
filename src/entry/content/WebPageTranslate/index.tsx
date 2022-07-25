@@ -17,7 +17,8 @@ import './style.css';
 const wPTI18nCache = {
     switchDisplayModeOfResult: getMessage('contentSwitchDisplayModeOfResult'),
     startWebPageTranslating: getMessage('contentStartWebPageTranslating'),
-    closeWebPageTranslating: getMessage('contentCloseWebPageTranslating')
+    closeWebPageTranslating: getMessage('contentCloseWebPageTranslating'),
+    restartWebpageTranslating: getMessage('contentRestartWebpageTranslating')
 };
 
 // WPT means web page transalte
@@ -100,8 +101,8 @@ const WebPageTranslate: React.FC = () => {
         }, {}));
     }, [source]);
 
-    const startProcessing = useCallback(() => {
-        if (source === workingSourceAndLanguage.source && targetLanguage === workingSourceAndLanguage.targetLanguage) { return; }
+    const startProcessing = useCallback((force = false) => {
+        if (source === workingSourceAndLanguage.source && targetLanguage === workingSourceAndLanguage.targetLanguage && !force) { return; }
 
         closeWebPageTranslating();
         const startSuccess = startWebPageTranslating(document.body, source, targetLanguage, getOptions().displayModeEnhancement, handleError);
@@ -180,6 +181,15 @@ const WebPageTranslate: React.FC = () => {
                 title={wPTI18nCache.startWebPageTranslating}
             >
                 <IconFont iconName='#icon-start' />
+            </PanelIconButtonWrapper>
+            <PanelIconButtonWrapper
+                onClick={() => {
+                    startProcessing(true);
+                }}
+                disabled={!working}
+                title={wPTI18nCache.restartWebpageTranslating}
+            >
+                <IconFont iconName='#icon-refresh' />
             </PanelIconButtonWrapper>
             <PanelIconButtonWrapper
                 onClick={() => {

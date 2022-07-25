@@ -479,6 +479,9 @@
     "contentRemoveFromCollection": {
         "message": "从收藏中删除"
     },
+    "contentRestartWebpageTranslating": {
+        "message": "重新开始网页翻译"
+    },
     "popupEnableTranslate": {
         "message": "在此网站启用翻译"
     },
