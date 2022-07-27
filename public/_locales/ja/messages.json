@@ -434,6 +434,9 @@
     "optionsFileSyncDescription": {
         "message": "エクスポートされた設定は、明文でファイルに保存されます。"
     },
+    "optionsWebpageTranslatingInstructions": {
+        "message": "Webページ翻訳説明"
+    },
     "themePreset": {
         "message": "プリセット"
     },

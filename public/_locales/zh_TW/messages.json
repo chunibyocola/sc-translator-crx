@@ -434,6 +434,9 @@
     "optionsFileSyncDescription": {
         "message": "被導出的設置將會以明文的形式保存在文件中。"
     },
+    "optionsWebpageTranslatingInstructions": {
+        "message": "網頁翻譯說明"
+    },
     "themePreset": {
         "message": "預設"
     },

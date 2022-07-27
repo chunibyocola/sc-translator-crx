@@ -52,6 +52,13 @@ const WebPageTranslating: React.FC = () => {
             <div className='opt-section-row'>
                 <div className='item-description'>
                     {getMessage('optionsWebPageTranslatingDescription')}
+                    <a
+                        target='_blank'
+                        href='https://github.com/chunibyocola/sc-translator-crx/discussions/56'
+                        rel='noreferrer'
+                    >
+                        {getMessage('optionsWebpageTranslatingInstructions')}
+                    </a>
                 </div>
             </div>
             <div className='opt-section-row'>

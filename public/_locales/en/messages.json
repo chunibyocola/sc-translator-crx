@@ -434,6 +434,9 @@
     "optionsFileSyncDescription": {
         "message": "The exported settings will be saved in clear text in the file."
     },
+    "optionsWebpageTranslatingInstructions": {
+        "message": "Webpage translating instructions"
+    },
     "themePreset": {
         "message": "Preset"
     },
