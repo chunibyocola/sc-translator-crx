@@ -1,4 +1,4 @@
-import { sendTabsCallOutCommandKeyPressed, sendTabsSeparateWindowSetText } from "../../public/send";
+import { sendTabsCallOutCommandKeyPressed, sendTabsOpenSeparateWindowCommandKeyPressed, sendTabsSeparateWindowSetText } from "../../public/send";
 import { getQueryString } from "../../public/translate/utils";
 import { getLocalStorageAsync } from "../../public/utils";
 import { DefaultOptions } from "../../types";
@@ -28,9 +28,13 @@ export const createSeparateWindow = async (text?: string) => {
 
         chrome.windows.update(windowId, { focused: true });
 
-        sendTabsCallOutCommandKeyPressed(tabId);
-
-        text && sendTabsSeparateWindowSetText(tabId, text);
+        if (text) {
+            sendTabsCallOutCommandKeyPressed(tabId);
+            sendTabsSeparateWindowSetText(tabId, text);
+        }
+        else {
+            sendTabsOpenSeparateWindowCommandKeyPressed(tabId);
+        }
     }
     else {
         const { rememberStwSizeAndPosition, stwSizeAndPosition } = await getLocalStorageAsync<PickedOptions>(keys);

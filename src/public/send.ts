@@ -109,6 +109,7 @@ export type ChromeTabsMessage = GenericMessage<typeof types.SCTS_CONTEXT_MENUS_C
 }> | GenericMessage<typeof types.SCTS_SWITCH_WT_DISPLAY_MODE, {
 }> | GenericMessage<typeof types.SCTS_SEPARATE_WINDOW_SET_TEXT, {
     text: string;
+}> | GenericMessage<typeof types.SCTS_OPEN_SEPARATE_WINDOW_COMMAND_KEY_PRESSED, {
 }>;
 
 export const sendTabsContextMenusClicked = (tabId: number, text: string) => {
@@ -141,6 +142,10 @@ export const sendTabsSwitchWtDisplayMode = (tabId: number) => {
 
 export const sendTabsSeparateWindowSetText = (tabId: number, text: string) => {
     return chromeTabsSendMessage(tabId, { type: types.SCTS_SEPARATE_WINDOW_SET_TEXT, payload: { text } });
+};
+
+export const sendTabsOpenSeparateWindowCommandKeyPressed = (tabId: number) => {
+    return chromeTabsSendMessage(tabId, { type: types.SCTS_OPEN_SEPARATE_WINDOW_COMMAND_KEY_PRESSED, payload: {} })
 };
 
 export const chromeTabsSendMessage = <T = null>(tabId: number, message: ChromeTabsMessage): Promise<T | ErrorResponse> => {
