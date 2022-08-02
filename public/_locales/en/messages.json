@@ -207,7 +207,7 @@
         "message": "Font size of translate panel"
     },
     "optionsStwAutoRespondDescription": {
-        "message": "Separate translate window will auto respond to the translate request which you click the \"translate\" item of context menus in the extension unavailable page."
+        "message": "Separate translate window will auto respond to the translate request when you click the \"translate\" item of context menus in the extension unavailable page."
     },
     "optionsRememberHistoryPanelStatus": {
         "message": "Remember the status of translate history panel"
