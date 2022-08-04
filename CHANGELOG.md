@@ -1,3 +1,9 @@
+# 4.3.0 (2022-08-04)
+- The last text of clipboard will be pasted into text box when user using "Open separate translate window" keyboard with "Auto paste in the text box" option enabled now. ([4ed8aae](https://github.com/chunibyocola/sc-translator-crx/commit/4ed8aae2cd611624f25bac0668ed36fe1e408e7f))
+- Add "Restart webpage translating" button to webpage translating control bar. ([8f80948](https://github.com/chunibyocola/sc-translator-crx/commit/8f8094819c4a0d7d9f33603e266706c9b3f60f0f))
+- Add "import settings" button. ([632422e](https://github.com/chunibyocola/sc-translator-crx/commit/632422e20cfdae8ccf18d0c365035390d30cfd55))
+- Add "export settings" button. ([5df98fa](https://github.com/chunibyocola/sc-translator-crx/commit/5df98fa16c93451a8ebb66cfd61174b01d9aeb29))
+- Add example to Bing translation. ([2271af1](https://github.com/chunibyocola/sc-translator-crx/commit/2271af1a45b54c6cb83aa05860a1a5df58133a48))
 # 4.2.0 (2022-07-01)
 - Add "custom webpage translate source".
 - Add "Not displaying the translations discretely" option.
