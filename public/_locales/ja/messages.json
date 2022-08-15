@@ -521,6 +521,9 @@
     "collectionSearchText": {
         "message": "検索テキスト"
     },
+    "collectionExportCollection": {
+        "message": "エクスポートコレクション"
+    },
     "wordTranslate": {
         "message": "翻訳"
     },

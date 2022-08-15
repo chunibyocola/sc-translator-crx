@@ -521,6 +521,9 @@
     "collectionSearchText": {
         "message": "搜索文本"
     },
+    "collectionExportCollection": {
+        "message": "導出收藏"
+    },
     "wordTranslate": {
         "message": "翻譯"
     },

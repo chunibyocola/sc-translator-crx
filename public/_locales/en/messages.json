@@ -521,6 +521,9 @@
     "collectionSearchText": {
         "message": "Search text"
     },
+    "collectionExportCollection": {
+        "message": "Export collection"
+    },
     "wordTranslate": {
         "message": "Translate"
     },

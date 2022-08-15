@@ -7,6 +7,7 @@ import Logo from '../../../components/Logo';
 import SourceFavicon from '../../../components/SourceFavicon';
 import TranslateResult from '../../../components/TranslateResult';
 import { getMessage } from '../../../public/i18n';
+import scFile from '../../../public/sc-file';
 import scIndexedDB, { DB_STORE_COLLECTION, StoreCollectionValue } from '../../../public/sc-indexed-db';
 import { resultToString } from '../../../public/utils';
 import './style.css';
@@ -177,76 +178,96 @@ const Collection: React.FC = () => {
             <div style={{height: '1px'}}></div>
             <div className='toolbar'>
                 <div className='toolbar-wrapper'>
-                    <Checkbox
-                        checked={checkedLength > 0 && checkedLength === checked.length}
-                        indeterminate={checkedLength > 0}
-                        onChange={() => setChecked(checkedLength > 0 ? checked.map(() => false) : checked.map(() => true))}
-                    />
-                    {checkedLength > 0 ? <>
+                    <div className='toolbar-wrapper__left'>
+                        <Checkbox
+                            checked={checkedLength > 0 && checkedLength === checked.length}
+                            indeterminate={checkedLength > 0}
+                            onChange={() => setChecked(checkedLength > 0 ? checked.map(() => false) : checked.map(() => true))}
+                        />
+                        {checkedLength > 0 ? <>
+                            <Button
+                                variant='icon'
+                                onClick={() => {
+                                    const deleteQueries: string[] = [];
+
+                                    checked.forEach((value, index) => {
+                                        value && filteredValues[index] && deleteQueries.push(filteredValues[index].text);
+                                    });
+
+                                    deleteQueries.length > 0 && scIndexedDB.delete(DB_STORE_COLLECTION, deleteQueries).then(() => refreshCollectionValues());
+                                }}
+                            >
+                                <IconFont
+                                    iconName='#icon-MdDelete'
+                                    style={{fontSize: '24px'}}
+                                />
+                            </Button>
+                        </> : <>
+                            <Button
+                                variant='icon'
+                                onClick={() => refreshCollectionValues()}
+                            >
+                                <IconFont
+                                    iconName='#icon-refresh'
+                                    style={{fontSize: '24px'}}
+                                />
+                            </Button>
+                            <Button
+                                variant='text'
+                                onClick={() => setOrderIndicate(v => v === 3 ? 2 : 3)}
+                            >
+                                <span className='order-btn__content'>
+                                    {getMessage('wordText')}
+                                    <span className='order-btn__content__icons'>
+                                        <IconFont
+                                            iconName='#icon-GoChevronDown'
+                                            style={{transform: 'rotate(180deg)', ...(orderIndicate !== 3 ? { opacity: 0.3 } : undefined)}}
+                                        />
+                                        <IconFont
+                                            iconName='#icon-GoChevronDown'
+                                            style={orderIndicate !== 2 ? { opacity: 0.3 } : undefined}
+                                        />
+                                    </span>
+                                </span>
+                            </Button>
+                            <Button
+                                variant='text'
+                                onClick={() => setOrderIndicate(v => v === 1 ? 0 : 1)}
+                            >
+                                <span className='order-btn__content'>
+                                    {getMessage('wordDate')}
+                                    <span className='order-btn__content__icons'>
+                                        <IconFont
+                                            iconName='#icon-GoChevronDown'
+                                            style={{transform: 'rotate(180deg)', ...(orderIndicate !== 1 ? { opacity: 0.3 } : undefined)}}
+                                        />
+                                        <IconFont
+                                            iconName='#icon-GoChevronDown'
+                                            style={orderIndicate !== 0 ? { opacity: 0.3 } : undefined}
+                                        />
+                                    </span>
+                                </span>
+                            </Button>
+                        </>}
+                    </div>
+                    <div className='toolbar-wrapper__right'>
                         <Button
-                            variant='icon'
-                            onClick={() => {
-                                const deleteQueries: string[] = [];
+                            variant='text'
+                            onClick={async () => {
+                                const data = await scIndexedDB.getAll<StoreCollectionValue>(DB_STORE_COLLECTION);
 
-                                checked.forEach((value, index) => {
-                                    value && filteredValues[index] && deleteQueries.push(filteredValues[index].text);
-                                });
+                                const date = new Date();
 
-                                deleteQueries.length > 0 && scIndexedDB.delete(DB_STORE_COLLECTION, deleteQueries).then(() => refreshCollectionValues());
+                                scFile.saveAs(data, `collection-d${date.getFullYear()}${date.getMonth() + 1 < 10 ? '0' : ''}${date.getMonth() + 1}${date.getDate() < 10 ? '0' : ''}${date.getDate()}`);
                             }}
                         >
                             <IconFont
-                                iconName='#icon-MdDelete'
-                                style={{fontSize: '24px'}}
+                                iconName='#icon-export'
+                                style={{fontSize: '24px', marginRight: '5px'}}
                             />
+                            {getMessage('collectionExportCollection')}
                         </Button>
-                    </> : <>
-                        <Button
-                            variant='icon'
-                            onClick={() => refreshCollectionValues()}
-                        >
-                            <IconFont
-                                iconName='#icon-refresh'
-                                style={{fontSize: '24px'}}
-                            />
-                        </Button>
-                        <Button
-                            variant='text'
-                            onClick={() => setOrderIndicate(v => v === 3 ? 2 : 3)}
-                        >
-                            <span className='order-btn__content'>
-                                {getMessage('wordText')}
-                                <span className='order-btn__content__icons'>
-                                    <IconFont
-                                        iconName='#icon-GoChevronDown'
-                                        style={{transform: 'rotate(180deg)', ...(orderIndicate !== 3 ? { opacity: 0.3 } : undefined)}}
-                                    />
-                                    <IconFont
-                                        iconName='#icon-GoChevronDown'
-                                        style={orderIndicate !== 2 ? { opacity: 0.3 } : undefined}
-                                    />
-                                </span>
-                            </span>
-                        </Button>
-                        <Button
-                            variant='text'
-                            onClick={() => setOrderIndicate(v => v === 1 ? 0 : 1)}
-                        >
-                            <span className='order-btn__content'>
-                                {getMessage('wordDate')}
-                                <span className='order-btn__content__icons'>
-                                    <IconFont
-                                        iconName='#icon-GoChevronDown'
-                                        style={{transform: 'rotate(180deg)', ...(orderIndicate !== 1 ? { opacity: 0.3 } : undefined)}}
-                                    />
-                                    <IconFont
-                                        iconName='#icon-GoChevronDown'
-                                        style={orderIndicate !== 0 ? { opacity: 0.3 } : undefined}
-                                    />
-                                </span>
-                            </span>
-                        </Button>
-                    </>}
+                    </div>
                 </div>
             </div>
             <div style={{height: '2px'}}></div>
