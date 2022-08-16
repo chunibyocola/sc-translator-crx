@@ -256,9 +256,7 @@ const Collection: React.FC = () => {
                             onClick={async () => {
                                 const data = await scIndexedDB.getAll<StoreCollectionValue>(DB_STORE_COLLECTION);
 
-                                const date = new Date();
-
-                                scFile.saveAs(data, `collection-d${date.getFullYear()}${date.getMonth() + 1 < 10 ? '0' : ''}${date.getMonth() + 1}${date.getDate() < 10 ? '0' : ''}${date.getDate()}`);
+                                scFile.saveAs(data, 'collection');
                             }}
                         >
                             <IconFont

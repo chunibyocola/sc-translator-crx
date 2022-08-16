@@ -9,6 +9,9 @@ const SC_FILE_NAME_SUFFIX = `.${SC_FILE_EXTENSION}`;
 const scFile = (() => {
     return {
         saveAs: (serializableObject: SerializableObject | SerializableArray, fileName: string) => {
+            const date = new Date();
+            fileName = `${fileName}-d${date.getFullYear()}${date.getMonth() + 1 < 10 ? '0' : ''}${date.getMonth() + 1}${date.getDate() < 10 ? '0' : ''}${date.getDate()}`;
+
             const downloadElement = document.createElement('a');
             downloadElement.setAttribute('href', `data:text/plain;charset=utf-8,${JSON.stringify(serializableObject)}`);
             downloadElement.setAttribute('download', `${fileName}${SC_FILE_NAME_SUFFIX}`);

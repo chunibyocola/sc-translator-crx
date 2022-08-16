@@ -21,9 +21,7 @@ const FileSync: React.FC = () => {
 
                     const syncOptions: SyncOptions = options;
 
-                    const date = new Date();
-
-                    scFile.saveAs(syncOptions, `settings-d${date.getFullYear()}${date.getMonth() + 1 < 10 ? '0' : ''}${date.getMonth() + 1}${date.getDate() < 10 ? '0' : ''}${date.getDate()}`);
+                    scFile.saveAs(syncOptions, 'settings');
                 }}
             >
                 <IconFont
