@@ -69,6 +69,13 @@ const scIndexedDB = (() => {
 
             store.put(value, key);
         },
+        addAll: async <T = any>(storeName: string, values: T[]) => {
+            const [store, done] = await withStore(storeName, 'readwrite');
+
+            values.forEach(value => store.put(value));
+
+            await done;
+        },
         delete: async (storeName: string, query: IDBValidKey | IDBKeyRange | (IDBValidKey | IDBKeyRange)[]) => {
             const [store, done] = await withStore(storeName, 'readwrite');
 

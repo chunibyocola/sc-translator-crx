@@ -265,6 +265,27 @@ const Collection: React.FC = () => {
                             />
                             {getMessage('collectionExportCollection')}
                         </Button>
+                        <Button
+                            variant='text'
+                            onClick={async () => {
+                                scFile.open(async (file) => {
+                                    try {
+                                        const data = await scFile.read(file);
+
+                                        await scIndexedDB.addAll(DB_STORE_COLLECTION, data);
+                                    }
+                                    finally {
+                                        refreshCollectionValues();
+                                    }
+                                });
+                            }}
+                        >
+                            <IconFont
+                                iconName='#icon-import'
+                                style={{fontSize: '24px', marginRight: '5px'}}
+                            />
+                            {getMessage('collectionImportCollection')}
+                        </Button>
                     </div>
                 </div>
             </div>

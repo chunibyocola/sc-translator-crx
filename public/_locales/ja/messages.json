@@ -524,6 +524,9 @@
     "collectionExportCollection": {
         "message": "エクスポートコレクション"
     },
+    "collectionImportCollection": {
+        "message": "インポートコレクション"
+    },
     "wordTranslate": {
         "message": "翻訳"
     },

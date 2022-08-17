@@ -524,6 +524,9 @@
     "collectionExportCollection": {
         "message": "導出收藏"
     },
+    "collectionImportCollection": {
+        "message": "導入收藏"
+    },
     "wordTranslate": {
         "message": "翻譯"
     },
