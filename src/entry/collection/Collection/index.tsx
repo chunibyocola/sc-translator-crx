@@ -9,6 +9,7 @@ import TranslateResult from '../../../components/TranslateResult';
 import { getMessage } from '../../../public/i18n';
 import scFile from '../../../public/sc-file';
 import scIndexedDB, { DB_STORE_COLLECTION, StoreCollectionValue } from '../../../public/sc-indexed-db';
+import { checkResultFromCustomSource } from '../../../public/translate/custom/check-result';
 import { resultToString } from '../../../public/utils';
 import './style.css';
 
@@ -270,9 +271,37 @@ const Collection: React.FC = () => {
                             onClick={async () => {
                                 scFile.open(async (file) => {
                                     try {
-                                        const data = await scFile.read(file);
+                                        let values = await scFile.read(file);
 
-                                        await scIndexedDB.addAll(DB_STORE_COLLECTION, data);
+                                        if (!Array.isArray(values)) { return; }
+
+                                        const isObject = (value: any) => {
+                                            return !!value && typeof value === 'object' && !Array.isArray(value);
+                                        };
+
+                                        values = values.filter((item) => {
+                                            if (!isObject(item)) { return false; }
+                                            if (typeof item.date !== 'number' || typeof item.text !== 'string' || !item.text) { return false; }
+                                            if (!Array.isArray(item.translations)) { return false; }
+                                            const found = (item.translations as any[]).find((value) => {
+                                                if (!isObject(value)) { return true; }
+                                                if (typeof value.source !== 'string' || !value.source) { return true; }
+                                                if (!value.translateRequest && typeof value.translateRequest !== 'object') { return true; }
+                                                if (value.translateRequest.status !== 'finished') { return true; }
+                                                try {
+                                                    checkResultFromCustomSource(value.translateRequest.result);
+                                                    if (typeof value.translateRequest.result.text !== 'string') { return true; }
+                                                }
+                                                catch {
+                                                    return true;
+                                                }
+                                                return false;
+                                            });
+                                            if (found) { return false; }
+                                            return true;
+                                        });
+
+                                        await scIndexedDB.addAll<StoreCollectionValue>(DB_STORE_COLLECTION, values);
                                     }
                                     finally {
                                         refreshCollectionValues();
