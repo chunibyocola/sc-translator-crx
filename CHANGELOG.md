@@ -1,3 +1,7 @@
+# 4.4.0 (2022-08-22)
+- Add "import collection" button in collection page. ([9f54730](https://github.com/chunibyocola/sc-translator-crx/commit/9f547307d8043ddd31742852b90b70a531eaf6e0))
+- Add "export collection" button in collection page. ([692dd36](https://github.com/chunibyocola/sc-translator-crx/commit/692dd36158d44c91d1ac44dceea1708456d0aa5f))
+- Fix panel of add source in multiple translate source mode is unreachable in content script. ([c0e6347](https://github.com/chunibyocola/sc-translator-crx/commit/c0e63471a15d1aafe7c1d42eee9e2d7c9e876dfe))
 # 4.3.0 (2022-08-04)
 - The last text of clipboard will be pasted into text box when user using "Open separate translate window" keyboard with "Auto paste in the text box" option enabled now. ([4ed8aae](https://github.com/chunibyocola/sc-translator-crx/commit/4ed8aae2cd611624f25bac0668ed36fe1e408e7f))
 - Add "Restart webpage translating" button to webpage translating control bar. ([8f80948](https://github.com/chunibyocola/sc-translator-crx/commit/8f8094819c4a0d7d9f33603e266706c9b3f60f0f))
