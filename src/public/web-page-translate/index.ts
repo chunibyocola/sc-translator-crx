@@ -137,19 +137,16 @@ const dealWithPreElement = (pre: HTMLPreElement) => {
 };
 
 const isPureInlineElement = (inlineElement: HTMLElement) => {
-    let nodeStack: { node: Node; index: number }[] = [{ node: inlineElement, index: 0 }];
-    let currentNode: { node: Node; index: number } | undefined = nodeStack.shift();
+    let nodeStack: { node: Element; index: number }[] = [{ node: inlineElement, index: 0 }];
+    let currentNode = nodeStack.shift();
 
     while (currentNode) {
-        for (let i = currentNode.index; i < currentNode.node.childNodes.length; i++) {
-            const node = currentNode.node.childNodes[i];
-            if (/#comment|#text/.test(node.nodeName)) {
-                continue;
-            }
-            else if (ignoreTagRegExp.test(node.nodeName)) {
+        for (let i = currentNode.index; i < currentNode.node.children.length; i++) {
+            const node = currentNode.node.children[i];
+            if (ignoreTagRegExp.test(node.nodeName)) {
                 return false;
             }
-            else if (window.getComputedStyle(node as HTMLElement).display !== 'inline') {
+            else if (window.getComputedStyle(node).display !== 'inline') {
                 return false;
             }
             else {
@@ -166,22 +163,23 @@ const isPureInlineElement = (inlineElement: HTMLElement) => {
 const getTextNodesFromNodes = (nodes: Node[]) => {
     let textNodes: Text[] = [];
     let nodeStack: { node: Node; index: number }[] = nodes.map((v) => ({ node: v, index: 0 }));
-    let currentNode: { node: Node; index: number } | undefined = nodeStack.shift();
+    let currentNode = nodeStack.shift();
 
     while (currentNode) {
-        if (currentNode.node.nodeName === '#text' && currentNode.node.nodeValue?.trimLeft()) {
-            textNodes.push(currentNode.node as Text);
+        if (currentNode.node.nodeName === '#text') {
+            currentNode.node.nodeValue?.trim() && textNodes.push(currentNode.node as Text);
         }
         else {
             for (let i = currentNode.index; i < currentNode.node.childNodes.length; i++) {
-                if (skipTagRegExp.test(currentNode.node.childNodes[i].nodeName)) {
+                const node = currentNode.node.childNodes[i];
+                if (skipTagRegExp.test(node.nodeName)) {
                     continue;
                 }
-                else if (currentNode.node.childNodes[i].nodeName === '#text' && currentNode.node.childNodes[i].nodeValue?.trimLeft()) {
-                    textNodes.push(currentNode.node.childNodes[i] as Text);
+                else if (node.nodeName === '#text') {
+                    node.nodeValue?.trim() && textNodes.push(node as Text);
                 }
                 else {
-                    nodeStack.unshift({ node: currentNode.node.childNodes[i], index: 0 }, { node: currentNode.node, index: ++i });
+                    nodeStack.unshift({ node, index: 0 }, { node: currentNode.node, index: ++i });
                     break;
                 }
             }
@@ -198,13 +196,13 @@ const getAllTextFromElement = (element: HTMLElement) => {
     let elementArr: Node[] = [];
     let text = '';
     let nodeStack: { node: Node; index: number }[] = [{ node: element, index: 0 }];
-    let currentNode: { node: Node; index: number } | undefined = nodeStack.shift();
+    let currentNode = nodeStack.shift();
 
     while (currentNode) {
         for (let i = currentNode.index; i < currentNode.node.childNodes.length; i++) {
             const node = currentNode.node.childNodes[i];
             if (ignoreTagRegExp.test(node.nodeName)) {
-                if (elementArr.length > 0 && text.trimLeft()) {
+                if (elementArr.length > 0 && text.trim()) {
                     newPageTranslateItem(text, elementArr);
                 }
     
@@ -232,12 +230,14 @@ const getAllTextFromElement = (element: HTMLElement) => {
                     nodeStack.unshift({ node: shadowRoot, index: 0 });
                 }
 
-                if (window.getComputedStyle(node as HTMLElement).display === 'inline' && isPureInlineElement(node as HTMLElement) && (node as HTMLElement).innerText.trimLeft()) {
-                    elementArr.push(node);
-                    text += (node as HTMLElement).innerText;
+                if (window.getComputedStyle(node as HTMLElement).display === 'inline' && isPureInlineElement(node as HTMLElement)) {
+                    if ((node as HTMLElement).innerText.trim()) {
+                        elementArr.push(node);
+                        text += (node as HTMLElement).innerText;
+                    }
                 }
                 else {
-                    if (elementArr.length > 0 && text.trimLeft()) {
+                    if (elementArr.length > 0 && text.trim()) {
                         newPageTranslateItem(text, elementArr);
                     }
 
@@ -255,7 +255,7 @@ const getAllTextFromElement = (element: HTMLElement) => {
             }
         }
 
-        if (elementArr.length > 0 && text.trimLeft()) {
+        if (elementArr.length > 0 && text.trim()) {
             newPageTranslateItem(text, elementArr);
         }
 
