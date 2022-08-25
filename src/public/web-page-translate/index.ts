@@ -41,9 +41,10 @@ let wayOfFontsDisplaying: number = 1;
 let waitingList: PageTranslateItemEnity[] = [];
 let updatedList: PageTranslateItemEnity[] = [];
 
-const preIgnoreTagRegExp = /^(CANVAS|IFRAME|BR|HR|SVG|IMG|SCRIPT|LINK|STYLE|INPUT|TEXTAREA|CODE|#comment)$/i;
-const ignoreTagRegExp = /^(CANVAS|IFRAME|BR|HR|SVG|IMG|SCRIPT|LINK|STYLE|INPUT|TEXTAREA)$/i;
-const skipTagRegExp = /^(CODE|#comment)$/i;
+const ignoredTagsArr = ['canvas', 'iframe', 'br', 'hr', 'svg', 'img', 'script', 'link', 'style', 'input', 'textarea'];
+const skippedTagsArr = ['code', '#comment'];
+const ignoredTags = new Set(ignoredTagsArr.concat(ignoredTagsArr.map(v => v.toUpperCase())));
+const skippedTags = new Set(skippedTagsArr.concat(skippedTagsArr.map(v => v.toUpperCase())));
 let minViewPort = 0;
 let maxViewPort = 0;
 
@@ -127,7 +128,7 @@ const dealWithPreElement = (pre: HTMLPreElement) => {
                 pre.removeChild(v);
             }
         }
-        else if (preIgnoreTagRegExp.test(v.nodeName)) {
+        else if (ignoredTags.has(v.nodeName) || skippedTags.has(v.nodeName)) {
             return;
         }
         else {
@@ -143,7 +144,7 @@ const isPureInlineElement = (inlineElement: HTMLElement) => {
     while (currentNode) {
         for (let i = currentNode.index; i < currentNode.node.children.length; i++) {
             const node = currentNode.node.children[i];
-            if (ignoreTagRegExp.test(node.nodeName)) {
+            if (ignoredTags.has(node.nodeName)) {
                 return false;
             }
             else if (window.getComputedStyle(node).display !== 'inline') {
@@ -172,7 +173,7 @@ const getTextNodesFromNodes = (nodes: Node[]) => {
         else {
             for (let i = currentNode.index; i < currentNode.node.childNodes.length; i++) {
                 const node = currentNode.node.childNodes[i];
-                if (skipTagRegExp.test(node.nodeName)) {
+                if (skippedTags.has(node.nodeName)) {
                     continue;
                 }
                 else if (node.nodeName === '#text') {
@@ -201,7 +202,7 @@ const getAllTextFromElement = (element: HTMLElement) => {
     while (currentNode) {
         for (let i = currentNode.index; i < currentNode.node.childNodes.length; i++) {
             const node = currentNode.node.childNodes[i];
-            if (ignoreTagRegExp.test(node.nodeName)) {
+            if (ignoredTags.has(node.nodeName)) {
                 if (elementArr.length > 0 && text.trim()) {
                     newPageTranslateItem(text, elementArr);
                 }
@@ -211,7 +212,7 @@ const getAllTextFromElement = (element: HTMLElement) => {
     
                 continue;
             }
-            else if (skipTagRegExp.test(node.nodeName)) {
+            else if (skippedTags.has(node.nodeName)) {
                 continue;
             }
             else if (node.nodeName === '#text') {
@@ -231,7 +232,7 @@ const getAllTextFromElement = (element: HTMLElement) => {
                 }
 
                 if (window.getComputedStyle(node as HTMLElement).display === 'inline' && isPureInlineElement(node as HTMLElement)) {
-                    if ((node as HTMLElement).innerText.trim()) {
+                    if ((node as HTMLElement).innerText?.trim()) {
                         elementArr.push(node);
                         text += (node as HTMLElement).innerText;
                     }
