@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { drag } from '../../public/utils';
 import { Position } from '../../types';
 
@@ -63,7 +64,9 @@ const Draggable: React.FC<DraggableProps> = ({ children, onChange, values }) => 
 
         const mouseMoveCallback = ({ x, y }: Position) => {
             if (!moved) {
-                setDraggingStyle({ height: `${elementHeight}px` });
+                flushSync(() => {
+                    setDraggingStyle({ height: `${elementHeight}px` });
+                });
                 window.addEventListener('scroll', onScroll);
                 moved = true;
             }
