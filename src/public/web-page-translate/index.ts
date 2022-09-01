@@ -87,10 +87,9 @@ const clearAllTimeout = () => {
     }
 };
 
-const newPageTranslateItem = (text: string, nodes: Node[]) => {
+const newPageTranslateItem = (text: string, textNodes: Text[]) => {
     const searchIndex = text.search(/[^\s]/);
-    const textNodes = getTextNodesFromNodes(nodes);
-    
+
     const range = document.createRange();
     range.selectNode(textNodes[0]);
     const firstTextNodeClientY = range.getBoundingClientRect().top + window.scrollY;
@@ -112,159 +111,87 @@ const newPageTranslateItem = (text: string, nodes: Node[]) => {
     pageTranslateItemMap[itemMapIndex] = item;
 };
 
-const dealWithPreElement = (pre: HTMLPreElement) => {
-    const childNodes: Node[] = [];
-    pre.childNodes.forEach(v => childNodes.push(v));
+const getAllParagraph = (element: HTMLElement) => {
+    let texts: Text[] = [];
+    let nodeStack: { node: Node; index: number; isInline: boolean; }[] = [{ node: element, index: 0, isInline: getComputedStyle(element).display === 'inline' }];
+    let currentNode = nodeStack.shift();
 
-    childNodes.forEach((v) => {
-        if (v.nodeName === '#text') {
-            const matchArray =  v.nodeValue?.match(/\n*[^\n]+/g)
-            if (matchArray) {
-                matchArray.forEach((match) => {
-                    const textNode = document.createTextNode(match);
-                    pre.insertBefore(textNode, v);
+    const nextParagraph = () => {
+        const text = texts.map(v => v.nodeValue ?? '').join('');
+
+        text.replace(/[\P{L}]/ug, '') && newPageTranslateItem(text, texts);
+
+        texts = [];
+    };
+
+    while (currentNode) {
+        let { index } = currentNode;
+
+        for (; index < currentNode.node.childNodes.length; index++) {
+            const node = currentNode.node.childNodes[index];
+
+            if (ignoredTags.has(node.nodeName)) {
+                nextParagraph();
+                continue;
+            }
+
+            if (skippedTags.has(node.nodeName)) {
+                continue;
+            }
+
+            if (node.nodeName === '#text') {
+                if (node.nodeValue?.trim()) {
+                    texts.push(node as Text);
+                }
+                continue;
+            }
+
+            if ((node as HTMLElement).classList.contains('notranslate')) {
+                nextParagraph();
+                continue;
+            }
+
+            let isInline = getComputedStyle(node as HTMLElement).display === 'inline';
+
+            if (node.nodeName === 'PRE') {
+                node.childNodes.forEach((v) => {
+                    if (v.nodeName === '#text') {
+                        const matchArray =  v.nodeValue?.match(/\n*[^\n]+/g)
+                        if (matchArray) {
+                            matchArray.forEach(match => node.insertBefore(document.createTextNode(match), v));
+
+                            node.removeChild(v);
+                        }
+                    }
                 });
 
-                pre.removeChild(v);
+                isInline = false;
             }
-        }
-        else if (ignoredTags.has(v.nodeName) || skippedTags.has(v.nodeName)) {
-            return;
-        }
-        else {
-            getAllTextFromElement(v as HTMLElement);
-        }
-    });
-};
 
-const isPureInlineElement = (inlineElement: HTMLElement) => {
-    let nodeStack: { node: Element; index: number }[] = [{ node: inlineElement, index: 0 }];
-    let currentNode = nodeStack.shift();
+            nodeStack.unshift({ node, index: 0, isInline }, { ...currentNode, index: index + 1 });
 
-    while (currentNode) {
-        for (let i = currentNode.index; i < currentNode.node.children.length; i++) {
-            const node = currentNode.node.children[i];
-            if (ignoredTags.has(node.nodeName)) {
-                return false;
+            const shadowRoot = (node as HTMLElement).shadowRoot;
+            if (shadowRoot) {
+                isInline = false;
+
+                nodeStack.unshift({ node: shadowRoot, index: 0, isInline });
             }
-            else if (window.getComputedStyle(node).display !== 'inline') {
-                return false;
+
+            if (!isInline) {
+                nextParagraph();
             }
-            else {
-                nodeStack.unshift({ node, index: 0 }, { node: currentNode.node, index: ++i });
-                break;
-            }
+
+            break;
         }
 
-        currentNode = nodeStack.shift();
-    }
-    return true;
-};
-
-const getTextNodesFromNodes = (nodes: Node[]) => {
-    let textNodes: Text[] = [];
-    let nodeStack: { node: Node; index: number }[] = nodes.map((v) => ({ node: v, index: 0 }));
-    let currentNode = nodeStack.shift();
-
-    while (currentNode) {
-        if (currentNode.node.nodeName === '#text') {
-            currentNode.node.nodeValue?.trim() && textNodes.push(currentNode.node as Text);
-        }
-        else {
-            for (let i = currentNode.index; i < currentNode.node.childNodes.length; i++) {
-                const node = currentNode.node.childNodes[i];
-                if (skippedTags.has(node.nodeName)) {
-                    continue;
-                }
-                else if (node.nodeName === '#text') {
-                    node.nodeValue?.trim() && textNodes.push(node as Text);
-                }
-                else {
-                    nodeStack.unshift({ node, index: 0 }, { node: currentNode.node, index: ++i });
-                    break;
-                }
-            }
+        if (index >= currentNode.node.childNodes.length && !currentNode.isInline) {
+            nextParagraph();
         }
 
         currentNode = nodeStack.shift();
     }
 
-    return textNodes;
-};
-
-
-const getAllTextFromElement = (element: HTMLElement) => {
-    let elementArr: Node[] = [];
-    let text = '';
-    let nodeStack: { node: Node; index: number }[] = [{ node: element, index: 0 }];
-    let currentNode = nodeStack.shift();
-
-    while (currentNode) {
-        for (let i = currentNode.index; i < currentNode.node.childNodes.length; i++) {
-            const node = currentNode.node.childNodes[i];
-            if (ignoredTags.has(node.nodeName)) {
-                if (elementArr.length > 0 && text.trim()) {
-                    newPageTranslateItem(text, elementArr);
-                }
-    
-                elementArr = [];
-                text = '';
-    
-                continue;
-            }
-            else if (skippedTags.has(node.nodeName)) {
-                continue;
-            }
-            else if (node.nodeName === '#text') {
-                if (node.nodeValue?.replace(/\s|[0-9]/g, '')) {
-                    elementArr.push(node);
-                    text += node.nodeValue;
-                }
-            }
-            else if ((node as HTMLElement).classList.contains('notranslate')) {
-                continue;
-            }
-            // Below, node is definitely a HTMLElement
-            else {
-                const shadowRoot = (node as HTMLElement).shadowRoot;
-                if (shadowRoot) {
-                    nodeStack.unshift({ node: shadowRoot, index: 0 });
-                }
-
-                if (window.getComputedStyle(node as HTMLElement).display === 'inline' && isPureInlineElement(node as HTMLElement)) {
-                    if ((node as HTMLElement).innerText?.trim()) {
-                        elementArr.push(node);
-                        text += (node as HTMLElement).innerText;
-                    }
-                }
-                else {
-                    if (elementArr.length > 0 && text.trim()) {
-                        newPageTranslateItem(text, elementArr);
-                    }
-
-                    elementArr = [];
-                    text = '';
-
-                    if (node.nodeName === 'PRE') {
-                        dealWithPreElement(node as HTMLPreElement);
-                    }
-                    else {
-                        nodeStack.unshift({ node, index: 0 }, { node: currentNode.node, index: ++i });
-                        break;
-                    }
-                }
-            }
-        }
-
-        if (elementArr.length > 0 && text.trim()) {
-            newPageTranslateItem(text, elementArr);
-        }
-
-        elementArr = [];
-        text = '';
-
-        currentNode = nodeStack.shift();
-    }
+    nextParagraph();
 };
 
 export const startWebPageTranslating = (
@@ -293,7 +220,7 @@ export const startWebPageTranslating = (
     minViewPort = window.scrollY - 500;
     maxViewPort = window.scrollY + window.innerHeight + 500;
 
-    getAllTextFromElement(element);
+    getAllParagraph(element);
 
     handleDelay();
 
