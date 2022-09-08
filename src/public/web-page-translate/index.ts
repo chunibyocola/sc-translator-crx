@@ -38,10 +38,10 @@ type PageTranslateItemEnity = {
 // 2: result TextNode only
 let wayOfFontsDisplaying: number = 1;
 
-let waitingList: PageTranslateItemEnity[] = [];
-let updatedList: PageTranslateItemEnity[] = [];
+let waitingList: Set<PageTranslateItemEnity> = new Set();
+let updatedList: Set<PageTranslateItemEnity> = new Set();
 
-const ignoredTagsArr = ['canvas', 'iframe', 'br', 'hr', 'svg', 'img', 'script', 'link', 'style', 'input', 'textarea'];
+const ignoredTagsArr = ['canvas', 'iframe', 'br', 'hr', 'svg', 'img', 'script', 'link', 'style', 'input', 'textarea', 'font'];
 const skippedTagsArr = ['code', '#comment'];
 const ignoredTags = new Set(ignoredTagsArr.concat(ignoredTagsArr.map(v => v.toUpperCase())));
 const skippedTags = new Set(skippedTagsArr.concat(skippedTagsArr.map(v => v.toUpperCase())));
@@ -87,6 +87,98 @@ const clearAllTimeout = () => {
     }
 };
 
+let checkedNodes: WeakSet<Node> = new WeakSet();
+
+const observer = new MutationObserver((records) => {
+    const noTranslate = (element: Element | null) => {
+        if (!document.body.contains(element)) {
+            return true;
+        }
+        while (element) {
+            const tagName = element.nodeName;
+            if (skippedTags.has(tagName) || ignoredTags.has(tagName)) {
+                return true;
+            }
+            if (element.classList.contains('notranslate')) {
+                return true;
+            }
+            element = element.parentElement;
+            if (element === document.body) {
+                break;
+            }
+        }
+        return false;
+    };
+
+    const targets = new Set<Element>();
+
+    records.forEach(({ type, target, addedNodes }) => {
+        let nextTarget: Element | null = null;
+
+        if (type === 'characterData') {
+            nextTarget = target.parentElement;
+            [target, target.parentElement].forEach(node => node && checkedNodes.delete(node));
+        }
+
+        if (type === 'childList' && addedNodes.length > 0) {
+            nextTarget = target as Element;
+            [target, ...addedNodes].forEach(node => checkedNodes.delete(node));
+        }
+
+        if (nextTarget && !noTranslate(nextTarget) && !targets.has(nextTarget)) {
+            targets.add(nextTarget);
+
+            for (const element of targets) {
+                if (element === nextTarget) {
+                    continue;
+                }
+
+                let currentElement: Element | null = null;
+                let rootElement: Element | null = null;
+
+                if (nextTarget.contains(element)) {
+                    currentElement = element;
+                    rootElement = nextTarget;
+                }
+                else if (element.contains(nextTarget)) {
+                    currentElement = nextTarget;
+                    rootElement = element;
+                }
+
+                if (currentElement && rootElement) {
+                    targets.delete(currentElement);
+
+                    while (currentElement.parentElement) {
+                        if (currentElement.parentElement === rootElement) {
+                            break;
+                        }
+
+                        checkedNodes.delete(currentElement.parentElement);
+                        currentElement = currentElement.parentElement;
+                    }
+                    break;
+                }
+            }
+        }
+    });
+
+    targets.forEach(target => document.body.contains(target) && getAllParagraph(target as HTMLElement));
+
+    targets.size > 0 && handleDelay();
+});
+
+const startObserving = () => {
+    observer.observe(document.body, {
+        characterData: true,
+        childList: true,
+        subtree: true
+    });
+};
+
+const stopObserving = () => {
+    observer.disconnect();
+};
+
 const newPageTranslateItem = (text: string, textNodes: Text[]) => {
     const searchIndex = text.search(/[^\s]/);
 
@@ -106,7 +198,7 @@ const newPageTranslateItem = (text: string, textNodes: Text[]) => {
         mapIndex: itemMapIndex
     };
 
-    waitingList.push(item);
+    waitingList.add(item);
 
     pageTranslateItemMap[itemMapIndex] = item;
 };
@@ -129,6 +221,12 @@ const getAllParagraph = (element: HTMLElement) => {
 
         for (; index < currentNode.node.childNodes.length; index++) {
             const node = currentNode.node.childNodes[index];
+
+            if (checkedNodes.has(node)) {
+                continue;
+            }
+
+            checkedNodes.add(node);
 
             if (ignoredTags.has(node.nodeName)) {
                 nextParagraph();
@@ -203,6 +301,10 @@ export const startWebPageTranslating = (
 ) => {
     if (startFlag === closeFlag) { return false; }
 
+    waitingList = new Set();
+    updatedList = new Set();
+    checkedNodes = new WeakSet();
+
     errorCb && (errorCallback = errorCb);
 
     source = translateSource;
@@ -229,6 +331,8 @@ export const startWebPageTranslating = (
     if ((wayOfFontsDisplaying === 0 && displayModeEnhancement.o_Hovering) || (wayOfFontsDisplaying === 2 && displayModeEnhancement.t_Hovering)) {
         window.addEventListener('mousemove', onWindowMouseMove);
     }
+
+    startObserving();
 
     return true;
 };
@@ -383,6 +487,8 @@ const onWindowMouseMove = (e: MouseEvent) => {
 export const closeWebPageTranslating = () => {
     if (closeFlag > startFlag) { return; }
 
+    stopObserving();
+
     source = '';
     language = '';
 
@@ -398,8 +504,8 @@ export const closeWebPageTranslating = () => {
         });
     });
 
-    waitingList = [];
-    updatedList = [];
+    waitingList.clear();
+    updatedList.clear();
 
     pageTranslateItemMap = {};
     itemMapIndex = 0;
@@ -432,17 +538,27 @@ const delay = (fn: () => void, ms: number) => {
 };
 
 const handleDelay = delay(() => {
-    const nextTranslateList = waitingList.filter(v => v.firstTextNodeClientY >= minViewPort && v.firstTextNodeClientY <= maxViewPort);
+    const nextTranslateList: PageTranslateItemEnity[] = [];
 
-    if (nextTranslateList.length === 0) { return; }
+    waitingList.forEach((item) => {
+        if (!document.body.contains(item.textNodes[0])) {
+            waitingList.delete(item);
+            return;
+        }
 
-    waitingList = waitingList.filter(v => !(v.firstTextNodeClientY >= minViewPort && v.firstTextNodeClientY <= maxViewPort));
-    updatedList = updatedList.concat(nextTranslateList);
+        if (item.firstTextNodeClientY >= minViewPort && item.firstTextNodeClientY <= maxViewPort) {
+            updatedList.add(item);
+            waitingList.delete(item);
+            nextTranslateList.push(item);
+        }
+    });
 
     startProcessing(nextTranslateList);
 }, 500);
 
 const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, result: WebpageTranslateResult) => {
+    stopObserving();
+
     pageTranslateItem.result = result;
     const comparisons = preprocessComparisons(pageTranslateItem.result);
     pageTranslateItem.status = 'finished';
@@ -452,6 +568,8 @@ const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, 
         const fonts = insertResultAndWrapOriginalTextNode(textNode, pageTranslateItem.mapIndex, pageTranslateItem.result.translations[i], comparisons[i]);
         fonts && pageTranslateItem.fontsNodes.push(fonts);
     });
+
+    startObserving();
 };
 
 type KeyFormat = (paragraph: string[]) => string;
@@ -560,7 +678,7 @@ const startProcessing = (nextTranslateList: PageTranslateItemEnity[]) => {
 };
 
 export const errorRetry = () => {
-    const nextTranslateList = updatedList.filter(v => v.status === 'error');
+    const nextTranslateList = [...updatedList].filter(v => v.status === 'error');
 
     if (nextTranslateList.length === 0) { return; }
 
