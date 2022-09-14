@@ -22,7 +22,8 @@ type PickedOptions = Pick<
     'webPageTranslateDirectly' |
     'noControlBarWhileFirstActivating' |
     'displayModeEnhancement' |
-    'customWebpageTranslateSourceList'
+    'customWebpageTranslateSourceList' |
+    'translateDynamicContent'
 >;
 const useOptionsDependency: (keyof PickedOptions)[] = [
     'webPageTranslateSource',
@@ -32,7 +33,8 @@ const useOptionsDependency: (keyof PickedOptions)[] = [
     'webPageTranslateDirectly',
     'noControlBarWhileFirstActivating',
     'displayModeEnhancement',
-    'customWebpageTranslateSourceList'
+    'customWebpageTranslateSourceList',
+    'translateDynamicContent'
 ];
 
 const WebPageTranslating: React.FC = () => {
@@ -44,7 +46,8 @@ const WebPageTranslating: React.FC = () => {
         webPageTranslateDirectly,
         noControlBarWhileFirstActivating,
         displayModeEnhancement,
-        customWebpageTranslateSourceList
+        customWebpageTranslateSourceList,
+        translateDynamicContent
     } = useOptions<PickedOptions>(useOptionsDependency);
 
     return (
@@ -174,6 +177,16 @@ const WebPageTranslating: React.FC = () => {
                     <div className='item-description'>
                         {getMessage('optionsNoControlBarWhileFirstActivatingDescription')}
                     </div>
+                </div>
+            </div>
+            <div className='opt-section-row'>
+                <Switch
+                    label={getMessage('optionsTranslateDynamicContent')}
+                    checked={translateDynamicContent}
+                    onChange={v => setLocalStorage({ translateDynamicContent: v })}
+                />
+                <div className='item-description'>
+                    {getMessage('optionsTranslateDynamicContentDescription')}
                 </div>
             </div>
         </div>

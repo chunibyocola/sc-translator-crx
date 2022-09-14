@@ -105,7 +105,16 @@ const WebPageTranslate: React.FC = () => {
         if (source === workingSourceAndLanguage.source && targetLanguage === workingSourceAndLanguage.targetLanguage && !force) { return; }
 
         closeWebPageTranslating();
-        const startSuccess = startWebPageTranslating(document.body, source, targetLanguage, getOptions().displayModeEnhancement, handleError);
+
+        const startSuccess = startWebPageTranslating({
+            element: document.body,
+            translateSource: source,
+            targetLanguage,
+            enhancement: getOptions().displayModeEnhancement,
+            translateDynamicContent: getOptions().translateDynamicContent,
+            onError: handleError
+        });
+
         if (startSuccess) {
             setWorkingSourceAndLanguage({ source, targetLanguage });
             dispach({ type: 'process-success' });

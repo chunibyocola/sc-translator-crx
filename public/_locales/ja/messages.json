@@ -437,6 +437,12 @@
     "optionsWebpageTranslatingInstructions": {
         "message": "Webページ翻訳説明"
     },
+    "optionsTranslateDynamicContent": {
+        "message": "動的に生成されたコンテンツを翻訳する"
+    },
+    "optionsTranslateDynamicContentDescription": {
+        "message": "新しいテキストコンテンツを継続的に作成する一部のサイトでWebページ翻訳を使用すると、拡張機能が翻訳要求を送信し続ける可能性があります。"
+    },
     "themePreset": {
         "message": "プリセット"
     },

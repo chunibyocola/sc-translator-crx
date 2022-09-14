@@ -89,6 +89,8 @@ const clearAllTimeout = () => {
 
 let checkedNodes: WeakSet<Node> = new WeakSet();
 
+let translateDynamicContent = false;
+
 const observer = new MutationObserver((records) => {
     const noTranslate = (element: Element | null) => {
         if (!document.body.contains(element)) {
@@ -168,6 +170,10 @@ const observer = new MutationObserver((records) => {
 });
 
 const startObserving = () => {
+    if (!translateDynamicContent) {
+        return;
+    }
+
     observer.observe(document.body, {
         characterData: true,
         childList: true,
@@ -292,20 +298,23 @@ const getAllParagraph = (element: HTMLElement) => {
     nextParagraph();
 };
 
-export const startWebPageTranslating = (
-    element: HTMLElement,
-    translateSource: string,
-    targetLanguage: string,
-    enhancement: DisplayModeEnhancement,
-    errorCb?: (errorReason: string) => void,
-) => {
+export const startWebPageTranslating = ({ element, translateSource, targetLanguage, enhancement, onError, translateDynamicContent: translateDC }: {
+    element: HTMLElement;
+    translateSource: string;
+    targetLanguage: string;
+    enhancement: DisplayModeEnhancement;
+    translateDynamicContent: boolean;
+    onError?: (errorReason: string) => void;
+}) => {
     if (startFlag === closeFlag) { return false; }
 
     waitingList = new Set();
     updatedList = new Set();
     checkedNodes = new WeakSet();
 
-    errorCb && (errorCallback = errorCb);
+    translateDynamicContent = translateDC;
+
+    errorCallback = onError;
 
     source = translateSource;
     language = targetLanguage;

@@ -437,6 +437,12 @@
     "optionsWebpageTranslatingInstructions": {
         "message": "網頁翻譯說明"
     },
+    "optionsTranslateDynamicContent": {
+        "message": "翻譯動態生成的內容"
+    },
+    "optionsTranslateDynamicContentDescription": {
+        "message": "在某些不斷創建新文本內容的網站中使用網頁翻譯可能會導致擴展程序不斷發送翻譯請求。"
+    },
     "themePreset": {
         "message": "預設"
     },

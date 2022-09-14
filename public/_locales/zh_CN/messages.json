@@ -437,6 +437,12 @@
     "optionsWebpageTranslatingInstructions": {
         "message": "网页翻译说明"
     },
+    "optionsTranslateDynamicContent": {
+        "message": "翻译动态生成的内容"
+    },
+    "optionsTranslateDynamicContentDescription": {
+        "message": "在某些不断创建新文本内容的网站中使用网页翻译可能会导致扩展程序不断发送翻译请求。"
+    },
     "themePreset": {
         "message": "预设"
     },

@@ -437,6 +437,12 @@
     "optionsWebpageTranslatingInstructions": {
         "message": "Webpage translating instructions"
     },
+    "optionsTranslateDynamicContent": {
+        "message": "Translate dynamically generated content"
+    },
+    "optionsTranslateDynamicContentDescription": {
+        "message": "Using webpage translating in some websites that continually create new text content may cause the extension to keep sending translate requests."
+    },
     "themePreset": {
         "message": "Preset"
     },

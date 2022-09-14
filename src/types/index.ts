@@ -147,6 +147,7 @@ export type DefaultOptions = {
     displayOfTranslation: DisplayOfTranslation;
     displayModeEnhancement: DisplayModeEnhancement;
     customWebpageTranslateSourceList: CustomTranslateSource[];
+    translateDynamicContent: boolean;
 };
 
 // Only work in "src/entry/background/install.ts".
