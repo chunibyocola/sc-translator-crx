@@ -48,7 +48,9 @@ const skippedTags = new Set(skippedTagsArr.concat(skippedTagsArr.map(v => v.toUp
 let minViewPort = 0;
 let maxViewPort = 0;
 
-let resultCache: { [key: string]: WebpageTranslateResult } = {};
+let pendingMap: Map<string, Set<PageTranslateItemEnity>> = new Map();
+let cacheMap: Map<string, WebpageTranslateResult> = new Map();
+
 let resultCacheLanguage = '';
 let resultCacheSource = '';
 
@@ -312,6 +314,8 @@ export const startWebPageTranslating = ({ element, translateSource, targetLangua
     updatedList = new Set();
     checkedNodes = new WeakSet();
 
+    pendingMap = new Map();
+
     translateDynamicContent = translateDC;
 
     errorCallback = onError;
@@ -319,7 +323,7 @@ export const startWebPageTranslating = ({ element, translateSource, targetLangua
     source = translateSource;
     language = targetLanguage;
     if (language !== resultCacheLanguage || source !== resultCacheSource) {
-        resultCache = {};
+        cacheMap = new Map();
         resultCacheLanguage = language;
         resultCacheSource = source;
     }
@@ -516,6 +520,8 @@ export const closeWebPageTranslating = () => {
     waitingList.clear();
     updatedList.clear();
 
+    pendingMap.clear();
+
     pageTranslateItemMap = {};
     itemMapIndex = 0;
 
@@ -602,9 +608,19 @@ const getTranslateList = (nextTranslateList: PageTranslateItemEnity[], keyFormat
         const paragraph = pageTranslateItem.textNodes.map(textNode => textNode.nodeValue ?? '');
         const key = keyFormat(paragraph);
 
-        if (resultCache[key]) {
-            feedDataToPageTranslateItem(pageTranslateItem, resultCache[key]);
+        const cachedResult = cacheMap.get(key);
+        if (cachedResult) {
+            feedDataToPageTranslateItem(pageTranslateItem, cachedResult);
             return;
+        }
+
+        const pendingItemSet = pendingMap.get(key);
+        if (pendingItemSet) {
+            pendingItemSet.add(pageTranslateItem);
+            return;
+        }
+        else {
+            pendingMap.set(key, new Set([pageTranslateItem]));
         }
 
         const { paragraphs, pageTranslateList, keys } = translateList[translateList.length - 1];
@@ -673,16 +689,19 @@ const startProcessing = (nextTranslateList: PageTranslateItemEnity[]) => {
 
             if (keys.length !== result.length) { throw getError(`Error: "result"'s length is not the same as "paragraphs"'s.`); }
 
-            pageTranslateList.forEach((pageTranslateItem, i) => {
-                resultCache[keys[i]] = result[i];
-                feedDataToPageTranslateItem(pageTranslateItem, result[i]);
+            result.forEach((translation, index) => {
+                const key = keys[index];
+                cacheMap.set(key, translation);
+                pendingMap.get(key)?.forEach(item => feedDataToPageTranslateItem(item, translation));
             });
         }).catch((reason) => {
-            pageTranslateList.forEach(v => v.status = 'error');
+            keys.forEach(key => pendingMap.get(key)?.forEach(item => item.status = 'error'));
             errorCallback?.(reason.code ?? reason.message ?? 'Error: Unknown Error.');
+        }).finally(() => {
+            keys.forEach(key => pendingMap.delete(key));
         });
 
-        pageTranslateList.forEach(v => v.status = 'loading');
+        keys.forEach(key => pendingMap.get(key)?.forEach(item => item.status = 'loading'));
     });
 };
 
