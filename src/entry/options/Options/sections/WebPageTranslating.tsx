@@ -185,6 +185,7 @@ const WebPageTranslating: React.FC = () => {
                     checked={translateDynamicContent}
                     onChange={v => setLocalStorage({ translateDynamicContent: v })}
                 />
+                <BetaIcon />
                 <div className='item-description'>
                     {getMessage('optionsTranslateDynamicContentDescription')}
                 </div>
