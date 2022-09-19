@@ -1,3 +1,8 @@
+# 4.5.0 (2022-09-19)
+- Add "Translate dynamically generated content" option. ([d14a496](https://github.com/chunibyocola/sc-translator-crx/commit/d14a496e799e3e83dc4cc476743d0932c5004a8d))
+- Improve the webpage translating performance greatly.
+- Fix text nodes in pre element is ignored in webpage translating. ([f7eab05](https://github.com/chunibyocola/sc-translator-crx/commit/f7eab056a8861901ce1979179d30adc486d6f24c))
+- Fix flickering while dragging in draggable component. ([f84c1ed](https://github.com/chunibyocola/sc-translator-crx/commit/f84c1ed872179977a24691be28369b094b3bec6f))
 # 4.4.0 (2022-08-22)
 - Add "import collection" button in collection page. ([9f54730](https://github.com/chunibyocola/sc-translator-crx/commit/9f547307d8043ddd31742852b90b70a531eaf6e0))
 - Add "export collection" button in collection page. ([692dd36](https://github.com/chunibyocola/sc-translator-crx/commit/692dd36158d44c91d1ac44dceea1708456d0aa5f))
