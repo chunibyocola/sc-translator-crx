@@ -27,7 +27,7 @@ type PageTranslateItemEnity = {
     result?: WebpageTranslateResult;
     textNodes: Text[];
     fontsNodes: ItemFonts[];
-    firstTextNodeClientY: number;
+    range: Range;
     status: 'init' | 'loading' | 'error' | 'finished';
     mapIndex: number;
 };
@@ -45,8 +45,6 @@ const ignoredTagsArr = ['canvas', 'iframe', 'br', 'hr', 'svg', 'img', 'script', 
 const skippedTagsArr = ['code', '#comment'];
 const ignoredTags = new Set(ignoredTagsArr.concat(ignoredTagsArr.map(v => v.toUpperCase())));
 const skippedTags = new Set(skippedTagsArr.concat(skippedTagsArr.map(v => v.toUpperCase())));
-let minViewPort = 0;
-let maxViewPort = 0;
 
 let pendingMap: Map<string, Set<PageTranslateItemEnity>> = new Map();
 let cacheMap: Map<string, WebpageTranslateResult> = new Map();
@@ -168,7 +166,7 @@ const observer = new MutationObserver((records) => {
 
     targets.forEach(target => document.body.contains(target) && getAllParagraph(target as HTMLElement));
 
-    targets.size > 0 && handleDelay();
+    targets.size > 0 && translateInViewPortParagraphs();
 });
 
 const startObserving = () => {
@@ -192,7 +190,6 @@ const newPageTranslateItem = (text: string, textNodes: Text[]) => {
 
     const range = document.createRange();
     range.selectNode(textNodes[0]);
-    const firstTextNodeClientY = range.getBoundingClientRect().top + window.scrollY;
 
     itemMapIndex += 1;
 
@@ -201,7 +198,7 @@ const newPageTranslateItem = (text: string, textNodes: Text[]) => {
         text: text.substring(searchIndex).replace('\n', ' '),
         textNodes,
         fontsNodes: [],
-        firstTextNodeClientY,
+        range,
         status: 'init',
         mapIndex: itemMapIndex
     };
@@ -332,12 +329,9 @@ export const startWebPageTranslating = ({ element, translateSource, targetLangua
 
     ++startFlag;
 
-    minViewPort = window.scrollY - 500;
-    maxViewPort = window.scrollY + window.innerHeight + 500;
-
     getAllParagraph(element);
 
-    handleDelay();
+    translateInViewPortParagraphs();
 
     window.addEventListener('scroll', onWindowScroll, true);
 
@@ -350,32 +344,8 @@ export const startWebPageTranslating = ({ element, translateSource, targetLangua
     return true;
 };
 
-const onWindowScroll = (e: Event) => {
-    const element = e.target as HTMLElement;
-
-    if (!element.contains(document.documentElement)) {
-        waitingList.forEach((v) => {
-            if (!element.contains(v.textNodes[0])) { return ; }
-
-            const range = document.createRange();
-            range.selectNode(v.textNodes[0]);
-            const { top } = range.getBoundingClientRect();
-
-            if (top > -500 && top < window.innerHeight + 500) {
-                v.firstTextNodeClientY = minViewPort + 100;
-            }
-        });
-    }
-    else {
-        if (window.scrollY - 100 < minViewPort) {
-            minViewPort = window.scrollY - 500;
-        }
-        if (window.scrollY + window.innerHeight + 100 > maxViewPort) {
-            maxViewPort = window.scrollY + window.innerHeight + 500;
-        }
-    }
-
-    handleDelay();
+const onWindowScroll = () => {
+    translateInViewPortParagraphs();
 };
 
 const onWindowMouseMove = (e: MouseEvent) => {
@@ -552,8 +522,11 @@ const delay = (fn: () => void, ms: number) => {
     };
 };
 
-const handleDelay = delay(() => {
+const translateInViewPortParagraphs = delay(() => {
     const nextTranslateList: PageTranslateItemEnity[] = [];
+
+    const minViewPort = -500;
+    const maxViewPort = window.innerHeight + 500;
 
     waitingList.forEach((item) => {
         if (!document.body.contains(item.textNodes[0])) {
@@ -561,7 +534,9 @@ const handleDelay = delay(() => {
             return;
         }
 
-        if (item.firstTextNodeClientY >= minViewPort && item.firstTextNodeClientY <= maxViewPort) {
+        const { top } = item.range.getBoundingClientRect();
+
+        if (top >= minViewPort && top <= maxViewPort) {
             updatedList.add(item);
             waitingList.delete(item);
             nextTranslateList.push(item);
