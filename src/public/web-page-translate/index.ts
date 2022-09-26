@@ -104,6 +104,9 @@ const observer = new MutationObserver((records) => {
             if (element.classList.contains('notranslate')) {
                 return true;
             }
+            if ((element as HTMLElement).isContentEditable) {
+                return true;
+            }
             element = element.parentElement;
             if (element === document.body) {
                 break;
@@ -250,6 +253,11 @@ const getAllParagraph = (element: HTMLElement) => {
             }
 
             if ((node as HTMLElement).classList.contains('notranslate')) {
+                nextParagraph();
+                continue;
+            }
+
+            if ((node as HTMLElement).isContentEditable) {
                 nextParagraph();
                 continue;
             }
