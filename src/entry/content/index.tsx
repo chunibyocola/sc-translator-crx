@@ -47,12 +47,14 @@ const init = (options: DefaultOptions) => {
     rootElement.id = 'sc-translator-root';
     rootWrapper.appendChild(rootElement);
 
+    const enableWebpageTranslation = chrome.runtime.getURL('') !== `${window.origin}/`;
+
     contentStyle.onload = () => ReactDOMClient.createRoot(rootElement).render(
         <Provider store={store}>
             <TsBtn />
             <TsHistory />
             <ResultBox multipleTranslateMode={options.multipleTranslateMode} />
-            <WebPageTranslate />
+            {enableWebpageTranslation && <WebPageTranslate />}
         </Provider>
     );
 };
