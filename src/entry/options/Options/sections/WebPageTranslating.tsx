@@ -11,6 +11,7 @@ import { DefaultOptions } from '../../../../types';
 import BetaIcon from '../../BetaIcon';
 import CustomTranslateSourceDisplay from '../../CustomTranslateSourceDisplay';
 import DefaultSelect from '../../DefaultSelect';
+import HostList from '../../HostList';
 import WebPageTranslateDisplayMode from '../../WebPageTranslateDisplayMode';
 
 type PickedOptions = Pick<
@@ -23,7 +24,8 @@ type PickedOptions = Pick<
     'noControlBarWhileFirstActivating' |
     'displayModeEnhancement' |
     'customWebpageTranslateSourceList' |
-    'translateDynamicContent'
+    'translateDynamicContent' |
+    'autoTranslateWebpageHostList'
 >;
 const useOptionsDependency: (keyof PickedOptions)[] = [
     'webPageTranslateSource',
@@ -34,7 +36,8 @@ const useOptionsDependency: (keyof PickedOptions)[] = [
     'noControlBarWhileFirstActivating',
     'displayModeEnhancement',
     'customWebpageTranslateSourceList',
-    'translateDynamicContent'
+    'translateDynamicContent',
+    'autoTranslateWebpageHostList'
 ];
 
 const WebPageTranslating: React.FC = () => {
@@ -47,7 +50,8 @@ const WebPageTranslating: React.FC = () => {
         noControlBarWhileFirstActivating,
         displayModeEnhancement,
         customWebpageTranslateSourceList,
-        translateDynamicContent
+        translateDynamicContent,
+        autoTranslateWebpageHostList
     } = useOptions<PickedOptions>(useOptionsDependency);
 
     return (
@@ -188,6 +192,12 @@ const WebPageTranslating: React.FC = () => {
                 <BetaIcon />
                 <div className='item-description'>
                     {getMessage('optionsTranslateDynamicContentDescription')}
+                </div>
+                <div className='mt10-ml30'>
+                    <HostList
+                        list={autoTranslateWebpageHostList}
+                        updateList={list => setLocalStorage({ autoTranslateWebpageHostList: list })}
+                    />
                 </div>
             </div>
         </div>

@@ -148,6 +148,7 @@ export type DefaultOptions = {
     displayModeEnhancement: DisplayModeEnhancement;
     customWebpageTranslateSourceList: CustomTranslateSource[];
     translateDynamicContent: boolean;
+    autoTranslateWebpageHostList: string[];
 };
 
 // Only work in "src/entry/background/install.ts".
