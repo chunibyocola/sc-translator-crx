@@ -443,6 +443,9 @@
     "optionsTranslateDynamicContentDescription": {
         "message": "在某些不斷創建新文本內容的網站中使用網頁翻譯可能會導致擴展程序不斷發送翻譯請求。"
     },
+    "optionsEnterDomainNameHere": {
+        "message": "在此輸入功能變數名稱"
+    },
     "themePreset": {
         "message": "預設"
     },

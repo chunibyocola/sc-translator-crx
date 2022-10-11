@@ -443,6 +443,9 @@
     "optionsTranslateDynamicContentDescription": {
         "message": "Using webpage translating in some websites that continually create new text content may cause the extension to keep sending translate requests."
     },
+    "optionsEnterDomainNameHere": {
+        "message": "Enter domain name here"
+    },
     "themePreset": {
         "message": "Preset"
     },

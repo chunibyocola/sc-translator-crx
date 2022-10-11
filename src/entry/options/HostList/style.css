@@ -1,11 +1,18 @@
 .host-list {
-    border: 1px solid #999;
     width: 400px;
-    padding: 5px;
+    box-shadow: rgb(60 64 67 / 30%) 0 1px 2px 0, rgb(60 64 67 / 15%) 0 1px 3px 1px;
+    border-radius: 4px;
+}
+.host-list__bar {
+    display: flex;
+    align-items: center;
+}
+.host-list .checkbox {
+    margin-right: 10px;
 }
 .host-list__add {
     display: flex;
-    margin-bottom: 3px;
+    flex: 1;
 }
 .host-list__add input {
     flex: 1;
@@ -24,13 +31,17 @@
     align-items: center;
 }
 .host-list__item:hover {
-    background-color: var(--bg-item-hover);
+    background-color: rgba(0, 0, 0, 0.04);
 }
-.host-list__item:not(:last-child) {
-    border-bottom: 1px solid #999;
+.host-list__item--checked {
+    background-color: rgba(25, 118, 210, 0.08);
 }
-.host-list__menu {
-    margin-top: 3px;
-    border-top: 1px solid #999;
-    padding-top: 3px;
+.host-list__item--checked:hover {
+    background-color: rgba(25, 118, 210, 0.12);
+}
+.host-list__bar, .host-list__item:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.host-list__bar, .host-list__item {
+    padding: 0 5px;
 }

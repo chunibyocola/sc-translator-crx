@@ -2,6 +2,8 @@ import React, { useRef, useCallback, useState } from 'react';
 import Button from '../../../components/Button';
 import Checkbox from '../../../components/Checkbox';
 import IconFont from '../../../components/IconFont';
+import { getMessage } from '../../../public/i18n';
+import { classNames } from '../../../public/utils';
 import './style.css';
 
 type HostListProps = {
@@ -10,76 +12,74 @@ type HostListProps = {
 };
 
 const HostList: React.FC<HostListProps> = ({ list, updateList }) => {
-    const [checked, setChecked] = useState<{ [key: number]: number; }>({});
-    const [checkAll, setCheckAll] = useState(false);
+    const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
 
     const textEle = useRef<HTMLInputElement>(null);
 
-    const handleCheckBoxChange = useCallback((index: number) => {
-        if (index in checked) {
-            let tempObj = { ...checked };
-            delete tempObj[index];
-            setChecked(tempObj);
-        }
-        else setChecked({ ...checked, [index]: index });
+    const handleItemClick = useCallback((host: string) => {
+        const nextCheckedItems = new Set(checkedItems);
+        nextCheckedItems.has(host) ? nextCheckedItems.delete(host) : nextCheckedItems.add(host);
+        setCheckedItems(nextCheckedItems);
+    }, [checkedItems]);
 
-        setCheckAll(false);
-    }, [checked]);
-
-    const handleCheckAllToggle = useCallback(() => {
-        checkAll ? setChecked({}) : setChecked(list.reduce((t, v, i) => ({ ...t, [i]: i }), {}));
-        
-        setCheckAll(!checkAll);
-    }, [checkAll, list]);
+    const handleCheckAllClick = useCallback(() => {
+        checkedItems.size === 0 ? setCheckedItems(new Set(list)) : setCheckedItems(new Set());
+    }, [checkedItems, list]);
 
     const handleRemoveBtnClick = useCallback(() => {
-        if (!Object.keys(checked).length) { return; }
+        if (checkedItems.size === 0) { return; }
 
-        updateList(list.filter((v, i) => (!(i in checked))));
+        updateList(list.filter(item => !checkedItems.has(item)));
 
-        setChecked({});
-        setCheckAll(false);
-    }, [list, checked, updateList]);
+        setCheckedItems(new Set());
+    }, [checkedItems, list, updateList]);
 
     const handleAddHostBtnClick = useCallback(() => {
-        if (!textEle.current || !textEle.current.value) { return; }
+        if (!textEle.current) { return; }
 
-        updateList([...list, textEle.current.value]);
+        const host = textEle.current?.value.trimStart().trimEnd();
+
+        if (!host) { return; }
 
         textEle.current.value = '';
+        setCheckedItems(new Set());
 
-        setCheckAll(false);
+        if (list.includes(host)) { return; }
+
+        updateList([...list, host]);
     }, [list, updateList]);
 
     return (
         <div className='host-list'>
-            <div className='host-list__add'>
-                <input ref={textEle} type='text' />
-                <Button variant='icon' onClick={handleAddHostBtnClick}>
-                    <IconFont iconName='#icon-MdAdd' />
-                </Button>
+            <div className='host-list__bar'>
+                <Checkbox
+                    checked={checkedItems.size > 0 && checkedItems.size === list.length}
+                    indeterminate={checkedItems.size > 0}
+                    onChange={handleCheckAllClick}
+                />
+                {checkedItems.size > 0 ? <Button
+                    variant='icon'
+                    onClick={handleRemoveBtnClick}
+                >
+                    <IconFont iconName='#icon-MdDelete' style={{fontSize: '24px'}} />
+                </Button> : <div className='host-list__add'>
+                    <input ref={textEle} type='text' placeholder={getMessage('optionsEnterDomainNameHere')} />
+                    <Button variant='icon' onClick={handleAddHostBtnClick}>
+                        <IconFont iconName='#icon-MdAdd' />
+                    </Button>
+                </div>}
             </div>
             <div className='host-list__box'>
                 {list.map((v, i) => (
-                    <div className='host-list__item' key={i} onClick={() => handleCheckBoxChange(i)}>
-                        <Checkbox
-                            checked={i in checked}
-                        />
+                    <div
+                        className={classNames('host-list__item', checkedItems.has(v) && 'host-list__item--checked')}
+                        key={i}
+                        onClick={() => handleItemClick(v)}
+                    >
+                        <Checkbox checked={checkedItems.has(v)} />
                         <span>{v}</span>
                     </div>
                 ))}
-            </div>
-            <div className='host-list__menu'>
-                <Checkbox
-                    checked={checkAll}
-                    onChange={handleCheckAllToggle}
-                />
-                <Button
-                    variant='outlined'
-                    onClick={handleRemoveBtnClick}
-                >
-                    <IconFont iconName='#icon-MdDelete' />
-                </Button>
             </div>
         </div>
     );

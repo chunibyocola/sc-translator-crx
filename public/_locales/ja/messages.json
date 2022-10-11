@@ -443,6 +443,9 @@
     "optionsTranslateDynamicContentDescription": {
         "message": "新しいテキストコンテンツを継続的に作成する一部のサイトでWebページ翻訳を使用すると、拡張機能が翻訳要求を送信し続ける可能性があります。"
     },
+    "optionsEnterDomainNameHere": {
+        "message": "ここにドメイン名を入力"
+    },
     "themePreset": {
         "message": "プリセット"
     },
