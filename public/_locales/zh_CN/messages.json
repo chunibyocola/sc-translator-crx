@@ -446,6 +446,12 @@
     "optionsEnterDomainNameHere": {
         "message": "在此输入域名"
     },
+    "optionsEnableAutoTranslateWebpage": {
+        "message": "启用自动翻译网页"
+    },
+    "optionsEnableAutoTranslateWebpageDescription": {
+        "message": "只有当“翻译动态生成的内容”选项启用后此选项才会生效。启用此选项后，“在此网站上启用/禁用自动翻译” 按钮将会被展示在控制栏中。当你访问在下方域名列表中的网站时，网页将会自动被翻译。"
+    },
     "themePreset": {
         "message": "预设"
     },

@@ -25,7 +25,8 @@ type PickedOptions = Pick<
     'displayModeEnhancement' |
     'customWebpageTranslateSourceList' |
     'translateDynamicContent' |
-    'autoTranslateWebpageHostList'
+    'autoTranslateWebpageHostList' |
+    'enableAutoTranslateWebpage'
 >;
 const useOptionsDependency: (keyof PickedOptions)[] = [
     'webPageTranslateSource',
@@ -37,7 +38,8 @@ const useOptionsDependency: (keyof PickedOptions)[] = [
     'displayModeEnhancement',
     'customWebpageTranslateSourceList',
     'translateDynamicContent',
-    'autoTranslateWebpageHostList'
+    'autoTranslateWebpageHostList',
+    'enableAutoTranslateWebpage'
 ];
 
 const WebPageTranslating: React.FC = () => {
@@ -51,7 +53,8 @@ const WebPageTranslating: React.FC = () => {
         displayModeEnhancement,
         customWebpageTranslateSourceList,
         translateDynamicContent,
-        autoTranslateWebpageHostList
+        autoTranslateWebpageHostList,
+        enableAutoTranslateWebpage
     } = useOptions<PickedOptions>(useOptionsDependency);
 
     return (
@@ -194,10 +197,20 @@ const WebPageTranslating: React.FC = () => {
                     {getMessage('optionsTranslateDynamicContentDescription')}
                 </div>
                 <div className='mt10-ml30'>
-                    <HostList
-                        list={autoTranslateWebpageHostList}
-                        updateList={list => setLocalStorage({ autoTranslateWebpageHostList: list })}
+                    <Switch
+                        label={getMessage('optionsEnableAutoTranslateWebpage')}
+                        checked={enableAutoTranslateWebpage}
+                        onChange={v => setLocalStorage({ enableAutoTranslateWebpage: v })}
                     />
+                    <div className='item-description'>
+                        {getMessage('optionsEnableAutoTranslateWebpageDescription')}
+                    </div>
+                    <div className='mt10-ml30'>
+                        <HostList
+                            list={autoTranslateWebpageHostList}
+                            updateList={list => setLocalStorage({ autoTranslateWebpageHostList: list })}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

@@ -71,7 +71,8 @@ const defaultOptions: DefaultOptions = {
     displayModeEnhancement: { o_Hovering: false, oAndT_Underline: false, oAndT_NonDiscrete: false, t_Hovering: false },
     customWebpageTranslateSourceList: [],
     translateDynamicContent: false,
-    autoTranslateWebpageHostList: []
+    autoTranslateWebpageHostList: [],
+    enableAutoTranslateWebpage: false
 };
 
 export default defaultOptions;

@@ -149,6 +149,7 @@ export type DefaultOptions = {
     customWebpageTranslateSourceList: CustomTranslateSource[];
     translateDynamicContent: boolean;
     autoTranslateWebpageHostList: string[];
+    enableAutoTranslateWebpage: boolean;
 };
 
 // Only work in "src/entry/background/install.ts".

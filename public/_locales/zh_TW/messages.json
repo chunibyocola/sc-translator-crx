@@ -446,6 +446,12 @@
     "optionsEnterDomainNameHere": {
         "message": "在此輸入功能變數名稱"
     },
+    "optionsEnableAutoTranslateWebpage": {
+        "message": "啟用自動翻譯網頁"
+    },
+    "optionsEnableAutoTranslateWebpageDescription": {
+        "message": "只有當“翻譯動態生成的內容”選項啟用後此選項才會生效。啟用此選項後，“在此網站上啟用/禁用自動翻譯” 按鈕將會被展示在控制欄中。當你訪問在下方域名列表中的網站時，網頁將會自動被翻譯。"
+    },
     "themePreset": {
         "message": "預設"
     },

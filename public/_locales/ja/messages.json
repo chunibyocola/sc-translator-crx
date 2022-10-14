@@ -446,6 +446,12 @@
     "optionsEnterDomainNameHere": {
         "message": "ここにドメイン名を入力"
     },
+    "optionsEnableAutoTranslateWebpage": {
+        "message": "ウェブページの自動翻訳を有効にする"
+    },
+    "optionsEnableAutoTranslateWebpageDescription": {
+        "message": "このオプションは、「動的に生成されたコンテンツを翻訳する」オプションを有効にした場合にのみ使用できます。このオプションを有効にすると、「このサイトで自動翻訳を有効/無効にする」ボタンがコントロールバーに表示されます。下記のドメイン名リストにあるウェブサイトにアクセスすると、そのページが自動的に翻訳されます。"
+    },
     "themePreset": {
         "message": "プリセット"
     },

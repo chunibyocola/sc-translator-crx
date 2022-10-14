@@ -446,6 +446,12 @@
     "optionsEnterDomainNameHere": {
         "message": "Enter domain name here"
     },
+    "optionsEnableAutoTranslateWebpage": {
+        "message": "Enable automatic translation of webpages"
+    },
+    "optionsEnableAutoTranslateWebpageDescription": {
+        "message": "This option is only available when you enable the \"Enalbe automatic translation of webpages\" option. After enabling this option, the \"Enable/Disable automatic translation on this website\" button will be displayed on the control bar. When you visit a website in the domain name list below, the page will be automatically translated."
+    },
     "themePreset": {
         "message": "Preset"
     },
