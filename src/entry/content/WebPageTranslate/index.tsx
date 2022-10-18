@@ -29,10 +29,10 @@ type WPTReducerState = {
     working: boolean;
     error: string;
     activated: boolean;
+    auto: boolean;
 };
 type WPTReducerAction = 
-| { type: 'init'; source: string; targetLanguage: string; }
-| { type: 'active-wpt'; show: boolean; }
+| { type: 'active-wpt'; show: boolean; auto: boolean; }
 | { type: 'change-error'; error: string; }
 | { type: 'process-success'; }
 | { type: 'close-wpt'; }
@@ -47,21 +47,20 @@ const initWPTState: WPTReducerState = {
     targetLanguage: '',
     working: false,
     error: '',
-    activated: false
+    activated: false,
+    auto: false
 };
 
 const wPTReducer = (state: WPTReducerState, action: WPTReducerAction): WPTReducerState => {
     switch (action.type) {
-        case 'init':
-            return { ...state, source: action.source, targetLanguage: action.targetLanguage };
         case 'active-wpt':
-            return { ...state, show: action.show, error: '', working: false, activated: true };
+            return { ...state, show: action.show, error: '', working: false, activated: true, auto: action.auto };
         case 'change-error':
             return { ...state, error: action.error };
         case 'process-success':
             return { ...state, working: true };
         case 'close-wpt':
-            return { ...state, show: false, working: false, activated: false };
+            return { ...state, show: false, working: false, activated: false, auto: false };
         case 'change-source':
             return { ...state, source: action.source };
         case 'change-targer-language':
@@ -80,16 +79,26 @@ const WebPageTranslate: React.FC = () => {
     const [langLocal, setLangLocal] = useState<{ [key: string]: string; }>({});
     const [workingSourceAndLanguage, setWorkingSourceAndLanguage] = useState({ source: '', targetLanguage: '' });
 
-    const [{ show, source, targetLanguage, working, error, activated }, dispach] = useReducer(wPTReducer, initWPTState);
+    const [{ show, source, targetLanguage, working, error, activated, auto }, dispach] = useReducer(wPTReducer, {
+        ...initWPTState,
+        source: getOptions().webPageTranslateSource,
+        targetLanguage: getOptions().webPageTranslateTo
+    });
 
     const handleError = useCallback((errorReason: string) => {
         errorReason && dispach({ type: 'change-error', error: errorReason });
     }, [dispach]);
 
     useEffectOnce(() => {
-        dispach({ type: 'init', source: getOptions().webPageTranslateSource, targetLanguage: getOptions().webPageTranslateTo });
-
         switchWayOfFontsDisplaying(getOptions().webPageTranslateDisplayMode);
+
+        const auto = getOptions().enableAutoTranslateWebpage && getOptions().autoTranslateWebpageHostList.includes(window.location.host);
+
+        if (!working && auto) {
+            dispach({ type: 'active-wpt', show: !getOptions().noControlBarWhileFirstActivating, auto });
+
+            startProcessing();
+        }
     });
 
     useEffect(() => {
@@ -128,14 +137,22 @@ const WebPageTranslate: React.FC = () => {
         switch (type) {
             case SCTS_TRANSLATE_CURRENT_PAGE:
                 if (!working) {
-                    dispach({ type: 'active-wpt', show: !(getOptions().webPageTranslateDirectly && getOptions().noControlBarWhileFirstActivating) });
+                    dispach({ type: 'active-wpt', show: !(getOptions().webPageTranslateDirectly && getOptions().noControlBarWhileFirstActivating), auto: false });
 
                     getOptions().webPageTranslateDirectly && startProcessing();
                 }
 
-                if (activated && getOptions().webPageTranslateDirectly && getOptions().noControlBarWhileFirstActivating) {
-                    show ? dispach({ type: 'hide-control-bar' }) : dispach({ type: 'show-control-bar' });
+                if (!activated) { break; }
+
+                if (!show) {
+                    dispach({ type: 'show-control-bar' });
+                    break;
                 }
+
+                if ((getOptions().webPageTranslateDirectly || auto) && getOptions().noControlBarWhileFirstActivating) {
+                    dispach({ type: 'hide-control-bar' });
+                }
+
                 break;
             case SCTS_SWITCH_WT_DISPLAY_MODE:
                 working && switchWayOfFontsDisplaying();
