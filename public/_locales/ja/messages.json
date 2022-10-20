@@ -500,6 +500,12 @@
     "contentRestartWebpageTranslating": {
         "message": "Webページ翻訳を再起動する"
     },
+    "contentEnableAutoTranslationOnThisSite": {
+        "message": "このサイトで自動翻訳を有効にする"
+    },
+    "contentDisableAutoTranslationOnThisSite": {
+        "message": "このサイトで自動翻訳を無効にする"
+    },
     "popupEnableTranslate": {
         "message": "このサイトで翻訳を有効にする"
     },

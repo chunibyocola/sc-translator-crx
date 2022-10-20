@@ -500,6 +500,12 @@
     "contentRestartWebpageTranslating": {
         "message": "重新开始网页翻译"
     },
+    "contentEnableAutoTranslationOnThisSite": {
+        "message": "在此网站上启用自动翻译"
+    },
+    "contentDisableAutoTranslationOnThisSite": {
+        "message": "在此网站上禁用自动翻译"
+    },
     "popupEnableTranslate": {
         "message": "在此网站启用翻译"
     },
