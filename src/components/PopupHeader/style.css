@@ -2,15 +2,13 @@
     color: var(--text-icon);
     height: 30px;
 }
-.popup-header__logo {
-    font-weight: bold;
-    font-size: 16px;
+.popup-header__left {
     margin-left: 5px;
 }
 .popup-header__icons {
     margin-right: 5px;
 }
-.popup-header__icons .iconfont {
+.popup-header__icons .iconfont, .popup-header__left .iconfont {
     font-size: 20px !important;
     color: var(--text-icon);
 }
