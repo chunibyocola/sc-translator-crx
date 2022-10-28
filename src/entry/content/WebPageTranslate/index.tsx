@@ -104,27 +104,6 @@ const WebPageTranslate: React.FC = () => {
         errorReason && dispach({ type: 'change-error', error: errorReason });
     }, [dispach]);
 
-    useEffectOnce(() => {
-        switchWayOfFontsDisplaying(getOptions().webPageTranslateDisplayMode);
-
-        const auto = getOptions().enableAutoTranslateWebpage && getOptions().autoTranslateWebpageHostList.includes(host);
-
-        if (!working && auto) {
-            dispach({ type: 'active-wpt', show: !getOptions().noControlBarWhileFirstActivating, auto });
-
-            startProcessing();
-        }
-    });
-
-    useEffect(() => {
-        setLangCodes(preferredLangCode[getOptions().userLanguage]);
-
-        setLangLocal(preferredLangCode[getOptions().userLanguage].reduce((total: { [key: string]: string; }, current) => {
-            total[current['code']] = current['name'];
-            return total;
-        }, {}));
-    }, [source]);
-
     const startProcessing = useCallback((force = false) => {
         if (source === workingSourceAndLanguage.source && targetLanguage === workingSourceAndLanguage.targetLanguage && !force) { return; }
 
@@ -148,26 +127,77 @@ const WebPageTranslate: React.FC = () => {
         }
     }, [source, targetLanguage, workingSourceAndLanguage, dispach, handleError]);
 
+    const activatePageTranslation = useCallback(() => {
+        if (!working) {
+            dispach({ type: 'active-wpt', show: !(getOptions().webPageTranslateDirectly && getOptions().noControlBarWhileFirstActivating), auto: false });
+
+            getOptions().webPageTranslateDirectly && startProcessing();
+        }
+
+        if (!activated) { return; }
+
+        if (!show) {
+            dispach({ type: 'show-control-bar' });
+            return;
+        }
+
+        if ((getOptions().webPageTranslateDirectly || auto) && getOptions().noControlBarWhileFirstActivating) {
+            dispach({ type: 'hide-control-bar' });
+        }
+    }, [working, activated, show, auto, startProcessing]);
+
+    const closePageTranslation = useCallback(() => {
+        closeWebPageTranslating();
+        setWorkingSourceAndLanguage({ source: '', targetLanguage: '' });
+        dispach({ type: 'close-wpt' });
+    }, [dispach]);
+
+    useEffectOnce(() => {
+        switchWayOfFontsDisplaying(getOptions().webPageTranslateDisplayMode);
+
+        const auto = getOptions().enableAutoTranslateWebpage && getOptions().autoTranslateWebpageHostList.includes(host);
+
+        if (!working && auto) {
+            dispach({ type: 'active-wpt', show: !getOptions().noControlBarWhileFirstActivating, auto });
+
+            startProcessing();
+        }
+    });
+
+    useEffect(() => {
+        const onMessage = (message: string, sender: chrome.runtime.MessageSender, sendResponse: (response?: any) => void) => {
+            if (message === 'Have you activated?') {
+                sendResponse(activated ? 'Yes!' : 'No!');
+                return true;
+            }
+            if (message === 'Activate page translation!') {
+                activatePageTranslation();
+                return false;
+            }
+            if (message === 'Close page translation!') {
+                closePageTranslation();
+                return false;
+            }
+        };
+
+        chrome.runtime.onMessage.addListener(onMessage);
+
+        return () => chrome.runtime.onMessage.removeListener(onMessage)
+    }, [activated, activatePageTranslation, closePageTranslation]);
+
+    useEffect(() => {
+        setLangCodes(preferredLangCode[getOptions().userLanguage]);
+
+        setLangLocal(preferredLangCode[getOptions().userLanguage].reduce((total: { [key: string]: string; }, current) => {
+            total[current['code']] = current['name'];
+            return total;
+        }, {}));
+    }, [source]);
+
     useOnRuntimeMessage(({ type }) => {
         switch (type) {
             case SCTS_TRANSLATE_CURRENT_PAGE:
-                if (!working) {
-                    dispach({ type: 'active-wpt', show: !(getOptions().webPageTranslateDirectly && getOptions().noControlBarWhileFirstActivating), auto: false });
-
-                    getOptions().webPageTranslateDirectly && startProcessing();
-                }
-
-                if (!activated) { break; }
-
-                if (!show) {
-                    dispach({ type: 'show-control-bar' });
-                    break;
-                }
-
-                if ((getOptions().webPageTranslateDirectly || auto) && getOptions().noControlBarWhileFirstActivating) {
-                    dispach({ type: 'hide-control-bar' });
-                }
-
+                activatePageTranslation();
                 break;
             case SCTS_SWITCH_WT_DISPLAY_MODE:
                 working && switchWayOfFontsDisplaying();
@@ -244,11 +274,7 @@ const WebPageTranslate: React.FC = () => {
                 <IconFont iconName='#icon-auto' />
             </PanelIconButtonWrapper>
             <PanelIconButtonWrapper
-                onClick={() => {
-                    closeWebPageTranslating();
-                    setWorkingSourceAndLanguage({ source: '', targetLanguage: '' });
-                    dispach({ type: 'close-wpt' });
-                }}
+                onClick={closePageTranslation}
                 title={wPTI18nCache.closeWebPageTranslating}
             >
                 <IconFont iconName='#icon-GoX' />

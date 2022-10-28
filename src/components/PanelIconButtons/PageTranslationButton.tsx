@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { getMessage } from '../../public/i18n';
-import { sendTabsTranslateCurrentPage } from '../../public/send';
 import { getCurrentTab } from '../../public/utils';
 import IconFont from '../IconFont';
 import PanelIconButtonWrapper from './PanelIconButtonWrapper';
@@ -10,13 +9,34 @@ type PageTranslationButtonProps = {
 };
 
 const PageTranslationButton: React.FC<PageTranslationButtonProps> = ({ host }) => {
+    const [activated, setActivated] = useState(false);
+    const [tabId, setTabId] = useState<number>();
+
+    useEffect(() => {
+        if (!host) { return; }
+
+        getCurrentTab((tab) => {
+            tab?.id !== undefined && chrome.tabs.sendMessage(tab.id, 'Have you activated?', (response) => {
+                if (chrome.runtime.lastError) { return; }
+
+                setActivated(response === 'Yes!');
+                setTabId(tab.id);
+            });
+        });
+    }, [host]);
+
     return (
         <PanelIconButtonWrapper
-            disabled={!host}
+            disabled={tabId === undefined}
             onClick={() => {
-                host && getCurrentTab(tab => tab?.id !== undefined && sendTabsTranslateCurrentPage(tab.id));
+                if (tabId === undefined) { return; }
+
+                chrome.tabs.sendMessage(tabId, activated ? 'Close page translation!' : 'Activate page translation!');
+
+                window.close();
             }}
-            title={host ? getMessage('contextMenus_TRANSLATE_CURRENT_PAGE') : getMessage('popupNotAvailable')}
+            title={getMessage(tabId !== undefined ? activated ? 'contentCloseWebPageTranslating' : 'contextMenus_TRANSLATE_CURRENT_PAGE' : 'popupNotAvailable')}
+            iconGrey={!activated}
         >
             <IconFont iconName='#icon-pageTranslation' />
         </PanelIconButtonWrapper>
