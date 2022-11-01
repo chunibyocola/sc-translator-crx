@@ -36,7 +36,7 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
             text,
             from: data[0].detectedLanguage.language,
             to,
-            result: [data[0].translations[0].text]
+            result: (data[0].translations[0].text as string).split('\n').filter(v => v.trim())
         };
 
         let dict: undefined | string[] = undefined;
