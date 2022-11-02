@@ -74,6 +74,7 @@ export type DisplayOfTranslation = {
     related: boolean;
     example: boolean;
     phonetic_nonEnglish: boolean;
+    maintainParagraphStructure: boolean;
 };
 
 export type DisplayModeEnhancement = {

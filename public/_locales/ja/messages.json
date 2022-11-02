@@ -452,6 +452,9 @@
     "optionsEnableAutoTranslateWebpageDescription": {
         "message": "このオプションは、「動的に生成されたコンテンツを翻訳する」オプションを有効にした場合にのみ使用できます。このオプションを有効にすると、「このサイトで自動翻訳を有効/無効にする」ボタンがコントロールバーに表示されます。下記のドメイン名リストにあるウェブサイトにアクセスすると、そのページが自動的に翻訳されます。"
     },
+    "optionsMaintainParagraphStructure": {
+        "message": "段落構造を維持する"
+    },
     "themePreset": {
         "message": "プリセット"
     },

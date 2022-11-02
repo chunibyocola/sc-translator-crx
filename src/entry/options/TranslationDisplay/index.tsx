@@ -49,6 +49,11 @@ const TranslationDisplay: React.FC<TranslationDisplayProps> = ({ displayOfTransl
                     checked={displayOfTranslation.phonetic_nonEnglish}
                     onChange={v => onChange({ ...displayOfTranslation, phonetic_nonEnglish: v })}
                 />
+                <Checkbox
+                    label={getMessage('optionsMaintainParagraphStructure')}
+                    checked={displayOfTranslation.maintainParagraphStructure}
+                    onChange={v => onChange({ ...displayOfTranslation, maintainParagraphStructure: v })}
+                />
             </div>
             <div className='translation-display__preview'>
                 <div className='flex-align-items-center'>
