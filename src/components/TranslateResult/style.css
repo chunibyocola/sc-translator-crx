@@ -11,3 +11,7 @@
 .translate-result__item-stack + .translate-result__item-stack {
     margin-block-start: 0.8em;
 }
+.translate-result__paragraph + .translate-result__paragraph {
+    display: block;
+    margin-top: 0.625em;
+}

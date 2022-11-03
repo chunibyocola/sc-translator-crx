@@ -36,24 +36,34 @@ const TranslateResult: React.FC<TranslateResultProps> = ({ translateRequest, sou
                     {translateRequest.result.phonetic}
                 </div>}
                 <div className='translate-result__item-stack'>
-                    <span>
-                        {resultToString(translateRequest.result.result)}
-                        {insertResult && <IconFont
-                            className='iconbutton button'
-                            iconName='#icon-insert'
-                            onClick={() => insertResult(resultToString(translateRequest.result.result))}
-                        />}
-                        <IconFont
-                            className='iconbutton button'
-                            iconName='#icon-copy'
-                            onClick={() => navigator.clipboard.writeText(resultToString(translateRequest.result.result))}
-                        />
-                        <ListenButton
-                            text={resultToString(translateRequest.result.result)}
-                            source={source}
-                            from={translateRequest.result.to}
-                        />
-                    </span>
+                    {translateRequest.result.result.map((item, index) => (<span
+                        className={classNames(displayOfTranslation.maintainParagraphStructure && 'translate-result__paragraph')}
+                        key={index}
+                    >
+                        {item}
+                        {index === translateRequest.result.result.length - 1 && (<>
+                            {insertResult && <IconFont
+                                className='iconbutton button'
+                                iconName='#icon-insert'
+                                onClick={() => insertResult(resultToString(translateRequest.result.result))}
+                            />}
+                            <IconFont
+                                className='iconbutton button'
+                                iconName='#icon-copy'
+                                onClick={() => {
+                                    const text = displayOfTranslation.maintainParagraphStructure
+                                        ? translateRequest.result.result.join('\n\n')
+                                        : resultToString(translateRequest.result.result);
+                                    navigator.clipboard.writeText(text);
+                                }}
+                            />
+                            <ListenButton
+                                text={resultToString(translateRequest.result.result)}
+                                source={source}
+                                from={translateRequest.result.to}
+                            />
+                        </>)}
+                    </span>))}
                 </div>
                 {displayOfTranslation.dict && translateRequest.result.dict && translateRequest.result.dict.length > 0 && <div className='translate-result__item-stack'>
                     {translateRequest.result.dict.map((v, i) => (

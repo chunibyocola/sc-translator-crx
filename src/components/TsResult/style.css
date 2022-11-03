@@ -24,3 +24,7 @@
     white-space: nowrap;
     max-width: 170px;
 }
+.st-result__paragraph + .st-result__paragraph {
+    display: block;
+    margin-top: 0.625em;
+}
