@@ -94,7 +94,7 @@ const reducerMap: [(keyof DefaultOptions)[], <S>(origin: S, next: any, addition:
         return code.find(v => v.code === next) ? next : code.find(v => v.code === origin as any as string) ? origin : '';
     }
 ], [
-    ['translateHostList', 'historyHostList'],
+    ['translateHostList', 'historyHostList', 'autoTranslateWebpageHostList'],
     (origin, next) => {
         return CheckData.isArrayOf('', next) ? next : origin;
     }
