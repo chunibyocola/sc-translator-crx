@@ -1,3 +1,9 @@
+# 4.6.0 (2022-11-07)
+- Add "Maintain paragraph structure" option of "Display of translation". ([dbe4955](https://github.com/chunibyocola/sc-translator-crx/commit/dbe495525a253735d0627a0c8eec9ba6a678dc58))
+- Add "page translation" toggle onto popup page. ([5ee6222](https://github.com/chunibyocola/sc-translator-crx/commit/5ee6222b38d5bc7f363495845153372412c76fcb))
+- Add "Enable automatic translation of webpages" option. ([823fee3](https://github.com/chunibyocola/sc-translator-crx/commit/823fee397d4a497b05b7c9cc4f9e84b6b5a22b1a))
+- Make page translation detect the in-viewport paragraphs more acurrate. ([0bc39a3](https://github.com/chunibyocola/sc-translator-crx/commit/0bc39a3b0d89b868989f0c4cc993076ff24b744d))
+- Page translation will ignore content-editable elements now. ([c9e88d1](https://github.com/chunibyocola/sc-translator-crx/commit/c9e88d17860829bd56f832cecc95a26f3384ffa4))
 # 4.5.0 (2022-09-19)
 - Add "Translate dynamically generated content" option. ([d14a496](https://github.com/chunibyocola/sc-translator-crx/commit/d14a496e799e3e83dc4cc476743d0932c5004a8d))
 - Improve the webpage translating performance greatly.
