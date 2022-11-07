@@ -155,7 +155,7 @@ const WebPageTranslate: React.FC = () => {
     useEffectOnce(() => {
         switchWayOfFontsDisplaying(getOptions().webPageTranslateDisplayMode);
 
-        const auto = getOptions().enableAutoTranslateWebpage && getOptions().autoTranslateWebpageHostList.includes(host);
+        const auto = getOptions().translateDynamicContent && getOptions().enableAutoTranslateWebpage && getOptions().autoTranslateWebpageHostList.includes(host);
 
         if (!working && auto) {
             dispach({ type: 'active-wpt', show: !getOptions().noControlBarWhileFirstActivating, auto });
@@ -262,7 +262,7 @@ const WebPageTranslate: React.FC = () => {
             >
                 <IconFont iconName='#icon-refresh' />
             </PanelIconButtonWrapper>
-            <PanelIconButtonWrapper
+            {getOptions().translateDynamicContent && getOptions().enableAutoTranslateWebpage && <PanelIconButtonWrapper
                 onClick={() => {
                     const nextHostSet = new Set(hostSet);
                     nextHostSet.has(host) ? nextHostSet.delete(host) : nextHostSet.add(host);
@@ -272,7 +272,7 @@ const WebPageTranslate: React.FC = () => {
                 iconGrey={!hostSet.has(host)}
             >
                 <IconFont iconName='#icon-auto' />
-            </PanelIconButtonWrapper>
+            </PanelIconButtonWrapper>}
             <PanelIconButtonWrapper
                 onClick={closePageTranslation}
                 title={wPTI18nCache.closeWebPageTranslating}
