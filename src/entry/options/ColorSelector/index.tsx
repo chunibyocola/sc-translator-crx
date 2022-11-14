@@ -42,16 +42,16 @@ const ColorSelector: React.FC<ColorSelectorProps> = ({ initColor, save, update }
         setOpacity(a);
     }, [initColor, updateStateByRgb]);
 
-    const handleUpdateColor = useCallback((selectedColor, opacity) => {
+    const handleUpdateColor = useCallback((selectedColor: RGB, opacity: number) => {
         setOpacity(opacity);
         update(`rgba(${selectedColor.r},${selectedColor.g},${selectedColor.b},${opacity})`);
     }, [update]);
 
-    const handleOpacityChange = useCallback((opacity) => {
+    const handleOpacityChange = useCallback((opacity: number) => {
         handleUpdateColor(selectedColor, opacity);
     }, [handleUpdateColor, selectedColor]);
 
-    const handleBarTopChange = useCallback((y) => {
+    const handleBarTopChange = useCallback((y: number) => {
         const tempMainColor = getMainColorByBarTop(y, mainColorBarRect.h);
         setMainColor(tempMainColor);
         const tempSelectedColor = calculateColor(platterPos.x, platterPos.y, platterRect.w, platterRect.h, tempMainColor);
@@ -61,7 +61,7 @@ const ColorSelector: React.FC<ColorSelectorProps> = ({ initColor, save, update }
         handleUpdateColor(tempSelectedColor, opacity);
     }, [platterPos, handleUpdateColor, opacity]);
 
-    const handlePlatterPosChange = useCallback((x, y) => {
+    const handlePlatterPosChange = useCallback((x: number, y: number) => {
         const tempSelectedColor = calculateColor(x, y, platterRect.w, platterRect.h, mainColor);
         setSelectedColor(tempSelectedColor);
         setPlatterPos({ x, y });
@@ -69,7 +69,7 @@ const ColorSelector: React.FC<ColorSelectorProps> = ({ initColor, save, update }
         handleUpdateColor(tempSelectedColor, opacity);
     }, [mainColor, handleUpdateColor, opacity]);
 
-    const handleColorAdjust = useCallback((aR, aG, aB) => {
+    const handleColorAdjust = useCallback((aR: number, aG: number, aB: number) => {
         updateStateByRgb(aR, aG, aB);
 
         handleUpdateColor({ r: aR, g: aG, b: aB }, opacity);

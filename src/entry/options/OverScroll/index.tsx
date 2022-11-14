@@ -18,7 +18,7 @@ const OverScroll: React.FC = () => {
         }
     });
 
-    const onItemClick = useCallback((scrollId) => {
+    const onItemClick = useCallback((scrollId: string) => {
         if (!overscrollEle.current) { return; }
 
         window.removeEventListener('scroll', listenerRef.current);

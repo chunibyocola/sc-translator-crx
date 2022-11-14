@@ -5,7 +5,7 @@ import { getMessage } from '../../../../public/i18n';
 import ColorSelector from '../../ColorSelector';
 import './style.css';
 
-const initChanging = { targetColor: '', saved: false, offsetColor: '' };
+const initChanging: { targetColor: keyof StyleVars | null; saved: boolean; offsetColor: string; } = { targetColor: null, saved: false, offsetColor: '' };
 const textKeyList: (keyof Pick<StyleVars, '--text-normal' | '--text-icon'>)[] = ['--text-normal', '--text-icon'];
 const bgKeyList: (keyof Pick<StyleVars, '--bg-content' | '--bg-total' | '--bg-item-hover' | '--bg-select-focus'>)[] = ['--bg-content', '--bg-total', '--bg-item-hover', '--bg-select-focus'];
 const i18nMessage = {
@@ -30,17 +30,17 @@ const CustomizeBoardOptions: React.FC<CustomizeBoardOptionsProps> = ({ styleVars
 
     const themeNameEle = useRef<HTMLInputElement>(null);
 
-    const saveColor = useCallback((targetColor, styleVar) => {
+    const saveColor = useCallback((targetColor: keyof StyleVars, styleVar: string) => {
         setCustomizeStyleVars({ ...styleVars, [targetColor]: styleVar });
         updateCallback({ ...styleVars, [targetColor]: styleVar });
         setChanging({ targetColor, saved: true, offsetColor: styleVar });
     }, [styleVars, updateCallback]);
 
-    const updateColor = useCallback((targetColor, styleVar) => {
+    const updateColor = useCallback((targetColor: keyof StyleVars, styleVar: string) => {
         updateCallback({ ...styleVars, [targetColor]: styleVar });
     }, [styleVars, updateCallback]);
 
-    const handleColorClick = useCallback((targetColor, offsetColor) => {
+    const handleColorClick = useCallback((targetColor: keyof StyleVars, offsetColor: string) => {
         changing.targetColor && changing.offsetColor && updateColor(changing.targetColor, changing.offsetColor);
 
         setChanging({ targetColor, saved: false, offsetColor });
@@ -53,7 +53,7 @@ const CustomizeBoardOptions: React.FC<CustomizeBoardOptionsProps> = ({ styleVars
         finishCallback(customizeStyleVars, tempName);
     }, [finishCallback, customizeStyleVars]);
 
-    const handleOffsetStyleClick = useCallback((styleVars) => {
+    const handleOffsetStyleClick = useCallback((styleVars: StyleVars) => {
         setChanging(initChanging);
         updateCallback(styleVars);
         setCustomizeStyleVars(styleVars);
@@ -100,8 +100,8 @@ const CustomizeBoardOptions: React.FC<CustomizeBoardOptionsProps> = ({ styleVars
             </div>
             {changing.targetColor && <ColorSelector
                 initColor={changing.offsetColor}
-                save={color => saveColor(changing.targetColor, color)}
-                update={color => updateColor(changing.targetColor, color)}
+                save={color => changing.targetColor && saveColor(changing.targetColor, color)}
+                update={color => changing.targetColor && updateColor(changing.targetColor, color)}
             />}
         </div>
     );

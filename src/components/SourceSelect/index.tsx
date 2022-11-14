@@ -16,7 +16,7 @@ type SourceSelectProps = {
 const SourceSelect: React.FC<SourceSelectProps> = ({ onChange, sourceList, source, className, disabled }) => {
     const [showOptions, setShowOptions] = useState(false);
 
-    const optionClick = useCallback((value) => {
+    const optionClick = useCallback((value: string) => {
         if (value === source) { return; }
 
         onChange(value);

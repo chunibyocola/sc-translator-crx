@@ -17,7 +17,7 @@ const MultipleSourcesDisplay: React.FC<MultipleSourcesDisplayProps> = ({ enabled
         return enabledSources.reduce((total, current) => ({ ...total, [current]: true }), {});
     }, [enabledSources]);
 
-    const onSourceItemClick = useCallback((source) => {
+    const onSourceItemClick = useCallback((source: string) => {
         if (enabledSources.includes(source)) {
             onChange(enabledSources.filter(value => value !== source));
         }

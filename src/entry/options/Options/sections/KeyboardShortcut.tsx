@@ -9,14 +9,14 @@ import {
     SC_TRANSLATE,
     SC_TRANSLATE_CURRENT_PAGE
 } from '../../../../constants/commandsName';
-import { createNewTab, getAllCommands } from '../../../../public/chrome-call';
+import { createNewTab } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 
 const KeyboardShortcut: React.FC = () => {
     const [commands, setCommands] = useState<{ [key: string]: string; }>({});
 
     useEffect(() => {
-        getAllCommands((commands) => {
+        chrome.commands.getAll((commands) => {
             setCommands(commands.reduce((t: { [key: string]: string; }, v) => ((v.name && v.shortcut) ? { ...t, [v.name]: v.shortcut } : t), {}));
         });
     }, []);

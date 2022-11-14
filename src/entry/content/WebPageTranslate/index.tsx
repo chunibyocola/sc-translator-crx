@@ -247,7 +247,9 @@ const WebPageTranslate: React.FC = () => {
                 <IconFont iconName='#icon-switch' />
             </PanelIconButtonWrapper>
             <PanelIconButtonWrapper
-                onClick={startProcessing}
+                onClick={() => {
+                    startProcessing();
+                }}
                 disabled={source === workingSourceAndLanguage.source && targetLanguage === workingSourceAndLanguage.targetLanguage}
                 title={wPTI18nCache.startWebPageTranslating}
             >

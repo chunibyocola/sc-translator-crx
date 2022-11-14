@@ -15,13 +15,14 @@ type PlatterProps = {
 };
 
 const Platter: React.FC<PlatterProps> = ({ mainColor, posChange, pos, width, height }) => {
-    const handlePointerDrag = useCallback(({ x, y }) => {
+    const handlePointerDrag = useCallback(({ x, y }: Position) => {
         posChange(x, y);
     }, [posChange]);
 
-    const handleMouseDown = useCallback((e) => {
+    const handleMouseDown: React.MouseEventHandler<HTMLDivElement> = useCallback((e) => {
         handlePointerDrag({ x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY });
-        pointerDrag(e.target, { maxX: e.target.offsetWidth - 1, maxY: e.target.offsetHeight - 1 }, handlePointerDrag);
+        const target = e.target as HTMLDivElement
+        pointerDrag(target, { maxX: target.offsetWidth - 1, maxY: target.offsetHeight - 1 }, handlePointerDrag);
     }, [handlePointerDrag]);
 
     return (

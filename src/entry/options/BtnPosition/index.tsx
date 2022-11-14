@@ -22,17 +22,19 @@ const BtnPostion: React.FC<BtnPostionProps> = ({ currentPos, updateBtnPosition }
         setPos(currentPos);
     }, [currentPos]);
 
-    const handlePointerDrag = useCallback(({ x ,y }) => {
+    const handlePointerDrag = useCallback(({ x ,y }: Position) => {
         setPos({ x: ~~x - 50, y: ~~y - 50 });
     }, []);
 
-    const handleMouseDown = useCallback((e) => {
+    const handleMouseDown: React.MouseEventHandler<HTMLDivElement> = useCallback((e) => {
         if (!btnEle.current) { return; }
 
-        const maxX = e.target.offsetWidth - btnEle.current.offsetWidth;
-        const maxY = e.target.offsetHeight - btnEle.current.offsetHeight;
+        const target = e.target as HTMLDivElement;
+
+        const maxX = target.offsetWidth - btnEle.current.offsetWidth;
+        const maxY = target.offsetHeight - btnEle.current.offsetHeight;
         handlePointerDrag({ x: Math.min(e.nativeEvent.offsetX, maxX), y: Math.min(e.nativeEvent.offsetY, maxY) });
-        pointerDrag(e.target, { maxX, maxY }, handlePointerDrag);
+        pointerDrag(target, { maxX, maxY }, handlePointerDrag);
     }, [handlePointerDrag]);
 
     return (

@@ -1,5 +1,5 @@
 import { DefaultOptions, Position } from '../../types';
-import { queryTabs, sendMessageToTab } from '../chrome-call';
+import { queryTabs } from '../chrome-call';
 
 export const resultToString = (result: string[]) => (result.reduce((t, c) => (t + c), ''));
 
@@ -14,7 +14,7 @@ export const getIsContentScriptEnabled = async (tabId?: number):Promise<boolean>
                 resolve(false);
                 return;
             }
-            sendMessageToTab(tabId, 'Are you enabled?', () => {
+            chrome.tabs.sendMessage(tabId, 'Are you enabled?', () => {
                 if (chrome.runtime.lastError) resolve(false);
                 resolve(true);
             });
@@ -38,7 +38,7 @@ export const getIsEnabled = (host: string, hostList: string[], mode: boolean) =>
 
 export const getCurrentTabHost = async (tabId?: number): Promise<string> => {
     return await new Promise((resolve, reject) => {
-        const callback = (tabId: number) => sendMessageToTab(tabId, 'Are you enabled?', (tabData) => {
+        const callback = (tabId: number) => chrome.tabs.sendMessage(tabId, 'Are you enabled?', (tabData) => {
             chrome.runtime.lastError && resolve('');
 
             resolve(tabData?.host);

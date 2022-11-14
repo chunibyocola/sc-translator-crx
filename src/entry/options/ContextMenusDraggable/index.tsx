@@ -18,7 +18,7 @@ const ContextMenusDraggable: React.FC<ContextMenusDraggableProps> = ({ contextMe
         setTempContextMenus([...contextMenus]);
     }, [contextMenus]);
 
-    const onChange = useCallback((values) => {
+    const onChange = useCallback((values: OptionsContextMenu[]) => {
         setTempContextMenus(values);
         update(values);
     }, [update]);

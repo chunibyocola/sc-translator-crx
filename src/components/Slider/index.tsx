@@ -34,7 +34,7 @@ const Slider: React.FC<SliderProps> = ({ defaultValue, min, max, step, marks, va
         return step ? Math.round(value / step) * step : value;
     }, [min, max, step]);
 
-    const calculatePointerLeftByValue = useCallback((value) => {
+    const calculatePointerLeftByValue = useCallback((value: number) => {
         return (value - min) / (max - min) * 100;
     }, [min, max]);
 
@@ -61,7 +61,7 @@ const Slider: React.FC<SliderProps> = ({ defaultValue, min, max, step, marks, va
         handleValueChange(value);
     }, [handleSliderMouseMove, handleSliderMouseUp, mouseDownCallback, calculateValueByX, handleValueChange]);
 
-    const handleMarkMouseDown = useCallback((value) => {
+    const handleMarkMouseDown = useCallback((value: number) => {
         mouseUpCallback?.(value);
         handleValueChange(value);
     }, [mouseUpCallback, handleValueChange]);

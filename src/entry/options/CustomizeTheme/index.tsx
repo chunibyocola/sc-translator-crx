@@ -25,7 +25,7 @@ const CustomizeTheme: React.FC<CustomizeThemeProps> = ({ styleVarsList, styleVar
         setShowBoard(false);
     }, [styleVarsList, updateStyleVarsList]);
 
-    const handleDelete = useCallback((index) => {
+    const handleDelete = useCallback((index: number) => {
         updateStyleVarsList(styleVarsList.filter((v, i) => (i !== index)));
         if (index === styleVarsIndex) {
             updateStyleVarsIndex(0);
@@ -35,7 +35,7 @@ const CustomizeTheme: React.FC<CustomizeThemeProps> = ({ styleVarsList, styleVar
         }
     }, [updateStyleVarsList, styleVarsList, styleVarsIndex, updateStyleVarsIndex]);
 
-    const handleUpdate = useCallback((styleVars, name) => {
+    const handleUpdate = useCallback((styleVars: StyleVars, name: string) => {
         updateStyleVarsList(styleVarsList.map((v, i) => (i !== editIndex ? v : { name, styleVars, editable: true })));
         setShowBoard(false);
         setEditIndex(null);

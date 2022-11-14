@@ -10,11 +10,11 @@ import { getLocalStorage } from '../../public/chrome-call';
 import defaultOptions from '../../constants/defaultOptions';
 import HandleCommand from './HandleCommands';
 import Separate from './Separate';
-import { getI18nMessage } from '../../public/chrome-call';
 import { appendColorVarsStyle, appendCustomizeStyle, appendFontSizeStyle } from '../../public/inject-style';
 import { DefaultOptions } from '../../types';
+import { getMessage } from '../../public/i18n';
 
-document.title = `${getI18nMessage('titleSeparateWindow')} - ${getI18nMessage('extName')}`;
+document.title = `${getMessage('titleSeparateWindow')} - ${getMessage('extName')}`;
 
 const init = (options: DefaultOptions) => {
     document.body.id = 'sc-translator-root';
