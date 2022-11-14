@@ -54,11 +54,7 @@ module.exports = (env) => {
                     oneOf: [
                         {
                             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-                            loader: require.resolve('url-loader'),
-                            options: {
-                                limit: 10000,
-                                name: 'static/media/[name].[hash:8].[ext]',
-                            },
+                            type: 'asset/inline',
                         },
                         {
                             test: /\.(js|jsx|mjs|tsx|ts)$/,
@@ -72,13 +68,6 @@ module.exports = (env) => {
                             test: /\.css$/,
                             use: [{ loader: MiniCssExtractPlugin.loader }, 'css-loader']
                         },
-                        // {
-                        //     loader: require.resolve('file-loader'),
-                        //     exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
-                        //     options: {
-                        //         name: 'static/media/[name].[hash:8].[ext]',
-                        //     },
-                        // },
                     ],
                 },
             ],
