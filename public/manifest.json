@@ -55,6 +55,9 @@
     },
     "sc-switch-wt-display-mode": {
       "description": "__MSG_extSwitchWTDisplayModeDescription__"
+    },
+    "sc-toggle-page-translation-state": {
+      "description": "__MSG_extTogglePageTranslationStateDescription__"
     }
   },
   "permissions": [

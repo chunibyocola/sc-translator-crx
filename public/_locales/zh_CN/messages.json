@@ -35,6 +35,9 @@
     "extSwitchWTDisplayModeDescription": {
         "message": "切换网页内网页翻译结果的显示方式"
     },
+    "extTogglePageTranslationStateDescription": {
+        "message": "切换当前网页的网页翻译状态"
+    },
     "titleSeparateWindow": {
         "message": "独立翻译窗口"
     },
@@ -454,6 +457,9 @@
     },
     "optionsMaintainParagraphStructure": {
         "message": "保持段落结构"
+    },
+    "optionsTogglePageTranslationStateDescription": {
+        "message": "在扩展已启用的网页中使用此快捷键时，你可以在网页翻译未激活时激活它，或在已激活时关闭它。"
     },
     "themePreset": {
         "message": "预设"

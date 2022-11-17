@@ -7,7 +7,8 @@ import {
     SC_CLOSE,
     SC_TOGGLE_AUTO_INSERT_RESULT,
     SC_TRANSLATE_CURRENT_PAGE,
-    SC_SWITCH_WT_DISPLAY_MODE
+    SC_SWITCH_WT_DISPLAY_MODE,
+    SC_TOGGLE_PAGE_TRANSLATION_STATE
 } from '../../constants/commandsName';
 import { createSeparateWindow } from './separate-window';
 import { setLocalStorage } from '../../public/chrome-call';
@@ -17,6 +18,7 @@ import {
     sendTabsCallOutCommandKeyPressed,
     sendTabsCloseCommandKeyPressed,
     sendTabsSwitchWtDisplayMode,
+    sendTabsTogglePageTranslationState,
     sendTabsTranslateCommandKeyPressed,
     sendTabsTranslateCurrentPage
 } from '../../public/send';
@@ -46,6 +48,9 @@ chrome.commands.onCommand.addListener((cmd) => {
             break;
         case SC_SWITCH_WT_DISPLAY_MODE:
             getCurrentTab(tab => tab?.id !== undefined && sendTabsSwitchWtDisplayMode(tab.id));
+            break;
+        case SC_TOGGLE_PAGE_TRANSLATION_STATE:
+            getCurrentTab(tab => tab?.id !== undefined && sendTabsTogglePageTranslationState(tab.id));
             break;
         default: break;
     }

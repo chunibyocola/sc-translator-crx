@@ -7,7 +7,8 @@ import {
     SC_SWITCH_WT_DISPLAY_MODE,
     SC_TOGGLE_AUTO_INSERT_RESULT,
     SC_TRANSLATE,
-    SC_TRANSLATE_CURRENT_PAGE
+    SC_TRANSLATE_CURRENT_PAGE,
+    SC_TOGGLE_PAGE_TRANSLATION_STATE
 } from '../../../../constants/commandsName';
 import { createNewTab } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
@@ -59,6 +60,11 @@ const KeyboardShortcut: React.FC = () => {
             <div className='opt-section-row'>
                 {getMessage('extSwitchWTDisplayModeDescription')}
                 <span className='keyboard-shortcut'>{commands[SC_SWITCH_WT_DISPLAY_MODE]}</span>
+            </div>
+            <div className='opt-section-row'>
+                {getMessage('extTogglePageTranslationStateDescription')}
+                <span className='keyboard-shortcut'>{commands[SC_TOGGLE_PAGE_TRANSLATION_STATE]}</span>
+                <div className='item-description'>{getMessage('optionsTogglePageTranslationStateDescription')}</div>
             </div>
             <div className='opt-section-row'>
                 <Button variant='outlined' onClick={() => createNewTab('chrome://extensions/shortcuts')}>

@@ -4,7 +4,7 @@ import IconFont from '../../../components/IconFont';
 import LanguageSelect from '../../../components/LanguageSelect';
 import PanelIconButtonWrapper from '../../../components/PanelIconButtons/PanelIconButtonWrapper';
 import SourceSelect from '../../../components/SourceSelect';
-import { SCTS_SWITCH_WT_DISPLAY_MODE, SCTS_TRANSLATE_CURRENT_PAGE } from '../../../constants/chromeSendMessageTypes';
+import { SCTS_SWITCH_WT_DISPLAY_MODE, SCTS_TOGGLE_PAGE_TRANSLATION_STATE, SCTS_TRANSLATE_CURRENT_PAGE } from '../../../constants/chromeSendMessageTypes';
 import { LangCodes, preferredLangCode } from '../../../constants/langCode';
 import { webPageTranslateSource as webPageTranslateSourceList } from '../../../constants/translateSource';
 import { setLocalStorage } from '../../../public/chrome-call';
@@ -201,6 +201,9 @@ const WebPageTranslate: React.FC = () => {
                 break;
             case SCTS_SWITCH_WT_DISPLAY_MODE:
                 working && switchWayOfFontsDisplaying();
+                break;
+            case SCTS_TOGGLE_PAGE_TRANSLATION_STATE:
+                activated ? closePageTranslation() : activatePageTranslation();
                 break;
             default: break;
         }

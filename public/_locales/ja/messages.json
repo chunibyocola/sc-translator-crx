@@ -35,6 +35,9 @@
     "extSwitchWTDisplayModeDescription": {
         "message": "Webページ内でWebページ翻訳結果の表示モードを切り変えます"
     },
+    "extTogglePageTranslationStateDescription": {
+        "message": "現在のページのページ翻訳状態を切り替える"
+    },
     "titleSeparateWindow": {
         "message": "スタンドアロン翻訳ウィンドウ"
     },
@@ -454,6 +457,9 @@
     },
     "optionsMaintainParagraphStructure": {
         "message": "段落構造を維持する"
+    },
+    "optionsTogglePageTranslationStateDescription": {
+        "message": "拡張機能が有効なページでこのキーボードショートカットを使用すると、ページ翻訳がアクティブしない状態でアクティブにしたり、アクティブした状態で閉じたりすることができます。"
     },
     "themePreset": {
         "message": "プリセット"

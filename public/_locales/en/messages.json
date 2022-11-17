@@ -35,6 +35,9 @@
     "extSwitchWTDisplayModeDescription": {
         "message": "Switch the display mode of webpage translations inside the webpage"
     },
+    "extTogglePageTranslationStateDescription": {
+        "message": "Toggle the page translation state of current page"
+    },
     "titleSeparateWindow": {
         "message": "Separate translate window"
     },
@@ -454,6 +457,9 @@
     },
     "optionsMaintainParagraphStructure": {
         "message": "Maintain paragraph structure"
+    },
+    "optionsTogglePageTranslationStateDescription": {
+        "message": "When this keyboard shortcut is used on an extension enabled page, you can activate page translation while it is not activated, or close it while it is activated."
     },
     "themePreset": {
         "message": "Preset"

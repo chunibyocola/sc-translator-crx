@@ -35,6 +35,9 @@
     "extSwitchWTDisplayModeDescription": {
         "message": "切換網頁內網頁翻譯結果的顯示方式"
     },
+    "extTogglePageTranslationStateDescription": {
+        "message": "切換當前網頁的網頁翻譯狀態"
+    },
     "titleSeparateWindow": {
         "message": "獨立翻譯視窗"
     },
@@ -454,6 +457,9 @@
     },
     "optionsMaintainParagraphStructure": {
         "message": "保持段落結構"
+    },
+    "optionsTogglePageTranslationStateDescription": {
+        "message": "在擴充功能已啟用的網頁中使用此快捷鍵時，你可以在網頁翻譯未激活時激活它，或在已激活時關閉它。"
     },
     "themePreset": {
         "message": "預設"
