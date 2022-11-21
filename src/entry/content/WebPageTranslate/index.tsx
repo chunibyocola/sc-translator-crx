@@ -62,7 +62,7 @@ const wPTReducer = (state: WPTReducerState, action: WPTReducerAction): WPTReduce
         case 'change-error':
             return { ...state, error: action.error };
         case 'process-success':
-            return { ...state, working: true };
+            return { ...state, working: true, error: '' };
         case 'close-wpt':
             return { ...state, show: false, working: false, activated: false, auto: false };
         case 'change-source':
