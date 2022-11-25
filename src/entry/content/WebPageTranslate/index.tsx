@@ -84,7 +84,6 @@ const useOptionsDependency: (keyof PickedOptions)[] = ['autoTranslateWebpageHost
 const WebPageTranslate: React.FC = () => {
     const [langCodes, setLangCodes] = useState<LangCodes>([]);
     const [langLocal, setLangLocal] = useState<{ [key: string]: string; }>({});
-    const [workingSourceAndLanguage, setWorkingSourceAndLanguage] = useState({ source: '', targetLanguage: '' });
 
     const [{ show, source, targetLanguage, working, error, activated, auto }, dispach] = useReducer(wPTReducer, {
         ...initWPTState,
@@ -105,7 +104,7 @@ const WebPageTranslate: React.FC = () => {
     }, [dispach]);
 
     const startProcessing = useCallback((force = false) => {
-        if (source === workingSourceAndLanguage.source && targetLanguage === workingSourceAndLanguage.targetLanguage && !force) { return; }
+        if (working && !force) { return; }
 
         closeWebPageTranslating();
 
@@ -119,13 +118,12 @@ const WebPageTranslate: React.FC = () => {
         });
 
         if (startSuccess) {
-            setWorkingSourceAndLanguage({ source, targetLanguage });
             dispach({ type: 'process-success' });
         }
         else {
             dispach({ type: 'change-error', error: 'Process failed!' });
         }
-    }, [source, targetLanguage, workingSourceAndLanguage, dispach, handleError]);
+    }, [source, targetLanguage, working, dispach, handleError]);
 
     const activatePageTranslation = useCallback(() => {
         if (!working) {
@@ -148,7 +146,6 @@ const WebPageTranslate: React.FC = () => {
 
     const closePageTranslation = useCallback(() => {
         closeWebPageTranslating();
-        setWorkingSourceAndLanguage({ source: '', targetLanguage: '' });
         dispach({ type: 'close-wpt' });
     }, [dispach]);
 
@@ -249,24 +246,21 @@ const WebPageTranslate: React.FC = () => {
             >
                 <IconFont iconName='#icon-switch' />
             </PanelIconButtonWrapper>
-            <PanelIconButtonWrapper
+            {!working ? <PanelIconButtonWrapper
                 onClick={() => {
                     startProcessing();
                 }}
-                disabled={source === workingSourceAndLanguage.source && targetLanguage === workingSourceAndLanguage.targetLanguage}
                 title={wPTI18nCache.startWebPageTranslating}
             >
                 <IconFont iconName='#icon-start' />
-            </PanelIconButtonWrapper>
-            <PanelIconButtonWrapper
+            </PanelIconButtonWrapper> : <PanelIconButtonWrapper
                 onClick={() => {
                     startProcessing(true);
                 }}
-                disabled={!working}
                 title={wPTI18nCache.restartWebpageTranslating}
             >
                 <IconFont iconName='#icon-refresh' />
-            </PanelIconButtonWrapper>
+            </PanelIconButtonWrapper>}
             {getOptions().translateDynamicContent && getOptions().enableAutoTranslateWebpage && <PanelIconButtonWrapper
                 onClick={() => {
                     const nextHostSet = new Set(hostSet);
