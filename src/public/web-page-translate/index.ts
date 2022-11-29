@@ -24,6 +24,7 @@ type ItemFonts = [ScWebpageTranslationElement, ScWebpageTranslationElement | nul
 type PageTranslateItemEnity = {
     prefix: string;
     text: string;
+    codeTexts: (string[] | undefined)[];
     result?: WebpageTranslateResult;
     textNodes: Text[];
     fontsNodes: ItemFonts[];
@@ -188,7 +189,7 @@ const stopObserving = () => {
     observer.disconnect();
 };
 
-const newPageTranslateItem = (text: string, textNodes: Text[]) => {
+const newPageTranslateItem = (text: string, textNodes: Text[], codeTexts: PageTranslateItemEnity['codeTexts']) => {
     const searchIndex = text.search(/[^\s]/);
 
     const range = document.createRange();
@@ -199,6 +200,7 @@ const newPageTranslateItem = (text: string, textNodes: Text[]) => {
     const item: PageTranslateItemEnity = {
         prefix: text.substring(0, searchIndex),
         text: text.substring(searchIndex).replace('\n', ' '),
+        codeTexts,
         textNodes,
         fontsNodes: [],
         range,
@@ -213,15 +215,17 @@ const newPageTranslateItem = (text: string, textNodes: Text[]) => {
 
 const getAllParagraph = (element: HTMLElement) => {
     let texts: Text[] = [];
+    let codeTexts: PageTranslateItemEnity['codeTexts'] = [];
     let nodeStack: { node: Node; index: number; isInline: boolean; }[] = [{ node: element, index: 0, isInline: getComputedStyle(element).display === 'inline' }];
     let currentNode = nodeStack.shift();
 
     const nextParagraph = () => {
         const text = texts.map(v => v.nodeValue ?? '').join('');
 
-        text.replace(/[\P{L}]/ug, '') && newPageTranslateItem(text, texts);
+        text.replace(/[\P{L}]/ug, '') && newPageTranslateItem(text, texts, codeTexts);
 
         texts = [];
+        codeTexts = [];
     };
 
     while (currentNode) {
@@ -242,6 +246,16 @@ const getAllParagraph = (element: HTMLElement) => {
             }
 
             if (skippedTags.has(node.nodeName)) {
+                if (node.nodeName === 'CODE' && node.textContent) {
+                    const item = codeTexts[texts.length];
+                    const codeText = `"${node.textContent}"`;
+                    if (item) {
+                        item.push(codeText);
+                    }
+                    else {
+                        codeTexts[texts.length] = [codeText];
+                    }
+                }
                 continue;
             }
 
@@ -558,7 +572,7 @@ const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, 
     stopObserving();
 
     pageTranslateItem.result = result;
-    const comparisons = preprocessComparisons(pageTranslateItem.result);
+    const comparisons = preprocessComparisons(pageTranslateItem.result, pageTranslateItem.codeTexts);
     pageTranslateItem.status = 'finished';
     pageTranslateItem.textNodes.forEach((textNode, i) => {
         if (!textNode.parentElement || typeof pageTranslateItem.result?.translations[i] !== 'string') { return; }
@@ -620,7 +634,7 @@ const getTranslateList = (nextTranslateList: PageTranslateItemEnity[], keyFormat
         }
     });
 
-    if (translateList.length === 1 && translateList[0].pageTranslateList.length === 0) { return [] as TranslateItem[]; }
+    if (translateList.length === 1 && translateList[0].pageTranslateList.length === 0) { return []; }
 
     return translateList;
 };
@@ -696,13 +710,13 @@ export const errorRetry = () => {
     startProcessing(nextTranslateList);
 };
 
-const preprocessComparisons = (webpageTranslateResult: WebpageTranslateResult) => {
+const preprocessComparisons = (webpageTranslateResult: WebpageTranslateResult, codeTexts: PageTranslateItemEnity['codeTexts']) => {
     let comparisons = webpageTranslateResult.comparisons ?? webpageTranslateResult.translations;
 
     if (displayModeEnhancement.oAndT_NonDiscrete) {
         const length = webpageTranslateResult.translations.length;
         comparisons = new Array(length).fill(null);
-        comparisons[length - 1] = webpageTranslateResult.translations.join('');
+        comparisons[length - 1] = webpageTranslateResult.translations.reduce((total, value, index) => (`${total}${codeTexts.at(index)?.join('') ?? ''}${value}`), '');
     }
 
     return comparisons;
