@@ -26,6 +26,7 @@ type PageTranslateItemEnity = {
     text: string;
     codeTexts: (string[] | undefined)[];
     result?: WebpageTranslateResult;
+    translation?: string;
     textNodes: Text[];
     fontsNodes: ItemFonts[];
     range: Range;
@@ -426,18 +427,20 @@ const onWindowMouseMove = (e: MouseEvent) => {
                 contentElement.style.marginTop = '10px';
                 contentElement.style.color = '#000000';
 
+                const currentItem = pageTranslateItemMap[displayingItem];
+
                 if (wayOfFontsDisplaying === 0) {
                     titleElement.innerText = getMessage('optionsTranslation');
-                    contentElement.innerText = pageTranslateItemMap[displayingItem].fontsNodes.reduce((t, [,, v]) => (t + v.innerText), '');
-                    pageTranslateItemMap[displayingItem].fontsNodes.forEach(([v]) => {
+                    contentElement.innerText = currentItem.translation ?? currentItem.fontsNodes.reduce((t, [,, v]) => (t + v.innerText), '');
+                    currentItem.fontsNodes.forEach(([v]) => {
                         v.style.backgroundColor = '#c9d7f1';
                         v.style.boxShadow = '2px 2px 4px #9999aa';
                     });
                 }
                 else if (wayOfFontsDisplaying === 2) {
                     titleElement.innerText = getMessage('optionsOriginalText');
-                    contentElement.innerText = pageTranslateItemMap[displayingItem].text;
-                    pageTranslateItemMap[displayingItem].fontsNodes.forEach(([,, v]) => {
+                    contentElement.innerText = currentItem.text;
+                    currentItem.fontsNodes.forEach(([,, v]) => {
                         v.style.backgroundColor = '#c9d7f1';
                         v.style.boxShadow = '2px 2px 4px #9999aa';
                     });
@@ -572,7 +575,8 @@ const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, 
     stopObserving();
 
     pageTranslateItem.result = result;
-    const comparisons = preprocessComparisons(pageTranslateItem.result, pageTranslateItem.codeTexts);
+    pageTranslateItem.translation = result.translations.reduce((total, value, index) => (`${total}${pageTranslateItem.codeTexts.at(index)?.join('') ?? ''}${value}`), '');
+    const comparisons = preprocessComparisons(pageTranslateItem.result, pageTranslateItem.translation);
     pageTranslateItem.status = 'finished';
     pageTranslateItem.textNodes.forEach((textNode, i) => {
         if (!textNode.parentElement || typeof pageTranslateItem.result?.translations[i] !== 'string') { return; }
@@ -710,13 +714,13 @@ export const errorRetry = () => {
     startProcessing(nextTranslateList);
 };
 
-const preprocessComparisons = (webpageTranslateResult: WebpageTranslateResult, codeTexts: PageTranslateItemEnity['codeTexts']) => {
+const preprocessComparisons = (webpageTranslateResult: WebpageTranslateResult, translation: string) => {
     let comparisons = webpageTranslateResult.comparisons ?? webpageTranslateResult.translations;
 
     if (displayModeEnhancement.oAndT_NonDiscrete) {
         const length = webpageTranslateResult.translations.length;
         comparisons = new Array(length).fill(null);
-        comparisons[length - 1] = webpageTranslateResult.translations.reduce((total, value, index) => (`${total}${codeTexts.at(index)?.join('') ?? ''}${value}`), '');
+        comparisons[length - 1] = translation;
     }
 
     return comparisons;
