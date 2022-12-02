@@ -25,6 +25,7 @@ type PageTranslateItemEnity = {
     prefix: string;
     text: string;
     codeTexts: (string[] | undefined)[];
+    originalText: string;
     result?: WebpageTranslateResult;
     translation?: string;
     textNodes: Text[];
@@ -202,6 +203,7 @@ const newPageTranslateItem = (text: string, textNodes: Text[], codeTexts: PageTr
         prefix: text.substring(0, searchIndex),
         text: text.substring(searchIndex).replace('\n', ' '),
         codeTexts,
+        originalText: textNodes.reduce((total, textNode, index) => (`${total}${codeTexts.at(index)?.join('') ?? ''}${textNode.nodeValue ?? ''}`), ''),
         textNodes,
         fontsNodes: [],
         range,
@@ -439,7 +441,7 @@ const onWindowMouseMove = (e: MouseEvent) => {
                 }
                 else if (wayOfFontsDisplaying === 2) {
                     titleElement.innerText = getMessage('optionsOriginalText');
-                    contentElement.innerText = currentItem.text;
+                    contentElement.innerText = currentItem.originalText;
                     currentItem.fontsNodes.forEach(([,, v]) => {
                         v.style.backgroundColor = '#c9d7f1';
                         v.style.boxShadow = '2px 2px 4px #9999aa';
