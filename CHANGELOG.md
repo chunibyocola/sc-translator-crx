@@ -1,3 +1,8 @@
+# 4.7.0 (2022-12-09)
+- Add "Toggle the page translation state of current page" keyboard shortcut. ([9435a54](https://github.com/chunibyocola/sc-translator-crx/commit/9435a5442a0989f7d129f951b97ffbd53174340b))
+- Remain text content in code tag in "original text + translation" display mode with "Not displaying the translations discretely" enabled.
+- Remain text content in code tag in popup translation-panel and original-text-panel.
+- Restart button and start button will not be displayed simultaneously now.
 # 4.6.0 (2022-11-07)
 - Add "Maintain paragraph structure" option of "Display of translation". ([dbe4955](https://github.com/chunibyocola/sc-translator-crx/commit/dbe495525a253735d0627a0c8eec9ba6a678dc58))
 - Add "page translation" toggle onto popup page. ([5ee6222](https://github.com/chunibyocola/sc-translator-crx/commit/5ee6222b38d5bc7f363495845153372412c76fcb))
