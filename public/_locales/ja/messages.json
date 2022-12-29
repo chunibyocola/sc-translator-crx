@@ -515,6 +515,9 @@
     "contentDisableAutoTranslationOnThisSite": {
         "message": "このサイトで自動翻訳を無効にする"
     },
+    "contentUpdateToCollection": {
+        "message": "現在の翻訳をコレクションに更新する"
+    },
     "popupEnableTranslate": {
         "message": "このサイトで翻訳を有効にする"
     },

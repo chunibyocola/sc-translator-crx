@@ -515,6 +515,9 @@
     "contentDisableAutoTranslationOnThisSite": {
         "message": "在此网站上禁用自动翻译"
     },
+    "contentUpdateToCollection": {
+        "message": "将当前翻译更新到收藏中"
+    },
     "popupEnableTranslate": {
         "message": "在此网站启用翻译"
     },

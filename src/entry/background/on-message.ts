@@ -66,16 +66,27 @@ chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sen
         case types.SCTS_ADD_TO_COLLECTION: {
             let { text, translations } = message.payload;
 
-            text = text.trimLeft().trimRight();
+            text = text.trimStart().trimEnd();
 
-            text && scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { text, date: Number(new Date()), translations });
+            text && scIndexedDB.get<StoreCollectionValue>(DB_STORE_COLLECTION, text).then((value) => {
+                if (value) {
+                    const translationMap = new Map([...value.translations, ...translations].map((v) => ([v.source, v.translateRequest])));
+
+                    const nextTranslations: typeof value.translations = [...translationMap.entries()].map(([k, v]) => ({ source: k, translateRequest: v }));
+
+                    scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { ...value, date: Number(new Date()), translations: nextTranslations });
+                }
+                else {
+                    scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { text, date: Number(new Date()), translations });
+                }
+            });
 
             return false;
         }
         case types.SCTS_REMOVE_FROM_COLLECTION: {
             let { text } = message.payload;
 
-            text = text.trimLeft().trimRight();
+            text = text.trimStart().trimEnd();
 
             text && scIndexedDB.delete(DB_STORE_COLLECTION, text);
 

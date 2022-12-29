@@ -515,6 +515,9 @@
     "contentDisableAutoTranslationOnThisSite": {
         "message": "Disable automatic translation on this website"
     },
+    "contentUpdateToCollection": {
+        "message": "Update the current translation(s) to collection"
+    },
     "popupEnableTranslate": {
         "message": "Enable translate on this website"
     },
