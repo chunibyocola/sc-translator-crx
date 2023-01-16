@@ -1,3 +1,6 @@
+# 4.7.1 (2023-01-16)
+- Clicking "collect" button in collected state will update the item in collection now. ([1f4f89b](https://github.com/chunibyocola/sc-translator-crx/commit/1f4f89b5eda3b7fc887b9ba95e95a027bd059f0f))
+- Fix Bing unavailable. ([abf2db1](https://github.com/chunibyocola/sc-translator-crx/commit/abf2db1f1ac42a9f25a475babe1de9615aab90dd))
 # 4.7.0 (2022-12-09)
 - Add "Toggle the page translation state of current page" keyboard shortcut. ([9435a54](https://github.com/chunibyocola/sc-translator-crx/commit/9435a5442a0989f7d129f951b97ffbd53174340b))
 - Remain text content in code tag in "original text + translation" display mode with "Not displaying the translations discretely" enabled.
