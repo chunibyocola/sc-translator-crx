@@ -11,7 +11,8 @@ export type StoreCollectionValue = {
     translations: {
         translateRequest: TranslateRequest;
         source: string;
-    }[]
+    }[];
+    note?: string;
 };
 
 const scIndexedDB = (() => {
