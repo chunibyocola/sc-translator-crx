@@ -560,6 +560,15 @@
     "collectionImportCollection": {
         "message": "インポートコレクション"
     },
+    "collectionAddNote": {
+        "message": "メモを追加"
+    },
+    "collectionEditNote": {
+        "message": "メモを編集"
+    },
+    "collectionDeleteNote": {
+        "message": "メモを削除"
+    },
     "wordTranslate": {
         "message": "翻訳"
     },

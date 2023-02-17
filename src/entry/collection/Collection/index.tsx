@@ -45,22 +45,142 @@ const CollectionValueCard: React.FC<CollectionValueCardProps> = React.memo(({ co
     );
 });
 
-type TranslationsContainerProps = {
-    collectionValue: StoreCollectionValue;
+type NoteTextAreaProps = {
+    editable: boolean;
+    defaultNote: StoreCollectionValue['note'];
+    onSave: (note: string) => void;
+    onCancel: () => void;
+    onDelete: () => void;
 };
 
-const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo(({ collectionValue }) => {
+const NoteTextArea: React.FC<NoteTextAreaProps> = React.memo(({ editable, defaultNote, onSave, onCancel, onDelete }) => {
+    const pDefaultNote = defaultNote ?? '';
+
+    const [note, setNote] = useState(pDefaultNote);
+    const noteTextAreaEleRef = useRef<HTMLTextAreaElement>(null);
+
+    useLayoutEffect(() => {
+        setNote(pDefaultNote);
+    }, [pDefaultNote]);
+
+    useEffect(() => {
+        const element = noteTextAreaEleRef.current;
+
+        if (editable && element) {
+            element.focus();
+            element.selectionStart = element.selectionEnd = element.value.length;
+        }
+    }, [editable]);
+
+    return (
+        <div className='translations-container__note'>
+            <textarea
+                className='note__text-area'
+                ref={noteTextAreaEleRef}
+                value={note ?? ''}
+                onChange={(e) => { setNote(e.target.value); }}
+                disabled={!editable}
+            />
+            {editable && <div className='note__update'>
+                <div className='note__update__left'>
+                    {defaultNote !== undefined && <Button
+                        variant='outlined'
+                        onClick={() => { onDelete(); }}
+                    >
+                        <IconFont iconName='#icon-MdDelete' style={{marginRight: '5px'}} />
+                        {getMessage('collectionDeleteNote')}
+                    </Button>}
+                </div>
+                <div className='note__update__right'>
+                    <Button
+                        variant='text'
+                        onClick={() => {
+                            onCancel();
+                            setNote(pDefaultNote);
+                        }}
+                    >
+                        {getMessage('wordCancel')}
+                    </Button>
+                    <Button
+                        variant='contained'
+                        onClick={() => { onSave(note); }}
+                        disabled={note === pDefaultNote}
+                    >
+                        {getMessage('wordSave')}
+                    </Button>
+                </div>
+            </div>}
+        </div>
+    );
+});
+
+type TranslationsContainerProps = {
+    collectionValue: StoreCollectionValue;
+    refreshCollectionValues: () => void;
+};
+
+const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo(({ collectionValue, refreshCollectionValues }) => {
+    const [editingNote, setEditingNote] = useState(false);
+    const [note, setNote] = useState(collectionValue.note);
+
+    const noteTextAreaEleRef = useRef<HTMLTextAreaElement>(null);
+
+    useLayoutEffect(() => {
+        setEditingNote(false);
+        setNote(collectionValue.note);
+    }, [collectionValue]);
+
     return (
         <div className='translations-container'>
             <div className='translations-container__title'>
                 {collectionValue.text}
-                <IconFont
-                    className='iconbutton button'
-                    iconName='#icon-copy'
-                    style={{marginLeft: '5px'}}
-                    onClick={() => navigator.clipboard.writeText(collectionValue.text)}
-                />
             </div>
+            <div className='translations-container__toolbox'>
+                <Button
+                    variant='text'
+                    onClick={() => navigator.clipboard.writeText(collectionValue.text)}
+                >
+                    <IconFont iconName='#icon-copy' style={{marginRight: '5px'}} />
+                    {getMessage('optionsButtonCopy')}
+                </Button>
+                {note === undefined ? <Button
+                    variant='text'
+                    onClick={() => {
+                        setEditingNote(true);
+                        noteTextAreaEleRef.current?.focus();
+                    }}
+                    disabled={editingNote}
+                >
+                    <IconFont iconName='#icon-addNote' style={{marginRight: '5px'}} />
+                    {getMessage('collectionAddNote')}
+                </Button> : <Button
+                    variant='text'
+                    onClick={() => { setEditingNote(true); }}
+                    disabled={editingNote}
+                >
+                    <IconFont iconName='#icon-edit' style={{marginRight: '5px'}} />
+                    {getMessage('collectionEditNote')}
+                </Button>}
+            </div>
+            {(editingNote || note !== undefined) && <NoteTextArea
+                editable={editingNote}
+                defaultNote={note}
+                onSave={(nextNote) => {
+                    scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { ...collectionValue, note: nextNote }).then(refreshCollectionValues);
+
+                    setNote(nextNote);
+                    setEditingNote(false);
+                }}
+                onCancel={() => { setEditingNote(false); }}
+                onDelete={() => {
+                    const { note, ...nextCollectionValue } = collectionValue;
+
+                    scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, nextCollectionValue).then(refreshCollectionValues);
+
+                    setEditingNote(false);
+                    setNote(undefined);
+                }}
+            />}
             {collectionValue.translations.map(({ source, translateRequest }) => (translateRequest.status === 'finished' && <div
                 key={source + collectionValue.text}
                 className='translations-container__item'
@@ -342,7 +462,7 @@ const Collection: React.FC = () => {
                     </div>
                 </div>
                 <div className='main'>
-                    {currentValue && <TranslationsContainer collectionValue={currentValue} />}
+                    {currentValue && <TranslationsContainer collectionValue={currentValue} refreshCollectionValues={refreshCollectionValues} />}
                 </div>
             </div>
         </div>

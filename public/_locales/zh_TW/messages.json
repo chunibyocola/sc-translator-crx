@@ -560,6 +560,15 @@
     "collectionImportCollection": {
         "message": "導入收藏"
     },
+    "collectionAddNote": {
+        "message": "添加筆記"
+    },
+    "collectionEditNote": {
+        "message": "編輯筆記"
+    },
+    "collectionDeleteNote": {
+        "message": "刪除筆記"
+    },
     "wordTranslate": {
         "message": "翻譯"
     },

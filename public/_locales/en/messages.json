@@ -560,6 +560,15 @@
     "collectionImportCollection": {
         "message": "Import collection"
     },
+    "collectionAddNote": {
+        "message": "Add note"
+    },
+    "collectionEditNote": {
+        "message": "Edit note"
+    },
+    "collectionDeleteNote": {
+        "message": "Delete note"
+    },
     "wordTranslate": {
         "message": "Translate"
     },
