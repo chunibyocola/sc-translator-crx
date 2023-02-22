@@ -57,6 +57,7 @@ const NoteTextArea: React.FC<NoteTextAreaProps> = React.memo(({ editable, defaul
     const pDefaultNote = defaultNote ?? '';
 
     const [note, setNote] = useState(pDefaultNote);
+
     const noteTextAreaEleRef = useRef<HTMLTextAreaElement>(null);
 
     useLayoutEffect(() => {
@@ -122,12 +123,12 @@ type TranslationsContainerProps = {
 const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo(({ collectionValue, refreshCollectionValues }) => {
     const [editingNote, setEditingNote] = useState(false);
     const [note, setNote] = useState(collectionValue.note);
-
-    const noteTextAreaEleRef = useRef<HTMLTextAreaElement>(null);
+    const [deletedNote, setDeletedNote] = useState('');
 
     useLayoutEffect(() => {
         setEditingNote(false);
         setNote(collectionValue.note);
+        setDeletedNote('');
     }, [collectionValue]);
 
     return (
@@ -147,7 +148,6 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
                     variant='text'
                     onClick={() => {
                         setEditingNote(true);
-                        noteTextAreaEleRef.current?.focus();
                     }}
                     disabled={editingNote}
                 >
@@ -162,7 +162,7 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
                     {getMessage('collectionEditNote')}
                 </Button>}
             </div>
-            {(editingNote || note !== undefined) && <NoteTextArea
+            {(editingNote || note !== undefined) ? <NoteTextArea
                 editable={editingNote}
                 defaultNote={note}
                 onSave={(nextNote) => {
@@ -170,17 +170,41 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
 
                     setNote(nextNote);
                     setEditingNote(false);
+                    setDeletedNote('');
                 }}
                 onCancel={() => { setEditingNote(false); }}
                 onDelete={() => {
-                    const { note, ...nextCollectionValue } = collectionValue;
+                    const { note: beDeletedNote, ...nextCollectionValue } = collectionValue;
 
                     scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, nextCollectionValue).then(refreshCollectionValues);
+
+                    setDeletedNote(note ?? '');
 
                     setEditingNote(false);
                     setNote(undefined);
                 }}
-            />}
+            /> : (deletedNote && <div className='translations-container__undo-delete-note'>
+                {getMessage('collectionNoteHaveBeenDeleted')}
+                <Button
+                    variant='text'
+                    onClick={() => {
+                        scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { ...collectionValue, note: deletedNote }).then(refreshCollectionValues);
+
+                        setNote(deletedNote);
+                        setDeletedNote('');
+                    }}
+                >
+                    {getMessage('collectionUndo')}
+                </Button>
+                <Button
+                    variant='icon'
+                    onClick={() =>{
+                        setDeletedNote('');
+                    }}
+                >
+                    <IconFont iconName='#icon-GoX' />
+                </Button>
+            </div>)}
             {collectionValue.translations.map(({ source, translateRequest }) => (translateRequest.status === 'finished' && <div
                 key={source + collectionValue.text}
                 className='translations-container__item'

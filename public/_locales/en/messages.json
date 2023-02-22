@@ -569,6 +569,12 @@
     "collectionDeleteNote": {
         "message": "Delete note"
     },
+    "collectionNoteHaveBeenDeleted": {
+        "message": "Note have been deleted."
+    },
+    "collectionUndo": {
+        "message": "Undo"
+    },
     "wordTranslate": {
         "message": "Translate"
     },

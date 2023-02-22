@@ -569,6 +569,12 @@
     "collectionDeleteNote": {
         "message": "删除笔记"
     },
+    "collectionNoteHaveBeenDeleted": {
+        "message": "笔记已删除。"
+    },
+    "collectionUndo": {
+        "message": "撤销"
+    },
     "wordTranslate": {
         "message": "翻译"
     },

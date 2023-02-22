@@ -192,6 +192,19 @@
     margin-top: 10px;
     justify-content: space-between;
 }
+.translations-container__undo-delete-note {
+    font-size: 16px;
+    display: inline-flex;
+    background-color: #fff;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 8px;
+    box-shadow: rgb(60 64 67 / 30%) 0 1px 2px 0, rgb(60 64 67 / 15%) 0 1px 3px 1px;
+    font-weight: 500;
+}
+.translations-container__undo-delete-note>button:first-child {
+    margin-left: 10px;
+}
 .translations-container__source-favicon {
     margin-right: 5px;
 }

@@ -569,6 +569,12 @@
     "collectionDeleteNote": {
         "message": "メモを削除"
     },
+    "collectionNoteHaveBeenDeleted": {
+        "message": "メモは削除されました。"
+    },
+    "collectionUndo": {
+        "message": "元に戻す"
+    },
     "wordTranslate": {
         "message": "翻訳"
     },
