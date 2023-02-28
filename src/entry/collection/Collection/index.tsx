@@ -273,6 +273,16 @@ const SearchField: React.FC<SearchFieldProps> = React.memo(({ onChange }) => {
     );
 });
 
+type BackdropProps = Pick<React.HtmlHTMLAttributes<HTMLButtonElement>, 'children'>;;
+
+const Backdrop: React.FC<BackdropProps> = ({ children }) => {
+    return (
+        <div className='backdrop'>
+            {children}
+        </div>
+    );
+};
+
 const Collection: React.FC = () => {
     const [collectionValues, setCollectionValues] = useState<StoreCollectionValue[]>([]);
     const [currentValue, setCurrentValue] = useState<StoreCollectionValue>();
