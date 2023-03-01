@@ -26,6 +26,9 @@
     cursor: default;
     pointer-events: none;
 }
+.btn * {
+    pointer-events: none;
+}
 .btn--contained {
     color: #ffffff;
     background-color: var(--color-default);

@@ -283,6 +283,72 @@ const Backdrop: React.FC<BackdropProps> = ({ children }) => {
     );
 };
 
+type ConfirmDeleteProps = {
+    onConfirm: () => void;
+    onCancel: () => void;
+    onClose: () => void;
+    deleteList: string[];
+};
+
+const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({ onConfirm, onCancel, onClose, deleteList }) => {
+    const [fold, setFold] = useState(true);
+
+    return (
+        <Backdrop>
+            <div className='confirm-delete'>
+                <div className='confirm-delete__close'>
+                    <Button
+                        variant='icon'
+                        onClick={() => {
+                            onClose();
+                        }}
+                    >
+                        <IconFont iconName='#icon-GoX' />
+                    </Button>
+                </div>
+                <div className='confirm-delete__content'>
+                    <Button
+                        variant='text'
+                        onClick={() => {
+                            setFold(!fold);
+                        }}
+                    >
+                        <span>Are you sure to delete these items?</span>
+                        <IconFont iconName='#icon-GoChevronDown' style={fold ? {} : {rotate: '180deg'}} />
+                    </Button>
+                    <div className='confirm-delete__content__list scrollbar' style={{display: fold ? 'none' : 'block'}}>
+                        {deleteList.map((item) => (<div
+                            className='confirm-delete__content__list_item'
+                            title={item}
+                            key={item}
+                        >
+                            {item}
+                        </div>))}
+                    </div>
+                </div>
+                <div className='confirm-delete__buttons'>
+                    <Button
+                        variant='text'
+                        onClick={() => {
+                            onConfirm();
+                        }}
+                    >
+                        Confirm
+                    </Button>
+                    <Button
+                        variant='contained'
+                        onClick={() => {
+                            onCancel();
+                        }}
+                    >
+                        Cancel
+                    </Button>
+                </div>
+            </div>
+        </Backdrop>
+    );
+};
+
 const Collection: React.FC = () => {
     const [collectionValues, setCollectionValues] = useState<StoreCollectionValue[]>([]);
     const [currentValue, setCurrentValue] = useState<StoreCollectionValue>();
@@ -290,6 +356,7 @@ const Collection: React.FC = () => {
     const [search, setSearch] = useState('');
     const [filteredValues, setFilteredValues] = useState<StoreCollectionValue[]>([]);
     const [orderIndicate, setOrderIndicate] = useState(0); // 0: order by date reverse, 1: order by date, 2: order by text reverse, 3: order by text
+    const [deleteList, setDeleteList] = useState<null | string[]>(null);
 
     const checkedLength = useMemo(() => checked.reduce((total, current) => (total + Number(current)), 0), [checked]);
 
@@ -348,13 +415,13 @@ const Collection: React.FC = () => {
                             <Button
                                 variant='icon'
                                 onClick={() => {
-                                    const deleteQueries: string[] = [];
+                                    const nextDeleteList: string[] = [];
 
                                     checked.forEach((value, index) => {
-                                        value && filteredValues[index] && deleteQueries.push(filteredValues[index].text);
+                                        value && filteredValues[index] && nextDeleteList.push(filteredValues[index].text);
                                     });
 
-                                    deleteQueries.length > 0 && scIndexedDB.delete(DB_STORE_COLLECTION, deleteQueries).then(() => refreshCollectionValues());
+                                    setDeleteList(nextDeleteList);
                                 }}
                             >
                                 <IconFont
@@ -362,6 +429,19 @@ const Collection: React.FC = () => {
                                     style={{fontSize: '24px'}}
                                 />
                             </Button>
+                            {deleteList && <ConfirmDelete
+                                deleteList={deleteList}
+                                onCancel={() => {
+                                    setDeleteList(null);
+                                }}
+                                onClose={() => {
+                                    setDeleteList(null);
+                                }}
+                                onConfirm={() => {
+                                    setDeleteList(null);
+                                    deleteList?.length > 0 && scIndexedDB.delete(DB_STORE_COLLECTION, deleteList).then(() => refreshCollectionValues());
+                                }}
+                            />}
                         </> : <>
                             <Button
                                 variant='icon'

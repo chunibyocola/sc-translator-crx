@@ -224,3 +224,52 @@
     align-items: center;
     justify-content: center;
 }
+.confirm-delete {
+    background-color: #fff;
+    border-radius: 16px;
+    width: 400px;
+}
+.confirm-delete__close {
+    display: flex;
+    justify-content: flex-end;
+}
+.confirm-delete__close > button {
+    top: 5px;
+    right: 5px;
+}
+.confirm-delete__buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+.confirm-delete__content {
+    margin: 20px 0;
+}
+.confirm-delete__content > span {
+    text-align: start;
+}
+.confirm-delete__content > button {
+    width: 100%;
+    justify-content: space-between;
+    text-transform: unset;
+    --color-default: #333;
+    height: unset;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: unset;
+}
+.confirm-delete__content > button .ripple {
+    border-radius: unset;
+}
+.confirm-delete__content__list {
+    max-height: 148px;
+    overflow-y: auto;
+}
+.confirm-delete__content__list_item {
+    font-size: 16px;
+    padding: 8px 16px 8px 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
