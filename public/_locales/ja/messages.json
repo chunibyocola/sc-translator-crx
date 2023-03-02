@@ -575,6 +575,9 @@
     "collectionUndo": {
         "message": "元に戻す"
     },
+    "collectionConfirmingDelete": {
+        "message": "チェックした項目が削除されます。"
+    },
     "wordTranslate": {
         "message": "翻訳"
     },
@@ -616,6 +619,9 @@
     },
     "wordNonEnglish": {
         "message": "非英語"
+    },
+    "wordConfirm": {
+        "message": "確認"
     },
     "sentenceAddTranslateSource": {
         "message": "翻訳ソースを追加してください。"

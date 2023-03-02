@@ -303,7 +303,7 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({ onConfirm, onCancel, onCl
                             onClose();
                         }}
                     >
-                        <IconFont iconName='#icon-GoX' />
+                        <IconFont iconName='#icon-GoX' style={{fontSize: '20px'}} />
                     </Button>
                 </div>
                 <div className='confirm-delete__content'>
@@ -313,7 +313,7 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({ onConfirm, onCancel, onCl
                             setFold(!fold);
                         }}
                     >
-                        <span>Are you sure to delete these items?</span>
+                        <span>{getMessage('collectionConfirmingDelete')}</span>
                         <IconFont iconName='#icon-GoChevronDown' style={fold ? {} : {rotate: '180deg'}} />
                     </Button>
                     <div className='confirm-delete__content__list scrollbar' style={{display: fold ? 'none' : 'block'}}>
@@ -328,12 +328,12 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({ onConfirm, onCancel, onCl
                 </div>
                 <div className='confirm-delete__buttons'>
                     <Button
-                        variant='text'
+                        variant='outlined'
                         onClick={() => {
                             onConfirm();
                         }}
                     >
-                        Confirm
+                        {getMessage('wordConfirm')}
                     </Button>
                     <Button
                         variant='contained'
@@ -341,7 +341,7 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({ onConfirm, onCancel, onCl
                             onCancel();
                         }}
                     >
-                        Cancel
+                        {getMessage('wordCancel')}
                     </Button>
                 </div>
             </div>

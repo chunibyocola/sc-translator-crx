@@ -575,6 +575,9 @@
     "collectionUndo": {
         "message": "Undo"
     },
+    "collectionConfirmingDelete": {
+        "message": "The checked items will be deleted."
+    },
     "wordTranslate": {
         "message": "Translate"
     },
@@ -616,6 +619,9 @@
     },
     "wordNonEnglish": {
         "message": "Non-English"
+    },
+    "wordConfirm": {
+        "message": "Confirm"
     },
     "sentenceAddTranslateSource": {
         "message": "Please add a translate source."

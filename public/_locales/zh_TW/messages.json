@@ -575,6 +575,9 @@
     "collectionUndo": {
         "message": "撤銷"
     },
+    "collectionConfirmingDelete": {
+        "message": "選中的項目將會被刪除。"
+    },
     "wordTranslate": {
         "message": "翻譯"
     },
@@ -616,6 +619,9 @@
     },
     "wordNonEnglish": {
         "message": "非英語"
+    },
+    "wordConfirm": {
+        "message": "確認"
     },
     "sentenceAddTranslateSource": {
         "message": "請添加翻譯源。"
