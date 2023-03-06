@@ -396,6 +396,7 @@ const onWindowMouseMove = (e: MouseEvent) => {
                     panelElement.style.position = 'fixed';
                     panelElement.style.width = '400px';
                     panelElement.style.boxShadow = 'rgb(0 0 0 / 20%) 0px 0px 15px';
+                    panelElement.style.zIndex = '999';
                     panelElement.addEventListener('mousemove', (e: MouseEvent) => {
                         clearAllTimeout();
                         e.stopPropagation();
