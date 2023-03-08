@@ -12,8 +12,10 @@ const scFile = (() => {
             const date = new Date();
             fileName = `${fileName}-d${date.getFullYear()}${date.getMonth() + 1 < 10 ? '0' : ''}${date.getMonth() + 1}${date.getDate() < 10 ? '0' : ''}${date.getDate()}`;
 
+            const file = new Blob([JSON.stringify(serializableObject)], { type: 'text/plain;charset=utf-8' });
+
             const downloadElement = document.createElement('a');
-            downloadElement.setAttribute('href', `data:text/plain;charset=utf-8,${JSON.stringify(serializableObject)}`);
+            downloadElement.setAttribute('href', URL.createObjectURL(file));
             downloadElement.setAttribute('download', `${fileName}${SC_FILE_NAME_SUFFIX}`);
             downloadElement.click();
         },
