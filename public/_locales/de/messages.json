@@ -396,7 +396,7 @@
     "message": "Du musst Dich mit demselben Konto anmelden, um diese Funktion zu aktivieren. Stelle sicher, dass in Deinem Konto die Synchronisierung von Erweiterungen aktiviert ist."
   },
   "optionsSyncSettings": {
-    "message": "Synchronisieruns-Einstellungen"
+    "message": "Einstellungen synchronisieren"
   },
   "optionsDisplayOfTranslation": {
     "message": "Anzeige der Übersetzung"
