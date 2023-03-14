@@ -523,6 +523,9 @@ const Collection: React.FC = () => {
                                             if (typeof item.date !== 'number' || typeof item.text !== 'string' || !item.text) { return false; }
                                             if (!Array.isArray(item.translations)) { return false; }
                                             if (Object.hasOwn(item, 'note') && typeof item.note !== 'string') { return false; }
+                                            if (Object.hasOwn(item, 'tags')) {
+                                                if (!Array.isArray(item.tags) || (item.tags as any[]).findIndex(v => typeof v !== 'string') !== -1) { return false; }
+                                            }
                                             const found = (item.translations as any[]).findIndex((value) => {
                                                 if (!isObject(value)) { return true; }
                                                 if (typeof value.source !== 'string' || !value.source) { return true; }

@@ -13,6 +13,7 @@ export type StoreCollectionValue = {
         source: string;
     }[];
     note?: string;
+    tags?: string[];
 };
 
 const scIndexedDB = (() => {
