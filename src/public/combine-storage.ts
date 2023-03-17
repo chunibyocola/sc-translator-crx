@@ -164,7 +164,7 @@ const reducerMap: [(keyof DefaultOptions)[], <S>(origin: S, next: any, addition:
     ['textPreprocessingPreset', 'displayOfTranslation', 'displayModeEnhancement'],
     (origin, next) => {
         Object.keys(next).forEach((key) => {
-            if (!(key in origin) || typeof next[key] !== 'boolean') {
+            if (!(key in (origin as { [K: string]: boolean; })) || typeof next[key] !== 'boolean') {
                 delete next[key];
             }
         });
