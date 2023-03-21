@@ -578,6 +578,9 @@
     "collectionConfirmingDelete": {
         "message": "选中的项目将会被删除。"
     },
+    "collectionAddTag": {
+        "message": "添加标签"
+    },
     "wordTranslate": {
         "message": "翻译"
     },

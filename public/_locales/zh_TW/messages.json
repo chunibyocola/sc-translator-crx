@@ -578,6 +578,9 @@
     "collectionConfirmingDelete": {
         "message": "選中的項目將會被刪除。"
     },
+    "collectionAddTag": {
+        "message": "添加標籤"
+    },
     "wordTranslate": {
         "message": "翻譯"
     },

@@ -166,6 +166,12 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
                     <IconFont iconName='#icon-edit' style={{marginRight: '5px'}} />
                     {getMessage('collectionEditNote')}
                 </Button>}
+                <Button
+                    variant='text'
+                >
+                    <IconFont iconName='#icon-tag' style={{marginRight: '5px'}} />
+                    {getMessage('collectionAddTag')}
+                </Button>
             </div>
             {(editingNote || note !== undefined) ? <NoteTextArea
                 editable={editingNote}

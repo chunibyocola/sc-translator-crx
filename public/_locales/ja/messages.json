@@ -578,6 +578,9 @@
     "collectionConfirmingDelete": {
         "message": "チェックした項目が削除されます。"
     },
+    "collectionAddTag": {
+        "message": "タグを追加"
+    },
     "wordTranslate": {
         "message": "翻訳"
     },

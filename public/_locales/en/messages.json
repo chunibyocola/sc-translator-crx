@@ -578,6 +578,9 @@
     "collectionConfirmingDelete": {
         "message": "The checked items will be deleted."
     },
+    "collectionAddTag": {
+        "message": "Add tag"
+    },
     "wordTranslate": {
         "message": "Translate"
     },
