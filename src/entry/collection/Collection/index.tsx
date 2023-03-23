@@ -50,6 +50,40 @@ const CollectionValueCard: React.FC<CollectionValueCardProps> = React.memo(({ co
     );
 });
 
+type AddTagProps = {
+    onClose: () => void;
+    onAdd: (tagName: string) => void;
+};
+
+const AddTag: React.FC<AddTagProps> = ({ onClose, onAdd }) => {
+    const [tagName, setTagName] = useState('');
+
+    return (
+        <Backdrop>
+            <div className='add-tag'>
+                <div className='add-tag__close'>
+                    <Button
+                        variant='icon'
+                        onClick={() => { onClose(); }}
+                    >
+                        <IconFont iconName='#icon-GoX' style={{fontSize: '20px'}} />
+                    </Button>
+                </div>
+                <div className='add-tag__content'>
+                    <input type='text' placeholder='Input tag here' onChange={(e) => { setTagName(e.target.value); }} />
+                    <Button
+                        variant='text'
+                        onClick={() => { tagName && onAdd(tagName); }}
+                        disabled={!tagName}
+                    >
+                        Add
+                    </Button>
+                </div>
+            </div>
+        </Backdrop>
+    );
+};
+
 type NoteTextAreaProps = {
     editable: boolean;
     defaultNote: StoreCollectionValue['note'];
@@ -129,15 +163,28 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
     const [editingNote, setEditingNote] = useState(false);
     const [note, setNote] = useState(collectionValue.note);
     const [deletedNote, setDeletedNote] = useState('');
+    const [addingTag, setAddingTag] = useState(false);
 
     useLayoutEffect(() => {
         setEditingNote(false);
         setNote(collectionValue.note);
         setDeletedNote('');
+        setAddingTag(false);
     }, [collectionValue]);
 
     return (
         <div className='translations-container'>
+            {collectionValue.tags?.map((v, i) => (<div key={i}>{v}</div>))}
+            {addingTag && <AddTag
+                onClose={() => { setAddingTag(false); }}
+                onAdd={(tagName) => {
+                    const nextTagSet = new Set([...collectionValue.tags ?? [], tagName]);
+
+                    scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { ...collectionValue, tags: [...nextTagSet] }).then(refreshCollectionValues);
+
+                    setAddingTag(false);
+                }}
+            />}
             <div className='translations-container__title'>
                 {collectionValue.text}
             </div>
@@ -168,6 +215,8 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
                 </Button>}
                 <Button
                     variant='text'
+                    onClick={() => { setAddingTag(true); }}
+                    disabled={addingTag}
                 >
                     <IconFont iconName='#icon-tag' style={{marginRight: '5px'}} />
                     {getMessage('collectionAddTag')}

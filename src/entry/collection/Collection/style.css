@@ -163,7 +163,7 @@
     flex: 1;
     text-align: right;
 }
-.translations-container > div + div {
+.translations-container > div[class*=translations-container__] + div {
     margin-top: 20px;
 }
 .translations-container__title {
@@ -224,16 +224,16 @@
     align-items: center;
     justify-content: center;
 }
-.confirm-delete {
+.confirm-delete, .add-tag {
     background-color: #fff;
     border-radius: 16px;
     width: 400px;
 }
-.confirm-delete__close {
+.confirm-delete__close, .add-tag__close {
     display: flex;
     justify-content: flex-end;
 }
-.confirm-delete__close > button {
+.confirm-delete__close > button, .add-tag__close > button {
     top: 5px;
     right: 5px;
 }
