@@ -156,20 +156,26 @@ const NoteTextArea: React.FC<NoteTextAreaProps> = React.memo(({ editable, defaul
 
 type TranslationsContainerProps = {
     collectionValue: StoreCollectionValue;
-    refreshCollectionValues: () => void;
+    updateCurrentValue: () => void;
 };
 
-const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo(({ collectionValue, refreshCollectionValues }) => {
+const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo(({ collectionValue, updateCurrentValue }) => {
     const [editingNote, setEditingNote] = useState(false);
     const [note, setNote] = useState(collectionValue.note);
     const [deletedNote, setDeletedNote] = useState('');
     const [addingTag, setAddingTag] = useState(false);
 
+    const lastTextRef = useRef<string>();
+
     useLayoutEffect(() => {
+        if (lastTextRef.current === collectionValue.text) { return; }
+
         setEditingNote(false);
         setNote(collectionValue.note);
         setDeletedNote('');
         setAddingTag(false);
+
+        lastTextRef.current = collectionValue.text;
     }, [collectionValue]);
 
     return (
@@ -180,7 +186,7 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
                 onAdd={(tagName) => {
                     const nextTagSet = new Set([...collectionValue.tags ?? [], tagName]);
 
-                    scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { ...collectionValue, tags: [...nextTagSet] }).then(refreshCollectionValues);
+                    scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { ...collectionValue, tags: [...nextTagSet] }).then(updateCurrentValue);
 
                     setAddingTag(false);
                 }}
@@ -226,7 +232,7 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
                 editable={editingNote}
                 defaultNote={note}
                 onSave={(nextNote) => {
-                    scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { ...collectionValue, note: nextNote }).then(refreshCollectionValues);
+                    scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { ...collectionValue, note: nextNote }).then(updateCurrentValue);
 
                     setNote(nextNote);
                     setEditingNote(false);
@@ -236,7 +242,7 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
                 onDelete={() => {
                     const { note: beDeletedNote, ...nextCollectionValue } = collectionValue;
 
-                    scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, nextCollectionValue).then(refreshCollectionValues);
+                    scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, nextCollectionValue).then(updateCurrentValue);
 
                     setDeletedNote(note ?? '');
 
@@ -248,7 +254,7 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
                 <Button
                     variant='text'
                     onClick={() => {
-                        scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { ...collectionValue, note: deletedNote }).then(refreshCollectionValues);
+                        scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { ...collectionValue, note: deletedNote }).then(updateCurrentValue);
 
                         setNote(deletedNote);
                         setDeletedNote('');
@@ -416,8 +422,22 @@ const Collection: React.FC = () => {
     const checkedLength = useMemo(() => checked.reduce((total, current) => (total + Number(current)), 0), [checked]);
 
     const refreshCollectionValues = useCallback(() => {
-        scIndexedDB.getAll(DB_STORE_COLLECTION).then(data => setCollectionValues(data));
+        scIndexedDB.getAll<StoreCollectionValue>(DB_STORE_COLLECTION).then(data => setCollectionValues(data));
     }, []);
+
+    const updateCurrentValue = useCallback(() => {
+        const currentValueText = currentValue?.text;
+
+        if (!currentValueText) { return; }
+
+        scIndexedDB.getAll<StoreCollectionValue>(DB_STORE_COLLECTION).then((data) => {
+            const nextCurrentValue = data.find(v => v.text === currentValueText);
+
+            nextCurrentValue && setCurrentValue(nextCurrentValue);
+
+            setCollectionValues(data);
+        });
+    }, [currentValue]);
 
     useEffect(() => {
         refreshCollectionValues();
@@ -639,7 +659,7 @@ const Collection: React.FC = () => {
                     </div>
                 </div>
                 <div className='main'>
-                    {currentValue && <TranslationsContainer collectionValue={currentValue} refreshCollectionValues={refreshCollectionValues} />}
+                    {currentValue && <TranslationsContainer collectionValue={currentValue} updateCurrentValue={updateCurrentValue} />}
                 </div>
             </div>
         </div>
