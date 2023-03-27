@@ -2,33 +2,32 @@ import { fetchData, getError } from '../utils';
 import { detect } from './detect';
 import { LANGUAGE_NOT_SOPPORTED, RESULT_ERROR } from '../error-codes';
 import { AudioParams } from '../translate-types';
-import { getAudioParams } from './get-params';
+import { getTranslateParams } from './get-params';
 
 export const audio = async ({ text, from = '', com = true }: AudioParams) => {
     from = from || await detect({ text, com });
 
-    const { region, token } = await getAudioParams(com);
+    const { IG, IID, token, key } = await getTranslateParams(com);
 
-    const url = `https://${region}.tts.speech.microsoft.com/cognitiveservices/v1`;
+    const url = `https://${com ? 'www' : 'cn'}.bing.com/tfettts?isVertical=1&IG=${IG}&IID=${IID}`;
+
     const { lang, gender, name } = getXMLParams(from);
+
     if (!lang) { throw getError(LANGUAGE_NOT_SOPPORTED); }
-    const rawXML = `
-        <speak version='1.0' xml:lang='${lang}'>
-            <voice xml:lang='${lang}' xml:gender='${gender}' name='${name}'>
-                <prosody rate='-20.00%'>
-                    ${text}
-                </prosody>
-            </voice>
-        </speak>
-    `;
+
+    const rawXML = `<speak version='1.0' xml:lang='${lang}'><voice xml:lang='${lang}' xml:gender='${gender}' name='${name}'><prosody rate='-20.00%'>${text}`
+        + `</prosody></voice></speak>`;
+
+    const searchParams = new URLSearchParams();
+    searchParams.append('token', token);
+    searchParams.append('key', key.toString());
 
     const res = await fetchData(url, {
         method: 'POST',
         headers: {
-            'X-MICROSOFT-OutputFormat': 'audio-16khz-32kbitrate-mono-mp3',
-            'Authorization': `Bearer ${token}`
+            'content-type': 'application/x-www-form-urlencoded'
         },
-        body: rawXML
+        body: `ssml=${rawXML}&` + searchParams.toString()
     });
 
     try {
