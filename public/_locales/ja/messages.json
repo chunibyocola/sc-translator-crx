@@ -581,6 +581,9 @@
     "collectionAddTag": {
         "message": "タグを追加"
     },
+    "collectionEnterTagName": {
+        "message": "ここにタグ名を入力します"
+    },
     "wordTranslate": {
         "message": "翻訳"
     },
@@ -625,6 +628,9 @@
     },
     "wordConfirm": {
         "message": "確認"
+    },
+    "wordAdd": {
+        "message": "追加"
     },
     "sentenceAddTranslateSource": {
         "message": "翻訳ソースを追加してください。"

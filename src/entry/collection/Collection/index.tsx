@@ -70,13 +70,25 @@ const AddTag: React.FC<AddTagProps> = ({ onClose, onAdd }) => {
                     </Button>
                 </div>
                 <div className='add-tag__content'>
-                    <input type='text' placeholder='Input tag here' onChange={(e) => { setTagName(e.target.value); }} />
+                    <label htmlFor='add-tag-input-box' style={{padding: '5px', opacity: '0.6'}}>
+                        <IconFont iconName='#icon-tag' />
+                    </label>
+                    <input
+                        id='add-tag-input-box'
+                        type='text'
+                        placeholder={getMessage('collectionEnterTagName')}
+                        onChange={(e) => { setTagName(e.target.value); }}
+                    />
                     <Button
                         variant='text'
-                        onClick={() => { tagName && onAdd(tagName); }}
-                        disabled={!tagName}
+                        onClick={() => {
+                            const nextTagName = tagName.trimStart().trimEnd();
+
+                            nextTagName && onAdd(nextTagName);
+                        }}
+                        disabled={!tagName.trimStart().trimEnd()}
                     >
-                        Add
+                        {getMessage('wordAdd')}
                     </Button>
                 </div>
             </div>

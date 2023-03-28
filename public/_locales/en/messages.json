@@ -581,6 +581,9 @@
     "collectionAddTag": {
         "message": "Add tag"
     },
+    "collectionEnterTagName": {
+        "message": "Enter the tag name here"
+    },
     "wordTranslate": {
         "message": "Translate"
     },
@@ -625,6 +628,9 @@
     },
     "wordConfirm": {
         "message": "Confirm"
+    },
+    "wordAdd": {
+        "message": "Add"
     },
     "sentenceAddTranslateSource": {
         "message": "Please add a translate source."
