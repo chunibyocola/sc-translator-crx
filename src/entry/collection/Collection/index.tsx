@@ -213,6 +213,24 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
             <div className='translations-container__title'>
                 {collectionValue.text}
             </div>
+            <div className='translations-container__tags'>
+                {collectionValue.tags?.map((tagName, i) => (<div
+                    key={i}
+                    className='tags__item'
+                >
+                    {tagName}
+                    <IconFont
+                        iconName='#icon-GoX'
+                        onClick={() => {
+                            const nextTagSet = new Set([...collectionValue.tags ?? []]);
+
+                            nextTagSet.delete(tagName);
+
+                            scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { ...collectionValue, tags: [...nextTagSet] }).then(updateCurrentValue);
+                        }}
+                    />
+                </div>))}
+            </div>
             <div className='translations-container__toolbox'>
                 <Button
                     variant='text'

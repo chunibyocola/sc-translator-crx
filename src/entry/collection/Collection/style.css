@@ -233,6 +233,22 @@
     display: flex;
     justify-content: flex-end;
 }
+.tags__item {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 2em;
+    border: 1px solid rgb(25, 118, 210);
+    padding: 0 7px;
+    font-size: 14px;
+    margin-right: 5px;
+    margin-top: 3px;
+}
+.tags__item > .iconfont {
+    font-size: 14px;
+    margin-left: 5px;
+    cursor: pointer;
+    opacity: 0.6;
+}
 .add-tag__content {
     display: flex;
     margin: 20px;
