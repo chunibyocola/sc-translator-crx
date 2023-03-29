@@ -85,6 +85,7 @@ const AddTag: React.FC<AddTagProps> = ({ onClose, onAdd }) => {
                         type='text'
                         placeholder={getMessage('collectionEnterTagName')}
                         onChange={(e) => { setTagName(e.target.value); }}
+                        maxLength={40}
                     />
                     <Button
                         variant='text'
