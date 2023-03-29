@@ -58,6 +58,12 @@ type AddTagProps = {
 const AddTag: React.FC<AddTagProps> = ({ onClose, onAdd }) => {
     const [tagName, setTagName] = useState('');
 
+    const inputBoxRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        inputBoxRef.current?.focus();
+    }, []);
+
     return (
         <Backdrop>
             <div className='add-tag'>
@@ -74,6 +80,7 @@ const AddTag: React.FC<AddTagProps> = ({ onClose, onAdd }) => {
                         <IconFont iconName='#icon-tag' />
                     </label>
                     <input
+                        ref={inputBoxRef}
                         id='add-tag-input-box'
                         type='text'
                         placeholder={getMessage('collectionEnterTagName')}
@@ -192,7 +199,6 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
 
     return (
         <div className='translations-container'>
-            {collectionValue.tags?.map((v, i) => (<div key={i}>{v}</div>))}
             {addingTag && <AddTag
                 onClose={() => { setAddingTag(false); }}
                 onAdd={(tagName) => {
