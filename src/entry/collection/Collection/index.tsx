@@ -1,4 +1,4 @@
-import React, { createContext, startTransition, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { createContext, startTransition, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import Button from '../../../components/Button';
 import Checkbox from '../../../components/Checkbox';
 import IconFont from '../../../components/IconFont';
@@ -60,7 +60,17 @@ type AddTagProps = {
 const AddTag: React.FC<AddTagProps> = ({ onClose, onAdd }) => {
     const [tagName, setTagName] = useState('');
 
+    const tagSet = useContext(TagSetContext);
+
+    const tags = useMemo(() => ([...tagSet]), [tagSet]);
+
     const inputBoxRef = useRef<HTMLInputElement>(null);
+
+    const addTag = useCallback((nextTagName: string) => {
+        nextTagName = nextTagName.trimStart().trimEnd();
+
+        nextTagName && onAdd(nextTagName);
+    }, [onAdd]);
 
     useEffect(() => {
         inputBoxRef.current?.focus();
@@ -91,15 +101,23 @@ const AddTag: React.FC<AddTagProps> = ({ onClose, onAdd }) => {
                     />
                     <Button
                         variant='text'
-                        onClick={() => {
-                            const nextTagName = tagName.trimStart().trimEnd();
-
-                            nextTagName && onAdd(nextTagName);
-                        }}
+                        onClick={() => { addTag(tagName); }}
                         disabled={!tagName.trimStart().trimEnd()}
                     >
                         {getMessage('wordAdd')}
                     </Button>
+                </div>
+                <div className='add-tag__existed'>
+                    <div className='add-tag__existed__tags'>
+                        {tags.map((tagName) => (<div
+                            key={tagName}
+                            className='add-tag__existed__tags__item'
+                            title={tagName}
+                            onClick={() => { addTag(tagName); }}
+                        >
+                            {tagName}
+                        </div>))}
+                    </div>
                 </div>
             </div>
         </Backdrop>

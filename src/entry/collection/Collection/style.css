@@ -183,7 +183,7 @@
     padding: 8px;
     font-size: 16px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-    color: var(--text-normal);
+    color: rgba(0, 0, 0, 0.8);
     border-color: rgb(25, 118, 210);
     outline-color: rgb(25, 118, 210);
 }
@@ -286,6 +286,21 @@
 }
 .add-tag__content:focus-within::after {
     transform: scaleX(1) translateX(0);
+}
+.add-tag__existed {
+    margin: 20px;
+}
+.add-tag__existed__tags {
+    max-height: 270px;
+    overflow-y: auto;
+}
+.add-tag__existed__tags__item {
+    padding: 4px 0px 4px 24px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.add-tag__existed__tags__item:hover {
+    background-color: rgba(0, 0, 0, 0.04);
 }
 .confirm-delete__close > button, .add-tag__close > button {
     top: 5px;
