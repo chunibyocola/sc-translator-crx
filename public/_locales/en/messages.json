@@ -584,6 +584,9 @@
     "collectionEnterTagName": {
         "message": "Enter the tag name here"
     },
+    "collectionOtherTags": {
+        "message": "Other Tags"
+    },
     "wordTranslate": {
         "message": "Translate"
     },
@@ -631,6 +634,9 @@
     },
     "wordAdd": {
         "message": "Add"
+    },
+    "wordSearch": {
+        "message": "Search"
     },
     "sentenceAddTranslateSource": {
         "message": "Please add a translate source."

@@ -10,7 +10,7 @@ import { getMessage } from '../../../public/i18n';
 import scFile from '../../../public/sc-file';
 import scIndexedDB, { DB_STORE_COLLECTION, StoreCollectionValue } from '../../../public/sc-indexed-db';
 import { checkResultFromCustomSource } from '../../../public/translate/custom/check-result';
-import { resultToString } from '../../../public/utils';
+import { classNames, resultToString } from '../../../public/utils';
 import './style.css';
 
 const TagSetContext = createContext<Set<string>>(new Set());
@@ -55,14 +55,22 @@ const CollectionValueCard: React.FC<CollectionValueCardProps> = React.memo(({ co
 type AddTagProps = {
     onClose: () => void;
     onAdd: (tagName: string) => void;
+    addedTags: StoreCollectionValue['tags'];
 };
 
-const AddTag: React.FC<AddTagProps> = ({ onClose, onAdd }) => {
+const AddTag: React.FC<AddTagProps> = ({ onClose, onAdd, addedTags }) => {
     const [tagName, setTagName] = useState('');
+    const [search, setSearch] = useState('');
 
     const tagSet = useContext(TagSetContext);
 
-    const tags = useMemo(() => ([...tagSet]), [tagSet]);
+    const tags = useMemo(() => {
+        const lowerCaseSearch = search.toLowerCase();
+
+        return [...tagSet].filter(tag => tag.toLowerCase().includes(lowerCaseSearch));
+    }, [tagSet, search]);
+
+    const addedTagSet = useMemo(() => (new Set(addedTags)), [addedTags]);
 
     const inputBoxRef = useRef<HTMLInputElement>(null);
 
@@ -87,7 +95,7 @@ const AddTag: React.FC<AddTagProps> = ({ onClose, onAdd }) => {
                         <IconFont iconName='#icon-GoX' style={{fontSize: '20px'}} />
                     </Button>
                 </div>
-                <div className='add-tag__content'>
+                <div className='add-tag__content add-tag__input-box'>
                     <label htmlFor='add-tag-input-box' style={{padding: '5px', opacity: '0.6'}}>
                         <IconFont iconName='#icon-tag' />
                     </label>
@@ -96,7 +104,7 @@ const AddTag: React.FC<AddTagProps> = ({ onClose, onAdd }) => {
                         id='add-tag-input-box'
                         type='text'
                         placeholder={getMessage('collectionEnterTagName')}
-                        onChange={(e) => { setTagName(e.target.value); }}
+                        onChange={(e) => { startTransition(() => setTagName(e.target.value)); }}
                         maxLength={40}
                     />
                     <Button
@@ -107,18 +115,33 @@ const AddTag: React.FC<AddTagProps> = ({ onClose, onAdd }) => {
                         {getMessage('wordAdd')}
                     </Button>
                 </div>
-                <div className='add-tag__existed'>
+                {tagSet.size > 0 && <div className='add-tag__existed'>
+                    <div className='add-tag__existed__search'>
+                        <div className='add-tag__existed__search__title'>{getMessage('collectionOtherTags')}</div>
+                        <div className='add-tag__input-box'>
+                            <label htmlFor='search-tag-input-box' style={{padding: '5px', opacity: '0.6'}}>
+                                <IconFont iconName='#icon-search' />
+                            </label>
+                            <input
+                                id='search-tag-input-box'
+                                type='text'
+                                placeholder={getMessage('wordSearch')}
+                                onChange={(e) => { startTransition(() => setSearch(e.target.value)); }}
+                                maxLength={40}
+                            />
+                        </div>
+                    </div>
                     <div className='add-tag__existed__tags'>
                         {tags.map((tagName) => (<div
                             key={tagName}
-                            className='add-tag__existed__tags__item'
+                            className={classNames('add-tag__existed__tags__item', addedTagSet.has(tagName) && 'added')}
                             title={tagName}
                             onClick={() => { addTag(tagName); }}
                         >
                             {tagName}
                         </div>))}
                     </div>
-                </div>
+                </div>}
             </div>
         </Backdrop>
     );
@@ -229,6 +252,7 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
 
                     setAddingTag(false);
                 }}
+                addedTags={collectionValue.tags}
             />}
             <div className='translations-container__title'>
                 {collectionValue.text}
@@ -369,7 +393,7 @@ const SearchField: React.FC<SearchFieldProps> = React.memo(({ onChange }) => {
                 ref={searchElementRef}
                 defaultValue={''}
                 placeholder={getMessage('collectionSearchText')}
-                onChange={e => startTransition(() => onChange((e.target as HTMLInputElement).value))}
+                onChange={e => startTransition(() => onChange(e.target.value))}
             />
             <Button
                 variant='icon'

@@ -584,6 +584,9 @@
     "collectionEnterTagName": {
         "message": "在此輸入標籤名稱"
     },
+    "collectionOtherTags": {
+        "message": "其他標籤"
+    },
     "wordTranslate": {
         "message": "翻譯"
     },
@@ -631,6 +634,9 @@
     },
     "wordAdd": {
         "message": "添加"
+    },
+    "wordSearch": {
+        "message": "搜索"
     },
     "sentenceAddTranslateSource": {
         "message": "請添加翻譯源。"
