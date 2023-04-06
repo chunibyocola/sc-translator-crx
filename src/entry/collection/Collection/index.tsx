@@ -34,7 +34,10 @@ const CollectionValueCard: React.FC<CollectionValueCardProps> = React.memo(({ co
                 >
                     {collectionValue.text}
                 </div>
-                {collectionValue.translations[0]?.translateRequest.status === 'finished' && <div className='card__translation'>
+                {collectionValue.translations[0]?.translateRequest.status === 'finished' && <div
+                    className='card__translation'
+                    title={resultToString(collectionValue.translations[0].translateRequest.result.result)}
+                >
                     {resultToString(collectionValue.translations[0].translateRequest.result.result)}
                 </div>}
             </div>
