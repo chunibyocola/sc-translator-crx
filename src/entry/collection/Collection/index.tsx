@@ -12,6 +12,8 @@ import scIndexedDB, { DB_STORE_COLLECTION, StoreCollectionValue } from '../../..
 import { checkResultFromCustomSource } from '../../../public/translate/custom/check-result';
 import { classNames, resultToString } from '../../../public/utils';
 import './style.css';
+import SelectOptions from '../../../components/SelectOptions';
+import { useMouseEventOutside } from '../../../public/react-use';
 
 const TagSetContext = createContext<Set<string>>(new Set());
 
@@ -370,11 +372,29 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
 });
 
 type SearchFieldProps = {
-    onChange: (search: string) => void;
+    search: string;
+    setSearch: (search: string) => void;
+    checkedTagSet: Set<string>;
+    setCheckedTagSet: (checkedTagSet: Set<string>) => void;
 };
 
-const SearchField: React.FC<SearchFieldProps> = React.memo(({ onChange }) => {
+const SearchField: React.FC<SearchFieldProps> = React.memo(({ search, setSearch, checkedTagSet, setCheckedTagSet }) => {
+    const [tagFiltering, setTagFiltering] = useState(false);
+    const [tagSearch, setTagSearch] = useState('');
+
     const searchElementRef = useRef<HTMLInputElement>(null);
+
+    const tagSet = useContext(TagSetContext);
+
+    const filteredTags = useMemo(() => {
+        const lowerCaseSearch = tagSearch.toLowerCase();
+
+        return [...tagSet].filter(tagName => tagName.toLowerCase().includes(lowerCaseSearch));
+    }, [tagSet, tagSearch]);
+
+    const tagFilterEleRef = useRef<HTMLDivElement>(null);
+
+    useMouseEventOutside(() => { setTagFiltering(false); }, 'mousedown', tagFilterEleRef.current, tagFiltering);
 
     return (
         <div className='search-field'>
@@ -394,19 +414,67 @@ const SearchField: React.FC<SearchFieldProps> = React.memo(({ onChange }) => {
             <input
                 type='text'
                 ref={searchElementRef}
-                defaultValue={''}
                 placeholder={getMessage('collectionSearchText')}
-                onChange={e => startTransition(() => onChange(e.target.value))}
+                onChange={e => startTransition(() => setSearch(e.target.value))}
             />
+            <div className='search-field__tags-filter' ref={tagFilterEleRef}>
+                <Button
+                    variant='icon'
+                    onClick={() => setTagFiltering(!tagFiltering)}
+                >
+                    <IconFont
+                        iconName='#icon-filter'
+                        style={{fontSize: '20px'}}
+                    />
+                </Button>
+                <SelectOptions
+                    show={tagFiltering}
+                    maxWidth={300}
+                    maxHeight={353}
+                >
+                    <div className='search-field__tags-filter__title'>{getMessage('collectionTags')}</div>
+                    <div className='add-tag__input-box'>
+                        <label htmlFor='filter-search-tag-input-box' style={{padding: '5px', opacity: '0.6'}}>
+                            <IconFont iconName='#icon-search' />
+                        </label>
+                        <input
+                            id='filter-search-tag-input-box'
+                            type='text'
+                            placeholder={getMessage('wordSearch')}
+                            onChange={(e) => { startTransition(() => setTagSearch(e.target.value)); }}
+                            maxLength={40}
+                        />
+                    </div>
+                    {filteredTags.map((tagName) => (<div
+                        key={tagName}
+                        className='search-field__tags-filter__item'
+                        style={{color: checkedTagSet.has(tagName) ? 'rgb(25, 118, 210)' : 'rgb(51, 51, 51)'}}
+                        title={tagName}
+                        onClick={() => {
+                            const nextCheckedTagSet = new Set([...checkedTagSet]);
+
+                            nextCheckedTagSet.has(tagName) ? nextCheckedTagSet.delete(tagName) : nextCheckedTagSet.add(tagName);
+
+                            setCheckedTagSet(nextCheckedTagSet);
+                        }}
+                    >
+                        {tagName}
+                    </div>))}
+                </SelectOptions>
+            </div>
+            <span className='search-field__division'></span>
             <Button
                 variant='icon'
                 className='search-field__close-btn'
+                disabled={!search && checkedTagSet.size === 0}
                 onClick={() => {
                     if (!searchElementRef.current) { return; }
 
                     searchElementRef.current.value = '';
                     searchElementRef.current.blur();
-                    onChange('');
+
+                    setSearch('');
+                    setCheckedTagSet(new Set());
                 }}
             >
                 <IconFont
@@ -502,6 +570,7 @@ const Collection: React.FC = () => {
     const [filteredValues, setFilteredValues] = useState<StoreCollectionValue[]>([]);
     const [orderIndicate, setOrderIndicate] = useState(0); // 0: order by date reverse, 1: order by date, 2: order by text reverse, 3: order by text
     const [deleteList, setDeleteList] = useState<null | string[]>(null);
+    const [checkedTagSet, setCheckedTagSet] = useState<Set<string>>(new Set());
 
     const lastTagSetRef = useRef<Set<string>>(new Set());
 
@@ -545,6 +614,11 @@ const Collection: React.FC = () => {
         const lowerCaseSearch = search.toLowerCase();
         let nextFilteredValues = lowerCaseSearch ? collectionValues.filter(v => v.text.toLowerCase().includes(lowerCaseSearch)) : [...collectionValues];
 
+        if (checkedTagSet.size > 0) {
+            const checkedTags = [...checkedTagSet];
+            nextFilteredValues = nextFilteredValues.filter(value => value.tags?.length && checkedTags.every(tagName => value.tags?.includes(tagName)));
+        }
+
         if (orderIndicate === 0) {
             nextFilteredValues.sort((a, b) => (b.date - a.date));
         }
@@ -557,7 +631,7 @@ const Collection: React.FC = () => {
 
         setChecked(new Array(nextFilteredValues.length).fill(false));
         setFilteredValues(nextFilteredValues);
-    }, [collectionValues, search, orderIndicate]);
+    }, [collectionValues, search, orderIndicate, checkedTagSet]);
 
     return (
         <TagSetContext.Provider value={tagSet}>
@@ -572,7 +646,12 @@ const Collection: React.FC = () => {
                         </div>
                     </div>
                     <div className='navbar-center'>
-                        <SearchField onChange={setSearch} />
+                        <SearchField
+                            search={search}
+                            setSearch={setSearch}
+                            checkedTagSet={checkedTagSet}
+                            setCheckedTagSet={setCheckedTagSet}
+                        />
                     </div>
                     <div className='navbar-right'></div>
                 </div>

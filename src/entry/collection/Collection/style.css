@@ -40,14 +40,30 @@
     outline: none;
     margin: 0 5px;
     padding: 0;
-    width: 100%;
+    flex: 1;
     line-height: 185%;
 }
-.search-field__close-btn {
-    visibility: hidden;
+.search-field__tags-filter {
+    position: relative;
 }
-.search-field > input:not(:placeholder-shown) + .search-field__close-btn {
-    visibility: visible;
+.search-field__tags-filter__title {
+    color: #000000;
+    font-size: 20px;
+    font-weight: 500;
+}
+.search-field__tags-filter .select-options {
+    padding: 8px;
+}
+.search-field__tags-filter .add-tag__input-box {
+    margin: 8px 0;
+}
+.search-field__division {
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.15);
+    height: 80%;
+    width: 2px;
+    border-radius: 2px;
+    margin: 0 2px;
 }
 .toolbar {
     min-height: 48px;
@@ -303,16 +319,16 @@
     max-height: 270px;
     overflow-y: auto;
 }
-.add-tag__existed__tags__item {
+.add-tag__existed__tags__item, .search-field__tags-filter__item {
     padding: 4px 0px 4px 24px;
     overflow: hidden;
     cursor: pointer;
 }
+.add-tag__existed__tags__item:hover, .search-field__tags-filter__item:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
 .add-tag__existed__tags__item.added {
     color: rgba(51, 51, 51, 0.42);
-}
-.add-tag__existed__tags__item:hover {
-    background-color: rgba(0, 0, 0, 0.04);
 }
 .confirm-delete__close > button, .add-tag__close > button {
     top: 5px;

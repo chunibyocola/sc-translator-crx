@@ -587,6 +587,9 @@
     "collectionOtherTags": {
         "message": "Other Tags"
     },
+    "collectionTags": {
+        "message": "Tags"
+    },
     "wordTranslate": {
         "message": "Translate"
     },

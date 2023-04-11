@@ -587,6 +587,9 @@
     "collectionOtherTags": {
         "message": "其他标签"
     },
+    "collectionTags": {
+        "message": "标签"
+    },
     "wordTranslate": {
         "message": "翻译"
     },
