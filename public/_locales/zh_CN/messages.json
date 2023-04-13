@@ -590,6 +590,15 @@
     "collectionTags": {
         "message": "标签"
     },
+    "collectionManageTags": {
+        "message": "管理标签"
+    },
+    "collectionTargetTag": {
+        "message": "目标标签"
+    },
+    "collectionConfirmRemoveTag": {
+        "message": "此标签将从以下项目中删除。"
+    },
     "wordTranslate": {
         "message": "翻译"
     },

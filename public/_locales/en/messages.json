@@ -590,6 +590,15 @@
     "collectionTags": {
         "message": "Tags"
     },
+    "collectionManageTags": {
+        "message": "Manage Tags"
+    },
+    "collectionTargetTag": {
+        "message": "Target Tag"
+    },
+    "collectionConfirmRemoveTag": {
+        "message": "This tag will be removed from the following items."
+    },
     "wordTranslate": {
         "message": "Translate"
     },

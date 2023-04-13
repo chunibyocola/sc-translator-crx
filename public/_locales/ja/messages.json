@@ -590,6 +590,15 @@
     "collectionTags": {
         "message": "タグ"
     },
+    "collectionManageTags": {
+        "message": "タグの管理"
+    },
+    "collectionTargetTag": {
+        "message": "ターゲットタグ"
+    },
+    "collectionConfirmRemoveTag": {
+        "message": "このタグは、次のアイテムから削除されます。"
+    },
     "wordTranslate": {
         "message": "翻訳"
     },

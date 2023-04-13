@@ -51,10 +51,10 @@
     font-size: 20px;
     font-weight: 500;
 }
-.search-field__tags-filter .select-options {
+.search-field__tags-filter .select-options, .manage-tags .select-options {
     padding: 8px;
 }
-.search-field__tags-filter .add-tag__input-box {
+.search-field__tags-filter .add-tag__input-box, .manage-tags .add-tag__input-box {
     margin: 8px 0;
 }
 .search-field__division {
@@ -324,11 +324,34 @@
     overflow: hidden;
     cursor: pointer;
 }
-.add-tag__existed__tags__item:hover, .search-field__tags-filter__item:hover {
+.add-tag__existed__tags__item:hover, .search-field__tags-filter__item:hover, .manage-tags__item:hover {
     background-color: rgba(0, 0, 0, 0.04);
 }
 .add-tag__existed__tags__item.added {
     color: rgba(51, 51, 51, 0.42);
+}
+.manage-tags {
+    position: relative;
+    display: inline-block;
+}
+.manage-tags__item {
+    padding: 4px 0px 4px 24px;
+    display: flex;
+    align-items: center;
+}
+.manage-tags__item__name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.manage-tags__item__delete {
+    cursor: pointer;
+    margin-left: 8px;
+    min-width: 1em;
+    opacity: 0.5;
+}
+.manage-tags__item__delete:hover {
+    opacity: 1;
 }
 .confirm-delete__close > button, .add-tag__close > button {
     top: 5px;
@@ -369,4 +392,17 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.confirm-delete__content__text-pair {
+    margin: 20px 16px;
+}
+.text-pair__first {
+    font-size: 16px;
+}
+.text-pair__second {
+    font-size: 24px;
+    font-weight: 600;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

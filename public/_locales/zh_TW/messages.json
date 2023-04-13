@@ -590,6 +590,15 @@
     "collectionTags": {
         "message": "標籤"
     },
+    "collectionManageTags": {
+        "message": "管理標籤"
+    },
+    "collectionTargetTag": {
+        "message": "目標標籤"
+    },
+    "collectionConfirmRemoveTag": {
+        "message": "此標籤將從以下項目中刪除。"
+    },
     "wordTranslate": {
         "message": "翻譯"
     },

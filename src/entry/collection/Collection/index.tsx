@@ -17,6 +17,25 @@ import { useMouseEventOutside } from '../../../public/react-use';
 
 const TagSetContext = createContext<Set<string>>(new Set());
 
+const useTagSearchFiltered = (defaultSearch: string) => {
+    const [tagSearch, setTagSearch] = useState(defaultSearch);
+
+    const tagSet = useContext(TagSetContext);
+
+    const filteredTags = useMemo(() => {
+        const lowerCaseSearch = tagSearch.toLowerCase();
+
+        return [...tagSet].filter(tagName => tagName.toLowerCase().includes(lowerCaseSearch));
+    }, [tagSet, tagSearch]);
+
+    return {
+        tagSearch,
+        setTagSearch,
+        filteredTags,
+        tagSet
+    };
+};
+
 type CollectionValueCardProps = {
     collectionValue: StoreCollectionValue;
 };
@@ -500,10 +519,12 @@ type ConfirmDeleteProps = {
     onConfirm: () => void;
     onCancel: () => void;
     onClose: () => void;
+    textPair?: [string, string];
+    drawerTitle: string;
     deleteList: string[];
 };
 
-const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({ onConfirm, onCancel, onClose, deleteList }) => {
+const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({ onConfirm, onCancel, onClose, textPair, drawerTitle, deleteList }) => {
     const [fold, setFold] = useState(true);
 
     return (
@@ -520,14 +541,18 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({ onConfirm, onCancel, onCl
                     </Button>
                 </div>
                 <div className='confirm-delete__content'>
+                    {textPair && <div className='confirm-delete__content__text-pair'>
+                        <div className='text-pair__first'>{textPair[0]}</div>
+                        <div className='text-pair__second' title={textPair[1]}>{textPair[1]}</div>
+                    </div>}
                     <Button
                         variant='text'
                         onClick={() => {
                             setFold(!fold);
                         }}
                     >
-                        <span>{getMessage('collectionConfirmingDelete')}</span>
-                        <IconFont iconName='#icon-GoChevronDown' style={fold ? {} : {rotate: '180deg'}} />
+                        <span>{drawerTitle}</span>
+                        <IconFont iconName='#icon-GoChevronDown' style={{minWidth: '1em', rotate: fold ? 'unset' : '180deg'}} />
                     </Button>
                     <div className='confirm-delete__content__list scrollbar' style={{display: fold ? 'none' : 'block'}}>
                         {deleteList.map((item) => (<div
@@ -561,6 +586,104 @@ const ConfirmDelete: React.FC<ConfirmDeleteProps> = ({ onConfirm, onCancel, onCl
         </Backdrop>
     );
 };
+
+type ManageTagsProps = {
+    onTagDeleted: (tagName: string) => void;
+    collectionValues: StoreCollectionValue[];
+};
+
+const ManageTags = React.memo<ManageTagsProps>(({ onTagDeleted, collectionValues }) => {
+    const [managingTags, setManagingTags] = useState(false);
+    const [nextDelete, setNextDelete] = useState<{ tagName: string; affectedItems: StoreCollectionValue[]; } | null>(null);
+
+    const { setTagSearch, filteredTags } = useTagSearchFiltered('');
+
+    const manageTagsEleRef = useRef<HTMLDivElement>(null);
+
+    useMouseEventOutside(() => { setManagingTags(false); }, 'mousedown', manageTagsEleRef.current, managingTags);
+
+    return (
+        <div className='manage-tags' ref={manageTagsEleRef}>
+            {nextDelete && <ConfirmDelete
+                onConfirm={() => {
+                    const { tagName, affectedItems } = nextDelete;
+
+                    const nextCollectionValues = affectedItems.map((value) => {
+                        if (!value.tags?.includes(tagName)) {
+                            return value;
+                        }
+
+                        const nextTags = value.tags.filter(v => v !== tagName);
+
+                        return { ...value, tags: nextTags };
+                    });
+
+                    setNextDelete(null);
+
+                    scIndexedDB.addAll<StoreCollectionValue>(DB_STORE_COLLECTION, nextCollectionValues).then(() => {
+                        onTagDeleted(tagName);
+                    });
+                }}
+                onCancel={() => { setNextDelete(null); }}
+                onClose={() => { setNextDelete(null); }}
+                textPair={[getMessage('collectionTargetTag'), nextDelete.tagName]}
+                drawerTitle={getMessage('collectionConfirmRemoveTag')}
+                deleteList={nextDelete.affectedItems.map(v => v.text)}
+            />}
+            <Button
+                variant='text'
+                onClick={() => { setManagingTags(!managingTags); }}
+            >
+                <IconFont
+                    iconName='#icon-tag'
+                    style={{fontSize: '24px', marginRight: '5px'}}
+                />
+                {getMessage('collectionManageTags')}
+            </Button>
+            <SelectOptions
+                show={managingTags}
+                maxWidth={300}
+                maxHeight={353}
+            >
+                <div className='search-field__tags-filter__title'>删除标签</div>
+                <div className='add-tag__input-box'>
+                    <label htmlFor='manage-search-tag-input-box' style={{padding: '5px', opacity: '0.6'}}>
+                        <IconFont iconName='#icon-search' />
+                    </label>
+                    <input
+                        id='manage-search-tag-input-box'
+                        type='text'
+                        placeholder={getMessage('wordSearch')}
+                        onChange={(e) => { startTransition(() => setTagSearch(e.target.value)); }}
+                        maxLength={40}
+                    />
+                </div>
+                {filteredTags.map((tagName) => (<div
+                    key={tagName}
+                    className='manage-tags__item'
+                >
+                    <span className='manage-tags__item__name' title={tagName}>{tagName}</span>
+                    <IconFont
+                        iconName='#icon-MdDelete'
+                        className='manage-tags__item__delete'
+                        onClick={() => {
+                            const affectedItems: StoreCollectionValue[] = [];
+                            
+                            collectionValues.forEach((value) => {
+                                value.tags?.includes(tagName) && affectedItems.push(value)
+                            });
+
+                            setManagingTags(false);
+                            setNextDelete({ tagName, affectedItems });
+
+                            console.log(affectedItems);
+                        }}
+                    />
+                </div>))}
+            </SelectOptions>
+        </div>
+    );
+});
 
 const Collection: React.FC = () => {
     const [collectionValues, setCollectionValues] = useState<StoreCollectionValue[]>([]);
@@ -684,6 +807,7 @@ const Collection: React.FC = () => {
                                 </Button>
                                 {deleteList && <ConfirmDelete
                                     deleteList={deleteList}
+                                    drawerTitle={getMessage('collectionConfirmingDelete')}
                                     onCancel={() => {
                                         setDeleteList(null);
                                     }}
@@ -744,6 +868,13 @@ const Collection: React.FC = () => {
                             </>}
                         </div>
                         <div className='toolbar-wrapper__right'>
+                            <ManageTags
+                                onTagDeleted={(tagName) => {
+                                    lastTagSetRef.current.delete(tagName);
+                                    currentValue?.text ? updateCurrentValue() : refreshCollectionValues();
+                                }}
+                                collectionValues={collectionValues}
+                            />
                             <Button
                                 variant='text'
                                 onClick={async () => {
