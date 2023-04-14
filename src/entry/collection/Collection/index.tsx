@@ -84,15 +84,8 @@ type AddTagProps = {
 
 const AddTag: React.FC<AddTagProps> = ({ onClose, onAdd, addedTags }) => {
     const [tagName, setTagName] = useState('');
-    const [search, setSearch] = useState('');
 
-    const tagSet = useContext(TagSetContext);
-
-    const tags = useMemo(() => {
-        const lowerCaseSearch = search.toLowerCase();
-
-        return [...tagSet].filter(tag => tag.toLowerCase().includes(lowerCaseSearch));
-    }, [tagSet, search]);
+    const { setTagSearch, filteredTags, tagSet } = useTagSearchFiltered('');
 
     const addedTagSet = useMemo(() => (new Set(addedTags)), [addedTags]);
 
@@ -150,13 +143,13 @@ const AddTag: React.FC<AddTagProps> = ({ onClose, onAdd, addedTags }) => {
                                 id='search-tag-input-box'
                                 type='text'
                                 placeholder={getMessage('wordSearch')}
-                                onChange={(e) => { startTransition(() => setSearch(e.target.value)); }}
+                                onChange={(e) => { startTransition(() => setTagSearch(e.target.value)); }}
                                 maxLength={40}
                             />
                         </div>
                     </div>
                     <div className='add-tag__existed__tags'>
-                        {tags.map((tagName) => (<div
+                        {filteredTags.map((tagName) => (<div
                             key={tagName}
                             className={classNames('add-tag__existed__tags__item', addedTagSet.has(tagName) && 'added')}
                             title={tagName}
@@ -399,17 +392,10 @@ type SearchFieldProps = {
 
 const SearchField: React.FC<SearchFieldProps> = React.memo(({ search, setSearch, checkedTagSet, setCheckedTagSet }) => {
     const [tagFiltering, setTagFiltering] = useState(false);
-    const [tagSearch, setTagSearch] = useState('');
 
     const searchElementRef = useRef<HTMLInputElement>(null);
 
-    const tagSet = useContext(TagSetContext);
-
-    const filteredTags = useMemo(() => {
-        const lowerCaseSearch = tagSearch.toLowerCase();
-
-        return [...tagSet].filter(tagName => tagName.toLowerCase().includes(lowerCaseSearch));
-    }, [tagSet, tagSearch]);
+    const { setTagSearch, filteredTags } = useTagSearchFiltered('');
 
     const tagFilterEleRef = useRef<HTMLDivElement>(null);
 
