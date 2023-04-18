@@ -8,6 +8,7 @@ import { baiduSwitchToGoogleLangCode, bingSwitchToGoogleLangCode } from './switc
 const audio = new Audio();
 
 let defaultAudioSource = GOOGLE_COM;
+let keepUsingDefaultAudioSource = false;
 
 type AudioCache = {
     textList: string[];
@@ -43,7 +44,7 @@ const utter = new SpeechSynthesisUtterance();
 export const playAudio = ({ text, source, from = '' }: { text: string, source?: string, from?: string }, onPause?: () => void) => {
     pauseAudio();
 
-    if (!source) {
+    if (!source || keepUsingDefaultAudioSource) {
         source = defaultAudioSource;
     }
 
@@ -220,8 +221,8 @@ const getTextList = (text: string, textLength: number) => {
     return arr;
 };
 
-type PickedOptions = Pick<DefaultOptions, 'audioVolume' | 'audioPlaybackRate' | 'defaultAudioSource'>;
-const keys: (keyof PickedOptions)[] = ['audioVolume', 'audioPlaybackRate', 'defaultAudioSource'];
+type PickedOptions = Pick<DefaultOptions, 'audioVolume' | 'audioPlaybackRate' | 'defaultAudioSource' | 'keepUsingDefaultAudioSource'>;
+const keys: (keyof PickedOptions)[] = ['audioVolume', 'audioPlaybackRate', 'defaultAudioSource', 'keepUsingDefaultAudioSource'];
 getLocalStorage<PickedOptions>(keys, (storage) => {
     audio.volume = storage.audioVolume / 100;
     audio.defaultPlaybackRate = storage.audioPlaybackRate;
@@ -230,6 +231,8 @@ getLocalStorage<PickedOptions>(keys, (storage) => {
     utter.rate = storage.audioPlaybackRate;
 
     defaultAudioSource = storage.defaultAudioSource;
+
+    keepUsingDefaultAudioSource = storage.keepUsingDefaultAudioSource;
 });
 listenOptionsChange<PickedOptions>(keys, (changes) => {
     if (changes.audioVolume !== undefined) {
@@ -242,4 +245,6 @@ listenOptionsChange<PickedOptions>(keys, (changes) => {
         utter.rate = changes.audioPlaybackRate;
     }
     changes.defaultAudioSource !== undefined && (defaultAudioSource = changes.defaultAudioSource);
+
+    changes.keepUsingDefaultAudioSource !== undefined && (keepUsingDefaultAudioSource = changes.keepUsingDefaultAudioSource);
 });

@@ -151,6 +151,7 @@ export type DefaultOptions = {
     translateDynamicContent: boolean;
     autoTranslateWebpageHostList: string[];
     enableAutoTranslateWebpage: boolean;
+    keepUsingDefaultAudioSource: boolean;
 };
 
 // Only work in "src/entry/background/install.ts".

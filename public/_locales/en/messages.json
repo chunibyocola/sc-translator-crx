@@ -461,6 +461,9 @@
     "optionsTogglePageTranslationStateDescription": {
         "message": "When this keyboard shortcut is used on an extension enabled page, you can activate page translation while it is not activated, or close it while it is activated."
     },
+    "optionsKeepUsingDefaultAudioSource": {
+        "message": "Use this audio source in other translation sources"
+    },
     "themePreset": {
         "message": "Preset"
     },

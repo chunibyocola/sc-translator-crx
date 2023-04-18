@@ -461,6 +461,9 @@
     "optionsTogglePageTranslationStateDescription": {
         "message": "拡張機能が有効なページでこのキーボードショートカットを使用すると、ページ翻訳がアクティブしない状態でアクティブにしたり、アクティブした状態で閉じたりすることができます。"
     },
+    "optionsKeepUsingDefaultAudioSource": {
+        "message": "この音声ソースを他の翻訳ソースで使用する"
+    },
     "themePreset": {
         "message": "プリセット"
     },

@@ -8,6 +8,7 @@ import { getMessage } from '../../../../public/i18n';
 import { playAudio } from '../../../../public/play-audio';
 import { useOptions } from '../../../../public/react-use';
 import { DefaultOptions } from '../../../../types';
+import Switch from '../../../../components/Switch';
 
 const marksVolume: SliderMarks = [
     { value: 5, label: '5' },
@@ -36,19 +37,22 @@ type PickedOptions = Pick<
     DefaultOptions,
     'defaultAudioSource' |
     'audioVolume' |
-    'audioPlaybackRate'
+    'audioPlaybackRate' |
+    'keepUsingDefaultAudioSource'
 >;
 const useOptionsDependency: (keyof PickedOptions)[] = [
     'defaultAudioSource',
     'audioVolume',
-    'audioPlaybackRate'
+    'audioPlaybackRate',
+    'keepUsingDefaultAudioSource'
 ];
 
 const Audio: React.FC = () => {
     const {
         defaultAudioSource,
         audioVolume,
-        audioPlaybackRate
+        audioPlaybackRate,
+        keepUsingDefaultAudioSource
     } = useOptions<PickedOptions>(useOptionsDependency);
 
     return (
@@ -61,6 +65,13 @@ const Audio: React.FC = () => {
                     source={defaultAudioSource}
                     onChange={value => setLocalStorage({ defaultAudioSource: value })}
                 />
+                <div className='mt10-ml30'>
+                    <Switch
+                        label={getMessage('optionsKeepUsingDefaultAudioSource')}
+                        checked={keepUsingDefaultAudioSource}
+                        onChange={v => setLocalStorage({ keepUsingDefaultAudioSource: v })}
+                    />
+                </div>
             </div>
             <div className='opt-section-row'>
                 {getMessage('optionsVolume')}

@@ -72,7 +72,8 @@ const defaultOptions: DefaultOptions = {
     customWebpageTranslateSourceList: [],
     translateDynamicContent: false,
     autoTranslateWebpageHostList: [],
-    enableAutoTranslateWebpage: false
+    enableAutoTranslateWebpage: false,
+    keepUsingDefaultAudioSource: false
 };
 
 export default defaultOptions;

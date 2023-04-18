@@ -461,6 +461,9 @@
     "optionsTogglePageTranslationStateDescription": {
         "message": "在扩展已启用的网页中使用此快捷键时，你可以在网页翻译未激活时激活它，或在已激活时关闭它。"
     },
+    "optionsKeepUsingDefaultAudioSource": {
+        "message": "在其他翻译源中使用此朗读源"
+    },
     "themePreset": {
         "message": "预设"
     },

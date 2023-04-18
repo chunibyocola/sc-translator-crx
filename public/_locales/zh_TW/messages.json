@@ -461,6 +461,9 @@
     "optionsTogglePageTranslationStateDescription": {
         "message": "在擴充功能已啟用的網頁中使用此快捷鍵時，你可以在網頁翻譯未激活時激活它，或在已激活時關閉它。"
     },
+    "optionsKeepUsingDefaultAudioSource": {
+        "message": "在其他翻譯源中使用此朗讀源"
+    },
     "themePreset": {
         "message": "預設"
     },
