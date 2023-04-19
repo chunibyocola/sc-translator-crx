@@ -35,7 +35,7 @@ const SourceSelect: React.FC<SourceSelectProps> = ({ onChange, sourceList, sourc
             <span className='source-select__value'>
                 <SourceFavicon source={source} />
             </span>
-            <IconFont iconName='#icon-GoChevronDown' style={{position: 'absolute', right: '2px'}} />
+            <IconFont iconName='#icon-GoChevronDown' />
             <SelectOptions
                 className='source-select__options scrollbar'
                 maxHeight={150}

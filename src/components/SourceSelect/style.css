@@ -9,6 +9,10 @@
     outline: 0;
     white-space: pre;
     padding: 2px 3px;
+    max-width: 150px;
+}
+.source-select .iconfont {
+    margin-left: 4px;
 }
 .source-select--disabled {
     color: rgb(170, 170, 170);
@@ -20,7 +24,7 @@
     border-radius: 5px;
 }
 .source-select__value {
-    width: calc(100% - 20px);
+    flex: 1;
     overflow: hidden;
 }
 .source-select__options__option {
