@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import LanguageSelection from '../../../components/LanguageSelection';
 import { sendTranslate } from '../../../public/send';
 import RawText from '../../../components/RawText';
-import TsResult from '../../../components/TsResult';
 import { googleLangCode, langCode } from '../../../constants/langCode';
 import TsVia from '../../../components/TsVia';
 import { switchTranslateSource } from '../../../public/switch-translate-source';
@@ -11,6 +10,8 @@ import { textPreprocessing } from '../../../public/text-preprocessing';
 import { useAppDispatch, useAppSelector } from '../../../public/react-use';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
 import { nextTranslaion, requestError, requestFinish, requestStart, singleChangeSource } from '../../../redux/slice/translationSlice';
+import TranslateResult from '../../../components/TranslateResult';
+import './style.css';
 
 const SingleTranslateResult: React.FC = () => {
     const { translations, from, to, text, translateId } = useAppSelector(state => state.translation);
@@ -83,19 +84,22 @@ const SingleTranslateResult: React.FC = () => {
                 to={to}
                 languageCodes={langCode[source] ?? googleLangCode}
             />
-            <div style={{minHeight: '250px'}}>
-                <div className='scrollbar' style={{maxHeight: '300px', overflowY: 'auto'}}>
-                    <TsResult
-                        translateRequest={translateRequest}
+            <div className='single-translation-container'>
+                <div className='single-translation'>
+                    <TsVia
+                        sourceChange={handleSourceChange}
                         source={source}
-                        retry={handleRetry}
-                        setText={handleSetText}
+                        translateRequest={translateRequest}
                     />
+                    <div className='single-translation__translation scrollbar'>
+                        <TranslateResult
+                            translateRequest={translateRequest}
+                            source={source}
+                            retry={handleRetry}
+                            setText={handleSetText}
+                        />
+                    </div>
                 </div>
-                <TsVia
-                    sourceChange={handleSourceChange}
-                    source={source}
-                />
             </div>
         </>
     );

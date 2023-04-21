@@ -1,20 +1,14 @@
 .via {
-    position: relative;
-    text-align: right;
-    background: var(--bg-content);
-    border-radius: 0 0 6px 6px;
     padding: 0 10px;
 }
 .via__content {
     font-size: 14px !important;
     padding: 2px 0;
+    display: flex;
+    align-items: center;
 }
-.via__content-pre {
-    opacity: 0.7;
-}
-.via__content-select {
-    margin-left: 10px;
-    width: 150px;
+.via__content-select .source-select__value {
+    max-width: 128px;
 }
 .via__content-select:focus {
     background: var(--bg-select-focus);

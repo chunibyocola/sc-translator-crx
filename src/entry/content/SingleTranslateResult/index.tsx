@@ -1,6 +1,5 @@
 import React, { useEffect, useCallback, useRef, useLayoutEffect, useState } from 'react';
 import { sendTranslate } from '../../../public/send';
-import TsResult from '../../../components/TsResult';
 import LanguageSelection from '../../../components/LanguageSelection';
 import RawText from '../../../components/RawText';
 import { googleLangCode, langCode } from '../../../constants/langCode';
@@ -11,6 +10,7 @@ import './style.css';
 import { textPreprocessing } from '../../../public/text-preprocessing';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../../redux/slice/translateHistorySlice';
 import { nextTranslaion, requestError, requestFinish, requestStart, singleChangeSource } from '../../../redux/slice/translationSlice';
+import TranslateResult from '../../../components/TranslateResult';
 
 type SingleTranslateResultProps = {
     maxHeightGap: number;
@@ -109,19 +109,22 @@ const SingleTranslateResult: React.FC<SingleTranslateResultProps> = React.memo((
                     languageCodes={langCode[source] ?? googleLangCode}
                 />
             </div>
-            <div className='single-result scrollbar' style={{maxHeight: `${resultMaxHeight}px`}} ref={resultContainerEle}>
-                <TsResult
-                    translateRequest={translateRequest}
+            <div className='single-translation'>
+                <TsVia
+                    sourceChange={handleSourceChange}
                     source={source}
-                    retry={handleRetry}
-                    setText={handleSetText}
-                    insertResult={canInsertResult ? result => insertResultToggle(translateId, source, result) : undefined}
+                    translateRequest={translateRequest}
                 />
+                <div className='single-translation__translation scrollbar' style={{maxHeight: `${resultMaxHeight}px`}} ref={resultContainerEle}>
+                    <TranslateResult
+                        translateRequest={translateRequest}
+                        source={source}
+                        retry={handleRetry}
+                        setText={handleSetText}
+                        insertResult={canInsertResult ? result => insertResultToggle(translateId, source, result) : undefined}
+                    />
+                </div>
             </div>
-            <TsVia
-                sourceChange={handleSourceChange}
-                source={source}
-            />
         </>
     );
 });
