@@ -44,6 +44,15 @@ const utter = new SpeechSynthesisUtterance();
 export const playAudio = ({ text, source, from = '' }: { text: string, source?: string, from?: string }, onPause?: () => void) => {
     pauseAudio();
 
+    if (source && from) {
+        if (source === BING_COM) {
+            from = bingSwitchToGoogleLangCode(from);
+        }
+        else if (source === BAIDU_COM) {
+            from = baiduSwitchToGoogleLangCode(from);
+        }
+    }
+
     if (!source || keepUsingDefaultAudioSource) {
         source = defaultAudioSource;
     }
