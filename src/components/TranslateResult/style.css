@@ -1,14 +1,14 @@
 .translate-result {
     padding: 10px 0;
 }
-.translate-result__item-stack .iconfont {
+.translate-result__item .iconfont {
     position: relative;
     bottom: .125em;
 }
-.translate-result__item-stack .iconfont:first-child {
+.translate-result__item .iconfont:first-child {
     margin-left: 5px;
 }
-.translate-result__item-stack + .translate-result__item-stack {
+.translate-result__item + .translate-result__item {
     margin-block-start: 0.8em;
 }
 .translate-result__paragraph + .translate-result__paragraph {

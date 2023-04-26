@@ -32,10 +32,10 @@ const TranslateResult: React.FC<TranslateResultProps> = ({ translateRequest, sou
                 {((displayOfTranslation.phonetic && translateRequest.result.from === LANG_EN)
                     || (displayOfTranslation.phonetic_nonEnglish && translateRequest.result.from !== LANG_EN))
                     && translateRequest.result.phonetic
-                    && <div className='translate-result__item-stack'>
+                    && <div className='translate-result__item translate-result__phonetic'>
                     {translateRequest.result.phonetic}
                 </div>}
-                <div className='translate-result__item-stack'>
+                <div className='translate-result__item translate-result__result'>
                     {translateRequest.result.result.map((item, index) => (<span
                         className={classNames(displayOfTranslation.maintainParagraphStructure && 'translate-result__paragraph')}
                         key={index}
@@ -65,17 +65,26 @@ const TranslateResult: React.FC<TranslateResultProps> = ({ translateRequest, sou
                         </>)}
                     </span>))}
                 </div>
-                {displayOfTranslation.dict && translateRequest.result.dict && translateRequest.result.dict.length > 0 && <div className='translate-result__item-stack'>
+                {displayOfTranslation.dict
+                    && translateRequest.result.dict
+                    && translateRequest.result.dict.length > 0
+                    && <div className='translate-result__item translate-result__dict'>
                     {translateRequest.result.dict.map((v, i) => (
                         <div key={i}>{v}</div>
                     ))}
                 </div>}
-                {displayOfTranslation.related && translateRequest.result.related && translateRequest.result.from === LANG_EN && <div className='translate-result__item-stack'>
+                {displayOfTranslation.related
+                    && translateRequest.result.related
+                    && translateRequest.result.from === LANG_EN
+                    && <div className='translate-result__item translate-result__related'>
                     {getMessage('wordRelated')}: {translateRequest.result.related.map((v, i) => (<span key={`${v}${i}`}>
                         {i !== 0 && ', '}<span className={setText && 'span-link'} onClick={() => setText?.(v)}>{v}</span>
                     </span>))}
                 </div>}
-                {displayOfTranslation.example && translateRequest.result.example && translateRequest.result.example.length > 0 && <div className='translate-result__item-stack'>
+                {displayOfTranslation.example
+                    && translateRequest.result.example
+                    && translateRequest.result.example.length > 0
+                    && <div className='translate-result__item translate-result__example'>
                     {translateRequest.result.example.map((v, i) => (
                         <div key={i}>
                             <IconFont
