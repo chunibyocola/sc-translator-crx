@@ -11,7 +11,7 @@ export const defaultContextMenus: OptionsContextMenu[] = [
     { id: LISTEN_SELECTION_TEXT, enabled: false },
     { id: OPEN_SEPARATE_WINDOW, enabled: false },
     { id: OPEN_THIS_PAGE_WITH_PDF_VIEWER, enabled: false },
-    { id: TRANSLATE_CURRENT_PAGE, enabled: false }
+    { id: TRANSLATE_CURRENT_PAGE, enabled: true }
 ];
 
 export const contextMenusContexts: { [key: string]: chrome.contextMenus.ContextType[] } = {

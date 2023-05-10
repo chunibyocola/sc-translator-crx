@@ -35,7 +35,7 @@ const defaultOptions: DefaultOptions = {
     hideButtonFixedTime: 1000,
     respondToSeparateWindow: false,
     // 'stw' means 'Separate translate Window'
-    rememberStwSizeAndPosition: false,
+    rememberStwSizeAndPosition: true,
     stwSizeAndPosition: { width: 286, height: 439, left: 550, top: 250 },
     pinThePanelWhileOpeningIt: false,
     rememberPositionOfPinnedPanel: false,
@@ -67,10 +67,10 @@ const defaultOptions: DefaultOptions = {
     translateButtonsTL: { first: '', second: LANG_EN, third: LANG_EN },
     sourceParamsCache: initSourceParams,
     customTranslateSourceList: [],
-    displayOfTranslation: { result: true, dict: true, phonetic: true, related: true, example: false, phonetic_nonEnglish: false, maintainParagraphStructure: false },
-    displayModeEnhancement: { o_Hovering: false, oAndT_Underline: false, oAndT_NonDiscrete: false, t_Hovering: false },
+    displayOfTranslation: { result: true, dict: true, phonetic: true, related: true, example: true, phonetic_nonEnglish: false, maintainParagraphStructure: false },
+    displayModeEnhancement: { o_Hovering: true, oAndT_Underline: true, oAndT_NonDiscrete: false, t_Hovering: true },
     customWebpageTranslateSourceList: [],
-    translateDynamicContent: false,
+    translateDynamicContent: true,
     autoTranslateWebpageHostList: [],
     enableAutoTranslateWebpage: false,
     keepUsingDefaultAudioSource: false
