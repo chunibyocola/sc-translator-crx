@@ -12,10 +12,11 @@ import '../../../../components/MtAddSource/style.css';
 import '../../../../components/MtResult/style.css';
 import '../../../../components/LanguageSelect/style.css';
 import '../../../../components/TranslateResult/style.css';
+import '../../../content/SingleTranslateResult/style.css';
 import SourceFavicon from '../../../../components/SourceFavicon';
 import IconFont from '../../../../components/IconFont';
 import { StyleVars } from '../../../../constants/defaultStyleVars';
-import Logo from '../../../../components/Logo';
+import PanelIconButtonWrapper from '../../../../components/PanelIconButtons/PanelIconButtonWrapper';
 
 type CustomizeBoardDisplayProps = {
     styleVars: StyleVars;
@@ -67,35 +68,33 @@ const CustomizeBoardDisplay: React.FC<CustomizeBoardDisplayProps> = ({ styleVars
                             </div>
                         </div>
                     </div>
-                    <div className="single-result scrollbar">
-                        <div className='st-result' style={{background: styleVars['--bg-content']}}>
-                            <div className="st-result__item-stack">
-                                <span>欢迎</span>
+                    <div className='single-translation' style={{background: styleVars['--bg-content']}} >
+                        <div className="via">
+                            <div className="via__content">
+                                <div className="source-select via__content-select">
+                                    <span className="source-select__value">
+                                        <SourceFavicon source='google.com' />
+                                    </span>
+                                    <IconFont iconName='#icon-GoChevronDown' />
+                                </div>
                                 <IconFont iconName='#icon-copy' className='iconbutton button' />
                                 <IconFont iconName='#icon-GoUnmute' className='iconbutton button' />
                             </div>
-                            <div className="st-result__item-stack">
-                                <div>名词: 欢迎, 欢迎光临</div>
-                                <div>动词: 欢迎, 迎, 迎接, 赞同, 赞成, 赞许, 揖, 迓, 赞, 接</div>
-                                <div>形容词: 受欢迎, 爽快, 顗</div>
-                            </div>
-                            <div className="st-result__item-stack">
-                                <span className="st-result__text">welcome</span>
-                                <IconFont iconName='#icon-copy' className='iconbutton button' />
-                                <IconFont iconName='#icon-GoUnmute' className='iconbutton button' />
-                            </div>
-                            <div className="tss-phonetic">[ˈwelkəm]</div>
+                            <div className='dividing-line' style={{background: styleVars['--text-normal']}}></div>
                         </div>
-                    </div>
-                    <div className="via" style={{background: styleVars['--bg-content']}}>
-                        <div className='dividing-line' style={{background: styleVars['--text-normal']}}></div>
-                        <div className="via__content">
-                            <span className="via__content-pre">via</span>
-                            <div className="source-select via__content-select">
-                                <span className="source-select__value">
-                                    <SourceFavicon source='google.com' />
-                                </span>
-                                <IconFont iconName='#icon-GoChevronDown' style={{position: 'absolute', right: '2px'}} />
+                        <div className="single-translation__translation scrollbar">
+                            <div className='translate-result'>
+                                <div className="translate-result__item translate-result__phonetic">[ˈwelkəm]</div>
+                                <div className="translate-result__item translate-result__result">
+                                    <span>欢迎</span>
+                                    <IconFont iconName='#icon-copy' className='iconbutton button' />
+                                    <IconFont iconName='#icon-GoUnmute' className='iconbutton button' />
+                                </div>
+                                <div className="translate-result__item translate-result__dict">
+                                    <div>名词: 欢迎, 欢迎光临</div>
+                                    <div>动词: 欢迎, 迎, 迎接, 赞同, 赞成, 赞许, 揖, 迓, 赞, 接</div>
+                                    <div>形容词: 受欢迎, 爽快, 顗</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -113,14 +112,24 @@ const CustomizeBoardDisplay: React.FC<CustomizeBoardDisplayProps> = ({ styleVars
                         color: styleVars['--text-icon']
                     }}
                 >
-                    <div className="popup-header__logo flex-align-items-center">
-                        <Logo />
+                    <div className="popup-header__left flex-align-items-center">
+                        <PanelIconButtonWrapper>
+                            <IconFont iconName='#icon-pageTranslation' style={{color: styleVars['--text-icon']}} />
+                        </PanelIconButtonWrapper>
                     </div>
                     <div className="popup-header__icons flex-align-items-center">
-                        <IconFont iconName='#icon-theme' className='iconfont--enable' style={{color: styleVars['--text-icon']}} />
-                        <IconFont iconName='#icon-MdTranslate' className='iconfont--enable' style={{color: styleVars['--text-icon']}} />
-                        <IconFont iconName='#icon-MdHistory' className='iconfont--disable' style={{color: styleVars['--text-icon']}} />
-                        <IconFont iconName='#icon-MdSettings' className='iconfont--enable' style={{color: styleVars['--text-icon']}} />
+                        <PanelIconButtonWrapper>
+                            <IconFont iconName='#icon-theme' style={{color: styleVars['--text-icon']}} />
+                        </PanelIconButtonWrapper>
+                        <PanelIconButtonWrapper>
+                            <IconFont iconName='#icon-MdTranslate' style={{color: styleVars['--text-icon']}} />
+                        </PanelIconButtonWrapper>
+                        <PanelIconButtonWrapper disabled>
+                            <IconFont iconName='#icon-MdHistory' style={{color: styleVars['--text-icon']}} />
+                        </PanelIconButtonWrapper>
+                        <PanelIconButtonWrapper>
+                            <IconFont iconName='#icon-MdSettings' style={{color: styleVars['--text-icon']}} />
+                        </PanelIconButtonWrapper>
                     </div>
                 </div>
                 <div className="popup-container__content" style={{color: styleVars['--text-normal']}}>
