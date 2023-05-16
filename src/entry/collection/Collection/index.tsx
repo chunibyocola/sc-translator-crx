@@ -14,6 +14,7 @@ import { classNames, resultToString } from '../../../public/utils';
 import './style.css';
 import SelectOptions from '../../../components/SelectOptions';
 import { useMouseEventOutside } from '../../../public/react-use';
+import useEffectOnce from '../../../public/react-use/useEffectOnce';
 
 const TagSetContext = createContext<Set<string>>(new Set());
 
@@ -741,6 +742,25 @@ const Collection: React.FC = () => {
         setChecked(new Array(nextFilteredValues.length).fill(false));
         setFilteredValues(nextFilteredValues);
     }, [collectionValues, search, orderIndicate, checkedTagSet]);
+
+    useEffectOnce(() => {
+        chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+            if (request === 'Are you collection page?') {
+                chrome.tabs.getCurrent().then((tab) => {
+                    if (tab) {
+                        sendResponse({ tabId: tab.id, windowId: tab.windowId });
+
+                        refreshCollectionValues();
+                    }
+                    else {
+                        sendResponse(null);
+                    }
+                });
+
+                return true;
+            }
+        });
+    });
 
     return (
         <TagSetContext.Provider value={tagSet}>

@@ -133,3 +133,27 @@ export const classNames = (...args: (undefined | null | boolean | string)[]) => 
 
     return className.trimStart();
 };
+
+export const openCollectionPage = () => {
+    const isCollectionPageCreated = async (): Promise<null | { tabId: number, windowId: number }> => {
+        return await new Promise((resolve) => {
+            chrome.runtime.sendMessage('Are you collection page?', (data: { tabId: number, windowId: number }) => {
+                chrome.runtime.lastError && resolve(null);
+    
+                resolve(data);
+            });
+        });
+    };
+
+    isCollectionPageCreated().then((info) => {
+        if (info) {
+            const { tabId, windowId } = info;
+
+            chrome.tabs.update(tabId, { active: true, highlighted: true });
+            chrome.windows.update(windowId, { focused: true });
+        }
+        else {
+            chrome.tabs.create({ url: chrome.runtime.getURL('/collection.html') })
+        }
+    });
+};

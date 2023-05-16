@@ -1,5 +1,5 @@
 import { createSeparateWindow } from './separate-window';
-import { getIsContentScriptEnabled, getLocalStorageAsync } from '../../public/utils';
+import { getIsContentScriptEnabled, getLocalStorageAsync, openCollectionPage } from '../../public/utils';
 import {
     contextMenusContexts,
     LISTEN_SELECTION_TEXT,
@@ -110,10 +110,6 @@ const openSeparateTranslateWindow = () => {
 
 const translateCurrentPage: OnContextMenuClick = (info, tab) => {
     tab?.id !== undefined && tab.id >= 0 && sendTabsTranslateCurrentPage(tab.id);
-};
-
-const openCollectionPage = () => {
-    chrome.tabs.create({ url: chrome.runtime.getURL('/collection.html') });
 };
 
 const updateContextMenus = (contextMenus: OptionsContextMenu[]) => {
