@@ -107,6 +107,10 @@ const toTranslations = (rawResult: string) => {
         const matchB = rawResult.match(/<b>[\s\S]*?<\/b>/);
 
         if (matchB?.[0] && matchB.index !== undefined) {
+            if (rawResult !== originalRawResult && rawResult[matchB.index - 1] === ' ') {
+                matchB[0] = ' ' + matchB[0];
+            }
+
             rawResult = rawResult.substring(matchB.index + matchB[0].length);
 
             const r = dealWithSentence(matchB[0].replace(/(<b>)|(<\/b>)/g, ''), indexArray[0], indexArray.length);
