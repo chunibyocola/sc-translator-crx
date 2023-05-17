@@ -1,3 +1,10 @@
+# 5.0.0 (2023-05-16)
+- Add "Use this audio source in other translation sources" option. ([bb8b59e](https://github.com/chunibyocola/sc-translator-crx/commit/bb8b59e503431c63f3268b68740442a006491eae))
+- Able to add tag onto collection item.
+- Able to add note onto collection item.
+- Fix Bing audio unavailable. ([2f020f0](https://github.com/chunibyocola/sc-translator-crx/commit/2f020f00d2aeccfe564a3ded33334ce72aa738f5))
+- Fix export settings with pound mark in CSS customization box will make the content of exported file get cut off. ([a12db3f](https://github.com/chunibyocola/sc-translator-crx/commit/a12db3f284a280921bc08c49a77209283caa394a))
+- Fix original text/translation panel get covered by fixed elements. ([f63ce84](https://github.com/chunibyocola/sc-translator-crx/commit/f63ce84d6d35268a7ee618586367c25b09323440))
 # 4.7.1 (2023-01-16)
 - Clicking "collect" button in collected state will update the item in collection now. ([1f4f89b](https://github.com/chunibyocola/sc-translator-crx/commit/1f4f89b5eda3b7fc887b9ba95e95a027bd059f0f))
 - Fix Bing unavailable. ([abf2db1](https://github.com/chunibyocola/sc-translator-crx/commit/abf2db1f1ac42a9f25a475babe1de9615aab90dd))
