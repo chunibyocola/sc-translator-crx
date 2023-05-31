@@ -191,6 +191,24 @@ const stopObserving = () => {
     observer.disconnect();
 };
 
+const intersectionObserver = new IntersectionObserver((entries) => {
+    let doTranslate = false;
+
+    entries.forEach((entry) => {
+        if (!entry.isIntersecting) { return; }
+
+        const target = entry.target as HTMLElement;
+
+        intersectionObserver.unobserve(target);
+
+        document.body.contains(target) && getAllParagraph(target);
+
+        doTranslate = true;
+    });
+
+    doTranslate && translateInViewPortParagraphs();
+});
+
 const newPageTranslateItem = (text: string, textNodes: Text[], codeTexts: PageTranslateItemEnity['codeTexts']) => {
     const searchIndex = text.search(/[^\s]/);
 
@@ -279,7 +297,16 @@ const getAllParagraph = (element: HTMLElement) => {
                 continue;
             }
 
-            let isInline = getComputedStyle(node as HTMLElement).display === 'inline';
+            const nodeStyleDisplay = getComputedStyle(node as HTMLElement).display;
+
+            if (nodeStyleDisplay === 'none') {
+                intersectionObserver.observe(node as HTMLElement);
+
+                nextParagraph();
+                continue;
+            }
+
+            let isInline = nodeStyleDisplay === 'inline';
 
             if (node.nodeName === 'PRE') {
                 node.childNodes.forEach((v) => {
@@ -499,6 +526,8 @@ export const closeWebPageTranslating = () => {
     if (closeFlag > startFlag) { return; }
 
     stopObserving();
+
+    intersectionObserver.disconnect();
 
     source = '';
     language = '';
