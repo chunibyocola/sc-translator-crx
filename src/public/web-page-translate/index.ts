@@ -170,7 +170,7 @@ const observer = new MutationObserver((records) => {
         }
     });
 
-    targets.forEach(target => document.body.contains(target) && getAllParagraph(target as HTMLElement));
+    targets.forEach(target => document.body.contains(target) && intersectionObserver.observe(target as HTMLElement));
 
     targets.size > 0 && translateInViewPortParagraphs();
 });
