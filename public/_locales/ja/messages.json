@@ -464,6 +464,9 @@
     "optionsKeepUsingDefaultAudioSource": {
         "message": "この音声ソースを他の翻訳ソースで使用する"
     },
+    "optionsParagraphWrap": {
+        "message": "段落検出時に改行で訳文を表示する"
+    },
     "themePreset": {
         "message": "プリセット"
     },

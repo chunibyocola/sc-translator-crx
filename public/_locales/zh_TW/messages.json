@@ -464,6 +464,9 @@
     "optionsKeepUsingDefaultAudioSource": {
         "message": "在其他翻譯源中使用此朗讀源"
     },
+    "optionsParagraphWrap": {
+        "message": "檢測到段落時換行展示譯文"
+    },
     "themePreset": {
         "message": "預設"
     },

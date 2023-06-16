@@ -464,6 +464,9 @@
     "optionsKeepUsingDefaultAudioSource": {
         "message": "Use this audio source in other translation sources"
     },
+    "optionsParagraphWrap": {
+        "message": "Display translation in a new line when paragraph is detected"
+    },
     "themePreset": {
         "message": "Preset"
     },
