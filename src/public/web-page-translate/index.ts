@@ -33,6 +33,7 @@ type PageTranslateItemEnity = {
     range: Range;
     status: 'init' | 'loading' | 'error' | 'finished';
     mapIndex: number;
+    pNode?: HTMLParagraphElement;
 };
 
 
@@ -67,6 +68,7 @@ let displayModeEnhancement: DisplayModeEnhancement = {
     o_Hovering: false,
     oAndT_Underline: false,
     oAndT_NonDiscrete: false,
+    oAndT_paragraphWrap: false,
     t_Hovering: false
 };
 
@@ -209,7 +211,7 @@ const intersectionObserver = new IntersectionObserver((entries) => {
     doTranslate && translateInViewPortParagraphs();
 });
 
-const newPageTranslateItem = (text: string, textNodes: Text[], codeTexts: PageTranslateItemEnity['codeTexts']) => {
+const newPageTranslateItem = (text: string, textNodes: Text[], codeTexts: PageTranslateItemEnity['codeTexts'], pNode?: HTMLParagraphElement) => {
     const searchIndex = text.search(/[^\s]/);
 
     const range = document.createRange();
@@ -226,7 +228,8 @@ const newPageTranslateItem = (text: string, textNodes: Text[], codeTexts: PageTr
         fontsNodes: [],
         range,
         status: 'init',
-        mapIndex: itemMapIndex
+        mapIndex: itemMapIndex,
+        pNode
     };
 
     waitingList.add(item);
@@ -240,10 +243,10 @@ const getAllParagraph = (element: HTMLElement) => {
     let nodeStack: { node: Node; index: number; isInline: boolean; }[] = [{ node: element, index: 0, isInline: getComputedStyle(element).display === 'inline' }];
     let currentNode = nodeStack.shift();
 
-    const nextParagraph = () => {
+    const nextParagraph = (pNode?: HTMLParagraphElement) => {
         const text = texts.map(v => v.nodeValue ?? '').join('');
 
-        text.replace(/[\P{L}]/ug, '') && newPageTranslateItem(text, texts, codeTexts);
+        text.replace(/[\P{L}]/ug, '') && newPageTranslateItem(text, texts, codeTexts, pNode);
 
         texts = [];
         codeTexts = [];
@@ -298,6 +301,52 @@ const getAllParagraph = (element: HTMLElement) => {
             }
 
             const nodeStyleDisplay = getComputedStyle(node as HTMLElement).display;
+
+            if (displayModeEnhancement.oAndT_paragraphWrap && node.nodeName === 'P' && !(node.nextSibling?.nodeName === 'P' && Object.hasOwn(node.nextSibling, '_ScWebpageTranslationKey'))) {
+                nextParagraph();
+
+                const treeWalker = document.createTreeWalker(node, NodeFilter.SHOW_ALL, {
+                    acceptNode: (node) => {
+                        if (ignoredTags.has(node.nodeName) || node.nodeName === '#comment') { return NodeFilter.FILTER_REJECT; }
+                        
+                        return NodeFilter.FILTER_ACCEPT;
+                    }
+                });
+
+                let currentNode: null | Node;
+                let codeElement: null | HTMLElement = null;
+
+                for (currentNode = treeWalker.currentNode; currentNode; currentNode = treeWalker.nextNode()) {
+                    const { nodeName } = currentNode;
+
+                    if (checkedNodes.has(currentNode)) { continue; }
+
+                    checkedNodes.add(currentNode);
+
+                    if (nodeName === 'CODE') {
+                        codeElement = currentNode as HTMLElement;
+                    }
+                    if (nodeName === '#text' && currentNode.nodeValue?.trim()) {
+                        if (codeElement && codeElement.contains(currentNode)) {
+                            const item = codeTexts[texts.length];
+                            const codeText = `"${currentNode.textContent}"`;
+                            if (item) {
+                                item.push(codeText);
+                            }
+                            else {
+                                codeTexts[texts.length] = [codeText];
+                            }
+                        }
+                        else {
+                            codeElement = null;
+                            texts.push(currentNode as Text);
+                        }
+                    }
+                }
+
+                nextParagraph(node as HTMLParagraphElement);
+                continue;
+            }
 
             if (nodeStyleDisplay === 'none') {
                 intersectionObserver.observe(node as HTMLElement);
@@ -613,9 +662,27 @@ const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, 
     pageTranslateItem.textNodes.forEach((textNode, i) => {
         if (!textNode.parentElement || typeof pageTranslateItem.result?.translations[i] !== 'string') { return; }
 
-        const fonts = insertResultAndWrapOriginalTextNode(textNode, pageTranslateItem.mapIndex, pageTranslateItem.result.translations[i], comparisons[i]);
+        const comparison = pageTranslateItem.pNode ? null : comparisons[i];
+
+        const fonts = insertResultAndWrapOriginalTextNode(textNode, pageTranslateItem.mapIndex, pageTranslateItem.result.translations[i], comparison);
         fonts && pageTranslateItem.fontsNodes.push(fonts);
     });
+    if (pageTranslateItem.pNode) {
+        const paragraph: ScWebpageTranslationElement = document.createElement('p');
+
+        pageTranslateItem.pNode.parentElement?.insertBefore(paragraph, pageTranslateItem.pNode.nextSibling);
+
+        const comparisonFont: ScWebpageTranslationElement = document.createElement('font');
+        comparisonFont._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
+        comparisonFont.appendChild(document.createTextNode(pageTranslateItem.translation));
+        comparisonFont.setAttribute('style', `${displayModeEnhancement.oAndT_Underline ? ' border-bottom: 2px solid #72ECE9; padding: 0 2px;' : ''}`);
+
+        paragraph.appendChild(comparisonFont);
+        paragraph.className = pageTranslateItem.pNode.className;
+        paragraph._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
+
+        pageTranslateItem.fontsNodes[pageTranslateItem.fontsNodes.length - 1][1] = paragraph;
+    }
 
     startObserving();
 };
@@ -777,6 +844,8 @@ const insertResultAndWrapOriginalTextNode = (textNode: Text, mapIndex: number, t
     comparisonFont && comparison && comparisonFont.appendChild(document.createTextNode(comparison));
     translationFont.appendChild(document.createTextNode(translation));
 
+    comparisonFont?.setAttribute('style', `margin: 0 5px;${displayModeEnhancement.oAndT_Underline ? ' border-bottom: 2px solid #72ECE9; padding: 0 2px;' : ''}`);
+
     const itemFonts: ItemFonts = [originalFont, comparisonFont, translationFont];
 
     dealWithFontsStyle(itemFonts);
@@ -814,19 +883,19 @@ export const switchWayOfFontsDisplaying = (way?: number) => {
 const dealWithFontsStyle = ([originalFont, comparisonFont, translationFont]: ItemFonts) => {
     switch (wayOfFontsDisplaying) {
         case 0:
-            originalFont.setAttribute('style', '');
-            comparisonFont?.setAttribute('style', 'display: none;');
-            translationFont.setAttribute('style', 'display: none;');
+            originalFont.style.display = '';
+            comparisonFont && (comparisonFont.style.display = 'none');
+            translationFont.style.display = 'none';
             return;
         case 1:
-            originalFont.setAttribute('style', '');
-            comparisonFont?.setAttribute('style', `margin: 0 5px;${displayModeEnhancement.oAndT_Underline ? ' border-bottom: 2px solid #72ECE9; padding: 0 2px;' : ''}`);
-            translationFont.setAttribute('style', 'display: none;');
+            originalFont.style.display = '';
+            comparisonFont && (comparisonFont.style.display = '');
+            translationFont.style.display = 'none';
             return;
         default:
-            originalFont.setAttribute('style', 'display: none;');
-            comparisonFont?.setAttribute('style', 'display: none;');
-            translationFont.setAttribute('style', '');
+            originalFont.style.display = 'none';
+            comparisonFont && (comparisonFont.style.display = 'none');
+            translationFont.style.display = '';
             return;
     }
 };
