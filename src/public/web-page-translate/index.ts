@@ -682,6 +682,8 @@ const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, 
         paragraph._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
 
         pageTranslateItem.fontsNodes[pageTranslateItem.fontsNodes.length - 1][1] = paragraph;
+
+        dealWithFontsStyle(pageTranslateItem.fontsNodes[pageTranslateItem.fontsNodes.length - 1]);
     }
 
     startObserving();
