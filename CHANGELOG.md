@@ -1,3 +1,6 @@
+# 5.1.0 (2023-06-30)
+- Add "Display translation in a new line when paragraph is detected" option.
+- Reduce useless requests of page translation.
 # 5.0.0 (2023-05-16)
 - Add "Use this audio source in other translation sources" option. ([bb8b59e](https://github.com/chunibyocola/sc-translator-crx/commit/bb8b59e503431c63f3268b68740442a006491eae))
 - Able to add tag onto collection item.
