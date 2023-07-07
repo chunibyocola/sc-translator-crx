@@ -885,19 +885,19 @@ export const switchWayOfFontsDisplaying = (way?: number) => {
 const dealWithFontsStyle = ([originalFont, comparisonFont, translationFont]: ItemFonts) => {
     switch (wayOfFontsDisplaying) {
         case 0:
-            originalFont.style.display = '';
-            comparisonFont && (comparisonFont.style.display = 'none');
-            translationFont.style.display = 'none';
+            originalFont.style.setProperty('display', '');
+            comparisonFont?.style.setProperty('display', 'none', 'important');
+            translationFont.style.setProperty('display', 'none', 'important');
             return;
         case 1:
-            originalFont.style.display = '';
-            comparisonFont && (comparisonFont.style.display = '');
-            translationFont.style.display = 'none';
+            originalFont.style.setProperty('display', '');
+            comparisonFont?.style.setProperty('display', '');
+            translationFont.style.setProperty('display', 'none', 'important');
             return;
         default:
-            originalFont.style.display = 'none';
-            comparisonFont && (comparisonFont.style.display = 'none');
-            translationFont.style.display = '';
+            originalFont.style.setProperty('display', 'none', 'important');
+            comparisonFont?.style.setProperty('display', 'none', 'important');
+            translationFont.style.setProperty('display', '');
             return;
     }
 };
