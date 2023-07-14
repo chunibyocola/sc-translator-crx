@@ -1,5 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TranslateResult, Translation } from '../../types';
+import { textPreprocessing } from '../../public/text-preprocessing';
+import { sendTranslate } from '../../public/send';
 
 type TranslationState = {
     text: string;
@@ -16,6 +18,35 @@ const initialState: TranslationState = {
     translateId: 0,
     translations: []
 };
+
+export const fetchTranslationFromSource = createAsyncThunk<
+    Awaited<ReturnType<typeof sendTranslate>> | void,
+    string,
+    { state: { translation: TranslationState } }
+>('translation/fetchTranslationFromSource', async (source, { getState, dispatch }) => {
+    const { text, from, to, translateId } = getState().translation;
+
+    const preprocessedText = textPreprocessing(text);
+
+    if (!preprocessedText) { return; }
+
+    dispatch(requestStart({ source }));
+
+    const response = await sendTranslate({ source, text: preprocessedText, from, to }, translateId);
+
+    const { translateId: currentTranslateId } = getState().translation;
+
+    if (response.translateId !== currentTranslateId) { return; }
+
+    if ('code' in response) {
+        dispatch(requestError({ source, errorCode: response.code }));
+    }
+    else {
+        dispatch(requestFinish({ source, result: response.translation }));
+    }
+
+    return response;
+});
 
 export const translationSlice = createSlice({
     name: 'translation',
