@@ -1,91 +1,43 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import LanguageSelection from '../../../components/LanguageSelection';
 import MtAddSource from '../../../components/MtAddSource';
 import MtResult from '../../../components/MtResult';
 import RawText from '../../../components/RawText';
 import { mtLangCode } from '../../../constants/langCode';
 import { setLocalStorage } from '../../../public/chrome-call';
-import { sendTranslate } from '../../../public/send';
 import './style.css';
 import '../../../components/PopupHeader/style.css';
-import { useAppDispatch, useAppSelector, useOptions } from '../../../public/react-use';
+import { useAppDispatch, useEffectOnce, useOptions, useTranslation } from '../../../public/react-use';
 import { getMessage } from '../../../public/i18n';
 import { getOptions } from '../../../public/options';
-import { textPreprocessing } from '../../../public/text-preprocessing';
 import { DefaultOptions } from '../../../types';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
 import CollectButton from '../../../components/PanelIconButtons/CollectButton';
 import OpenOptionsPageButton from '../../../components/PanelIconButtons/OpenOptionsPageButton';
 import SwitchThemeButton from '../../../components/PanelIconButtons/SwitchThemeButton';
 import OpenCollectionPageButton from '../../../components/PanelIconButtons/OpenCollectionPageButton';
-import { addSource, nextTranslaion, removeSource, requestError, requestFinish, requestStart } from '../../../redux/slice/translationSlice';
 
 type PickedOptions = Pick<DefaultOptions, 'rememberStwSizeAndPosition'>;
 const useOptionsDependency: (keyof PickedOptions)[] = ['rememberStwSizeAndPosition'];
 
 const Separate: React.FC = () => {
-    const { text, from, to, translations, translateId } = useAppSelector(state => state.translation);
-
-    const translateIdRef = useRef(0);
-    const oldTranslateIdRef = useRef(0);
-
     const dispatch = useAppDispatch();
 
-    translateIdRef.current = translateId;
-
-    const handleTranslate = useCallback((source: string) => {
-        const preprocessedText = textPreprocessing(text);
-
-        if (!preprocessedText) { return; }
-
-        dispatch(requestStart({ source }));
-
-        sendTranslate({ text: preprocessedText, source, from, to }, translateIdRef.current).then((response) => {
-            if (response.translateId !== translateIdRef.current) { return; }
-
-            !('code' in response) ? dispatch(requestFinish({ source, result: response.translation})) : dispatch(requestError({ source, errorCode: response.code }));
-        });
-    }, [text, from, to, dispatch]);
-
-    const handleSetText = useCallback((text: string) => {
-        text && dispatch(nextTranslaion({ text }));
-    }, [dispatch]);
-
-    const handleSelectionChange = useCallback((from: string, to: string) => {
-        dispatch(nextTranslaion({ from, to }));
-    }, [dispatch]);
-
-    const handleRemoveSource = useCallback((source: string) => {
-        dispatch(removeSource({ source }));
-    }, [dispatch]);
-
-    const handleRetry = useCallback((source: string) => {
-        handleTranslate(source);
-    }, [handleTranslate]);
-
-    const handleAddSource = useCallback((source: string, addType: number) => {
-        dispatch(addSource({ source, addType }));
-        text && handleTranslate(source);
-    }, [dispatch, text, handleTranslate]);
-
-    useEffect(() => {
-        if (oldTranslateIdRef.current === translateId) { return; }
-
-        text && translations.map(({ source }) => (handleTranslate(source)));
-
-        oldTranslateIdRef.current = translateId;
-    }, [translateId, text, handleTranslate, translations]);
+    const {
+        state: { text, from, to, translations },
+        actions: { setText, setLanguage, removeSource, retry, addSource }
+    } = useTranslation();
 
     const { rememberStwSizeAndPosition } = useOptions<PickedOptions>(useOptionsDependency);
 
-    useEffect(() => {
+    useEffectOnce(() => {
         const text = new URL(window.location.href).searchParams.get('text');
-        text && dispatch(nextTranslaion({ text }));
+        text && setText(text);
 
         // read clipboard
         const readClipboardText = async () => {
             const clipboardText = await navigator.clipboard.readText();
-            clipboardText && dispatch(nextTranslaion({ text: clipboardText }));
+            clipboardText && setText(clipboardText);
             dispatch(callOutPanel());
         };
 
@@ -95,7 +47,7 @@ const Separate: React.FC = () => {
         else {
             dispatch(callOutPanel());
         }
-    }, [dispatch]);
+    });
 
     useEffect(() => {
         if (!rememberStwSizeAndPosition) { return; }
@@ -130,10 +82,10 @@ const Separate: React.FC = () => {
             <div className="separate-container__content">
                 <RawText
                     defaultValue={text}
-                    rawTextTranslate={handleSetText}
+                    rawTextTranslate={setText}
                 />
                 <LanguageSelection
-                    onChange={handleSelectionChange}
+                    onChange={setLanguage}
                     from={from}
                     to={to}
                     languageCodes={mtLangCode}
@@ -146,13 +98,13 @@ const Separate: React.FC = () => {
                             source={source}
                             translateRequest={translateRequest}
                             key={source}
-                            remove={() => handleRemoveSource(source)}
-                            retry={() => handleRetry(source)}
-                            setText={handleSetText}
+                            remove={() => removeSource(source)}
+                            retry={() => retry(source)}
+                            setText={setText}
                         />
                     ))}
                 </div>
-                <MtAddSource translations={translations} addSource={handleAddSource} />
+                <MtAddSource translations={translations} addSource={addSource} />
             </div>
         </div>
     );
