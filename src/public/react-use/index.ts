@@ -13,3 +13,4 @@ export { default as useRippleActivationClassName } from './useRippleActivationCl
 export { default as useMouseEventOutside } from './useMouseEventOutside';
 export { default as useTranslation } from './useTranslation';
 export { default as useTranslationActions } from './useTranslationActions';
+export { default as useEffectOnce } from './useEffectOnce';
