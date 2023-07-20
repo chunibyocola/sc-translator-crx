@@ -17,7 +17,7 @@ export const detect = async ({ text }: DetectParams): Promise<string> => {
     try {
         const result = await res.json();
 
-        if (result.msg !== 'success') { throw getError(RESULT_ERROR); };
+        if (result.msg !== 'success') { throw getError(RESULT_ERROR); }
 
         return result.lan;
     } catch (e) {

@@ -5,7 +5,7 @@ import { TranslateParams } from '../translate-types';
 import { TranslateResult } from '../../../types';
 import { getTranslateParams } from './get-params';
 
-export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '', com = true　}: TranslateParams) => {
+export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '', com = true }: TranslateParams) => {
     preferredLanguage = preferredLanguage || 'en';
     secondPreferredLanguage = secondPreferredLanguage || 'en';
     const originTo = to;

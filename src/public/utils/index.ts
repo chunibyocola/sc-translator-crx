@@ -8,7 +8,7 @@ export const getCurrentTab = (cb: (tab?: chrome.tabs.Tab) => void) => {
 };
 
 export const getIsContentScriptEnabled = async (tabId?: number):Promise<boolean> => {
-    return await new Promise((resolve, reject) => {
+    return await new Promise((resolve) => {
         try {
             if (!tabId) {
                 resolve(false);
@@ -37,7 +37,7 @@ export const getIsEnabled = (host: string, hostList: string[], mode: boolean) =>
 };
 
 export const getCurrentTabHost = async (tabId?: number): Promise<string> => {
-    return await new Promise((resolve, reject) => {
+    return await new Promise((resolve) => {
         const callback = (tabId: number) => chrome.tabs.sendMessage(tabId, 'Are you enabled?', (tabData) => {
             chrome.runtime.lastError && resolve('');
 
@@ -95,7 +95,7 @@ export const calculatePosition = (element: HTMLElement, { x, y }: Position, marg
     return { x, y };
 };
 
-export const debounce = (cb: Function, time: number) => {
+export const debounce = (cb: () => void, time: number) => {
     let timeout: number | undefined;
     return () => {
         timeout && clearTimeout(timeout);

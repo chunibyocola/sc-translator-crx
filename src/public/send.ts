@@ -24,29 +24,52 @@ type GenericMessage<ActionType, ActionPayload> = {
     type: ActionType;
     payload: ActionPayload;
 };
-export type ChromeRuntimeMessage = GenericMessage<typeof types.SCTS_IS_COLLECTED, {
-    text: string;
-}> | GenericMessage<typeof types.SCTS_ADD_TO_COLLECTION, {
-    text: string;
-    translations: Translation[];
-}> | GenericMessage<typeof types.SCTS_REMOVE_FROM_COLLECTION, {
-    text: string;
-}> | GenericMessage<typeof types.SCTS_SEND_TEXT_TO_SEPARATE_WINDOW, {
-    text: string;
-}> | GenericMessage<typeof types.SCTS_SYNC_SETTINGS_TO_OTHER_BROWSERS, {
-}> | GenericMessage<typeof types.SCTS_DETECT, {
-    text: string;
-    source: string;
-}> | GenericMessage<typeof types.SCTS_AUDIO, {
-    text: string;
-    source: string;
-    from: string;
-}> | GenericMessage<typeof types.SCTS_TRANSLATE, {
-    text: string;
-    source: string;
-    from: string;
-    to: string;
-}>;
+export type ChromeRuntimeMessage = GenericMessage<
+    typeof types.SCTS_IS_COLLECTED,
+    {
+        text: string;
+    }
+> | GenericMessage<
+    typeof types.SCTS_ADD_TO_COLLECTION,
+    {
+        text: string;
+        translations: Translation[];
+    }
+> | GenericMessage<
+    typeof types.SCTS_REMOVE_FROM_COLLECTION,
+    {
+        text: string;
+    }
+> | GenericMessage<
+    typeof types.SCTS_SEND_TEXT_TO_SEPARATE_WINDOW,
+    {
+        text: string;
+    }
+> | GenericMessage<
+    typeof types.SCTS_SYNC_SETTINGS_TO_OTHER_BROWSERS,
+    Record<string, never>
+> | GenericMessage<
+    typeof types.SCTS_DETECT,
+    {
+        text: string;
+        source: string;
+    }
+> | GenericMessage<
+    typeof types.SCTS_AUDIO,
+    {
+        text: string;
+        source: string;
+        from: string;
+    }
+> | GenericMessage<
+    typeof types.SCTS_TRANSLATE,
+    {
+        text: string;
+        source: string;
+        from: string;
+        to: string;
+    }
+>;
 
 export const sendTranslate = async (params: { text: string, source: string, from: string, to: string }, translateId: number) => {
     let response = await chromeRuntimeSendMessage<TranslateResponse>({ type: types.SCTS_TRANSLATE, payload: params });
@@ -99,19 +122,41 @@ const chromeRuntimeSendMessage = <T = null>(message: ChromeRuntimeMessage): Prom
     });
 };
 
-export type ChromeTabsMessage = GenericMessage<typeof types.SCTS_CONTEXT_MENUS_CLICKED, {
-    text: string;
-}> | GenericMessage<typeof types.SCTS_AUDIO_COMMAND_KEY_PRESSED, {
-}> | GenericMessage<typeof types.SCTS_TRANSLATE_CURRENT_PAGE, {
-}> | GenericMessage<typeof types.SCTS_TRANSLATE_COMMAND_KEY_PRESSED, {
-}> | GenericMessage<typeof types.SCTS_CALL_OUT_COMMAND_KEY_PRESSED, {
-}> | GenericMessage<typeof types.SCTS_CLOSE_COMMAND_KEY_PRESSED, {
-}> | GenericMessage<typeof types.SCTS_SWITCH_WT_DISPLAY_MODE, {
-}> | GenericMessage<typeof types.SCTS_SEPARATE_WINDOW_SET_TEXT, {
-    text: string;
-}> | GenericMessage<typeof types.SCTS_OPEN_SEPARATE_WINDOW_COMMAND_KEY_PRESSED, {
-}> | GenericMessage<typeof types.SCTS_TOGGLE_PAGE_TRANSLATION_STATE, {
-}>;
+export type ChromeTabsMessage = GenericMessage<
+    typeof types.SCTS_CONTEXT_MENUS_CLICKED,
+    {
+        text: string;
+    }
+> | GenericMessage<
+    typeof types.SCTS_AUDIO_COMMAND_KEY_PRESSED,
+    Record<string, never>
+> | GenericMessage<
+    typeof types.SCTS_TRANSLATE_CURRENT_PAGE,
+    Record<string, never>
+> | GenericMessage<
+    typeof types.SCTS_TRANSLATE_COMMAND_KEY_PRESSED,
+    Record<string, never>
+> | GenericMessage<
+    typeof types.SCTS_CALL_OUT_COMMAND_KEY_PRESSED,
+    Record<string, never>
+> | GenericMessage<
+    typeof types.SCTS_CLOSE_COMMAND_KEY_PRESSED,
+    Record<string, never>
+> | GenericMessage<
+    typeof types.SCTS_SWITCH_WT_DISPLAY_MODE,
+    Record<string, never>
+> | GenericMessage<
+    typeof types.SCTS_SEPARATE_WINDOW_SET_TEXT,
+    {
+        text: string;
+    }
+> | GenericMessage<
+    typeof types.SCTS_OPEN_SEPARATE_WINDOW_COMMAND_KEY_PRESSED,
+    Record<string, never>
+> | GenericMessage<
+    typeof types.SCTS_TOGGLE_PAGE_TRANSLATION_STATE,
+    Record<string, never>
+>;
 
 export const sendTabsContextMenusClicked = (tabId: number, text: string) => {
     return chromeTabsSendMessage(tabId, { type: types.SCTS_CONTEXT_MENUS_CLICKED, payload: { text } });

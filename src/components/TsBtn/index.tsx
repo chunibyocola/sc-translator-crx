@@ -65,7 +65,7 @@ const calculateBtnPos = ({ x, y }: Position, translateButtonElement: HTMLDivElem
     if (translateButtonElement) {
         const originalDisplay = translateButtonElement.style.display;
         translateButtonElement.style.display = 'flex';
-        const { width, height } = translateButtonElement?.getBoundingClientRect();
+        const { width, height } = translateButtonElement.getBoundingClientRect();
         translateButtonElement.style.display = originalDisplay;
 
         btnWidth = width;

@@ -12,7 +12,7 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
     from = from || await detect({ text });
     to = to || (from === preferredLanguage ? secondPreferredLanguage : preferredLanguage);
 
-    if (!(from in langCode) || !(to in langCode)) { throw getError(LANGUAGE_NOT_SOPPORTED); };
+    if (!(from in langCode) || !(to in langCode)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
 
     const { token, sign } = await getTranslateParams(text);
 

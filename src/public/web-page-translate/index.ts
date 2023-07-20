@@ -784,7 +784,7 @@ const startProcessing = (nextTranslateList: PageTranslateItemEnity[]) => {
 
     const tempCloseFlag = closeFlag;
 
-    translateList.forEach(({ paragraphs, pageTranslateList, keys }) => {
+    translateList.forEach(({ paragraphs, keys }) => {
         translate({ paragraphs, keys, targetLanguage }, source).then((result) => {
             // if not the same, means web page translate has been closed.
             if (tempCloseFlag !== closeFlag) { return; }

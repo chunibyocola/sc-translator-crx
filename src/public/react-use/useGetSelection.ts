@@ -6,7 +6,7 @@ import { isTextBox } from '../utils';
 import { getSelectedText } from '../utils/get-selection';
 
 const useGetSelection = (selectCallback: (params: { pos: Position, text: string }) => void, unselectCallback: () => void) => {
-    const selectRef = useRef<(params: { pos: Position, text: string }) => void>();
+    const selectRef = useRef<typeof selectCallback>();
     const unselectRef = useRef<() => void>();
     const lastSelectionTextRef = useRef('');
 

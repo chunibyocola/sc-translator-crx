@@ -5,7 +5,7 @@ import { sendSyncSettingsToOtherBrowsers } from '../../../../public/send';
 import BetaIcon from '../../BetaIcon';
 import FileSync from '../../FileSync';
 
-type SyncSettingsProps = {};
+type SyncSettingsProps = Record<string, never>;
 
 const SyncSettings: React.FC<SyncSettingsProps> = () => {
     return (

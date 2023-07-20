@@ -492,7 +492,7 @@ const SearchField: React.FC<SearchFieldProps> = React.memo(({ search, setSearch,
     );
 });
 
-type BackdropProps = Pick<React.HtmlHTMLAttributes<HTMLButtonElement>, 'children'>;;
+type BackdropProps = Pick<React.HtmlHTMLAttributes<HTMLButtonElement>, 'children'>;
 
 const Backdrop: React.FC<BackdropProps> = ({ children }) => {
     return (

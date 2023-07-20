@@ -104,7 +104,7 @@ const TranslationDisplay: React.FC<TranslationDisplayProps> = ({ displayOfTransl
                                 iconName='#icon-quote'
                                 style={{marginRight: '5px'}}
                             />
-                            there couldn't be a <b>better</b> time to start this job
+                            there couldn&#39;t be a <b>better</b> time to start this job
                         </div>
                         <div>
                             <IconFont

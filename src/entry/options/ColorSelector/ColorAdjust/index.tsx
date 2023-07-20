@@ -70,8 +70,8 @@ const ColorAdjust: React.FC<ColorAdjustProps> = ({ selectedColor, adjust, opacit
                 <input id='adjust-b' type='text' value={selectedColor.b} onChange={e => handleRgbInputChange('b', e)} onClick={e => (e.target as HTMLInputElement).select()} />
             </div>
             <div className='color-adjust__rgb'>
-                <label className='color-adjust__rgb-label'>A</label>
-                <input type='text' value={opacity} disabled/>
+                <label className='color-adjust__rgb-label' htmlFor='adjust-a'>A</label>
+                <input id='adjust-a' type='text' value={opacity} disabled/>
             </div>
             <Slider
                 min={0}

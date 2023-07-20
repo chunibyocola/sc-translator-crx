@@ -33,8 +33,8 @@ export const audio = async ({ text, from = '', com = true }: AudioParams) => {
     try {
         const data = await res.blob();
 
-        const dataURL: string = await new Promise((resolve, reject) => {
-            var reader = new FileReader();
+        const dataURL: string = await new Promise((resolve) => {
+            const reader = new FileReader();
             reader.onload = () => {
                 resolve(reader.result as string);
             };
@@ -91,7 +91,7 @@ const getXMLParams = (langCode: string) => {
         case "zh-Hant": t = "zh-CN"; i = "Female"; r = "zh-CN-XiaoxiaoNeural"; break;
         case "yue": t = "zh-HK"; i = "Female"; r = "zh-HK-HiuGaaiNeural"; break;
         default: break;
-    };
+    }
 
     return { lang: t, gender: i, name: r };
 };

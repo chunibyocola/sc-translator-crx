@@ -4,7 +4,7 @@ export const openOptionsPage = () => {
     chrome.runtime.openOptionsPage();
 };
 
-export const getLocalStorage = <T = any>(keys: string | Object | string[] | null, cb?: (data: T) => void) => {
+export const getLocalStorage = <T = any>(keys: string | object | string[] | null, cb?: (data: T) => void) => {
     chrome.storage.local.get(keys, (data) => { cb && cb(data as T); });
 };
 
