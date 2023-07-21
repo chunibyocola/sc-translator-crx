@@ -26,7 +26,7 @@ const ContextMenusDraggable: React.FC<ContextMenusDraggableProps> = ({ contextMe
     return (
         <div className='context-menus'>
             <Draggable onChange={onChange} values={contextMenus}>
-                {tempContextMenus.map((value, index) => (<div key={value.id} draggable-id={value.id}>
+                {tempContextMenus.map((value, index) => (<div key={value.id} data-draggableid={value.id}>
                     <div className='flex-justify-content-space-between draggable-item'>
                         <Checkbox
                             label={getMessage(`contextMenus_${value.id}`)}

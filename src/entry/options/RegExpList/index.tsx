@@ -42,7 +42,7 @@ const RegExpList: React.FC<RegExpListProps> = ({ textPreprocessingRegExpList, on
                 <Button variant='contained' onClick={() => setModifyMode(true)} disabled={modifyMode}>{getMessage('optionsModify')}</Button>
             </div>
             <Draggable values={regExpList} onChange={onDraggableChange}>
-                {regExpList.length > 0 ? regExpList.map((v, i) => (<div className='regexp-list__grid' key={i + timestamp} draggable-id={i + timestamp}>
+                {regExpList.length > 0 ? regExpList.map((v, i) => (<div className='regexp-list__grid' key={i + timestamp} data-draggableid={i + timestamp}>
                     <input type='text' disabled value={v.pattern} />
                     <input type='text' disabled value={v.flags} />
                     <input type='text' disabled value={v.replacement} />

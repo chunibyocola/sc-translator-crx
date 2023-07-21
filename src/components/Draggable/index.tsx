@@ -23,7 +23,7 @@ const Draggable: React.FC<DraggableProps> = ({ children, onChange, values }) => 
         let moved = false;
         let transitionStyle = '';
         
-        const currentIndex = draggableListRef.current.findIndex(v => v.getAttribute('draggable-id') === id);
+        const currentIndex = draggableListRef.current.findIndex(v => v.dataset.draggableid === id);
 
         if (currentIndex < 0) { return; }
 
@@ -110,7 +110,7 @@ const Draggable: React.FC<DraggableProps> = ({ children, onChange, values }) => 
         let unmountedCallbackList: (() => void)[] = [];
         
         draggableEleRef.current.childNodes.forEach((node) => {
-            const draggableId = (node as HTMLElement).getAttribute?.('draggable-id');
+            const draggableId = (node as HTMLElement).dataset?.draggableid;
             const moveElement = draggableId && (node as HTMLElement).querySelector('.draggable-move');
 
             if (draggableId && moveElement) {
