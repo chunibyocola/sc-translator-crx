@@ -2,7 +2,7 @@
   "short_name": "ScTranslator",
   "name": "__MSG_extName__",
   "default_locale": "en",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "description": "__MSG_extDescription__",
   "icons": {
     "16": "image/icon-16.png",

@@ -1,3 +1,6 @@
+# 5.1.1 (2023-07-26)
+- Fix Google page translation unavailable.
+- Fix text of page translation can't be hidden in some situations.
 # 5.1.0 (2023-06-30)
 - Add "Display translation in a new line when paragraph is detected" option.
 - Reduce useless requests of page translation.
