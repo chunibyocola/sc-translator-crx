@@ -284,9 +284,17 @@ const getAllParagraph = (element: HTMLElement) => {
             }
 
             if (node.nodeName === '#text') {
-                if (node.nodeValue?.trim()) {
+                if (!node.nodeValue) { continue; }
+
+                if (Object.hasOwn(node, '_ScInsidePreLineBreak')) {
+                    nextParagraph();
+                    continue;
+                }
+
+                if (node.nodeValue.trim()) {
                     texts.push(node as Text);
                 }
+
                 continue;
             }
 
@@ -358,15 +366,34 @@ const getAllParagraph = (element: HTMLElement) => {
             let isInline = nodeStyleDisplay === 'inline';
 
             if (node.nodeName === 'PRE') {
-                node.childNodes.forEach((v) => {
-                    if (v.nodeName === '#text') {
-                        const matchArray =  v.nodeValue?.match(/\n*[^\n]+/g)
-                        if (matchArray) {
-                            matchArray.forEach(match => node.insertBefore(document.createTextNode(match), v));
+                const textNodes: Text[] = [];
+                const treeWalker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+                let nextText: Text | null = treeWalker.nextNode() as Text;
+                while (nextText) {
+                    textNodes.push(nextText);
+                    nextText = treeWalker.nextNode() as Text;
+                }
 
-                            node.removeChild(v);
+                textNodes.forEach((textNode) => {
+                    const splited = textNode.nodeValue?.split('\n');
+
+                    if (!splited) { return; }
+
+                    if (splited.length === 1) { return; }
+
+                    splited.forEach((text, index) => {
+                        if (index !== 0) {
+                            const lineBreak = document.createTextNode('\n');
+                            Object.assign(lineBreak, { _ScInsidePreLineBreak: true });
+                            textNode?.parentElement?.insertBefore(lineBreak, textNode);
                         }
-                    }
+
+                        if (!text) { return; }
+
+                        textNode?.parentElement?.insertBefore(document.createTextNode(text), textNode);
+                    });
+
+                    textNode?.parentElement?.removeChild(textNode);
                 });
 
                 isInline = false;
