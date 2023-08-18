@@ -375,25 +375,29 @@ const getAllParagraph = (element: HTMLElement) => {
                 }
 
                 textNodes.forEach((textNode) => {
+                    if (!textNode?.parentElement) { return; }
+
                     const splited = textNode.nodeValue?.split('\n');
 
                     if (!splited) { return; }
 
                     if (splited.length === 1) { return; }
 
-                    splited.forEach((text, index) => {
-                        if (index !== 0) {
+                    for (let i = 0; i < splited.length; i++) {
+                        const text = splited[i];
+
+                        if (i !== 0) {
                             const lineBreak = document.createTextNode('\n');
                             Object.assign(lineBreak, { _ScInsidePreLineBreak: true });
-                            textNode?.parentElement?.insertBefore(lineBreak, textNode);
+                            textNode.parentElement.insertBefore(lineBreak, textNode);
                         }
 
-                        if (!text) { return; }
+                        if (!text) { continue; }
 
-                        textNode?.parentElement?.insertBefore(document.createTextNode(text), textNode);
-                    });
+                        textNode.parentElement.insertBefore(document.createTextNode(text), textNode);
+                    }
 
-                    textNode?.parentElement?.removeChild(textNode);
+                    textNode.parentElement.removeChild(textNode);
                 });
 
                 isInline = false;
