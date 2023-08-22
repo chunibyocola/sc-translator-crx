@@ -365,7 +365,7 @@ const getAllParagraph = (element: HTMLElement) => {
 
             let isInline = nodeStyleDisplay === 'inline';
 
-            if (node.nodeName === 'PRE') {
+            if (node.nodeName === 'PRE' || getComputedStyle(node as HTMLElement).whiteSpace.includes('pre')) {
                 const textNodes: Text[] = [];
                 const treeWalker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
                 let nextText: Text | null = treeWalker.nextNode() as Text;
