@@ -365,7 +365,7 @@ const getAllParagraph = (element: HTMLElement) => {
 
             let isInline = nodeStyleDisplay === 'inline';
 
-            if (node.nodeName === 'PRE' || getComputedStyle(node as HTMLElement).whiteSpace.includes('pre')) {
+            if (getComputedStyle(node as HTMLElement).whiteSpace.includes('pre') && node.parentElement && !getComputedStyle(node.parentElement).whiteSpace.includes('pre')) {
                 const textNodes: Text[] = [];
                 const treeWalker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
                 let nextText: Text | null = treeWalker.nextNode() as Text;
@@ -394,7 +394,9 @@ const getAllParagraph = (element: HTMLElement) => {
 
                         if (!text) { continue; }
 
-                        textNode.parentElement.insertBefore(document.createTextNode(text), textNode);
+                        const nextTextNode = document.createTextNode(text);
+
+                        textNode.parentElement.insertBefore(nextTextNode, textNode);
                     }
 
                     textNode.parentElement.removeChild(textNode);
