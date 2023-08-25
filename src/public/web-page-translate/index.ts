@@ -34,6 +34,7 @@ type PageTranslateItemEnity = {
     status: 'init' | 'loading' | 'error' | 'finished';
     mapIndex: number;
     pNode?: HTMLParagraphElement;
+    preNewLine?: boolean;
 };
 
 
@@ -229,7 +230,8 @@ const newPageTranslateItem = (text: string, textNodes: Text[], codeTexts: PageTr
         range,
         status: 'init',
         mapIndex: itemMapIndex,
-        pNode
+        pNode,
+        preNewLine: !pNode && textNodes.every(textNode => Object.hasOwn(textNode, '_ScInsidePreTextNode'))
     };
 
     waitingList.add(item);
@@ -381,8 +383,6 @@ const getAllParagraph = (element: HTMLElement) => {
 
                     if (!splited) { return; }
 
-                    if (splited.length === 1) { return; }
-
                     for (let i = 0; i < splited.length; i++) {
                         const text = splited[i];
 
@@ -395,6 +395,10 @@ const getAllParagraph = (element: HTMLElement) => {
                         if (!text) { continue; }
 
                         const nextTextNode = document.createTextNode(text);
+
+                        if (displayModeEnhancement.oAndT_paragraphWrap) {
+                            Object.assign(nextTextNode, { _ScInsidePreTextNode: true });
+                        }
 
                         textNode.parentElement.insertBefore(nextTextNode, textNode);
                     }
@@ -695,7 +699,7 @@ const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, 
     pageTranslateItem.textNodes.forEach((textNode, i) => {
         if (!textNode.parentElement || typeof pageTranslateItem.result?.translations[i] !== 'string') { return; }
 
-        const comparison = pageTranslateItem.pNode ? null : comparisons[i];
+        const comparison = (pageTranslateItem.pNode || pageTranslateItem.preNewLine) ? null : comparisons[i];
 
         const fonts = insertResultAndWrapOriginalTextNode(textNode, pageTranslateItem.mapIndex, pageTranslateItem.result.translations[i], comparison);
         fonts && pageTranslateItem.fontsNodes.push(fonts);
@@ -715,6 +719,25 @@ const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, 
         paragraph._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
 
         pageTranslateItem.fontsNodes[pageTranslateItem.fontsNodes.length - 1][1] = paragraph;
+
+        dealWithFontsStyle(pageTranslateItem.fontsNodes[pageTranslateItem.fontsNodes.length - 1]);
+    }
+    else if (pageTranslateItem.preNewLine) {
+        const font: ScWebpageTranslationElement = document.createElement('font');
+
+        const lastOriginalFont = pageTranslateItem.fontsNodes.at(-1)?.[0];
+        lastOriginalFont?.parentElement?.insertBefore(font, lastOriginalFont.nextSibling);
+
+        const comparisonFont: ScWebpageTranslationElement = document.createElement('font');
+        comparisonFont._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
+        comparisonFont.appendChild(document.createTextNode(pageTranslateItem.translation));
+        comparisonFont.setAttribute('style', `${displayModeEnhancement.oAndT_Underline ? ' border-bottom: 2px solid #72ECE9; padding: 0 2px;' : ''}`);
+
+        font.appendChild(document.createTextNode('\n'));
+        font.appendChild(comparisonFont);
+        font._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
+
+        pageTranslateItem.fontsNodes[pageTranslateItem.fontsNodes.length - 1][1] = font;
 
         dealWithFontsStyle(pageTranslateItem.fontsNodes[pageTranslateItem.fontsNodes.length - 1]);
     }
