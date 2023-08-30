@@ -68,7 +68,14 @@ const defaultOptions: DefaultOptions = {
     sourceParamsCache: initSourceParams,
     customTranslateSourceList: [],
     displayOfTranslation: { result: true, dict: true, phonetic: true, related: true, example: true, phonetic_nonEnglish: false, maintainParagraphStructure: false },
-    displayModeEnhancement: { o_Hovering: true, oAndT_Underline: true, oAndT_NonDiscrete: false, oAndT_paragraphWrap: true, t_Hovering: true },
+    displayModeEnhancement: {
+        o_Hovering: true,
+        oAndT_Underline: true,
+        oAndT_NonDiscrete: false,
+        oAndT_paragraphWrap: true,
+        oAndT_hideSameLanguage: false,
+        t_Hovering: true
+    },
     customWebpageTranslateSourceList: [],
     translateDynamicContent: true,
     autoTranslateWebpageHostList: [],

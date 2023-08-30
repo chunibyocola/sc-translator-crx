@@ -467,6 +467,9 @@
     "optionsParagraphWrap": {
         "message": "检测到段落时换行展示译文"
     },
+    "optionsSameLanguageHide": {
+        "message": "当原文的语言与目标语言相同时不展示译文"
+    },
     "themePreset": {
         "message": "预设"
     },

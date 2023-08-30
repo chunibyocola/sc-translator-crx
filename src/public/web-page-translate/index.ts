@@ -70,6 +70,7 @@ let displayModeEnhancement: DisplayModeEnhancement = {
     oAndT_Underline: false,
     oAndT_NonDiscrete: false,
     oAndT_paragraphWrap: false,
+    oAndT_hideSameLanguage: false,
     t_Hovering: false
 };
 

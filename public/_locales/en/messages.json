@@ -467,6 +467,9 @@
     "optionsParagraphWrap": {
         "message": "Display translation in a new line when paragraph is detected"
     },
+    "optionsSameLanguageHide": {
+        "message": "Not displaying translation when the language of original text is the same as the target language"
+    },
     "themePreset": {
         "message": "Preset"
     },

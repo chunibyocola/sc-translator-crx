@@ -161,6 +161,13 @@ const WebPageTranslating: React.FC = () => {
                             onChange={v => setLocalStorage({ displayModeEnhancement: { ...displayModeEnhancement, oAndT_paragraphWrap: v } })}
                         />
                     </div>
+                    <div className='mt10-ml30'>
+                        <Checkbox
+                            label={getMessage('optionsSameLanguageHide')}
+                            checked={displayModeEnhancement.oAndT_hideSameLanguage}
+                            onChange={v => setLocalStorage({ displayModeEnhancement: { ...displayModeEnhancement, oAndT_hideSameLanguage: v } })}
+                        />
+                    </div>
                 </div>
                 <div className='mt10-ml30'>
                     {getMessage('optionsTranslation')}

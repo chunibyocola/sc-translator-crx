@@ -82,6 +82,7 @@ export type DisplayModeEnhancement = {
     oAndT_Underline: boolean;
     oAndT_NonDiscrete: boolean;
     oAndT_paragraphWrap: boolean;
+    oAndT_hideSameLanguage: boolean;
     t_Hovering: boolean;
 };
 

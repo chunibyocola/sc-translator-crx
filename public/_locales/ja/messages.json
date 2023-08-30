@@ -467,6 +467,9 @@
     "optionsParagraphWrap": {
         "message": "段落検出時に改行で訳文を表示する"
     },
+    "optionsSameLanguageHide": {
+        "message": "原文の言語が目標言語と同じ場合に訳文を表示しない"
+    },
     "themePreset": {
         "message": "プリセット"
     },
