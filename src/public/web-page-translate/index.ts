@@ -10,6 +10,7 @@ import { getError } from '../translate/utils';
 export type WebpageTranslateResult = {
     translations: string[];
     comparisons?: string[];
+    detectedLanguage?: string;
 };
 type WebpageTranslateParams = {
     paragraphs: string[][];
@@ -697,50 +698,56 @@ const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, 
     pageTranslateItem.translation = result.translations.reduce((total, value, index) => (`${total}${pageTranslateItem.codeTexts.at(index)?.join('') ?? ''}${value}`), '');
     const comparisons = preprocessComparisons(pageTranslateItem.result, pageTranslateItem.translation);
     pageTranslateItem.status = 'finished';
+
+    const noComparison = displayModeEnhancement.oAndT_hideSameLanguage && (result.detectedLanguage === language);
+
     pageTranslateItem.textNodes.forEach((textNode, i) => {
         if (!textNode.parentElement || typeof pageTranslateItem.result?.translations[i] !== 'string') { return; }
 
-        const comparison = (pageTranslateItem.pNode || pageTranslateItem.preNewLine) ? null : comparisons[i];
+        const comparison = (noComparison || pageTranslateItem.pNode || pageTranslateItem.preNewLine) ? null : comparisons[i];
 
         const fonts = insertResultAndWrapOriginalTextNode(textNode, pageTranslateItem.mapIndex, pageTranslateItem.result.translations[i], comparison);
         fonts && pageTranslateItem.fontsNodes.push(fonts);
     });
-    if (pageTranslateItem.pNode) {
-        const paragraph: ScWebpageTranslationElement = document.createElement('p');
 
-        pageTranslateItem.pNode.parentElement?.insertBefore(paragraph, pageTranslateItem.pNode.nextSibling);
+    if (!noComparison) {
+        if (pageTranslateItem.pNode) {
+            const paragraph: ScWebpageTranslationElement = document.createElement('p');
 
-        const comparisonFont: ScWebpageTranslationElement = document.createElement('font');
-        comparisonFont._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
-        comparisonFont.appendChild(document.createTextNode(pageTranslateItem.translation));
-        comparisonFont.setAttribute('style', `${displayModeEnhancement.oAndT_Underline ? ' border-bottom: 2px solid #72ECE9; padding: 0 2px;' : ''}`);
+            pageTranslateItem.pNode.parentElement?.insertBefore(paragraph, pageTranslateItem.pNode.nextSibling);
 
-        paragraph.appendChild(comparisonFont);
-        paragraph.className = pageTranslateItem.pNode.className;
-        paragraph._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
+            const comparisonFont: ScWebpageTranslationElement = document.createElement('font');
+            comparisonFont._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
+            comparisonFont.appendChild(document.createTextNode(pageTranslateItem.translation));
+            comparisonFont.setAttribute('style', `${displayModeEnhancement.oAndT_Underline ? ' border-bottom: 2px solid #72ECE9; padding: 0 2px;' : ''}`);
 
-        pageTranslateItem.fontsNodes[pageTranslateItem.fontsNodes.length - 1][1] = paragraph;
+            paragraph.appendChild(comparisonFont);
+            paragraph.className = pageTranslateItem.pNode.className;
+            paragraph._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
 
-        dealWithFontsStyle(pageTranslateItem.fontsNodes[pageTranslateItem.fontsNodes.length - 1]);
-    }
-    else if (pageTranslateItem.preNewLine) {
-        const font: ScWebpageTranslationElement = document.createElement('font');
+            pageTranslateItem.fontsNodes[pageTranslateItem.fontsNodes.length - 1][1] = paragraph;
 
-        const lastOriginalFont = pageTranslateItem.fontsNodes.at(-1)?.[0];
-        lastOriginalFont?.parentElement?.insertBefore(font, lastOriginalFont.nextSibling);
+            dealWithFontsStyle(pageTranslateItem.fontsNodes[pageTranslateItem.fontsNodes.length - 1]);
+        }
+        else if (pageTranslateItem.preNewLine) {
+            const font: ScWebpageTranslationElement = document.createElement('font');
 
-        const comparisonFont: ScWebpageTranslationElement = document.createElement('font');
-        comparisonFont._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
-        comparisonFont.appendChild(document.createTextNode(pageTranslateItem.translation));
-        comparisonFont.setAttribute('style', `${displayModeEnhancement.oAndT_Underline ? ' border-bottom: 2px solid #72ECE9; padding: 0 2px;' : ''}`);
+            const lastOriginalFont = pageTranslateItem.fontsNodes.at(-1)?.[0];
+            lastOriginalFont?.parentElement?.insertBefore(font, lastOriginalFont.nextSibling);
 
-        font.appendChild(document.createTextNode('\n'));
-        font.appendChild(comparisonFont);
-        font._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
+            const comparisonFont: ScWebpageTranslationElement = document.createElement('font');
+            comparisonFont._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
+            comparisonFont.appendChild(document.createTextNode(pageTranslateItem.translation));
+            comparisonFont.setAttribute('style', `${displayModeEnhancement.oAndT_Underline ? ' border-bottom: 2px solid #72ECE9; padding: 0 2px;' : ''}`);
 
-        pageTranslateItem.fontsNodes[pageTranslateItem.fontsNodes.length - 1][1] = font;
+            font.appendChild(document.createTextNode('\n'));
+            font.appendChild(comparisonFont);
+            font._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
 
-        dealWithFontsStyle(pageTranslateItem.fontsNodes[pageTranslateItem.fontsNodes.length - 1]);
+            pageTranslateItem.fontsNodes[pageTranslateItem.fontsNodes.length - 1][1] = font;
+
+            dealWithFontsStyle(pageTranslateItem.fontsNodes[pageTranslateItem.fontsNodes.length - 1]);
+        }
     }
 
     startObserving();

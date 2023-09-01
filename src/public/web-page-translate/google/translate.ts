@@ -25,9 +25,14 @@ export const translate: WebpageTranslateFn = async ({ keys, targetLanguage }) =>
         if (!Array.isArray(data)) { return []; }
 
         return data.map((value) => {
+            const language = Array.isArray(value) ? (value[1] ?? undefined) : undefined;
             value = Array.isArray(value) ? (value[0] ?? '') : value;
 
-            return { translations: toTranslations(value), comparisons: toComparisons(value) };
+            return {
+                translations: toTranslations(value),
+                comparisons: toComparisons(value),
+                detectedLanguage: language
+            };
         });
     }
     catch {

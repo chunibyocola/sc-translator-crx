@@ -3,6 +3,7 @@ import { getError } from '../../translate/utils';
 import { getAuthorization } from './getAuthorization';
 import { langCode } from '../../translate/bing/lang-code';
 import { unescapeText, WebpageTranslateFn, WebpageTranslateResult } from '..';
+import { bingSwitchToGoogleLangCode } from '../../switch-lang-code';
 
 export const translate: WebpageTranslateFn = async ({ keys, targetLanguage }) => {
     if (!(targetLanguage in langCode)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
@@ -39,8 +40,17 @@ export const translate: WebpageTranslateFn = async ({ keys, targetLanguage }) =>
     }
 };
 
-const dealWithResult = (result: { translations: [{ text: string }] }[]): WebpageTranslateResult[] => {
-    return result.map((v) => ({ translations: toTranslations(v.translations[0].text), comparisons: toComparisons(v.translations[0].text) }));
+type MicrosoftPageTranslationResult = {
+    detectedLanguage: { language: string; };
+    translations: [{ text: string; to: string; }];
+}[];
+
+const dealWithResult = (result: MicrosoftPageTranslationResult): WebpageTranslateResult[] => {
+    return result.map((v) => ({
+        translations: toTranslations(v.translations[0].text),
+        comparisons: toComparisons(v.translations[0].text),
+        detectedLanguage: bingSwitchToGoogleLangCode(v.detectedLanguage?.language)
+    }));
 };
 
 const fetchFromMicrosoft = async (requestArray: { Text: string }[], targetLanguage: string) => {
