@@ -80,7 +80,8 @@ const defaultOptions: DefaultOptions = {
     translateDynamicContent: true,
     autoTranslateWebpageHostList: [],
     enableAutoTranslateWebpage: false,
-    keepUsingDefaultAudioSource: false
+    keepUsingDefaultAudioSource: false,
+    comparisonCustomization: { color: 'currentcolor', underlineColor: 'rgba(144,236,233,1)', underlineStyle: 'solid' }
 };
 
 export default defaultOptions;

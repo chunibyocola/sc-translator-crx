@@ -86,6 +86,12 @@ export type DisplayModeEnhancement = {
     t_Hovering: boolean;
 };
 
+export type ComparisonCustomization = {
+    color: string;
+    underlineColor: string;
+    underlineStyle: string;
+};
+
 export type DefaultOptions = {
     userLanguage: string;
     defaultTranslateSource: string;
@@ -154,6 +160,7 @@ export type DefaultOptions = {
     autoTranslateWebpageHostList: string[];
     enableAutoTranslateWebpage: boolean;
     keepUsingDefaultAudioSource: boolean;
+    comparisonCustomization: ComparisonCustomization;
 };
 
 // Only work in "src/entry/background/install.ts".
