@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useImperativeHandle, useState } from 'react';
 import ColorAdjust from './ColorAdjust';
 import MainColorBar from './MainColorBar';
 import Platter from './Platter';
@@ -16,7 +16,17 @@ type ColorSelectorProps = {
     update: (rgba: string) => void;
 };
 
-const ColorSelector: React.FC<ColorSelectorProps> = ({ initColor, save, update }) => {
+export type ColorSelectorForwardRef = {
+    setRGBA: (rgba: string) => void;
+};
+
+const getRGBAFromColor = (rgba: string) => {
+    const arr = rgba.replace(/\s|rgba|\(|\)/ig, '').split(',');
+    let [sR, sG, sB, sA] = arr;
+    return [Number(sR), Number(sG), Number(sB), Number(sA)];
+};
+
+const ColorSelector = React.forwardRef<ColorSelectorForwardRef, ColorSelectorProps>(({ initColor, save, update }, forwardedRef) => {
     const [mainColor, setMainColor] = useState<RGB>({ r: 255, g: 0, b: 0 });
     const [selectedColor, setSelectedColor] = useState({ r: 255, g: 0, b: 0 });
     const [platterPos, setPlatterPos] = useState({ x: platterRect.w, y: 0 });
@@ -32,12 +42,7 @@ const ColorSelector: React.FC<ColorSelectorProps> = ({ initColor, save, update }
     }, []);
 
     useEffect(() => {
-        const arr = initColor.replace(/\s|rgba|\(|\)/ig, '').split(',');
-        let [sR, sG, sB, sA] = arr;
-        let r = Number(sR);
-        let g = Number(sG);
-        let b = Number(sB);
-        let a = Number(sA);
+        const [r, g, b, a] = getRGBAFromColor(initColor);
         updateStateByRgb(r, g, b);
         setOpacity(a);
     }, [initColor, updateStateByRgb]);
@@ -75,6 +80,14 @@ const ColorSelector: React.FC<ColorSelectorProps> = ({ initColor, save, update }
         handleUpdateColor({ r: aR, g: aG, b: aB }, opacity);
     }, [handleUpdateColor, opacity, updateStateByRgb]);
 
+    useImperativeHandle(forwardedRef, () => ({
+        setRGBA: (color) => {
+            const [r, g, b, a] = getRGBAFromColor(color);
+            updateStateByRgb(r, g, b);
+            handleUpdateColor({ r, g, b }, a);
+        }
+    }));
+
     return (
         <div className='color-selector'>
             <Platter
@@ -99,6 +112,6 @@ const ColorSelector: React.FC<ColorSelectorProps> = ({ initColor, save, update }
             />
         </div>
     );
-};
+});
 
 export default ColorSelector;
