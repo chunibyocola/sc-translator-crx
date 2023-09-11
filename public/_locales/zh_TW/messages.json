@@ -470,6 +470,24 @@
     "optionsSameLanguageHide": {
         "message": "當原文的語言與目標語言相同時不展示譯文"
     },
+    "optionsTranslationStyleCustomization": {
+        "message": "譯文樣式自定義"
+    },
+    "optionsColor": {
+        "message": "顏色"
+    },
+    "optionsUnderlineColor": {
+        "message": "下劃線顏色"
+    },
+    "optionsUnderlineStyle": {
+        "message": "下劃線樣式"
+    },
+    "optionsUnset": {
+        "message": "取消設置"
+    },
+    "optionsClose": {
+        "message": "關閉"
+    },
     "themePreset": {
         "message": "預設"
     },

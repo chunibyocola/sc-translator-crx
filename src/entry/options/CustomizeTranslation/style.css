@@ -1,0 +1,89 @@
+.customize-translation__example {
+    margin-bottom: 16px;
+    border: 1px solid rgb(25, 118, 210);
+    border-radius: 8px;
+}
+.customize-translation__example legend {
+    padding: 0 12px;
+    font-style: italic;
+    color: rgb(25, 118, 210);
+}
+.customize-translation__example__comparison {
+    margin: 0 5px;
+    padding: 0 2px;
+}
+.customize-translation__items {
+    display: flex;
+}
+.customize-translation__items__item {
+    display: flex;
+    border: 2px solid transparent;
+    padding: 4px 8px 4px 4px;
+    border-radius: 32px;
+    cursor: pointer;
+    box-shadow: rgb(60 64 67 / 30%) 0 1px 2px 0, rgb(60 64 67 / 15%) 0 1px 3px 1px;
+}
+.customize-translation__items__item + .customize-translation__items__item {
+    margin-left: 4px;
+}
+.customize-translation__items__item .customize-translation__items__item__color, .customize-translation__items__item .customize-translation__current-color-icon {
+    margin-right: 4px;
+}
+.customize-translation__items__item__color {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+.customize-translation__color-selector__bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 10px 0 10px;
+}
+.customize-translation__color-selector__bar__left {
+    display: flex;
+    align-items: center;
+}
+.customize-translation__current-color-icon {
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    color: red;
+    border: 2px solid currentColor;
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    justify-content: center;
+}
+.customize-translation__current-color-icon::after {
+    content: "";
+    height: 100%;
+    width: 2px;
+    pointer-events: none;
+    background-color: currentColor;
+    transform: rotate(45deg);
+}
+.btn .customize-translation__current-color-icon {
+    margin-right: 4px;
+}
+.customize-translation__color {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    overflow: hidden;
+    cursor: pointer;
+    margin-left: 4px;
+}
+.underline-style__item {
+    padding: 8px 16px;
+}
+.underline-style__item:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+.underline-style__item__example {
+    display: inline-block;
+    width: 100%;
+    text-transform: uppercase;
+}

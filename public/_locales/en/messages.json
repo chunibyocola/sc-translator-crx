@@ -470,6 +470,24 @@
     "optionsSameLanguageHide": {
         "message": "Not displaying translation when the language of original text is the same as the target language"
     },
+    "optionsTranslationStyleCustomization": {
+        "message": "Translation style customization"
+    },
+    "optionsColor": {
+        "message": "Color"
+    },
+    "optionsUnderlineColor": {
+        "message": "Underline color"
+    },
+    "optionsUnderlineStyle": {
+        "message": "Underline style"
+    },
+    "optionsUnset": {
+        "message": "Unset"
+    },
+    "optionsClose": {
+        "message": "Close"
+    },
     "themePreset": {
         "message": "Preset"
     },

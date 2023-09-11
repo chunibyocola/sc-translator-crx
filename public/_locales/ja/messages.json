@@ -470,6 +470,24 @@
     "optionsSameLanguageHide": {
         "message": "原文の言語が目標言語と同じ場合に訳文を表示しない"
     },
+    "optionsTranslationStyleCustomization": {
+        "message": "訳文スタイルのカスタマイズ"
+    },
+    "optionsColor": {
+        "message": "色"
+    },
+    "optionsUnderlineColor": {
+        "message": "下線色"
+    },
+    "optionsUnderlineStyle": {
+        "message": "下線スタイル"
+    },
+    "optionsUnset": {
+        "message": "設定解除"
+    },
+    "optionsClose": {
+        "message": "閉じる"
+    },
     "themePreset": {
         "message": "プリセット"
     },
