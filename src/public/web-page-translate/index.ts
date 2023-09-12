@@ -1,5 +1,5 @@
 import { GOOGLE_COM, MICROSOFT_COM } from '../../constants/translateSource';
-import { DisplayModeEnhancement } from '../../types';
+import { ComparisonCustomization, DisplayModeEnhancement } from '../../types';
 import { getMessage } from '../i18n';
 import { bingSwitchLangCode } from '../switch-lang-code';
 import { translate as googleWebTranslate } from './google/translate';
@@ -73,6 +73,12 @@ let displayModeEnhancement: DisplayModeEnhancement = {
     oAndT_paragraphWrap: false,
     oAndT_hideSameLanguage: false,
     t_Hovering: false
+};
+
+let comparisonCustomization: ComparisonCustomization = {
+    color: 'currentcolor',
+    underlineColor: 'rgba(144,236,233,1)',
+    underlineStyle: 'solid'
 };
 
 let pageTranslateItemMap: { [key: number]: PageTranslateItemEnity; } = {};
@@ -437,12 +443,13 @@ const getAllParagraph = (element: HTMLElement) => {
     nextParagraph();
 };
 
-export const startWebPageTranslating = ({ element, translateSource, targetLanguage, enhancement, onError, translateDynamicContent: translateDC }: {
+export const startWebPageTranslating = ({ element, translateSource, targetLanguage, enhancement, onError, translateDynamicContent: translateDC, customization }: {
     element: HTMLElement;
     translateSource: string;
     targetLanguage: string;
     enhancement: DisplayModeEnhancement;
     translateDynamicContent: boolean;
+    customization: ComparisonCustomization;
     onError?: (errorReason: string) => void;
 }) => {
     if (startFlag === closeFlag) { return false; }
@@ -466,6 +473,8 @@ export const startWebPageTranslating = ({ element, translateSource, targetLangua
     }
 
     displayModeEnhancement = enhancement;
+
+    comparisonCustomization = customization;
 
     ++startFlag;
 
@@ -719,7 +728,7 @@ const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, 
             const comparisonFont: ScWebpageTranslationElement = document.createElement('font');
             comparisonFont._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
             comparisonFont.appendChild(document.createTextNode(pageTranslateItem.translation));
-            comparisonFont.setAttribute('style', `${displayModeEnhancement.oAndT_Underline ? ' border-bottom: 2px solid #72ECE9; padding: 0 2px;' : ''}`);
+            comparisonFont.setAttribute('style', getComparisonStyle());
 
             paragraph.appendChild(comparisonFont);
             paragraph.className = pageTranslateItem.pNode.className;
@@ -738,7 +747,7 @@ const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, 
             const comparisonFont: ScWebpageTranslationElement = document.createElement('font');
             comparisonFont._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
             comparisonFont.appendChild(document.createTextNode(pageTranslateItem.translation));
-            comparisonFont.setAttribute('style', `${displayModeEnhancement.oAndT_Underline ? ' border-bottom: 2px solid #72ECE9; padding: 0 2px;' : ''}`);
+            comparisonFont.setAttribute('style', getComparisonStyle());
 
             font.appendChild(document.createTextNode('\n'));
             font.appendChild(comparisonFont);
@@ -891,6 +900,12 @@ const preprocessComparisons = (webpageTranslateResult: WebpageTranslateResult, t
     return comparisons;
 };
 
+const getComparisonStyle = () => {
+    const { color, underlineColor, underlineStyle } = comparisonCustomization;
+    const borderStyle = displayModeEnhancement.oAndT_Underline ? ` border-bottom: 2px ${underlineStyle} ${underlineColor}; padding: 0 2px;` : '';
+    return `color: ${color};${borderStyle}`;
+};
+
 const insertResultAndWrapOriginalTextNode = (textNode: Text, mapIndex: number, translation: string, comparison: string | null): ItemFonts | void => {
     if (!textNode.parentElement) { return; }
 
@@ -910,7 +925,7 @@ const insertResultAndWrapOriginalTextNode = (textNode: Text, mapIndex: number, t
     comparisonFont && comparison && comparisonFont.appendChild(document.createTextNode(comparison));
     translationFont.appendChild(document.createTextNode(translation));
 
-    comparisonFont?.setAttribute('style', `margin: 0 5px;${displayModeEnhancement.oAndT_Underline ? ' border-bottom: 2px solid #72ECE9; padding: 0 2px;' : ''}`);
+    comparisonFont?.setAttribute('style', `margin: 0 5px;${getComparisonStyle()}`);
 
     const itemFonts: ItemFonts = [originalFont, comparisonFont, translationFont];
 

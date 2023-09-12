@@ -114,6 +114,7 @@ const WebPageTranslate: React.FC = () => {
             targetLanguage,
             enhancement: getOptions().displayModeEnhancement,
             translateDynamicContent: getOptions().translateDynamicContent,
+            customization: getOptions().comparisonCustomization,
             onError: handleError
         });
 
