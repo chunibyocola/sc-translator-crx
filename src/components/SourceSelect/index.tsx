@@ -5,15 +5,17 @@ import IconFont from '../IconFont';
 import SelectOptions from '../SelectOptions';
 import SourceFavicon from '../SourceFavicon';
 import './style.css';
+import PanelIconButtonWrapper from '../PanelIconButtons/PanelIconButtonWrapper';
 
 type SourceSelectProps = {
     onChange: (value: string) => void;
     sourceList: TranslateSource[];
     source: string;
     disabled?: boolean;
+    faviconOnly?: boolean;
 } & Pick<React.HTMLAttributes<HTMLDivElement>, 'className'>;
 
-const SourceSelect: React.FC<SourceSelectProps> = ({ onChange, sourceList, source, className, disabled }) => {
+const SourceSelect: React.FC<SourceSelectProps> = ({ onChange, sourceList, source, className, disabled, faviconOnly }) => {
     const [showOptions, setShowOptions] = useState(false);
 
     const optionClick = useCallback((value: string) => {
@@ -32,10 +34,15 @@ const SourceSelect: React.FC<SourceSelectProps> = ({ onChange, sourceList, sourc
             onMouseLeave={() => !disabled && setShowOptions(false)}
             onMouseDown={e => disabled && e.preventDefault()}
         >
-            <span className='source-select__value'>
-                <SourceFavicon source={source} />
-            </span>
-            <IconFont iconName='#icon-GoChevronDown' />
+            {faviconOnly ? <PanelIconButtonWrapper>
+                <SourceFavicon source={source} faviconOnly className='source-select__favicon-only' />
+                <IconFont iconName='#icon-GoChevronDown' style={{ fontSize: '16PX' }} />
+            </PanelIconButtonWrapper> : <>
+                <span className='source-select__value'>
+                    <SourceFavicon source={source} />
+                </span>
+                <IconFont iconName='#icon-GoChevronDown' />
+            </>}
             <SelectOptions
                 className='source-select__options scrollbar'
                 maxHeight={150}

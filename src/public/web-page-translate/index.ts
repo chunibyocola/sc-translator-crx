@@ -61,10 +61,14 @@ let resultCacheSource = '';
 let startFlag = 0;
 let closeFlag = 1;
 
+let requestingNum = 0;
+
 let source = '';
 let language = '';
 
 let errorCallback: ((errorReason: string) => void) | undefined;
+let requestStartCallback: (() => void) | undefined;
+let requestFinishCallback: (() => void) | undefined;
 
 let displayModeEnhancement: DisplayModeEnhancement = {
     o_Hovering: false,
@@ -443,7 +447,17 @@ const getAllParagraph = (element: HTMLElement) => {
     nextParagraph();
 };
 
-export const startWebPageTranslating = ({ element, translateSource, targetLanguage, enhancement, onError, translateDynamicContent: translateDC, customization }: {
+export const startWebPageTranslating = ({
+    element,
+    translateSource,
+    targetLanguage,
+    enhancement,
+    translateDynamicContent: translateDC,
+    customization,
+    onError,
+    onRequestStart,
+    onRequestFinish
+}: {
     element: HTMLElement;
     translateSource: string;
     targetLanguage: string;
@@ -451,6 +465,8 @@ export const startWebPageTranslating = ({ element, translateSource, targetLangua
     translateDynamicContent: boolean;
     customization: ComparisonCustomization;
     onError?: (errorReason: string) => void;
+    onRequestStart?: () => void;
+    onRequestFinish?: () => void;
 }) => {
     if (startFlag === closeFlag) { return false; }
 
@@ -463,6 +479,8 @@ export const startWebPageTranslating = ({ element, translateSource, targetLangua
     translateDynamicContent = translateDC;
 
     errorCallback = onError;
+    requestStartCallback = onRequestStart;
+    requestFinishCallback = onRequestFinish;
 
     source = translateSource;
     language = targetLanguage;
@@ -858,6 +876,11 @@ const startProcessing = (nextTranslateList: PageTranslateItemEnity[]) => {
     const tempCloseFlag = closeFlag;
 
     translateList.forEach(({ paragraphs, keys }) => {
+        if (requestingNum === 0) {
+            requestStartCallback?.();
+        }
+        requestingNum++;
+
         translate({ paragraphs, keys, targetLanguage }, source).then((result) => {
             // if not the same, means web page translate has been closed.
             if (tempCloseFlag !== closeFlag) { return; }
@@ -874,6 +897,11 @@ const startProcessing = (nextTranslateList: PageTranslateItemEnity[]) => {
             errorCallback?.(reason.code ?? reason.message ?? 'Error: Unknown Error.');
         }).finally(() => {
             keys.forEach(key => pendingMap.delete(key));
+
+            requestingNum--;
+            if (requestingNum === 0) {
+                requestFinishCallback?.();
+            }
         });
 
         keys.forEach(key => pendingMap.get(key)?.forEach(item => item.status = 'loading'));

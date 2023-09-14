@@ -15,6 +15,7 @@ import useEffectOnce from '../../../public/react-use/useEffectOnce';
 import { closeWebPageTranslating, errorRetry, startWebPageTranslating, switchWayOfFontsDisplaying } from '../../../public/web-page-translate';
 import { DefaultOptions } from '../../../types';
 import './style.css';
+import Logo from '../../../components/Logo';
 
 const wPTI18nCache = {
     switchDisplayModeOfResult: getMessage('contentSwitchDisplayModeOfResult'),
@@ -34,6 +35,7 @@ type WPTReducerState = {
     error: string;
     activated: boolean;
     auto: boolean;
+    requesting: boolean;
 };
 type WPTReducerAction = 
 | { type: 'active-wpt'; show: boolean; auto: boolean; }
@@ -43,7 +45,9 @@ type WPTReducerAction =
 | { type: 'change-source'; source: string; }
 | { type: 'change-targer-language'; targetLanguage: string; }
 | { type: 'show-control-bar'; }
-| { type: 'hide-control-bar'; };
+| { type: 'hide-control-bar'; }
+| { type: 'request-start'; }
+| { type: 'request-finish'; };
 
 const initWPTState: WPTReducerState = {
     show: false,
@@ -52,7 +56,8 @@ const initWPTState: WPTReducerState = {
     working: false,
     error: '',
     activated: false,
-    auto: false
+    auto: false,
+    requesting: false
 };
 
 const wPTReducer = (state: WPTReducerState, action: WPTReducerAction): WPTReducerState => {
@@ -73,6 +78,10 @@ const wPTReducer = (state: WPTReducerState, action: WPTReducerAction): WPTReduce
             return { ...state, show: true };
         case 'hide-control-bar':
             return { ...state, show: false };
+        case 'request-start':
+            return { ...state, requesting: true };
+        case 'request-finish':
+            return { ...state, requesting: false };
         default:
             return state;
     }
@@ -85,7 +94,7 @@ const WebPageTranslate: React.FC = () => {
     const [langCodes, setLangCodes] = useState<LangCodes>([]);
     const [langLocal, setLangLocal] = useState<{ [key: string]: string; }>({});
 
-    const [{ show, source, targetLanguage, working, error, activated, auto }, dispach] = useReducer(wPTReducer, {
+    const [{ show, source, targetLanguage, working, error, activated, auto, requesting }, dispach] = useReducer(wPTReducer, {
         ...initWPTState,
         source: getOptions().webPageTranslateSource,
         targetLanguage: getOptions().webPageTranslateTo
@@ -103,6 +112,14 @@ const WebPageTranslate: React.FC = () => {
         errorReason && dispach({ type: 'change-error', error: errorReason });
     }, [dispach]);
 
+    const handleRequestStart = useCallback(() => {
+        dispach({ type: 'request-start' });
+    }, [dispach]);
+
+    const handleRequestFinish = useCallback(() => {
+        dispach({ type: 'request-finish' });
+    }, [dispach]);
+
     const startProcessing = useCallback((force = false) => {
         if (working && !force) { return; }
 
@@ -115,7 +132,9 @@ const WebPageTranslate: React.FC = () => {
             enhancement: getOptions().displayModeEnhancement,
             translateDynamicContent: getOptions().translateDynamicContent,
             customization: getOptions().comparisonCustomization,
-            onError: handleError
+            onError: handleError,
+            onRequestStart: handleRequestStart,
+            onRequestFinish: handleRequestFinish
         });
 
         if (startSuccess) {
@@ -124,7 +143,7 @@ const WebPageTranslate: React.FC = () => {
         else {
             dispach({ type: 'change-error', error: 'Process failed!' });
         }
-    }, [source, targetLanguage, working, dispach, handleError]);
+    }, [source, targetLanguage, working, dispach, handleError, handleRequestStart, handleRequestFinish]);
 
     const activatePageTranslation = useCallback(() => {
         if (!working) {
@@ -222,11 +241,15 @@ const WebPageTranslate: React.FC = () => {
             />
         </div>}
         <div className='web-page-translate__content flex-align-items-center'>
+            <div className='web-page-translate__content__logo'>
+                {requesting ? <span className='spinner' /> : <Logo />}
+            </div>
+            <div className='web-page-translate__content__division' />
             <SourceSelect
-                className='web-page-translate__select border-bottom-select'
                 source={source}
                 sourceList={webPageTranslateSourceList.concat(getOptions().customWebpageTranslateSourceList)}
                 onChange={source => dispach({ type: 'change-source', source })}
+                faviconOnly
             />
             <LanguageSelect
                 className='web-page-translate__select border-bottom-select'

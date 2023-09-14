@@ -34,3 +34,6 @@
 .source-select__options__option:hover {
     background: var(--bg-item-hover);
 }
+.source-select__favicon-only {
+    pointer-events: none;
+}
