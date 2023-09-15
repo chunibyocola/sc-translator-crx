@@ -61,7 +61,7 @@ const defaultOptions: DefaultOptions = {
     webPageTranslateSource: GOOGLE_COM,
     webPageTranslateTo: LANG_EN,
     webPageTranslateDisplayMode: 1,
-    webPageTranslateDirectly: false,
+    webPageTranslateDirectly: true,
     noControlBarWhileFirstActivating: false,
     afterSelectingTextRegExpList: [],
     translateButtonsTL: { first: '', second: LANG_EN, third: LANG_EN },
