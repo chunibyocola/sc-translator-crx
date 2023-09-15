@@ -52,7 +52,7 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
             from: data.src,
             to,
             result: (data.sentences as { trans: string; }[])?.reduce((t, c) => (`${t}${c.trans ?? ''}`), '').split('\n').filter(v => v.trim()),
-            dict: data.dict?.reduce((t: string[], v: any) => (t.concat(v.pos + ': ' + v.terms.join(', '))), []),
+            dict: data.dict?.reduce((t: string[], c: { pos: string; entry: { word: string ; }[] }) => (t.concat(c.pos + ': ' + c.entry.map(v => v.word).join(', '))), []),
             phonetic: data.sentences?.[1]?.src_translit && `[${data.sentences[1].src_translit}]`,
             related: data.related_words?.word,
             example: (data.examples?.example as { text: string }[] | undefined)?.slice(0, 3).map(v => v.text)
