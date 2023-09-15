@@ -388,6 +388,8 @@ const getAllParagraph = (element: HTMLElement) => {
                     nextText = treeWalker.nextNode() as Text;
                 }
 
+                stopObserving();
+
                 textNodes.forEach((textNode) => {
                     if (!textNode?.parentElement) { return; }
 
@@ -417,6 +419,8 @@ const getAllParagraph = (element: HTMLElement) => {
 
                     textNode.parentElement.removeChild(textNode);
                 });
+
+                startObserving();
 
                 isInline = false;
             }
