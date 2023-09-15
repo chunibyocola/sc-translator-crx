@@ -1,3 +1,9 @@
+# 5.2.0 (2023-09-15)
+- Add "Not displaying translation when the language of original text is the same as the target language" option.
+- Able to customize translation style in options page.
+- Update control bar of page translation interface.
+- Fix Google translation unavailable.
+- Fix formatting get lost inside "pre" element.
 # 5.1.1 (2023-07-26)
 - Fix Google page translation unavailable.
 - Fix text of page translation can't be hidden in some situations.
