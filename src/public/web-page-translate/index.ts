@@ -324,6 +324,13 @@ const getAllParagraph = (element: HTMLElement) => {
 
             const nodeStyleDisplay = getComputedStyle(node as HTMLElement).display;
 
+            if (nodeStyleDisplay === 'none') {
+                intersectionObserver.observe(node as HTMLElement);
+
+                nextParagraph();
+                continue;
+            }
+
             if (displayModeEnhancement.oAndT_paragraphWrap && node.nodeName === 'P' && !(node.nextSibling?.nodeName === 'P' && Object.hasOwn(node.nextSibling, '_ScWebpageTranslationKey'))) {
                 nextParagraph();
 
@@ -367,13 +374,6 @@ const getAllParagraph = (element: HTMLElement) => {
                 }
 
                 nextParagraph(node as HTMLParagraphElement);
-                continue;
-            }
-
-            if (nodeStyleDisplay === 'none') {
-                intersectionObserver.observe(node as HTMLElement);
-
-                nextParagraph();
                 continue;
             }
 
