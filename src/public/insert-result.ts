@@ -45,7 +45,7 @@ export const getInsertConfirmed = (text: string, translateId: number) => {
 };
 
 const createInsertNode = (text: string) => {
-    let insertNode = document.createElement("span");
+    let insertNode = document.createElement('font');
     insertNode.appendChild(document.createTextNode(text));
     insertNode.style.margin = '0 5px';
     insertNode.style.userSelect = 'none';
