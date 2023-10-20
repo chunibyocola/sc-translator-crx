@@ -1,0 +1,31 @@
+.search-field {
+    background-color: var(--bg-total);
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 8px;
+    flex: 1;
+    max-width: 776px;
+    margin-right: 20px;
+}
+.search-field > input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    margin: 0 5px;
+    padding: 0;
+    flex: 1;
+    line-height: 185%;
+}
+.search-field__tags-filter {
+    position: relative;
+}
+.search-field__division {
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.15);
+    height: 80%;
+    width: 2px;
+    border-radius: 2px;
+    margin: 0 2px;
+}

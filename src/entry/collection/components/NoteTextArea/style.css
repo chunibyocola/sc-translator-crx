@@ -1,0 +1,18 @@
+.note__text-area {
+    display: block;
+    width: 100%;
+    min-height: 100px;
+    resize: vertical;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    color: rgba(0, 0, 0, 0.8);
+    border-color: rgb(25, 118, 210);
+    outline-color: rgb(25, 118, 210);
+}
+.note__update {
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-between;
+}

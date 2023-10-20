@@ -5,7 +5,7 @@ import { getMessage } from '../../public/i18n';
 import { initOptions } from '../../public/options';
 import { getLocalStorageAsync } from '../../public/utils';
 import { DefaultOptions } from '../../types';
-import Collection from './Collection';
+import Collection from './App';
 import '../../styles/global.css';
 import './style.css';
 
