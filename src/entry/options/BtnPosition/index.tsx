@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import IconFont from '../../../components/IconFont';
 import './style.css';
 import '../../../components/TsBtn/style.css';
-import { pointerDrag } from '../ColorSelector/utils';
+import { pointerDrag } from '../../../public/utils';
 import { getMessage } from '../../../public/i18n';
 import { Position } from '../../../types';
 import Button from '../../../components/Button';
@@ -34,7 +34,7 @@ const BtnPostion: React.FC<BtnPostionProps> = ({ currentPos, updateBtnPosition }
         const maxX = target.offsetWidth - btnEle.current.offsetWidth;
         const maxY = target.offsetHeight - btnEle.current.offsetHeight;
         handlePointerDrag({ x: Math.min(e.nativeEvent.offsetX, maxX), y: Math.min(e.nativeEvent.offsetY, maxY) });
-        pointerDrag(target, { maxX, maxY }, handlePointerDrag);
+        pointerDrag({ element: target, maxX, maxY, onMouseMove: handlePointerDrag });
     }, [handlePointerDrag]);
 
     return (

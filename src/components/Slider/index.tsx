@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { pointerDrag } from '../../entry/options/ColorSelector/utils';
+import { pointerDrag } from '../../public/utils';
 import { Position } from '../../types';
 import './style.css';
 
@@ -57,7 +57,7 @@ const Slider: React.FC<SliderProps> = ({ defaultValue, min, max, step, marks, va
         const value = calculateValueByX(e.nativeEvent.offsetX);
         mouseDownCallback?.(value);
         const targetElement = e.target as HTMLDivElement;
-        pointerDrag(targetElement, { maxX: targetElement.offsetWidth }, handleSliderMouseMove, handleSliderMouseUp);
+        pointerDrag({ element: targetElement, maxX: targetElement.offsetWidth, onMouseMove: handleSliderMouseMove, onMouseUp: handleSliderMouseUp });
         handleValueChange(value);
     }, [handleSliderMouseMove, handleSliderMouseUp, mouseDownCallback, calculateValueByX, handleValueChange]);
 

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import './style.css';
-import { pointerDrag } from '../utils';
+import { pointerDrag } from '../../../../public/utils';
 import { RGB } from '..';
 import { Position } from '../../../../types';
 
@@ -22,7 +22,7 @@ const Platter: React.FC<PlatterProps> = ({ mainColor, posChange, pos, width, hei
     const handleMouseDown: React.MouseEventHandler<HTMLDivElement> = useCallback((e) => {
         handlePointerDrag({ x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY });
         const target = e.target as HTMLDivElement
-        pointerDrag(target, { maxX: target.offsetWidth - 1, maxY: target.offsetHeight - 1 }, handlePointerDrag);
+        pointerDrag({ element: target, maxX: target.offsetWidth - 1, maxY: target.offsetHeight - 1, onMouseMove: handlePointerDrag });
     }, [handlePointerDrag]);
 
     return (

@@ -1,30 +1,4 @@
 import { RGB } from "..";
-import { Position } from "../../../../types";
-
-export const pointerDrag = (element: HTMLElement, { maxX = 0, maxY = 0 }, mouseMoveCallback?: (position: Position) => void, mouseUpCallback?: (position: Position) => void) => {
-    const { left, top } = element.getBoundingClientRect();
-
-    const calculate = (x: number, y: number) => {
-        x = x >= 0 ? x <= maxX ? x : maxX : 0;
-        y = y >= 0 ? y <= maxY ? y : maxY : 0;
-        return { x, y };
-    };
-
-    const mouseMoveListener = (e: MouseEvent) => {
-        mouseMoveCallback?.(calculate(e.clientX - left, e.clientY - top));
-    };
-
-    const mouseUpListener = (e: MouseEvent) => {
-        document.removeEventListener('mousemove', mouseMoveListener, true);
-        document.removeEventListener('mouseup', mouseUpListener, true);
-        document.onselectstart = () => { return true; };
-        mouseUpCallback?.(calculate(e.clientX - left, e.clientY - top));
-    };
-
-    document.onselectstart = () => { return false; };
-    document.addEventListener('mousemove', mouseMoveListener, true);
-    document.addEventListener('mouseup', mouseUpListener, true);
-};
 
 export const rgbToHex = (r: number, g: number, b: number) => {
     let sR = r.toString(16);

@@ -157,3 +157,37 @@ export const openCollectionPage = () => {
         }
     });
 };
+
+type PointerDragParams = {
+    element: HTMLElement,
+    maxX?: number;
+    maxY?: number;
+    onMouseMove?: (position: Position) => void;
+    onMouseUp?: (position: Position) => void;
+};
+
+export const pointerDrag = ({ element, maxX = 0, maxY = 0, onMouseMove, onMouseUp }: PointerDragParams) => {
+    const { left, top } = element.getBoundingClientRect();
+
+    const calculate = (x: number, y: number) => {
+        return {
+            x: Math.min(Math.max(0, x), maxX),
+            y: Math.min(Math.max(0, y), maxY)
+        };
+    };
+
+    const mouseMoveListener = (e: MouseEvent) => {
+        onMouseMove?.(calculate(e.clientX - left, e.clientY - top));
+    };
+
+    const mouseUpListener = (e: MouseEvent) => {
+        document.removeEventListener('mousemove', mouseMoveListener, true);
+        document.removeEventListener('mouseup', mouseUpListener, true);
+        document.onselectstart = () => { return true; };
+        onMouseUp?.(calculate(e.clientX - left, e.clientY - top));
+    };
+
+    document.onselectstart = () => { return false; };
+    document.addEventListener('mousemove', mouseMoveListener, true);
+    document.addEventListener('mouseup', mouseUpListener, true);
+};

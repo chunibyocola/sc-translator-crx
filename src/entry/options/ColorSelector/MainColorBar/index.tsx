@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import './style.css';
-import { pointerDrag } from '../utils';
+import { pointerDrag } from '../../../../public/utils';
 import { Position } from '../../../../types';
 
 const barPointerOffsetTop = -2;
@@ -20,7 +20,7 @@ const MainColorBar: React.FC<MainColorBarProps> = ({ top, topChange, width, heig
     const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         handlePointerDrag({ y: e.nativeEvent.offsetY });
         const targetElement = e.target as HTMLDivElement;
-        pointerDrag(targetElement, { maxY: targetElement.offsetHeight - 1 }, handlePointerDrag);
+        pointerDrag({ element: targetElement, maxY: targetElement.offsetHeight - 1, onMouseMove: handlePointerDrag });
     }, [handlePointerDrag]);
 
     return (
