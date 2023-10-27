@@ -8,12 +8,12 @@ import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { DefaultOptions } from '../../../../types';
-import BetaIcon from '../../BetaIcon';
-import CustomTranslateSourceDisplay from '../../CustomTranslateSourceDisplay';
-import DefaultSelect from '../../DefaultSelect';
-import HostList from '../../HostList';
-import WebPageTranslateDisplayMode from '../../WebPageTranslateDisplayMode';
-import CustomizeTranslation from '../../CustomizeTranslation';
+import BetaIcon from '../../components/BetaIcon';
+import CustomTranslateSourceDisplay from '../../components/CustomTranslateSourceDisplay';
+import DefaultSelect from '../../components/DefaultSelect';
+import HostList from '../../components/HostList';
+import WebPageTranslateDisplayMode from '../../components/WebPageTranslateDisplayMode';
+import CustomizeTranslation from '../../components/CustomizeTranslation';
 
 type PickedOptions = Pick<
     DefaultOptions,

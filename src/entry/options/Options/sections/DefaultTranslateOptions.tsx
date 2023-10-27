@@ -8,11 +8,11 @@ import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { switchTranslateSource } from '../../../../public/switch-translate-source';
 import { DefaultOptions } from '../../../../types';
-import BetaIcon from '../../BetaIcon';
-import CustomTranslateSourceDisplay from '../../CustomTranslateSourceDisplay';
-import DefaultSelect from '../../DefaultSelect';
-import MultipleSourcesDisplay from '../../MultipleSourcesDisplay';
-import TranslationDisplay from '../../TranslationDisplay';
+import BetaIcon from '../../components/BetaIcon';
+import CustomTranslateSourceDisplay from '../../components/CustomTranslateSourceDisplay';
+import DefaultSelect from '../../components/DefaultSelect';
+import MultipleSourcesDisplay from '../../components/MultipleSourcesDisplay';
+import TranslationDisplay from '../../components/TranslationDisplay';
 
 type PickedOptions = Pick<
     DefaultOptions,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { getMessage } from '../../../public/i18n';
-import OptionsMenu from '../OptionsMenu';
-import OverScroll from '../OverScroll';
+import OptionsMenu from '../components/OptionsMenu';
+import OverScroll from '../components/OverScroll';
 import Audio from './sections/Audio';
 import ContextMenus from './sections/ContextMenus';
 import DefaultTranslateOptions from './sections/DefaultTranslateOptions';

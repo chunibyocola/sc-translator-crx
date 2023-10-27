@@ -5,10 +5,10 @@ import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { DefaultOptions } from '../../../../types';
-import BetaIcon from '../../BetaIcon';
-import BtnPostion from '../../BtnPosition';
-import HostList from '../../HostList';
-import TranslateButtonDisplay from '../../TranslateButtonDisplay';
+import BetaIcon from '../../components/BetaIcon';
+import BtnPostion from '../../components/BtnPosition';
+import HostList from '../../components/HostList';
+import TranslateButtonDisplay from '../../components/TranslateButtonDisplay';
 
 const marksHideButtonFixedTime: SliderMarks = [
     { value: 500, label: '0.50s' },

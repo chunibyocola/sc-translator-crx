@@ -4,7 +4,7 @@ import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { DefaultOptions } from '../../../../types';
-import HostList from '../../HostList';
+import HostList from '../../components/HostList';
 
 type PickedOptions = Pick<
     DefaultOptions,

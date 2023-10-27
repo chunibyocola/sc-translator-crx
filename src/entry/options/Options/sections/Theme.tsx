@@ -3,8 +3,8 @@ import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { DefaultOptions } from '../../../../types';
-import CustomizeStyleTextarea from '../../CustomizeStyleTextarea';
-import CustomizeTheme from '../../CustomizeTheme';
+import CustomizeStyleTextarea from '../../components/CustomizeStyleTextarea';
+import CustomizeTheme from '../../components/CustomizeTheme';
 
 type PickedOptions = Pick<
     DefaultOptions,

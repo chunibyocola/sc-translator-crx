@@ -4,8 +4,8 @@ import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { DefaultOptions } from '../../../../types';
-import RegExpList from '../../RegExpList';
-import TestTextProcessing from '../../TestTextPreprocessing';
+import RegExpList from '../../components/RegExpList';
+import TestTextProcessing from '../../components/TestTextPreprocessing';
 
 type PickedOptions = Pick<
     DefaultOptions,

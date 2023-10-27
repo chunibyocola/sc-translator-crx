@@ -2,8 +2,8 @@ import React from 'react';
 import Button from '../../../../components/Button';
 import { getMessage } from '../../../../public/i18n';
 import { sendSyncSettingsToOtherBrowsers } from '../../../../public/send';
-import BetaIcon from '../../BetaIcon';
-import FileSync from '../../FileSync';
+import BetaIcon from '../../components/BetaIcon';
+import FileSync from '../../components/FileSync';
 
 type SyncSettingsProps = Record<string, never>;
 

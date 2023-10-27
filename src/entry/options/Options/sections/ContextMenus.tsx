@@ -2,7 +2,7 @@ import React from 'react';
 import { setLocalStorage } from '../../../../public/chrome-call';
 import { useOptions } from '../../../../public/react-use';
 import { DefaultOptions } from '../../../../types';
-import ContextMenusDraggable from '../../ContextMenusDraggable';
+import ContextMenusDraggable from '../../components/ContextMenusDraggable';
 
 type PickedOptions = Pick<
     DefaultOptions,
