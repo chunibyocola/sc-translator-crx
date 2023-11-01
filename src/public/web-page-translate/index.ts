@@ -111,7 +111,7 @@ let translateDynamicContent = false;
 
 const observer = new MutationObserver((records) => {
     const noTranslate = (element: Element | null) => {
-        if (!document.body.contains(element)) {
+        if (!element?.isConnected) {
             return true;
         }
         while (element) {
@@ -185,7 +185,7 @@ const observer = new MutationObserver((records) => {
         }
     });
 
-    targets.forEach(target => document.body.contains(target) && intersectionObserver.observe(target as HTMLElement));
+    targets.forEach(target => target.isConnected && intersectionObserver.observe(target as HTMLElement));
 
     targets.size > 0 && translateInViewPortParagraphs();
 });
@@ -216,7 +216,7 @@ const intersectionObserver = new IntersectionObserver((entries) => {
 
         intersectionObserver.unobserve(target);
 
-        document.body.contains(target) && getAllParagraph(target);
+        target.isConnected && getAllParagraph(target);
 
         doTranslate = true;
     });
@@ -705,7 +705,7 @@ const translateInViewPortParagraphs = delay(() => {
     const maxViewPort = window.innerHeight + 500;
 
     waitingList.forEach((item) => {
-        if (!document.body.contains(item.textNodes[0])) {
+        if (!item.textNodes[0]?.isConnected) {
             waitingList.delete(item);
             return;
         }
