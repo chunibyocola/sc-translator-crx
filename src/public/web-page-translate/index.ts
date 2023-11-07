@@ -109,6 +109,8 @@ let checkedNodes: WeakSet<Node> = new WeakSet();
 
 let translateDynamicContent = false;
 
+let observeRootSet: Set<HTMLElement> = new Set();
+
 const observer = new MutationObserver((records) => {
     const noTranslate = (element: Element | null) => {
         if (!element?.isConnected) {
@@ -140,7 +142,7 @@ const observer = new MutationObserver((records) => {
 
         if (type === 'characterData') {
             nextTarget = target.parentElement;
-            [target, target.parentElement].forEach(node => node && checkedNodes.delete(node));
+            [target, nextTarget].forEach(node => node && checkedNodes.delete(node));
         }
 
         if (type === 'childList' && addedNodes.length > 0) {
@@ -185,7 +187,7 @@ const observer = new MutationObserver((records) => {
         }
     });
 
-    targets.forEach(target => target.isConnected && intersectionObserver.observe(target as HTMLElement));
+    targets.forEach(target => target.isConnected && intersectionObserver.observe(target));
 
     targets.size > 0 && translateInViewPortParagraphs();
 });
@@ -195,11 +197,11 @@ const startObserving = () => {
         return;
     }
 
-    observer.observe(document.body, {
+    observeRootSet.forEach(root => observer.observe(root, {
         characterData: true,
         childList: true,
         subtree: true
-    });
+    }));
 };
 
 const stopObserving = () => {
@@ -480,6 +482,8 @@ export const startWebPageTranslating = ({
 
     pendingMap = new Map();
 
+    observeRootSet = new Set([document.body]);
+
     translateDynamicContent = translateDC;
 
     errorCallback = onError;
@@ -643,6 +647,8 @@ const onWindowMouseMove = (e: MouseEvent) => {
 
 export const closeWebPageTranslating = () => {
     if (closeFlag > startFlag) { return; }
+
+    observeRootSet.clear();
 
     stopObserving();
 
