@@ -116,6 +116,13 @@ const observer = new MutationObserver((records) => {
         if (!element?.isConnected) {
             return true;
         }
+
+        const root = element.getRootNode({ composed: true });
+        if (root.nodeName !== '#document') {
+            return true;
+        }
+        const rootBody = (root as Document).body;
+
         while (element) {
             const tagName = element.nodeName;
             if (skippedTags.has(tagName) || ignoredTags.has(tagName)) {
@@ -128,7 +135,7 @@ const observer = new MutationObserver((records) => {
                 return true;
             }
             element = element.parentElement;
-            if (element === document.body) {
+            if (element === rootBody) {
                 break;
             }
         }
