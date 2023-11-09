@@ -275,6 +275,10 @@ const getAllParagraph = (element: HTMLElement) => {
         codeTexts = [];
     };
 
+    if (element.shadowRoot) {
+        currentNode = { node: element.shadowRoot, index: 0, isInline: false };
+    }
+
     while (currentNode) {
         let { index } = currentNode;
 
