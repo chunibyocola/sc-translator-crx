@@ -47,7 +47,7 @@ let wayOfFontsDisplaying: number = 1;
 let waitingList: Set<PageTranslateItemEnity> = new Set();
 let updatedList: Set<PageTranslateItemEnity> = new Set();
 
-const ignoredTagsArr = ['canvas', 'iframe', 'br', 'hr', 'svg', 'img', 'script', 'link', 'style', 'input', 'textarea', 'font'];
+const ignoredTagsArr = ['canvas', 'br', 'hr', 'svg', 'img', 'script', 'link', 'style', 'input', 'textarea', 'font'];
 const skippedTagsArr = ['code', '#comment'];
 const ignoredTags = new Set(ignoredTagsArr.concat(ignoredTagsArr.map(v => v.toUpperCase())));
 const skippedTags = new Set(skippedTagsArr.concat(skippedTagsArr.map(v => v.toUpperCase())));
@@ -211,6 +211,24 @@ const startObserving = () => {
     }));
 };
 
+const addObservationTarget = (target: HTMLElement) => {
+    if (!translateDynamicContent) {
+        return;
+    }
+
+    if (observeRootSet.has(target)) {
+        return;
+    }
+
+    observeRootSet.add(target);
+
+    observer.observe(target, {
+        characterData: true,
+        childList: true,
+        subtree: true
+    });
+};
+
 const stopObserving = () => {
     observer.disconnect();
 };
@@ -279,6 +297,28 @@ const getAllParagraph = (element: HTMLElement) => {
         currentNode = { node: element.shadowRoot, index: 0, isInline: false };
     }
 
+    if (element.nodeName === 'IFRAME') {
+        try {
+            if (new URL((element as HTMLIFrameElement).src).host !== location.host) {
+                return;
+            }
+        }
+        catch {
+            return;
+        }
+
+        const contentBody = (element as HTMLIFrameElement).contentDocument?.body;
+
+        if (contentBody) {
+            currentNode = { node: contentBody, index: 0, isInline: false };
+
+            addObservationTarget(contentBody);
+        }
+        else {
+            return;
+        }
+    }
+
     while (currentNode) {
         let { index } = currentNode;
 
@@ -339,6 +379,13 @@ const getAllParagraph = (element: HTMLElement) => {
 
             if (nodeStyleDisplay === 'none') {
                 intersectionObserver.observe(node as HTMLElement);
+
+                nextParagraph();
+                continue;
+            }
+
+            if (node.nodeName === 'IFRAME') {
+                intersectionObserver.observe(node as HTMLIFrameElement);
 
                 nextParagraph();
                 continue;
