@@ -569,7 +569,7 @@ export const startWebPageTranslating = ({
     window.addEventListener('scroll', onWindowScroll, true);
 
     if ((wayOfFontsDisplaying === 0 && displayModeEnhancement.o_Hovering) || (wayOfFontsDisplaying === 2 && displayModeEnhancement.t_Hovering)) {
-        window.addEventListener('mousemove', onWindowMouseMove);
+        observeRootSet.forEach(root => root.ownerDocument.defaultView?.addEventListener('mousemove', onWindowMouseMove));
     }
 
     startObserving();
@@ -662,8 +662,18 @@ const onWindowMouseMove = (e: MouseEvent) => {
 
                 panelElement.style.display = '';
                 const { width, height } = panelElement.getBoundingClientRect();
-                panelElement.style.left = `${Math.max(e.clientX + 25 - Math.max((e.clientX + 35 + width) - window.innerWidth, 0), 10)}px`;
-                panelElement.style.top = `${e.clientY + 15 - Math.max((e.clientY + 25 + height) - window.innerHeight, 0)}px`;
+
+                let relativeX = e.clientX;
+                let relativeY = e.clientY;
+                const frameElement = element.ownerDocument.defaultView?.frameElement;
+                if (frameElement) {
+                    const { top: frameTop, left: frameLeft } = frameElement.getBoundingClientRect();
+                    relativeX += frameLeft;
+                    relativeY += frameTop;
+                }
+
+                panelElement.style.left = `${Math.max(relativeX + 25 - Math.max((relativeX + 35 + width) - window.innerWidth, 0), 10)}px`;
+                panelElement.style.top = `${relativeY + 15 - Math.max((relativeY + 25 + height) - window.innerHeight, 0)}px`;
 
                 showPanelTimeout = null;
             }, 1000);
@@ -706,8 +716,6 @@ const onWindowMouseMove = (e: MouseEvent) => {
 export const closeWebPageTranslating = () => {
     if (closeFlag > startFlag) { return; }
 
-    observeRootSet.clear();
-
     stopObserving();
 
     intersectionObserver.disconnect();
@@ -747,7 +755,9 @@ export const closeWebPageTranslating = () => {
 
     window.removeEventListener('scroll', onWindowScroll, true);
 
-    window.removeEventListener('mousemove', onWindowMouseMove);
+    observeRootSet.forEach(root => root.ownerDocument.defaultView?.removeEventListener('mousemove', onWindowMouseMove));
+
+    observeRootSet.clear();
 };
 
 const delay = (fn: () => void, ms: number) => {
@@ -1046,10 +1056,10 @@ export const switchWayOfFontsDisplaying = (way?: number) => {
         panelElement.style.display = 'none';
     }
 
-    window.removeEventListener('mousemove', onWindowMouseMove);
+    observeRootSet.forEach(root => root.ownerDocument.defaultView?.removeEventListener('mousemove', onWindowMouseMove));
 
     if ((wayOfFontsDisplaying === 0 && displayModeEnhancement.o_Hovering) || (wayOfFontsDisplaying === 2 && displayModeEnhancement.t_Hovering)) {
-        window.addEventListener('mousemove', onWindowMouseMove);
+        observeRootSet.forEach(root => root.ownerDocument.defaultView?.addEventListener('mousemove', onWindowMouseMove));
     }
 
     updatedList.forEach((item) => {
