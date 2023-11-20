@@ -784,7 +784,12 @@ const translateInViewPortParagraphs = delay(() => {
             return;
         }
 
-        const { top } = item.range.getBoundingClientRect();
+        let { top } = item.range.getBoundingClientRect();
+
+        const frameElement = item.textNodes[0].ownerDocument.defaultView?.frameElement;
+        if (frameElement?.isConnected) {
+            top += frameElement.getBoundingClientRect().top;
+        }
 
         if (top >= minViewPort && top <= maxViewPort) {
             updatedList.add(item);
