@@ -313,6 +313,8 @@ const getAllParagraph = (element: HTMLElement) => {
             currentNode = { node: contentBody, index: 0, isInline: false };
 
             addObservationTarget(contentBody);
+
+            contentBody.ownerDocument.defaultView?.addEventListener('scroll', onWindowScroll, true);
         }
         else {
             return;
@@ -566,7 +568,7 @@ export const startWebPageTranslating = ({
 
     translateInViewPortParagraphs();
 
-    window.addEventListener('scroll', onWindowScroll, true);
+    observeRootSet.forEach(root => root.ownerDocument.defaultView?.addEventListener('scroll', onWindowScroll, true));
 
     if ((wayOfFontsDisplaying === 0 && displayModeEnhancement.o_Hovering) || (wayOfFontsDisplaying === 2 && displayModeEnhancement.t_Hovering)) {
         observeRootSet.forEach(root => root.ownerDocument.defaultView?.addEventListener('mousemove', onWindowMouseMove));
@@ -753,7 +755,7 @@ export const closeWebPageTranslating = () => {
         panelElement = null;
     }
 
-    window.removeEventListener('scroll', onWindowScroll, true);
+    observeRootSet.forEach(root => root.ownerDocument.defaultView?.removeEventListener('scroll', onWindowScroll, true));
 
     observeRootSet.forEach(root => root.ownerDocument.defaultView?.removeEventListener('mousemove', onWindowMouseMove));
 
