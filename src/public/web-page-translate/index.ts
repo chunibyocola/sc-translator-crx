@@ -667,11 +667,13 @@ const onWindowMouseMove = (e: MouseEvent) => {
 
                 let relativeX = e.clientX;
                 let relativeY = e.clientY;
-                const frameElement = element.ownerDocument.defaultView?.frameElement;
-                if (frameElement) {
+                let frameElement = element.ownerDocument.defaultView?.frameElement;
+                while (frameElement) {
                     const { top: frameTop, left: frameLeft } = frameElement.getBoundingClientRect();
                     relativeX += frameLeft;
                     relativeY += frameTop;
+
+                    frameElement = frameElement.ownerDocument.defaultView?.frameElement;
                 }
 
                 panelElement.style.left = `${Math.max(relativeX + 25 - Math.max((relativeX + 35 + width) - window.innerWidth, 0), 10)}px`;
