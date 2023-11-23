@@ -28,7 +28,8 @@ type PickedOptions = Pick<
     'translateDynamicContent' |
     'autoTranslateWebpageHostList' |
     'enableAutoTranslateWebpage' |
-    'comparisonCustomization'
+    'comparisonCustomization' |
+    'translateIframeContent'
 >;
 const useOptionsDependency: (keyof PickedOptions)[] = [
     'webPageTranslateSource',
@@ -42,7 +43,8 @@ const useOptionsDependency: (keyof PickedOptions)[] = [
     'translateDynamicContent',
     'autoTranslateWebpageHostList',
     'enableAutoTranslateWebpage',
-    'comparisonCustomization'
+    'comparisonCustomization',
+    'translateIframeContent'
 ];
 
 const WebPageTranslating: React.FC = () => {
@@ -58,7 +60,8 @@ const WebPageTranslating: React.FC = () => {
         translateDynamicContent,
         autoTranslateWebpageHostList,
         enableAutoTranslateWebpage,
-        comparisonCustomization
+        comparisonCustomization,
+        translateIframeContent
     } = useOptions<PickedOptions>(useOptionsDependency);
 
     return (
@@ -192,6 +195,14 @@ const WebPageTranslating: React.FC = () => {
                         />
                     </div>
                 </div>
+            </div>
+            <div className='opt-section-row'>
+                <Switch
+                    label={getMessage('optionsTranslateIframeContent')}
+                    checked={translateIframeContent}
+                    onChange={v => setLocalStorage({ translateIframeContent: v })}
+                />
+                <BetaIcon />
             </div>
             <div className='opt-section-row'>
                 <Switch

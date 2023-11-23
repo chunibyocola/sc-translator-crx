@@ -81,7 +81,8 @@ const defaultOptions: DefaultOptions = {
     autoTranslateWebpageHostList: [],
     enableAutoTranslateWebpage: false,
     keepUsingDefaultAudioSource: false,
-    comparisonCustomization: { color: 'currentcolor', underlineColor: 'rgba(144,236,233,1)', underlineStyle: 'solid' }
+    comparisonCustomization: { color: 'currentcolor', underlineColor: 'rgba(144,236,233,1)', underlineStyle: 'solid' },
+    translateIframeContent: false
 };
 
 export default defaultOptions;

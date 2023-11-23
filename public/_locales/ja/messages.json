@@ -488,6 +488,9 @@
     "optionsClose": {
         "message": "閉じる"
     },
+    "optionsTranslateIframeContent": {
+        "message": "iframe内の内容を翻訳する"
+    },
     "themePreset": {
         "message": "プリセット"
     },

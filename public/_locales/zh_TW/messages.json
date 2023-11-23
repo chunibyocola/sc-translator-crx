@@ -488,6 +488,9 @@
     "optionsClose": {
         "message": "關閉"
     },
+    "optionsTranslateIframeContent": {
+        "message": "翻譯 iframe 內的內容"
+    },
     "themePreset": {
         "message": "預設"
     },

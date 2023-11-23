@@ -109,6 +109,8 @@ let checkedNodes: WeakSet<Node> = new WeakSet();
 
 let translateDynamicContent = false;
 
+let translateIframeContent = false;
+
 let observeRootSet: Set<HTMLElement> = new Set();
 
 const observer = new MutationObserver((records) => {
@@ -297,7 +299,7 @@ const getAllParagraph = (element: HTMLElement) => {
         currentNode = { node: element.shadowRoot, index: 0, isInline: false };
     }
 
-    if (element.nodeName === 'IFRAME') {
+    if (element.nodeName === 'IFRAME' && translateIframeContent) {
         try {
             if (new URL((element as HTMLIFrameElement).src).host !== location.host) {
                 return;
@@ -519,6 +521,7 @@ export const startWebPageTranslating = ({
     targetLanguage,
     enhancement,
     translateDynamicContent: translateDC,
+    translateIframeContent: translateIC,
     customization,
     onError,
     onRequestStart,
@@ -529,6 +532,7 @@ export const startWebPageTranslating = ({
     targetLanguage: string;
     enhancement: DisplayModeEnhancement;
     translateDynamicContent: boolean;
+    translateIframeContent: boolean;
     customization: ComparisonCustomization;
     onError?: (errorReason: string) => void;
     onRequestStart?: () => void;
@@ -545,6 +549,8 @@ export const startWebPageTranslating = ({
     observeRootSet = new Set([document.body]);
 
     translateDynamicContent = translateDC;
+
+    translateIframeContent = translateIC;
 
     errorCallback = onError;
     requestStartCallback = onRequestStart;

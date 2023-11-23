@@ -161,6 +161,7 @@ export type DefaultOptions = {
     enableAutoTranslateWebpage: boolean;
     keepUsingDefaultAudioSource: boolean;
     comparisonCustomization: ComparisonCustomization;
+    translateIframeContent: boolean;
 };
 
 // Only work in "src/entry/background/install.ts".

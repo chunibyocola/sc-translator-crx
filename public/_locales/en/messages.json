@@ -488,6 +488,9 @@
     "optionsClose": {
         "message": "Close"
     },
+    "optionsTranslateIframeContent": {
+        "message": "Translate the content inside iframe"
+    },
     "themePreset": {
         "message": "Preset"
     },
