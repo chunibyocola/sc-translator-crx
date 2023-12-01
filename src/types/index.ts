@@ -162,6 +162,7 @@ export type DefaultOptions = {
     keepUsingDefaultAudioSource: boolean;
     comparisonCustomization: ComparisonCustomization;
     translateIframeContent: boolean;
+    translateRedirectedSameDomainPage: boolean;
 };
 
 // Only work in "src/entry/background/install.ts".

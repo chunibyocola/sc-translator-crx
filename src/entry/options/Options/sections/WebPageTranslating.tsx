@@ -29,7 +29,8 @@ type PickedOptions = Pick<
     'autoTranslateWebpageHostList' |
     'enableAutoTranslateWebpage' |
     'comparisonCustomization' |
-    'translateIframeContent'
+    'translateIframeContent' |
+    'translateRedirectedSameDomainPage'
 >;
 const useOptionsDependency: (keyof PickedOptions)[] = [
     'webPageTranslateSource',
@@ -44,7 +45,8 @@ const useOptionsDependency: (keyof PickedOptions)[] = [
     'autoTranslateWebpageHostList',
     'enableAutoTranslateWebpage',
     'comparisonCustomization',
-    'translateIframeContent'
+    'translateIframeContent',
+    'translateRedirectedSameDomainPage'
 ];
 
 const WebPageTranslating: React.FC = () => {
@@ -61,7 +63,8 @@ const WebPageTranslating: React.FC = () => {
         autoTranslateWebpageHostList,
         enableAutoTranslateWebpage,
         comparisonCustomization,
-        translateIframeContent
+        translateIframeContent,
+        translateRedirectedSameDomainPage
     } = useOptions<PickedOptions>(useOptionsDependency);
 
     return (
@@ -201,6 +204,18 @@ const WebPageTranslating: React.FC = () => {
                     label={getMessage('optionsTranslateIframeContent')}
                     checked={translateIframeContent}
                     onChange={v => setLocalStorage({ translateIframeContent: v })}
+                />
+                <BetaIcon />
+            </div>
+            <div className='opt-section-row flex-align-items-center'>
+                <Switch
+                    label={'Automatically translate when the domain name of the redirected page is the same as the original page'}
+                    checked={translateRedirectedSameDomainPage}
+                    onChange={(v) => {
+                        chrome.permissions.request({ permissions: ['webNavigation'] }, (granted) => {
+                            granted && setLocalStorage({ translateRedirectedSameDomainPage: v });
+                        });
+                    }}
                 />
                 <BetaIcon />
             </div>
