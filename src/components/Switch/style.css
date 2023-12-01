@@ -64,6 +64,7 @@
     transform: translateX(20px);
 }
 .switch-root + span {
+    flex: 1;
     cursor: pointer;
 }
 .switch .ripple {
