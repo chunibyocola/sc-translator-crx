@@ -209,7 +209,7 @@ const WebPageTranslating: React.FC = () => {
             </div>
             <div className='opt-section-row flex-align-items-center'>
                 <Switch
-                    label={'Automatically translate when the domain name of the redirected page is the same as the original page'}
+                    label={getMessage('optionsTranslateRedirectedSameDomainPage')}
                     checked={translateRedirectedSameDomainPage}
                     onChange={(v) => {
                         chrome.permissions.request({ permissions: ['webNavigation'] }, (granted) => {

@@ -491,6 +491,9 @@
     "optionsTranslateIframeContent": {
         "message": "Translate the content inside iframe"
     },
+    "optionsTranslateRedirectedSameDomainPage": {
+        "message": "Automatically translate when the domain name of the redirected page is the same as the original page"
+    },
     "themePreset": {
         "message": "Preset"
     },

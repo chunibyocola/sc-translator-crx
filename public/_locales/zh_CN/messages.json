@@ -491,6 +491,9 @@
     "optionsTranslateIframeContent": {
         "message": "翻译 iframe 内的内容"
     },
+    "optionsTranslateRedirectedSameDomainPage": {
+        "message": "跳转页面的域名与原页面相同时自动翻译"
+    },
     "themePreset": {
         "message": "预设"
     },

@@ -491,6 +491,9 @@
     "optionsTranslateIframeContent": {
         "message": "iframe内の内容を翻訳する"
     },
+    "optionsTranslateRedirectedSameDomainPage": {
+        "message": "リダイレクトされたページのドメイン名が元のページと同じ場合に自動的に翻訳する"
+    },
     "themePreset": {
         "message": "プリセット"
     },

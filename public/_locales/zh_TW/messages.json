@@ -108,7 +108,7 @@
         "message": "在網頁中"
     },
     "optionsDomainfilter": {
-        "message": "功能變數名稱篩選"
+        "message": "網域名稱篩選"
     },
     "optionsUseDotCn": {
         "message": "在 URL 中使用「.cn」（例如：translate.google.cn）"
@@ -447,7 +447,7 @@
         "message": "在某些不斷創建新文本內容的網站中使用網頁翻譯可能會導致擴展程序不斷發送翻譯請求。"
     },
     "optionsEnterDomainNameHere": {
-        "message": "在此輸入功能變數名稱"
+        "message": "在此輸入網域名稱"
     },
     "optionsEnableAutoTranslateWebpage": {
         "message": "啟用自動翻譯網頁"
@@ -490,6 +490,9 @@
     },
     "optionsTranslateIframeContent": {
         "message": "翻譯 iframe 內的內容"
+    },
+    "optionsTranslateRedirectedSameDomainPage": {
+        "message": "跳轉頁面的網域名稱與原頁面相同時自動翻譯"
     },
     "themePreset": {
         "message": "預設"
