@@ -69,6 +69,17 @@ export type ChromeRuntimeMessage = GenericMessage<
         from: string;
         to: string;
     }
+> | GenericMessage<
+    typeof types.SCTS_UPDATE_PAGE_TRANSLATION_STATE,
+    {
+        host: string;
+        translating: boolean;
+    }
+> | GenericMessage<
+    typeof types.SCTS_SHOULD_AUTO_TRANSLATE_THIS_PAGE,
+    {
+        host: string;
+    }
 >;
 
 export const sendTranslate = async (params: { text: string, source: string, from: string, to: string }, translateId: number) => {
@@ -103,6 +114,14 @@ export const sendAddToCollection = (text: string, translations: Translation[]) =
 
 export const sendRemoveFromCollection = (text: string) => {
     return chromeRuntimeSendMessage({ type: types.SCTS_REMOVE_FROM_COLLECTION, payload: { text } });
+};
+
+export const sendUpdatePageTranslationState = (host: string, translating: boolean) => {
+    return chromeRuntimeSendMessage({ type: types.SCTS_UPDATE_PAGE_TRANSLATION_STATE, payload: { host, translating } });
+};
+
+export const sendShouldAutoTranslateThisPage = (host: string) => {
+    return chromeRuntimeSendMessage<'Yes' | 'No'>({ type: types.SCTS_SHOULD_AUTO_TRANSLATE_THIS_PAGE, payload: { host } });
 };
 
 const chromeRuntimeSendMessage = <T = null>(message: ChromeRuntimeMessage): Promise<T | ErrorResponse> => {
