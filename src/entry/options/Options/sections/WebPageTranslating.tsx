@@ -212,9 +212,14 @@ const WebPageTranslating: React.FC = () => {
                     label={getMessage('optionsTranslateRedirectedSameDomainPage')}
                     checked={translateRedirectedSameDomainPage}
                     onChange={(v) => {
-                        chrome.permissions.request({ permissions: ['webNavigation'] }, (granted) => {
-                            granted && setLocalStorage({ translateRedirectedSameDomainPage: v });
-                        });
+                        if (v) {
+                            chrome.permissions.request({ permissions: ['webNavigation'] }, (granted) => {
+                                granted && setLocalStorage({ translateRedirectedSameDomainPage: v });
+                            });
+                        }
+                        else {
+                            chrome.permissions.remove({ permissions: ['webNavigation'] });
+                        }
                     }}
                 />
                 <BetaIcon />
