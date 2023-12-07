@@ -218,6 +218,7 @@ const WebPageTranslating: React.FC = () => {
                             });
                         }
                         else {
+                            setLocalStorage({ translateRedirectedSameDomainPage: v });
                             chrome.permissions.remove({ permissions: ['webNavigation'] });
                         }
                     }}
