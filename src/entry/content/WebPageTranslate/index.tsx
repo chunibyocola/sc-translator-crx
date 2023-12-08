@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import ErrorMessage from '../../../components/ErrorMessage';
 import IconFont from '../../../components/IconFont';
 import LanguageSelect from '../../../components/LanguageSelect';
@@ -16,6 +16,7 @@ import { closeWebPageTranslating, errorRetry, startWebPageTranslating, switchWay
 import { DefaultOptions } from '../../../types';
 import './style.css';
 import Logo from '../../../components/Logo';
+import { sendShouldAutoTranslateThisPage, sendUpdatePageTranslationState } from '../../../public/send';
 
 const wPTI18nCache = {
     switchDisplayModeOfResult: getMessage('contentSwitchDisplayModeOfResult'),
@@ -87,8 +88,8 @@ const wPTReducer = (state: WPTReducerState, action: WPTReducerAction): WPTReduce
     }
 };
 
-type PickedOptions = Pick<DefaultOptions, 'autoTranslateWebpageHostList'>;
-const useOptionsDependency: (keyof PickedOptions)[] = ['autoTranslateWebpageHostList'];
+type PickedOptions = Pick<DefaultOptions, 'autoTranslateWebpageHostList' | 'translateRedirectedSameDomainPage'>;
+const useOptionsDependency: (keyof PickedOptions)[] = ['autoTranslateWebpageHostList', 'translateRedirectedSameDomainPage'];
 
 const WebPageTranslate: React.FC = () => {
     const [langCodes, setLangCodes] = useState<LangCodes>([]);
@@ -100,7 +101,7 @@ const WebPageTranslate: React.FC = () => {
         targetLanguage: getOptions().webPageTranslateTo
     });
 
-    const { autoTranslateWebpageHostList } = useOptions<PickedOptions>(useOptionsDependency);
+    const { autoTranslateWebpageHostList, translateRedirectedSameDomainPage } = useOptions<PickedOptions>(useOptionsDependency);
 
     const hostSet = useMemo(() => {
         return new Set(autoTranslateWebpageHostList);
@@ -175,10 +176,21 @@ const WebPageTranslate: React.FC = () => {
 
         const auto = getOptions().translateDynamicContent && getOptions().enableAutoTranslateWebpage && getOptions().autoTranslateWebpageHostList.includes(host);
 
-        if (!working && auto) {
-            dispach({ type: 'active-wpt', show: !getOptions().noControlBarWhileFirstActivating, auto });
+        if (!working) {
+            if (auto) {
+                dispach({ type: 'active-wpt', show: !getOptions().noControlBarWhileFirstActivating, auto });
 
-            startProcessing();
+                startProcessing();
+            }
+            else if (getOptions().translateRedirectedSameDomainPage) {
+                sendShouldAutoTranslateThisPage(location.host).then((response) => {
+                    if (response === 'Yes') {
+                        dispach({ type: 'active-wpt', show: !getOptions().noControlBarWhileFirstActivating, auto });
+
+                        startProcessing();
+                    }
+                });
+            }
         }
     });
 
@@ -211,6 +223,35 @@ const WebPageTranslate: React.FC = () => {
             return total;
         }, {}));
     }, [source]);
+
+    const worked = useRef(false);
+    useEffect(() => {
+        if (!translateRedirectedSameDomainPage) { 
+            return;
+        }
+
+        if (!worked.current && !working) {
+            return;
+        }
+
+        worked.current = true;
+
+        let timeout: ReturnType<typeof setTimeout>;
+
+        const sendUpdateState = () => {
+            sendUpdatePageTranslationState(location.host, working);
+
+            if (working) {
+                timeout = setTimeout(sendUpdateState, 15000);
+            }
+        };
+
+        sendUpdateState();
+
+        return () => {
+            clearTimeout(timeout);
+        }
+    }, [working, translateRedirectedSameDomainPage]);
 
     useOnRuntimeMessage(({ type }) => {
         switch (type) {
