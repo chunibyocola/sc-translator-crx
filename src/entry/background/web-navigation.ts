@@ -5,16 +5,6 @@ import { getLocalStorageAsync } from '../../public/utils';
 
 const pageTranslatingTabMap = new Map<number, string>();
 
-const onBeforeNavigate: (details: chrome.webNavigation.WebNavigationParentedCallbackDetails) => void = ({ url, tabId, frameId }) => {
-    if (frameId !== 0) {
-        return;
-    }
-
-    if (pageTranslatingTabMap.has(tabId) && new URL(url).host !== pageTranslatingTabMap.get(tabId)) {
-        pageTranslatingTabMap.delete(tabId);
-    }
-};
-
 const onCreatedNavigationTarget: (details: chrome.webNavigation.WebNavigationSourceCallbackDetails) => void = ({ url, tabId, sourceTabId, sourceFrameId }) => {
     if (sourceFrameId !== 0) {
         return;
@@ -24,6 +14,18 @@ const onCreatedNavigationTarget: (details: chrome.webNavigation.WebNavigationSou
 
     if (pageTranslatingTabMap.has(sourceTabId) && host === pageTranslatingTabMap.get(sourceTabId)) {
         pageTranslatingTabMap.set(tabId, host);
+    }
+};
+
+const onCommitted: (details: chrome.webNavigation.WebNavigationTransitionCallbackDetails) => void = ({ url, tabId, frameId, transitionType }) => {
+    if (frameId !== 0) {
+        return;
+    }
+
+    if (pageTranslatingTabMap.has(tabId)) {
+        if (new URL(url).host !== pageTranslatingTabMap.get(tabId) || transitionType !== 'link') {
+            pageTranslatingTabMap.delete(tabId);
+        }
     }
 };
 
@@ -65,8 +67,8 @@ const runtimeOnMessage: RuntimeOnMessageCallback = ({ type, payload }, sender, s
 };
 
 const startTranslatingRedirectedSameDomainPage = async () => {
-    chrome.webNavigation?.onBeforeNavigate.addListener(onBeforeNavigate);
     chrome.webNavigation?.onCreatedNavigationTarget.addListener(onCreatedNavigationTarget);
+    chrome.webNavigation?.onCommitted.addListener(onCommitted);
     chrome.tabs.onRemoved.addListener(tabsOnRemoved);
     chrome.runtime.onMessage.addListener(runtimeOnMessage);
 
@@ -85,8 +87,8 @@ const startTranslatingRedirectedSameDomainPage = async () => {
 };
 
 const stopTranslatingRedirectedSameDomainPage = () => {
-    chrome.webNavigation?.onBeforeNavigate.removeListener(onBeforeNavigate);
     chrome.webNavigation?.onCreatedNavigationTarget.removeListener(onCreatedNavigationTarget);
+    chrome.webNavigation?.onCommitted.removeListener(onCommitted);
     chrome.tabs.onRemoved.removeListener(tabsOnRemoved);
     chrome.runtime.onMessage.removeListener(runtimeOnMessage);
 
