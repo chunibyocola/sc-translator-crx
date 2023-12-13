@@ -76,7 +76,8 @@ let displayModeEnhancement: DisplayModeEnhancement = {
     oAndT_NonDiscrete: false,
     oAndT_paragraphWrap: false,
     oAndT_hideSameLanguage: false,
-    t_Hovering: false
+    t_Hovering: false,
+    t_hoveringWithKeyPressing: false
 };
 
 let comparisonCustomization: ComparisonCustomization = {
@@ -253,6 +254,22 @@ const intersectionObserver = new IntersectionObserver((entries) => {
     doTranslate && translateInViewPortParagraphs();
 });
 
+let ctrlKeyPressing = false;
+const onKeyDown: (ev: KeyboardEvent) => any = e => e.key === 'Control' && !ctrlKeyPressing && (ctrlKeyPressing = true);
+const onKeyUp: (ev: KeyboardEvent) => any = e => e.key === 'Control' && ctrlKeyPressing && (ctrlKeyPressing = false);
+const startCtrlKeyPressingListener = () => {
+    observeRootSet.forEach((root) => {
+        root.ownerDocument.defaultView?.addEventListener('keydown', onKeyDown);
+        root.ownerDocument.defaultView?.addEventListener('keyup', onKeyUp);
+    });
+};
+const stopCtrlKeyPressingListener = () => {
+    observeRootSet.forEach((root) => {
+        root.ownerDocument.defaultView?.removeEventListener('keydown', onKeyDown);
+        root.ownerDocument.defaultView?.removeEventListener('keyup', onKeyUp);
+    });
+};
+
 const newPageTranslateItem = (text: string, textNodes: Text[], codeTexts: PageTranslateItemEnity['codeTexts'], pNode?: HTMLParagraphElement) => {
     const searchIndex = text.search(/[^\s]/);
 
@@ -315,6 +332,12 @@ const getAllParagraph = (element: HTMLElement) => {
             currentNode = { node: contentBody, index: 0, isInline: false };
 
             addObservationTarget(contentBody);
+
+            if ((wayOfFontsDisplaying === 0 && displayModeEnhancement.o_Hovering) || (wayOfFontsDisplaying === 2 && displayModeEnhancement.t_Hovering)) {
+                contentBody.ownerDocument.defaultView?.addEventListener('mousemove', onWindowMouseMove);
+            }
+
+            displayModeEnhancement.t_hoveringWithKeyPressing && startCtrlKeyPressingListener();
 
             contentBody.ownerDocument.defaultView?.addEventListener('scroll', onWindowScroll, true);
         }
@@ -574,6 +597,8 @@ export const startWebPageTranslating = ({
 
     translateInViewPortParagraphs();
 
+    displayModeEnhancement.t_hoveringWithKeyPressing && startCtrlKeyPressingListener();
+
     observeRootSet.forEach(root => root.ownerDocument.defaultView?.addEventListener('scroll', onWindowScroll, true));
 
     if ((wayOfFontsDisplaying === 0 && displayModeEnhancement.o_Hovering) || (wayOfFontsDisplaying === 2 && displayModeEnhancement.t_Hovering)) {
@@ -589,6 +614,34 @@ const onWindowScroll = () => {
     translateInViewPortParagraphs();
 };
 
+const hidePanel = () => {
+    clearAllTimeout();
+
+    hoveringItem = null;
+    hidePanelTimeout = setTimeout(() => {
+        if (displayingItem) {
+            if (wayOfFontsDisplaying === 0) {
+                pageTranslateItemMap[displayingItem].fontsNodes.forEach(([v]) => {
+                    v.style.backgroundColor = '';
+                    v.style.boxShadow = '';
+                });
+            }
+            else if (wayOfFontsDisplaying === 2) {
+                pageTranslateItemMap[displayingItem].fontsNodes.forEach(([,, v]) => {
+                    v.style.backgroundColor = '';
+                    v.style.boxShadow = '';
+                });
+            }
+        }
+        displayingItem = null;
+        if (panelElement) {
+            panelElement.style.display = 'none';
+        }
+
+        hidePanelTimeout = null;
+    }, 500);
+};
+
 const onWindowMouseMove = (e: MouseEvent) => {
     const element = e.target as HTMLElement;
     const key = (element as ScWebpageTranslationElement)._ScWebpageTranslationKey;
@@ -598,6 +651,14 @@ const onWindowMouseMove = (e: MouseEvent) => {
             clearAllTimeout();
         }
         else if (hoveringItem !== key) {
+            if (wayOfFontsDisplaying === 2 && displayModeEnhancement.t_hoveringWithKeyPressing && !ctrlKeyPressing) {
+                if ((displayingItem || showPanelTimeout) && !hidePanelTimeout) {
+                    hidePanel();
+                }
+
+                return;
+            }
+
             clearAllTimeout();
 
             showPanelTimeout = setTimeout(() => {
@@ -692,31 +753,7 @@ const onWindowMouseMove = (e: MouseEvent) => {
         hoveringItem = key;
     }
     else if ((displayingItem || showPanelTimeout) && !hidePanelTimeout) {
-        clearAllTimeout();
-
-        hoveringItem = null;
-        hidePanelTimeout = setTimeout(() => {
-            if (displayingItem) {
-                if (wayOfFontsDisplaying === 0) {
-                    pageTranslateItemMap[displayingItem].fontsNodes.forEach(([v]) => {
-                        v.style.backgroundColor = '';
-                        v.style.boxShadow = '';
-                    });
-                }
-                else if (wayOfFontsDisplaying === 2) {
-                    pageTranslateItemMap[displayingItem].fontsNodes.forEach(([,, v]) => {
-                        v.style.backgroundColor = '';
-                        v.style.boxShadow = '';
-                    });
-                }
-            }
-            displayingItem = null;
-            if (panelElement) {
-                panelElement.style.display = 'none';
-            }
-
-            hidePanelTimeout = null;
-        }, 500);
+        hidePanel();
     }
     else if (hoveringItem) {
         hoveringItem = null;
@@ -762,6 +799,8 @@ export const closeWebPageTranslating = () => {
         panelElement.parentElement?.removeChild(panelElement);
         panelElement = null;
     }
+
+    displayModeEnhancement.t_hoveringWithKeyPressing && stopCtrlKeyPressingListener();
 
     observeRootSet.forEach(root => root.ownerDocument.defaultView?.removeEventListener('scroll', onWindowScroll, true));
 
