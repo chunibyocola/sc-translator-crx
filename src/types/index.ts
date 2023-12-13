@@ -84,6 +84,7 @@ export type DisplayModeEnhancement = {
     oAndT_paragraphWrap: boolean;
     oAndT_hideSameLanguage: boolean;
     t_Hovering: boolean;
+    t_hoveringWithKeyPressing: boolean;
 };
 
 export type ComparisonCustomization = {

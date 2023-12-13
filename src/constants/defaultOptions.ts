@@ -74,7 +74,8 @@ const defaultOptions: DefaultOptions = {
         oAndT_NonDiscrete: false,
         oAndT_paragraphWrap: true,
         oAndT_hideSameLanguage: false,
-        t_Hovering: true
+        t_Hovering: true,
+        t_hoveringWithKeyPressing: false
     },
     customWebpageTranslateSourceList: [],
     translateDynamicContent: true,
