@@ -198,7 +198,7 @@ const WebPageTranslating: React.FC = () => {
                         />
                         <div className='mt10-ml30'>
                             <Checkbox
-                                label={'Display original text only when "Ctrl" key is pressed at the same time'}
+                                label={getMessage('optionsDisplayOriginalTextWhenCtrlPressed')}
                                 checked={displayModeEnhancement.t_hoveringWithKeyPressing}
                                 onChange={v => setLocalStorage({ displayModeEnhancement: { ...displayModeEnhancement, t_hoveringWithKeyPressing: v } })}
                             />

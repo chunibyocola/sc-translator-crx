@@ -494,6 +494,9 @@
     "optionsTranslateRedirectedSameDomainPage": {
         "message": "跳轉頁面的網域名稱與原頁面相同時自動翻譯"
     },
+    "optionsDisplayOriginalTextWhenCtrlPressed": {
+        "message": "僅在同時按住「Ctrl」鍵時顯示原文"
+    },
     "themePreset": {
         "message": "預設"
     },

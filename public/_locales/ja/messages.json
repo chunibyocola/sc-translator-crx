@@ -494,6 +494,9 @@
     "optionsTranslateRedirectedSameDomainPage": {
         "message": "リダイレクトされたページのドメイン名が元のページと同じ場合に自動的に翻訳する"
     },
+    "optionsDisplayOriginalTextWhenCtrlPressed": {
+        "message": "「Ctrl」キーを同時に押したときのみ原文を表示する"
+    },
     "themePreset": {
         "message": "プリセット"
     },

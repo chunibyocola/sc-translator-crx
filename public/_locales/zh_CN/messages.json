@@ -494,6 +494,9 @@
     "optionsTranslateRedirectedSameDomainPage": {
         "message": "跳转页面的域名与原页面相同时自动翻译"
     },
+    "optionsDisplayOriginalTextWhenCtrlPressed": {
+        "message": "仅在同时按住“Ctrl”键时显示原文"
+    },
     "themePreset": {
         "message": "预设"
     },
