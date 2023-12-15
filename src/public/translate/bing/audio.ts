@@ -7,9 +7,9 @@ import { getTranslateParams } from './get-params';
 export const audio = async ({ text, from = '', com = true }: AudioParams) => {
     from = from || await detect({ text, com });
 
-    const { IG, IID, token, key } = await getTranslateParams(com);
+    const { IG, richIID, token, key } = await getTranslateParams(com);
 
-    const url = `https://${com ? 'www' : 'cn'}.bing.com/tfettts?isVertical=1&IG=${IG}&IID=${IID}`;
+    const url = `https://${com ? 'www' : 'cn'}.bing.com/tfettts?isVertical=1&&IG=${IG}&IID=${richIID}`;
 
     const { lang, gender, name } = getXMLParams(from);
 
@@ -27,7 +27,7 @@ export const audio = async ({ text, from = '', com = true }: AudioParams) => {
         headers: {
             'content-type': 'application/x-www-form-urlencoded'
         },
-        body: `ssml=${rawXML}&` + searchParams.toString()
+        body: `&ssml=${rawXML}&` + searchParams.toString()
     });
 
     try {

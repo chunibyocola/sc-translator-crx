@@ -6,7 +6,7 @@ import { getTranslateParams } from './get-params';
 export const detect = async ({ text, com = true }: DetectParams): Promise<string> => {
     const { token, key, IG, IID } = await getTranslateParams(com);
 
-    const url = `https://${com ? 'www' : 'cn'}.bing.com/ttranslatev3?isVertical=1&IG=${IG}&IID=${IID}`;
+    const url = `https://${com ? 'www' : 'cn'}.bing.com/ttranslatev3?isVertical=1&&IG=${IG}&IID=${IID}`;
 
     let searchParams = new URLSearchParams();
     searchParams.append('fromLang', 'auto-detect');

@@ -72,9 +72,9 @@ type FetchFromBingParams = {
 };
 
 const fetchExampleFromBing = async ({ text, from, to, com, translation }: FetchFromBingParams & { translation: string; }): Promise<string[]> => {
-    const { token, key, IG, IID } = await getTranslateParams(com);
+    const { token, key, IG, richIID } = await getTranslateParams(com);
 
-    const url = `https://${com ? 'www' : 'cn'}.bing.com/texamplev3?isVertical=1&IG=${IG}&IID=${IID}`;
+    const url = `https://${com ? 'www' : 'cn'}.bing.com/texamplev3?isVertical=1&IG=${IG}&IID=${richIID}`;
 
     const searchParams = new URLSearchParams();
     searchParams.append('from', from);
@@ -89,7 +89,7 @@ const fetchExampleFromBing = async ({ text, from, to, com, translation }: FetchF
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: searchParams.toString()
+        body: '&' + searchParams.toString()
     });
     
     const data = await res.json();
@@ -98,9 +98,9 @@ const fetchExampleFromBing = async ({ text, from, to, com, translation }: FetchF
 };
 
 const fetchDictFromBing = async ({ text, from, to, com }: FetchFromBingParams): Promise<string[]> => {
-    const { token, key, IG, IID } = await getTranslateParams(com);
+    const { token, key, IG, richIID } = await getTranslateParams(com);
 
-    const url = `https://${com ? 'www' : 'cn'}.bing.com/tlookupv3?isVertical=1&IG=${IG}&IID=${IID}`;
+    const url = `https://${com ? 'www' : 'cn'}.bing.com/tlookupv3?isVertical=1&&IG=${IG}&IID=${richIID}`;
 
     const searchParams = new URLSearchParams();
     searchParams.append('from', from);
@@ -114,7 +114,7 @@ const fetchDictFromBing = async ({ text, from, to, com }: FetchFromBingParams): 
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: searchParams.toString()
+        body: '&' + searchParams.toString()
     });
 
     const data = await res.json();
@@ -127,7 +127,7 @@ const fetchDictFromBing = async ({ text, from, to, com }: FetchFromBingParams): 
 const fetchResultFromBing = async ({ text, from, to, com }: FetchFromBingParams) => {
     const { token, key, IG, IID } = await getTranslateParams(com);
 
-    const url = `https://${com ? 'www' : 'cn'}.bing.com/ttranslatev3?isVertical=1&IG=${IG}&IID=${IID}`;
+    const url = `https://${com ? 'www' : 'cn'}.bing.com/ttranslatev3?isVertical=1&&IG=${IG}&IID=${IID}`;
 
     const searchParams = new URLSearchParams();
     searchParams.append('fromLang', from);
@@ -141,6 +141,6 @@ const fetchResultFromBing = async ({ text, from, to, com }: FetchFromBingParams)
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: searchParams.toString()
+        body: '&' + searchParams.toString()
     });
 };

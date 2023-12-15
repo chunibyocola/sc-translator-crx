@@ -11,6 +11,8 @@ type BingParams = {
         key: number;
         token: string;
         IG: string;
+        IID: string;
+        richIID: string;
     } & UpdateTime;
     audio: {
         expiry: number;
@@ -38,6 +40,8 @@ export const initSourceParams: SourceParams = {
             key: 0,
             token: '',
             IG: 'IG',
+            IID: 'translator.5027',
+            richIID: 'translator.5024.1',
             updateTime: 0
         },
         audio: {

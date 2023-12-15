@@ -7,15 +7,13 @@ import { fetchData, getError } from '../utils';
 type PickedOptions = Pick<DefaultOptions, 'sourceParamsCache'>;
 const keys: (keyof PickedOptions)[] = ['sourceParamsCache'];
 
-const IID = 'translator.5024.1';
-
 export const getTranslateParams = async (com: boolean) => {
     const currentTime = Number(new Date());
 
     const { sourceParamsCache } = await getLocalStorageAsync<PickedOptions>(keys);
-    let { expiry, key, token, IG, updateTime } = sourceParamsCache['bing.com'].translate
+    let { expiry, key, token, IG, updateTime, IID, richIID } = sourceParamsCache['bing.com'].translate
 
-    if (updateTime <= currentTime && token && key && expiry > currentTime) { return { key, token, IG, IID }; }
+    if (updateTime <= currentTime && token && key && expiry > currentTime) { return { key, token, IG, IID, richIID }; }
 
     const res = await fetchData(`https://${com ? 'www' : 'cn'}.bing.com/translator`);
     const text = await res.text();
@@ -23,17 +21,20 @@ export const getTranslateParams = async (com: boolean) => {
     IG = text.match(/(?<=,IG:")[a-zA-Z0-9]+(?=")/)![0];
     const [tKey, tToken, tDuration] = code.split(',');
 
+    IID = text.match(/(?<=id="tta_outGDCont" data-iid=")translator\.[0-9]+(?=">)/)?.[0] ?? 'translator.5027';
+    richIID = (text.match(/(?<=id="rich_tta" data-iid=")translator\.[0-9]+(?=">)/)?.[0] ?? 'translator.5024') + '.1';
+
     key = Number(tKey);
     const duration = Number(tDuration);
     expiry = currentTime + duration;
     token = tToken;
 
     getLocalStorageAsync<PickedOptions>(keys).then(({ sourceParamsCache }) => {
-        sourceParamsCache['bing.com'].translate = { expiry, key, token, IG, updateTime: currentTime };
+        sourceParamsCache['bing.com'].translate = { expiry, key, token, IG, IID, richIID, updateTime: currentTime };
         setLocalStorage({ sourceParamsCache });
     });
 
-    return { key, token, IG, IID };
+    return { key, token, IG, IID, richIID };
 };
 
 export const getAudioParams = async (com: boolean) => {
