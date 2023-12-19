@@ -8,6 +8,7 @@ import ErrorMessage from '../ErrorMessage';
 import IconFont from '../IconFont';
 import ListenButton from '../ListenButton';
 import './style.css';
+import { BING_COM } from '../../constants/translateSource';
 
 type TranslateResultProps = {
     translateRequest: TranslateRequest;
@@ -27,7 +28,20 @@ const TranslateResult: React.FC<TranslateResultProps> = ({ translateRequest, sou
             translateRequest.status === 'init' ?
                 getMessage('contentTranslateAfterInput') :
             translateRequest.status === 'error' ?
-                <ErrorMessage errorCode={translateRequest.errorCode} retry={retry} /> :
+                <>
+                    <ErrorMessage errorCode={translateRequest.errorCode} retry={retry} />
+                    {retry && translateRequest.errorCode.includes('429') && source === BING_COM && <>
+                        <br />
+                        <span>{getMessage('sentenceBingHttp429')}</span>
+                        <a
+                            href={`https://${getOptions().useDotCn ? 'cn' : 'www'}.bing.com/translator/?ref=TThis&text=test&from=en&to=zh-Hans`}
+                            rel='noreferrer'
+                            target='_blank'
+                        >
+                            {`${getOptions().useDotCn ? 'cn' : 'www'}.bing.com/translator`}
+                        </a>
+                    </>}
+                </> :
             <>
                 {((displayOfTranslation.phonetic && translateRequest.result.from === LANG_EN)
                     || (displayOfTranslation.phonetic_nonEnglish && translateRequest.result.from !== LANG_EN))

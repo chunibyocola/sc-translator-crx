@@ -698,6 +698,9 @@
     "sentenceRefreshPage": {
         "message": "ページを更新"
     },
+    "sentenceBingHttp429": {
+        "message": "（リクエストが多すぎます）利用を継続する前に、公式サイトで翻訳し、検証を完了する必要があるかもしれない。公式サイト："
+    },
     "contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER": {
         "message": "PDFビューアでこのページを開く"
     },

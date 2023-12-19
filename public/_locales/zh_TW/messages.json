@@ -698,6 +698,9 @@
     "sentenceRefreshPage": {
         "message": "刷新頁面"
     },
+    "sentenceBingHttp429": {
+        "message": "（請求過多）你可能需要前往官網進行翻譯並完成驗證後才能繼續使用。官網："
+    },
     "contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER": {
         "message": "用 PDF 閱讀器打開此頁面"
     },

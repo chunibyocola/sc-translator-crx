@@ -698,6 +698,9 @@
     "sentenceRefreshPage": {
         "message": "Refresh page"
     },
+    "sentenceBingHttp429": {
+        "message": "(Too Many Requests) You may need to go to the official website to translate and complete the verification before you can continue to use it. Official website:"
+    },
     "contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER": {
         "message": "Open this page with PDF viewer"
     },
