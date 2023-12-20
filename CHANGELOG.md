@@ -1,3 +1,8 @@
+# 5.3.0 (2023-12-18)
+- Add "Display original text only when 'Ctrl' key is pressed at the same time" option.
+- Add "Automatically translate when the domain name of the redirected page is the same as the original page" option.
+- Add "Translate the content inside iframe" option.
+- Fix shadow root will not be reached if display of host is 'none' at first.
 # 5.2.0 (2023-09-15)
 - Add "Not displaying translation when the language of original text is the same as the target language" option.
 - Able to customize translation style in options page.
