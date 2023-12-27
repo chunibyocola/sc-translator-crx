@@ -1,7 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const paths = require('./paths');
 const ESLintPlugin = require('eslint-webpack-plugin');
@@ -46,6 +45,7 @@ module.exports = (env) => {
             path: paths.appBuild,
             filename: 'static/js/[name].js',
             chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
+            clean: true
         },
         module: {
             strictExportPresence: true,
@@ -73,7 +73,6 @@ module.exports = (env) => {
             ],
         },
         plugins: [
-            new CleanWebpackPlugin(),
             new CopyPlugin({
                 patterns: [
                     {
