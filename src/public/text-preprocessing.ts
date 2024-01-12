@@ -31,18 +31,16 @@ export const textPreprocessing = (text: string) => {
 export const selectedTextPreprocessing = (text: string) => {
     if (!text) { return text; }
 
-    text = text.replace(/[\P{L}]/ug, '');
-
     const tempText = text;
 
     try {
         afterSelectingTextRegExpList.forEach(({ pattern, flags, replacement }) => (text = text.replace(new RegExp(pattern, flags), replacement)));
-
-        return text.trim();
     }
     catch {
-        return tempText;
+        text = tempText;
     }
+
+    return text.replace(/[\P{L}]/ug, '');
 };
 
 type PickedOptions = Pick<DefaultOptions, 'textPreprocessingRegExpList' | 'textPreprocessingPreset' | 'afterSelectingTextRegExpList'>;
