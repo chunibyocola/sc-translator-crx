@@ -16,6 +16,11 @@ export type StoreCollectionValue = {
     tags?: string[];
 };
 
+type StoreName = typeof DB_STORE_COLLECTION;
+type StoreValue<T> = 
+    T extends typeof DB_STORE_COLLECTION ? StoreCollectionValue :
+    never;
+
 const scIndexedDB = (() => {
     let instance: IDBDatabase;
 
@@ -48,7 +53,7 @@ const scIndexedDB = (() => {
     };
 
     return {
-        get: async <T = any>(storeName: string, query: IDBValidKey | IDBKeyRange): Promise<undefined | T> => {
+        get: async <T extends StoreName>(storeName: T, query: IDBValidKey | IDBKeyRange): Promise<undefined | StoreValue<T>> => {
             const [store, done] = await withStore(storeName, 'readonly');
 
             let request = store.get(query);
@@ -57,7 +62,7 @@ const scIndexedDB = (() => {
 
             return request.result;
         },
-        getAll: async <T = any>(storeName: string): Promise<T[]> => {
+        getAll: async <T extends StoreName>(storeName: T): Promise<StoreValue<T>[]> => {
             const [store, done] = await withStore(storeName, 'readonly');
 
             let request = store.getAll();
@@ -66,19 +71,19 @@ const scIndexedDB = (() => {
 
             return request.result;
         },
-        add: async <T = any>(storeName: string, value: T, key?: IDBValidKey ) => {
+        add: async <T extends StoreName>(storeName: T, value: StoreValue<T>, key?: IDBValidKey ) => {
             const [store] = await withStore(storeName, 'readwrite');
 
             store.put(value, key);
         },
-        addAll: async <T = any>(storeName: string, values: T[]) => {
+        addAll: async <T extends StoreName>(storeName: T, values: StoreValue<T>[]) => {
             const [store, done] = await withStore(storeName, 'readwrite');
 
             values.forEach(value => store.put(value));
 
             await done;
         },
-        delete: async (storeName: string, query: IDBValidKey | IDBKeyRange | (IDBValidKey | IDBKeyRange)[]) => {
+        delete: async <T extends StoreName>(storeName: T, query: IDBValidKey | IDBKeyRange | (IDBValidKey | IDBKeyRange)[]) => {
             const [store, done] = await withStore(storeName, 'readwrite');
 
             Array.isArray(query) ? query.forEach((value) => store.delete(value)) : store.delete(query);

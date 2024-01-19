@@ -41,7 +41,7 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
                 onAdd={(tagName) => {
                     const nextTagSet = new Set([...collectionValue.tags ?? [], tagName]);
 
-                    scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { ...collectionValue, tags: [...nextTagSet] }).then(updateCurrentValue);
+                    scIndexedDB.add(DB_STORE_COLLECTION, { ...collectionValue, tags: [...nextTagSet] }).then(updateCurrentValue);
 
                     setAddingTag(false);
                 }}
@@ -63,7 +63,7 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
 
                             nextTagSet.delete(tagName);
 
-                            scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { ...collectionValue, tags: [...nextTagSet] }).then(updateCurrentValue);
+                            scIndexedDB.add(DB_STORE_COLLECTION, { ...collectionValue, tags: [...nextTagSet] }).then(updateCurrentValue);
                         }}
                     />
                 </div>))}
@@ -106,7 +106,7 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
                 editable={editingNote}
                 defaultNote={note}
                 onSave={(nextNote) => {
-                    scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { ...collectionValue, note: nextNote }).then(updateCurrentValue);
+                    scIndexedDB.add(DB_STORE_COLLECTION, { ...collectionValue, note: nextNote }).then(updateCurrentValue);
 
                     setNote(nextNote);
                     setEditingNote(false);
@@ -116,7 +116,7 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
                 onDelete={() => {
                     const { note: beDeletedNote, ...nextCollectionValue } = collectionValue;
 
-                    scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, nextCollectionValue).then(updateCurrentValue);
+                    scIndexedDB.add(DB_STORE_COLLECTION, nextCollectionValue).then(updateCurrentValue);
 
                     setDeletedNote(note ?? '');
 
@@ -128,7 +128,7 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
                 <Button
                     variant='text'
                     onClick={() => {
-                        scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { ...collectionValue, note: deletedNote }).then(updateCurrentValue);
+                        scIndexedDB.add(DB_STORE_COLLECTION, { ...collectionValue, note: deletedNote }).then(updateCurrentValue);
 
                         setNote(deletedNote);
                         setDeletedNote('');

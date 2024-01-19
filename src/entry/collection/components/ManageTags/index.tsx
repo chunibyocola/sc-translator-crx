@@ -42,7 +42,7 @@ const ManageTags = React.memo<ManageTagsProps>(({ onTagDeleted, collectionValues
 
                     setNextDelete(null);
 
-                    scIndexedDB.addAll<StoreCollectionValue>(DB_STORE_COLLECTION, nextCollectionValues).then(() => {
+                    scIndexedDB.addAll(DB_STORE_COLLECTION, nextCollectionValues).then(() => {
                         onTagDeleted(tagName);
                     });
                 }}

@@ -4,7 +4,7 @@ import { createSeparateWindow } from './separate-window';
 import { DefaultOptions } from '../../types';
 import { getLocalStorageAsync } from '../../public/utils';
 import { syncSettingsToOtherBrowsers } from './sync';
-import scIndexedDB, { DB_STORE_COLLECTION, StoreCollectionValue } from '../../public/sc-indexed-db';
+import scIndexedDB, { DB_STORE_COLLECTION } from '../../public/sc-indexed-db';
 import { AudioResponse, ChromeRuntimeMessage, DetectResponse, IsCollectResponse, TranslateResponse } from '../../public/send';
 
 type TypedSendResponse = (response: TranslateResponse | AudioResponse | DetectResponse | IsCollectResponse) => void;
@@ -53,7 +53,7 @@ chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sen
             text = text.trimLeft().trimRight();
 
             if (text) {
-                scIndexedDB.get<StoreCollectionValue>(DB_STORE_COLLECTION, text)
+                scIndexedDB.get(DB_STORE_COLLECTION, text)
                     .then(value => sendResponse({ text: message.payload.text, isCollected: !!value }))
                     .catch(() => sendResponse({ code: '' }));
             }
@@ -68,16 +68,16 @@ chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sen
 
             text = text.trimStart().trimEnd();
 
-            text && scIndexedDB.get<StoreCollectionValue>(DB_STORE_COLLECTION, text).then((value) => {
+            text && scIndexedDB.get(DB_STORE_COLLECTION, text).then((value) => {
                 if (value) {
                     const translationMap = new Map([...value.translations, ...translations].map((v) => ([v.source, v.translateRequest])));
 
                     const nextTranslations: typeof value.translations = [...translationMap.entries()].map(([k, v]) => ({ source: k, translateRequest: v }));
 
-                    scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { ...value, date: Number(new Date()), translations: nextTranslations });
+                    scIndexedDB.add(DB_STORE_COLLECTION, { ...value, date: Number(new Date()), translations: nextTranslations });
                 }
                 else {
-                    scIndexedDB.add<StoreCollectionValue>(DB_STORE_COLLECTION, { text, date: Number(new Date()), translations });
+                    scIndexedDB.add(DB_STORE_COLLECTION, { text, date: Number(new Date()), translations });
                 }
             });
 

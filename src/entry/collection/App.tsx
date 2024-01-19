@@ -42,7 +42,7 @@ const Collection: React.FC = () => {
     const checkedLength = useMemo(() => checked.reduce((total, current) => (total + Number(current)), 0), [checked]);
 
     const refreshCollectionValues = useCallback(() => {
-        scIndexedDB.getAll<StoreCollectionValue>(DB_STORE_COLLECTION).then(data => setCollectionValues(data));
+        scIndexedDB.getAll(DB_STORE_COLLECTION).then(data => setCollectionValues(data));
     }, []);
 
     const updateCurrentValue = useCallback(() => {
@@ -50,7 +50,7 @@ const Collection: React.FC = () => {
 
         if (!currentValueText) { return; }
 
-        scIndexedDB.getAll<StoreCollectionValue>(DB_STORE_COLLECTION).then((data) => {
+        scIndexedDB.getAll(DB_STORE_COLLECTION).then((data) => {
             const nextCurrentValue = data.find(v => v.text === currentValueText);
 
             nextCurrentValue && setCurrentValue(nextCurrentValue);
@@ -227,7 +227,7 @@ const Collection: React.FC = () => {
                             <Button
                                 variant='text'
                                 onClick={async () => {
-                                    const data = await scIndexedDB.getAll<StoreCollectionValue>(DB_STORE_COLLECTION);
+                                    const data = await scIndexedDB.getAll(DB_STORE_COLLECTION);
 
                                     scFile.saveAs(data, 'collection');
                                 }}
@@ -277,7 +277,7 @@ const Collection: React.FC = () => {
                                                 return true;
                                             });
 
-                                            await scIndexedDB.addAll<StoreCollectionValue>(DB_STORE_COLLECTION, values);
+                                            await scIndexedDB.addAll(DB_STORE_COLLECTION, values);
                                         }
                                         finally {
                                             refreshCollectionValues();
