@@ -1,7 +1,8 @@
 import { TranslateRequest } from '../types';
+import type { WebpageTranslateResult } from './web-page-translate';
 
 const DB_NAME = 'ScTranslator';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 export const DB_STORE_COLLECTION = 'collection';
 
@@ -16,9 +17,19 @@ export type StoreCollectionValue = {
     tags?: string[];
 };
 
-type StoreName = typeof DB_STORE_COLLECTION;
+export const DB_STORE_PAGE_TRANSLATION_CACHE = 'page-translation-cache';
+
+export type StorePageTranslationCacheValue = {
+    query: string;
+    key: string;
+    date: number;
+    translation: WebpageTranslateResult;
+};
+
+type StoreName = typeof DB_STORE_COLLECTION | typeof DB_STORE_PAGE_TRANSLATION_CACHE;
 type StoreValue<T> = 
     T extends typeof DB_STORE_COLLECTION ? StoreCollectionValue :
+    T extends typeof DB_STORE_PAGE_TRANSLATION_CACHE ? StorePageTranslationCacheValue :
     never;
 
 const scIndexedDB = (() => {
@@ -33,7 +44,15 @@ const scIndexedDB = (() => {
             request.onsuccess = () => resolve(request.result);
             request.onerror = () => reject(request.error);
             request.onupgradeneeded = () => {
-                request.result.createObjectStore(DB_STORE_COLLECTION, { keyPath: 'text' });
+                if (!request.result.objectStoreNames.contains(DB_STORE_COLLECTION)) {
+                    request.result.createObjectStore(DB_STORE_COLLECTION, { keyPath: 'text' });
+                }
+
+                if (!request.result.objectStoreNames.contains(DB_STORE_PAGE_TRANSLATION_CACHE)) {
+                    const pageTranslationCacheStore = request.result.createObjectStore(DB_STORE_PAGE_TRANSLATION_CACHE, { keyPath: 'query' });
+                    pageTranslationCacheStore.createIndex('date', 'date');
+                    pageTranslationCacheStore.createIndex('key', 'key');
+                }
             };
         });
 
