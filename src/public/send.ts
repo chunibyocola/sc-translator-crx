@@ -1,6 +1,7 @@
 import * as types from '../constants/chromeSendMessageTypes';
 import { EXTENSION_UPDATED } from '../constants/errorCodes';
 import { TranslateResult, Translation } from '../types';
+import type { WebpageTranslateResult } from './web-page-translate';
 
 type ErrorResponse = {
     code: string;
@@ -18,6 +19,9 @@ export type DetectResponse = GenericResponse<{
 export type IsCollectResponse = GenericResponse<{
     text: string;
     isCollected: boolean;
+}>;
+export type GetCacheResponse = GenericResponse<{
+    [K: string]: WebpageTranslateResult;
 }>;
 
 type GenericMessage<ActionType, ActionPayload> = {
@@ -80,6 +84,22 @@ export type ChromeRuntimeMessage = GenericMessage<
     {
         host: string;
     }
+> | GenericMessage<
+    typeof types.SCTS_GET_PAGE_TRANSLATION_CACHE,
+    {
+        keys: string[];
+        source: string;
+        from: string;
+        to: string;
+    }
+> | GenericMessage<
+    typeof types.SCTS_SET_PAGE_TRANSLATION_CACHE,
+    {
+        cache: { key: string; translation: WebpageTranslateResult }[];
+        source: string;
+        from: string;
+        to: string;
+    }
 >;
 
 export const sendTranslate = async (params: { text: string, source: string, from: string, to: string }, translateId: number) => {
@@ -122,6 +142,14 @@ export const sendUpdatePageTranslationState = (host: string, translating: boolea
 
 export const sendShouldAutoTranslateThisPage = (host: string) => {
     return chromeRuntimeSendMessage<'Yes' | 'No'>({ type: types.SCTS_SHOULD_AUTO_TRANSLATE_THIS_PAGE, payload: { host } });
+};
+
+export const sendGetPageTranslationCache = (keys: string[], source: string, from: string, to: string) => {
+    return chromeRuntimeSendMessage<GetCacheResponse>({ type: types.SCTS_GET_PAGE_TRANSLATION_CACHE, payload: { keys, source, from, to } });
+};
+
+export const sendSetPageTranslationCache = (cache: { key: string; translation: WebpageTranslateResult; }[], source: string, from: string, to: string) => {
+    return chromeRuntimeSendMessage({ type: types.SCTS_SET_PAGE_TRANSLATION_CACHE, payload: { cache, source, from, to } });
 };
 
 const chromeRuntimeSendMessage = <T = null>(message: ChromeRuntimeMessage): Promise<T | ErrorResponse> => {
