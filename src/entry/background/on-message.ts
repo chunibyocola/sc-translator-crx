@@ -5,9 +5,10 @@ import { DefaultOptions } from '../../types';
 import { getLocalStorageAsync } from '../../public/utils';
 import { syncSettingsToOtherBrowsers } from './sync';
 import scIndexedDB, { DB_STORE_COLLECTION } from '../../public/sc-indexed-db';
-import { AudioResponse, ChromeRuntimeMessage, DetectResponse, IsCollectResponse, TranslateResponse } from '../../public/send';
+import { AudioResponse, ChromeRuntimeMessage, DetectResponse, GetCacheResponse, IsCollectResponse, TranslateResponse } from '../../public/send';
+import { addCache, getCache } from './page-translation-cache';
 
-type TypedSendResponse = (response: TranslateResponse | AudioResponse | DetectResponse | IsCollectResponse) => void;
+type TypedSendResponse = (response: TranslateResponse | AudioResponse | DetectResponse | IsCollectResponse | GetCacheResponse) => void;
 
 chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sendResponse: TypedSendResponse) => {
     switch (message.type) {
@@ -90,6 +91,20 @@ chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sen
 
             text && scIndexedDB.delete(DB_STORE_COLLECTION, text);
 
+            return false;
+        }
+        case types.SCTS_GET_PAGE_TRANSLATION_CACHE: {
+            const { keys, source, from, to } = message.payload;
+
+            getCache(keys, source, from, to).then(data => sendResponse(data));
+
+            return true;
+        }
+        case types.SCTS_SET_PAGE_TRANSLATION_CACHE: {
+            const { cache, source, from, to } = message.payload;
+
+            addCache(cache, source, from, to);
+            
             return false;
         }
         default: return;
