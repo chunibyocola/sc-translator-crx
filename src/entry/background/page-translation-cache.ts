@@ -13,11 +13,10 @@ export const addCache = (cache: { key: string; translation: WebpageTranslateResu
 export const getCache = async (keys: string[], source: string, from: string, to: string): Promise<{ [K: string]: WebpageTranslateResult; }> => {
     const cache: { [K: string]: WebpageTranslateResult; } = {};
     const querySuffix = getQuerySuffix(source, from, to);
-    const promises = keys.map(key => scIndexedDB.get(DB_STORE_PAGE_TRANSLATION_CACHE, getQuery(key, querySuffix)));
 
-    const result = await Promise.allSettled(promises);
+    const result = await scIndexedDB.getAllByQueries(DB_STORE_PAGE_TRANSLATION_CACHE, keys.map(key => getQuery(key, querySuffix)));
 
-    result.forEach((v, i) => (v.status === 'fulfilled' && v.value?.key === keys[i] && (cache[keys[i]] = v.value.translation)));
+    result.forEach((v, i) => (v?.key === keys[i] && (cache[keys[i]] = v.translation)));
 
     return cache;
 };
