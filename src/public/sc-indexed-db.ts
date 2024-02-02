@@ -81,6 +81,17 @@ const scIndexedDB = (() => {
 
             return request.result;
         },
+        getAllByQueries: async <T extends StoreName>(storeName: T, queries: (IDBValidKey | IDBKeyRange)[]): Promise<(undefined | StoreValue<T>)[]> => {
+            const [store, done] = await withStore(storeName, 'readonly');
+
+            const requests: IDBRequest<StoreValue<T>>[] = [];
+
+            queries.forEach(query => requests.push(store.get(query)));
+
+            await done;
+
+            return requests.map(request => request.result);
+        },
         getAll: async <T extends StoreName>(storeName: T): Promise<StoreValue<T>[]> => {
             const [store, done] = await withStore(storeName, 'readonly');
 
