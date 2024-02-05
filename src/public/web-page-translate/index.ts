@@ -913,21 +913,8 @@ const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, 
 };
 
 type KeyFormat = (paragraph: string[]) => string;
-type TranslateItem = {
-    paragraphs: string[][],
-    pageTranslateList: PageTranslateItemEnity[],
-    keys: string[]
-};
-const getTranslateList = (nextTranslateList: PageTranslateItemEnity[], keyFormat: KeyFormat, options = { maxParagraphCount: 100, maxTextLength: 1024 }) => {
-    if (nextTranslateList.length === 0) { return [] as TranslateItem[]; }
-
-    let translateList: TranslateItem[] = [{
-        paragraphs: [],
-        pageTranslateList: [],
-        keys: []
-    }];
-
-    let text = '';
+const getTranslateList = async (nextTranslateList: PageTranslateItemEnity[], keyFormat: KeyFormat, options = { maxParagraphCount: 100, maxTextLength: 1024 }) => {
+    const keyMap: Map<string, { paragraph: string[]; pageTranslateItem: PageTranslateItemEnity; }> = new Map();
 
     nextTranslateList.forEach((pageTranslateItem) => {
         const paragraph = pageTranslateItem.textNodes.map(textNode => textNode.nodeValue ?? '');
@@ -939,6 +926,16 @@ const getTranslateList = (nextTranslateList: PageTranslateItemEnity[], keyFormat
             return;
         }
 
+        keyMap.set(key, { paragraph, pageTranslateItem });
+    });
+
+    const translateList: { keys: string[]; paragraphs: string[][]; }[] = [];
+
+    let keys: string[] = [];
+    let paragraphs: string[][] = [];
+    let totalKey: string = '';
+
+    keyMap.forEach(({ paragraph, pageTranslateItem }, key) => {
         const pendingItemSet = pendingMap.get(key);
         if (pendingItemSet) {
             pendingItemSet.add(pageTranslateItem);
@@ -948,21 +945,21 @@ const getTranslateList = (nextTranslateList: PageTranslateItemEnity[], keyFormat
             pendingMap.set(key, new Set([pageTranslateItem]));
         }
 
-        const { paragraphs, pageTranslateList, keys } = translateList[translateList.length - 1];
+        if ((totalKey.length + key.length > options.maxTextLength) || (paragraphs.length + 1 > options.maxParagraphCount)) {
+            translateList.push({ keys, paragraphs });
+            keys = [];
+            paragraphs = [];
+            totalKey = '';
+        }
 
-        if ((text.length + key.length < options.maxTextLength && paragraphs.length < options.maxParagraphCount) || pageTranslateList.length === 0) {
-            paragraphs.push(paragraph);
-            pageTranslateList.push(pageTranslateItem);
-            keys.push(key);
-            text += key;
-        }
-        else {
-            translateList.push({ paragraphs: [paragraph], pageTranslateList: [pageTranslateItem], keys: [key] });
-            text = key;
-        }
+        paragraphs.push(paragraph);
+        keys.push(key);
+        totalKey += key;
     });
 
-    if (translateList.length === 1 && translateList[0].pageTranslateList.length === 0) { return []; }
+    if (keys.length && paragraphs.length && totalKey.trim()) {
+        translateList.push({ keys, paragraphs });
+    }
 
     return translateList;
 };
@@ -986,8 +983,8 @@ const getKeyFormatFn = () => {
     }
 };
 
-const startProcessing = (nextTranslateList: PageTranslateItemEnity[]) => {
-    const translateList = getTranslateList(nextTranslateList, getKeyFormatFn());
+const startProcessing = async (nextTranslateList: PageTranslateItemEnity[]) => {
+    const translateList = await getTranslateList(nextTranslateList, getKeyFormatFn());
 
     if (translateList.length === 0) { return; }
 
