@@ -497,6 +497,9 @@
     "optionsDisplayOriginalTextWhenCtrlPressed": {
         "message": "「Ctrl」キーを同時に押したときのみ原文を表示する"
     },
+    "optionsEnablePageTranslationCache": {
+        "message": "翻訳結果をディスクにキャッシュする"
+    },
     "themePreset": {
         "message": "プリセット"
     },

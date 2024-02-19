@@ -497,6 +497,9 @@
     "optionsDisplayOriginalTextWhenCtrlPressed": {
         "message": "仅在同时按住“Ctrl”键时显示原文"
     },
+    "optionsEnablePageTranslationCache": {
+        "message": "将翻译结果缓存到磁盘"
+    },
     "themePreset": {
         "message": "预设"
     },

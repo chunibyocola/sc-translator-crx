@@ -164,6 +164,7 @@ export type DefaultOptions = {
     comparisonCustomization: ComparisonCustomization;
     translateIframeContent: boolean;
     translateRedirectedSameDomainPage: boolean;
+    enablePageTranslationCache: boolean;
 };
 
 // Only work in "src/entry/background/install.ts".

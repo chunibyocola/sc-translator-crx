@@ -30,7 +30,8 @@ type PickedOptions = Pick<
     'enableAutoTranslateWebpage' |
     'comparisonCustomization' |
     'translateIframeContent' |
-    'translateRedirectedSameDomainPage'
+    'translateRedirectedSameDomainPage' |
+    'enablePageTranslationCache'
 >;
 const useOptionsDependency: (keyof PickedOptions)[] = [
     'webPageTranslateSource',
@@ -46,7 +47,8 @@ const useOptionsDependency: (keyof PickedOptions)[] = [
     'enableAutoTranslateWebpage',
     'comparisonCustomization',
     'translateIframeContent',
-    'translateRedirectedSameDomainPage'
+    'translateRedirectedSameDomainPage',
+    'enablePageTranslationCache'
 ];
 
 const WebPageTranslating: React.FC = () => {
@@ -64,7 +66,8 @@ const WebPageTranslating: React.FC = () => {
         enableAutoTranslateWebpage,
         comparisonCustomization,
         translateIframeContent,
-        translateRedirectedSameDomainPage
+        translateRedirectedSameDomainPage,
+        enablePageTranslationCache
     } = useOptions<PickedOptions>(useOptionsDependency);
 
     return (
@@ -278,6 +281,13 @@ const WebPageTranslating: React.FC = () => {
                         />
                     </div>
                 </div>
+            </div>
+            <div className='opt-section-row'>
+                <Switch
+                    label={getMessage('optionsEnablePageTranslationCache')}
+                    checked={enablePageTranslationCache}
+                    onChange={v => setLocalStorage({ enablePageTranslationCache: v })}
+                />
             </div>
         </div>
     );
