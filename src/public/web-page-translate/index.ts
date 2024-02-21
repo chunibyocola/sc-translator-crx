@@ -6,6 +6,7 @@ import { translate as googleWebTranslate } from './google/translate';
 import { translate as microsoftWebTranslate } from './microsoft/translate';
 import { translate as customWebTranslate } from './custom/translate';
 import { getError } from '../translate/utils';
+import { sendGetPageTranslationCache, sendSetPageTranslationCache } from '../send';
 
 export type WebpageTranslateResult = {
     translations: string[];
@@ -85,6 +86,8 @@ let comparisonCustomization: ComparisonCustomization = {
     underlineColor: 'rgba(144,236,233,1)',
     underlineStyle: 'solid'
 };
+
+let enablePageTranslationCache = false;
 
 let pageTranslateItemMap: { [key: number]: PageTranslateItemEnity; } = {};
 let itemMapIndex = 0;
@@ -546,6 +549,7 @@ export const startWebPageTranslating = ({
     translateDynamicContent: translateDC,
     translateIframeContent: translateIC,
     customization,
+    enableCache,
     onError,
     onRequestStart,
     onRequestFinish
@@ -557,6 +561,7 @@ export const startWebPageTranslating = ({
     translateDynamicContent: boolean;
     translateIframeContent: boolean;
     customization: ComparisonCustomization;
+    enableCache: boolean;
     onError?: (errorReason: string) => void;
     onRequestStart?: () => void;
     onRequestFinish?: () => void;
@@ -590,6 +595,8 @@ export const startWebPageTranslating = ({
     displayModeEnhancement = enhancement;
 
     comparisonCustomization = customization;
+
+    enablePageTranslationCache = enableCache;
 
     ++startFlag;
 
@@ -929,6 +936,20 @@ const getTranslateList = async (nextTranslateList: PageTranslateItemEnity[], key
         keyMap.set(key, { paragraph, pageTranslateItem });
     });
 
+    if (enablePageTranslationCache) {
+        const result = await sendGetPageTranslationCache([...keyMap.keys()], source, '', language);
+        if (!('code' in result)) {
+            const resultKeys = Object.keys(result);
+
+            resultKeys.forEach((key) => {
+                const pageTranslateItem = keyMap.get(key)?.pageTranslateItem;
+                pageTranslateItem && feedDataToPageTranslateItem(pageTranslateItem, result[key]);
+                cacheMap.set(key, result[key]);
+                keyMap.delete(key);
+            });
+        }
+    }
+
     const translateList: { keys: string[]; paragraphs: string[][]; }[] = [];
 
     let keys: string[] = [];
@@ -1015,6 +1036,10 @@ const startProcessing = async (nextTranslateList: PageTranslateItemEnity[]) => {
             if (tempCloseFlag !== closeFlag) { return; }
 
             if (keys.length !== result.length) { throw getError(`Error: "result"'s length is not the same as "paragraphs"'s.`); }
+
+            if (enablePageTranslationCache) {
+                sendSetPageTranslationCache(keys.map((key, index) => ({ key, translation: result[index] })), source, '', language);
+            }
 
             result.forEach((translation, index) => {
                 const key = keys[index];

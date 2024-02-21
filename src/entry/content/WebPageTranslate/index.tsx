@@ -134,6 +134,7 @@ const WebPageTranslate: React.FC = () => {
             translateDynamicContent: getOptions().translateDynamicContent,
             translateIframeContent: getOptions().translateIframeContent,
             customization: getOptions().comparisonCustomization,
+            enableCache: getOptions().enablePageTranslationCache,
             onError: handleError,
             onRequestStart: handleRequestStart,
             onRequestFinish: handleRequestFinish
