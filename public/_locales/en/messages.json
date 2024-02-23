@@ -500,6 +500,9 @@
     "optionsEnablePageTranslationCache": {
         "message": "Cache translation results to disk"
     },
+    "optionsEnablePageTranslationCacheDescription": {
+        "message": "Page translation will look in the cache before sending a translation request. Translating previously translated pages can speed up translation and reduce the number of translation requests."
+    },
     "themePreset": {
         "message": "Preset"
     },

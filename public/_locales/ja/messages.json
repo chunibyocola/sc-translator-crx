@@ -500,6 +500,9 @@
     "optionsEnablePageTranslationCache": {
         "message": "翻訳結果をディスクにキャッシュする"
     },
+    "optionsEnablePageTranslationCacheDescription": {
+        "message": "ページ翻訳は、翻訳リクエストを送信する前にキャッシュを検索します。以前に翻訳したページを翻訳すると、翻訳の速度が向上し、翻訳リクエストの数を減らすことができます。"
+    },
     "themePreset": {
         "message": "プリセット"
     },

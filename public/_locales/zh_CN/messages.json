@@ -500,6 +500,9 @@
     "optionsEnablePageTranslationCache": {
         "message": "将翻译结果缓存到磁盘"
     },
+    "optionsEnablePageTranslationCacheDescription": {
+        "message": "页面翻译发送翻译请求前会先在缓存中寻找。翻译曾经翻译过的页面可以加快翻译速度和减少翻译请求的数量。"
+    },
     "themePreset": {
         "message": "预设"
     },

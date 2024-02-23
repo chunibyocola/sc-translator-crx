@@ -288,6 +288,9 @@ const WebPageTranslating: React.FC = () => {
                     checked={enablePageTranslationCache}
                     onChange={v => setLocalStorage({ enablePageTranslationCache: v })}
                 />
+                <div className='item-description'>
+                    {getMessage('optionsEnablePageTranslationCacheDescription')}
+                </div>
             </div>
         </div>
     );

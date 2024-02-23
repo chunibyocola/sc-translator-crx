@@ -498,7 +498,10 @@
         "message": "僅在同時按住「Ctrl」鍵時顯示原文"
     },
     "optionsEnablePageTranslationCache": {
-        "message": "將翻譯結果緩存到磁盤"
+        "message": "將翻譯結果快取到磁碟"
+    },
+    "optionsEnablePageTranslationCacheDescription": {
+        "message": "頁面翻譯將在發送翻譯請求之前查看快取。翻譯先前翻譯的頁面可以加快翻譯速度並減少翻譯請求的數量。"
     },
     "themePreset": {
         "message": "預設"
