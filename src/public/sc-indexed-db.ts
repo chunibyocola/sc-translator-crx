@@ -119,6 +119,11 @@ const scIndexedDB = (() => {
             Array.isArray(query) ? query.forEach((value) => store.delete(value)) : store.delete(query);
 
             await done;
+        },
+        clear: async <T extends StoreName>(storeName: T) => {
+            const [store] = await withStore(storeName, 'readwrite');
+
+            store.clear();
         }
     }
 })();
