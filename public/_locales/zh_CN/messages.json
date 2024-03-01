@@ -503,6 +503,12 @@
     "optionsEnablePageTranslationCacheDescription": {
         "message": "页面翻译发送翻译请求前会先在缓存中寻找。翻译曾经翻译过的页面可以加快翻译速度和减少翻译请求的数量。"
     },
+    "optionsClearTranslationCache": {
+        "message": "清除翻译缓存"
+    },
+    "optionsConfirmClearTranslationCache": {
+        "message": "翻译缓存将被清除。"
+    },
     "themePreset": {
         "message": "预设"
     },

@@ -503,6 +503,12 @@
     "optionsEnablePageTranslationCacheDescription": {
         "message": "頁面翻譯將在發送翻譯請求之前查看快取。翻譯先前翻譯的頁面可以加快翻譯速度並減少翻譯請求的數量。"
     },
+    "optionsClearTranslationCache": {
+        "message": "清除翻譯快取"
+    },
+    "optionsConfirmClearTranslationCache": {
+        "message": "翻譯快取將被清除。"
+    },
     "themePreset": {
         "message": "預設"
     },

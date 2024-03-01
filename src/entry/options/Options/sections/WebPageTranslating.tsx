@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Checkbox from '../../../../components/Checkbox';
 import SourceSelect from '../../../../components/SourceSelect';
 import Switch from '../../../../components/Switch';
@@ -14,6 +14,9 @@ import DefaultSelect from '../../components/DefaultSelect';
 import HostList from '../../components/HostList';
 import WebPageTranslateDisplayMode from '../../components/WebPageTranslateDisplayMode';
 import CustomizeTranslation from '../../components/CustomizeTranslation';
+import Button from '../../../../components/Button';
+import scIndexedDB from '../../../../public/sc-indexed-db';
+import ConfirmDelete from '../../../collection/components/ConfirmDelete';
 
 type PickedOptions = Pick<
     DefaultOptions,
@@ -69,6 +72,8 @@ const WebPageTranslating: React.FC = () => {
         translateRedirectedSameDomainPage,
         enablePageTranslationCache
     } = useOptions<PickedOptions>(useOptionsDependency);
+
+    const [readyToClearCache, setReadyToClearCache] = useState(false);
 
     return (
         <div className='opt-section'>
@@ -290,6 +295,24 @@ const WebPageTranslating: React.FC = () => {
                 />
                 <div className='item-description'>
                     {getMessage('optionsEnablePageTranslationCacheDescription')}
+                </div>
+                <div className='mt10-ml30'>
+                    <Button
+                        variant='outlined'
+                        onClick={() => setReadyToClearCache(true)}
+                    >
+                        {getMessage('optionsClearTranslationCache')}
+                    </Button>
+                    {readyToClearCache && <ConfirmDelete
+                        onConfirm={() => {
+                            scIndexedDB.clear('page-translation-cache');
+
+                            setReadyToClearCache(false);
+                        }}
+                        onCancel={() => setReadyToClearCache(false)}
+                        onClose={() => setReadyToClearCache(false)}
+                        drawerTitle={getMessage('optionsConfirmClearTranslationCache')}
+                    />}
                 </div>
             </div>
         </div>
