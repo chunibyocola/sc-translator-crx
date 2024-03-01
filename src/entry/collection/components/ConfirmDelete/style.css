@@ -3,6 +3,24 @@
     justify-content: space-around;
     margin-bottom: 10px;
 }
+.confirm-delete {
+    background-color: #fff;
+    border-radius: 16px;
+    width: 400px;
+}
+.confirm-delete__close {
+    display: flex;
+    justify-content: flex-end;
+}
+.confirm-delete__close > button {
+    top: 5px;
+    right: 5px;
+}
+.confirm-delete__drawer-title {
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: 400;
+}
 .confirm-delete__content {
     margin: 20px 0;
 }

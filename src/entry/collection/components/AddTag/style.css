@@ -1,3 +1,16 @@
+.add-tag {
+    background-color: #fff;
+    border-radius: 16px;
+    width: 400px;
+}
+.add-tag__close {
+    display: flex;
+    justify-content: flex-end;
+}
+.add-tag__close > button {
+    top: 5px;
+    right: 5px;
+}
 .add-tag__content {
     margin: 20px;
 }
