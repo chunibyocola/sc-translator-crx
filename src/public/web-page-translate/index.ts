@@ -921,7 +921,7 @@ const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, 
 
 type KeyFormat = (paragraph: string[]) => string;
 const getTranslateList = async (nextTranslateList: PageTranslateItemEnity[], keyFormat: KeyFormat, options = { maxParagraphCount: 100, maxTextLength: 1024 }) => {
-    const keyMap: Map<string, { paragraph: string[]; pageTranslateItem: PageTranslateItemEnity; }> = new Map();
+    const keyMap: Map<string, { paragraph: string[]; }> = new Map();
 
     nextTranslateList.forEach((pageTranslateItem) => {
         const paragraph = pageTranslateItem.textNodes.map(textNode => textNode.nodeValue ?? '');
@@ -933,7 +933,16 @@ const getTranslateList = async (nextTranslateList: PageTranslateItemEnity[], key
             return;
         }
 
-        keyMap.set(key, { paragraph, pageTranslateItem });
+        const pendingItemSet = pendingMap.get(key);
+        if (pendingItemSet) {
+            pendingItemSet.add(pageTranslateItem);
+            return;
+        }
+        else {
+            pendingMap.set(key, new Set([pageTranslateItem]));
+        }
+
+        keyMap.set(key, { paragraph });
     });
 
     if (enablePageTranslationCache) {
@@ -942,10 +951,11 @@ const getTranslateList = async (nextTranslateList: PageTranslateItemEnity[], key
             const resultKeys = Object.keys(result);
 
             resultKeys.forEach((key) => {
-                const pageTranslateItem = keyMap.get(key)?.pageTranslateItem;
-                pageTranslateItem && feedDataToPageTranslateItem(pageTranslateItem, result[key]);
+                const pendingItemSet = pendingMap.get(key);
+                pendingItemSet?.forEach(item => feedDataToPageTranslateItem(item, result[key]));
                 cacheMap.set(key, result[key]);
                 keyMap.delete(key);
+                pendingMap.delete(key);
             });
         }
     }
@@ -956,14 +966,9 @@ const getTranslateList = async (nextTranslateList: PageTranslateItemEnity[], key
     let paragraphs: string[][] = [];
     let totalKey: string = '';
 
-    keyMap.forEach(({ paragraph, pageTranslateItem }, key) => {
-        const pendingItemSet = pendingMap.get(key);
-        if (pendingItemSet) {
-            pendingItemSet.add(pageTranslateItem);
+    keyMap.forEach(({ paragraph }, key) => {
+        if (!pendingMap.has(key)) {
             return;
-        }
-        else {
-            pendingMap.set(key, new Set([pageTranslateItem]));
         }
 
         if ((totalKey.length + key.length > options.maxTextLength) || (paragraphs.length + 1 > options.maxParagraphCount)) {
