@@ -1,3 +1,6 @@
+# 5.4.0 (2024-03-07)
+- Add option "Cache translation results to disk".
+- Fix "selected text" of text-preprocessing can not filter URL text.
 # 5.3.0 (2023-12-18)
 - Add "Display original text only when 'Ctrl' key is pressed at the same time" option.
 - Add "Automatically translate when the domain name of the redirected page is the same as the original page" option.
