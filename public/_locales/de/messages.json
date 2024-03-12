@@ -1,0 +1,672 @@
+{
+  "extName": {
+    "message": "ScTranslator"
+  },
+  "extDescription": {
+    "message": "Übersetze ausgewählten Text mit mehreren Quellen, übersetze Webseiten mit 3 Anzeigemodi... Eine All-in-One-Übersetzungserweiterung."
+  },
+  "extActivateExtensionDescription": {
+    "message": "Aktiviere die Erweiterung"
+  },
+  "extTranslateCommandDescription": {
+    "message": "Übersetze den ausgewählten Text"
+  },
+  "extListenCommandDescription": {
+    "message": "Höre den ausgewählten Text an"
+  },
+  "extCallOutCommandDescription": {
+    "message": "Aufruf der Erweiterung in der Webseite"
+  },
+  "extToggleAutoInsertResultDescription": {
+    "message": "Übersetzungsergebnisse automatisch in Webseiten einfügen"
+  },
+  "extTranslateCurrentPageDescription": {
+    "message": "Übersetze die aktuelle Seite"
+  },
+  "extOpenSeparateWindowDescription": {
+    "message": "Separates Übersetzungsfenster öffnen"
+  },
+  "extCloseCommandDescription": {
+    "message": "Erweiterung in Webseite schließen"
+  },
+  "extOpenWithPdfViewerDescription": {
+    "message": "Öffne diese Seite mit dem PDF-Viewer"
+  },
+  "extSwitchWTDisplayModeDescription": {
+    "message": "Schalte den Anzeigemodus von Webseitenübersetzungen innerhalb der Webseite um"
+  },
+  "extTogglePageTranslationStateDescription": {
+    "message": "Schaltet den Status der Seitenübersetzung der aktuellen Seite um"
+  },
+  "titleSeparateWindow": {
+    "message": "Separates Übersetzungsfenster"
+  },
+  "optionsTitle": {
+    "message": "Optionen"
+  },
+  "optionsTranslate": {
+    "message": "Übersetzen"
+  },
+  "optionsHistory": {
+    "message": "Verlauf"
+  },
+  "optionsLanguage": {
+    "message": "Sprache"
+  },
+  "optionsEnableContextMenus": {
+    "message": "Kontextmenüs aktivieren"
+  },
+  "optionsDefaultTranslateOptions": {
+    "message": "Standard-Übersetzungsoptionen"
+  },
+  "optionsSource": {
+    "message": "Quelle"
+  },
+  "optionsFrom": {
+    "message": "Ausgangssprache"
+  },
+  "optionsTo": {
+    "message": "Zielsprache"
+  },
+  "optionsTranslateDirectly": {
+    "message": "Nach Auswahl des Textes sofort übersetzen"
+  },
+  "optionsTranslateBlackListMode": {
+    "message": "Blacklist-Modus"
+  },
+  "optionsEnableHistory": {
+    "message": "Aktiviere Verlaufs-Funktion"
+  },
+  "optionsHistoryBlackListMode": {
+    "message": "Blacklist-Modus"
+  },
+  "optionsMoreFeaturesOrBugReports": {
+    "message": "Weitere Funktionen oder Fehlerberichte"
+  },
+  "optionsTheme": {
+    "message": "Darstellung"
+  },
+  "optionsDarkMode": {
+    "message": "Dunkler Modus"
+  },
+  "optionsShowButtonAfterSelect": {
+    "message": "Schaltflächen nach der Auswahl von Text anzeigen"
+  },
+  "optionsShowButtonAfterSelectDescription": {
+    "message": "Wenn Du einen Text markierst und die linke Maustaste loslässt, werden die Schaltflächen, die Du unten angekreuzt hast, angezeigt. Die Reihenfolge der Schaltflächen hängt von der Reihenfolge ab, in der sie markiert wurden. Wenn Du keine Schaltflächen anzeigen möchtest, deaktiviere einfach alle Schaltflächen."
+  },
+  "optionsAudio": {
+    "message": "Audio"
+  },
+  "optionsDefaultAudioOptions": {
+    "message": "Standard-Audiooptionen"
+  },
+  "optionsTranslateWithKeyPress": {
+    "message": "Drücke die \"Strg\"-Taste und wählen Sie den zu übersetzenden Text aus"
+  },
+  "optionsInWebPage": {
+    "message": "Integration in die Webseite"
+  },
+  "optionsDomainfilter": {
+    "message": "Domänennamen-Filterung"
+  },
+  "optionsUseDotCn": {
+    "message": "Use \".cn\" in URL (Zum Beispiel: translate.google.cn)"
+  },
+  "optionsMode": {
+    "message": "Modus"
+  },
+  "optionsMultipleTranslateMode": {
+    "message": "Mehrfach-Übersetzungsmodus"
+  },
+  "optionsSourceList": {
+    "message": "Quellenliste"
+  },
+  "optionsEnabled": {
+    "message": "Aktiviert"
+  },
+  "optionsNotEnabled": {
+    "message": "Nicht aktiviert"
+  },
+  "optionsEnablePdfViewer": {
+    "message": "PDF-Viewer aktivieren"
+  },
+  "optionsEnablePdfViewerDescription": {
+    "message": "Wenn Du diese Option aktivierst, wird diese Erweiterung die URL aller PDF-Dateien anpassen und so PDFs an einen speziellen Viewer umleiten. Mit dem PDF-Viewer kann diese Erweiterung Texte in PDF-Dateien übersetzen. Wenn Du diese Erweiterung auch für lokale PDF-Dateien aktivieren möchtest, aktiviere \"Zugriff auf Datei-URLs zulassen\" in der Erweiterungsverwaltung."
+  },
+  "optionsPreferredLanguage": {
+    "message": "Bevorzugte Sprache"
+  },
+  "optionsPreferredLanguageDescription": {
+    "message": "Wenn die Zielsprache der Übersetzung \"auto\" ist, wird der Text in die \"bevorzugte Sprache\" übersetzt. Wenn die Sprache des Textes dieselbe ist wie die \"bevorzugte Sprache\", wird er in die \"zweite bevorzugte Sprache\" übersetzt."
+  },
+  "optionsKeyboardShortcut": {
+    "message": "Tastaturkürzel"
+  },
+  "optionsCallOutCommandDescription": {
+    "message": "Mit dieser Tastenkombination kannst Du das Übersetzungsfenster aufrufen. Ist dieses bereits sichtbar, wird mit dieser Kombination der Fokus auf das Textfeld gelegt."
+  },
+  "optionsCustomizeHere": {
+    "message": "Hier anpassen"
+  },
+  "optionsButtonsPosition": {
+    "message": "Position der Schlatfläche"
+  },
+  "optionsVolume": {
+    "message": "Lautstärke"
+  },
+  "optionsPlaybackRate": {
+    "message": "Wiedergaberate"
+  },
+  "optionsPlayTestAudio": {
+    "message": "Test-Audio abspielen"
+  },
+  "optionsHideButtonAfterFixedTime": {
+    "message": "Schaltfläche nach automatisch ausblenden"
+  },
+  "optionsTheFixedTimeOfHidingButton": {
+    "message": "Dauer bis zum Ausblenden der Schaltfläche"
+  },
+  "optionsRespondToSeparateWindow": {
+    "message": "Ein separates Übersetzungsfenster verwenden"
+  },
+  "optionsRememberStwSizeAndPosition": {
+    "message": "Größe und Position des separaten Übersetzungsfensters merken"
+  },
+  "optionsStwDescription": {
+    "message": "Das separate Übersetzungsfenster verwendet das Übersetzungsfenster \"Multi-Übersetzungs-Modus\". Das separate Übersetzungsfenster kann auch mit einer Tastenkombination geöffnet werden."
+  },
+  "optionsResetSizeAndPosition": {
+    "message": "Größe und Position zurücksetzen"
+  },
+  "optionsSecondPreferredLanguage": {
+    "message": "Zweite bevorzugte Sprache"
+  },
+  "optionsPinThePanelWhileOpeningIt": {
+    "message": "Das Übersetzungsfenster anheften, nachdem es geöffnet wurde"
+  },
+  "optionsPinThePanelWhileOpeningItDescription": {
+    "message": "Das Panel wird beim Übersetzen oder nach dem Aufruf per Tastenkombination automatisch angeheftet."
+  },
+  "optionsRememberPositionOfPinnedPanel": {
+    "message": "Die Position des angehefteten Panels merken"
+  },
+  "optionsRememberPositionOfPinnedPanelDescription": {
+    "message": "Wenn Du im nicht angehefteten Zustand des Panels auf das Pinsymbol klickst, wird es automatisch an die zuletzt angeheftete Position verschoben. Wird das Panel im angehefteten Zustand verschoben, wird die aktuelle Position automatisch mit allen Seiten synchronisiert."
+  },
+  "optionsTranslatePanel": {
+    "message": "Übersetzungsfenster"
+  },
+  "optionsMaxHeightOfTranslatePanel": {
+    "message": "Maximale Höhe des Übersetzungsfensters"
+  },
+  "optionsPercentage": {
+    "message": "Prozentsatz"
+  },
+  "optionsWidthOfTranslatePanel": {
+    "message": "Breite des Übersetzungsfensters"
+  },
+  "optionsFontSizeOfTranslatePanel": {
+    "message": "Schriftgröße des Übersetzungsfensters"
+  },
+  "optionsStwAutoRespondDescription": {
+    "message": "Das separate Übersetzungsfenster wird automatisch auf die Übersetzungsanforderung reagieren, wenn Du \"Übersetzen\" des Kontextmenüs auswählst."
+  },
+  "optionsRememberHistoryPanelStatus": {
+    "message": "Den Status des Übersetzungsverlaufspanels merken"
+  },
+  "optionsTranslateDirectlyWhilePinning": {
+    "message": "Sofort übersetzen, während das Übersetzungsfenster angeheftet ist"
+  },
+  "optionsDoNotRespondInTextBox": {
+    "message": "Nicht im Textfeld antworten"
+  },
+  "optionsDoNotRespondInTextBoxDescription": {
+    "message": "Die Erweiterung zeigt keine Schaltfläche an und übersetzt nicht automatisch, wenn Du einen Text im Textfeld auswählst."
+  },
+  "optionsMore": {
+    "message": "Mehr"
+  },
+  "optionsChangeLog": {
+    "message": "Change Log"
+  },
+  "optionsAutoTranslateAfterInput": {
+    "message": "Automatisch übersetzen nach Eingabe im Eingabefeld"
+  },
+  "optionsAutoTranslateAfterInputDescription": {
+    "message": "Die Erweiterung sendet mit kurzer Verzögerung eine Übersetzungsanfrage mit dem Text, den Du in das Eingabefeld eingeben hast. Wenn Du diese Funktion deaktivierst, musst Du die Tastenkombination \"Strg + Eingabe\" verwenden, um die Übersetzungsanfrage auszulösen."
+  },
+  "optionsContextMenus": {
+    "message": "Kontextmenüs"
+  },
+  "optionsClipboard": {
+    "message": "Zwischenablage"
+  },
+  "optionsAllowExtensionToReadClipboard": {
+    "message": "Der Erweiterung den Zugriff auf die Zwischenablage erlauben"
+  },
+  "optionsAllowExtensionToReadClipboardDescription": {
+    "message": "Einige Funktionen erfordern, dass Du der Erweiterung erlaubst, die Zwischenablage zu lesen, um daraus den zu übersetzenden Text zu erhalten, z. b. \"Automatisch in das Eingabefeld einfügen\"."
+  },
+  "optionsReadClipboardAutomatically": {
+    "message": "Automatisch in das Eingabefeld einfügen"
+  },
+  "optionsReadClipboardAutomaticallyDescription": {
+    "message": "Der letzte Text aus der Zwischenablage wird beim Öffnen einer Popup-Seite oder eines separaten Übersetzungsfensters automatisch in das Eingabefeld eingefügt."
+  },
+  "optionsEnableInsertResult": {
+    "message": "Der Erweiterung das Einfügen von Übersetzungsergebnissen in Webseiten erlauben"
+  },
+  "optionsEnableInsertResultDescription": {
+    "message": "Wenn Du diese Option aktivierst, wird hinter dem Übersetzungsergebnis ein Symbol \"einfügen\" angezeigt. Wenn Du auf das Symbol klickst, fügt die Erweiterung das Übersetzungsergebnis hinter dem ausgewählten Text ein. Mit einem erneuten Klicken auf das Symbol wird das zuvor eingefügte Übersetzungsergebnis wieder entfernt."
+  },
+  "optionsBeta": {
+    "message": "Diese Funktion ist möglicherweise noch nicht vollständig entwickelt und es können Kompatibilitäts- und Zerstörungsprobleme auftreten. Wenn Du einen Fehler meldest oder einen Vorschlag für eine Funktion machen möchtest, wende dich bitte an den Entwickler."
+  },
+  "optionsAutoInsertResult": {
+    "message": "Übersetzungsergebnisse automatisch in Webseiten einfügen"
+  },
+  "optionsAutoInsertResultDescription": {
+    "message": "Nach dem Aktivieren dieser Option fügt die Erweiterung das Übersetzungsergebnis automatisch in die Webseite ein, wenn die Übersetzungsanfrage abgeschlossen ist. Du kannst diese Option über das Tastaturkürzel \"Übersetzungsergebnisse automatisch in Webseiten einfügen\" einschalten."
+  },
+  "optionsTextPreprocessing": {
+    "message": "Textvorverarbeitung"
+  },
+  "OptionenTextVorverarbeitungBeschreibung": {
+    "message": "\"Textvorverarbeitung\" verwendet reguläre Ausdrücke, um die Zeichenfolge abzugleichen und sie dann zu ersetzen. Wenn Sie mit regulären Ausdrücken nicht vertraut sind, wird nicht empfohlen, eigene reguläre Ausdrücke zu schreiben."
+  },
+  "optionsReplaceWithRegExp": {
+    "message": "Ersetzen durch regulären Ausdruck"
+  },
+  "optionsPattern": {
+    "message": "Pattern"
+  },
+  "optionsFlags": {
+    "message": "Flags"
+  },
+  "optionsReplacement": {
+    "message": "Ersetzung"
+  },
+  "optionsModify": {
+    "message": "Ändern"
+  },
+  "optionsPatternCanNotBeEmpty": {
+    "message": "Das Pattern darf nicht leer sein."
+  },
+  "optionsTestSomeText": {
+    "message": "Test some text"
+  },
+  "optionsTestSomeTextDescription": {
+    "message": "Nach Eingabe des Textes in das Textfeld links unten wird der verarbeitete Text im Textfeld rechts angezeigt."
+  },
+  "optionsConvertCamelCase": {
+    "message": "Groß- und Kleinschreibung umwandeln"
+  },
+  "optionsLearnMoreAboutTextPreprocessing": {
+    "message": "Erfahre mehr über die Textvorverarbeitung"
+  },
+  "optionsCustomizeStyle": {
+    "message": "Stil anpassen"
+  },
+  "optionsCustomizeStyleDescription": {
+    "message": "Das CSS, das Du hier eingibst, wird in alle Seiten außer der Optionsseite eingefügt."
+  },
+  "optionsCustomizeStyleNotice": {
+    "message": "Hinweis: Es gibt keine Garantie, dass Elemente oder Klassennamen nicht geändert werden. Wenn Elemente oder Klassennamen geändert werden, kann das eingegebene CSS die komplette Darstellung beeinträchtigen, so dass Sie das hier eingegebene CSS möglicherweise anpassen müssen."
+  },
+  "optionsPreview": {
+    "message": "Vorschau:"
+  },
+  "optionsButtonTranslate": {
+    "message": "Übersetzen"
+  },
+  "optionsButtonListen": {
+    "message": "Anhören"
+  },
+  "optionsButtonCopy": {
+    "message": "Kopieren"
+  },
+  "optionsWebPageTranslating": {
+    "message": "Webseite übersetzen"
+  },
+  "optionsDisplayMode": {
+    "message": "Anzeigemodus der Übersetzungsergebnisse"
+  },
+  "optionsOriginalText": {
+    "message": "Originaltext"
+  },
+  "optionsTranslation": {
+    "message": "Übersetzung"
+  },
+  "optionsWebPageTranslatingDescription": {
+    "message": "\"Webseite übersetzen\" ist eine Funktion, die die gesamte Webseite in die gewünschte Sprache übersetzen kann. Sie können die Webseitenübersetzung über das Kontextmenü oder eine Tastenkombination aktivieren. Nach der Aktivierung der Webseitenübersetzung wird eine Kontrollleiste in der unteren rechten Ecke der Seite angezeigt."
+  },
+  "optionsWebPageTranslateDirectly": {
+    "message": "Nach dem Aktivieren der Webseitenübersetzung sofort übersetzen"
+  },
+  "optionsWebPageTranslateDirectlyDescription": {
+    "message": "Wenn Du diese Option aktivierst und die Webseitenübersetzung startest, brauchst Du nicht auf die Schaltfläche \"Webseitenübersetzung starten\" zu klicken – die Webseite wird automatisch sofort übersetzt."
+  },
+  "optionsNoControlBarWhileFirstActivating": {
+    "message": "Keine Anzeige der Kontrollleiste bei der ersten Aktivierung"
+  },
+  "optionsNoControlBarWhileFirstActivatingDescription": {
+    "message": "Diese Option ist nur verfügbar, wenn Du die Option \"Nach dem Aktivieren der Webseitenübersetzung sofort übersetzen\" aktivierst. Wenn Du diese Option aktivierst, wird die Kontrollleiste bei der ersten Aktivierung von \"Webseite übersetzen\" nicht angezeigt. Nach der ersten Aktivierung kannst Du die \"Webseitenübersetzung\" erneut aktivieren, um die Kontrollleiste ein- oder auszublenden."
+  },
+  "optionsBeforeSendingTranslateRequest": {
+    "message": "Vor dem Senden der Übersetzungsanfrage"
+  },
+  "optionsBeforeSendingTranslateRequestDescription": {
+    "message": "Der zu übersetzende Text wird verarbeitet, bevor eine Übersetzungsanfrage gesendet wird."
+  },
+  "optionsAfterSelectingText": {
+    "message": "Nach der Auswahl des Textes"
+  },
+  "optionsAfterSelectingTextDescription": {
+    "message": "Der Text, den Du auf der Webseite ausgewählt hast, wird durch den regulären Ausdruck manipuliert. Wenn der Text durch hierdurch leer wird, wird die Schaltfläche nicht angezeigt und der Text wird nicht automatisch übersetzt. Nicht-Buchstaben werden standardmäßig als Leerzeichen ersetzt."
+  },
+  "optionsTranslateToTargetLanguage": {
+    "message": "In die Zielsprache übersetzen"
+  },
+  "optionsAutoPasteInTheInputBoxErrorDescription": {
+    "message": "Fehler: Die Berechtigung zum Lesen der Zwischenablage konnte nicht erteilt werden. Du musst der Erweiterung erlauben, die Zwischenablage zu lesen. Du kannst auf das Symbol rechts neben der URL-Leiste klicken, um dieser Erweiterung das Lesen der Zwischenablage zu erlauben. Du kannst die Anfrage auch über den folgenden Link zulassen:"
+  },
+  "optionsMultipleTranslateSourceListDescription": {
+    "message": "Die angekreuzte Quelle wird standardmäßig im Panel angezeigt. Die Reihenfolge der Quellen richtet sich nach der Reihenfolge, in der sie angekreuzt wurden."
+  },
+  "optionsCustomTranslateSource": {
+    "message": "Eigene Übersetzungsquelle"
+  },
+  "optionsCustomTranslateSourceDescription": {
+    "message": "Du kannst eigene Übersetzungsquellen hinzufügen."
+  },
+  "optionsCustomTranslateSourceLearn": {
+    "message": "Erfahre mehr über benutzerdefinierte Übersetzungsquellen."
+  },
+  "optionsURLCanNotBeEmpty": {
+    "message": "URL darf nicht leer sein."
+  },
+  "optionsEncourage": {
+    "message": "Wenn Du \"ScTranslator\" nützlich findest, kannst Du den Entwickler Freude machen, indem Du eine Fünf-Sterne-Bewertung im Extension Store verfasst oder das GitHub-Repository mit einem Sternchen versiehst. Vielen Dank!"
+  },
+  "optionsSyncSettingsToOtherBrowsers": {
+    "message": "Einstellungen mit anderen Browsern synchronisieren"
+  },
+  "optionsSyncSettingsToOtherBrowsersDescription": {
+    "message": "Du musst Dich mit demselben Konto anmelden, um diese Funktion zu aktivieren. Stelle sicher, dass in Deinem Konto die Synchronisierung von Erweiterungen aktiviert ist."
+  },
+  "optionsSyncSettings": {
+    "message": "Einstellungen synchronisieren"
+  },
+  "optionsDisplayOfTranslation": {
+    "message": "Anzeige der Übersetzung"
+  },
+  "optionsDisplayOfTranslationDescription": {
+    "message": "Du kannst entscheiden, welche Inhalte im Übersetzungsfenster angezeigt werden sollen."
+  },
+  "optionsEnhancementOfDisplay": {
+    "message": "Erweiterung der Anzeige"
+  },
+  "optionsAddUnderlineToTranslations": {
+    "message": "Übersetzungen unterstreichen"
+  },
+  "optionsMouseHoverOverTranslation": {
+    "message": "Den Originaltext anzeigen, wenn der Mauszeiger über der Übersetzung schwebt"
+  },
+  "optionsMouseHoverOverOriginalText": {
+    "message": "Die Übersetzung anzeigen, wenn der Mauszeiger über dem Originaltext schwebt"
+  },
+  "optionsNotDisplayingTheTranslationsDiscretely": {
+    "message": "Die Übersetzungen nicht diskret anzeigen"
+  },
+  "optionsCustomWebpageTranslateSource": {
+    "message": "Eigene Quelle für die Webseitenseitenübersetzung"
+  },
+  "optionsCustomWebpageTranslateSourceDescription": {
+    "message": "Du kannst eigene Webseiten-Übersetzungsquellen hinzufügen."
+  },
+  "optionsCustomWebpageTranslateSourceLearn": {
+    "message": "Erfahre mehr darüber, wie man eigene Webseiten-Übersetzungsquellen erstellen kann."
+  },
+  "optionsExportSettings": {
+    "message": "Einstellungen exportieren"
+  },
+  "optionsImportSettings": {
+    "message": "Einstellungen importieren"
+  },
+  "optionsFileSyncDescription": {
+    "message": "Die exportierten Einstellungen werden im Klartext in der Datei gespeichert."
+  },
+  "optionsWebpageTranslatingInstructions": {
+    "message": "Webseiten-Übersetzungsanweisungen"
+  },
+
+  "optionsTranslateDynamicContent": {
+    "message": "Dynamisch generierte Inhalte übersetzen"
+  },
+  "optionsTranslateDynamicContentDescription": {
+    "message": "Die Verwendung der Webseitenübersetzung in einigen Websites, die ständig neue Textinhalte erstellen, kann dazu führen, dass die Erweiterung ständig Übersetzungsanfragen sendet."
+  },
+  "optionsEnterDomainNameHere": {
+    "message": "Gib hier die Domainnamen ein"
+  },
+  "optionsEnableAutoTranslateWebpage": {
+    "message": "Aktiviere automatische Übersetzung von Webseiten"
+  },
+  "optionsEnableAutoTranslateWebpageDescription": {
+    "message": "Diese Option ist nur verfügbar, wenn Du die Option \"Automatische Übersetzung von Webseiten\" aktivierst. Nach der Aktivierung dieser Option wird die Schaltfläche \"Automatische Übersetzung auf dieser Website aktivieren/deaktivieren\" in der Kontrollleiste angezeigt. Wenn Du eine Website in der unten aufgeführten Domainnamenliste besuchst, wird die Seite automatisch übersetzt."
+  },
+  "optionsMaintainParagraphStructure": {
+    "message": "Absatzstruktur beibehalten"
+  },
+  "optionsTogglePageTranslationStateDescription": {
+    "message": "Mit dieser Tastenkombination kannst Du die Seitenübersetzung aktivieren. War sie bereits geöffnet, schließt sie diese Kombination"
+  },
+  "themePreset": {
+    "message": "Voreinstellung"
+  },
+  "themeTextColor": {
+    "message": "Textfarbe"
+  },
+  "themeBackgroundColor": {
+    "message": "Hintergrundfarbe"
+  },
+  "themeThemeName": {
+    "message": "Theme-Name"
+  },
+  "themeSaveColor": {
+    "message": "Farbe speichern"
+  },
+  "contentInputHere": {
+    "message": "Gib den zu übersetzenden Text ein"
+  },
+  "contentTranslateAfterInput": {
+    "message": "Nach der Eingabe übersetzen"
+  },
+  "contentResult": {
+    "message": "Ergebnis"
+  },
+  "contentHistoryTitle": {
+    "message": "Verlauf"
+  },
+  "contentNoRecord": {
+    "message": "Keine Daten"
+  },
+  "contentSwitchDisplayModeOfResult": {
+    "message": "Anzeigemodus der Übersetzungen umschalten"
+  },
+  "contentStartWebPageTranslating": {
+    "message": "Webseite übersetzen"
+  },
+  "contentCloseWebPageTranslating": {
+    "message": "Webseite übersetzen schließen"
+  },
+  "contentAddToCollection": {
+    "message": "Füge die aktuelle(n) Übersetzung(en) zur Sammlung hinzu"
+  },
+  "contentRemoveFromCollection": {
+    "message": "Aus der Sammlung entfernen"
+  },
+  "contentRestartWebpageTranslating": {
+    "message": "Webseitenübersetzung wiederholen"
+  },
+  "contentEnableAutoTranslationOnThisSite": {
+    "message": "Aktiviere die automatische Übersetzung auf dieser Website"
+  },
+  "contentDisableAutoTranslationOnThisSite": {
+    "message": "Deaktivieren Sie die automatische Übersetzung auf dieser Website"
+  },
+  "contentUpdateToCollection": {
+    "message": "Aktualisiere die aktuelle(n) Übersetzung(en) in der Sammlung"
+  },
+  "popupEnableTranslate": {
+    "message": "Aktiviere die Übersetzung auf dieser Website"
+  },
+  "popupDisableTranslate": {
+    "message": "Übersetzen auf dieser Website deaktivieren"
+  },
+  "popupEnableHistory": {
+    "message": "Verlauf auf dieser Website aktivieren"
+  },
+  "popupDisableHistory": {
+    "message": "Verlauf auf dieser Website deaktivieren"
+  },
+  "popupNotAvailable": {
+    "message": "Auf dieser Website nicht verfügbar"
+  },
+  "popupOpenOptionsPage": {
+    "message": "Optionsseite öffnen"
+  },
+  "popupEnableDarkMode": {
+    "message": "Dunkelmodus aktivieren"
+  },
+  "popupDisableDarkMode": {
+    "message": "Dunkelmodus deaktivieren"
+  },
+  "popupSwitchToTheNextTheme": {
+    "message": "Zum nächsten Theme wechseln"
+  },
+  "popupOpenCollectionPage": {
+    "message": "Sammlungsseite öffnen"
+  },
+  "collectionTitle": {
+    "message": "Sammlung"
+  },
+  "collectionSearchText": {
+    "message": "Suchtext"
+  },
+  "collectionExportCollection": {
+    "message": "Sammlung exportieren"
+  },
+  "collectionImportCollection": {
+    "message": "Sammlung importieren"
+  },
+  "collectionAddNote": {
+    "message": "Notiz hinzufügen"
+  },
+  "collectionEditNote": {
+    "message": "Notiz bearbeiten"
+  },
+  "collectionDeleteNote": {
+    "message": "Notiz löschen"
+  },
+  "collectionNoteHaveBeenDeleted": {
+    "message": "Notiz wurde gelöscht"
+  },
+  "collectionUndo": {
+    "message": "Rückgängig"
+  },
+  "collectionConfirmingDelete": {
+    "message": "Die angekreuzten Elemente werden gelöscht."
+  },
+  "wordTranslate": {
+    "message": "Übersetzen"
+  },
+  "wordRequesting": {
+    "message": "Anfrage läuft..."
+  },
+  "wordRetry": {
+    "message": "Wiederholung"
+  },
+  "wordSave": {
+    "message": "Speichern"
+  },
+  "wordCancel": {
+    "message": "Abbrechen"
+  },
+  "wordRelated": {
+    "message": "Verwandt"
+  },
+  "wordName": {
+    "message": "Name"
+  },
+  "wordResult": {
+    "message": "Ergebnis"
+  },
+  "wordDictionary": {
+    "message": "Wörterbuch"
+  },
+  "wordPhonetic": {
+    "message": "Phonetisch"
+  },
+  "wordExample": {
+    "message": "Beispiel"
+  },
+  "wordText": {
+    "message": "Text"
+  },
+  "wordDate": {
+    "message": "Datum"
+  },
+  "wordNonEnglish": {
+    "message": "Nicht-Englisch"
+  },
+  "wordConfirm": {
+    "message": "Bestätigen"
+  },
+  "sentenceAddTranslateSource": {
+    "message": "Bitte füge eine Übersetzungsquelle hinzu."
+  },
+  "sentenceNoResult": {
+    "message": "Kein Ergebnis."
+  },
+  "sentenceSearchLanguages": {
+    "message": "Sprachen suchen"
+  },
+  "sentenceRefreshPage": {
+    "message": "Seite aktualisieren"
+  },
+  "contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER": {
+    "message": "Diese Seite mit dem PDF-Viewer öffnen"
+  },
+  "contextMenus_OPEN_SEPARATE_WINDOW": {
+    "message": "Separates Übersetzungsfenster öffnen"
+  },
+  "contextMenus_TRANSLATE_SELECTION_TEXT": {
+    "message": "Übersetze den ausgewählten Text"
+  },
+  "contextMenus_LISTEN_SELECTION_TEXT": {
+    "message": "Höre den ausgewählten Text"
+  },
+  "contextMenus_TRANSLATE_CURRENT_PAGE": {
+    "message": "Übersetze die aktuelle Seite"
+  },
+  "errorCode_CONNECTION_TIMED_OUT": {
+    "message": "Fehler: Connection timed out."
+  },
+  "errorCode_RESULT_ERROR": {
+    "message": "Fehler: Server liefert ein unerwartetes Ergebnis."
+  },
+  "errorCode_LANGUAGE_NOT_SOPPORTED": {
+    "message": "Fehler: Die Übersetzungsquelle unterstützt diese Sprache nicht."
+  },
+  "errorCode_NO_RESULT": {
+    "message": "Fehler:Kein Übersetzungsergebnis."
+  },
+  "errorCode_EXTENSION_UPDATED": {
+    "message": "Fehler: Die Erweiterung wurde aktiviert. Bitte lade die Seite neu."
+  },
+  "errorCode_SOURCE_ERROR": {
+    "message": "Fehler: Übersetzungsquelle nicht gefunden."
+  }
+}
