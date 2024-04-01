@@ -2,7 +2,8 @@ import { DefaultOptions } from '../../../types';
 import { setLocalStorage } from '../../chrome-call';
 import { getLocalStorageAsync } from '../../utils';
 import { RESULT_ERROR } from '../error-codes';
-import { fetchData, getError } from '../utils';
+import { getError } from '../utils';
+import { fetchBing } from './fetch-bing';
 
 type PickedOptions = Pick<DefaultOptions, 'sourceParamsCache'>;
 const keys: (keyof PickedOptions)[] = ['sourceParamsCache'];
@@ -15,7 +16,7 @@ export const getTranslateParams = async (com: boolean) => {
 
     if (updateTime <= currentTime && token && key && expiry > currentTime) { return { key, token, IG, IID, richIID }; }
 
-    const res = await fetchData(`https://${com ? 'www' : 'cn'}.bing.com/translator`);
+    const res = await fetchBing(`https://${com ? 'www' : 'cn'}.bing.com/translator`);
     const text = await res.text();
     const code = text.match(/params_AbusePreventionHelper = \[.*?\]/g)![0].split('[')[1].replace(/"|\]/g, '');
     IG = text.match(/(?<=,IG:")[a-zA-Z0-9]+(?=")/)![0];
@@ -52,7 +53,7 @@ export const getAudioParams = async (com: boolean) => {
     const searchParams = new URLSearchParams();
     searchParams.append('token', translateToken);
     searchParams.append('key', key.toString());
-    const res = await fetchData(url, {
+    const res = await fetchBing(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'

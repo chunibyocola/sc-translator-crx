@@ -1,9 +1,10 @@
-import { fetchData, getError } from '../utils';
+import { getError } from '../utils';
 import { langCode } from './lang-code';
 import { LANGUAGE_NOT_SOPPORTED, RESULT_ERROR } from '../error-codes';
 import { TranslateParams } from '../translate-types';
 import { TranslateResult } from '../../../types';
 import { getTranslateParams } from './get-params';
+import { fetchBing } from './fetch-bing';
 
 export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '', com = true }: TranslateParams) => {
     preferredLanguage = preferredLanguage || 'en';
@@ -84,7 +85,7 @@ const fetchExampleFromBing = async ({ text, from, to, com, translation }: FetchF
     searchParams.append('key', key.toString());
     searchParams.append('translation', translation);
 
-    const res = await fetchData(url, {
+    const res = await fetchBing(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -109,7 +110,7 @@ const fetchDictFromBing = async ({ text, from, to, com }: FetchFromBingParams): 
     searchParams.append('token', token);
     searchParams.append('key', key.toString());
 
-    const res = await fetchData(url, {
+    const res = await fetchBing(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -136,7 +137,7 @@ const fetchResultFromBing = async ({ text, from, to, com }: FetchFromBingParams)
     searchParams.append('token', token);
     searchParams.append('key', key.toString());
 
-    return await fetchData(url, {
+    return await fetchBing(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'

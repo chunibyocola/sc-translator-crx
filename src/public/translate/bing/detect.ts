@@ -1,7 +1,8 @@
-import { fetchData, getError } from '../utils';
+import { getError } from '../utils';
 import { RESULT_ERROR } from '../error-codes';
 import { DetectParams } from '../translate-types';
 import { getTranslateParams } from './get-params';
+import { fetchBing } from './fetch-bing';
 
 export const detect = async ({ text, com = true }: DetectParams): Promise<string> => {
     const { token, key, IG, IID } = await getTranslateParams(com);
@@ -15,7 +16,7 @@ export const detect = async ({ text, com = true }: DetectParams): Promise<string
     searchParams.append('token', token);
     searchParams.append('key', key.toString());
 
-    const res = await fetchData(url, {
+    const res = await fetchBing(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'

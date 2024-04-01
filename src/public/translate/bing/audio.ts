@@ -1,8 +1,9 @@
-import { fetchData, getError } from '../utils';
+import { getError } from '../utils';
 import { detect } from './detect';
 import { LANGUAGE_NOT_SOPPORTED, RESULT_ERROR } from '../error-codes';
 import { AudioParams } from '../translate-types';
 import { getTranslateParams } from './get-params';
+import { fetchBing } from './fetch-bing';
 
 export const audio = async ({ text, from = '', com = true }: AudioParams) => {
     from = from || await detect({ text, com });
@@ -22,7 +23,7 @@ export const audio = async ({ text, from = '', com = true }: AudioParams) => {
     searchParams.append('token', token);
     searchParams.append('key', key.toString());
 
-    const res = await fetchData(url, {
+    const res = await fetchBing(url, {
         method: 'POST',
         headers: {
             'content-type': 'application/x-www-form-urlencoded'
