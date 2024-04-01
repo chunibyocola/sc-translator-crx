@@ -1,10 +1,9 @@
-import { fetchData, getError } from '../utils';
+import { fetchStream, getError } from '../utils';
 import { detect } from './detect';
 import { RESULT_ERROR, LANGUAGE_NOT_SOPPORTED } from '../error-codes';
 import { langCode } from './lang-code';
 import { TranslateParams } from '../translate-types';
 import { TranslateResult } from '../../../types';
-import { getTranslateParams } from './get-params';
 
 export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '' }: TranslateParams) => {
     preferredLanguage = preferredLanguage || 'en';
@@ -14,81 +13,117 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
 
     if (!(from in langCode) || !(to in langCode)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
 
-    const { token, sign } = await getTranslateParams(text);
-
-    let searchParams = new URLSearchParams();
-    searchParams.append('from', from);
-    searchParams.append('to', to);
-    searchParams.append('query', text);
-    searchParams.append('token', token);
-    searchParams.append('sign', sign);
-
-    const res = await fetchData('https://fanyi.baidu.com/v2transapi', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-        },
-        body: searchParams.toString()
-    });
-
     try {
-        const data = await res.json();
+        const data = await fetchStream('https://fanyi.baidu.com/ait/text/translate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                query: text,
+                from,
+                to,
+                reference: '',
+                corpusIds: [],
+                qcSettings: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'],
+                needPhonetic: false,
+                domain: 'common',
+                milliTimestamp: Number(new Date())
+            })
+        });
 
-        let dict: any = undefined;
-        if (data?.dict_result?.content?.[0]?.mean) {
-            dict = data.dict_result.content[0].mean.map((v: any) => (
-                `${v.pre ? v.pre + ' ' : ''}${Object.keys(v.cont)[0]}`
-            ));
-        }
-        else if (data?.dict_result?.simple_means?.symbols?.[0]?.parts?.[0]?.part) {
-            const tempDict = data.dict_result.simple_means.symbols[0].parts.map((v: any) => (
-                `${v.part} ${v.means.reduce((t: string, c: string, i: number) => (i === 0 ? `${c};` : `${t} ${c};`), '')}`
-            ));
-            Array.isArray(dict) ? (dict = dict.concat(tempDict)) : (dict = tempDict);
-        }
-        else if (data?.dict_result?.simple_means?.word_means) {
-            const tempDict = [data.dict_result.simple_means.word_means.reduce((t: string, c: string, i:number) => (
-                i === 0 ? `${c};` : `${t} ${c};`
-            ), '')];
-            Array.isArray(dict) ? (dict = dict.concat(tempDict)) : (dict = tempDict);
-        }
-
-        let phonetic = undefined;
-        if (data?.dict_result?.voice) {
-            phonetic = data.dict_result.voice.reduce((t: string, v: any) => (
-                v.en_phonic ? `${t} UK: ${v.en_phonic}` : v.us_phonic ? `${t} US: ${v.us_phonic}` : t
-            ), '').trimLeft();
-        }
-        else if (data?.dict_result?.simple_means?.symbols?.[0]) {
-            const { ph_am, ph_en, word_symbol } = data.dict_result.simple_means.symbols[0];
-            phonetic = `${ph_en ? ('UK: [' + ph_en + ']') : ''} ${ph_am ? ('US: [' + ph_am + ']') : ''} ${word_symbol ? '[' + word_symbol + ']' : ''}`.trimStart();
-        }
-
-        let related = undefined;
-        if (Array.isArray(data?.dict_result?.simple_means?.exchange?.word_proto)) {
-            related = data.dict_result.simple_means.exchange.word_proto;
-        }
-
+        let r: string[] | undefined = undefined;
         let example: string[] | undefined = undefined;
-        if (data?.liju_result?.double) {
-            try {
-                const double = (JSON.parse(data.liju_result.double).slice(0, 3) as any[]).map(v => v[0]) as [string, string, string, number, string | undefined][][];
-                example = double.map(v => v.reduce((total, item) => (
-                    `${total}${(item[3] ? '<b>' : '') + item[0] + (item[3] ? '</b>' : '') + (item[4] ?? '')}`
-                ), ''));
+        let dict: string[] | undefined = undefined;
+        let phonetic: string | undefined = undefined;
+        let related: string[] | undefined = undefined;
+
+        data.forEach((value: { data: { event: string; [K: string]: any; } }) => {
+            switch (value?.data?.event) {
+                case 'GetSentSucceed':
+                    try {
+                        const double: [string, string, string, number, string | undefined][][] = value.data.sentResult.double.slice(0, 3).map((v: any[]) => (v[0]));
+                        example = double.map(value => value.reduce((total, current) => (`${total}${current[3] === 1 ? '<b>' + current[0] + '</b>' : current[0]}${current[4] ?? ''}`), ''));
+                    }
+                    catch {
+                        example = undefined;
+                    }
+
+                    return;
+                case 'Translating':
+                    try {
+                        r = value.data.list.map((value: { dst: string; }) => (value.dst));
+                    }
+                    catch {
+                        r = undefined;
+                    }
+
+                    return;
+                case 'GetDictSucceed':
+                    try {
+                        const parts: any[] = value.data.dictResult.simple_means.symbols[0].parts;
+
+                        if (parts && (typeof parts?.[0]?.means?.[0] === 'string')) {
+                            dict = parts.map((value: { means: string[]; part: string; }) => (`${value.part} ${value.means.join('; ')}`));
+                        }
+                        else if (parts && (typeof parts?.[0]?.means?.[0]?.part === 'string')) {
+                            const s = new Map<string, string[]>();
+
+                            parts[0].means.forEach((value: { part: string; text: string; }) => {
+                                if (s.has(value.part)) {
+                                    s.get(value.part)?.push(value.text);
+                                }
+                                else {
+                                    s.set(value.part, [value.text]);
+                                }
+                            });
+
+                            dict = [];
+
+                            [...s.keys()].forEach((key) => {
+                                dict?.push(`${key ? key + ' ' : ''}${s.get(key)?.reduce((t, c, i) => (`${t}${i !== 0 ? ', ' : ''}${c}`), '')}`);
+                            });
+                        }
+                    }
+                    catch {
+                        dict = undefined;
+                    }
+
+                    try {
+                        const p: { ph_am: string; ph_en: string; word_symbol: string; } = value.data.dictResult.simple_means.symbols[0];
+                        if (p.ph_am || p.ph_en) {
+                            phonetic = `${p.ph_en ? 'UK: [' + p.ph_en  + '] ': ''}${p.ph_am ? 'US: [' + p.ph_am + '] ': ''}`;
+                        }
+                        else if (p.word_symbol) {
+                            phonetic = `[${p.word_symbol}]`;
+                        }
+                    }
+                    catch {
+                        phonetic = undefined;
+                    }
+
+                    try {
+                        if (Array.isArray(value.data.dictResult.simple_means.exchange.word_proto)) {
+                            related = value.data.dictResult.simple_means.exchange.word_proto;
+                        }
+                    }
+                    catch {
+                        related = undefined;
+                    }
+
+                    return;
             }
-            catch {
-                example = undefined;
-            }
-        }
+        });
+
+        if (!r) { throw getError(RESULT_ERROR); }
 
         const result: TranslateResult = {
             text,
-            from: data.trans_result.from,
-            to: data.trans_result.to,
+            from,
+            to,
             dict,
             phonetic,
-            result: data.trans_result.data.map((v: any) => (v.dst)),
+            result: r,
             related,
             example
         };

@@ -41,3 +41,36 @@ export const fetchData = async (url: string, init?: RequestInit) => {
 
     return res;
 };
+
+export const fetchStream = async (url: string, init?: RequestInit) => {
+    const res = await fetchData(url, init);
+
+    const reader = res.body?.getReader();
+
+    if (!reader) { throw getError('ERROR: NOT_STREAM'); }
+
+    const rs =  new ReadableStream({
+        start: (controller) => {
+            const push = async () => {
+                const { done, value } = await reader.read();
+
+                if (done) {
+                    controller.close();
+                    return;
+                }
+
+                controller.enqueue(value);
+
+                push();
+            }
+
+            push();
+        }
+    });
+
+    const result = await new Response(rs, { headers: { 'Content-Type': 'text/html' } }).text();
+
+    const re = result.split('\n\n').filter(v => v.indexOf('event: message\ndata: ') === 0).map(v => JSON.parse(v.replace('event: message\ndata: ', '')));
+
+    return re;
+};
