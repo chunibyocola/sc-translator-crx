@@ -1,3 +1,6 @@
+# 5.4.1 (2024-04-01)
+- Fix Baidu translation unavailable.
+- Auto switch "Use '.cn' in URL" option when user is using Bing translation.
 # 5.4.0 (2024-03-07)
 - Add option "Cache translation results to disk".
 - Fix "selected text" of text-preprocessing can not filter URL text.
