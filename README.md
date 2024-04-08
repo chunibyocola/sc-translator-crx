@@ -15,6 +15,7 @@ Translate with multiple translation sources at the same time / Translation histo
 - [Chrome Web Store](https://chrome.google.com/webstore/detail/sctranslator/icfnljfpacimpcbpammmbclmhenimhfc)
 - [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/ebkimaahhkeiplegpghijhgmlcdkeppf)
 - [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/sctranslator/)
+- [Download ZIP from latest release](https://github.com/chunibyocola/sc-translator-crx/releases/latest) (Unzip, then load unpacked on extensions page with developer mode enabling)
 
 ## Build
 
