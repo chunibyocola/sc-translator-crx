@@ -38,8 +38,8 @@ const MultipleSourcesDisplay: React.FC<MultipleSourcesDisplayProps> = ({ enabled
                 </div>))}
             </div>
             <div className='multiple-sources-display__preview'>
-                <div style={{marginTop: '5px', marginRight: '5px'}}>{getMessage('optionsPreview')}</div>
-                <div>
+                <div>{getMessage('optionsPreview')}</div>
+                <div className='multiple-sources-display__preview__content'>
                     {enabledSources.length > 0 ? enabledSources.map((source, index) => (<div className='multiple-sources-display__item' key={'msd_p_' + source}>
                         {index !== 0 &&  <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(-90deg)', marginRight: '5px'}} />}
                         <SourceFavicon source={source} />

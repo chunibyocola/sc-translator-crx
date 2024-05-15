@@ -2,9 +2,7 @@
     height: 30px;
     display: flex;
     align-items: center;
-}
-.translate-button-display__preview>span {
-    margin-right: 10px;
+    column-gap: 8px;
 }
 .translate-button-display__item {
     margin-right: 10px;

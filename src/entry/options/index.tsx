@@ -9,7 +9,6 @@ import defaultOptions from '../../constants/defaultOptions';
 import { initOptions } from '../../public/options';
 import { getMessage } from '../../public/i18n';
 
-document.documentElement.id = 'sc-translator-root';
 document.title = `${getMessage('optionsTitle')} - ${getMessage('extName')}`;
 
 getLocalStorageAsync<DefaultOptions>(Object.keys(defaultOptions) as (keyof DefaultOptions)[]).then((options) => {

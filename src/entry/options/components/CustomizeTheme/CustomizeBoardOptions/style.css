@@ -19,17 +19,12 @@
 }
 .customize-board-options__colors-title {
     margin: 2px;
+    display: grid;
+    grid-template-columns: 100px 100px;
 }
 .customize-board-options__colors-color {
     box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 5px 0px;
-    display: inline-block;
-    width: 100px;
     height: 20px;
-    vertical-align: middle;
-}
-.customize-board-options__colors-label {
-    display: inline-block;
-    width: 100px;
 }
 .customize-board-options__colors-head {
     margin: 7px 0;

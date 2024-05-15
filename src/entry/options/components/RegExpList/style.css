@@ -5,9 +5,6 @@
     padding: 3px;
     align-items: center;
 }
-.regexp-list__grid .iconfont + .iconfont {
-    margin-left: 10px;
-}
 .regexp-list__grid .draggable-move {
     cursor: move;
 }

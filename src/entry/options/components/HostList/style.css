@@ -6,19 +6,15 @@
 .host-list__bar {
     display: flex;
     align-items: center;
-}
-.host-list .checkbox {
-    margin-right: 10px;
+    column-gap: 8px;
 }
 .host-list__add {
     display: flex;
     flex: 1;
+    column-gap: 4px;
 }
 .host-list__add input {
     flex: 1;
-}
-.host-list__add button {
-    margin-left: 5px;
 }
 .host-list__box {
     height: 150px;
@@ -29,14 +25,15 @@
     cursor: pointer;
     display: flex;
     align-items: center;
+    column-gap: 8px;
 }
 .host-list__item:hover {
     background-color: rgba(0, 0, 0, 0.04);
 }
-.host-list__item--checked {
+.host-list__item:has(:checked) {
     background-color: rgba(25, 118, 210, 0.08);
 }
-.host-list__item--checked:hover {
+.host-list__item:has(:checked):hover {
     background-color: rgba(25, 118, 210, 0.12);
 }
 .host-list__bar, .host-list__item:not(:last-child) {

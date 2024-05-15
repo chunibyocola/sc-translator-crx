@@ -1,7 +1,7 @@
 .customize-theme {
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
+    column-gap: 8px;
 }
 .customize-theme__item-badge {
     display: flex;
@@ -17,16 +17,14 @@
     margin-bottom: 5px;
 }
 .customize-theme__item {
-    margin-right: 10px;
     width: 100px;
-    line-height: 1em;
-    font-size: 14px;
 }
 .customize-theme__item-box {
     height: 30px;
     overflow: hidden;
 }
 .customize-theme__item-box-content {
+    line-height: 1em;
     height: 100%;
     width: 100%;
     overflow: hidden;
@@ -37,7 +35,7 @@
 }
 .customize-theme__item-box-content .iconfont {
     cursor: pointer;
-    font-size: 20px !important;
+    font-size: 20px;
 }
 .customize-theme__item-box-content .not-editable {
     cursor: not-allowed;
@@ -57,7 +55,7 @@
     opacity: 1;
 }
 .customize-theme__add .iconfont {
-    font-size: 50px !important;
+    font-size: 50px;
 }
 .customize-theme__board {
     background: rgb(0, 0, 0, 0.55);
@@ -78,5 +76,5 @@
     color: #fff;
 }
 .customize-theme__board-close .iconfont {
-    font-size: 50px !important;
+    font-size: 50px;
 }

@@ -1,14 +1,16 @@
-.multiple-sources-display__item {
-    margin-right: 10px;
-    display: inline-flex;
-    align-items: center;
-    vertical-align: middle;
+.multiple-sources-display__list {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 8px;
 }
 .multiple-sources-display__preview {
-    grid-template-columns: max-content auto;
     display: grid;
-    min-height: 30px;
+    grid-template-columns: max-content auto;
+    column-gap: 4px;
+    padding: 4px 0;
 }
-.multiple-sources-display__preview .multiple-sources-display__item {
-    margin-top: 5px;
+.multiple-sources-display__preview__content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 8px;
 }

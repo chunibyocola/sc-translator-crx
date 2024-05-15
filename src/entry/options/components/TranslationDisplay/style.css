@@ -1,8 +1,10 @@
-.translation-display__list .checkbox:not(:last-child) {
-    margin-right: 10px;
+.translation-display__list {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
 }
 .translation-display__preview__item + .translation-display__preview__item {
-    margin-block-start: 0.8em;
+    margin-top: 12px;
 }
 .translation-display__preview__content {
     width: 350px;

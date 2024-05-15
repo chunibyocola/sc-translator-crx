@@ -56,7 +56,7 @@ const TranslationDisplay: React.FC<TranslationDisplayProps> = ({ displayOfTransl
                 />
             </div>
             <div className='translation-display__preview'>
-                <div className='flex-align-items-center'>
+                <div>
                     <Button
                         variant='text'
                         onClick={() => setDisplayPreview(v => !v)}

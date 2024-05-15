@@ -72,7 +72,7 @@ const HostList: React.FC<HostListProps> = ({ list, updateList }) => {
             <div className='host-list__box'>
                 {list.map((v, i) => (
                     <div
-                        className={classNames('host-list__item', checkedItems.has(v) && 'host-list__item--checked')}
+                        className='host-list__item'
                         key={i}
                         onClick={() => handleItemClick(v)}
                     >

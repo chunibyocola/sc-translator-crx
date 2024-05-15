@@ -122,12 +122,12 @@ const CustomizeTranslation: React.FC<CustomizeTranslationProps> = ({ comparisonC
                                 onChange({ ...comparisonCustomization, underlineStyle });
                             }}
                         >
-                            <span
+                            <div
                                 className='underline-style__item__example'
                                 style={{ borderBottom: `2px ${underlineStyle} rgba(147,52,230,1)` }}
                             >
                                 {underlineStyle}
-                            </span>
+                            </div>
                         </div>))}
                     </SelectOptions>
                 </div>
