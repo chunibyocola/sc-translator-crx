@@ -18,20 +18,11 @@ import './style.css';
 import WebPageTranslating from './sections/WebPageTranslating';
 import TextPreprocessing from './sections/TextPreprocessing';
 import SyncSettings from './sections/SyncSettings';
-import Logo from '../../../components/Logo';
 
 const Options: React.FC = () => {
     return (
         <div className='options'>
-            <div className='opt-nav-bar'>
-                <OptionsMenu />
-                <div className='main-title'>
-                    <div className='flex-align-items-center'>
-                        <Logo style={{fontSize: '30px', marginRight: '10px'}} />
-                        {getMessage('optionsTitle')}
-                    </div>
-                </div>
-            </div>
+            <OptionsMenu />
             <div className='sub-title'  id='theme'>{getMessage('optionsTheme')}</div>
             <Theme />
             <div className='sub-title' id='pdf'>PDF</div>

@@ -26,68 +26,62 @@ const menusItems = [
 ];
 
 const OptionsMenu: React.FC = () => {
-    const [sideBar, setSideBar] = useState(!(window.innerWidth < 1234));
+    const [showNavBarMenu, setShowNavBarMenu] = useState(false);
+    const [smallScreen, setSmallScreen] = useState(false);
 
     const signal = useSignal();
 
     const windowSize = useWindowSize();
 
     useEffect(() => {
-        setSideBar(!(window.innerWidth < 1234));
+        if (windowSize.width >= 1234) {
+            setShowNavBarMenu(false);
+            setSmallScreen(false);
+        }
+        else {
+            setSmallScreen(true);
+        }
     }, [windowSize.width]);
 
     return (
-        <>
-            {sideBar ? <SideBarMenu signal={signal} /> : <NavBarMenu signal={signal} />}
-        </>
-    );
-};
-
-type BarMenuProps = {
-    signal: ReturnType<typeof useSignal>;
-};
-
-const SideBarMenu: React.FC<BarMenuProps> = ({ signal }) => {
-    return (
-        <div className='side-bar-menu'>
-            <div className='side-bar-menu__items'>
-                {menusItems.map((item) => (<div
-                    className='options-menu__item button'
-                    key={item.id}
-                    onClick={() => signal('menu-item-click', item.id)}
-                >
-                    {item.title}
-                </div>))}
+        <div className='opt-nav-bar'>
+            <div className='main-title'>
+                <IconFont className='nav-bar-menu__icon button' onClick={() => setShowNavBarMenu(true)} iconName='#icon-menu' />
+                <Logo style={{fontSize: '30px'}} />
+                {getMessage('optionsTitle')}
             </div>
-        </div>
-    );
-};
-
-const NavBarMenu: React.FC<BarMenuProps> = ({ signal }) => {
-    const [showNavBarMenu, setShowNavBarMenu] = useState(false);
-
-    return (
-        <div className={classNames('nav-bar-menu', showNavBarMenu && 'nav-bar-menu--show')}>
-            <IconFont className='nav-bar-menu__icon button' onClick={() => setShowNavBarMenu(true)} iconName='#icon-menu' />
-            <div className='nav-bar-menu__backdrop' onClick={() => setShowNavBarMenu(false)}></div>
-            <div className='nav-bar-menu__sidebar'>
-                <div className='nav-bar-menu__sidebar-brand'>
-                    <Logo style={{fontSize: '30px', marginRight: '10px'}} />
-                    {getMessage('optionsTitle')}
-                </div>
-                <div className='nav-bar-menu__sidebar-items'>
+            <div className='side-bar-menu'>
+                <div className='side-bar-menu__items'>
                     {menusItems.map((item) => (<div
                         className='options-menu__item button'
                         key={item.id}
-                        onClick={() => {
-                            setShowNavBarMenu(false);
-                            signal('menu-item-click', item.id);
-                        }}
+                        onClick={() => signal('menu-item-click', item.id)}
                     >
                         {item.title}
                     </div>))}
                 </div>
             </div>
+            <div className={classNames('nav-bar-menu__backdrop', showNavBarMenu && 'nav-bar-menu--show')} onClick={() => setShowNavBarMenu(false)} />
+            {smallScreen && <div className={classNames('nav-bar-menu', showNavBarMenu && 'nav-bar-menu--show')}>
+                <div className='nav-bar-menu__sidebar'>
+                    <div className='nav-bar-menu__sidebar-brand main-title'>
+                        <Logo style={{fontSize: '30px'}} />
+                        {getMessage('optionsTitle')}
+                    </div>
+                    <div className='nav-bar-menu__sidebar-items'>
+                        {menusItems.map((item) => (<div
+                            className='options-menu__item button'
+                            key={item.id}
+                            onClick={() => {
+                                setShowNavBarMenu(false);
+                                signal('menu-item-click', item.id);
+                            }}
+                        >
+                            {item.title}
+                        </div>))}
+                    </div>
+                </div>
+            </div>}
         </div>
     );
 };

@@ -14,10 +14,6 @@
     margin-top: 10px;
     margin-left: 30px;
 }
-.main-title {
-    font-size: 115%;
-    font-weight: 500;
-}
 .sub-title {
     font-size: 110%;
     font-weight: 400;
@@ -51,20 +47,6 @@
 }
 .opt-section-row {
     padding: 12px 24px;
-}
-.opt-nav-bar {
-    position: fixed;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    height: 56px;
-    background: var(--bg-content);
-    color: var(--text-normal);
-    padding-left: 20px;
-    top: 0;
-    left: 0;
-    right: 0;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
 }
 input[type=text] {
     padding: 5px;
