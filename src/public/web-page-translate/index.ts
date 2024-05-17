@@ -163,6 +163,18 @@ const observer = new MutationObserver((records) => {
             [target, ...addedNodes].forEach(node => checkedNodes.delete(node));
         }
 
+        if (targeting.isTargeting && nextTarget) {
+            if (nextTarget.matches(targeting.queryUpward)) {
+                targets.add(nextTarget);
+            }
+            else {
+                const elements = nextTarget.querySelectorAll(targeting.targetSelectors);
+                elements.forEach(elt => targets.add(elt));
+            }
+
+            return;
+        }
+
         if (nextTarget && !noTranslate(nextTarget) && !targets.has(nextTarget)) {
             targets.add(nextTarget);
 
@@ -271,6 +283,14 @@ const stopCtrlKeyPressingListener = () => {
         root.ownerDocument.defaultView?.removeEventListener('keydown', onKeyDown);
         root.ownerDocument.defaultView?.removeEventListener('keyup', onKeyUp);
     });
+};
+
+// fake data
+const targetSelectors = '.font-semibold, .justify-between.p-5.sm\\:p-5.cursor-pointer.w-full.h-full, .max-w-3xl.mx-auto.text-lg';
+const targeting = {
+    isTargeting: false,
+    targetSelectors: targetSelectors,
+    queryUpward: targetSelectors + targetSelectors.split(',').join(' *,')
 };
 
 const newPageTranslateItem = (text: string, textNodes: Text[], codeTexts: PageTranslateItemEnity['codeTexts'], pNode?: HTMLParagraphElement) => {
@@ -600,7 +620,13 @@ export const startWebPageTranslating = ({
 
     ++startFlag;
 
-    getAllParagraph(element);
+    if (targeting.isTargeting) {
+        const elements = document.querySelectorAll(targeting.targetSelectors);
+        elements.forEach(elt => getAllParagraph(elt as HTMLElement));
+    }
+    else {
+        getAllParagraph(element);
+    }
 
     translateInViewPortParagraphs();
 
