@@ -163,13 +163,19 @@ const observer = new MutationObserver((records) => {
             [target, ...addedNodes].forEach(node => checkedNodes.delete(node));
         }
 
-        if (targeting.isTargeting && nextTarget) {
-            if (nextTarget.matches(targeting.queryUpward)) {
+        if (specifyContentConfig.excludeMode && nextTarget) {
+            if (nextTarget.matches(specifyContentConfig.excludeMachesSelectors)) {
+                checkedNodes.add(nextTarget);
+                return;
+            }
+        }
+
+        if (specifyContentConfig.includeMode && nextTarget) {
+            if (nextTarget.matches(specifyContentConfig.includeMachesSelectors)) {
                 targets.add(nextTarget);
             }
             else {
-                const elements = nextTarget.querySelectorAll(targeting.targetSelectors);
-                elements.forEach(elt => targets.add(elt));
+                nextTarget.querySelectorAll(specifyContentConfig.includeSelectors).forEach(elt => targets.add(elt));
             }
 
             return;
@@ -211,6 +217,10 @@ const observer = new MutationObserver((records) => {
             }
         }
     });
+
+    if (specifyContentConfig.excludeMode) {
+        targets.forEach(target => target.querySelectorAll(specifyContentConfig.excludeSelectors).forEach(elt => checkedNodes.add(elt)));
+    }
 
     targets.forEach(target => target.isConnected && intersectionObserver.observe(target));
 
@@ -285,12 +295,22 @@ const stopCtrlKeyPressingListener = () => {
     });
 };
 
+export type SpecifyContentConfig = (
+    { includeMode: false; } | { includeMode: true; includeSelectors: string; includeMachesSelectors: string; }
+) & (
+    { excludeMode: false; } | { excludeMode: true; excludeSelectors: string; excludeMachesSelectors: string; }
+);
+
 // fake data
-const targetSelectors = '.font-semibold, .justify-between.p-5.sm\\:p-5.cursor-pointer.w-full.h-full, .max-w-3xl.mx-auto.text-lg';
-const targeting = {
-    isTargeting: false,
-    targetSelectors: targetSelectors,
-    queryUpward: targetSelectors + targetSelectors.split(',').join(' *,')
+const includeSelectors = '.font-semibold, .justify-between.p-5.sm\\:p-5.cursor-pointer.w-full.h-full, .max-w-3xl.mx-auto.text-lg';
+const excludeSelectors = 'p';
+let specifyContentConfig: SpecifyContentConfig = {
+    includeMode: true,
+    includeSelectors: includeSelectors,
+    includeMachesSelectors: includeSelectors + includeSelectors.split(',').reduce((t, c, i) => (`${t}${i === 0 ? '' : ','}${c} *`), ''),
+    excludeMode: true,
+    excludeSelectors: excludeSelectors,
+    excludeMachesSelectors: excludeSelectors + excludeSelectors.split(',').reduce((t, c, i) => (`${t}${i === 0 ? '' : ','}${c} *`), ''),
 };
 
 const newPageTranslateItem = (text: string, textNodes: Text[], codeTexts: PageTranslateItemEnity['codeTexts'], pNode?: HTMLParagraphElement) => {
@@ -620,9 +640,14 @@ export const startWebPageTranslating = ({
 
     ++startFlag;
 
-    if (targeting.isTargeting) {
-        const elements = document.querySelectorAll(targeting.targetSelectors);
-        elements.forEach(elt => getAllParagraph(elt as HTMLElement));
+    let excludedElements: Set<Element> = new Set();
+    if (specifyContentConfig.excludeMode) {
+        excludedElements = new Set([...element.querySelectorAll(specifyContentConfig.excludeSelectors)]);
+        excludedElements.forEach(elt => checkedNodes.add(elt));
+    }
+
+    if (specifyContentConfig.includeMode) {
+        element.querySelectorAll(specifyContentConfig.includeSelectors).forEach(elt => !excludedElements.has(elt) && getAllParagraph(elt as HTMLElement));
     }
     else {
         getAllParagraph(element);
