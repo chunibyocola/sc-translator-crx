@@ -191,3 +191,33 @@ export const pointerDrag = ({ element, maxX = 0, maxY = 0, onMouseMove, onMouseU
     document.addEventListener('mousemove', mouseMoveListener, true);
     document.addEventListener('mouseup', mouseUpListener, true);
 };
+
+export const matchPattern = (pattern: string, hostAndPathname: string) => {
+    const match = new RegExp('^(?:(?:https|http|\\*)://)?(\\*|(?:\\*\\.)?(?:[^/*]+))?(/.*)?$').exec(pattern);
+
+    if (!match) { return false; }
+
+    let [, host, path] = match;
+
+    if (!host) { return false; }
+
+    let regex = '^';
+
+    if (host === '*') {
+        regex += '[^/]+?';
+    }
+    else {
+        if (host.substring(0, 2) === '*.') {
+            regex += '[^/]*?';
+            host = host.substring(2);
+        }
+
+        regex += host.replaceAll('.', '\\.');
+    }
+
+    if (path) {
+        regex += path.replaceAll('.', '\\.').replaceAll('*', '.*?');
+    }
+
+    return new RegExp(regex).test(hostAndPathname);
+};
