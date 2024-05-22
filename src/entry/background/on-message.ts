@@ -5,10 +5,11 @@ import { DefaultOptions } from '../../types';
 import { getLocalStorageAsync } from '../../public/utils';
 import { syncSettingsToOtherBrowsers } from './sync';
 import scIndexedDB, { DB_STORE_COLLECTION } from '../../public/sc-indexed-db';
-import { AudioResponse, ChromeRuntimeMessage, DetectResponse, GetCacheResponse, IsCollectResponse, TranslateResponse } from '../../public/send';
+import { AudioResponse, ChromeRuntimeMessage, DetectResponse, GetCacheResponse, GetSelectorsResponse, IsCollectResponse, TranslateResponse } from '../../public/send';
 import { addCache, getCache } from './page-translation-cache';
+import { getSpecifySelectors } from './page-translation-rule';
 
-type TypedSendResponse = (response: TranslateResponse | AudioResponse | DetectResponse | IsCollectResponse | GetCacheResponse) => void;
+type TypedSendResponse = (response: TranslateResponse | AudioResponse | DetectResponse | IsCollectResponse | GetCacheResponse | GetSelectorsResponse) => void;
 
 chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sendResponse: TypedSendResponse) => {
     switch (message.type) {
@@ -106,6 +107,13 @@ chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sen
             addCache(cache, source, from, to);
             
             return false;
+        }
+        case types.SCTS_GET_SPECIFY_SELECTORS: {
+            const { hostAndPathname } = message.payload;
+
+            getSpecifySelectors(hostAndPathname).then(data => sendResponse(data));
+
+            return true;
         }
         default: return;
     }
