@@ -2,7 +2,7 @@ import { TranslateRequest } from '../types';
 import type { WebpageTranslateResult } from './web-page-translate';
 
 const DB_NAME = 'ScTranslator';
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 
 export const DB_STORE_COLLECTION = 'collection';
 
@@ -26,10 +26,25 @@ export type StorePageTranslationCacheValue = {
     translation: WebpageTranslateResult;
 };
 
-type StoreName = typeof DB_STORE_COLLECTION | typeof DB_STORE_PAGE_TRANSLATION_CACHE;
+export const DB_STORE_PAGE_TRANSLATION_RULE = 'page-translation-rule';
+
+export type StorePageTranslationRuleValue = {
+    id: number;
+    patterns: string;
+    include?: string;
+    exclude?: string;
+};
+
+type StoreName = typeof DB_STORE_COLLECTION | typeof DB_STORE_PAGE_TRANSLATION_CACHE | typeof DB_STORE_PAGE_TRANSLATION_RULE;
 type StoreValue<T> = 
     T extends typeof DB_STORE_COLLECTION ? StoreCollectionValue :
     T extends typeof DB_STORE_PAGE_TRANSLATION_CACHE ? StorePageTranslationCacheValue :
+    T extends typeof DB_STORE_PAGE_TRANSLATION_RULE ? StorePageTranslationRuleValue :
+    never;
+type StoreAddValue<T> = 
+    T extends typeof DB_STORE_COLLECTION ? StoreCollectionValue :
+    T extends typeof DB_STORE_PAGE_TRANSLATION_CACHE ? StorePageTranslationCacheValue :
+    T extends typeof DB_STORE_PAGE_TRANSLATION_RULE ? Omit<StorePageTranslationRuleValue, 'id'> :
     never;
 
 const scIndexedDB = (() => {
@@ -52,6 +67,10 @@ const scIndexedDB = (() => {
                     const pageTranslationCacheStore = request.result.createObjectStore(DB_STORE_PAGE_TRANSLATION_CACHE, { keyPath: 'query' });
                     pageTranslationCacheStore.createIndex('date', 'date');
                     pageTranslationCacheStore.createIndex('key', 'key');
+                }
+
+                if (!request.result.objectStoreNames.contains(DB_STORE_PAGE_TRANSLATION_RULE)) {
+                    request.result.createObjectStore(DB_STORE_PAGE_TRANSLATION_RULE, { keyPath: 'id', autoIncrement: true });
                 }
             };
         });
@@ -101,12 +120,12 @@ const scIndexedDB = (() => {
 
             return request.result;
         },
-        add: async <T extends StoreName>(storeName: T, value: StoreValue<T>, key?: IDBValidKey ) => {
+        add: async <T extends StoreName>(storeName: T, value: StoreAddValue<T>, key?: IDBValidKey ) => {
             const [store] = await withStore(storeName, 'readwrite');
 
             store.put(value, key);
         },
-        addAll: async <T extends StoreName>(storeName: T, values: StoreValue<T>[]) => {
+        addAll: async <T extends StoreName>(storeName: T, values: StoreAddValue<T>[]) => {
             const [store, done] = await withStore(storeName, 'readwrite');
 
             values.forEach(value => store.put(value));
