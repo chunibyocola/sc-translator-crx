@@ -32,6 +32,7 @@ const TextField: React.FC<TextFieldProps> = ({ label, onChange, defaultValue, er
             <div className='text-field__input-area'>
                 <input
                     placeholder={placeholder}
+                    className={label && 'labeled-input'}
                     value={internalValue}
                     id={id}
                     type='text'

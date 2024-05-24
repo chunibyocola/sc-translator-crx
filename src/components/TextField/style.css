@@ -48,6 +48,17 @@
     width: 100%;
     color: rgba(0, 0, 0, 0.87);
 }
+.text-field input::placeholder {
+    color: currentColor;
+    opacity: 0.5;
+}
+.text-field input.labeled-input::placeholder {
+    opacity: 0;
+    transition: opacity 200ms;
+}
+.text-field input.labeled-input:focus::placeholder {
+    opacity: 0.5;
+}
 .text-field__input-area::before, .text-field__input-area::after {
     left: 0;
     right: 0;
