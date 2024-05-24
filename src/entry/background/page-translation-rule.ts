@@ -10,8 +10,13 @@ export const getSpecifySelectors = async (hostAndPathname: string) => {
     specifications.forEach(({ patterns, include, exclude }) => {
         patterns.split(',').map(v => v.trimStart().trimEnd()).forEach((pattern) => {
             if (matchPattern(pattern, hostAndPathname)) {
-                includeSelectors += include ?? '';
-                excludeSelectors += exclude ?? '';
+                if (include) {
+                    includeSelectors += (includeSelectors && ',') + include;
+                }
+
+                if (exclude) {
+                    excludeSelectors += (excludeSelectors && ',') + exclude;
+                }
             }
         });
     });
