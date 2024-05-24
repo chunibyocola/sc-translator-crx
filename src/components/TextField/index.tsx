@@ -12,10 +12,10 @@ type TextFieldProps = {
     helperText?: string;
     placeholder?: string;
     value?: string;
-    clearButton?: boolean;
+    type?: 'text' | 'search'
 };
 
-const TextField: React.FC<TextFieldProps> = ({ label, onChange, defaultValue, error, helperText, placeholder, value, clearButton }) => {
+const TextField: React.FC<TextFieldProps> = ({ label, onChange, defaultValue, error, helperText, placeholder, value, type }) => {
     const [internalValue, setInternalValue] = useState(value ?? defaultValue ?? '');
 
     useLayoutEffect(() => {
@@ -35,21 +35,12 @@ const TextField: React.FC<TextFieldProps> = ({ label, onChange, defaultValue, er
                     className={label && 'labeled-input'}
                     value={internalValue}
                     id={id}
-                    type='text'
+                    type={type ?? 'text'}
                     onChange={(e) => {
                         setInternalValue(e.target.value);
                         onChange?.(e.target.value);
                     }}
                 />
-                {clearButton && internalValue && <Button
-                    variant='icon'
-                    onClick={() => {
-                        setInternalValue('');
-                        onChange?.('');
-                    }}
-                >
-                    <IconFont iconName='#icon-GoX' />
-                </Button>}
             </div>
             {helperText && <p className='text-field__helper-text'>{helperText}</p>}
         </div>
