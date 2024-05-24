@@ -17,6 +17,7 @@ import CustomizeTranslation from '../../components/CustomizeTranslation';
 import Button from '../../../../components/Button';
 import scIndexedDB from '../../../../public/sc-indexed-db';
 import ConfirmDelete from '../../../collection/components/ConfirmDelete';
+import SpecifyRule from '../../components/SpecifyRule';
 
 type PickedOptions = Pick<
     DefaultOptions,
@@ -313,6 +314,13 @@ const WebPageTranslating: React.FC = () => {
                         onClose={() => setReadyToClearCache(false)}
                         drawerTitle={getMessage('optionsConfirmClearTranslationCache')}
                     />}
+                </div>
+            </div>
+            <div className='opt-section-row'>
+                {getMessage('optionsSpecifyTranslate')}
+                <BetaIcon />
+                <div className='mt10-ml30'>
+                    <SpecifyRule />
                 </div>
             </div>
         </div>

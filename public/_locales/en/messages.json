@@ -509,6 +509,36 @@
     "optionsConfirmClearTranslationCache": {
         "message": "The translation cache will be cleared."
     },
+    "optionsSpecifyTranslate": {
+        "message": "Specify what to be translate or not translate"
+    },
+    "optionsEnterURLFilterMatchedRules": {
+        "message": "Enter a URL to filter matched rules"
+    },
+    "optionsAddRule": {
+        "message": "Add rule"
+    },
+    "optionsMatchURLs": {
+        "message": "Match URLs"
+    },
+    "optionsMatchURLsDescription": {
+        "message": "No need http(s):// prefix; Support wildcard(*) and terminator($$); Use (,) to separate;"
+    },
+    "optionsIncludeSelectors": {
+        "message": "CSS selectors - translate"
+    },
+    "optionsExcludeSelectors": {
+        "message": "CSS selectors - no translate"
+    },
+    "optionsUpdateRule": {
+        "message": "Update rule"
+    },
+    "optionsMatchPatternError": {
+        "message": "After preprocessing, the value of the matching pattern is empty."
+    },
+    "optionsNotValidSelectorError": {
+        "message": "It is not a valid selector."
+    },
     "themePreset": {
         "message": "Preset"
     },

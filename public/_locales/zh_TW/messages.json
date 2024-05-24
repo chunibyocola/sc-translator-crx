@@ -509,6 +509,36 @@
     "optionsConfirmClearTranslationCache": {
         "message": "翻譯快取將被清除。"
     },
+    "optionsSpecifyTranslate": {
+        "message": "指定要翻譯或不翻譯的內容"
+    },
+    "optionsEnterURLFilterMatchedRules": {
+        "message": "輸入 URL 以過濾符合的規則"
+    },
+    "optionsAddRule": {
+        "message": "新增規則"
+    },
+    "optionsMatchURLs": {
+        "message": "匹配 URL"
+    },
+    "optionsMatchURLsDescription": {
+        "message": "不需要 http(s):// 前綴；支援通配符(*)和終止符($$)；用(,)分隔；"
+    },
+    "optionsIncludeSelectors": {
+        "message": "CSS 選擇器 - 翻譯"
+    },
+    "optionsExcludeSelectors": {
+        "message": "CSS 選擇器 - 不翻譯"
+    },
+    "optionsUpdateRule": {
+        "message": "更新規則"
+    },
+    "optionsMatchPatternError": {
+        "message": "預處理後匹配模式的值為空。"
+    },
+    "optionsNotValidSelectorError": {
+        "message": "這不是一個有效的選擇器。"
+    },
     "themePreset": {
         "message": "預設"
     },

@@ -509,6 +509,36 @@
     "optionsConfirmClearTranslationCache": {
         "message": "翻訳キャッシュがクリアされます。"
     },
+    "optionsSpecifyTranslate": {
+        "message": "翻訳するかしないかを指定する"
+    },
+    "optionsEnterURLFilterMatchedRules": {
+        "message": "URLを入力して一致したルールを選別"
+    },
+    "optionsAddRule": {
+        "message": "ルールを追加"
+    },
+    "optionsMatchURLs": {
+        "message": "URLの一致"
+    },
+    "optionsMatchURLsDescription": {
+        "message": "http(s)://接頭語は不要。ワイルドカード(*)とターミネータ($$)を使用できます。(,)を使用して区切ります。"
+    },
+    "optionsIncludeSelectors": {
+        "message": "CSSセレクタ - 翻訳"
+    },
+    "optionsExcludeSelectors": {
+        "message": "CSSセレクタ - 翻訳しない"
+    },
+    "optionsUpdateRule": {
+        "message": "ルールを更新"
+    },
+    "optionsMatchPatternError": {
+        "message": "前処理後の一致パターンは空になります。"
+    },
+    "optionsNotValidSelectorError": {
+        "message": "有効なセレクターではありません。"
+    },
     "themePreset": {
         "message": "プリセット"
     },

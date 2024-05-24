@@ -1,0 +1,71 @@
+.rule {
+    position: relative;
+    box-shadow: rgb(60 64 67 / 30%) 0 1px 2px 0, rgb(60 64 67 / 15%) 0 1px 3px 1px;
+    display: flex;
+    flex-direction: column;
+    height: 350px;
+    width: 95%;
+    border-radius: 4px;
+}
+.rule__bar {
+    display: grid;
+    grid-template-columns: max-content auto;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 4px;
+    column-gap: 8px;
+}
+.rule__bar > .text-field {
+    margin: 0;
+}
+.rule__list {
+    flex: 1;
+    font-size: 16px;
+    overflow-y: auto;
+}
+.rule__list__item {
+    padding: 4px;
+    display: flex;
+    column-gap: 8px;
+    align-items: center;
+}
+.rule__list__item:nth-child(2n) {
+    background-color: rgb(248, 250, 252);
+}
+.rule__list__item:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+.rule__list__item:has(:checked) {
+    background-color: rgba(25, 118, 210, 0.08);
+}
+.rule__list__item:has(:checked):hover {
+    background-color: rgba(25, 118, 210, 0.12);
+}
+.rule__list__item__pattern {
+    flex: 1;
+    display: grid;
+    align-items: center;
+    column-gap: 8px;
+    grid-template-columns: auto max-content;
+    cursor: pointer;
+}
+.rule__list__item__pattern > div {
+    overflow: hidden;
+}
+.rule__footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 2px;
+    text-align: right;
+}
+.add-pattern {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    overflow-y: auto;
+}
