@@ -647,12 +647,12 @@ export const startWebPageTranslating = ({
     if (includeSelectors) {
         specifyConfig.includeMode = true;
         specifyConfig.includeSelectors = includeSelectors;
-        specifyConfig.includeMachesSelectors = includeSelectors + includeSelectors.split(',').reduce((t, c, i) => (`${t}${i === 0 ? '' : ','}${c} *`), '');
+        specifyConfig.includeMachesSelectors = includeSelectors + includeSelectors.split(',').reduce((t, c) => (`${t},${c} *`), '');
     }
     if (excludeSelectors) {
         specifyConfig.excludeMode = true;
         specifyConfig.excludeSelectors = excludeSelectors;
-        specifyConfig.excludeMachesSelectors = excludeSelectors + excludeSelectors.split(',').reduce((t, c, i) => (`${t}${i === 0 ? '' : ','}${c} *`), '');
+        specifyConfig.excludeMachesSelectors = excludeSelectors + excludeSelectors.split(',').reduce((t, c) => (`${t},${c} *`), '');
     }
 
     ++startFlag;
