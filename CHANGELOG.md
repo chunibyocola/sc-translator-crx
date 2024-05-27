@@ -1,3 +1,5 @@
+# 5.5.0 (2024-05-27)
+- Able to specify what to translate or not translate.
 # 5.4.1 (2024-04-01)
 - Fix Baidu translation unavailable.
 - Auto switch "Use '.cn' in URL" option when user is using Bing translation.
