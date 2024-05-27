@@ -510,7 +510,7 @@
         "message": "The translation cache will be cleared."
     },
     "optionsSpecifyTranslate": {
-        "message": "Specify what to be translate or not translate"
+        "message": "Specify what to translate or not translate"
     },
     "optionsEnterURLFilterMatchedRules": {
         "message": "Enter a URL to filter matched rules"
