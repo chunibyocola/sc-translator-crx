@@ -163,19 +163,23 @@ const observer = new MutationObserver((records) => {
             [target, ...addedNodes].forEach(node => checkedNodes.delete(node));
         }
 
-        if (specifyContentConfig.excludeMode && nextTarget) {
-            if (nextTarget.matches(specifyContentConfig.excludeMachesSelectors)) {
+        if (specifyConfig.excludeMode && nextTarget) {
+            if (nextTarget.matches(specifyConfig.excludeMachesSelectors)) {
                 checkedNodes.add(nextTarget);
                 return;
             }
         }
 
-        if (specifyContentConfig.includeMode && nextTarget) {
-            if (nextTarget.matches(specifyContentConfig.includeMachesSelectors)) {
+        if (specifyConfig.includeMode && nextTarget) {
+            if (nextTarget.matches(specifyConfig.includeMachesSelectors)) {
                 targets.add(nextTarget);
             }
             else {
-                nextTarget.querySelectorAll(specifyContentConfig.includeSelectors).forEach(elt => targets.add(elt));
+                let excludedElements: Set<Element> = new Set();
+                if (specifyConfig.excludeMode) {
+                    excludedElements = new Set([...nextTarget.querySelectorAll(specifyConfig.excludeSelectors)]);
+                }
+                nextTarget.querySelectorAll(specifyConfig.includeSelectors).forEach(elt => !excludedElements.has(elt) && targets.add(elt));
             }
 
             return;
@@ -218,8 +222,8 @@ const observer = new MutationObserver((records) => {
         }
     });
 
-    if (specifyContentConfig.excludeMode) {
-        targets.forEach(target => target.querySelectorAll(specifyContentConfig.excludeSelectors).forEach(elt => checkedNodes.add(elt)));
+    if (specifyConfig.excludeMode) {
+        targets.forEach(target => target.querySelectorAll(specifyConfig.excludeSelectors).forEach(elt => checkedNodes.add(elt)));
     }
 
     targets.forEach(target => target.isConnected && intersectionObserver.observe(target));
@@ -295,22 +299,21 @@ const stopCtrlKeyPressingListener = () => {
     });
 };
 
-export type SpecifyContentConfig = (
-    { includeMode: false; } | { includeMode: true; includeSelectors: string; includeMachesSelectors: string; }
-) & (
-    { excludeMode: false; } | { excludeMode: true; excludeSelectors: string; excludeMachesSelectors: string; }
-);
-
-// fake data
-const includeSelectors = '.font-semibold, .justify-between.p-5.sm\\:p-5.cursor-pointer.w-full.h-full, .max-w-3xl.mx-auto.text-lg';
-const excludeSelectors = 'p';
-let specifyContentConfig: SpecifyContentConfig = {
-    includeMode: true,
-    includeSelectors: includeSelectors,
-    includeMachesSelectors: includeSelectors + includeSelectors.split(',').reduce((t, c, i) => (`${t}${i === 0 ? '' : ','}${c} *`), ''),
-    excludeMode: true,
-    excludeSelectors: excludeSelectors,
-    excludeMachesSelectors: excludeSelectors + excludeSelectors.split(',').reduce((t, c, i) => (`${t}${i === 0 ? '' : ','}${c} *`), ''),
+export type SpecifyContentConfig = {
+    includeMode: boolean;
+    includeSelectors: string;
+    includeMachesSelectors: string;
+    excludeMode: boolean;
+    excludeSelectors: string;
+    excludeMachesSelectors: string;
+};
+let specifyConfig: SpecifyContentConfig = {
+    includeMode: false,
+    includeSelectors: '',
+    includeMachesSelectors: '',
+    excludeMode: false,
+    excludeSelectors: '',
+    excludeMachesSelectors: ''
 };
 
 const newPageTranslateItem = (text: string, textNodes: Text[], codeTexts: PageTranslateItemEnity['codeTexts'], pNode?: HTMLParagraphElement) => {
@@ -590,6 +593,7 @@ export const startWebPageTranslating = ({
     translateIframeContent: translateIC,
     customization,
     enableCache,
+    specifySelectors,
     onError,
     onRequestStart,
     onRequestFinish
@@ -602,6 +606,7 @@ export const startWebPageTranslating = ({
     translateIframeContent: boolean;
     customization: ComparisonCustomization;
     enableCache: boolean;
+    specifySelectors: { includeSelectors: string; excludeSelectors: string; };
     onError?: (errorReason: string) => void;
     onRequestStart?: () => void;
     onRequestFinish?: () => void;
@@ -638,16 +643,28 @@ export const startWebPageTranslating = ({
 
     enablePageTranslationCache = enableCache;
 
+    const { includeSelectors, excludeSelectors } = specifySelectors;
+    if (includeSelectors) {
+        specifyConfig.includeMode = true;
+        specifyConfig.includeSelectors = includeSelectors;
+        specifyConfig.includeMachesSelectors = includeSelectors + includeSelectors.split(',').reduce((t, c, i) => (`${t}${i === 0 ? '' : ','}${c} *`), '');
+    }
+    if (excludeSelectors) {
+        specifyConfig.excludeMode = true;
+        specifyConfig.excludeSelectors = excludeSelectors;
+        specifyConfig.excludeMachesSelectors = excludeSelectors + excludeSelectors.split(',').reduce((t, c, i) => (`${t}${i === 0 ? '' : ','}${c} *`), '');
+    }
+
     ++startFlag;
 
     let excludedElements: Set<Element> = new Set();
-    if (specifyContentConfig.excludeMode) {
-        excludedElements = new Set([...element.querySelectorAll(specifyContentConfig.excludeSelectors)]);
+    if (specifyConfig.excludeMode) {
+        excludedElements = new Set([...element.querySelectorAll(specifyConfig.excludeSelectors)]);
         excludedElements.forEach(elt => checkedNodes.add(elt));
     }
 
-    if (specifyContentConfig.includeMode) {
-        element.querySelectorAll(specifyContentConfig.includeSelectors).forEach(elt => !excludedElements.has(elt) && getAllParagraph(elt as HTMLElement));
+    if (specifyConfig.includeMode) {
+        element.querySelectorAll(specifyConfig.includeSelectors).forEach(elt => !excludedElements.has(elt) && getAllParagraph(elt as HTMLElement));
     }
     else {
         getAllParagraph(element);

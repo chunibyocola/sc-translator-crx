@@ -16,7 +16,7 @@ import { closeWebPageTranslating, errorRetry, startWebPageTranslating, switchWay
 import { DefaultOptions } from '../../../types';
 import './style.css';
 import Logo from '../../../components/Logo';
-import { sendShouldAutoTranslateThisPage, sendUpdatePageTranslationState } from '../../../public/send';
+import { sendGetSpecifySelectors, sendShouldAutoTranslateThisPage, sendUpdatePageTranslationState } from '../../../public/send';
 
 const wPTI18nCache = {
     switchDisplayModeOfResult: getMessage('contentSwitchDisplayModeOfResult'),
@@ -126,26 +126,35 @@ const WebPageTranslate: React.FC = () => {
 
         closeWebPageTranslating();
 
-        const startSuccess = startWebPageTranslating({
-            element: document.body,
-            translateSource: source,
-            targetLanguage,
-            enhancement: getOptions().displayModeEnhancement,
-            translateDynamicContent: getOptions().translateDynamicContent,
-            translateIframeContent: getOptions().translateIframeContent,
-            customization: getOptions().comparisonCustomization,
-            enableCache: getOptions().enablePageTranslationCache,
-            onError: handleError,
-            onRequestStart: handleRequestStart,
-            onRequestFinish: handleRequestFinish
-        });
+        sendGetSpecifySelectors(`${window.location.host}${window.location.pathname}`).then((data) => {
+            let specifySelectors = { includeSelectors: '', excludeSelectors: '' };
 
-        if (startSuccess) {
-            dispach({ type: 'process-success' });
-        }
-        else {
-            dispach({ type: 'change-error', error: 'Process failed!' });
-        }
+            if (!('code' in data)) {
+                specifySelectors = data;
+            }
+
+            const startSuccess = startWebPageTranslating({
+                element: document.body,
+                translateSource: source,
+                targetLanguage,
+                enhancement: getOptions().displayModeEnhancement,
+                translateDynamicContent: getOptions().translateDynamicContent,
+                translateIframeContent: getOptions().translateIframeContent,
+                customization: getOptions().comparisonCustomization,
+                enableCache: getOptions().enablePageTranslationCache,
+                specifySelectors,
+                onError: handleError,
+                onRequestStart: handleRequestStart,
+                onRequestFinish: handleRequestFinish
+            });
+    
+            if (startSuccess) {
+                dispach({ type: 'process-success' });
+            }
+            else {
+                dispach({ type: 'change-error', error: 'Process failed!' });
+            }
+        });
     }, [source, targetLanguage, working, dispach, handleError, handleRequestStart, handleRequestFinish]);
 
     const activatePageTranslation = useCallback(() => {
