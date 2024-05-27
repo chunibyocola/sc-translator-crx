@@ -64,7 +64,7 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
                         const parts: any[] = value.data.dictResult.simple_means.symbols[0].parts;
 
                         if (parts && (typeof parts?.[0]?.means?.[0] === 'string')) {
-                            dict = parts.map((value: { means: string[]; part: string; }) => (`${value.part} ${value.means.join('; ')}`));
+                            dict = parts.map((value: { means: string[]; part: string; part_name: string; }) => (`${value.part ?? value.part_name ?? ''} ${value.means.join('; ')}`));
                         }
                         else if (parts && (typeof parts?.[0]?.means?.[0]?.part === 'string')) {
                             const s = new Map<string, string[]>();
