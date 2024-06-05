@@ -988,7 +988,7 @@ const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, 
 };
 
 type KeyFormat = (paragraph: string[]) => string;
-const getTranslateList = async (nextTranslateList: PageTranslateItemEnity[], keyFormat: KeyFormat, options = { maxParagraphCount: 100, maxTextLength: 1024 }) => {
+const getTranslateList = async (nextTranslateList: PageTranslateItemEnity[], keyFormat: KeyFormat, options = { maxParagraphCount: 100, maxTextLength: 2048 }) => {
     const keyMap: Map<string, { paragraph: string[]; }> = new Map();
 
     nextTranslateList.forEach((pageTranslateItem) => {
