@@ -28,11 +28,7 @@ export const translate: WebpageTranslateFn = async ({ keys, targetLanguage }) =>
             const language = Array.isArray(value) ? (value[1] ?? undefined) : undefined;
             value = Array.isArray(value) ? (value[0] ?? '') : value;
 
-            return {
-                translations: toTranslations(value),
-                comparisons: toComparisons(value),
-                detectedLanguage: language
-            };
+            return { detectedLanguage: language, ...interpreter(value) };
         });
     }
     catch {
@@ -40,97 +36,51 @@ export const translate: WebpageTranslateFn = async ({ keys, targetLanguage }) =>
     }
 };
 
-const dealWithSentence = (sentence: string, startIndex?: number, tagANum?: number) => {
-    let results: string[] = [];
-    let match = sentence.match(/<a i=[0-9]+>[\s\S]*?<\/a>/);
-    let flag = false;
+const interpreter = (sentence: string) => {
+    const stack: number[] = [];
+    const aNum = sentence.match(/<a i=[0-9]+>/g)?.length ?? 1;
+    const translations: string[] = new Array(aNum).fill('');
+    const comparisons: string[] = new Array(aNum).fill('');
+    let anchor = 0;
+    const matchRegExp = new RegExp('<a i=([0-9]+)>|</a>');
+    let match = sentence.match(matchRegExp);
 
-    startIndex ??= 0;
-    tagANum ??= (match && sentence.match(/<a i=[0-9]+>[\s\S]*?<\/a>/g)?.length) ?? 0;
+    while (match?.index !== undefined) {
+        const [text, i] = match;
 
-    while (match?.[0] && match.index !== undefined) {
-        const str = match[0];
-        const [index, text] = str.replace(/(<a i=)|(<\/a>)/g, '').split('>');
-        const i = Number(index);
+        if (text === '</a>') {
+            const pop = stack.pop();
 
-        if (!flag) {
-            if (startIndex < i) {
-                results = new Array(i - startIndex).fill('');
+            if (pop !== undefined) {
+                comparisons[pop] += unescapeText(sentence.substring(0, match.index));
+            }
+        }
+        else if (i !== undefined) {
+            const numI = Number(i);
+            stack.push(numI);
+            if (stack.length === 1 && anchor !== numI) {
+                anchor = Math.min(Math.max(numI, anchor + 1), aNum - 1);
             }
 
-            flag = true;
-        }
-
-        let length = results.length;
-
-        if (match.index !== 0) {
-            const index = Math.max(0, length - 1);
-            results[index] = (results[index] ?? '') + sentence.substring(0, match.index);
-        }
-
-        const nextIndex = Math.min(length, tagANum - 1);
-
-        results[nextIndex] = (results[nextIndex] ?? '') + unescapeText(text);
-
-        sentence = sentence.substring(match.index + str.length);
-        match = sentence.match(/<a i=[0-9]+>[\s\S]*?<\/a>/);
-    }
-
-    const index = Math.max(0, results.length - 1);
-    results[index] = (results[index] ?? '') + unescapeText(sentence);
-
-    return results;
-};
-
-const toComparisons = (rawResult: string) => {
-    let result: string[] = [];
-    let preprocessText = rawResult.replace(/\s?<i>[\s\S]*?<\/i>/g, '').replace(/<\/?b>/g, '');
-    let matchArray = preprocessText.match(/(?<=<a i=)[0-9]+>[\s\S]*?(?=<\/a>)/g);
-    if (matchArray) {
-        matchArray.forEach((v) => {
-            const [index, rawResult] = v.split('>');
-            result[Number(index)] = (result[Number(index)] ?? '') + unescapeText(rawResult);
-        });
-        return result;
-    }
-
-    return [unescapeText(preprocessText)];
-};
-
-const toTranslations = (rawResult: string) => {
-    let results: string[] = [];
-    const originalRawResult = rawResult;
-
-    let matchI = rawResult.match(/(?<=<i>)[\s\S]*?(?=<\/i>)/);
-
-    if (!matchI) {
-        return dealWithSentence(rawResult);
-    }
-    
-    while (matchI?.[0] && matchI.index !== undefined) {
-        const indexArray = matchI[0].match(/(?<=<a i=)[0-9]+(?=>[\s\S]*?<\/a>)/g)?.map(Number) ?? [0];
-        const matchB = rawResult.match(/<b>[\s\S]*?<\/b>/);
-
-        if (matchB?.[0] && matchB.index !== undefined) {
-            if (rawResult !== originalRawResult && rawResult[matchB.index - 1] === ' ') {
-                matchB[0] = ' ' + matchB[0];
+            if (stack.length > 1) {
+                comparisons[stack[0]] += unescapeText(sentence.substring(0, match.index));
             }
+        }
 
-            rawResult = rawResult.substring(matchB.index + matchB[0].length);
-
-            const r = dealWithSentence(matchB[0].replace(/(<b>)|(<\/b>)/g, ''), indexArray[0], indexArray.length);
-            r.forEach((value, index) => {
-                const nextIndex = indexArray[Math.min(index, indexArray.length - 1)];
-
-                results[nextIndex] = (results[nextIndex] ?? '') + value;
-            });
-
-            matchI = rawResult.match(/(?<=<i>)[\s\S]*?(?=<\/i>)/);
+        if (anchor > 0 && translations[anchor - 1] === '' && i !== undefined) {
+            translations[anchor - 1] += unescapeText(sentence.substring(0, match.index));
         }
         else {
-            return toComparisons(originalRawResult);
+            translations[anchor] += unescapeText(sentence.substring(0, match.index));
         }
+
+        sentence = sentence.substring(match.index + text.length);
+
+        match = sentence.match(matchRegExp);
     }
 
-    return results;
+    translations[translations.length - 1] += unescapeText(sentence);
+    comparisons[comparisons.length - 1] += unescapeText(sentence);
+
+    return { translations, comparisons };
 };
