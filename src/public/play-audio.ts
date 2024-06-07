@@ -20,7 +20,7 @@ type AudioCache = {
     index: number;
     requesting: boolean;
     manuallyPaused: boolean;
-    onPause: undefined | (() => void);
+    onPause?: () => void;
     id: number;
 };
 
@@ -34,7 +34,6 @@ let audioCache: AudioCache = {
     index: 0,
     requesting: false,
     manuallyPaused: false,
-    onPause: undefined,
     id: 0
 };
 
@@ -65,18 +64,7 @@ export const playAudio = ({ text, source, from = '' }: { text: string, source?: 
         return;
     }
 
-    let textList: string[] = [];
-
-    switch (source) {
-        case GOOGLE_COM:
-            textList = getTextList(text, 200);
-            break;
-        default:
-            textList = [text];
-            break;
-    }
-
-    audioCache.textList = textList;
+    audioCache.textList = source === GOOGLE_COM ? getTextList(text, 200) : [text];
     audioCache.source = source;
     audioCache.text = text;
     audioCache.from = from;
@@ -169,15 +157,7 @@ utter.addEventListener('end', () => {
 const play = (dataURL: string) => {
     if (violateCSP) {
         utter.text = dataURL;
-        if (audioCache.source === BING_COM) {
-            utter.lang = bingSwitchToGoogleLangCode(audioCache.from);
-        }
-        else if (audioCache.source === BAIDU_COM) {
-            utter.lang = baiduSwitchToGoogleLangCode(audioCache.from);
-        }
-        else {
-            utter.lang = audioCache.detectedFrom;
-        }
+        utter.lang = audioCache.detectedFrom;
         window.speechSynthesis.speak(utter);
     }
     else {
@@ -188,46 +168,26 @@ const play = (dataURL: string) => {
     ++audioCache.index;
 };
 
-const getTextList = (text: string, textLength: number) => {
-    let arr: string[] = [];
-    let textArr = [];
-
-    while (text) {
-        const index = text.search(/\.|。|\?|？|,|，|:|：|;|；|\s|\n/g);
-        if (index >= 0) {
-            textArr.push(text.substr(0, index + 1));
-            text = text.substr(index + 1, text.length);
-        } else {
-            textArr.push(text);
-            break;
-        }
-    }
-
-    textArr.reduce((total, value, index) => {
-        let { length, str } = total;
-        if (length + value.length <= textLength) {
-            length += value.length;
-            str += value;
-        }
-        else {
-            str && arr.push(str);
-
-            if (value.length > textLength) {
-                while (value.length > textLength) {
-                    arr.push(value.substr(0, textLength));
-                    value = value.substr(textLength, value.length);
-                }
+const getTextList = (text: string, maxLength: number) => {
+    return text.split(/(?<=\.|。|\?|？|,|，|:|：|;|；|\s|\n)/).reduce((total, value) => {
+        if (value.length > maxLength) {
+            for (let i = Math.floor(value.length / maxLength); i >= 0; i--) {
+                total.push(value.substring(0, maxLength));
+                value = value.substring(maxLength);
             }
 
-            length = value.length;
-            str = value;
+            return total;
         }
-        (index === textArr.length - 1 && str) && arr.push(str);
 
-        return { length, str };
-    }, { length: 0, str: '' });
+        if (total[total.length - 1].length + value.length <= maxLength) {
+            total[total.length - 1] += value;
+        }
+        else {
+            total.push(value);
+        }
 
-    return arr;
+        return total;
+    }, ['']);
 };
 
 type PickedOptions = Pick<DefaultOptions, 'audioVolume' | 'audioPlaybackRate' | 'defaultAudioSource' | 'keepUsingDefaultAudioSource'>;

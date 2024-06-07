@@ -9,7 +9,7 @@ import bing from '../public/translate/bing';
 import mojidict from '../public/translate/mojidict';
 import baidu from '../public/translate/baidu';
 import custom from '../public/translate/custom';
-import { bingSwitchLangCode, baiduSwitchLangCode } from '../public/switch-lang-code';
+import { bingSwitchLangCode, baiduSwitchLangCode, bingSwitchToGoogleLangCode, baiduSwitchToGoogleLangCode } from '../public/switch-lang-code';
 import { AudioResponse, DetectResponse, TranslateResponse } from './send';
 import { getError } from './translate/utils';
 
@@ -122,7 +122,14 @@ export const detect = async (requestParams: DetectRequestParams): Promise<Detect
 	}
 
 	try {
-		const langCode = await detect(requestParams);
+		let langCode = await detect(requestParams);
+
+		if (requestParams.source === BING_COM) {
+			langCode = bingSwitchToGoogleLangCode(langCode);
+		}
+		else if (requestParams.source === BAIDU_COM) {
+			langCode = baiduSwitchToGoogleLangCode(langCode);
+		}
 
 		return { langCode };
 	}
