@@ -85,7 +85,8 @@ const defaultOptions: DefaultOptions = {
     comparisonCustomization: { color: 'currentcolor', underlineColor: 'rgba(144,236,233,1)', underlineStyle: 'solid' },
     translateIframeContent: false,
     translateRedirectedSameDomainPage: false,
-    enablePageTranslationCache: false
+    enablePageTranslationCache: false,
+    autoPlayAudio: false
 };
 
 export default defaultOptions;

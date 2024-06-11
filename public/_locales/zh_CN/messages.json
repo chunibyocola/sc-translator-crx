@@ -539,6 +539,9 @@
     "optionsNotValidSelectorError": {
         "message": "这不是一个有效的选择器。"
     },
+    "optionsAutoplayAudio": {
+        "message": "翻译完成后自动播放音频"
+    },
     "themePreset": {
         "message": "预设"
     },

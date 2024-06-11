@@ -539,6 +539,9 @@
     "optionsNotValidSelectorError": {
         "message": "有効なセレクターではありません。"
     },
+    "optionsAutoplayAudio": {
+        "message": "翻訳が完了したら自動的に音声を再生します"
+    },
     "themePreset": {
         "message": "プリセット"
     },

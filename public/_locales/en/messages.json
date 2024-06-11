@@ -539,6 +539,9 @@
     "optionsNotValidSelectorError": {
         "message": "It is not a valid selector."
     },
+    "optionsAutoplayAudio": {
+        "message": "Automatically play audio after translation is completed"
+    },
     "themePreset": {
         "message": "Preset"
     },

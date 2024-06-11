@@ -38,13 +38,15 @@ type PickedOptions = Pick<
     'defaultAudioSource' |
     'audioVolume' |
     'audioPlaybackRate' |
-    'keepUsingDefaultAudioSource'
+    'keepUsingDefaultAudioSource' |
+    'autoPlayAudio'
 >;
 const useOptionsDependency: (keyof PickedOptions)[] = [
     'defaultAudioSource',
     'audioVolume',
     'audioPlaybackRate',
-    'keepUsingDefaultAudioSource'
+    'keepUsingDefaultAudioSource',
+    'autoPlayAudio'
 ];
 
 const Audio: React.FC = () => {
@@ -52,7 +54,8 @@ const Audio: React.FC = () => {
         defaultAudioSource,
         audioVolume,
         audioPlaybackRate,
-        keepUsingDefaultAudioSource
+        keepUsingDefaultAudioSource,
+        autoPlayAudio
     } = useOptions<PickedOptions>(useOptionsDependency);
 
     return (
@@ -72,6 +75,13 @@ const Audio: React.FC = () => {
                         onChange={v => setLocalStorage({ keepUsingDefaultAudioSource: v })}
                     />
                 </div>
+            </div>
+            <div className='opt-section-row'>
+                <Switch
+                    label={getMessage('optionsAutoplayAudio')}
+                    checked={autoPlayAudio}
+                    onChange={v => setLocalStorage({ autoPlayAudio: v })}
+                />
             </div>
             <div className='opt-section-row'>
                 {getMessage('optionsVolume')}
