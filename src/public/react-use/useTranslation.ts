@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useAppDispatch, useInsertResult, useTranslationActions } from '../../public/react-use';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../redux/slice/translateHistorySlice';
+import { playAudio } from '../play-audio';
+import { getOptions } from '../options';
 
 const useTranslation = (extra?: { recordTranslation?: boolean; insertTranslation?: boolean; }) => {
     const recordTranslation = extra?.recordTranslation;
@@ -15,6 +17,7 @@ const useTranslation = (extra?: { recordTranslation?: boolean; insertTranslation
     const { text, translateId, translations } = state;
 
     const lastTranslateIdRef = useRef(translateId);
+    const firstFinished = useRef(false);
 
     const [insertable, confirmInsert, insertTranslationToggle, autoInsert] = useInsertResult();
 
@@ -22,7 +25,7 @@ const useTranslation = (extra?: { recordTranslation?: boolean; insertTranslation
         const response = await fetchTranslationFromSource(source);
 
         if (!response) { return; }
-        
+
         if ('code' in response) {
 
             if (recordTranslation) {
@@ -39,6 +42,16 @@ const useTranslation = (extra?: { recordTranslation?: boolean; insertTranslation
         if (insertTranslation) {
             autoInsert(response.translateId, source, response.translation.result);
         }
+
+        if (!firstFinished.current) {
+            firstFinished.current = true;
+
+            if (getOptions().autoPlayAudio) {
+                const { text, from } = response.translation;
+
+                text.length <= 30 && playAudio({ text, source, from });
+            }
+        }
     }, [fetchTranslationFromSource, autoInsert, dispatch, insertTranslation, recordTranslation]);
 
     useEffect(() => {
@@ -51,6 +64,8 @@ const useTranslation = (extra?: { recordTranslation?: boolean; insertTranslation
         if (recordTranslation) {
             dispatch(addHistory({ translateId, text, sourceList: translations.map(({ source }) => source) }));
         }
+
+        firstFinished.current = false;
 
         translations.forEach(({ source }) => translate(source));
 
