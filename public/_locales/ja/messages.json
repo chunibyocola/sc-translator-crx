@@ -542,6 +542,9 @@
     "optionsAutoplayAudio": {
         "message": "翻訳が完了したら自動的に音声を再生します"
     },
+    "optionsAutoplayAudioDescription": {
+        "message": "原文の文字数が30以下と翻訳リクエストに一つ翻訳済みがある場合、原文の音声が自動的に再生されます。"
+    },
     "themePreset": {
         "message": "プリセット"
     },

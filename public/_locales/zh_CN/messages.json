@@ -542,6 +542,9 @@
     "optionsAutoplayAudio": {
         "message": "翻译完成后自动播放音频"
     },
+    "optionsAutoplayAudioDescription": {
+        "message": "当原文的字符数在 30 个以下且翻译请求中有已完成的翻译时，自动播放原文的音频。"
+    },
     "themePreset": {
         "message": "预设"
     },

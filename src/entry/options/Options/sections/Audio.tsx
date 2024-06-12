@@ -82,6 +82,7 @@ const Audio: React.FC = () => {
                     checked={autoPlayAudio}
                     onChange={v => setLocalStorage({ autoPlayAudio: v })}
                 />
+                <div className='item-description'>{getMessage('optionsAutoplayAudioDescription')}</div>
             </div>
             <div className='opt-section-row'>
                 {getMessage('optionsVolume')}

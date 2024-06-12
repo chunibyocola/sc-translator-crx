@@ -542,6 +542,9 @@
     "optionsAutoplayAudio": {
         "message": "翻譯完成後自動播放音頻"
     },
+    "optionsAutoplayAudioDescription": {
+        "message": "當原文的字元數在 30 個以下且翻譯請求中有已完成的翻譯時，自動播放原文的音訊。"
+    },
     "themePreset": {
         "message": "預設"
     },
