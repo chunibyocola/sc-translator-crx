@@ -1,0 +1,39 @@
+.auto-langs__edit {
+    display: inline-block;
+    position: relative;
+}
+.auto-langs__list__item {
+    padding: 4px 8px;
+    cursor: pointer;
+    overflow: hidden;
+}
+.auto-langs__list__item:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+.auto-langs__list__item.checked {
+    background-color: rgba(25, 118, 210, 0.08);
+}
+.auto-langs__list__item.checked:hover {
+    background-color: rgba(25, 118, 210, 0.12);
+}
+.auto-langs__preview {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+.auto-langs__preview__list {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+.auto-langs__preview__list__item {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    border-radius: 2em;
+    border: 1px solid rgb(25, 118, 210);
+    padding: 0 4px;
+}
+.auto-langs__preview__list__item .iconfont {
+    cursor: pointer;
+}

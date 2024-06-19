@@ -86,7 +86,8 @@ const defaultOptions: DefaultOptions = {
     translateIframeContent: false,
     translateRedirectedSameDomainPage: false,
     enablePageTranslationCache: false,
-    autoPlayAudio: false
+    autoPlayAudio: false,
+    autoPlayAudioLangs: []
 };
 
 export default defaultOptions;

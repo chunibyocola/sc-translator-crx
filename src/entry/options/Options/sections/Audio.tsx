@@ -9,6 +9,7 @@ import { playAudio } from '../../../../public/play-audio';
 import { useOptions } from '../../../../public/react-use';
 import { DefaultOptions } from '../../../../types';
 import Switch from '../../../../components/Switch';
+import AutoPlayAudioLangs from '../../components/AutoPlayAudioLangs';
 
 const marksVolume: SliderMarks = [
     { value: 5, label: '5' },
@@ -39,14 +40,16 @@ type PickedOptions = Pick<
     'audioVolume' |
     'audioPlaybackRate' |
     'keepUsingDefaultAudioSource' |
-    'autoPlayAudio'
+    'autoPlayAudio' |
+    'autoPlayAudioLangs'
 >;
 const useOptionsDependency: (keyof PickedOptions)[] = [
     'defaultAudioSource',
     'audioVolume',
     'audioPlaybackRate',
     'keepUsingDefaultAudioSource',
-    'autoPlayAudio'
+    'autoPlayAudio',
+    'autoPlayAudioLangs'
 ];
 
 const Audio: React.FC = () => {
@@ -55,7 +58,8 @@ const Audio: React.FC = () => {
         audioVolume,
         audioPlaybackRate,
         keepUsingDefaultAudioSource,
-        autoPlayAudio
+        autoPlayAudio,
+        autoPlayAudioLangs
     } = useOptions<PickedOptions>(useOptionsDependency);
 
     return (
@@ -83,6 +87,12 @@ const Audio: React.FC = () => {
                     onChange={v => setLocalStorage({ autoPlayAudio: v })}
                 />
                 <div className='item-description'>{getMessage('optionsAutoplayAudioDescription')}</div>
+                <div className='mt10-ml30'>
+                    Select what languages should only be played automatically
+                    <div className='mt10-ml30'>
+                        <AutoPlayAudioLangs langs={autoPlayAudioLangs} onChange={v => setLocalStorage({ autoPlayAudioLangs: v })} />
+                    </div>
+                </div>
             </div>
             <div className='opt-section-row'>
                 {getMessage('optionsVolume')}

@@ -166,6 +166,7 @@ export type DefaultOptions = {
     translateRedirectedSameDomainPage: boolean;
     enablePageTranslationCache: boolean;
     autoPlayAudio: boolean;
+    autoPlayAudioLangs: string[];
 };
 
 // Only work in "src/entry/background/install.ts".
