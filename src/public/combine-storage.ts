@@ -130,7 +130,7 @@ const reducerMap: [(keyof DefaultOptions)[], <S>(origin: S, next: any, addition:
         return CheckData.isSameStucture(origin as any, next) ? next : origin;
     }
 ], [
-    ['recentTranslateFromList', 'recentTranslateToList'],
+    ['recentTranslateFromList', 'recentTranslateToList', 'autoPlayAudioLangs'],
     (origin, next) => {
         return CheckData.isArrayOf('', next) ? next : origin;
     }
@@ -165,6 +165,17 @@ const reducerMap: [(keyof DefaultOptions)[], <S>(origin: S, next: any, addition:
     (origin, next) => {
         Object.keys(next).forEach((key) => {
             if (!(key in (origin as { [K: string]: boolean; })) || typeof next[key] !== 'boolean') {
+                delete next[key];
+            }
+        });
+
+        return { ...origin, ...next };
+    }
+], [
+    ['comparisonCustomization'],
+    (origin, next) => {
+        Object.keys(next).forEach((key) => {
+            if (!(key in (origin as { [K: string]: string; })) || typeof next[key] !== 'string') {
                 delete next[key];
             }
         });
