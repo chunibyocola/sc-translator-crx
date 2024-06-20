@@ -17,7 +17,8 @@
     background-color: rgba(25, 118, 210, 0.12);
 }
 .auto-langs__preview {
-    display: flex;
+    display: grid;
+    grid-template-columns: max-content auto;
     gap: 8px;
     margin-top: 8px;
 }

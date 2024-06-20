@@ -545,6 +545,15 @@
     "optionsAutoplayAudioDescription": {
         "message": "原文の文字数が30以下と翻訳リクエストに一つ翻訳済みがある場合、原文の音声が自動的に再生されます。"
     },
+    "optionsSelectAutoplayLanguage": {
+        "message": "自動再生の言語を選択する"
+    },
+    "optionsSelectAutoplayLanguageDescription": {
+        "message": "空の場合は、すべての言語が自動的に再生されます。空でない場合は、選択した言語のみが自動的に再生されます。"
+    },
+    "optionsSelectAutoPlayLanguageClear": {
+        "message": "選択された言語はすべて削除されます。"
+    },
     "themePreset": {
         "message": "プリセット"
     },
@@ -733,6 +742,12 @@
     },
     "wordSearch": {
         "message": "検索"
+    },
+    "wordSelect": {
+        "message": "選ぶ"
+    },
+    "wordClear": {
+        "message": "クリア"
     },
     "sentenceAddTranslateSource": {
         "message": "翻訳ソースを追加してください。"

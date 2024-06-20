@@ -545,6 +545,15 @@
     "optionsAutoplayAudioDescription": {
         "message": "當原文的字元數在 30 個以下且翻譯請求中有已完成的翻譯時，自動播放原文的音訊。"
     },
+    "optionsSelectAutoplayLanguage": {
+        "message": "選擇自動播放的語言"
+    },
+    "optionsSelectAutoplayLanguageDescription": {
+        "message": "如果為空，將自動播放所有語言。如果不為空，則只會自動播放你選擇的語言。"
+    },
+    "optionsSelectAutoPlayLanguageClear": {
+        "message": "所有已選擇的語言將被清除。"
+    },
     "themePreset": {
         "message": "預設"
     },
@@ -733,6 +742,12 @@
     },
     "wordSearch": {
         "message": "搜索"
+    },
+    "wordSelect": {
+        "message": "選擇"
+    },
+    "wordClear": {
+        "message": "清空"
     },
     "sentenceAddTranslateSource": {
         "message": "請添加翻譯源。"

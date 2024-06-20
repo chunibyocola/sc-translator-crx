@@ -88,7 +88,8 @@ const Audio: React.FC = () => {
                 />
                 <div className='item-description'>{getMessage('optionsAutoplayAudioDescription')}</div>
                 <div className='mt10-ml30'>
-                    Select what languages should only be played automatically
+                    {getMessage('optionsSelectAutoplayLanguage')}
+                    <div className='item-description'>{getMessage('optionsSelectAutoplayLanguageDescription')}</div>
                     <div className='mt10-ml30'>
                         <AutoPlayAudioLangs langs={autoPlayAudioLangs} onChange={v => setLocalStorage({ autoPlayAudioLangs: v })} />
                     </div>

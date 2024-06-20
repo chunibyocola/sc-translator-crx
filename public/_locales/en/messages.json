@@ -545,6 +545,15 @@
     "optionsAutoplayAudioDescription": {
         "message": "When the number of characters in the original text is 30 or less and there is a completed translation in the translation request, the audio of the original text will be played automatically."
     },
+    "optionsSelectAutoplayLanguage": {
+        "message": "Select the language for autoplay"
+    },
+    "optionsSelectAutoplayLanguageDescription": {
+        "message": "If it is empty, all languages will be played automatically. If it is not empty, only the language you selected will be played automatically."
+    },
+    "optionsSelectAutoPlayLanguageClear": {
+        "message": "All selected languages will be cleared."
+    },
     "themePreset": {
         "message": "Preset"
     },
@@ -733,6 +742,12 @@
     },
     "wordSearch": {
         "message": "Search"
+    },
+    "wordSelect": {
+        "message": "Select"
+    },
+    "wordClear": {
+        "message": "Clear"
     },
     "sentenceAddTranslateSource": {
         "message": "Please add a translate source."

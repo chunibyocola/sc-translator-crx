@@ -545,6 +545,15 @@
     "optionsAutoplayAudioDescription": {
         "message": "当原文的字符数在 30 个以下且翻译请求中有已完成的翻译时，自动播放原文的音频。"
     },
+    "optionsSelectAutoplayLanguage": {
+        "message": "选择自动播放的语言"
+    },
+    "optionsSelectAutoplayLanguageDescription": {
+        "message": "如果为空，将自动播放所有语言。如果不为空，则只会自动播放你选择的语言。"
+    },
+    "optionsSelectAutoPlayLanguageClear": {
+        "message": "所有已选择的语言将被清除。"
+    },
     "themePreset": {
         "message": "预设"
     },
@@ -733,6 +742,12 @@
     },
     "wordSearch": {
         "message": "搜索"
+    },
+    "wordSelect": {
+        "message": "选择"
+    },
+    "wordClear": {
+        "message": "清空"
     },
     "sentenceAddTranslateSource": {
         "message": "请添加翻译源。"

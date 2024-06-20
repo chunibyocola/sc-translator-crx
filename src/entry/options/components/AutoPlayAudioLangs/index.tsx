@@ -34,10 +34,10 @@ const AutoPlayAudioLangs: React.FC<AutoPlayAudioLangsProps> = ({ langs, onChange
             <div>
                 <div className='auto-langs__edit' ref={editBoxElt}>
                     <Button
-                        variant='text'
+                        variant='contained'
                         onClick={() => setEditing(editing => !editing)}
                     >
-                        Edit
+                        {getMessage('wordSelect')}
                     </Button>
                     <SelectOptions
                         show={editing}
@@ -65,10 +65,10 @@ const AutoPlayAudioLangs: React.FC<AutoPlayAudioLangsProps> = ({ langs, onChange
                     variant='text'
                     onClick={() => setConfirmClear(true)}
                 >
-                    Clear
+                    {getMessage('wordClear')}
                 </Button>
                 {confirmClear && <ConfirmDelete
-                    drawerTitle='All checked languages will be removed.'
+                    drawerTitle={getMessage('optionsSelectAutoPlayLanguageClear')}
                     onConfirm={() => {
                         onChange([]);
                         setConfirmClear(false);
@@ -78,9 +78,7 @@ const AutoPlayAudioLangs: React.FC<AutoPlayAudioLangsProps> = ({ langs, onChange
                 />}
             </div>
             <div className='auto-langs__preview'>
-                <div>
-                    Preview:
-                </div>
+                <div>{getMessage('optionsPreview')}</div>
                 <div className='auto-langs__preview__list'>
                     {langs.length === 0 && '--'}
                     {langs.map((lang) => (<div key={lang} className='auto-langs__preview__list__item'>
