@@ -9,6 +9,8 @@ const audio = new Audio();
 
 let defaultAudioSource = GOOGLE_COM;
 let keepUsingDefaultAudioSource = false;
+let autoPlayAudio = false;
+let autoPlayAudioLangs: string[] = [];
 
 type AudioCache = {
     textList: string[];
@@ -40,9 +42,7 @@ let audioCache: AudioCache = {
 let violateCSP = false;
 const utter = new SpeechSynthesisUtterance();
 
-export const playAudio = ({ text, source, from = '' }: { text: string, source?: string, from?: string }, onPause?: () => void) => {
-    pauseAudio();
-
+export const playAudio = ({ text, source, from = '', auto }: { text: string; source?: string; from?: string; auto?: boolean; }, onPause?: () => void) => {
     if (source && from) {
         if (source === BING_COM) {
             from = bingSwitchToGoogleLangCode(from);
@@ -51,6 +51,13 @@ export const playAudio = ({ text, source, from = '' }: { text: string, source?: 
             from = baiduSwitchToGoogleLangCode(from);
         }
     }
+
+    if (auto) {
+        if (!autoPlayAudio) { return; }
+        if (autoPlayAudioLangs.length !== 0 && !autoPlayAudioLangs.includes(from)) { return; }
+    }
+
+    pauseAudio();
 
     if (!source || keepUsingDefaultAudioSource) {
         source = defaultAudioSource;
@@ -86,6 +93,11 @@ export const playAudio = ({ text, source, from = '' }: { text: string, source?: 
             if ('code' in response) { return; }
 
             if (detectingText === audioCache.textList[0] && source === audioCache.source) {
+                if (auto) {
+                    if (!autoPlayAudio) { return; }
+                    if (autoPlayAudioLangs.length !== 0 && !autoPlayAudioLangs.includes(from)) { return; }
+                }
+
                 audioCache.detectedFrom = response.langCode;
                 startPlaying();
             }
@@ -190,8 +202,23 @@ const getTextList = (text: string, maxLength: number) => {
     }, ['']);
 };
 
-type PickedOptions = Pick<DefaultOptions, 'audioVolume' | 'audioPlaybackRate' | 'defaultAudioSource' | 'keepUsingDefaultAudioSource'>;
-const keys: (keyof PickedOptions)[] = ['audioVolume', 'audioPlaybackRate', 'defaultAudioSource', 'keepUsingDefaultAudioSource'];
+type PickedOptions = Pick<
+    DefaultOptions,
+    'audioVolume' |
+    'audioPlaybackRate' |
+    'defaultAudioSource' |
+    'keepUsingDefaultAudioSource' |
+    'autoPlayAudio' |
+    'autoPlayAudioLangs'
+>;
+const keys: (keyof PickedOptions)[] = [
+    'audioVolume',
+    'audioPlaybackRate',
+    'defaultAudioSource',
+    'keepUsingDefaultAudioSource',
+    'autoPlayAudio',
+    'autoPlayAudioLangs'
+];
 getLocalStorage<PickedOptions>(keys, (storage) => {
     audio.volume = storage.audioVolume / 100;
     audio.defaultPlaybackRate = storage.audioPlaybackRate;
@@ -202,6 +229,10 @@ getLocalStorage<PickedOptions>(keys, (storage) => {
     defaultAudioSource = storage.defaultAudioSource;
 
     keepUsingDefaultAudioSource = storage.keepUsingDefaultAudioSource;
+
+    autoPlayAudio = storage.autoPlayAudio;
+
+    autoPlayAudioLangs = storage.autoPlayAudioLangs;
 });
 listenOptionsChange<PickedOptions>(keys, (changes) => {
     if (changes.audioVolume !== undefined) {
@@ -216,4 +247,8 @@ listenOptionsChange<PickedOptions>(keys, (changes) => {
     changes.defaultAudioSource !== undefined && (defaultAudioSource = changes.defaultAudioSource);
 
     changes.keepUsingDefaultAudioSource !== undefined && (keepUsingDefaultAudioSource = changes.keepUsingDefaultAudioSource);
+
+    changes.autoPlayAudio !== undefined && (autoPlayAudio = changes.autoPlayAudio);
+
+    changes.autoPlayAudioLangs !== undefined && (autoPlayAudioLangs = changes.autoPlayAudioLangs);
 });

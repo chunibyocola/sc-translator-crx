@@ -49,7 +49,7 @@ const useTranslation = (extra?: { recordTranslation?: boolean; insertTranslation
             if (getOptions().autoPlayAudio) {
                 const { text, from } = response.translation;
 
-                text.length <= 30 && playAudio({ text, source, from });
+                text.length <= 30 && playAudio({ text, source, from, auto: true });
             }
         }
     }, [fetchTranslationFromSource, autoInsert, dispatch, insertTranslation, recordTranslation]);
