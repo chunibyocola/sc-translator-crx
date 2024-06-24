@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useAppDispatch, useInsertResult, useTranslationActions } from '../../public/react-use';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../redux/slice/translateHistorySlice';
 import { playAudio } from '../play-audio';
-import { getOptions } from '../options';
 
 const useTranslation = (extra?: { recordTranslation?: boolean; insertTranslation?: boolean; }) => {
     const recordTranslation = extra?.recordTranslation;
@@ -19,7 +18,7 @@ const useTranslation = (extra?: { recordTranslation?: boolean; insertTranslation
     const lastTranslateIdRef = useRef(translateId);
     const firstFinished = useRef(false);
 
-    const [insertable, confirmInsert, insertTranslationToggle, autoInsert] = useInsertResult();
+    const { insertable, confirmInsert, insertToggle: insertTranslationToggle, autoInsert } = useInsertResult();
 
     const translate = useCallback(async (source: string) => {
         const response = await fetchTranslationFromSource(source);
@@ -39,16 +38,16 @@ const useTranslation = (extra?: { recordTranslation?: boolean; insertTranslation
             dispatch(updateHistoryFinish({ translateId: response.translateId, source, result: response.translation }));
         }
 
-        if (insertTranslation) {
-            autoInsert(response.translateId, source, response.translation.result);
-        }
-
         if (!firstFinished.current) {
             firstFinished.current = true;
 
             const { text, from } = response.translation;
 
             text.length <= 30 && playAudio({ text, source, from, auto: true });
+
+            if (insertTranslation) {
+                autoInsert(response.translateId, source, response.translation.result);
+            }
         }
     }, [fetchTranslationFromSource, autoInsert, dispatch, insertTranslation, recordTranslation]);
 

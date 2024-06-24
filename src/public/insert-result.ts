@@ -1,52 +1,20 @@
-type ConfirmedInsertEnity = {
-    selectionRange: null | Range;
+type Insertion = {
+    range: Range;
     translateId: number;
-    sourceText: string;
-    inserted: boolean;
-    insertedNode: null | HTMLElement;
-    translateSource: string;
-};
-const initConfirmedInsertEnity: ConfirmedInsertEnity = {
-    selectionRange: null,
-    translateId: 0,
-    sourceText: '',
-    inserted: false,
-    insertedNode: null,
-    translateSource: ''
+    source?: string;
+    text: string;
+    fontNode: HTMLFontElement;
 };
 
-let confirmed = false;
-let confirmedInsertEnity = { ...initConfirmedInsertEnity };
-let newestInsertEnity: Pick<ConfirmedInsertEnity, 'sourceText' | 'selectionRange'> = {
-    sourceText: '',
-    selectionRange: null
-};
+let insertion: Insertion | null = null;
+let textRange: Pick<Insertion, 'range' | 'text'> | null = null;
 
 export const setSelectionRange = (range: Range, text: string) => {
-    newestInsertEnity.selectionRange = range;
-    newestInsertEnity.sourceText = text;
+    textRange = { range, text };
 };
 
-export const getInsertConfirmed = (text: string, translateId: number) => {
-    if (!text || !(text === newestInsertEnity.sourceText || text === confirmedInsertEnity.sourceText) || !translateId) {
-        confirmed = false;
-        return false;
-    }
-
-    confirmed = true;
-    if (text === confirmedInsertEnity.sourceText) {
-        confirmedInsertEnity.translateId = translateId;
-    }
-    else {
-        confirmedInsertEnity = { ...initConfirmedInsertEnity, ...newestInsertEnity, translateId, inserted: false, sourceText: text };
-    }
-
-    return true;
-};
-
-const createInsertNode = (text: string) => {
+const createInsertNode = () => {
     let insertNode = document.createElement('font');
-    insertNode.appendChild(document.createTextNode(text));
     insertNode.style.margin = '0 5px';
     insertNode.style.userSelect = 'none';
     insertNode.style.padding = '0 2px';
@@ -54,22 +22,29 @@ const createInsertNode = (text: string) => {
     return insertNode;
 };
 
-export const insertResultToggle = (translateId: number, translateSource: string, result: string) => {
-    if (!confirmed || translateId !== confirmedInsertEnity.translateId || !confirmedInsertEnity.selectionRange || !translateSource) { return; }
-
-    if (confirmedInsertEnity.inserted && confirmedInsertEnity.translateSource === translateSource) {
-        confirmedInsertEnity.insertedNode?.parentElement?.removeChild(confirmedInsertEnity.insertedNode);
-        confirmedInsertEnity.insertedNode = null;
-        confirmedInsertEnity.inserted = false;
+export const confirmInsertion = (text: string, translateId: number) => {
+    if (text === insertion?.text) {
+        insertion = { ...insertion, translateId };
+        insertion.fontNode.remove();
+        return true;
     }
-    else if (confirmedInsertEnity.selectionRange?.insertNode) {
-        if (confirmedInsertEnity.inserted && confirmedInsertEnity.insertedNode) {
-            confirmedInsertEnity.insertedNode?.parentElement?.removeChild(confirmedInsertEnity.insertedNode);
-        }
+    else if (text === textRange?.text) {
+        insertion = { ...textRange, translateId, fontNode: createInsertNode() };
+        return true;
+    }
+    
+    return false;
+};
 
-        confirmedInsertEnity.insertedNode = createInsertNode(result);
-        confirmedInsertEnity.selectionRange.insertNode(confirmedInsertEnity.insertedNode);
-        confirmedInsertEnity.inserted = true;
-        confirmedInsertEnity.translateSource = translateSource;
+export const insertTranslationToggle = (translateId: number, source: string, translation: string) => {
+    if (translateId !== insertion?.translateId) { return; }
+
+    if (source === insertion.source && insertion.fontNode.parentElement) {
+        insertion.fontNode.remove();
+    }
+    else {
+        insertion.fontNode.innerText = translation;
+        insertion.range.insertNode(insertion.fontNode);
+        insertion.source = source;
     }
 };
