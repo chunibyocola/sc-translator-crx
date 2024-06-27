@@ -749,6 +749,12 @@
     "wordClear": {
         "message": "クリア"
     },
+    "wordExport": {
+        "message": "エクスポート"
+    },
+    "wordImport": {
+        "message": "インポート"
+    },
     "sentenceAddTranslateSource": {
         "message": "翻訳ソースを追加してください。"
     },

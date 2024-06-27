@@ -749,6 +749,12 @@
     "wordClear": {
         "message": "Clear"
     },
+    "wordExport": {
+        "message": "Export"
+    },
+    "wordImport": {
+        "message": "Import"
+    },
     "sentenceAddTranslateSource": {
         "message": "Please add a translate source."
     },

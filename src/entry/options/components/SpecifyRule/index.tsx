@@ -9,6 +9,7 @@ import Checkbox from '../../../../components/Checkbox';
 import ConfirmDelete from '../../../collection/components/ConfirmDelete';
 import { matchPattern } from '../../../../public/utils';
 import { getMessage } from '../../../../public/i18n';
+import scFile from '../../../../public/sc-file';
 
 const SpecifyRule: React.FC = () => {
     const [rules, setRules] = useState<StorePageTranslationRuleValue[]>([]);
@@ -113,15 +114,83 @@ const SpecifyRule: React.FC = () => {
                 deleteList={[...checkedItems.values()].map(v => v.patterns)}
             />}
             <div className='rule__footer'>
-                <Button
-                    variant='text'
-                    onClick={() => {
-                        setAddingPattern(true);
-                        setCheckedItems(new Set());
-                    }}
-                >
-                    {getMessage('optionsAddRule')}
-                </Button>
+                <div>
+                    <Button
+                        variant='text'
+                        onClick={() => scFile.saveAs(rules.map(({ id, ...rule }) => (rule)), 'rule')}
+                    >
+                        <IconFont
+                            iconName='#icon-export'
+                            style={{fontSize: '24px', marginRight: '5px'}}
+                        />
+                        {getMessage('wordExport')}
+                    </Button>
+                    <Button
+                        variant='text'
+                        onClick={() => {
+                            scFile.open(async (file) => {
+                                try {
+                                    const ruleMap = new Map<string, StorePageTranslationRuleValue[]>();
+                                    rules.forEach((rule) => {
+                                        const t = ruleMap.get(rule.patterns);
+                                        t ? ruleMap.set(rule.patterns, t.concat(rule)) : ruleMap.set(rule.patterns, [rule]);
+                                        
+                                    });
+                                    const data: Omit<StorePageTranslationRuleValue, 'id'>[] = await scFile.read(file);
+
+                                    const qualifiedRules: Omit<StorePageTranslationRuleValue, 'id'>[] = [];
+                                    data.forEach((rule) => {
+                                        try {
+                                            if (!rule.patterns) { return; }
+
+                                            if (!(rule.include && isSelectorsVaild(rule.include)) && !(rule.exclude && isSelectorsVaild(rule.exclude))) { return; }
+
+                                            const t = ruleMap.get(rule.patterns);
+                                            if (t && t.find(({ include, exclude }) => (include === rule.include && exclude === rule.exclude))) { return; }
+
+                                            const nextRule: Omit<StorePageTranslationRuleValue, 'id'> = { patterns: rule.patterns };
+
+                                            if (rule.include) {
+                                                nextRule.include = rule.include;
+                                            }
+
+                                            if (rule.exclude) {
+                                                nextRule.exclude = rule.exclude;
+                                            }
+
+                                            qualifiedRules.push(nextRule);
+                                        }
+                                        catch {}
+                                    });
+
+                                    scIndexedDB.addAll('page-translation-rule', qualifiedRules).then(() => {
+                                        setAddingPattern(false);
+                                        setEditingValue(undefined);
+                                        refreshValue();
+                                    });
+                                }
+                                catch {}
+                            })
+                        }}
+                    >
+                        <IconFont
+                            iconName='#icon-import'
+                            style={{fontSize: '24px', marginRight: '5px'}}
+                        />
+                        {getMessage('wordImport')}
+                    </Button>
+                </div>
+                <div>
+                    <Button
+                        variant='text'
+                        onClick={() => {
+                            setAddingPattern(true);
+                            setCheckedItems(new Set());
+                        }}
+                    >
+                        {getMessage('optionsAddRule')}
+                    </Button>
+                </div>
             </div>
         </div>
     )

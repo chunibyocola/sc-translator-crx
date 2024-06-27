@@ -749,6 +749,12 @@
     "wordClear": {
         "message": "清空"
     },
+    "wordExport": {
+        "message": "導出"
+    },
+    "wordImport": {
+        "message": "導入"
+    },
     "sentenceAddTranslateSource": {
         "message": "請添加翻譯源。"
     },

@@ -55,7 +55,8 @@
 .rule__footer {
     border-top: 1px solid rgba(0, 0, 0, 0.2);
     padding: 2px;
-    text-align: right;
+    display: flex;
+    justify-content: space-between;
 }
 .add-pattern {
     height: 100%;
