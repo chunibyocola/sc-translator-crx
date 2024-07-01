@@ -43,6 +43,7 @@ const interpreter = (sentence: string) => {
     const comparisons: string[] = new Array(aNum).fill('');
     let anchor = 0;
     const matchRegExp = new RegExp('<a i=([0-9]+)>|</a>');
+    sentence = sentence.replace(/<i>.*?<\/i>/g, '').replace(/\s*?<b>|<\/b>/g, '');
     let match = sentence.match(matchRegExp);
 
     while (match?.index !== undefined) {
