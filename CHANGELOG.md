@@ -1,3 +1,7 @@
+# 5.6.0 (2024-07-01)
+- Add "Automatically play audio after translation is completed" option.
+- Able to export/import the rules of "Specify what to be translate or not translate".
+- Fix page translation parsing error in some cases.
 # 5.5.0 (2024-05-27)
 - Able to specify what to translate or not translate.
 # 5.4.1 (2024-04-01)
