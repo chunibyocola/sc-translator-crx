@@ -1,6 +1,6 @@
 import React, { useId } from 'react';
 import { useRippleActivationClassName } from '../../public/react-use';
-import { classNames } from '../../public/utils';
+import { cn } from '../../public/utils';
 import './style.css';
 
 type ChcekboxProps = {
@@ -17,9 +17,9 @@ const Checkbox: React.FC<ChcekboxProps> = ({ label, checked, indeterminate, onCh
     const id = useId();
 
     return (
-        <label htmlFor={id} className={classNames('checkbox', disabled && 'checkbox--disabled')}>
+        <label htmlFor={id} className={cn('checkbox', disabled && 'checkbox--disabled')}>
             <span
-                className={classNames('checkbox-root', activationClassName, checked && 'checkbox--checked')}
+                className={cn('checkbox-root', activationClassName, checked && 'checkbox--checked')}
                 onMouseDown={() => {
                     if (disabled) { return; }
 

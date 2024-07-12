@@ -3,7 +3,6 @@ import Button from '../../../../components/Button';
 import Checkbox from '../../../../components/Checkbox';
 import IconFont from '../../../../components/IconFont';
 import { getMessage } from '../../../../public/i18n';
-import { classNames } from '../../../../public/utils';
 import './style.css';
 
 type HostListProps = {

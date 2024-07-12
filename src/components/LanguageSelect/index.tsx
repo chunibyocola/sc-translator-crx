@@ -2,7 +2,7 @@ import React, { startTransition, useCallback, useEffect, useRef, useState } from
 import { LangCodes } from '../../constants/langCode';
 import { getMessage } from '../../public/i18n';
 import { useMouseEventOutside } from '../../public/react-use';
-import { classNames } from '../../public/utils';
+import { cn } from '../../public/utils';
 import IconFont from '../IconFont';
 import SelectOptions, { SelectOptionsForwardRef } from '../SelectOptions';
 import './style.css';
@@ -49,7 +49,7 @@ const LanguageSelect: React.FC<LanguageSelectProps> = ({ value, onChange, classN
 
     return (
         <div
-            className={classNames('language-select', className)}
+            className={cn('language-select', className)}
             ref={languageSelectElementRef}
             tabIndex={-1}
             onClick={() => setShowOptions(v => !v)}

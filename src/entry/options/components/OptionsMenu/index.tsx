@@ -4,7 +4,7 @@ import IconFont from '../../../../components/IconFont';
 import Logo from '../../../../components/Logo';
 import { getMessage } from '../../../../public/i18n';
 import { useWindowSize } from '../../../../public/react-use';
-import { classNames } from '../../../../public/utils';
+import { cn } from '../../../../public/utils';
 import './style.css';
 
 const menusItems = [
@@ -61,8 +61,8 @@ const OptionsMenu: React.FC = () => {
                     </div>))}
                 </div>
             </div>
-            <div className={classNames('nav-bar-menu__backdrop', showNavBarMenu && 'nav-bar-menu--show')} onClick={() => setShowNavBarMenu(false)} />
-            {smallScreen && <div className={classNames('nav-bar-menu', showNavBarMenu && 'nav-bar-menu--show')}>
+            <div className={cn('nav-bar-menu__backdrop', showNavBarMenu && 'nav-bar-menu--show')} onClick={() => setShowNavBarMenu(false)} />
+            {smallScreen && <div className={cn('nav-bar-menu', showNavBarMenu && 'nav-bar-menu--show')}>
                 <div className='nav-bar-menu__sidebar'>
                     <div className='nav-bar-menu__sidebar-brand main-title'>
                         <Logo style={{fontSize: '30px'}} />

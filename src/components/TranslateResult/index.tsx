@@ -2,7 +2,7 @@ import React from 'react';
 import { LANG_EN } from '../../constants/langCode';
 import { getMessage } from '../../public/i18n';
 import { getOptions } from '../../public/options';
-import { classNames, resultToString } from '../../public/utils';
+import { cn, resultToString } from '../../public/utils';
 import { TranslateRequest } from '../../types';
 import ErrorMessage from '../ErrorMessage';
 import IconFont from '../IconFont';
@@ -22,7 +22,7 @@ const TranslateResult: React.FC<TranslateResultProps> = ({ translateRequest, sou
     const { displayOfTranslation } = getOptions();
 
     return (
-        <div className={classNames('translate-result', className)} style={style}>
+        <div className={cn('translate-result', className)} style={style}>
             {translateRequest.status === 'loading' ?
                 <TranslateResultSkeleton /> :
             translateRequest.status === 'init' ?
@@ -51,7 +51,7 @@ const TranslateResult: React.FC<TranslateResultProps> = ({ translateRequest, sou
                 </div>}
                 <div className='translate-result__item translate-result__result'>
                     {translateRequest.result.result.map((item, index) => (<span
-                        className={classNames(displayOfTranslation.maintainParagraphStructure && 'translate-result__paragraph')}
+                        className={cn(displayOfTranslation.maintainParagraphStructure && 'translate-result__paragraph')}
                         key={index}
                     >
                         {item}

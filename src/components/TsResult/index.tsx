@@ -1,7 +1,7 @@
 import React from 'react';
 import IconFont from '../IconFont';
 import { LANG_EN } from '../../constants/langCode';
-import { classNames, resultToString } from '../../public/utils';
+import { cn, resultToString } from '../../public/utils';
 import './style.css';
 import { getMessage } from '../../public/i18n';
 import ErrorMessage from '../ErrorMessage';
@@ -31,7 +31,7 @@ const TsResult: React.FC<TsResultProps> = ({ translateRequest, source, retry, se
             <>
                 <div className='st-result__item-stack'>
                     {translateRequest.result.result.map((item, index) => (<span
-                        className={classNames(displayOfTranslation.maintainParagraphStructure && 'st-result__paragraph')}
+                        className={cn(displayOfTranslation.maintainParagraphStructure && 'st-result__paragraph')}
                         key={index}
                     >
                         {item}

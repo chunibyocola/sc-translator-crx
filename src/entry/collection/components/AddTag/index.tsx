@@ -5,7 +5,7 @@ import Backdrop from '../Backdrop';
 import Button from '../../../../components/Button';
 import IconFont from '../../../../components/IconFont';
 import { getMessage } from '../../../../public/i18n';
-import { classNames } from '../../../../public/utils';
+import { cn } from '../../../../public/utils';
 import './style.css';
 
 type AddTagProps = {
@@ -83,7 +83,7 @@ const AddTag: React.FC<AddTagProps> = ({ onClose, onAdd, addedTags }) => {
                     <div className='add-tag__existed__tags'>
                         {filteredTags.map((tagName) => (<div
                             key={tagName}
-                            className={classNames('add-tag__existed__tags__item', addedTagSet.has(tagName) && 'added')}
+                            className={cn('add-tag__existed__tags__item', addedTagSet.has(tagName) && 'added')}
                             title={tagName}
                             onClick={() => { addTag(tagName); }}
                         >

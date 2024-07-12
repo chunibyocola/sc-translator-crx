@@ -1,6 +1,6 @@
 import React, { useId, useRef } from 'react';
 import { useRippleActivationClassName } from '../../public/react-use';
-import { classNames } from '../../public/utils';
+import { cn } from '../../public/utils';
 import './style.css';
 
 type RadioProps = {
@@ -22,7 +22,7 @@ const Radio: React.FC<RadioProps> = ({ value, name, label, checked, onChange }) 
         <label htmlFor={id} className='radio'>
             <span
                 ref={radioRootRef}
-                className={classNames('radio-root', activationClassName, checked && 'radio--checked')}
+                className={cn('radio-root', activationClassName, checked && 'radio--checked')}
                 onMouseDown={() => {
                     onActivate();
                 }}

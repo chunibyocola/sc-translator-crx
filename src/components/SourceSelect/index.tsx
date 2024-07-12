@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { TranslateSource } from '../../constants/translateSource';
-import { classNames } from '../../public/utils';
+import { cn } from '../../public/utils';
 import IconFont from '../IconFont';
 import SelectOptions from '../SelectOptions';
 import SourceFavicon from '../SourceFavicon';
@@ -29,7 +29,7 @@ const SourceSelect: React.FC<SourceSelectProps> = ({ onChange, sourceList, sourc
     return (
         <div
             tabIndex={-1}
-            className={classNames('source-select', className, disabled && 'source-select--disabled')}
+            className={cn('source-select', className, disabled && 'source-select--disabled')}
             onClick={() => !disabled && setShowOptions(!showOptions)}
             onMouseLeave={() => !disabled && setShowOptions(false)}
             onMouseDown={e => disabled && e.preventDefault()}

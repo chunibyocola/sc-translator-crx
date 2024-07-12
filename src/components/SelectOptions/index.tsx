@@ -1,6 +1,6 @@
 import React, { useImperativeHandle, useLayoutEffect, useRef, useState } from 'react';
 import { useWindowSize } from '../../public/react-use';
-import { classNames } from '../../public/utils';
+import { cn } from '../../public/utils';
 import './style.css';
 
 const calculateSelectOptionsStyle = (relativeElement: HTMLElement | null | undefined, optionsMaxHeight: number, optionsMaxWidth: number, cover?: boolean) => {
@@ -100,7 +100,7 @@ const SelectOptions = React.forwardRef<SelectOptionsForwardRef, SelectOptionsPro
 
     return (
         <div
-            className={classNames('select-options', className)}
+            className={cn('select-options', className)}
             ref={optionsElementRef}
             style={Object.assign({ display: show ? 'block' : 'none' }, optionsStyle, style)}
             onMouseLeave={onMouseLeave}

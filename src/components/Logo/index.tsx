@@ -1,5 +1,5 @@
 import React from 'react';
-import { classNames } from '../../public/utils';
+import { cn } from '../../public/utils';
 import logo from './logo.png';
 import './style.css';
 
@@ -9,7 +9,7 @@ const Logo: React.FC<LogoProps> = ({ style, className }) => {
     return (
         <img
             src={logo}
-            className={classNames('logo', className)}
+            className={cn('logo', className)}
             style={style}
             alt='ScTranslator Logo'
         />

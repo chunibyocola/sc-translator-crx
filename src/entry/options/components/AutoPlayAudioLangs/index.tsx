@@ -4,7 +4,7 @@ import IconFont from '../../../../components/IconFont';
 import { preferredLangCode } from '../../../../constants/langCode';
 import { getOptions } from '../../../../public/options';
 import SelectOptions from '../../../../components/SelectOptions';
-import { classNames } from '../../../../public/utils';
+import { cn } from '../../../../public/utils';
 import TextField from '../../../../components/TextField';
 import { getMessage } from '../../../../public/i18n';
 import { useMouseEventOutside } from '../../../../public/react-use';
@@ -54,7 +54,7 @@ const AutoPlayAudioLangs: React.FC<AutoPlayAudioLangsProps> = ({ langs, onChange
                         />
                         {filtered.map(({ code, name }) => (<div
                             key={code}
-                            className={classNames('auto-langs__list__item', checkedLangSet.has(code) && 'checked')}
+                            className={cn('auto-langs__list__item', checkedLangSet.has(code) && 'checked')}
                             onClick={() => checkedLangSet.has(code) ? onChange(langs.filter(lang => lang !== code)) : onChange(langs.concat(code))}
                         >
                             {name}

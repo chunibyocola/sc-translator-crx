@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRippleActivationClassName } from '../../public/react-use';
-import { classNames } from '../../public/utils';
+import { cn } from '../../public/utils';
 import './style.css';
 
 type ButtonProps = {
@@ -13,7 +13,7 @@ const Button: React.FC<ButtonProps> = ({ variant, onClick, children, disabled, c
 
     return (
         <button
-            className={classNames('btn', `btn--${variant}`, activationClassName, className)}
+            className={cn('btn', `btn--${variant}`, activationClassName, className)}
             onClick={onClick}
             onMouseDown={(e) => {
                 if (variant !== 'icon') {

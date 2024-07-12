@@ -1,8 +1,6 @@
 import React, { useId, useLayoutEffect, useState } from 'react';
 import './style.css';
-import { classNames } from '../../public/utils';
-import Button from '../Button';
-import IconFont from '../IconFont';
+import { cn } from '../../public/utils';
 
 type TextFieldProps = {
     label?: string;
@@ -25,8 +23,8 @@ const TextField: React.FC<TextFieldProps> = ({ label, onChange, defaultValue, er
     const id = useId();
 
     return (
-        <div className={classNames('text-field', error && 'text-field--error')}>
-            {label && <label className={classNames('text-field__label', internalValue && 'value-not-empty')} htmlFor={id}>
+        <div className={cn('text-field', error && 'text-field--error')}>
+            {label && <label className={cn('text-field__label', internalValue && 'value-not-empty')} htmlFor={id}>
                 {label}
             </label>}
             <div className='text-field__input-area'>

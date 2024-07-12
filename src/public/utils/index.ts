@@ -126,7 +126,7 @@ export const isTextBox = (element: Element) => {
         || (element as HTMLElement).isContentEditable;
 };
 
-export const classNames = (...args: (undefined | null | boolean | string)[]) => {
+export const cn = (...args: (undefined | null | boolean | string)[]) => {
     let className = '';
 
     args.forEach((value) => (value && typeof value === 'string' && (className += ' ' + value)));

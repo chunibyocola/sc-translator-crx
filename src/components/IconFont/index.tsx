@@ -1,5 +1,5 @@
 import React from 'react';
-import { classNames } from '../../public/utils';
+import { cn } from '../../public/utils';
 import './style.css';
 
 type IconFontProps = {
@@ -10,7 +10,7 @@ type IconFontProps = {
 const IconFont: React.FC<IconFontProps> = ({ iconName, className, style, onClick, onMouseUp, onMouseDown, title }) => {
     return (
         <svg
-            className={classNames('iconfont', className)}
+            className={cn('iconfont', className)}
             aria-hidden='true'
             style={style}
             onClick={onClick}
