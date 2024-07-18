@@ -2,17 +2,15 @@ import React from 'react';
 import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
-import { DefaultOptions } from '../../../../types';
+import { GetStorageKeys } from '../../../../types';
 import CustomizeStyleTextarea from '../../components/CustomizeStyleTextarea';
 import CustomizeTheme from '../../components/CustomizeTheme';
 
-type PickedOptions = Pick<
-    DefaultOptions,
+const useOptionsDependency: GetStorageKeys<
     'styleVarsList' |
     'styleVarsIndex' |
     'customizeStyleText'
->;
-const useOptionsDependency: (keyof PickedOptions)[] = [
+> = [
     'styleVarsList',
     'styleVarsIndex',
     'customizeStyleText'
@@ -23,7 +21,7 @@ const Theme: React.FC = () => {
         styleVarsList,
         styleVarsIndex,
         customizeStyleText
-    } = useOptions<PickedOptions>(useOptionsDependency);
+    } = useOptions(useOptionsDependency);
 
     return (
         <div className='opt-section'>

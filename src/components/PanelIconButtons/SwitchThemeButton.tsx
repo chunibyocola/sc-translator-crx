@@ -2,15 +2,14 @@ import React from 'react';
 import { setLocalStorage } from '../../public/chrome-call';
 import { getMessage } from '../../public/i18n';
 import { useOptions } from '../../public/react-use';
-import { DefaultOptions } from '../../types';
+import { GetStorageKeys } from '../../types';
 import IconFont from '../IconFont';
 import PanelIconButtonWrapper from './PanelIconButtonWrapper';
 
-type PickedOptions = Pick<DefaultOptions, 'styleVarsList' | 'styleVarsIndex'>;
-const useOptionsDependency: (keyof PickedOptions)[] = ['styleVarsList', 'styleVarsIndex'];
+const useOptionsDependency: GetStorageKeys<'styleVarsList' | 'styleVarsIndex'> = ['styleVarsList', 'styleVarsIndex'];
 
 const SwitchThemeButton: React.FC = () => {
-    const { styleVarsList, styleVarsIndex } = useOptions<PickedOptions>(useOptionsDependency);
+    const { styleVarsList, styleVarsIndex } = useOptions(useOptionsDependency);
 
     return (
         <PanelIconButtonWrapper

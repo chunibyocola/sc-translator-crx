@@ -7,14 +7,13 @@ import HistoryResultPanel from './HistoryResultPanel';
 import HistoryItem from './HistoryItem';
 import { cn, mouseDrag } from '../../public/utils';
 import { setLocalStorage } from '../../public/chrome-call';
-import { DefaultOptions, Translation } from '../../types';
+import { GetStorageKeys, Translation } from '../../types';
 import { removeHistory } from '../../redux/slice/translateHistorySlice';
 import Logo from '../Logo';
 
 const midInThree = (min: number, num: number, max: number) => (Math.min(max, Math.max(min, num)));
 
-type PickedOptions = Pick<DefaultOptions, 'rememberHistoryPanelStatus' | 'historyPanelStatus'>;
-const useOptionsDependency: (keyof PickedOptions)[] = ['rememberHistoryPanelStatus', 'historyPanelStatus'];
+const useOptionsDependency: GetStorageKeys<'rememberHistoryPanelStatus' | 'historyPanelStatus'> = ['rememberHistoryPanelStatus', 'historyPanelStatus'];
 
 const TsHistory: React.FC = () => {
     const [pinning, setPinning] = useState(false);
@@ -25,7 +24,7 @@ const TsHistory: React.FC = () => {
 
     const translateHistoryState = useAppSelector(state => state.translateHistory);
 
-    const { rememberHistoryPanelStatus, historyPanelStatus } = useOptions<PickedOptions>(useOptionsDependency);
+    const { rememberHistoryPanelStatus, historyPanelStatus } = useOptions(useOptionsDependency);
 
     const historyEnabled = useIsHistoryEnabled(window.location.host);
     const translateEnabled = useIsTranslateEnabled(window.location.host);

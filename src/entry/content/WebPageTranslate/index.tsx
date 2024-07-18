@@ -13,7 +13,7 @@ import { getOptions } from '../../../public/options';
 import { useOnRuntimeMessage, useOptions } from '../../../public/react-use';
 import useEffectOnce from '../../../public/react-use/useEffectOnce';
 import { closeWebPageTranslating, errorRetry, startWebPageTranslating, switchWayOfFontsDisplaying } from '../../../public/web-page-translate';
-import { DefaultOptions } from '../../../types';
+import { GetStorageKeys } from '../../../types';
 import './style.css';
 import Logo from '../../../components/Logo';
 import { sendGetSpecifySelectors, sendShouldAutoTranslateThisPage, sendUpdatePageTranslationState } from '../../../public/send';
@@ -88,8 +88,10 @@ const wPTReducer = (state: WPTReducerState, action: WPTReducerAction): WPTReduce
     }
 };
 
-type PickedOptions = Pick<DefaultOptions, 'autoTranslateWebpageHostList' | 'translateRedirectedSameDomainPage'>;
-const useOptionsDependency: (keyof PickedOptions)[] = ['autoTranslateWebpageHostList', 'translateRedirectedSameDomainPage'];
+const useOptionsDependency: GetStorageKeys<
+    'autoTranslateWebpageHostList' |
+    'translateRedirectedSameDomainPage'
+> = ['autoTranslateWebpageHostList', 'translateRedirectedSameDomainPage'];
 
 const WebPageTranslate: React.FC = () => {
     const [langCodes, setLangCodes] = useState<LangCodes>([]);
@@ -101,7 +103,7 @@ const WebPageTranslate: React.FC = () => {
         targetLanguage: getOptions().webPageTranslateTo
     });
 
-    const { autoTranslateWebpageHostList, translateRedirectedSameDomainPage } = useOptions<PickedOptions>(useOptionsDependency);
+    const { autoTranslateWebpageHostList, translateRedirectedSameDomainPage } = useOptions(useOptionsDependency);
 
     const hostSet = useMemo(() => {
         return new Set(autoTranslateWebpageHostList);

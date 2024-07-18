@@ -7,15 +7,14 @@ import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { switchTranslateSource } from '../../../../public/switch-translate-source';
-import { DefaultOptions } from '../../../../types';
+import { GetStorageKeys } from '../../../../types';
 import BetaIcon from '../../components/BetaIcon';
 import CustomTranslateSourceDisplay from '../../components/CustomTranslateSourceDisplay';
 import DefaultSelect from '../../components/DefaultSelect';
 import MultipleSourcesDisplay from '../../components/MultipleSourcesDisplay';
 import TranslationDisplay from '../../components/TranslationDisplay';
 
-type PickedOptions = Pick<
-    DefaultOptions,
+const useOptionsDependency: GetStorageKeys<
     'multipleTranslateMode' |
     'userLanguage' |
     'preferredLanguage' |
@@ -29,8 +28,7 @@ type PickedOptions = Pick<
     'useDotCn' |
     'customTranslateSourceList' |
     'displayOfTranslation'
->;
-const useOptionsDependency: (keyof PickedOptions)[] = [
+> = [
     'multipleTranslateMode',
     'userLanguage',
     'preferredLanguage',
@@ -61,7 +59,7 @@ const DefaultTranslateOptions: React.FC = () => {
         useDotCn,
         customTranslateSourceList,
         displayOfTranslation
-    } = useOptions<PickedOptions>(useOptionsDependency);
+    } = useOptions(useOptionsDependency);
 
     return (
         <div className='opt-section'>

@@ -1,21 +1,19 @@
 import React from 'react';
 import { setLocalStorage } from '../../../../public/chrome-call';
 import { useOptions } from '../../../../public/react-use';
-import { DefaultOptions } from '../../../../types';
+import { GetStorageKeys } from '../../../../types';
 import ContextMenusDraggable from '../../components/ContextMenusDraggable';
 
-type PickedOptions = Pick<
-    DefaultOptions,
+const useOptionsDependency: GetStorageKeys<
     'contextMenus'
->;
-const useOptionsDependency: (keyof PickedOptions)[] = [
+> = [
     'contextMenus'
 ];
 
 const ContextMenus: React.FC = () => {
     const {
         contextMenus
-    } = useOptions<PickedOptions>(useOptionsDependency);
+    } = useOptions(useOptionsDependency);
 
     return (
         <div className='opt-section'>

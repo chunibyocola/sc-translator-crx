@@ -7,7 +7,7 @@ import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { playAudio } from '../../../../public/play-audio';
 import { useOptions } from '../../../../public/react-use';
-import { DefaultOptions } from '../../../../types';
+import { GetStorageKeys } from '../../../../types';
 import Switch from '../../../../components/Switch';
 import AutoPlayAudioLangs from '../../components/AutoPlayAudioLangs';
 
@@ -33,17 +33,14 @@ const playbackRateFormat = (v: number) => Number(Number(v).toFixed(2));
 const volumeLabelFormat: SliderFormat = v => `${Number(v).toFixed(0)}`;
 const playbackRateLabelFormat: SliderFormat = v => `${Number(v).toFixed(2)}x`;
 
-
-type PickedOptions = Pick<
-    DefaultOptions,
+const useOptionsDependency: GetStorageKeys<
     'defaultAudioSource' |
     'audioVolume' |
     'audioPlaybackRate' |
     'keepUsingDefaultAudioSource' |
     'autoPlayAudio' |
     'autoPlayAudioLangs'
->;
-const useOptionsDependency: (keyof PickedOptions)[] = [
+> = [
     'defaultAudioSource',
     'audioVolume',
     'audioPlaybackRate',
@@ -60,7 +57,7 @@ const Audio: React.FC = () => {
         keepUsingDefaultAudioSource,
         autoPlayAudio,
         autoPlayAudioLangs
-    } = useOptions<PickedOptions>(useOptionsDependency);
+    } = useOptions(useOptionsDependency);
 
     return (
         <div className='opt-section'>

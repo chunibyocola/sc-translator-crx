@@ -13,13 +13,12 @@ import { useAppDispatch, useOnRuntimeMessage, useOptions } from '../../../public
 import { getSelectedText } from '../../../public/utils/get-selection';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
 import { nextTranslaion } from '../../../redux/slice/translationSlice';
-import { DefaultOptions } from '../../../types';
+import { GetStorageKeys } from '../../../types';
 
-type PickedOptions = Pick<DefaultOptions, 'autoPasteInTheInputBox'>;
-const useOptionsDependency: (keyof PickedOptions)[] = ['autoPasteInTheInputBox'];
+const useOptionsDependency: GetStorageKeys<'autoPasteInTheInputBox'> = ['autoPasteInTheInputBox'];
 
 const HandleCommands: React.FC = () => {
-    const { autoPasteInTheInputBox } = useOptions<PickedOptions>(useOptionsDependency);
+    const { autoPasteInTheInputBox } = useOptions(useOptionsDependency);
 
     const dispatch = useAppDispatch();
 

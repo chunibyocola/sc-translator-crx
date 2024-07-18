@@ -4,22 +4,20 @@ import Switch from '../../../../components/Switch';
 import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
-import { DefaultOptions } from '../../../../types';
+import { GetStorageKeys } from '../../../../types';
 
 const initSizeAndPosition = { width: 286, height: 439, left: 550, top: 250 };
 
-type PickedOptions = Pick<
-    DefaultOptions,
+const useOptionsDependency: GetStorageKeys<
     'rememberStwSizeAndPosition'
->;
-const useOptionsDependency: (keyof PickedOptions)[] = [
+> = [
     'rememberStwSizeAndPosition'
 ];
 
 const SeparateWindow: React.FC = () => {
     const {
         rememberStwSizeAndPosition
-    } = useOptions<PickedOptions>(useOptionsDependency);
+    } = useOptions(useOptionsDependency);
 
     return (
         <div className='opt-section'>

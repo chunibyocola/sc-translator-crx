@@ -3,13 +3,12 @@ import { LangCodes, LocaleLangCodes } from '../../constants/langCode';
 import { setLocalStorage } from '../../public/chrome-call';
 import { getOptions } from '../../public/options';
 import { useOptions } from '../../public/react-use';
-import { DefaultOptions } from '../../types';
+import { GetStorageKeys } from '../../types';
 import IconFont from '../IconFont';
 import LanguageSelect from '../LanguageSelect';
 import './style.css';
 
-type PickedOptions = Pick<DefaultOptions, 'recentTranslateFromList' | 'recentTranslateToList'>;
-const useOptionsDependency: (keyof PickedOptions)[] = ['recentTranslateFromList', 'recentTranslateToList'];
+const useOptionsDependency: GetStorageKeys<'recentTranslateFromList' | 'recentTranslateToList'> = ['recentTranslateFromList', 'recentTranslateToList'];
 
 const updateRecentList = (recentList: string[], code: string, from: boolean) => {
     setLocalStorage({ [`recentTranslate${from ? 'From' : 'To'}List`]: [code].concat(recentList.filter(v => v !== code)).slice(0, 4) });
@@ -26,7 +25,7 @@ const LanguageSelection: React.FC<LanguageSelectionProps> = ({ onChange, from, t
     const [langCodes, setLangCodes] = useState<LangCodes>([]);
     const [langLocal, setLangLocal] = useState<{ [key: string]: string; }>({});
 
-    const { recentTranslateFromList, recentTranslateToList } = useOptions<PickedOptions>(useOptionsDependency);
+    const { recentTranslateFromList, recentTranslateToList } = useOptions(useOptionsDependency);
 
     useEffect(() => {
         setLangCodes(languageCodes[getOptions().userLanguage] as LangCodes);

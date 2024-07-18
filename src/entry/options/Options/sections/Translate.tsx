@@ -4,7 +4,7 @@ import Switch from '../../../../components/Switch';
 import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
-import { DefaultOptions } from '../../../../types';
+import { GetStorageKeys } from '../../../../types';
 import BetaIcon from '../../components/BetaIcon';
 import BtnPostion from '../../components/BtnPosition';
 import HostList from '../../components/HostList';
@@ -19,8 +19,7 @@ const marksHideButtonFixedTime: SliderMarks = [
 ];
 const hideButtonFixedTimeLabelFormat: SliderFormat = v => `${(v / 1000).toFixed(2)}s`
 
-type PickedOptions = Pick<
-    DefaultOptions,
+const useOptionsDependency: GetStorageKeys<
     'translateWithKeyPress' |
     'translateDirectly' |
     'btnPosition' |
@@ -36,8 +35,7 @@ type PickedOptions = Pick<
     'translateButtons' |
     'translateButtonsTL' |
     'userLanguage'
->;
-const useOptionsDependency: (keyof PickedOptions)[] = [
+> = [
     'translateWithKeyPress',
     'translateDirectly',
     'btnPosition',
@@ -72,7 +70,7 @@ const Translate: React.FC = () => {
         translateButtons,
         translateButtonsTL,
         userLanguage
-    } = useOptions<PickedOptions>(useOptionsDependency);
+    } = useOptions(useOptionsDependency);
 
     return (
         <div className='opt-section'>

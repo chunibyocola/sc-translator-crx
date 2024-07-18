@@ -12,7 +12,7 @@ import IconFont from '../IconFont';
 import './style.css';
 import { sendSeparate } from '../../public/send';
 import { isTextBox } from '../../public/utils';
-import { DefaultOptions, Position } from '../../types';
+import { GetStorageKeys, Position } from '../../types';
 import { callOutPanelInContentScript, closePanel, requestToHidePanel, showPanelAndSetPosition } from '../../redux/slice/panelStatusSlice';
 import {
     translateButtonContext,
@@ -30,8 +30,7 @@ import PanelIconButtonWrapper from '../PanelIconButtons/PanelIconButtonWrapper';
 const initText = '';
 const initPos = { x: 5, y: 5 };
 
-type PickedOptions = Pick<
-    DefaultOptions,
+const useOptionsDependency: GetStorageKeys<
     'translateDirectly' |
     'translateWithKeyPress' |
     'hideButtonAfterFixedTime' |
@@ -43,8 +42,7 @@ type PickedOptions = Pick<
     'translateButtonsTL' |
     'pinThePanelWhileOpeningIt' |
     'btnPosition'
->;
-const useOptionsDependency: (keyof PickedOptions)[] = [
+> = [
     'translateDirectly',
     'translateWithKeyPress',
     'hideButtonAfterFixedTime',
@@ -100,7 +98,7 @@ const TsBtn: React.FC = () => {
         translateButtonsTL,
         pinThePanelWhileOpeningIt,
         btnPosition
-    } = useOptions<PickedOptions>(useOptionsDependency);
+    } = useOptions(useOptionsDependency);
 
     const debounceHideButtonAfterFixedTime = useDebounceFn(() => setShowBtn(false), hideButtonFixedTime, []);
 

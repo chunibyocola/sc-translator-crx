@@ -3,17 +3,15 @@ import Checkbox from '../../../../components/Checkbox';
 import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
-import { DefaultOptions } from '../../../../types';
+import { GetStorageKeys } from '../../../../types';
 import RegExpList from '../../components/RegExpList';
 import TestTextProcessing from '../../components/TestTextPreprocessing';
 
-type PickedOptions = Pick<
-    DefaultOptions,
+const useOptionsDependency: GetStorageKeys<
     'textPreprocessingRegExpList' |
     'textPreprocessingPreset' |
     'afterSelectingTextRegExpList'
->;
-const useOptionsDependency: (keyof PickedOptions)[] = [
+> = [
     'textPreprocessingRegExpList',
     'textPreprocessingPreset',
     'afterSelectingTextRegExpList'
@@ -24,7 +22,7 @@ const TextPreprocessing: React.FC = () => {
         textPreprocessingPreset,
         textPreprocessingRegExpList,
         afterSelectingTextRegExpList
-    } = useOptions<PickedOptions>(useOptionsDependency);
+    } = useOptions(useOptionsDependency);
 
     return (
         <div className='opt-section'>

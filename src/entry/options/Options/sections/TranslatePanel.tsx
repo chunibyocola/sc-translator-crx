@@ -4,7 +4,7 @@ import Switch from '../../../../components/Switch';
 import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
-import { DefaultOptions } from '../../../../types';
+import { GetStorageKeys } from '../../../../types';
 
 const marksPercentage: SliderMarks = [
     { value: 10, label: '10%' },
@@ -38,16 +38,14 @@ const marksFontSize: SliderMarks = [
 ];
 const pxLabelFormat: SliderFormat = v => `${v}px`
 
-type PickedOptions = Pick<
-    DefaultOptions,
+const useOptionsDependency: GetStorageKeys<
     'pinThePanelWhileOpeningIt' |
     'rememberPositionOfPinnedPanel' |
     'translatePanelMaxHeight' |
     'translatePanelWidth' |
     'translatePanelFontSize' |
     'autoTranslateAfterInput'
->;
-const useOptionsDependency: (keyof PickedOptions)[] = [
+> = [
     'pinThePanelWhileOpeningIt',
     'rememberPositionOfPinnedPanel',
     'translatePanelMaxHeight',
@@ -64,7 +62,7 @@ const TranslatePanel: React.FC = () => {
         translatePanelWidth,
         translatePanelFontSize,
         autoTranslateAfterInput
-    } = useOptions<PickedOptions>(useOptionsDependency);
+    } = useOptions(useOptionsDependency);
 
     const { percentage: hPercentage, px: hPx, percent: hPercent } = translatePanelMaxHeight;
     const { percentage: wPercentage, px: wPx, percent: wPercent } = translatePanelWidth;

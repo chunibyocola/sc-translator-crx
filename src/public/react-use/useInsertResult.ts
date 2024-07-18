@@ -1,11 +1,10 @@
 import { useCallback, useRef, useState } from "react";
-import { DefaultOptions } from "../../types";
+import { GetStorageKeys } from "../../types";
 import { confirmInsertion, insertTranslationToggle } from "../insert-result";
 import { resultToString } from "../utils";
 import useOptions from "./useOptions";
 
-type PickedOptions = Pick<DefaultOptions, 'enableInsertResult' | 'autoInsertResult'>
-const useOptionsDependency: (keyof PickedOptions)[] = ['enableInsertResult', 'autoInsertResult'];
+const useOptionsDependency: GetStorageKeys<'enableInsertResult' | 'autoInsertResult'> = ['enableInsertResult', 'autoInsertResult'];
 
 /**
  * You need to confirm before insert toggle.
@@ -15,7 +14,7 @@ const useInsertResult = () => {
 
     const autoInsertedRef = useRef(false);
 
-    const { enableInsertResult, autoInsertResult } = useOptions<PickedOptions>(useOptionsDependency);
+    const { enableInsertResult, autoInsertResult } = useOptions(useOptionsDependency);
 
     const confirmInsert = useCallback((text: string, translateId: number) => {
         setInsertable(enableInsertResult && confirmInsertion(text, translateId));

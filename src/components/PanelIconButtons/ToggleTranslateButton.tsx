@@ -3,12 +3,11 @@ import { setLocalStorage } from '../../public/chrome-call';
 import { getMessage } from '../../public/i18n';
 import { useOptions } from '../../public/react-use';
 import { getIsEnabled } from '../../public/utils';
-import { DefaultOptions } from '../../types';
+import { GetStorageKeys } from '../../types';
 import IconFont from '../IconFont';
 import PanelIconButtonWrapper from './PanelIconButtonWrapper';
 
-type PickedOptions = Pick<DefaultOptions, 'translateBlackListMode' | 'translateHostList'>;
-const useOptionsDependency: (keyof PickedOptions)[] = ['translateBlackListMode', 'translateHostList'];
+const useOptionsDependency: GetStorageKeys<'translateBlackListMode' | 'translateHostList'> = ['translateBlackListMode', 'translateHostList'];
 
 
 type ToggleTranslateButtonProps = {
@@ -16,7 +15,7 @@ type ToggleTranslateButtonProps = {
 };
 
 const ToggleTranslateButton: React.FC<ToggleTranslateButtonProps> = ({ host }) => {
-    const { translateBlackListMode, translateHostList } = useOptions<PickedOptions>(useOptionsDependency);
+    const { translateBlackListMode, translateHostList } = useOptions(useOptionsDependency);
 
     const translateEnabled = useMemo(() => {
         return !!host && getIsEnabled(host, translateHostList, translateBlackListMode);

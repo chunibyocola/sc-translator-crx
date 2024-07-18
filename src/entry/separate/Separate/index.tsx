@@ -10,15 +10,14 @@ import '../../../components/PopupHeader/style.css';
 import { useAppDispatch, useEffectOnce, useOptions, useTranslation } from '../../../public/react-use';
 import { getMessage } from '../../../public/i18n';
 import { getOptions } from '../../../public/options';
-import { DefaultOptions } from '../../../types';
+import { GetStorageKeys } from '../../../types';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
 import CollectButton from '../../../components/PanelIconButtons/CollectButton';
 import OpenOptionsPageButton from '../../../components/PanelIconButtons/OpenOptionsPageButton';
 import SwitchThemeButton from '../../../components/PanelIconButtons/SwitchThemeButton';
 import OpenCollectionPageButton from '../../../components/PanelIconButtons/OpenCollectionPageButton';
 
-type PickedOptions = Pick<DefaultOptions, 'rememberStwSizeAndPosition'>;
-const useOptionsDependency: (keyof PickedOptions)[] = ['rememberStwSizeAndPosition'];
+const useOptionsDependency: GetStorageKeys<'rememberStwSizeAndPosition'> = ['rememberStwSizeAndPosition'];
 
 const Separate: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -28,7 +27,7 @@ const Separate: React.FC = () => {
         actions: { setText, setLanguage, removeSource, retry, addSource }
     } = useTranslation();
 
-    const { rememberStwSizeAndPosition } = useOptions<PickedOptions>(useOptionsDependency);
+    const { rememberStwSizeAndPosition } = useOptions(useOptionsDependency);
 
     useEffectOnce(() => {
         const text = new URL(window.location.href).searchParams.get('text');

@@ -1,13 +1,12 @@
 import { useMemo } from 'react';
-import { DefaultOptions } from '../../types';
+import { GetStorageKeys } from '../../types';
 import { getIsEnabled } from '../utils';
 import useOptions from './useOptions';
 
-type PickedOptions = Pick<DefaultOptions, 'historyBlackListMode' | 'historyHostList'>;
-const useOptionsDependency: (keyof PickedOptions)[] = ['historyBlackListMode', 'historyHostList'];
+const useOptionsDependency: GetStorageKeys<'historyBlackListMode' | 'historyHostList'> = ['historyBlackListMode', 'historyHostList'];
 
 const useIsHistoryEnabled = (host: string) => {
-    const { historyBlackListMode, historyHostList } = useOptions<PickedOptions>(useOptionsDependency);
+    const { historyBlackListMode, historyHostList } = useOptions(useOptionsDependency);
 
     const historyEnabled = useMemo(() => {
         return !!host && getIsEnabled(host, historyHostList, historyBlackListMode);

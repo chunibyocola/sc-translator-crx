@@ -5,19 +5,19 @@ import defaultOptions from '../../constants/defaultOptions';
 import useEffectOnce from './useEffectOnce';
 import { DefaultOptions } from '../../types';
 
-const useOptions = <T>(keys: (keyof DefaultOptions)[]) => {
-    const [curOptions, setCurOptions] = useState<Partial<DefaultOptions>>(defaultOptions);
+const useOptions = <T extends keyof DefaultOptions>(keys: T[]) => {
+    const [curOptions, setCurOptions] = useState<Pick<DefaultOptions, T>>(defaultOptions);
 
-    const curOptionsRef = useRef<Partial<DefaultOptions>>(defaultOptions);
+    const curOptionsRef = useRef<typeof curOptions>(defaultOptions);
 
     useEffectOnce(() => {
-        getLocalStorage<Partial<DefaultOptions>>(keys, (data) => {
+        getLocalStorage<typeof curOptions>(keys, (data) => {
             setCurOptions(data);
 
             curOptionsRef.current = data;
         });
 
-        const removeListener = listenOptionsChange<Partial<DefaultOptions>>(keys, (changes) => {
+        const removeListener = listenOptionsChange<Partial<typeof curOptions>>(keys, (changes) => {
             curOptionsRef.current = { ...curOptionsRef.current, ...changes };
 
             setCurOptions(curOptionsRef.current);
@@ -26,7 +26,7 @@ const useOptions = <T>(keys: (keyof DefaultOptions)[]) => {
         return removeListener;
     });
 
-    return curOptions as T;
+    return curOptions;
 };
 
 export default useOptions;

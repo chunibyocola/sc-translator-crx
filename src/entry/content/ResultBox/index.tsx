@@ -4,7 +4,7 @@ import DisplayEditAreaButton from '../../../components/PanelIconButtons/DisplayE
 import { setLocalStorage } from '../../../public/chrome-call';
 import { useAppSelector, useOptions, useWindowSize } from '../../../public/react-use';
 import { calculatePosition, drag } from '../../../public/utils';
-import { DefaultOptions, Position } from '../../../types';
+import { GetStorageKeys, Position } from '../../../types';
 import MultipleTranslateResult from '../MultipleTranslateResult';
 import SingleTranslateResult from '../SingleTranslateResult';
 import './style.css';
@@ -12,14 +12,12 @@ import PinButton from '../../../components/PanelIconButtons/PinButton';
 import CloseButton from '../../../components/PanelIconButtons/CloseButton';
 import Logo from '../../../components/Logo';
 
-type PickedOptions = Pick<
-    DefaultOptions,
+const useOptionsDependency: GetStorageKeys<
     'rememberPositionOfPinnedPanel' |
     'positionOfPinnedPanel' |
     'translatePanelMaxHeight' |
     'translatePanelWidth'
->;
-const useOptionsDependency: (keyof PickedOptions)[] = [
+> = [
     'rememberPositionOfPinnedPanel',
     'positionOfPinnedPanel',
     'translatePanelMaxHeight',
@@ -45,7 +43,7 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
         positionOfPinnedPanel,
         translatePanelMaxHeight,
         translatePanelWidth,
-    } = useOptions<PickedOptions>(useOptionsDependency);
+    } = useOptions(useOptionsDependency);
 
     const windowSize = useWindowSize();
 

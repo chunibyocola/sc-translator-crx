@@ -1,13 +1,12 @@
 import { useMemo } from 'react';
-import { DefaultOptions } from '../../types';
+import { GetStorageKeys } from '../../types';
 import { getIsEnabled } from '../utils';
 import useOptions from './useOptions';
 
-type PickedOptions = Pick<DefaultOptions, 'translateBlackListMode' | 'translateHostList'>;
-const useOptionsDependency: (keyof PickedOptions)[] = ['translateBlackListMode', 'translateHostList'];
+const useOptionsDependency: GetStorageKeys<'translateBlackListMode' | 'translateHostList'> = ['translateBlackListMode', 'translateHostList'];
 
 const useIsTranslateEnabled = (host: string) => {
-    const { translateBlackListMode, translateHostList } = useOptions<PickedOptions>(useOptionsDependency);
+    const { translateBlackListMode, translateHostList } = useOptions(useOptionsDependency);
 
     const translateEnabled = useMemo(() => {
         return !!host && getIsEnabled(host, translateHostList, translateBlackListMode);

@@ -2,7 +2,7 @@ import React, { useRef, useCallback, useEffect, useLayoutEffect } from 'react';
 import { getMessage } from '../../public/i18n';
 import { useAppSelector, useDebounceFn, useOptions } from '../../public/react-use';
 import { textPreprocessing } from '../../public/text-preprocessing';
-import { DefaultOptions } from '../../types';
+import { GetStorageKeys } from '../../types';
 import './style.css';
 
 type RawTextProps = {
@@ -10,11 +10,10 @@ type RawTextProps = {
     rawTextTranslate: (text: string) => void;
 };
 
-type PickedOptions = Pick<DefaultOptions, 'autoTranslateAfterInput'>;
-const useOptionsDependency: (keyof PickedOptions)[] = ['autoTranslateAfterInput'];
+const useOptionsDependency: GetStorageKeys<'autoTranslateAfterInput'> = ['autoTranslateAfterInput'];
 
 const RawText: React.FC<RawTextProps> = ({ defaultValue, rawTextTranslate }) => {
-    const { autoTranslateAfterInput } = useOptions<PickedOptions>(useOptionsDependency);
+    const { autoTranslateAfterInput } = useOptions(useOptionsDependency);
     const { focusFlag } = useAppSelector(state => state.panelStatus);
 
     const lastTextRef = useRef('');

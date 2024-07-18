@@ -3,12 +3,11 @@ import { setLocalStorage } from '../../public/chrome-call';
 import { getMessage } from '../../public/i18n';
 import { useOptions } from '../../public/react-use';
 import { getIsEnabled } from '../../public/utils';
-import { DefaultOptions } from '../../types';
+import { GetStorageKeys } from '../../types';
 import IconFont from '../IconFont';
 import PanelIconButtonWrapper from './PanelIconButtonWrapper';
 
-type PickedOptions = Pick<DefaultOptions, 'historyBlackListMode' | 'historyHostList'>;
-const useOptionsDependency: (keyof PickedOptions)[] = ['historyBlackListMode', 'historyHostList'];
+const useOptionsDependency: GetStorageKeys<'historyBlackListMode' | 'historyHostList'> = ['historyBlackListMode', 'historyHostList'];
 
 
 type ToggleHistoryButtonProps = {
@@ -16,7 +15,7 @@ type ToggleHistoryButtonProps = {
 };
 
 const ToggleHistoryButton: React.FC<ToggleHistoryButtonProps> = ({ host }) => {
-    const { historyBlackListMode, historyHostList } = useOptions<PickedOptions>(useOptionsDependency);
+    const { historyBlackListMode, historyHostList } = useOptions(useOptionsDependency);
 
     const historyEnabled = useMemo(() => {
         return !!host && getIsEnabled(host, historyHostList, historyBlackListMode);

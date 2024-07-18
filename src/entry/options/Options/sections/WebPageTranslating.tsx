@@ -7,7 +7,7 @@ import { GOOGLE_COM, webPageTranslateSource as webPageTranslateSourceList } from
 import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
-import { DefaultOptions } from '../../../../types';
+import { GetStorageKeys } from '../../../../types';
 import BetaIcon from '../../components/BetaIcon';
 import CustomTranslateSourceDisplay from '../../components/CustomTranslateSourceDisplay';
 import DefaultSelect from '../../components/DefaultSelect';
@@ -19,8 +19,7 @@ import scIndexedDB from '../../../../public/sc-indexed-db';
 import ConfirmDelete from '../../../collection/components/ConfirmDelete';
 import SpecifyRule from '../../components/SpecifyRule';
 
-type PickedOptions = Pick<
-    DefaultOptions,
+const useOptionsDependency: GetStorageKeys<
     'webPageTranslateSource' |
     'webPageTranslateTo' |
     'webPageTranslateDisplayMode' |
@@ -36,8 +35,7 @@ type PickedOptions = Pick<
     'translateIframeContent' |
     'translateRedirectedSameDomainPage' |
     'enablePageTranslationCache'
->;
-const useOptionsDependency: (keyof PickedOptions)[] = [
+> = [
     'webPageTranslateSource',
     'webPageTranslateTo',
     'webPageTranslateDisplayMode',
@@ -72,7 +70,7 @@ const WebPageTranslating: React.FC = () => {
         translateIframeContent,
         translateRedirectedSameDomainPage,
         enablePageTranslationCache
-    } = useOptions<PickedOptions>(useOptionsDependency);
+    } = useOptions(useOptionsDependency);
 
     const [readyToClearCache, setReadyToClearCache] = useState(false);
 

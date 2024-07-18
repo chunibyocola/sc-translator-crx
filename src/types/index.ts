@@ -1,6 +1,8 @@
 import { StyleVarsList } from "../constants/defaultStyleVars";
 import { SourceParams } from "../constants/sourceParams";
 
+export type GetStorageKeys<T extends keyof DefaultOptions> = T[];
+
 export type TranslateResult = {
     text: string;
     from: string;

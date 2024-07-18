@@ -3,16 +3,14 @@ import Switch from '../../../../components/Switch';
 import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
-import { DefaultOptions } from '../../../../types';
+import { GetStorageKeys } from '../../../../types';
 import HostList from '../../components/HostList';
 
-type PickedOptions = Pick<
-    DefaultOptions,
+const useOptionsDependency: GetStorageKeys<
     'historyBlackListMode' |
     'historyHostList' |
     'rememberHistoryPanelStatus'
->;
-const useOptionsDependency: (keyof PickedOptions)[] = [
+> = [
     'historyBlackListMode',
     'historyHostList',
     'rememberHistoryPanelStatus'
@@ -23,7 +21,7 @@ const History: React.FC = () => {
         historyBlackListMode,
         historyHostList,
         rememberHistoryPanelStatus
-    } = useOptions<PickedOptions>(useOptionsDependency);
+    } = useOptions(useOptionsDependency);
 
     return (
         <div className='opt-section'>

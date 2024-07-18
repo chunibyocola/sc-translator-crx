@@ -3,20 +3,18 @@ import Switch from '../../../../components/Switch';
 import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
-import { DefaultOptions } from '../../../../types';
+import { GetStorageKeys } from '../../../../types';
 
-type PickedOptions = Pick<
-    DefaultOptions,
+const useOptionsDependency: GetStorageKeys<
     'enablePdfViewer'
->;
-const useOptionsDependency: (keyof PickedOptions)[] = [
+> = [
     'enablePdfViewer'
 ];
 
 const Pdf: React.FC = () => {
     const {
         enablePdfViewer
-    } = useOptions<PickedOptions>(useOptionsDependency);
+    } = useOptions(useOptionsDependency);
 
     return (
         <div className='opt-section'>
