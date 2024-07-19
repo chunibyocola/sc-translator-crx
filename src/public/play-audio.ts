@@ -1,5 +1,5 @@
 import { BAIDU_COM, BING_COM, GOOGLE_COM } from '../constants/translateSource';
-import { DefaultOptions } from '../types';
+import { DefaultOptions, GetStorageKeys } from '../types';
 import { getLocalStorage } from './chrome-call';
 import { listenOptionsChange } from './options';
 import { sendDetect, sendAudio } from './send';
@@ -211,7 +211,14 @@ type PickedOptions = Pick<
     'autoPlayAudio' |
     'autoPlayAudioLangs'
 >;
-const keys: (keyof PickedOptions)[] = [
+const keys: GetStorageKeys<
+    'audioVolume' |
+    'audioPlaybackRate' |
+    'defaultAudioSource' |
+    'keepUsingDefaultAudioSource' |
+    'autoPlayAudio' |
+    'autoPlayAudioLangs'
+> = [
     'audioVolume',
     'audioPlaybackRate',
     'defaultAudioSource',
@@ -234,7 +241,7 @@ getLocalStorage<PickedOptions>(keys, (storage) => {
 
     autoPlayAudioLangs = storage.autoPlayAudioLangs;
 });
-listenOptionsChange<PickedOptions>(keys, (changes) => {
+listenOptionsChange(keys, (changes) => {
     if (changes.audioVolume !== undefined) {
         audio.volume = changes.audioVolume / 100;
         utter.volume = changes.audioVolume / 100;

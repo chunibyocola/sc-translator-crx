@@ -1,7 +1,7 @@
 import { getLocalStorage } from './chrome-call';
 import { listenOptionsChange } from './options';
 import { defaultStyleVars, StyleVars, StyleVarsList } from '../constants/defaultStyleVars';
-import { DefaultOptions } from '../types';
+import { DefaultOptions, GetStorageKeys } from '../types';
 
 // color vars
 let styleVarsList: StyleVarsList = [];
@@ -50,13 +50,13 @@ export const appendColorVarsStyle = (targetParent: HTMLElement | ShadowRoot) => 
     targetParent.appendChild(colorVarsStyle);
 
     type PickedOptions = Pick<DefaultOptions, 'styleVarsIndex' | 'styleVarsList'>;
-    const keys: (keyof PickedOptions)[] = ['styleVarsList', 'styleVarsIndex'];
+    const keys: GetStorageKeys<'styleVarsIndex' | 'styleVarsList'> = ['styleVarsList', 'styleVarsIndex'];
     getLocalStorage<PickedOptions>(keys, (storage) => {
         styleVarsList = storage.styleVarsList;
         styleVarsIndex = storage.styleVarsIndex;
         updateColorVarsStyleInnerText();
     });
-    listenOptionsChange<PickedOptions>(keys, (changes) => {
+    listenOptionsChange(keys, (changes) => {
         changes.styleVarsList !== undefined && (styleVarsList = changes.styleVarsList);
         changes.styleVarsIndex !== undefined && (styleVarsIndex = changes.styleVarsIndex);
         updateColorVarsStyleInnerText();
@@ -68,12 +68,12 @@ export const appendFontSizeStyle = (targetParent: HTMLElement | ShadowRoot) => {
     targetParent.appendChild(fontSizeStyle);
 
     type PickedOptions = Pick<DefaultOptions, 'translatePanelFontSize'>;
-    const keys: (keyof PickedOptions)[] = ['translatePanelFontSize'];
+    const keys: GetStorageKeys<'translatePanelFontSize'> = ['translatePanelFontSize'];
     getLocalStorage<PickedOptions>(keys, (storage) => {
         translatePanelFontSize = storage.translatePanelFontSize;
         updateFontSizeStyleInnerText();
     });
-    listenOptionsChange<PickedOptions>(keys, (changes) => {
+    listenOptionsChange(keys, (changes) => {
         changes.translatePanelFontSize !== undefined && (translatePanelFontSize = changes.translatePanelFontSize);
         updateFontSizeStyleInnerText();
     });
@@ -84,12 +84,12 @@ export const appendCustomizeStyle = (targetParent: HTMLElement | ShadowRoot) => 
     targetParent.appendChild(customizeStyle);
 
     type PickedOptions = Pick<DefaultOptions, 'customizeStyleText'>;
-    const keys: (keyof PickedOptions)[] = ['customizeStyleText'];
+    const keys: GetStorageKeys<'customizeStyleText'> = ['customizeStyleText'];
     getLocalStorage<PickedOptions>(keys, (storage) => {
         customizeStyleText = storage.customizeStyleText;
         updateCustomizeStyleInnerText();
     });
-    listenOptionsChange<PickedOptions>(keys, (changes) => {
+    listenOptionsChange(keys, (changes) => {
         changes.customizeStyleText !== undefined && (customizeStyleText = changes.customizeStyleText);
         updateCustomizeStyleInnerText();
     })

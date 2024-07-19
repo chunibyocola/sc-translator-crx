@@ -13,13 +13,13 @@ export const getOptions = () => {
     return options;
 };
 
-export const listenOptionsChange = <T>(keys: (keyof DefaultOptions)[], listener: (changes: Partial<T>) => void) => {
+export const listenOptionsChange = <T extends keyof DefaultOptions>(keys: T[], listener: (changes: Partial<Pick<DefaultOptions, T>>) => void) => {
     const onChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
         const tempObj: { [key: string]: any } = {};
 
         keys.map((v) => (v in changes && (tempObj[v] = changes[v].newValue)));
 
-        Object.keys(tempObj).length && listener && listener(tempObj as Partial<T>);
+        Object.keys(tempObj).length && listener && listener(tempObj as Partial<Pick<DefaultOptions, T>>);
     };
 
     listeners.push(onChange);

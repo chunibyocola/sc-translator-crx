@@ -17,7 +17,7 @@ const useOptions = <T extends keyof DefaultOptions>(keys: T[]) => {
             curOptionsRef.current = data;
         });
 
-        const removeListener = listenOptionsChange<Partial<typeof curOptions>>(keys, (changes) => {
+        const removeListener = listenOptionsChange(keys, (changes) => {
             curOptionsRef.current = { ...curOptionsRef.current, ...changes };
 
             setCurOptions(curOptionsRef.current);
