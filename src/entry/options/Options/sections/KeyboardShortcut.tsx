@@ -10,7 +10,6 @@ import {
     SC_TRANSLATE_CURRENT_PAGE,
     SC_TOGGLE_PAGE_TRANSLATION_STATE
 } from '../../../../constants/commandsName';
-import { createNewTab } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 
 const KeyboardShortcut: React.FC = () => {
@@ -67,7 +66,7 @@ const KeyboardShortcut: React.FC = () => {
                 <div className='item-description'>{getMessage('optionsTogglePageTranslationStateDescription')}</div>
             </div>
             <div className='opt-section-row'>
-                <Button variant='outlined' onClick={() => createNewTab('chrome://extensions/shortcuts')}>
+                <Button variant='outlined' onClick={() => chrome.tabs.create({ url: 'chrome://extensions/shortcuts' })}>
                     {getMessage('optionsCustomizeHere')}
                 </Button>
             </div>

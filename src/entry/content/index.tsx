@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import store from '../../redux/store';
 import { initTranslation } from '../../redux/init';
 import { initOptions } from '../../public/options';
-import { getExtensionURL, getLocalStorage } from '../../public/chrome-call';
+import { getLocalStorage } from '../../public/chrome-call';
 import defaultOptions from '../../constants/defaultOptions';
 import '../../styles/global.css';
 import { appendColorVarsStyle, appendCustomizeStyle, appendFontSizeStyle } from '../../public/inject-style';
@@ -32,7 +32,7 @@ const init = (options: DefaultOptions) => {
 
     const contentStyle = document.createElement('link');
     contentStyle.rel = 'stylesheet';
-    contentStyle.href = getExtensionURL('/static/css/content.css');
+    contentStyle.href = chrome.runtime.getURL('/static/css/content.css');
     shadowRoot.appendChild(contentStyle);
 
     appendColorVarsStyle(shadowRoot);

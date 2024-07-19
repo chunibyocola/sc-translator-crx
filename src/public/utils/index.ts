@@ -1,10 +1,9 @@
 import { DefaultOptions, Position } from '../../types';
-import { queryTabs } from '../chrome-call';
 
 export const resultToString = (result: string[]) => (result.reduce((t, c) => (t + c), ''));
 
 export const getCurrentTab = (cb: (tab?: chrome.tabs.Tab) => void) => {
-    queryTabs({ active: true, lastFocusedWindow: true }, tabs => cb(tabs[0]));
+    chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => cb(tabs[0]));
 };
 
 export const getIsContentScriptEnabled = async (tabId?: number):Promise<boolean> => {
