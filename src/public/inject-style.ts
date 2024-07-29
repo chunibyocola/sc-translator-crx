@@ -1,7 +1,7 @@
 import { getLocalStorage } from './chrome-call';
-import { listenOptionsChange } from './options';
 import { defaultStyleVars, StyleVars, StyleVarsList } from '../constants/defaultStyleVars';
 import { DefaultOptions, GetStorageKeys } from '../types';
+import scOptions from './sc-options';
 
 // color vars
 let styleVarsList: StyleVarsList = [];
@@ -56,7 +56,7 @@ export const appendColorVarsStyle = (targetParent: HTMLElement | ShadowRoot) => 
         styleVarsIndex = storage.styleVarsIndex;
         updateColorVarsStyleInnerText();
     });
-    listenOptionsChange(keys, (changes) => {
+    scOptions.listen(keys, (changes) => {
         changes.styleVarsList !== undefined && (styleVarsList = changes.styleVarsList);
         changes.styleVarsIndex !== undefined && (styleVarsIndex = changes.styleVarsIndex);
         updateColorVarsStyleInnerText();
@@ -73,7 +73,7 @@ export const appendFontSizeStyle = (targetParent: HTMLElement | ShadowRoot) => {
         translatePanelFontSize = storage.translatePanelFontSize;
         updateFontSizeStyleInnerText();
     });
-    listenOptionsChange(keys, (changes) => {
+    scOptions.listen(keys, (changes) => {
         changes.translatePanelFontSize !== undefined && (translatePanelFontSize = changes.translatePanelFontSize);
         updateFontSizeStyleInnerText();
     });
@@ -89,7 +89,7 @@ export const appendCustomizeStyle = (targetParent: HTMLElement | ShadowRoot) => 
         customizeStyleText = storage.customizeStyleText;
         updateCustomizeStyleInnerText();
     });
-    listenOptionsChange(keys, (changes) => {
+    scOptions.listen(keys, (changes) => {
         changes.customizeStyleText !== undefined && (customizeStyleText = changes.customizeStyleText);
         updateCustomizeStyleInnerText();
     })

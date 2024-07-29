@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
 import { getLocalStorage } from '../chrome-call';
-import { listenOptionsChange } from '../options';
 import defaultOptions from '../../constants/defaultOptions';
 import useEffectOnce from './useEffectOnce';
 import { DefaultOptions } from '../../types';
+import scOptions from '../sc-options';
 
 const useOptions = <T extends keyof DefaultOptions>(keys: T[]) => {
     const [curOptions, setCurOptions] = useState<Pick<DefaultOptions, T>>(defaultOptions);
@@ -17,7 +17,7 @@ const useOptions = <T extends keyof DefaultOptions>(keys: T[]) => {
             curOptionsRef.current = data;
         });
 
-        const removeListener = listenOptionsChange(keys, (changes) => {
+        const removeListener = scOptions.listen(keys, (changes) => {
             curOptionsRef.current = { ...curOptionsRef.current, ...changes };
 
             setCurOptions(curOptionsRef.current);

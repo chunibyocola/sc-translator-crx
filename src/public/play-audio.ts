@@ -1,7 +1,7 @@
 import { BAIDU_COM, BING_COM, GOOGLE_COM } from '../constants/translateSource';
 import { DefaultOptions, GetStorageKeys } from '../types';
 import { getLocalStorage } from './chrome-call';
-import { listenOptionsChange } from './options';
+import scOptions from './sc-options';
 import { sendDetect, sendAudio } from './send';
 import { baiduSwitchToGoogleLangCode, bingSwitchToGoogleLangCode } from './switch-lang-code';
 
@@ -241,7 +241,7 @@ getLocalStorage<PickedOptions>(keys, (storage) => {
 
     autoPlayAudioLangs = storage.autoPlayAudioLangs;
 });
-listenOptionsChange(keys, (changes) => {
+scOptions.listen(keys, (changes) => {
     if (changes.audioVolume !== undefined) {
         audio.volume = changes.audioVolume / 100;
         utter.volume = changes.audioVolume / 100;

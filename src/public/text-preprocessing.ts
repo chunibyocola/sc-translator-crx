@@ -1,6 +1,6 @@
 import { DefaultOptions, GetStorageKeys, TextPreprocessingPreset, TextPreprocessingRegExp } from "../types";
 import { getLocalStorage } from "./chrome-call";
-import { listenOptionsChange } from "./options";
+import scOptions from "./sc-options";
 
 let textPreprocessingRegExpList: TextPreprocessingRegExp[] = [];
 let textPreprocessingPreset: TextPreprocessingPreset = { convertCamelCase: false };
@@ -58,7 +58,7 @@ getLocalStorage<PickedOptions>(keys, (options) => {
     textPreprocessingPreset = options.textPreprocessingPreset ?? {};
     afterSelectingTextRegExpList = options.afterSelectingTextRegExpList ?? [];
 });
-listenOptionsChange(keys, (changes) => {
+scOptions.listen(keys, (changes) => {
     changes.textPreprocessingRegExpList !== undefined && (textPreprocessingRegExpList = changes.textPreprocessingRegExpList);
     changes.textPreprocessingPreset !== undefined && (textPreprocessingPreset = changes.textPreprocessingPreset);
     changes.afterSelectingTextRegExpList !== undefined && (afterSelectingTextRegExpList = changes.afterSelectingTextRegExpList);
