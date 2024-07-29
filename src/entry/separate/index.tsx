@@ -5,21 +5,16 @@ import '../../styles/global.css';
 import { Provider } from 'react-redux';
 import store from '../../redux/store';
 import { initTranslation } from '../../redux/init';
-import { initOptions } from '../../public/options';
-import { getLocalStorage } from '../../public/chrome-call';
-import defaultOptions from '../../constants/defaultOptions';
 import HandleCommand from './HandleCommands';
 import Separate from './Separate';
 import { appendColorVarsStyle, appendCustomizeStyle, appendFontSizeStyle } from '../../public/inject-style';
-import { DefaultOptions } from '../../types';
 import { getMessage } from '../../public/i18n';
+import scOptions from '../../public/sc-options';
 
 document.title = `${getMessage('titleSeparateWindow')} - ${getMessage('extName')}`;
 
-const init = (options: DefaultOptions) => {
+scOptions.init().then((options) => {
     document.body.id = 'sc-translator-root';
-
-    initOptions(options);
 
     appendColorVarsStyle(document.head);
     appendFontSizeStyle(document.head);
@@ -39,9 +34,7 @@ const init = (options: DefaultOptions) => {
             <Separate />
         </Provider>
     );
-};
-
-getLocalStorage<DefaultOptions>(defaultOptions, init);
+});
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request === 'Are you enabled?') {

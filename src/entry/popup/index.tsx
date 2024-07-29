@@ -5,16 +5,11 @@ import '../../styles/global.css';
 import { Provider } from 'react-redux';
 import store from '../../redux/store';
 import { initTranslation } from '../../redux/init';
-import { initOptions } from '../../public/options';
-import { getLocalStorage } from '../../public/chrome-call';
-import defaultOptions from '../../constants/defaultOptions';
 import { appendColorVarsStyle, appendCustomizeStyle, appendFontSizeStyle } from '../../public/inject-style';
 import ResultBox from './ResultBox';
-import { DefaultOptions } from '../../types';
+import scOptions from '../../public/sc-options';
 
-const init = (options: DefaultOptions) => {
-    initOptions(options);
-
+scOptions.init().then((options) => {
     appendColorVarsStyle(document.head);
     appendFontSizeStyle(document.head);
     appendCustomizeStyle(document.head);
@@ -32,6 +27,4 @@ const init = (options: DefaultOptions) => {
             <ResultBox multipleTranslateMode={options.multipleTranslateMode} />
         </Provider>
     );
-};
-
-getLocalStorage<DefaultOptions>(defaultOptions, init);
+});

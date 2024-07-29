@@ -6,17 +6,12 @@ import ResultBox from './ResultBox';
 import { Provider } from 'react-redux';
 import store from '../../redux/store';
 import { initTranslation } from '../../redux/init';
-import { initOptions } from '../../public/options';
-import { getLocalStorage } from '../../public/chrome-call';
-import defaultOptions from '../../constants/defaultOptions';
 import '../../styles/global.css';
 import { appendColorVarsStyle, appendCustomizeStyle, appendFontSizeStyle } from '../../public/inject-style';
-import { DefaultOptions } from '../../types';
 import WebPageTranslate from './WebPageTranslate';
+import scOptions from '../../public/sc-options';
 
-const init = (options: DefaultOptions) => {
-    initOptions(options);
-
+scOptions.init().then((options) => {
     initTranslation({
         sourceList: options.multipleTranslateMode ? options.multipleTranslateSourceList : [options.defaultTranslateSource],
         from: options.multipleTranslateMode ? options.multipleTranslateFrom : options.defaultTranslateFrom,
@@ -57,9 +52,7 @@ const init = (options: DefaultOptions) => {
             {enableWebpageTranslation && <WebPageTranslate />}
         </Provider>
     );
-};
-
-getLocalStorage<DefaultOptions>(defaultOptions, init);
+});
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request === 'Are you enabled?') sendResponse({ host: window.location.host });
