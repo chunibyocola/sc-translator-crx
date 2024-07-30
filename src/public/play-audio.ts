@@ -1,6 +1,5 @@
 import { BAIDU_COM, BING_COM, GOOGLE_COM } from '../constants/translateSource';
-import { DefaultOptions, GetStorageKeys } from '../types';
-import { getLocalStorage } from './chrome-call';
+import { GetStorageKeys } from '../types';
 import scOptions from './sc-options';
 import { sendDetect, sendAudio } from './send';
 import { baiduSwitchToGoogleLangCode, bingSwitchToGoogleLangCode } from './switch-lang-code';
@@ -202,15 +201,6 @@ const getTextList = (text: string, maxLength: number) => {
     }, ['']);
 };
 
-type PickedOptions = Pick<
-    DefaultOptions,
-    'audioVolume' |
-    'audioPlaybackRate' |
-    'defaultAudioSource' |
-    'keepUsingDefaultAudioSource' |
-    'autoPlayAudio' |
-    'autoPlayAudioLangs'
->;
 const keys: GetStorageKeys<
     'audioVolume' |
     'audioPlaybackRate' |
@@ -226,7 +216,7 @@ const keys: GetStorageKeys<
     'autoPlayAudio',
     'autoPlayAudioLangs'
 ];
-getLocalStorage<PickedOptions>(keys, (storage) => {
+scOptions.get(keys).then((storage) => {
     audio.volume = storage.audioVolume / 100;
     audio.defaultPlaybackRate = storage.audioPlaybackRate;
 

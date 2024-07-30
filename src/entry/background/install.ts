@@ -1,6 +1,5 @@
 import { LANG_ZH_CN, LANG_JA, preferredLangCode } from '../../constants/langCode';
 import defaultOptions from '../../constants/defaultOptions';
-import { getLocalStorage } from '../../public/chrome-call';
 import { defaultStyleVars } from '../../constants/defaultStyleVars';
 import { TRANSLATE_CURRENT_PAGE, TRANSLATE_SELECTION_TEXT } from '../../constants/contextMenusIds';
 import { DefaultOptions, DeprecatedOptions } from '../../types';
@@ -8,6 +7,7 @@ import { TRANSLATE_BUTTON_TRANSLATE } from '../../constants/translateButtonTypes
 import { initContextMenus } from './context-menus';
 import { initSourceParams } from '../../constants/sourceParams';
 import { BING_COM, MICROSOFT_COM } from '../../constants/translateSource';
+import scOptions from '../../public/sc-options';
 
 const initStorageOnInstalled = (userLang: string, update: boolean) => {
 
@@ -34,7 +34,8 @@ const initStorageOnInstalled = (userLang: string, update: boolean) => {
     defaultSet.webPageTranslateTo = defaultSet.preferredLanguage;
     defaultSet.translateButtonsTL = { first: '', second: defaultSet.preferredLanguage, third: defaultSet.secondPreferredLanguage };
 
-    getLocalStorage<DefaultOptions & DeprecatedOptions>(null, (data) => {
+    scOptions.get(null).then((d: any) => {
+        const data = d as DefaultOptions & DeprecatedOptions;
         // in new version, use 'useDotCn' instead of 'xxx.cn'
         if (update && (data.defaultTranslateSource === 'google.cn' || data.defaultTranslateSource === 'bing.cn' || data.defaultAudioSource === 'google.cn')) {
             data.useDotCn = true;

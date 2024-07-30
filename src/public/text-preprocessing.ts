@@ -1,5 +1,4 @@
-import { DefaultOptions, GetStorageKeys, TextPreprocessingPreset, TextPreprocessingRegExp } from "../types";
-import { getLocalStorage } from "./chrome-call";
+import { GetStorageKeys, TextPreprocessingPreset, TextPreprocessingRegExp } from "../types";
 import scOptions from "./sc-options";
 
 let textPreprocessingRegExpList: TextPreprocessingRegExp[] = [];
@@ -43,7 +42,6 @@ export const selectedTextPreprocessing = (text: string) => {
     return text.replace(/[\P{L}]/ug, '');
 };
 
-type PickedOptions = Pick<DefaultOptions, 'textPreprocessingRegExpList' | 'textPreprocessingPreset' | 'afterSelectingTextRegExpList'>;
 const keys: GetStorageKeys<
     'textPreprocessingRegExpList' |
     'textPreprocessingPreset' |
@@ -53,7 +51,7 @@ const keys: GetStorageKeys<
     'textPreprocessingRegExpList',
     'afterSelectingTextRegExpList'
 ];
-getLocalStorage<PickedOptions>(keys, (options) => {
+scOptions.get(keys).then((options) => {
     textPreprocessingRegExpList = options.textPreprocessingRegExpList ?? [];
     textPreprocessingPreset = options.textPreprocessingPreset ?? {};
     afterSelectingTextRegExpList = options.afterSelectingTextRegExpList ?? [];

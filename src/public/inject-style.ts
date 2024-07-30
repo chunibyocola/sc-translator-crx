@@ -1,6 +1,5 @@
-import { getLocalStorage } from './chrome-call';
 import { defaultStyleVars, StyleVars, StyleVarsList } from '../constants/defaultStyleVars';
-import { DefaultOptions, GetStorageKeys } from '../types';
+import { GetStorageKeys } from '../types';
 import scOptions from './sc-options';
 
 // color vars
@@ -49,9 +48,8 @@ export const appendColorVarsStyle = (targetParent: HTMLElement | ShadowRoot) => 
     colorVarsStyle = document.createElement('style');
     targetParent.appendChild(colorVarsStyle);
 
-    type PickedOptions = Pick<DefaultOptions, 'styleVarsIndex' | 'styleVarsList'>;
     const keys: GetStorageKeys<'styleVarsIndex' | 'styleVarsList'> = ['styleVarsList', 'styleVarsIndex'];
-    getLocalStorage<PickedOptions>(keys, (storage) => {
+    scOptions.get(keys).then((storage) => {
         styleVarsList = storage.styleVarsList;
         styleVarsIndex = storage.styleVarsIndex;
         updateColorVarsStyleInnerText();
@@ -67,9 +65,8 @@ export const appendFontSizeStyle = (targetParent: HTMLElement | ShadowRoot) => {
     fontSizeStyle = document.createElement('style');
     targetParent.appendChild(fontSizeStyle);
 
-    type PickedOptions = Pick<DefaultOptions, 'translatePanelFontSize'>;
     const keys: GetStorageKeys<'translatePanelFontSize'> = ['translatePanelFontSize'];
-    getLocalStorage<PickedOptions>(keys, (storage) => {
+    scOptions.get(keys).then((storage) => {
         translatePanelFontSize = storage.translatePanelFontSize;
         updateFontSizeStyleInnerText();
     });
@@ -83,9 +80,8 @@ export const appendCustomizeStyle = (targetParent: HTMLElement | ShadowRoot) => 
     customizeStyle = document.createElement('style');
     targetParent.appendChild(customizeStyle);
 
-    type PickedOptions = Pick<DefaultOptions, 'customizeStyleText'>;
     const keys: GetStorageKeys<'customizeStyleText'> = ['customizeStyleText'];
-    getLocalStorage<PickedOptions>(keys, (storage) => {
+    scOptions.get(keys).then((storage) => {
         customizeStyleText = storage.customizeStyleText;
         updateCustomizeStyleInnerText();
     });

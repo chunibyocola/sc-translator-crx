@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import { getLocalStorage } from '../chrome-call';
 import defaultOptions from '../../constants/defaultOptions';
 import useEffectOnce from './useEffectOnce';
 import { DefaultOptions } from '../../types';
@@ -11,7 +10,7 @@ const useOptions = <T extends keyof DefaultOptions>(keys: T[]) => {
     const curOptionsRef = useRef<typeof curOptions>(defaultOptions);
 
     useEffectOnce(() => {
-        getLocalStorage<typeof curOptions>(keys, (data) => {
+        scOptions.get(keys).then((data) => {
             setCurOptions(data);
 
             curOptionsRef.current = data;
