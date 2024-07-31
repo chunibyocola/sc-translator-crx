@@ -1,5 +1,5 @@
 import { DefaultOptions } from '../../../types';
-import { setLocalStorage } from '../../chrome-call';
+import scOptions from '../../sc-options';
 import { getLocalStorageAsync } from '../../utils';
 import { RESULT_ERROR } from '../error-codes';
 import { getError } from '../utils';
@@ -32,7 +32,7 @@ export const getTranslateParams = async (com: boolean) => {
 
     getLocalStorageAsync<PickedOptions>(keys).then(({ sourceParamsCache }) => {
         sourceParamsCache['bing.com'].translate = { expiry, key, token, IG, IID, richIID, updateTime: currentTime };
-        setLocalStorage({ sourceParamsCache });
+        scOptions.set({ sourceParamsCache });
     });
 
     return { key, token, IG, IID, richIID };
@@ -70,7 +70,7 @@ export const getAudioParams = async (com: boolean) => {
 
         getLocalStorageAsync<PickedOptions>(keys).then(({ sourceParamsCache }) => {
             sourceParamsCache['bing.com'].audio = { expiry, region, token, updateTime: currentTime };
-            setLocalStorage({ sourceParamsCache });
+            scOptions.set({ sourceParamsCache });
         });
 
         return { region, token };

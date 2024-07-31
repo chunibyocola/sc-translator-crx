@@ -3,13 +3,13 @@ import Button from '../../../../components/Button';
 import Slider, { SliderFormat, SliderMarks } from '../../../../components/Slider';
 import SourceSelect from '../../../../components/SourceSelect';
 import { audioSource } from '../../../../constants/translateSource';
-import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { playAudio } from '../../../../public/play-audio';
 import { useOptions } from '../../../../public/react-use';
 import { GetStorageKeys } from '../../../../types';
 import Switch from '../../../../components/Switch';
 import AutoPlayAudioLangs from '../../components/AutoPlayAudioLangs';
+import scOptions from '../../../../public/sc-options';
 
 const marksVolume: SliderMarks = [
     { value: 5, label: '5' },
@@ -67,13 +67,13 @@ const Audio: React.FC = () => {
                     className='border-bottom-select opt-source-select'
                     sourceList={audioSource}
                     source={defaultAudioSource}
-                    onChange={value => setLocalStorage({ defaultAudioSource: value })}
+                    onChange={value => scOptions.set({ defaultAudioSource: value })}
                 />
                 <div className='mt10-ml30'>
                     <Switch
                         label={getMessage('optionsKeepUsingDefaultAudioSource')}
                         checked={keepUsingDefaultAudioSource}
-                        onChange={v => setLocalStorage({ keepUsingDefaultAudioSource: v })}
+                        onChange={v => scOptions.set({ keepUsingDefaultAudioSource: v })}
                     />
                 </div>
             </div>
@@ -81,14 +81,14 @@ const Audio: React.FC = () => {
                 <Switch
                     label={getMessage('optionsAutoplayAudio')}
                     checked={autoPlayAudio}
-                    onChange={v => setLocalStorage({ autoPlayAudio: v })}
+                    onChange={v => scOptions.set({ autoPlayAudio: v })}
                 />
                 <div className='item-description'>{getMessage('optionsAutoplayAudioDescription')}</div>
                 <div className='mt10-ml30'>
                     {getMessage('optionsSelectAutoplayLanguage')}
                     <div className='item-description'>{getMessage('optionsSelectAutoplayLanguageDescription')}</div>
                     <div className='mt10-ml30'>
-                        <AutoPlayAudioLangs langs={autoPlayAudioLangs} onChange={v => setLocalStorage({ autoPlayAudioLangs: v })} />
+                        <AutoPlayAudioLangs langs={autoPlayAudioLangs} onChange={v => scOptions.set({ autoPlayAudioLangs: v })} />
                     </div>
                 </div>
             </div>
@@ -101,7 +101,7 @@ const Audio: React.FC = () => {
                     step={5}
                     marks={marksVolume}
                     valueLabelDisplay
-                    mouseUpCallback={v => setLocalStorage({ audioVolume: volumeFormat(v) })}
+                    mouseUpCallback={v => scOptions.set({ audioVolume: volumeFormat(v) })}
                     valueLabelFormat={volumeLabelFormat}
                 />
             </div>
@@ -114,7 +114,7 @@ const Audio: React.FC = () => {
                     step={0.25}
                     marks={marksPlaybackRate}
                     valueLabelDisplay
-                    mouseUpCallback={v => setLocalStorage({ audioPlaybackRate: playbackRateFormat(v) })}
+                    mouseUpCallback={v => scOptions.set({ audioPlaybackRate: playbackRateFormat(v) })}
                     valueLabelFormat={playbackRateLabelFormat}
                 />
             </div>

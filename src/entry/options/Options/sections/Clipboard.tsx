@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Switch from '../../../../components/Switch';
-import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { GetStorageKeys } from '../../../../types';
+import scOptions from '../../../../public/sc-options';
 
 const useOptionsDependency: GetStorageKeys<
     'autoPasteInTheInputBox'
@@ -26,12 +26,12 @@ const Clipboard: React.FC = () => {
                     checked={autoPasteInTheInputBox}
                     onChange={() => {
                         if (autoPasteInTheInputBox) {
-                            setLocalStorage({ autoPasteInTheInputBox: false });
+                            scOptions.set({ autoPasteInTheInputBox: false });
                         }
                         else {
                             navigator.clipboard.readText().then(() => {
                                 error && setError(false);
-                                setLocalStorage({ autoPasteInTheInputBox: true });
+                                scOptions.set({ autoPasteInTheInputBox: true });
                             }).catch(() => {
                                 setError(true);
                             });

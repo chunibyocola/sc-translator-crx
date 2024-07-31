@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import Button from '../../../../components/Button';
 import IconFont from '../../../../components/IconFont';
 import defaultOptions from '../../../../constants/defaultOptions';
-import { setLocalStorage } from '../../../../public/chrome-call';
 import { combineStorage } from '../../../../public/combine-storage';
 import { getMessage } from '../../../../public/i18n';
 import scFile from '../../../../public/sc-file';
 import { getLocalStorageAsync } from '../../../../public/utils';
 import { DefaultOptions, SyncOptions } from '../../../../types';
+import scOptions from '../../../../public/sc-options';
 
 const FileSync: React.FC = () => {
     const [errorMessage, setErrorMessage] = useState('');
@@ -39,7 +39,7 @@ const FileSync: React.FC = () => {
                             
                             const newStorage = await combineStorage(data);
 
-                            setLocalStorage(newStorage);
+                            scOptions.set(newStorage);
 
                             setErrorMessage('');
                         }

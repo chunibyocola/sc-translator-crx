@@ -7,7 +7,6 @@ import SourceSelect from '../../../components/SourceSelect';
 import { SCTS_SWITCH_WT_DISPLAY_MODE, SCTS_TOGGLE_PAGE_TRANSLATION_STATE, SCTS_TRANSLATE_CURRENT_PAGE } from '../../../constants/chromeSendMessageTypes';
 import { LangCodes, preferredLangCode } from '../../../constants/langCode';
 import { webPageTranslateSource as webPageTranslateSourceList } from '../../../constants/translateSource';
-import { setLocalStorage } from '../../../public/chrome-call';
 import { getMessage } from '../../../public/i18n';
 import { getOptions } from '../../../public/options';
 import { useOnRuntimeMessage, useOptions } from '../../../public/react-use';
@@ -17,6 +16,7 @@ import { GetStorageKeys } from '../../../types';
 import './style.css';
 import Logo from '../../../components/Logo';
 import { sendGetSpecifySelectors, sendShouldAutoTranslateThisPage, sendUpdatePageTranslationState } from '../../../public/send';
+import scOptions from '../../../public/sc-options';
 
 const wPTI18nCache = {
     switchDisplayModeOfResult: getMessage('contentSwitchDisplayModeOfResult'),
@@ -343,7 +343,7 @@ const WebPageTranslate: React.FC = () => {
                 onClick={() => {
                     const nextHostSet = new Set(hostSet);
                     nextHostSet.has(host) ? nextHostSet.delete(host) : nextHostSet.add(host);
-                    setLocalStorage({ autoTranslateWebpageHostList: [...nextHostSet] });
+                    scOptions.set({ autoTranslateWebpageHostList: [...nextHostSet] });
                 }}
                 title={hostSet.has(host) ? wPTI18nCache.disableAutoTranslationOnThisSite : wPTI18nCache.enableAutoTranslationOnThisSite}
                 iconGrey={!hostSet.has(host)}

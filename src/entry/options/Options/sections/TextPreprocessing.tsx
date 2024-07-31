@@ -1,11 +1,11 @@
 import React from 'react';
 import Checkbox from '../../../../components/Checkbox';
-import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { GetStorageKeys } from '../../../../types';
 import RegExpList from '../../components/RegExpList';
 import TestTextProcessing from '../../components/TestTextPreprocessing';
+import scOptions from '../../../../public/sc-options';
 
 const useOptionsDependency: GetStorageKeys<
     'textPreprocessingRegExpList' |
@@ -46,7 +46,7 @@ const TextPreprocessing: React.FC = () => {
                     <div className='mt10-ml30'>
                         <RegExpList
                             textPreprocessingRegExpList={textPreprocessingRegExpList}
-                            onSave={value => setLocalStorage({ textPreprocessingRegExpList: value })}
+                            onSave={value => scOptions.set({ textPreprocessingRegExpList: value })}
                         />
                     </div>
                 </div>
@@ -56,7 +56,7 @@ const TextPreprocessing: React.FC = () => {
                         <Checkbox
                             label={getMessage('optionsConvertCamelCase')}
                             checked={textPreprocessingPreset.convertCamelCase}
-                            onChange={v => setLocalStorage({ textPreprocessingPreset: { ...textPreprocessingPreset, convertCamelCase: v } })}
+                            onChange={v => scOptions.set({ textPreprocessingPreset: { ...textPreprocessingPreset, convertCamelCase: v } })}
                         />
                         <div className='item-description'>{'"aCamelCaseText" => "a camel case text"'}</div>
                     </div>
@@ -79,7 +79,7 @@ const TextPreprocessing: React.FC = () => {
                     <div className='mt10-ml30'>
                         <RegExpList
                             textPreprocessingRegExpList={afterSelectingTextRegExpList}
-                            onSave={value => setLocalStorage({ afterSelectingTextRegExpList: value })}
+                            onSave={value => scOptions.set({ afterSelectingTextRegExpList: value })}
                         />
                     </div>
                 </div>

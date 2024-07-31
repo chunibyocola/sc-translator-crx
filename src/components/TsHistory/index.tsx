@@ -6,10 +6,10 @@ import { getMessage } from '../../public/i18n';
 import HistoryResultPanel from './HistoryResultPanel';
 import HistoryItem from './HistoryItem';
 import { cn, mouseDrag } from '../../public/utils';
-import { setLocalStorage } from '../../public/chrome-call';
 import { GetStorageKeys, Translation } from '../../types';
 import { removeHistory } from '../../redux/slice/translateHistorySlice';
 import Logo from '../Logo';
+import scOptions from '../../public/sc-options';
 
 const midInThree = (min: number, num: number, max: number) => (Math.min(max, Math.max(min, num)));
 
@@ -79,7 +79,7 @@ const TsHistory: React.FC = () => {
                     className={`history-head__pin${pinning ? ' history-head__pin--ning' : ''}`}
                     onClick={() => {
                         const nextPinning = !pinning;
-                        rememberHistoryPanelStatus && setLocalStorage({ 'historyPanelStatus': { ...historyPanelStatus, pin: nextPinning } });
+                        rememberHistoryPanelStatus && scOptions.set({ 'historyPanelStatus': { ...historyPanelStatus, pin: nextPinning } });
                         setPinning(nextPinning);
                         !nextPinning && setFold(true);
                     }}
@@ -93,7 +93,7 @@ const TsHistory: React.FC = () => {
                     if (x !== clientX) {
                         const nextWidth = midInThree(100, x - 1 + historyWidth - clientX, 300);
                         setHistoryWidth(nextWidth);
-                        rememberHistoryPanelStatus && setLocalStorage({ 'historyPanelStatus': { ...historyPanelStatus, width: nextWidth } });
+                        rememberHistoryPanelStatus && scOptions.set({ 'historyPanelStatus': { ...historyPanelStatus, width: nextWidth } });
                     }
                 }))}
             ></div>

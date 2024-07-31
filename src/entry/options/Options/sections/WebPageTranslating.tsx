@@ -4,7 +4,6 @@ import SourceSelect from '../../../../components/SourceSelect';
 import Switch from '../../../../components/Switch';
 import { preferredLangCode } from '../../../../constants/langCode';
 import { GOOGLE_COM, webPageTranslateSource as webPageTranslateSourceList } from '../../../../constants/translateSource';
-import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { GetStorageKeys } from '../../../../types';
@@ -18,6 +17,7 @@ import Button from '../../../../components/Button';
 import scIndexedDB from '../../../../public/sc-indexed-db';
 import ConfirmDelete from '../../../collection/components/ConfirmDelete';
 import SpecifyRule from '../../components/SpecifyRule';
+import scOptions from '../../../../public/sc-options';
 
 const useOptionsDependency: GetStorageKeys<
     'webPageTranslateSource' |
@@ -105,7 +105,7 @@ const WebPageTranslating: React.FC = () => {
                         customTranslateSources={customWebpageTranslateSourceList}
                         onChange={(value) => {
                             const availableSources = webPageTranslateSourceList.concat(value).map(v => v.source);
-                            setLocalStorage({
+                            scOptions.set({
                                 webPageTranslateSource: availableSources.includes(webPageTranslateSource) ? webPageTranslateSource : GOOGLE_COM,
                                 customWebpageTranslateSourceList: value
                             });
@@ -120,14 +120,14 @@ const WebPageTranslating: React.FC = () => {
                     className='border-bottom-select opt-source-select'
                     sourceList={webPageTranslateSourceList.concat(customWebpageTranslateSourceList)}
                     source={webPageTranslateSource}
-                    onChange={value => setLocalStorage({ webPageTranslateSource: value })}
+                    onChange={value => scOptions.set({ webPageTranslateSource: value })}
                 />
             </div>
             <div className='opt-section-row'>
                 {getMessage('optionsTo')}
                 <DefaultSelect
                     value={webPageTranslateTo}
-                    onChange={value => setLocalStorage({ webPageTranslateTo: value })}
+                    onChange={value => scOptions.set({ webPageTranslateTo: value })}
                     options={preferredLangCode[userLanguage]}
                     optionValue='code'
                     optionLabel='name'
@@ -137,7 +137,7 @@ const WebPageTranslating: React.FC = () => {
                 {getMessage('optionsDisplayMode')}
                 <div className='mt10-ml30'>
                     <WebPageTranslateDisplayMode
-                        update={displayMode => setLocalStorage({ webPageTranslateDisplayMode: displayMode })}
+                        update={displayMode => scOptions.set({ webPageTranslateDisplayMode: displayMode })}
                         displayMode={webPageTranslateDisplayMode}
                     />
                 </div>
@@ -151,7 +151,7 @@ const WebPageTranslating: React.FC = () => {
                         <Checkbox
                             label={getMessage('optionsMouseHoverOverOriginalText')}
                             checked={displayModeEnhancement.o_Hovering}
-                            onChange={v => setLocalStorage({ displayModeEnhancement: { ...displayModeEnhancement, o_Hovering: v } })}
+                            onChange={v => scOptions.set({ displayModeEnhancement: { ...displayModeEnhancement, o_Hovering: v } })}
                         />
                     </div>
                 </div>
@@ -161,21 +161,21 @@ const WebPageTranslating: React.FC = () => {
                         <Checkbox
                             label={getMessage('optionsNotDisplayingTheTranslationsDiscretely')}
                             checked={displayModeEnhancement.oAndT_NonDiscrete}
-                            onChange={v => setLocalStorage({ displayModeEnhancement: { ...displayModeEnhancement, oAndT_NonDiscrete: v } })}
+                            onChange={v => scOptions.set({ displayModeEnhancement: { ...displayModeEnhancement, oAndT_NonDiscrete: v } })}
                         />
                     </div>
                     <div className='mt10-ml30'>
                         <Checkbox
                             label={getMessage('optionsParagraphWrap')}
                             checked={displayModeEnhancement.oAndT_paragraphWrap}
-                            onChange={v => setLocalStorage({ displayModeEnhancement: { ...displayModeEnhancement, oAndT_paragraphWrap: v } })}
+                            onChange={v => scOptions.set({ displayModeEnhancement: { ...displayModeEnhancement, oAndT_paragraphWrap: v } })}
                         />
                     </div>
                     <div className='mt10-ml30'>
                         <Checkbox
                             label={getMessage('optionsSameLanguageHide')}
                             checked={displayModeEnhancement.oAndT_hideSameLanguage}
-                            onChange={v => setLocalStorage({ displayModeEnhancement: { ...displayModeEnhancement, oAndT_hideSameLanguage: v } })}
+                            onChange={v => scOptions.set({ displayModeEnhancement: { ...displayModeEnhancement, oAndT_hideSameLanguage: v } })}
                         />
                     </div>
                     <div className='mt10-ml30'>
@@ -184,12 +184,12 @@ const WebPageTranslating: React.FC = () => {
                             <CustomizeTranslation
                                 comparisonCustomization={comparisonCustomization}
                                 addUnderline={displayModeEnhancement.oAndT_Underline}
-                                onChange={v => setLocalStorage({ comparisonCustomization: v })}
+                                onChange={v => scOptions.set({ comparisonCustomization: v })}
                             >
                                 <Checkbox
                                     label={getMessage('optionsAddUnderlineToTranslations')}
                                     checked={displayModeEnhancement.oAndT_Underline}
-                                    onChange={v => setLocalStorage({ displayModeEnhancement: { ...displayModeEnhancement, oAndT_Underline: v } })}
+                                    onChange={v => scOptions.set({ displayModeEnhancement: { ...displayModeEnhancement, oAndT_Underline: v } })}
                                 />
                             </CustomizeTranslation>
                         </div>
@@ -201,13 +201,13 @@ const WebPageTranslating: React.FC = () => {
                         <Checkbox
                             label={getMessage('optionsMouseHoverOverTranslation')}
                             checked={displayModeEnhancement.t_Hovering}
-                            onChange={v => setLocalStorage({ displayModeEnhancement: { ...displayModeEnhancement, t_Hovering: v } })}
+                            onChange={v => scOptions.set({ displayModeEnhancement: { ...displayModeEnhancement, t_Hovering: v } })}
                         />
                         <div className='mt10-ml30'>
                             <Checkbox
                                 label={getMessage('optionsDisplayOriginalTextWhenCtrlPressed')}
                                 checked={displayModeEnhancement.t_hoveringWithKeyPressing}
-                                onChange={v => setLocalStorage({ displayModeEnhancement: { ...displayModeEnhancement, t_hoveringWithKeyPressing: v } })}
+                                onChange={v => scOptions.set({ displayModeEnhancement: { ...displayModeEnhancement, t_hoveringWithKeyPressing: v } })}
                             />
                         </div>
                     </div>
@@ -217,7 +217,7 @@ const WebPageTranslating: React.FC = () => {
                 <Switch
                     label={getMessage('optionsTranslateIframeContent')}
                     checked={translateIframeContent}
-                    onChange={v => setLocalStorage({ translateIframeContent: v })}
+                    onChange={v => scOptions.set({ translateIframeContent: v })}
                 />
                 <BetaIcon />
             </div>
@@ -228,11 +228,11 @@ const WebPageTranslating: React.FC = () => {
                     onChange={(v) => {
                         if (v) {
                             chrome.permissions.request({ permissions: ['webNavigation'] }, (granted) => {
-                                granted && setLocalStorage({ translateRedirectedSameDomainPage: v });
+                                granted && scOptions.set({ translateRedirectedSameDomainPage: v });
                             });
                         }
                         else {
-                            setLocalStorage({ translateRedirectedSameDomainPage: v });
+                            scOptions.set({ translateRedirectedSameDomainPage: v });
                             chrome.permissions.remove({ permissions: ['webNavigation'] });
                         }
                     }}
@@ -243,7 +243,7 @@ const WebPageTranslating: React.FC = () => {
                 <Switch
                     label={getMessage('optionsWebPageTranslateDirectly')}
                     checked={webPageTranslateDirectly}
-                    onChange={v => setLocalStorage({ webPageTranslateDirectly: v })}
+                    onChange={v => scOptions.set({ webPageTranslateDirectly: v })}
                 />
                 <div className='item-description'>
                     {getMessage('optionsWebPageTranslateDirectlyDescription')}
@@ -252,7 +252,7 @@ const WebPageTranslating: React.FC = () => {
                     <Switch
                         label={getMessage('optionsNoControlBarWhileFirstActivating')}
                         checked={noControlBarWhileFirstActivating}
-                        onChange={v => setLocalStorage({ noControlBarWhileFirstActivating: v })}
+                        onChange={v => scOptions.set({ noControlBarWhileFirstActivating: v })}
                     />
                     <div className='item-description'>
                         {getMessage('optionsNoControlBarWhileFirstActivatingDescription')}
@@ -263,7 +263,7 @@ const WebPageTranslating: React.FC = () => {
                 <Switch
                     label={getMessage('optionsTranslateDynamicContent')}
                     checked={translateDynamicContent}
-                    onChange={v => setLocalStorage({ translateDynamicContent: v })}
+                    onChange={v => scOptions.set({ translateDynamicContent: v })}
                 />
                 <BetaIcon />
                 <div className='item-description'>
@@ -273,7 +273,7 @@ const WebPageTranslating: React.FC = () => {
                     <Switch
                         label={getMessage('optionsEnableAutoTranslateWebpage')}
                         checked={enableAutoTranslateWebpage}
-                        onChange={v => setLocalStorage({ enableAutoTranslateWebpage: v })}
+                        onChange={v => scOptions.set({ enableAutoTranslateWebpage: v })}
                     />
                     <div className='item-description'>
                         {getMessage('optionsEnableAutoTranslateWebpageDescription')}
@@ -281,7 +281,7 @@ const WebPageTranslating: React.FC = () => {
                     <div className='mt10-ml30'>
                         <HostList
                             list={autoTranslateWebpageHostList}
-                            updateList={list => setLocalStorage({ autoTranslateWebpageHostList: list })}
+                            updateList={list => scOptions.set({ autoTranslateWebpageHostList: list })}
                         />
                     </div>
                 </div>
@@ -290,7 +290,7 @@ const WebPageTranslating: React.FC = () => {
                 <Switch
                     label={getMessage('optionsEnablePageTranslationCache')}
                     checked={enablePageTranslationCache}
-                    onChange={v => setLocalStorage({ enablePageTranslationCache: v })}
+                    onChange={v => scOptions.set({ enablePageTranslationCache: v })}
                 />
                 <div className='item-description'>
                     {getMessage('optionsEnablePageTranslationCacheDescription')}

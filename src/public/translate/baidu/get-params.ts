@@ -1,5 +1,5 @@
 import { DefaultOptions } from '../../../types';
-import { setLocalStorage } from '../../chrome-call';
+import scOptions from '../../sc-options';
 import { getLocalStorageAsync } from '../../utils';
 import { fetchData } from '../utils';
 import { getSign } from './get-sign';
@@ -25,7 +25,7 @@ export const getTranslateParams = async (query: string) => {
 
     getLocalStorageAsync<PickedOptions>(keys).then(({ sourceParamsCache }) => {
         sourceParamsCache['baidu.com'].translate = { expiry: currentTime + 21600000, token, updateTime: currentTime };
-        setLocalStorage({ sourceParamsCache });
+        scOptions.set({ sourceParamsCache });
     });
 
     return { token, sign };

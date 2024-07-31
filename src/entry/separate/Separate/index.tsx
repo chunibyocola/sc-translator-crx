@@ -4,7 +4,6 @@ import MtAddSource from '../../../components/MtAddSource';
 import MtResult from '../../../components/MtResult';
 import RawText from '../../../components/RawText';
 import { mtLangCode } from '../../../constants/langCode';
-import { setLocalStorage } from '../../../public/chrome-call';
 import './style.css';
 import '../../../components/PopupHeader/style.css';
 import { useAppDispatch, useEffectOnce, useOptions, useTranslation } from '../../../public/react-use';
@@ -16,6 +15,7 @@ import CollectButton from '../../../components/PanelIconButtons/CollectButton';
 import OpenOptionsPageButton from '../../../components/PanelIconButtons/OpenOptionsPageButton';
 import SwitchThemeButton from '../../../components/PanelIconButtons/SwitchThemeButton';
 import OpenCollectionPageButton from '../../../components/PanelIconButtons/OpenCollectionPageButton';
+import scOptions from '../../../public/sc-options';
 
 const useOptionsDependency: GetStorageKeys<'rememberStwSizeAndPosition'> = ['rememberStwSizeAndPosition'];
 
@@ -59,7 +59,7 @@ const Separate: React.FC = () => {
                 top: window.screenY
             };
 
-            setLocalStorage({ 'stwSizeAndPosition': sizeAndPosition });
+            scOptions.set({ 'stwSizeAndPosition': sizeAndPosition });
         };
 
         window.addEventListener('beforeunload', onBeforeUnload);

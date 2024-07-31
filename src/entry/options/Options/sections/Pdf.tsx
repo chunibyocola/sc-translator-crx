@@ -1,9 +1,9 @@
 import React from 'react';
 import Switch from '../../../../components/Switch';
-import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { GetStorageKeys } from '../../../../types';
+import scOptions from '../../../../public/sc-options';
 
 const useOptionsDependency: GetStorageKeys<
     'enablePdfViewer'
@@ -22,7 +22,7 @@ const Pdf: React.FC = () => {
                 <Switch
                     label={getMessage('optionsEnablePdfViewer')}
                     checked={enablePdfViewer}
-                    onChange={v => setLocalStorage({ enablePdfViewer: v })}
+                    onChange={v => scOptions.set({ enablePdfViewer: v })}
                 />
                 <div className='item-description'>{getMessage('optionsEnablePdfViewerDescription')}</div>
             </div>

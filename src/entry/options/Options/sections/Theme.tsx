@@ -1,10 +1,10 @@
 import React from 'react';
-import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { GetStorageKeys } from '../../../../types';
 import CustomizeStyleTextarea from '../../components/CustomizeStyleTextarea';
 import CustomizeTheme from '../../components/CustomizeTheme';
+import scOptions from '../../../../public/sc-options';
 
 const useOptionsDependency: GetStorageKeys<
     'styleVarsList' |
@@ -29,8 +29,8 @@ const Theme: React.FC = () => {
                 <CustomizeTheme
                     styleVarsList={styleVarsList}
                     styleVarsIndex={styleVarsIndex}
-                    updateStyleVarsList={list => setLocalStorage({ styleVarsList: list })}
-                    updateStyleVarsIndex={index => setLocalStorage({ styleVarsIndex: index })}
+                    updateStyleVarsList={list => scOptions.set({ styleVarsList: list })}
+                    updateStyleVarsIndex={index => scOptions.set({ styleVarsIndex: index })}
                 />
             </div>
             <div className='opt-section-row'>
@@ -38,7 +38,7 @@ const Theme: React.FC = () => {
                 <div className='mt10-ml30'>
                     <CustomizeStyleTextarea
                         customizeStyleText={customizeStyleText}
-                        onSave={text => setLocalStorage({ customizeStyleText: text })}
+                        onSave={text => scOptions.set({ customizeStyleText: text })}
                     />
                     <div className='item-description'>{getMessage('optionsCustomizeStyleDescription')}</div>
                     <div className='item-description'>{getMessage('optionsCustomizeStyleNotice')}</div>

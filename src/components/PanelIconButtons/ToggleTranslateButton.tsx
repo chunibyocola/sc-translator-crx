@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
-import { setLocalStorage } from '../../public/chrome-call';
 import { getMessage } from '../../public/i18n';
 import { useOptions } from '../../public/react-use';
 import { getIsEnabled } from '../../public/utils';
 import { GetStorageKeys } from '../../types';
 import IconFont from '../IconFont';
 import PanelIconButtonWrapper from './PanelIconButtonWrapper';
+import scOptions from '../../public/sc-options';
 
 const useOptionsDependency: GetStorageKeys<'translateBlackListMode' | 'translateHostList'> = ['translateBlackListMode', 'translateHostList'];
 
@@ -28,10 +28,10 @@ const ToggleTranslateButton: React.FC<ToggleTranslateButtonProps> = ({ host }) =
                 if (!host) { return; }
 
                 if ((translateEnabled && !translateBlackListMode) || (!translateEnabled && translateBlackListMode)) {
-                    setLocalStorage({ translateHostList: translateHostList.filter(v => !host.endsWith(v)) });
+                    scOptions.set({ translateHostList: translateHostList.filter(v => !host.endsWith(v)) });
                 }
                 else {
-                    setLocalStorage({ translateHostList: translateHostList.concat(host) });
+                    scOptions.set({ translateHostList: translateHostList.concat(host) });
                 }
             }}
             title={getMessage(host ? translateEnabled ? 'popupDisableTranslate' : 'popupEnableTranslate' : 'popupNotAvailable')}

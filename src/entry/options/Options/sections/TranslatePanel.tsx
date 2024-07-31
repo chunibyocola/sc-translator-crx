@@ -1,10 +1,10 @@
 import React from 'react';
 import Slider, { SliderFormat, SliderMarks } from '../../../../components/Slider';
 import Switch from '../../../../components/Switch';
-import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { GetStorageKeys } from '../../../../types';
+import scOptions from '../../../../public/sc-options';
 
 const marksPercentage: SliderMarks = [
     { value: 10, label: '10%' },
@@ -75,7 +75,7 @@ const TranslatePanel: React.FC = () => {
                     <Switch
                         label={getMessage('optionsPercentage')}
                         checked={hPercentage}
-                        onChange={v => setLocalStorage({ translatePanelMaxHeight: { ...translatePanelMaxHeight, percentage: v } })}
+                        onChange={v => scOptions.set({ translatePanelMaxHeight: { ...translatePanelMaxHeight, percentage: v } })}
                     />
                 </div>
                 {hPercentage ? <Slider
@@ -86,7 +86,7 @@ const TranslatePanel: React.FC = () => {
                     marks={marksPercentage}
                     valueLabelDisplay
                     valueLabelFormat={percentageLabelFormat}
-                    mouseUpCallback={v => setLocalStorage({ translatePanelMaxHeight: { ...translatePanelMaxHeight, 'percent': v } })}
+                    mouseUpCallback={v => scOptions.set({ translatePanelMaxHeight: { ...translatePanelMaxHeight, 'percent': v } })}
                 /> : <Slider
                     defaultValue={hPx}
                     min={100}
@@ -95,7 +95,7 @@ const TranslatePanel: React.FC = () => {
                     marks={marksPx}
                     valueLabelDisplay
                     valueLabelFormat={pxLabelFormat}
-                    mouseUpCallback={v => setLocalStorage({ translatePanelMaxHeight: { ...translatePanelMaxHeight, 'px': v } })}
+                    mouseUpCallback={v => scOptions.set({ translatePanelMaxHeight: { ...translatePanelMaxHeight, 'px': v } })}
                 />}
             </div>
             <div className='opt-section-row'>
@@ -104,7 +104,7 @@ const TranslatePanel: React.FC = () => {
                     <Switch
                         label={getMessage('optionsPercentage')}
                         checked={wPercentage}
-                        onChange={v => setLocalStorage({ translatePanelWidth: { ...translatePanelWidth, percentage: v } })}
+                        onChange={v => scOptions.set({ translatePanelWidth: { ...translatePanelWidth, percentage: v } })}
                     />
                 </div>
                 {wPercentage ? <Slider
@@ -115,7 +115,7 @@ const TranslatePanel: React.FC = () => {
                     marks={marksPercentage}
                     valueLabelDisplay
                     valueLabelFormat={percentageLabelFormat}
-                    mouseUpCallback={v => setLocalStorage({ translatePanelWidth: { ...translatePanelWidth, 'percent': v } })}
+                    mouseUpCallback={v => scOptions.set({ translatePanelWidth: { ...translatePanelWidth, 'percent': v } })}
                 /> : <Slider
                     defaultValue={wPx}
                     min={250}
@@ -124,7 +124,7 @@ const TranslatePanel: React.FC = () => {
                     marks={marksWidthPx}
                     valueLabelDisplay
                     valueLabelFormat={pxLabelFormat}
-                    mouseUpCallback={v => setLocalStorage({ translatePanelWidth: { ...translatePanelWidth, 'px': v } })}
+                    mouseUpCallback={v => scOptions.set({ translatePanelWidth: { ...translatePanelWidth, 'px': v } })}
                 />}
             </div>
             <div className='opt-section-row'>
@@ -137,14 +137,14 @@ const TranslatePanel: React.FC = () => {
                     marks={marksFontSize}
                     valueLabelDisplay
                     valueLabelFormat={pxLabelFormat}
-                    mouseUpCallback={v => setLocalStorage({ translatePanelFontSize: v })}
+                    mouseUpCallback={v => scOptions.set({ translatePanelFontSize: v })}
                 />
             </div>
             <div className='opt-section-row'>
                 <Switch
                     label={getMessage('optionsPinThePanelWhileOpeningIt')}
                     checked={pinThePanelWhileOpeningIt}
-                    onChange={v => setLocalStorage({ pinThePanelWhileOpeningIt: v })}
+                    onChange={v => scOptions.set({ pinThePanelWhileOpeningIt: v })}
                 />
                 <div className='item-description'>{getMessage('optionsPinThePanelWhileOpeningItDescription')}</div>
             </div>
@@ -152,7 +152,7 @@ const TranslatePanel: React.FC = () => {
                 <Switch
                     label={getMessage('optionsRememberPositionOfPinnedPanel')}
                     checked={rememberPositionOfPinnedPanel}
-                    onChange={v => setLocalStorage({ rememberPositionOfPinnedPanel: v })}
+                    onChange={v => scOptions.set({ rememberPositionOfPinnedPanel: v })}
                 />
                 <div className='item-description'>{getMessage('optionsRememberPositionOfPinnedPanelDescription')}</div>
             </div>
@@ -160,7 +160,7 @@ const TranslatePanel: React.FC = () => {
                 <Switch
                     label={getMessage('optionsAutoTranslateAfterInput')}
                     checked={autoTranslateAfterInput}
-                    onChange={v => setLocalStorage({ autoTranslateAfterInput: v })}
+                    onChange={v => scOptions.set({ autoTranslateAfterInput: v })}
                 />
                 <div className='item-description'>{getMessage('optionsAutoTranslateAfterInputDescription')}</div>
             </div>

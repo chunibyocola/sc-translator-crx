@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { LangCodes, LocaleLangCodes } from '../../constants/langCode';
-import { setLocalStorage } from '../../public/chrome-call';
 import { getOptions } from '../../public/options';
 import { useOptions } from '../../public/react-use';
 import { GetStorageKeys } from '../../types';
 import IconFont from '../IconFont';
 import LanguageSelect from '../LanguageSelect';
 import './style.css';
+import scOptions from '../../public/sc-options';
 
 const useOptionsDependency: GetStorageKeys<'recentTranslateFromList' | 'recentTranslateToList'> = ['recentTranslateFromList', 'recentTranslateToList'];
 
 const updateRecentList = (recentList: string[], code: string, from: boolean) => {
-    setLocalStorage({ [`recentTranslate${from ? 'From' : 'To'}List`]: [code].concat(recentList.filter(v => v !== code)).slice(0, 4) });
+    scOptions.set({ [`recentTranslate${from ? 'From' : 'To'}List`]: [code].concat(recentList.filter(v => v !== code)).slice(0, 4) });
 };
 
 type LanguageSelectionProps = {

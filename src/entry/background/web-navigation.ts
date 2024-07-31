@@ -1,5 +1,5 @@
 import { SCTS_SHOULD_AUTO_TRANSLATE_THIS_PAGE, SCTS_UPDATE_PAGE_TRANSLATION_STATE } from '../../constants/chromeSendMessageTypes';
-import { setLocalStorage } from '../../public/chrome-call';
+import scOptions from '../../public/sc-options';
 import { ChromeRuntimeMessage } from '../../public/send';
 import { getLocalStorageAsync } from '../../public/utils';
 
@@ -77,7 +77,7 @@ const startTranslatingRedirectedSameDomainPage = async () => {
     if (translateRedirectedSameDomainPage) {
         chrome.permissions.contains({ permissions: ['webNavigation'] }, (result) => {
             if (!result) {
-                setLocalStorage({ translateRedirectedSameDomainPage: false });
+                scOptions.set({ translateRedirectedSameDomainPage: false });
             }
         });
     }

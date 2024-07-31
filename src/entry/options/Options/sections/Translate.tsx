@@ -1,7 +1,6 @@
 import React from 'react';
 import Slider, { SliderFormat, SliderMarks } from '../../../../components/Slider';
 import Switch from '../../../../components/Switch';
-import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { GetStorageKeys } from '../../../../types';
@@ -9,6 +8,7 @@ import BetaIcon from '../../components/BetaIcon';
 import BtnPostion from '../../components/BtnPosition';
 import HostList from '../../components/HostList';
 import TranslateButtonDisplay from '../../components/TranslateButtonDisplay';
+import scOptions from '../../../../public/sc-options';
 
 const marksHideButtonFixedTime: SliderMarks = [
     { value: 500, label: '0.50s' },
@@ -78,14 +78,14 @@ const Translate: React.FC = () => {
                 <Switch
                     label={getMessage('optionsTranslateWithKeyPress')}
                     checked={translateWithKeyPress}
-                    onChange={v => setLocalStorage({ translateWithKeyPress: v })}
+                    onChange={v => scOptions.set({ translateWithKeyPress: v })}
                 />
             </div>
             <div className='opt-section-row'>
                 <Switch
                     label={getMessage('optionsTranslateDirectly')}
                     checked={translateDirectly}
-                    onChange={v => setLocalStorage({ translateDirectly: v })}
+                    onChange={v => scOptions.set({ translateDirectly: v })}
                 />
             </div>
             <div className='opt-section-row'>
@@ -95,8 +95,8 @@ const Translate: React.FC = () => {
                     <TranslateButtonDisplay
                         translateButtons={translateButtons}
                         translateButtonsTL={translateButtonsTL}
-                        onTranslateButtonsUpdate={value => setLocalStorage({ translateButtons: value })}
-                        onTranslateButtonsTLUpdate={value => setLocalStorage({ translateButtonsTL: value })}
+                        onTranslateButtonsUpdate={value => scOptions.set({ translateButtons: value })}
+                        onTranslateButtonsTLUpdate={value => scOptions.set({ translateButtonsTL: value })}
                         userLanguage={userLanguage}
                     />
                 </div>
@@ -104,14 +104,14 @@ const Translate: React.FC = () => {
             <div className='opt-section-row'>
                 {getMessage('optionsButtonsPosition')}
                 <div className='mt10-ml30'>
-                    <BtnPostion currentPos={btnPosition} updateBtnPosition={pos => setLocalStorage({ btnPosition: pos })} />
+                    <BtnPostion currentPos={btnPosition} updateBtnPosition={pos => scOptions.set({ btnPosition: pos })} />
                 </div>
             </div>
             <div className='opt-section-row'>
                 <Switch
                     label={getMessage('optionsHideButtonAfterFixedTime')}
                     checked={hideButtonAfterFixedTime}
-                    onChange={v => setLocalStorage({ hideButtonAfterFixedTime: v })}
+                    onChange={v => scOptions.set({ hideButtonAfterFixedTime: v })}
                 />
             </div>
             <div className='opt-section-row'>
@@ -124,28 +124,28 @@ const Translate: React.FC = () => {
                     marks={marksHideButtonFixedTime}
                     valueLabelDisplay
                     valueLabelFormat={hideButtonFixedTimeLabelFormat}
-                    mouseUpCallback={v => setLocalStorage({ hideButtonFixedTime: v })}
+                    mouseUpCallback={v => scOptions.set({ hideButtonFixedTime: v })}
                 />
             </div>
             <div className='opt-section-row'>
                 <Switch
                     label={getMessage('optionsRespondToSeparateWindow')}
                     checked={respondToSeparateWindow}
-                    onChange={v => setLocalStorage({ respondToSeparateWindow: v })}
+                    onChange={v => scOptions.set({ respondToSeparateWindow: v })}
                 />
             </div>
             <div className='opt-section-row'>
                 <Switch
                     label={getMessage('optionsTranslateDirectlyWhilePinning')}
                     checked={translateDirectlyWhilePinning}
-                    onChange={v => setLocalStorage({ translateDirectlyWhilePinning: v })}
+                    onChange={v => scOptions.set({ translateDirectlyWhilePinning: v })}
                 />
             </div>
             <div className='opt-section-row'>
                 <Switch
                     label={getMessage('optionsDoNotRespondInTextBox')}
                     checked={doNotRespondInTextBox}
-                    onChange={v => setLocalStorage({ doNotRespondInTextBox: v })}
+                    onChange={v => scOptions.set({ doNotRespondInTextBox: v })}
                 />
                 <div className='item-description'>{getMessage('optionsDoNotRespondInTextBoxDescription')}</div>
             </div>
@@ -154,7 +154,7 @@ const Translate: React.FC = () => {
                     <Switch
                         label={getMessage('optionsEnableInsertResult')}
                         checked={enableInsertResult}
-                        onChange={v => setLocalStorage({ enableInsertResult: v })}
+                        onChange={v => scOptions.set({ enableInsertResult: v })}
                     />
                     <BetaIcon />
                 </div>
@@ -163,7 +163,7 @@ const Translate: React.FC = () => {
                     <Switch
                         label={getMessage('optionsAutoInsertResult')}
                         checked={autoInsertResult}
-                        onChange={v => setLocalStorage({ autoInsertResult: v })}
+                        onChange={v => scOptions.set({ autoInsertResult: v })}
                     />
                     <div className='item-description'>{getMessage('optionsAutoInsertResultDescription')}</div>
                 </div>
@@ -174,13 +174,13 @@ const Translate: React.FC = () => {
                     <Switch
                         label={getMessage('optionsTranslateBlackListMode')}
                         checked={translateBlackListMode}
-                        onChange={v => setLocalStorage({ translateBlackListMode: v })}
+                        onChange={v => scOptions.set({ translateBlackListMode: v })}
                     />
                 </div>
                 <div className='mt10-ml30'>
                     <HostList
                         list={translateHostList}
-                        updateList={list => setLocalStorage({ translateHostList: list })}
+                        updateList={list => scOptions.set({ translateHostList: list })}
                     />
                 </div>
             </div>

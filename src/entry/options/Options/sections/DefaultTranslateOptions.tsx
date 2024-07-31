@@ -3,7 +3,6 @@ import SourceSelect from '../../../../components/SourceSelect';
 import Switch from '../../../../components/Switch';
 import { googleLangCode, langCode, mtLangCode, preferredLangCode, userLangs } from '../../../../constants/langCode';
 import { GOOGLE_COM, translateSource } from '../../../../constants/translateSource';
-import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { switchTranslateSource } from '../../../../public/switch-translate-source';
@@ -13,6 +12,7 @@ import CustomTranslateSourceDisplay from '../../components/CustomTranslateSource
 import DefaultSelect from '../../components/DefaultSelect';
 import MultipleSourcesDisplay from '../../components/MultipleSourcesDisplay';
 import TranslationDisplay from '../../components/TranslationDisplay';
+import scOptions from '../../../../public/sc-options';
 
 const useOptionsDependency: GetStorageKeys<
     'multipleTranslateMode' |
@@ -67,14 +67,14 @@ const DefaultTranslateOptions: React.FC = () => {
                 <Switch
                     label={getMessage('optionsUseDotCn')}
                     checked={useDotCn}
-                    onChange={v => setLocalStorage({ useDotCn: v })}
+                    onChange={v => scOptions.set({ useDotCn: v })}
                 />
             </div>
             <div className='opt-section-row'>
                 {getMessage('optionsLanguage')}
                 <DefaultSelect
                     value={userLanguage}
-                    onChange={value => setLocalStorage({ userLanguage: value })}
+                    onChange={value => scOptions.set({ userLanguage: value })}
                     options={userLangs}
                     optionValue='code'
                     optionLabel='name'
@@ -84,7 +84,7 @@ const DefaultTranslateOptions: React.FC = () => {
                 {getMessage('optionsPreferredLanguage')}
                 <DefaultSelect
                     value={preferredLanguage}
-                    onChange={value => setLocalStorage({ preferredLanguage: value })}
+                    onChange={value => scOptions.set({ preferredLanguage: value })}
                     options={preferredLangCode[userLanguage]}
                     optionValue='code'
                     optionLabel='name'
@@ -94,7 +94,7 @@ const DefaultTranslateOptions: React.FC = () => {
                 {getMessage('optionsSecondPreferredLanguage')}
                 <DefaultSelect
                     value={secondPreferredLanguage}
-                    onChange={value => setLocalStorage({ secondPreferredLanguage: value })}
+                    onChange={value => scOptions.set({ secondPreferredLanguage: value })}
                     options={preferredLangCode[userLanguage]}
                     optionValue='code'
                     optionLabel='name'
@@ -119,7 +119,7 @@ const DefaultTranslateOptions: React.FC = () => {
                         onChange={(value) => {
                             // If user delete the using custom sources, remove them from options(multipleTranslateSourceList/defaultTranslateSource).
                             const availableSources = translateSource.concat(value).map(v => v.source);
-                            setLocalStorage({
+                            scOptions.set({
                                 multipleTranslateSourceList: multipleTranslateSourceList.filter(v => availableSources.includes(v)),
                                 defaultTranslateSource: availableSources.includes(defaultTranslateSource) ? defaultTranslateSource : GOOGLE_COM,
                                 customTranslateSourceList: value
@@ -132,7 +132,7 @@ const DefaultTranslateOptions: React.FC = () => {
                 <Switch
                     label={getMessage('optionsMultipleTranslateMode')}
                     checked={multipleTranslateMode}
-                    onChange={v => setLocalStorage({ multipleTranslateMode: v })}
+                    onChange={v => scOptions.set({ multipleTranslateMode: v })}
                 />
             </div>
             {multipleTranslateMode ? <>
@@ -143,7 +143,7 @@ const DefaultTranslateOptions: React.FC = () => {
                         <MultipleSourcesDisplay
                             enabledSources={multipleTranslateSourceList}
                             sources={translateSource.concat(customTranslateSourceList)}
-                            onChange={value => setLocalStorage({ multipleTranslateSourceList: value })}
+                            onChange={value => scOptions.set({ multipleTranslateSourceList: value })}
                         />
                     </div>
                 </div>
@@ -151,7 +151,7 @@ const DefaultTranslateOptions: React.FC = () => {
                     {getMessage('optionsFrom')}
                     <DefaultSelect
                         value={multipleTranslateFrom}
-                        onChange={value => setLocalStorage({ multipleTranslateFrom: value })}
+                        onChange={value => scOptions.set({ multipleTranslateFrom: value })}
                         options={mtLangCode[userLanguage]}
                         optionValue='code'
                         optionLabel='name'
@@ -161,7 +161,7 @@ const DefaultTranslateOptions: React.FC = () => {
                     {getMessage('optionsTo')}
                     <DefaultSelect
                         value={multipleTranslateTo}
-                        onChange={value => setLocalStorage({ multipleTranslateTo: value })}
+                        onChange={value => scOptions.set({ multipleTranslateTo: value })}
                         options={mtLangCode[userLanguage]}
                         optionValue='code'
                         optionLabel='name'
@@ -180,7 +180,7 @@ const DefaultTranslateOptions: React.FC = () => {
                                 from: defaultTranslateFrom,
                                 to: defaultTranslateTo
                             });
-                            setLocalStorage({
+                            scOptions.set({
                                 defaultTranslateSource: source,
                                 defaultTranslateFrom: from,
                                 defaultTranslateTo: to
@@ -192,7 +192,7 @@ const DefaultTranslateOptions: React.FC = () => {
                     {getMessage('optionsFrom')}
                     <DefaultSelect
                         value={defaultTranslateFrom}
-                        onChange={value => setLocalStorage({ defaultTranslateFrom: value })}
+                        onChange={value => scOptions.set({ defaultTranslateFrom: value })}
                         options={(langCode[defaultTranslateSource] ?? googleLangCode)[userLanguage]}
                         optionValue='code'
                         optionLabel='name'
@@ -202,7 +202,7 @@ const DefaultTranslateOptions: React.FC = () => {
                     {getMessage('optionsTo')}
                     <DefaultSelect
                         value={defaultTranslateTo}
-                        onChange={value => setLocalStorage({ defaultTranslateTo: value })}
+                        onChange={value => scOptions.set({ defaultTranslateTo: value })}
                         options={(langCode[defaultTranslateSource] ?? googleLangCode)[userLanguage]}
                         optionValue='code'
                         optionLabel='name'
@@ -215,7 +215,7 @@ const DefaultTranslateOptions: React.FC = () => {
                 <div className='mt10-ml30'>
                     <TranslationDisplay
                         displayOfTranslation={displayOfTranslation}
-                        onChange={v => setLocalStorage({ displayOfTranslation: v })}
+                        onChange={v => scOptions.set({ displayOfTranslation: v })}
                     />
                 </div>
             </div>

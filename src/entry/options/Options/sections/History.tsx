@@ -1,10 +1,10 @@
 import React from 'react';
 import Switch from '../../../../components/Switch';
-import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { GetStorageKeys } from '../../../../types';
 import HostList from '../../components/HostList';
+import scOptions from '../../../../public/sc-options';
 
 const useOptionsDependency: GetStorageKeys<
     'historyBlackListMode' |
@@ -29,7 +29,7 @@ const History: React.FC = () => {
                 <Switch
                     label={getMessage('optionsRememberHistoryPanelStatus')}
                     checked={rememberHistoryPanelStatus}
-                    onChange={v => setLocalStorage({ rememberHistoryPanelStatus: v })}
+                    onChange={v => scOptions.set({ rememberHistoryPanelStatus: v })}
                 />
             </div>
             <div className='opt-section-row'>
@@ -38,13 +38,13 @@ const History: React.FC = () => {
                     <Switch
                         label={getMessage('optionsHistoryBlackListMode')}
                         checked={historyBlackListMode}
-                        onChange={v => setLocalStorage({ historyBlackListMode: v })}
+                        onChange={v => scOptions.set({ historyBlackListMode: v })}
                     />
                 </div>
                 <div className='mt10-ml30'>
                     <HostList
                         list={historyHostList}
-                        updateList={list => setLocalStorage({ historyHostList: list })}
+                        updateList={list => scOptions.set({ historyHostList: list })}
                     />
                 </div>
             </div>

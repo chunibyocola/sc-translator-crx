@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import CollectButton from '../../../components/PanelIconButtons/CollectButton';
 import DisplayEditAreaButton from '../../../components/PanelIconButtons/DisplayEditAreaButton';
-import { setLocalStorage } from '../../../public/chrome-call';
 import { useAppSelector, useOptions, useWindowSize } from '../../../public/react-use';
 import { calculatePosition, drag } from '../../../public/utils';
 import { GetStorageKeys, Position } from '../../../types';
@@ -11,6 +10,7 @@ import './style.css';
 import PinButton from '../../../components/PanelIconButtons/PinButton';
 import CloseButton from '../../../components/PanelIconButtons/CloseButton';
 import Logo from '../../../components/Logo';
+import scOptions from '../../../public/sc-options';
 
 const useOptionsDependency: GetStorageKeys<
     'rememberPositionOfPinnedPanel' |
@@ -72,7 +72,7 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
         const nextPosition = calculatePosition(mtEle.current, pos);
 
         if (rememberPositionOfPinnedPanel && pinning && (panelPosition.x !== nextPosition.x || panelPosition.y !== nextPosition.y)) {
-            setLocalStorage({ positionOfPinnedPanel: nextPosition });
+            scOptions.set({ positionOfPinnedPanel: nextPosition });
         }
 
         lastStablePanelPositionRef.current = nextPosition;

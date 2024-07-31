@@ -1,4 +1,4 @@
-import { setLocalStorage } from '../../chrome-call';
+import scOptions from '../../sc-options';
 import { BAD_REQUEST, CONNECTION_TIMED_OUT } from '../error-codes';
 import { getError } from '../utils';
 
@@ -7,10 +7,10 @@ export const fetchBing = async (url: string, init?: RequestInit) => {
 
     if (res.redirected) {
         if (res.url.includes('www.bing.com')) {
-            setLocalStorage({ useDotCn: false });
+            scOptions.set({ useDotCn: false });
         }
         else if (res.url.includes('cn.bing.com')) {
-            setLocalStorage({ useDotCn: true });
+            scOptions.set({ useDotCn: true });
         }
 
        res = await fetch(res.url, init).catch(() => { throw getError(CONNECTION_TIMED_OUT) });

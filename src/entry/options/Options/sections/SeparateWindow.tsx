@@ -1,10 +1,10 @@
 import React from 'react';
 import Button from '../../../../components/Button';
 import Switch from '../../../../components/Switch';
-import { setLocalStorage } from '../../../../public/chrome-call';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
 import { GetStorageKeys } from '../../../../types';
+import scOptions from '../../../../public/sc-options';
 
 const initSizeAndPosition = { width: 286, height: 439, left: 550, top: 250 };
 
@@ -29,11 +29,11 @@ const SeparateWindow: React.FC = () => {
                 <Switch
                     label={getMessage('optionsRememberStwSizeAndPosition')}
                     checked={rememberStwSizeAndPosition}
-                    onChange={v => setLocalStorage({ rememberStwSizeAndPosition: v })}
+                    onChange={v => scOptions.set({ rememberStwSizeAndPosition: v })}
                 />
             </div>
             <div className='opt-section-row'>
-                <Button variant='outlined' onClick={() => setLocalStorage({ stwSizeAndPosition: initSizeAndPosition })}>
+                <Button variant='outlined' onClick={() => scOptions.set({ stwSizeAndPosition: initSizeAndPosition })}>
                     {getMessage('optionsResetSizeAndPosition')}
                 </Button>
             </div>
