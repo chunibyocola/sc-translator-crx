@@ -1,6 +1,5 @@
 import { DefaultOptions } from '../../../types';
 import scOptions from '../../sc-options';
-import { getLocalStorageAsync } from '../../utils';
 import { fetchData } from '../utils';
 import { getSign } from './get-sign';
 
@@ -10,7 +9,7 @@ const keys: (keyof PickedOptions)[] = ['sourceParamsCache'];
 export const getTranslateParams = async (query: string) => {
     const currentTime = Number(new Date());
 
-    const { sourceParamsCache } = await getLocalStorageAsync<PickedOptions>(keys);
+    const { sourceParamsCache } = await scOptions.get(['sourceParamsCache']);
     let { expiry, token, updateTime } = sourceParamsCache['baidu.com'].translate;
 
     const sign = getSign(query);
@@ -23,7 +22,7 @@ export const getTranslateParams = async (query: string) => {
 
     if (code) { token = code[0].split('\'')[1]; }
 
-    getLocalStorageAsync<PickedOptions>(keys).then(({ sourceParamsCache }) => {
+    scOptions.get(['sourceParamsCache']).then(({ sourceParamsCache }) => {
         sourceParamsCache['baidu.com'].translate = { expiry: currentTime + 21600000, token, updateTime: currentTime };
         scOptions.set({ sourceParamsCache });
     });

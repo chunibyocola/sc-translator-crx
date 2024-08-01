@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import Button from '../../../../components/Button';
 import IconFont from '../../../../components/IconFont';
-import defaultOptions from '../../../../constants/defaultOptions';
 import { combineStorage } from '../../../../public/combine-storage';
 import { getMessage } from '../../../../public/i18n';
 import scFile from '../../../../public/sc-file';
-import { getLocalStorageAsync } from '../../../../public/utils';
-import { DefaultOptions, SyncOptions } from '../../../../types';
+import { SyncOptions } from '../../../../types';
 import scOptions from '../../../../public/sc-options';
 
 const FileSync: React.FC = () => {
@@ -17,7 +15,7 @@ const FileSync: React.FC = () => {
             <Button
                 variant='outlined'
                 onClick={async () => {
-                    const { sourceParamsCache, ...options } = await getLocalStorageAsync<DefaultOptions>(Object.keys(defaultOptions) as (keyof DefaultOptions)[]);
+                    const { sourceParamsCache, ...options } = await scOptions.get(null);
 
                     const syncOptions: SyncOptions = options;
 

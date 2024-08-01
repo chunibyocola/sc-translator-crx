@@ -1,13 +1,12 @@
 import { contextMenusContexts, defaultContextMenus } from '../constants/contextMenusIds';
-import defaultOptions from '../constants/defaultOptions';
 import { styleVarsList } from '../constants/defaultStyleVars';
 import { langCode, LANG_EN, userLangs } from '../constants/langCode';
 import { translateButtonContext } from '../constants/translateButtonTypes';
 import { audioSource, GOOGLE_COM, translateSource, webPageTranslateSource } from '../constants/translateSource';
 import { CustomTranslateSource, DefaultOptions, OptionsContextMenu, SyncOptions, TextPreprocessingRegExp } from '../types';
 import { SerializableObject } from './sc-file';
-import { getLocalStorageAsync } from './utils';
 import { langCode as googleLangCode } from './translate/google/lang-code';
+import scOptions from './sc-options';
 
 const { auto, ...preferredLangCode } = googleLangCode;
 
@@ -215,7 +214,7 @@ const nextValue = <S>(key: keyof DefaultOptions, origin: S, next: any, addition:
 
 export const combineStorage = async (newData: any) => {
     if (CheckData.getTypeOf(newData) !== 'object') { throw new Error('Error: Data is not an "object".'); }
-    const { sourceParamsCache, ...data } = await getLocalStorageAsync<DefaultOptions>(Object.keys(defaultOptions) as (keyof DefaultOptions)[]);
+    const { sourceParamsCache, ...data } = await scOptions.get(null);
     const oldData: SyncOptions = data;
     const addition: Addition = { availableSources: [], wpAvailableSources: [], defaultSource: '' };
     oldData.customTranslateSourceList = nextValue('customTranslateSourceList', oldData.customTranslateSourceList, newData.customTranslateSourceList, addition);

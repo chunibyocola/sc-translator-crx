@@ -1,17 +1,12 @@
-import { DefaultOptions } from '../../../types';
 import scOptions from '../../sc-options';
-import { getLocalStorageAsync } from '../../utils';
 import { RESULT_ERROR } from '../error-codes';
 import { getError } from '../utils';
 import { fetchBing } from './fetch-bing';
 
-type PickedOptions = Pick<DefaultOptions, 'sourceParamsCache'>;
-const keys: (keyof PickedOptions)[] = ['sourceParamsCache'];
-
 export const getTranslateParams = async (com: boolean) => {
     const currentTime = Number(new Date());
 
-    const { sourceParamsCache } = await getLocalStorageAsync<PickedOptions>(keys);
+    const { sourceParamsCache } = await scOptions.get(['sourceParamsCache']);
     let { expiry, key, token, IG, updateTime, IID, richIID } = sourceParamsCache['bing.com'].translate
 
     if (updateTime <= currentTime && token && key && expiry > currentTime) { return { key, token, IG, IID, richIID }; }
@@ -30,7 +25,7 @@ export const getTranslateParams = async (com: boolean) => {
     expiry = currentTime + duration;
     token = tToken;
 
-    getLocalStorageAsync<PickedOptions>(keys).then(({ sourceParamsCache }) => {
+    scOptions.get(['sourceParamsCache']).then(({ sourceParamsCache }) => {
         sourceParamsCache['bing.com'].translate = { expiry, key, token, IG, IID, richIID, updateTime: currentTime };
         scOptions.set({ sourceParamsCache });
     });
@@ -41,7 +36,7 @@ export const getTranslateParams = async (com: boolean) => {
 export const getAudioParams = async (com: boolean) => {
     const currentTime = Number(new Date());
 
-    const { sourceParamsCache } = await getLocalStorageAsync<PickedOptions>(keys);
+    const { sourceParamsCache } = await scOptions.get(['sourceParamsCache']);
     let { expiry, region, token, updateTime } = sourceParamsCache['bing.com'].audio;
 
     if (updateTime <= currentTime && expiry > currentTime) { return { region, token }; }
@@ -68,7 +63,7 @@ export const getAudioParams = async (com: boolean) => {
         region = data.region;
         token = data.token;
 
-        getLocalStorageAsync<PickedOptions>(keys).then(({ sourceParamsCache }) => {
+        scOptions.get(['sourceParamsCache']).then(({ sourceParamsCache }) => {
             sourceParamsCache['bing.com'].audio = { expiry, region, token, updateTime: currentTime };
             scOptions.set({ sourceParamsCache });
         });

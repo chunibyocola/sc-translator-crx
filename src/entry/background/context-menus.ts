@@ -1,5 +1,5 @@
 import { createSeparateWindow } from './separate-window';
-import { getIsContentScriptEnabled, getLocalStorageAsync, openCollectionPage } from '../../public/utils';
+import { getIsContentScriptEnabled, openCollectionPage } from '../../public/utils';
 import {
     contextMenusContexts,
     LISTEN_SELECTION_TEXT,
@@ -8,8 +8,9 @@ import {
     TRANSLATE_CURRENT_PAGE,
     TRANSLATE_SELECTION_TEXT
 } from '../../constants/contextMenusIds';
-import { DefaultOptions, OptionsContextMenu } from '../../types';
+import { OptionsContextMenu } from '../../types';
 import { sendTabsAudioCommandKeyPressed, sendTabsContextMenusClicked, sendTabsTranslateCurrentPage } from '../../public/send';
+import scOptions from '../../public/sc-options';
 
 // Google dosen't provide "chrome.i18n.getMessage" in service worker.
 type I18nLocaleCode = 'en' | 'ja' | 'zh_CN' | 'zh_TW';
@@ -167,7 +168,7 @@ export const initContextMenus = () => {
             contexts: ['action']
         }, () => { if (chrome.runtime.lastError) {} });
 
-        getLocalStorageAsync<Pick<DefaultOptions, 'contextMenus'>>(['contextMenus']).then(options => updateContextMenus(options.contextMenus));
+        scOptions.get(['contextMenus']).then(options => updateContextMenus(options.contextMenus));
     });
 };
 

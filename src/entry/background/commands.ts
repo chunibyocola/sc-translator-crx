@@ -1,4 +1,4 @@
-import { getCurrentTab, getLocalStorageAsync } from '../../public/utils';
+import { getCurrentTab } from '../../public/utils';
 import {
     SC_AUDIO,
     SC_TRANSLATE,
@@ -11,7 +11,6 @@ import {
     SC_TOGGLE_PAGE_TRANSLATION_STATE
 } from '../../constants/commandsName';
 import { createSeparateWindow } from './separate-window';
-import { DefaultOptions } from '../../types';
 import {
     sendTabsAudioCommandKeyPressed,
     sendTabsCallOutCommandKeyPressed,
@@ -41,7 +40,7 @@ chrome.commands.onCommand.addListener((cmd) => {
             getCurrentTab(tab => tab?.id !== undefined && sendTabsCloseCommandKeyPressed(tab.id));
             break;
         case SC_TOGGLE_AUTO_INSERT_RESULT:
-            getLocalStorageAsync<Pick<DefaultOptions, 'autoInsertResult'>>(['autoInsertResult']).then(data => scOptions.set({ 'autoInsertResult': !data.autoInsertResult }));
+            scOptions.get(['autoInsertResult']).then(data => scOptions.set({ autoInsertResult: !data.autoInsertResult }));
             break;
         case SC_TRANSLATE_CURRENT_PAGE:
             getCurrentTab(tab => tab?.id !== undefined && sendTabsTranslateCurrentPage(tab.id));

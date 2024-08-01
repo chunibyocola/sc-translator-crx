@@ -1,14 +1,11 @@
 import { SOURCE_ERROR } from '../../../constants/errorCodes';
-import { DefaultOptions, TranslateResult } from '../../../types';
-import { getLocalStorageAsync } from '../../utils';
+import { TranslateResult } from '../../../types';
 import { TranslateParams } from '../translate-types';
 import { fetchData, getError } from '../utils';
 import { langCode } from '../google/lang-code';
 import { LANGUAGE_NOT_SOPPORTED, RESULT_ERROR } from '../error-codes';
 import { checkResultFromCustomSource } from './check-result';
-
-type PickedOptions = Pick<DefaultOptions, 'customTranslateSourceList'>;
-const keys: (keyof PickedOptions)[] = ['customTranslateSourceList'];
+import scOptions from '../../sc-options';
 
 type FetchCustomSourceJSON = {
     text: string;
@@ -31,7 +28,7 @@ type FetchCustomSourceJSON = {
 // };
 
 export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '' }: TranslateParams, source: string) => {
-    const { customTranslateSourceList } = await getLocalStorageAsync<PickedOptions>(keys);
+    const { customTranslateSourceList } = await scOptions.get(['customTranslateSourceList']);
     const customTranslateSource = customTranslateSourceList.find(value => value.source === source);
 
     if (!customTranslateSource) { throw getError(SOURCE_ERROR); }

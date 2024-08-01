@@ -1,10 +1,6 @@
+import scOptions from "../../public/sc-options";
 import { sendTabsCallOutCommandKeyPressed, sendTabsOpenSeparateWindowCommandKeyPressed, sendTabsSeparateWindowSetText } from "../../public/send";
 import { getQueryString } from "../../public/translate/utils";
-import { getLocalStorageAsync } from "../../public/utils";
-import { DefaultOptions } from "../../types";
-
-type PickedOptions = Pick<DefaultOptions, 'rememberStwSizeAndPosition' | 'stwSizeAndPosition'>;
-const keys: (keyof PickedOptions)[] = ['rememberStwSizeAndPosition', 'stwSizeAndPosition'];
 
 const initSize = { width: 286, height: 439, left: 550, top: 250 };
 
@@ -37,7 +33,7 @@ export const createSeparateWindow = async (text?: string) => {
         }
     }
     else {
-        const { rememberStwSizeAndPosition, stwSizeAndPosition } = await getLocalStorageAsync<PickedOptions>(keys);
+        const { rememberStwSizeAndPosition, stwSizeAndPosition } = await scOptions.get(['rememberStwSizeAndPosition', 'stwSizeAndPosition']);
 
         const createData: chrome.windows.CreateData = {
             url: swUrl + ((text && getQueryString({ text })) ?? ''),

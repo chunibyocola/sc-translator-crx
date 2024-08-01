@@ -1,8 +1,5 @@
-import { getIsEnabled, getCurrentTabHost, getLocalStorageAsync } from '../../public/utils';
-import { DefaultOptions } from '../../types';
-
-type PickedOptions = Pick<DefaultOptions, 'translateBlackListMode' | 'translateHostList'>;
-const keys: (keyof PickedOptions)[] = ['translateBlackListMode', 'translateHostList'];
+import scOptions from '../../public/sc-options';
+import { getIsEnabled, getCurrentTabHost } from '../../public/utils';
 
 const onTabsUpdated: (tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => void = async (tabId, changeInfo, tab) => {
     if (!tab.active) { return; }
@@ -17,7 +14,7 @@ const onTabsActivated: (activeInfo: chrome.tabs.TabActiveInfo) => void = async (
 const updateBadge = async (tabId?: number) => {
     const tabHost = await getCurrentTabHost(tabId);
 
-    const pickedOptions = !!tabHost && await getLocalStorageAsync<PickedOptions>(keys);
+    const pickedOptions = !!tabHost && await scOptions.get(['translateBlackListMode', 'translateHostList']);
 
     const enabled = pickedOptions && getIsEnabled(tabHost, pickedOptions.translateHostList, pickedOptions.translateBlackListMode);
 

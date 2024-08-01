@@ -1,37 +1,33 @@
 import * as types from '../../constants/chromeSendMessageTypes';
 import { translate, audio, detect } from '../../public/request';
 import { createSeparateWindow } from './separate-window';
-import { DefaultOptions } from '../../types';
-import { getLocalStorageAsync } from '../../public/utils';
 import { syncSettingsToOtherBrowsers } from './sync';
 import scIndexedDB, { DB_STORE_COLLECTION } from '../../public/sc-indexed-db';
 import { AudioResponse, ChromeRuntimeMessage, DetectResponse, GetCacheResponse, GetSelectorsResponse, IsCollectResponse, TranslateResponse } from '../../public/send';
 import { addCache, getCache } from './page-translation-cache';
 import { getSpecifySelectors } from './page-translation-rule';
+import scOptions from '../../public/sc-options';
 
 type TypedSendResponse = (response: TranslateResponse | AudioResponse | DetectResponse | IsCollectResponse | GetCacheResponse | GetSelectorsResponse) => void;
 
 chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sendResponse: TypedSendResponse) => {
     switch (message.type) {
         case types.SCTS_TRANSLATE: {
-            type TranslatePickedOptions = Pick<DefaultOptions, 'useDotCn' | 'preferredLanguage' | 'secondPreferredLanguage'>;
-            const translatePickedKeys: (keyof TranslatePickedOptions)[] = ['useDotCn', 'preferredLanguage', 'secondPreferredLanguage'];
-
-            getLocalStorageAsync<TranslatePickedOptions>(translatePickedKeys)
+            scOptions.get(['useDotCn', 'preferredLanguage', 'secondPreferredLanguage'])
                 .then(({ useDotCn, ...preferred }) => (translate({ ...message.payload, com: !useDotCn, ...preferred })))
                 .then(sendResponse);
 
             return true;
         }
         case types.SCTS_AUDIO: {
-            getLocalStorageAsync<Pick<DefaultOptions, 'useDotCn'>>(['useDotCn'])
+            scOptions.get(['useDotCn'])
                 .then(({ useDotCn }) => (audio({ ...message.payload, com: !useDotCn })))
                 .then(sendResponse);
 
             return true;
         }
         case types.SCTS_DETECT: {
-            getLocalStorageAsync<Pick<DefaultOptions, 'useDotCn'>>(['useDotCn'])
+            scOptions.get(['useDotCn'])
                 .then(({ useDotCn }) => (detect({ ...message.payload, com: !useDotCn })))
                 .then(sendResponse);
 

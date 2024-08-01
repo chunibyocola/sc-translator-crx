@@ -1,7 +1,6 @@
 import { SCTS_SHOULD_AUTO_TRANSLATE_THIS_PAGE, SCTS_UPDATE_PAGE_TRANSLATION_STATE } from '../../constants/chromeSendMessageTypes';
 import scOptions from '../../public/sc-options';
 import { ChromeRuntimeMessage } from '../../public/send';
-import { getLocalStorageAsync } from '../../public/utils';
 
 const pageTranslatingTabMap = new Map<number, string>();
 
@@ -72,7 +71,7 @@ const startTranslatingRedirectedSameDomainPage = async () => {
     chrome.tabs.onRemoved.addListener(tabsOnRemoved);
     chrome.runtime.onMessage.addListener(runtimeOnMessage);
 
-    const { translateRedirectedSameDomainPage } = await getLocalStorageAsync(['translateRedirectedSameDomainPage']);
+    const { translateRedirectedSameDomainPage } = await scOptions.get(['translateRedirectedSameDomainPage']);
 
     if (translateRedirectedSameDomainPage) {
         chrome.permissions.contains({ permissions: ['webNavigation'] }, (result) => {

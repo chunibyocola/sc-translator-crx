@@ -1,13 +1,9 @@
 import { WebpageTranslateFn } from '..';
 import { SOURCE_ERROR } from '../../../constants/errorCodes';
-import { DefaultOptions } from '../../../types';
+import scOptions from '../../sc-options';
 import { RESULT_ERROR } from '../../translate/error-codes';
 import { fetchData, getError } from '../../translate/utils';
-import { getLocalStorageAsync } from '../../utils';
 import { checkResultFromCustomWebpageTranslatSource } from './check-result';
-
-type PickedOptions = Pick<DefaultOptions, 'customWebpageTranslateSourceList'>;
-const keys: (keyof PickedOptions)[] = ['customWebpageTranslateSourceList'];
 
 type FetchCustomSourceJSON = {
     paragraphs: string[][];
@@ -21,7 +17,7 @@ type FetchCustomSourceJSON = {
 // };
 
 export const translate: WebpageTranslateFn = async ({ paragraphs, targetLanguage }, source) => {
-    const { customWebpageTranslateSourceList } = await getLocalStorageAsync<PickedOptions>(keys);
+    const { customWebpageTranslateSourceList } = await scOptions.get(['customWebpageTranslateSourceList']);
     const customTranslateSource = customWebpageTranslateSourceList.find(value => value.source === source);
 
     if (!customTranslateSource) { throw getError(SOURCE_ERROR); }
