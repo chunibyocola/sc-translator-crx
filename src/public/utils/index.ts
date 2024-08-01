@@ -24,12 +24,6 @@ export const getIsContentScriptEnabled = async (tabId?: number):Promise<boolean>
     });
 };
 
-export const getLocalStorageAsync = <T extends Partial<DefaultOptions>>(keys: (keyof T)[]): Promise<T> => {
-    return new Promise((resolve) => {
-        chrome.storage.local.get(keys, data => resolve(data as T));
-    });
-};
-
 export const getIsEnabled = (host: string, hostList: string[], mode: boolean) => {
     const find = hostList.some(v => host.endsWith(v));
     return mode ? !find : find;
