@@ -2,11 +2,12 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Button from '../../../../components/Button';
 import IconFont from '../../../../components/IconFont';
 import { getMessage } from '../../../../public/i18n';
-import { getOptions, initOptions } from '../../../../public/options';
+import { initOptions } from '../../../../public/options';
 import { checkResultFromCustomSource } from '../../../../public/translate/custom/check-result';
 import { checkResultFromCustomWebpageTranslatSource } from '../../../../public/web-page-translate/custom/check-result';
 import { CustomTranslateSource } from '../../../../types';
 import './style.css';
+import scOptions from '../../../../public/sc-options';
 
 type CustomTranslateSourceDisplayProps = {
     customTranslateSources: CustomTranslateSource[];
@@ -82,7 +83,7 @@ const CustomTranslateSourceDisplay: React.FC<CustomTranslateSourceDisplayProps> 
 
     const onSaveBtnClick = useCallback(() => {
         onChange(customSources);
-        initOptions({ ...getOptions(), [webpage ? 'customWebpageTranslateSourceList' : 'customTranslateSourceList']: customSources });
+        initOptions({ ...scOptions.getInit(), [webpage ? 'customWebpageTranslateSourceList' : 'customTranslateSourceList']: customSources });
 
         setModifying(false);
         setUpdated(false);
@@ -152,7 +153,7 @@ const testCustomSource = async (url: string, webpage?: boolean) => {
         from: 'auto',
         to: 'en',
         userLang: navigator.language,
-        preferred: [getOptions().preferredLanguage, getOptions().secondPreferredLanguage]
+        preferred: [scOptions.getInit().preferredLanguage, scOptions.getInit().secondPreferredLanguage]
     };
 
     const res = await fetch(url, {

@@ -6,7 +6,7 @@ import mojidict from './favicons/mojidict.png';
 import baidu from './favicons/baidu.png';
 import microsoft from './favicons/microsofttranslator.png';
 import './style.css';
-import { getOptions } from '../../public/options';
+import scOptions from '../../public/sc-options';
 
 type SourceFaviconProps = {
     source: string;
@@ -23,7 +23,7 @@ const SourceFavicon: React.FC<SourceFaviconProps> = ({ source, className, favico
 };
 
 const getSourceNameFromCustomSources = (source: string) => {
-    return getOptions().customTranslateSourceList.concat(getOptions().customWebpageTranslateSourceList).find(v => v.source === source)?.name ?? source;
+    return scOptions.getInit().customTranslateSourceList.concat(scOptions.getInit().customWebpageTranslateSourceList).find(v => v.source === source)?.name ?? source;
 }
 
 const getFavicon = (source: string) => {

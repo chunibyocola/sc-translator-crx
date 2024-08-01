@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { translateSource } from '../../constants/translateSource';
-import { getOptions } from '../../public/options';
 import { Translation } from '../../types';
 import IconFont from '../IconFont';
 import PanelIconButtonWrapper from '../PanelIconButtons/PanelIconButtonWrapper';
 import SelectOptions from '../SelectOptions';
 import SourceFavicon from '../SourceFavicon';
 import './style.css';
+import scOptions from '../../public/sc-options';
 
 type MtAddSourceProps = {
     translations: Translation[];
@@ -17,7 +17,7 @@ const MtAddSource: React.FC<MtAddSourceProps> = ({ translations, addSource }) =>
     const [showSelectOptions, setShowSelectOptions] = useState(false);
 
     const sourceList = useMemo(() => {
-        return translateSource.concat(getOptions().customTranslateSourceList).filter(v => translations.findIndex(v1 => v1.source === v.source) < 0);
+        return translateSource.concat(scOptions.getInit().customTranslateSourceList).filter(v => translations.findIndex(v1 => v1.source === v.source) < 0);
     }, [translations]);
 
     const hideSelectOptions = useCallback(() => {

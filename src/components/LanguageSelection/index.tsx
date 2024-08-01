@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { LangCodes, LocaleLangCodes } from '../../constants/langCode';
-import { getOptions } from '../../public/options';
 import { useOptions } from '../../public/react-use';
 import { GetStorageKeys } from '../../types';
 import IconFont from '../IconFont';
@@ -28,9 +27,9 @@ const LanguageSelection: React.FC<LanguageSelectionProps> = ({ onChange, from, t
     const { recentTranslateFromList, recentTranslateToList } = useOptions(useOptionsDependency);
 
     useEffect(() => {
-        setLangCodes(languageCodes[getOptions().userLanguage] as LangCodes);
+        setLangCodes(languageCodes[scOptions.getInit().userLanguage] as LangCodes);
 
-        setLangLocal(languageCodes[getOptions().userLanguage].reduce((total: { [key: string]: string; }, current) => {
+        setLangLocal(languageCodes[scOptions.getInit().userLanguage].reduce((total: { [key: string]: string; }, current) => {
             total[current['code']] = current['name'];
             return total;
         }, {}));

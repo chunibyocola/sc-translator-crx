@@ -8,7 +8,6 @@ import './style.css';
 import '../../../components/PopupHeader/style.css';
 import { useAppDispatch, useEffectOnce, useOptions, useTranslation } from '../../../public/react-use';
 import { getMessage } from '../../../public/i18n';
-import { getOptions } from '../../../public/options';
 import { GetStorageKeys } from '../../../types';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
 import CollectButton from '../../../components/PanelIconButtons/CollectButton';
@@ -40,7 +39,7 @@ const Separate: React.FC = () => {
             dispatch(callOutPanel());
         };
 
-        if (getOptions().autoPasteInTheInputBox && !text) {
+        if (scOptions.getInit().autoPasteInTheInputBox && !text) {
             readClipboardText();
         }
         else {

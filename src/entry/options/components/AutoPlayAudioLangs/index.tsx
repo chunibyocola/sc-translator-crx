@@ -2,7 +2,6 @@ import React, { startTransition, useMemo, useRef, useState } from 'react';
 import Button from '../../../../components/Button';
 import IconFont from '../../../../components/IconFont';
 import { preferredLangCode } from '../../../../constants/langCode';
-import { getOptions } from '../../../../public/options';
 import SelectOptions from '../../../../components/SelectOptions';
 import { cn } from '../../../../public/utils';
 import TextField from '../../../../components/TextField';
@@ -10,6 +9,7 @@ import { getMessage } from '../../../../public/i18n';
 import { useMouseEventOutside } from '../../../../public/react-use';
 import './style.css';
 import ConfirmDelete from '../../../collection/components/ConfirmDelete';
+import scOptions from '../../../../public/sc-options';
 
 type AutoPlayAudioLangsProps = {
     langs: string[];
@@ -22,8 +22,8 @@ const AutoPlayAudioLangs: React.FC<AutoPlayAudioLangsProps> = ({ langs, onChange
     const [confirmClear, setConfirmClear] = useState(false);
 
     const checkedLangSet = useMemo(() => new Set(langs), [langs]);
-    const langI18n = useMemo(() => preferredLangCode[getOptions().userLanguage].reduce<{ [K: string]: string; }>((t, c) => ({ ...t, [c.code]: c.name }), {}), []);
-    const filtered = useMemo(() => preferredLangCode[getOptions().userLanguage].filter(({ name }) => (name.includes(search))), [search]);
+    const langI18n = useMemo(() => preferredLangCode[scOptions.getInit().userLanguage].reduce<{ [K: string]: string; }>((t, c) => ({ ...t, [c.code]: c.name }), {}), []);
+    const filtered = useMemo(() => preferredLangCode[scOptions.getInit().userLanguage].filter(({ name }) => (name.includes(search))), [search]);
 
     const editBoxElt = useRef<HTMLDivElement>(null);
 

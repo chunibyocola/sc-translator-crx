@@ -7,7 +7,7 @@ import { getMessage } from '../../public/i18n';
 import ErrorMessage from '../ErrorMessage';
 import { TranslateRequest } from '../../types';
 import ListenButton from '../ListenButton';
-import { getOptions } from '../../public/options';
+import scOptions from '../../public/sc-options';
 
 type TsResultProps = {
     translateRequest: TranslateRequest;
@@ -18,7 +18,7 @@ type TsResultProps = {
 };
 
 const TsResult: React.FC<TsResultProps> = ({ translateRequest, source, retry, setText, insertResult }) => {
-    const { displayOfTranslation } = getOptions();
+    const { displayOfTranslation } = scOptions.getInit();
 
     return (
         <div className='st-result'>

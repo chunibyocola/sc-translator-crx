@@ -3,11 +3,11 @@ import LanguageSelection from '../../../components/LanguageSelection';
 import RawText from '../../../components/RawText';
 import { googleLangCode, langCode } from '../../../constants/langCode';
 import TsVia from '../../../components/TsVia';
-import { getOptions } from '../../../public/options';
 import { useAppDispatch, useEffectOnce, useTranslation } from '../../../public/react-use';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
 import TranslateResult from '../../../components/TranslateResult';
 import './style.css';
+import scOptions from '../../../public/sc-options';
 
 const SingleTranslateResult: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -26,7 +26,7 @@ const SingleTranslateResult: React.FC = () => {
             dispatch(callOutPanel());
         };
 
-        getOptions().autoPasteInTheInputBox && readClipboardText();
+        scOptions.getInit().autoPasteInTheInputBox && readClipboardText();
     });
 
     return (

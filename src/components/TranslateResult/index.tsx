@@ -1,7 +1,6 @@
 import React from 'react';
 import { LANG_EN } from '../../constants/langCode';
 import { getMessage } from '../../public/i18n';
-import { getOptions } from '../../public/options';
 import { cn, resultToString } from '../../public/utils';
 import { TranslateRequest } from '../../types';
 import ErrorMessage from '../ErrorMessage';
@@ -9,6 +8,7 @@ import IconFont from '../IconFont';
 import ListenButton from '../ListenButton';
 import './style.css';
 import { BING_COM } from '../../constants/translateSource';
+import scOptions from '../../public/sc-options';
 
 type TranslateResultProps = {
     translateRequest: TranslateRequest;
@@ -19,7 +19,7 @@ type TranslateResultProps = {
 } & Pick<React.HTMLAttributes<HTMLDivElement>, 'style' | 'className'>;
 
 const TranslateResult: React.FC<TranslateResultProps> = ({ translateRequest, source, style, className, retry, insertResult, setText }) => {
-    const { displayOfTranslation } = getOptions();
+    const { displayOfTranslation } = scOptions.getInit();
 
     return (
         <div className={cn('translate-result', className)} style={style}>
@@ -34,11 +34,11 @@ const TranslateResult: React.FC<TranslateResultProps> = ({ translateRequest, sou
                         <br />
                         <span>{getMessage('sentenceBingHttp429')}</span>
                         <a
-                            href={`https://${getOptions().useDotCn ? 'cn' : 'www'}.bing.com/translator/?ref=TThis&text=test&from=en&to=zh-Hans`}
+                            href={`https://${scOptions.getInit().useDotCn ? 'cn' : 'www'}.bing.com/translator/?ref=TThis&text=test&from=en&to=zh-Hans`}
                             rel='noreferrer'
                             target='_blank'
                         >
-                            {`${getOptions().useDotCn ? 'cn' : 'www'}.bing.com/translator`}
+                            {`${scOptions.getInit().useDotCn ? 'cn' : 'www'}.bing.com/translator`}
                         </a>
                     </>}
                 </> :

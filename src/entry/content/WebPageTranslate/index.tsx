@@ -8,7 +8,6 @@ import { SCTS_SWITCH_WT_DISPLAY_MODE, SCTS_TOGGLE_PAGE_TRANSLATION_STATE, SCTS_T
 import { LangCodes, preferredLangCode } from '../../../constants/langCode';
 import { webPageTranslateSource as webPageTranslateSourceList } from '../../../constants/translateSource';
 import { getMessage } from '../../../public/i18n';
-import { getOptions } from '../../../public/options';
 import { useOnRuntimeMessage, useOptions } from '../../../public/react-use';
 import useEffectOnce from '../../../public/react-use/useEffectOnce';
 import { closeWebPageTranslating, errorRetry, startWebPageTranslating, switchWayOfFontsDisplaying } from '../../../public/web-page-translate';
@@ -99,8 +98,8 @@ const WebPageTranslate: React.FC = () => {
 
     const [{ show, source, targetLanguage, working, error, activated, auto, requesting }, dispach] = useReducer(wPTReducer, {
         ...initWPTState,
-        source: getOptions().webPageTranslateSource,
-        targetLanguage: getOptions().webPageTranslateTo
+        source: scOptions.getInit().webPageTranslateSource,
+        targetLanguage: scOptions.getInit().webPageTranslateTo
     });
 
     const { autoTranslateWebpageHostList, translateRedirectedSameDomainPage } = useOptions(useOptionsDependency);
@@ -139,11 +138,11 @@ const WebPageTranslate: React.FC = () => {
                 element: document.body,
                 translateSource: source,
                 targetLanguage,
-                enhancement: getOptions().displayModeEnhancement,
-                translateDynamicContent: getOptions().translateDynamicContent,
-                translateIframeContent: getOptions().translateIframeContent,
-                customization: getOptions().comparisonCustomization,
-                enableCache: getOptions().enablePageTranslationCache,
+                enhancement: scOptions.getInit().displayModeEnhancement,
+                translateDynamicContent: scOptions.getInit().translateDynamicContent,
+                translateIframeContent: scOptions.getInit().translateIframeContent,
+                customization: scOptions.getInit().comparisonCustomization,
+                enableCache: scOptions.getInit().enablePageTranslationCache,
                 specifySelectors,
                 onError: handleError,
                 onRequestStart: handleRequestStart,
@@ -161,9 +160,9 @@ const WebPageTranslate: React.FC = () => {
 
     const activatePageTranslation = useCallback(() => {
         if (!working) {
-            dispach({ type: 'active-wpt', show: !(getOptions().webPageTranslateDirectly && getOptions().noControlBarWhileFirstActivating), auto: false });
+            dispach({ type: 'active-wpt', show: !(scOptions.getInit().webPageTranslateDirectly && scOptions.getInit().noControlBarWhileFirstActivating), auto: false });
 
-            getOptions().webPageTranslateDirectly && startProcessing();
+            scOptions.getInit().webPageTranslateDirectly && startProcessing();
         }
 
         if (!activated) { return; }
@@ -173,7 +172,7 @@ const WebPageTranslate: React.FC = () => {
             return;
         }
 
-        if ((getOptions().webPageTranslateDirectly || auto) && getOptions().noControlBarWhileFirstActivating) {
+        if ((scOptions.getInit().webPageTranslateDirectly || auto) && scOptions.getInit().noControlBarWhileFirstActivating) {
             dispach({ type: 'hide-control-bar' });
         }
     }, [working, activated, show, auto, startProcessing]);
@@ -184,20 +183,20 @@ const WebPageTranslate: React.FC = () => {
     }, [dispach]);
 
     useEffectOnce(() => {
-        switchWayOfFontsDisplaying(getOptions().webPageTranslateDisplayMode);
+        switchWayOfFontsDisplaying(scOptions.getInit().webPageTranslateDisplayMode);
 
-        const auto = getOptions().translateDynamicContent && getOptions().enableAutoTranslateWebpage && getOptions().autoTranslateWebpageHostList.includes(host);
+        const auto = scOptions.getInit().translateDynamicContent && scOptions.getInit().enableAutoTranslateWebpage && scOptions.getInit().autoTranslateWebpageHostList.includes(host);
 
         if (!working) {
             if (auto) {
-                dispach({ type: 'active-wpt', show: !getOptions().noControlBarWhileFirstActivating, auto });
+                dispach({ type: 'active-wpt', show: !scOptions.getInit().noControlBarWhileFirstActivating, auto });
 
                 startProcessing();
             }
-            else if (getOptions().translateRedirectedSameDomainPage) {
+            else if (scOptions.getInit().translateRedirectedSameDomainPage) {
                 sendShouldAutoTranslateThisPage(location.host).then((response) => {
                     if (response === 'Yes') {
-                        dispach({ type: 'active-wpt', show: !getOptions().noControlBarWhileFirstActivating, auto });
+                        dispach({ type: 'active-wpt', show: !scOptions.getInit().noControlBarWhileFirstActivating, auto });
 
                         startProcessing();
                     }
@@ -228,9 +227,9 @@ const WebPageTranslate: React.FC = () => {
     }, [activated, activatePageTranslation, closePageTranslation]);
 
     useEffect(() => {
-        setLangCodes(preferredLangCode[getOptions().userLanguage]);
+        setLangCodes(preferredLangCode[scOptions.getInit().userLanguage]);
 
-        setLangLocal(preferredLangCode[getOptions().userLanguage].reduce((total: { [key: string]: string; }, current) => {
+        setLangLocal(preferredLangCode[scOptions.getInit().userLanguage].reduce((total: { [key: string]: string; }, current) => {
             total[current['code']] = current['name'];
             return total;
         }, {}));
@@ -301,7 +300,7 @@ const WebPageTranslate: React.FC = () => {
             <div className='web-page-translate__content__division' />
             <SourceSelect
                 source={source}
-                sourceList={webPageTranslateSourceList.concat(getOptions().customWebpageTranslateSourceList)}
+                sourceList={webPageTranslateSourceList.concat(scOptions.getInit().customWebpageTranslateSourceList)}
                 onChange={source => dispach({ type: 'change-source', source })}
                 faviconOnly
             />
@@ -339,7 +338,7 @@ const WebPageTranslate: React.FC = () => {
             >
                 <IconFont iconName='#icon-refresh' />
             </PanelIconButtonWrapper>}
-            {getOptions().translateDynamicContent && getOptions().enableAutoTranslateWebpage && <PanelIconButtonWrapper
+            {scOptions.getInit().translateDynamicContent && scOptions.getInit().enableAutoTranslateWebpage && <PanelIconButtonWrapper
                 onClick={() => {
                     const nextHostSet = new Set(hostSet);
                     nextHostSet.has(host) ? nextHostSet.delete(host) : nextHostSet.add(host);

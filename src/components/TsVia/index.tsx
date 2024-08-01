@@ -2,10 +2,10 @@ import React from 'react';
 import SourceSelect from '../SourceSelect';
 import { translateSource } from '../../constants/translateSource';
 import './style.css';
-import { getOptions } from '../../public/options';
 import { TranslateRequest } from '../../types';
 import IconFont from '../IconFont';
 import ListenButton from '../ListenButton';
+import scOptions from '../../public/sc-options';
 
 type TsViaProps = {
     sourceChange: (source: string) => void;
@@ -20,7 +20,7 @@ const TsVia: React.FC<TsViaProps> = ({ sourceChange, source, disableSourceChange
             <div className='via__content'>
                 <SourceSelect
                     source={source}
-                    sourceList={translateSource.concat(getOptions().customTranslateSourceList)}
+                    sourceList={translateSource.concat(scOptions.getInit().customTranslateSourceList)}
                     onChange={sourceChange}
                     className='via__content-select'
                     disabled={disableSourceChange}

@@ -6,9 +6,9 @@ import MtAddSource from '../../../components/MtAddSource';
 import MtResult from '../../../components/MtResult';
 import { mtLangCode } from '../../../constants/langCode';
 import { getMessage } from '../../../public/i18n';
-import { getOptions } from '../../../public/options';
 import { useAppDispatch, useEffectOnce, useTranslation } from '../../../public/react-use';
 import { callOutPanel } from '../../../redux/slice/panelStatusSlice';
+import scOptions from '../../../public/sc-options';
 
 const MultipleTranslateResult: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ const MultipleTranslateResult: React.FC = () => {
             dispatch(callOutPanel());
         };
 
-        getOptions().autoPasteInTheInputBox && readClipboardText();
+        scOptions.getInit().autoPasteInTheInputBox && readClipboardText();
     });
 
     return (
