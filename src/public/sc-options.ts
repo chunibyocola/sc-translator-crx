@@ -25,6 +25,9 @@ const scOptions = (() => {
             return initOptions;
         },
         getInit: () => initOptions,
+        setInit: (items: Partial<DefaultOptions>) => {
+            initOptions = { ...initOptions, ...items };
+        },
         listen: <T extends keyof DefaultOptions>(keys: T[], listener: (changes: Partial<Pick<DefaultOptions, T>>) => void) => {
             const onChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
                 const changed: { [key: string]: any; } = {};

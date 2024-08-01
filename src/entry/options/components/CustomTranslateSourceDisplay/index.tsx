@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Button from '../../../../components/Button';
 import IconFont from '../../../../components/IconFont';
 import { getMessage } from '../../../../public/i18n';
-import { initOptions } from '../../../../public/options';
 import { checkResultFromCustomSource } from '../../../../public/translate/custom/check-result';
 import { checkResultFromCustomWebpageTranslatSource } from '../../../../public/web-page-translate/custom/check-result';
 import { CustomTranslateSource } from '../../../../types';
@@ -83,7 +82,7 @@ const CustomTranslateSourceDisplay: React.FC<CustomTranslateSourceDisplayProps> 
 
     const onSaveBtnClick = useCallback(() => {
         onChange(customSources);
-        initOptions({ ...scOptions.getInit(), [webpage ? 'customWebpageTranslateSourceList' : 'customTranslateSourceList']: customSources });
+        scOptions.setInit({ ...scOptions.getInit(), [webpage ? 'customWebpageTranslateSourceList' : 'customTranslateSourceList']: customSources });
 
         setModifying(false);
         setUpdated(false);
