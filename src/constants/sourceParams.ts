@@ -1,4 +1,4 @@
-import { BAIDU_COM, BING_COM } from './translateSource';
+import { BING_COM } from './translateSource';
 
 // Use for users updating their computer time.
 type UpdateTime = {
@@ -21,16 +21,8 @@ type BingParams = {
     } & UpdateTime;
 };
 
-type BaiduParams = {
-    translate: {
-        expiry: number;
-        token: string;
-    } & UpdateTime;
-};
-
 export type SourceParams = {
     [BING_COM]: BingParams;
-    [BAIDU_COM]: BaiduParams;
 };
 
 export const initSourceParams: SourceParams = {
@@ -47,13 +39,6 @@ export const initSourceParams: SourceParams = {
         audio: {
             expiry: 0,
             region: '',
-            token: '',
-            updateTime: 0
-        }
-    },
-    [BAIDU_COM]: {
-        translate: {
-            expiry: 0,
             token: '',
             updateTime: 0
         }

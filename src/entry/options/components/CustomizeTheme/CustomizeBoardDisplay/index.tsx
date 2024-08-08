@@ -225,10 +225,6 @@ const CustomizeBoardDisplay: React.FC<CustomizeBoardDisplayProps> = ({ styleVars
                     <span className="source-selector__item-icons"><IconFont iconName='#icon-top' /></span>
                 </div>
                 <div className="source-selector__item button">
-                    <span className="source-selector__item-source"><SourceFavicon source='baidu.com' /></span>
-                    <span className="source-selector__item-icons"><IconFont iconName='#icon-top' /></span>
-                </div>
-                <div className="source-selector__item button">
                     <span className="source-selector__item-source"><SourceFavicon source='mojidict.com' /></span>
                     <span className="source-selector__item-icons"><IconFont iconName='#icon-top' /></span>
                 </div>

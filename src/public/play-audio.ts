@@ -1,8 +1,8 @@
-import { BAIDU_COM, BING_COM, GOOGLE_COM } from '../constants/translateSource';
+import { BING_COM, GOOGLE_COM } from '../constants/translateSource';
 import { GetStorageKeys } from '../types';
 import scOptions from './sc-options';
 import { sendDetect, sendAudio } from './send';
-import { baiduSwitchToGoogleLangCode, bingSwitchToGoogleLangCode } from './switch-lang-code';
+import { bingSwitchToGoogleLangCode } from './switch-lang-code';
 
 const audio = new Audio();
 
@@ -45,9 +45,6 @@ export const playAudio = ({ text, source, from = '', auto }: { text: string; sou
     if (source && from) {
         if (source === BING_COM) {
             from = bingSwitchToGoogleLangCode(from);
-        }
-        else if (source === BAIDU_COM) {
-            from = baiduSwitchToGoogleLangCode(from);
         }
     }
 
