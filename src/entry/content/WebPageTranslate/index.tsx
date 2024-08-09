@@ -5,7 +5,7 @@ import LanguageSelect from '../../../components/LanguageSelect';
 import PanelIconButtonWrapper from '../../../components/PanelIconButtons/PanelIconButtonWrapper';
 import SourceSelect from '../../../components/SourceSelect';
 import { SCTS_SWITCH_WT_DISPLAY_MODE, SCTS_TOGGLE_PAGE_TRANSLATION_STATE, SCTS_TRANSLATE_CURRENT_PAGE } from '../../../constants/chromeSendMessageTypes';
-import { LangCodes, preferredLangCode } from '../../../constants/langCode';
+import { preferredLangCode } from '../../../constants/langCode';
 import { webPageTranslateSource as webPageTranslateSourceList } from '../../../constants/translateSource';
 import { getMessage } from '../../../public/i18n';
 import { useOnRuntimeMessage, useOptions } from '../../../public/react-use';
@@ -93,8 +93,7 @@ const useOptionsDependency: GetStorageKeys<
 > = ['autoTranslateWebpageHostList', 'translateRedirectedSameDomainPage'];
 
 const WebPageTranslate: React.FC = () => {
-    const [langCodes, setLangCodes] = useState<LangCodes>([]);
-    const [langLocal, setLangLocal] = useState<{ [key: string]: string; }>({});
+    const langCodes = useMemo(() => preferredLangCode[scOptions.getInit().userLanguage], []);
 
     const [{ show, source, targetLanguage, working, error, activated, auto, requesting }, dispach] = useReducer(wPTReducer, {
         ...initWPTState,
@@ -226,15 +225,6 @@ const WebPageTranslate: React.FC = () => {
         return () => chrome.runtime.onMessage.removeListener(onMessage)
     }, [activated, activatePageTranslation, closePageTranslation]);
 
-    useEffect(() => {
-        setLangCodes(preferredLangCode[scOptions.getInit().userLanguage]);
-
-        setLangLocal(preferredLangCode[scOptions.getInit().userLanguage].reduce((total: { [key: string]: string; }, current) => {
-            total[current['code']] = current['name'];
-            return total;
-        }, {}));
-    }, [source]);
-
     const worked = useRef(false);
     useEffect(() => {
         if (!translateRedirectedSameDomainPage) { 
@@ -308,7 +298,6 @@ const WebPageTranslate: React.FC = () => {
                 className='web-page-translate__select border-bottom-select'
                 value={targetLanguage}
                 langCodes={langCodes}
-                langLocal={langLocal}
                 onChange={targetLanguage => dispach({ type: 'change-targer-language', targetLanguage })}
                 recentLangs={[]}
             />

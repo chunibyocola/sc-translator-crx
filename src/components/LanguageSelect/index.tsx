@@ -1,4 +1,4 @@
-import React, { startTransition, useCallback, useEffect, useRef, useState } from 'react';
+import React, { startTransition, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { LangCodes } from '../../constants/langCode';
 import { getMessage } from '../../public/i18n';
 import { useMouseEventOutside } from '../../public/react-use';
@@ -12,11 +12,12 @@ type LanguageSelectProps = {
     onChange: (value: string) => void;
     className?: string;
     langCodes: LangCodes;
-    langLocal: { [key: string]: string };
     recentLangs: string[];
 };
 
-const LanguageSelect: React.FC<LanguageSelectProps> = ({ value, onChange, className, langCodes, langLocal, recentLangs }) => {
+const LanguageSelect: React.FC<LanguageSelectProps> = ({ value, onChange, className, langCodes, recentLangs }) => {
+    const langLocal = useMemo(() => langCodes.reduce<{ [K: string]: string; }>((t, c) => ({ ...t, [c.code]: c.name }), {}), [langCodes]);
+
     const [showOptions, setShowOptions] = useState(false);
     const [searchLangCodes, setSearchLangCodes] = useState<LangCodes>([]);
     const [searchText, setSearchText] = useState('');
@@ -64,7 +65,7 @@ const LanguageSelect: React.FC<LanguageSelectProps> = ({ value, onChange, classN
                 onShow={onSelectOptionsShow}
                 onClick={e => e.stopPropagation()}
             >
-                {recentLangs?.map((v) => (v in langLocal && <div
+                {recentLangs.map((v) => (v in langLocal && <div
                     className='language-select__option'
                     key={'recent-' + v}
                     onClick={() => onOptionClick(v)}

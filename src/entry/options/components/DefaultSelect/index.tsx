@@ -12,7 +12,6 @@ type DefaultSelectProps = {
 
 const DefaultSelect: React.FC<DefaultSelectProps> = ({ onChange, value, options, optionValue, optionLabel }) => {
     const langCodes = useMemo(() => options.map((v) => ({ code: v[optionValue], name: v[optionLabel] })), [options, optionValue, optionLabel]);
-    const langLocal = useMemo(() => options.reduce((total, current) => ({ ...total, [current[optionValue]]: current[optionLabel] }), {}), [options, optionValue, optionLabel]);
 
     return (
         <LanguageSelect
@@ -20,7 +19,6 @@ const DefaultSelect: React.FC<DefaultSelectProps> = ({ onChange, value, options,
             value={value}
             onChange={onChange}
             langCodes={langCodes}
-            langLocal={langLocal}
             recentLangs={[]}
         />
     )
