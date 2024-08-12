@@ -12,7 +12,7 @@ type LanguageSelectProps = {
     onChange: (value: string) => void;
     className?: string;
     langCodes: LangCodes;
-    recentLangs: string[];
+    recentLangs?: string[];
 };
 
 const LanguageSelect: React.FC<LanguageSelectProps> = ({ value, onChange, className, langCodes, recentLangs }) => {
@@ -50,7 +50,7 @@ const LanguageSelect: React.FC<LanguageSelectProps> = ({ value, onChange, classN
 
     return (
         <div
-            className={cn('language-select', className)}
+            className={cn('language-select border-bottom-select', className)}
             ref={languageSelectElementRef}
             tabIndex={-1}
             onClick={() => setShowOptions(v => !v)}
@@ -65,7 +65,7 @@ const LanguageSelect: React.FC<LanguageSelectProps> = ({ value, onChange, classN
                 onShow={onSelectOptionsShow}
                 onClick={e => e.stopPropagation()}
             >
-                {recentLangs.map((v) => (v in langLocal && <div
+                {recentLangs?.map((v) => (v in langLocal && <div
                     className='language-select__option'
                     key={'recent-' + v}
                     onClick={() => onOptionClick(v)}

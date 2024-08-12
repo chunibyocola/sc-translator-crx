@@ -14,8 +14,8 @@ import {
 } from '../../../../constants/translateButtonTypes';
 import { getMessage } from '../../../../public/i18n';
 import { TranslateButtonsTL } from '../../../../types';
-import DefaultSelect from '../DefaultSelect';
 import './style.css';
+import LanguageSelect from '../../../../components/LanguageSelect';
 
 const presetButtons = [TRANSLATE_BUTTON_TRANSLATE, TRANSLATE_BUTTON_LISTEN, TRANSLATE_BUTTON_COPY];
 
@@ -75,11 +75,9 @@ const TranslateButtonDisplay: React.FC<TranslateButtonDisplayProps> = ({
                         tlCheckList[index] ? onTranslateButtonsUpdate(translateButtons.filter(v => v !== button)) : onTranslateButtonsUpdate(translateButtons.concat(button))
                     }}
                 />
-                <DefaultSelect
+                <LanguageSelect
                     value={translateButtonsTL[tlButtonsMap[button]]}
-                    options={googleLangCode[userLanguage]}
-                    optionLabel='name'
-                    optionValue='code'
+                    langCodes={googleLangCode[userLanguage]}
                     onChange={value => onTranslateButtonsTLUpdate({ ...translateButtonsTL, [tlButtonsMap[button]]: value })}
                 />
             </div>))}

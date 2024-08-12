@@ -7,7 +7,5 @@
     margin: 0 5px;
 }
 .language-selection__select {
-    position: relative;
     width: 100px;
-    display: inline-block;
 }

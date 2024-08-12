@@ -295,7 +295,7 @@ const WebPageTranslate: React.FC = () => {
                 faviconOnly
             />
             <LanguageSelect
-                className='web-page-translate__select border-bottom-select'
+                className='web-page-translate__select'
                 value={targetLanguage}
                 langCodes={langCodes}
                 onChange={targetLanguage => dispach({ type: 'change-targer-language', targetLanguage })}

@@ -28,7 +28,7 @@ const LanguageSelection: React.FC<LanguageSelectionProps> = ({ onChange, from, t
     return (
         <div className='language-selection'>
             <LanguageSelect
-                className='language-selection__select border-bottom-select'
+                className='language-selection__select'
                 value={from}
                 langCodes={langCodes}
                 recentLangs={recentTranslateFromList}
@@ -40,7 +40,7 @@ const LanguageSelection: React.FC<LanguageSelectionProps> = ({ onChange, from, t
             />
             <IconFont iconName='#icon-MdSwap' onClick={() => onChange(to, from)} />
             <LanguageSelect
-                className='language-selection__select border-bottom-select'
+                className='language-selection__select'
                 value={to}
                 langCodes={langCodes}
                 recentLangs={recentTranslateToList}

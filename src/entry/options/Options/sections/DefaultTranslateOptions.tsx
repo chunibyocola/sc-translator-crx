@@ -9,10 +9,10 @@ import { switchTranslateSource } from '../../../../public/switch-translate-sourc
 import { GetStorageKeys } from '../../../../types';
 import BetaIcon from '../../components/BetaIcon';
 import CustomTranslateSourceDisplay from '../../components/CustomTranslateSourceDisplay';
-import DefaultSelect from '../../components/DefaultSelect';
 import MultipleSourcesDisplay from '../../components/MultipleSourcesDisplay';
 import TranslationDisplay from '../../components/TranslationDisplay';
 import scOptions from '../../../../public/sc-options';
+import LanguageSelect from '../../../../components/LanguageSelect';
 
 const useOptionsDependency: GetStorageKeys<
     'multipleTranslateMode' |
@@ -72,32 +72,26 @@ const DefaultTranslateOptions: React.FC = () => {
             </div>
             <div className='opt-section-row'>
                 {getMessage('optionsLanguage')}
-                <DefaultSelect
+                <LanguageSelect
                     value={userLanguage}
                     onChange={value => scOptions.set({ userLanguage: value })}
-                    options={userLangs}
-                    optionValue='code'
-                    optionLabel='name'
+                    langCodes={userLangs}
                 />
             </div>
             <div className='opt-section-row'>
                 {getMessage('optionsPreferredLanguage')}
-                <DefaultSelect
+                <LanguageSelect
                     value={preferredLanguage}
                     onChange={value => scOptions.set({ preferredLanguage: value })}
-                    options={preferredLangCode[userLanguage]}
-                    optionValue='code'
-                    optionLabel='name'
+                    langCodes={preferredLangCode[userLanguage]}
                 />
             </div>
             <div className='opt-section-row'>
                 {getMessage('optionsSecondPreferredLanguage')}
-                <DefaultSelect
+                <LanguageSelect
                     value={secondPreferredLanguage}
                     onChange={value => scOptions.set({ secondPreferredLanguage: value })}
-                    options={preferredLangCode[userLanguage]}
-                    optionValue='code'
-                    optionLabel='name'
+                    langCodes={preferredLangCode[userLanguage]}
                 />
                 <div className='item-description'>{getMessage('optionsPreferredLanguageDescription')}</div>
             </div>
@@ -149,22 +143,18 @@ const DefaultTranslateOptions: React.FC = () => {
                 </div>
                 <div className='opt-section-row'>
                     {getMessage('optionsFrom')}
-                    <DefaultSelect
+                    <LanguageSelect
                         value={multipleTranslateFrom}
                         onChange={value => scOptions.set({ multipleTranslateFrom: value })}
-                        options={mtLangCode[userLanguage]}
-                        optionValue='code'
-                        optionLabel='name'
+                        langCodes={mtLangCode[userLanguage]}
                     />
                 </div>
                 <div className='opt-section-row'>
                     {getMessage('optionsTo')}
-                    <DefaultSelect
+                    <LanguageSelect
                         value={multipleTranslateTo}
                         onChange={value => scOptions.set({ multipleTranslateTo: value })}
-                        options={mtLangCode[userLanguage]}
-                        optionValue='code'
-                        optionLabel='name'
+                        langCodes={mtLangCode[userLanguage]}
                     />
                 </div>
             </> : <>
@@ -190,22 +180,18 @@ const DefaultTranslateOptions: React.FC = () => {
                 </div>
                 <div className='opt-section-row'>
                     {getMessage('optionsFrom')}
-                    <DefaultSelect
+                    <LanguageSelect
                         value={defaultTranslateFrom}
                         onChange={value => scOptions.set({ defaultTranslateFrom: value })}
-                        options={(langCode[defaultTranslateSource] ?? googleLangCode)[userLanguage]}
-                        optionValue='code'
-                        optionLabel='name'
+                        langCodes={(langCode[defaultTranslateSource] ?? googleLangCode)[userLanguage]}
                     />
                 </div>
                 <div className='opt-section-row'>
                     {getMessage('optionsTo')}
-                    <DefaultSelect
+                    <LanguageSelect
                         value={defaultTranslateTo}
                         onChange={value => scOptions.set({ defaultTranslateTo: value })}
-                        options={(langCode[defaultTranslateSource] ?? googleLangCode)[userLanguage]}
-                        optionValue='code'
-                        optionLabel='name'
+                        langCodes={(langCode[defaultTranslateSource] ?? googleLangCode)[userLanguage]}
                     />
                 </div>
             </>}

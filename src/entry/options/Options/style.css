@@ -51,3 +51,6 @@
 input[type=text] {
     padding: 5px;
 }
+.opt-section-row > .language-select, .translate-button-display__item > .language-select {
+    margin-left: 10px;
+}

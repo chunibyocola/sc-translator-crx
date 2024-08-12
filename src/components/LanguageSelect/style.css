@@ -7,14 +7,15 @@
     user-select: none;
     outline: 0;
     white-space: pre;
-    padding: 2px 3px;
+    padding: 5px;
+    width: 150px;
+    display: inline-block;
 }
 .language-select__badge {
     display: flex;
     align-items: center;
 }
 .language-select__badge-text {
-    margin-right: 8px;
     flex: 1;
     overflow: hidden;
 }

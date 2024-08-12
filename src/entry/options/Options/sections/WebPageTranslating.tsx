@@ -9,7 +9,6 @@ import { useOptions } from '../../../../public/react-use';
 import { GetStorageKeys } from '../../../../types';
 import BetaIcon from '../../components/BetaIcon';
 import CustomTranslateSourceDisplay from '../../components/CustomTranslateSourceDisplay';
-import DefaultSelect from '../../components/DefaultSelect';
 import HostList from '../../components/HostList';
 import WebPageTranslateDisplayMode from '../../components/WebPageTranslateDisplayMode';
 import CustomizeTranslation from '../../components/CustomizeTranslation';
@@ -18,6 +17,7 @@ import scIndexedDB from '../../../../public/sc-indexed-db';
 import ConfirmDelete from '../../../collection/components/ConfirmDelete';
 import SpecifyRule from '../../components/SpecifyRule';
 import scOptions from '../../../../public/sc-options';
+import LanguageSelect from '../../../../components/LanguageSelect';
 
 const useOptionsDependency: GetStorageKeys<
     'webPageTranslateSource' |
@@ -125,12 +125,10 @@ const WebPageTranslating: React.FC = () => {
             </div>
             <div className='opt-section-row'>
                 {getMessage('optionsTo')}
-                <DefaultSelect
+                <LanguageSelect
                     value={webPageTranslateTo}
                     onChange={value => scOptions.set({ webPageTranslateTo: value })}
-                    options={preferredLangCode[userLanguage]}
-                    optionValue='code'
-                    optionLabel='name'
+                    langCodes={preferredLangCode[userLanguage]}
                 />
             </div>
             <div className='opt-section-row'>
