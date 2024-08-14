@@ -165,13 +165,9 @@ const DefaultTranslateOptions: React.FC = () => {
                         sourceList={translateSource.concat(customTranslateSourceList)}
                         source={defaultTranslateSource}
                         onChange={value => {
-                            const { source, from, to } = switchTranslateSource(value, {
-                                source: defaultTranslateSource,
-                                from: defaultTranslateFrom,
-                                to: defaultTranslateTo
-                            });
+                            const { from, to } = switchTranslateSource(value, defaultTranslateFrom, defaultTranslateTo);
                             scOptions.set({
-                                defaultTranslateSource: source,
+                                defaultTranslateSource: value,
                                 defaultTranslateFrom: from,
                                 defaultTranslateTo: to
                             });

@@ -48,7 +48,7 @@ const useTranslationActions = () => {
     const changeSource = useCallback((source: string) => {
         const originalSource = translations[0]?.source;
 
-        originalSource && dispatch(singleChangeSourceAction(switchTranslateSource(source, { source: originalSource, from, to })));
+        originalSource && dispatch(singleChangeSourceAction(switchTranslateSource(source, from, to)));
     }, [dispatch, translations, from, to]);
 
     return {
