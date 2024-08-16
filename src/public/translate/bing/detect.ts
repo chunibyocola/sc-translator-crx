@@ -3,6 +3,7 @@ import { RESULT_ERROR } from '../error-codes';
 import { DetectParams } from '../translate-types';
 import { getTranslateParams } from './get-params';
 import { fetchBing } from './fetch-bing';
+import { switchToGoogleLangCode } from './switch-lang-code';
 
 export const detect = async ({ text, com = true }: DetectParams): Promise<string> => {
     const { token, key, IG, IID } = await getTranslateParams(com);
@@ -29,7 +30,7 @@ export const detect = async ({ text, com = true }: DetectParams): Promise<string
 
         const langCode = data[0].detectedLanguage.language;
 
-        return langCode;
+        return switchToGoogleLangCode(langCode);
     } catch (err) {
         throw getError(RESULT_ERROR);
     }

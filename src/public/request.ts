@@ -7,7 +7,6 @@ import google from '../public/translate/google';
 import bing from '../public/translate/bing';
 import mojidict from '../public/translate/mojidict';
 import custom from '../public/translate/custom';
-import { bingSwitchLangCode, bingSwitchToGoogleLangCode } from '../public/switch-lang-code';
 import { AudioResponse, DetectResponse, TranslateResponse } from './send';
 import { getError } from './translate/utils';
 
@@ -30,10 +29,6 @@ export const translate = async ({ source, ...requestParams }: TranslateRequestPa
 			break;
 		case BING_COM:
 			translate = bing.translate;
-			requestParams.from = bingSwitchLangCode(requestParams.from);
-			requestParams.to = bingSwitchLangCode(requestParams.to);
-			requestParams.preferredLanguage = bingSwitchLangCode(requestParams.preferredLanguage);
-			requestParams.secondPreferredLanguage = bingSwitchLangCode(requestParams.secondPreferredLanguage);
 			break;
 		case MOJIDICT_COM:
 			translate = mojidict.translate;
@@ -68,7 +63,6 @@ export const audio = async (requestParams: AudioRequestParams): Promise<AudioRes
 			break;
 		case BING_COM:
 			audio = bing.audio;
-			requestParams.from = bingSwitchLangCode(requestParams.from ?? '');
 			break;
 		default:
 			audio = google.audio;
@@ -107,10 +101,6 @@ export const detect = async (requestParams: DetectRequestParams): Promise<Detect
 
 	try {
 		let langCode = await detect(requestParams);
-
-		if (requestParams.source === BING_COM) {
-			langCode = bingSwitchToGoogleLangCode(langCode);
-		}
 
 		return { langCode };
 	}

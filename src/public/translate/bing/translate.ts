@@ -1,20 +1,23 @@
 import { getError } from '../utils';
-import { langCode } from './lang-code';
 import { LANGUAGE_NOT_SOPPORTED, RESULT_ERROR } from '../error-codes';
 import { TranslateParams } from '../translate-types';
 import { TranslateResult } from '../../../types';
 import { getTranslateParams } from './get-params';
 import { fetchBing } from './fetch-bing';
+import { bingSupportedLangCodes } from '../../../constants/langCode';
+import { switchToBingLangCode, switchToGoogleLangCode } from './switch-lang-code';
 
 export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '', com = true }: TranslateParams) => {
+    if (!bingSupportedLangCodes.has(from) || !bingSupportedLangCodes.has(to)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
+
+    [from, to, preferredLanguage, secondPreferredLanguage] = [from, to, preferredLanguage, secondPreferredLanguage].map(switchToBingLangCode);
+
     preferredLanguage = preferredLanguage || 'en';
     secondPreferredLanguage = secondPreferredLanguage || 'en';
     const originTo = to;
     const originFrom = from;
     from = from || 'auto-detect';
     to = to || (from === preferredLanguage ? secondPreferredLanguage : preferredLanguage);
-
-    if (!(from in langCode) || !(to in langCode)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
 
     const res = await fetchResultFromBing({ text, from, to, com });
 
@@ -35,8 +38,8 @@ export const translate = async ({ text, from = '', to = '', preferredLanguage = 
 
         let result: TranslateResult = {
             text,
-            from: data[0].detectedLanguage.language,
-            to,
+            from: switchToGoogleLangCode(data[0].detectedLanguage.language),
+            to: switchToGoogleLangCode(to),
             result: (data[0].translations[0].text as string).split('\n').filter(v => v.trim())
         };
 
