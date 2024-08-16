@@ -1,8 +1,7 @@
-import { BING_COM, GOOGLE_COM } from '../constants/translateSource';
+import { GOOGLE_COM } from '../constants/translateSource';
 import { GetStorageKeys } from '../types';
 import scOptions from './sc-options';
 import { sendDetect, sendAudio } from './send';
-import { bingSwitchToGoogleLangCode } from './switch-lang-code';
 
 const audio = new Audio();
 
@@ -42,12 +41,6 @@ let violateCSP = false;
 const utter = new SpeechSynthesisUtterance();
 
 export const playAudio = ({ text, source, from = '', auto }: { text: string; source?: string; from?: string; auto?: boolean; }, onPause?: () => void) => {
-    if (source && from) {
-        if (source === BING_COM) {
-            from = bingSwitchToGoogleLangCode(from);
-        }
-    }
-
     if (auto) {
         if (!autoPlayAudio) { return; }
         if (autoPlayAudioLangs.length !== 0 && !autoPlayAudioLangs.includes(from)) { return; }

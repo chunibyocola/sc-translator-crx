@@ -1,7 +1,6 @@
 import { GOOGLE_COM, MICROSOFT_COM } from '../../constants/translateSource';
 import { ComparisonCustomization, DisplayModeEnhancement } from '../../types';
 import { getMessage } from '../i18n';
-import { bingSwitchLangCode } from '../switch-lang-code';
 import { translate as googleWebTranslate } from './google/translate';
 import { translate as microsoftWebTranslate } from './microsoft/translate';
 import { translate as customWebTranslate } from './custom/translate';
@@ -1090,7 +1089,6 @@ const startProcessing = async (nextTranslateList: PageTranslateItemEnity[]) => {
     }
     else if (source === MICROSOFT_COM) {
         translate = microsoftWebTranslate;
-        targetLanguage = bingSwitchLangCode(language);
     }
     else {
         translate = customWebTranslate;

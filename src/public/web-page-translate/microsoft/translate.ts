@@ -1,12 +1,23 @@
 import { LANGUAGE_NOT_SOPPORTED, RESULT_ERROR } from '../../translate/error-codes';
 import { getError } from '../../translate/utils';
 import { getAuthorization } from './getAuthorization';
-import { langCode } from '../../translate/bing/lang-code';
 import { unescapeText, WebpageTranslateFn, WebpageTranslateResult } from '..';
-import { bingSwitchToGoogleLangCode } from '../../switch-lang-code';
+import { bingSupportedLangCodes } from '../../../constants/langCode';
+
+const switchToMicrosoftCodeMap = new Map(Object.entries({'zh-CN':'zh-Hans','zh-TW':'zh-Hant','tl':'fil','iw':'he','hmn':'mww','sr':'sr-Cyrl','no':'nb'}));
+const switchToMicrosoftLangCode = (code: string) => {
+    return switchToMicrosoftCodeMap.get(code) ?? code;
+};
+
+const switchToGoogleCodeMap = new Map(Object.entries({'zh-Hans':'zh-CN','zh-Hant':'zh-TW','fil':'tl','he':'iw','mww':'hmn','sr-Cyrl':'sr','nb':'no'}));
+const switchToGoogleLangCode = (code: string) => {
+    return switchToGoogleCodeMap.get(code) ?? code;
+};
 
 export const translate: WebpageTranslateFn = async ({ keys, targetLanguage }) => {
-    if (!(targetLanguage in langCode)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
+    if (!bingSupportedLangCodes.has(targetLanguage)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
+
+    targetLanguage = switchToMicrosoftLangCode(targetLanguage);
 
     const requestArray = keys.map((key) => ({ Text: key }));
 
@@ -49,7 +60,7 @@ const dealWithResult = (result: MicrosoftPageTranslationResult): WebpageTranslat
     return result.map((v) => ({
         translations: toTranslations(v.translations[0].text),
         comparisons: toComparisons(v.translations[0].text),
-        detectedLanguage: bingSwitchToGoogleLangCode(v.detectedLanguage?.language)
+        detectedLanguage: switchToGoogleLangCode(v.detectedLanguage?.language)
     }));
 };
 
