@@ -1,7 +1,7 @@
 import React, { startTransition, useMemo, useRef, useState } from 'react';
 import Button from '../../../../components/Button';
 import IconFont from '../../../../components/IconFont';
-import { preferredLangCode } from '../../../../constants/langCode';
+import { langCodeI18n, preferredLangCode } from '../../../../constants/langCode';
 import SelectOptions from '../../../../components/SelectOptions';
 import { cn } from '../../../../public/utils';
 import TextField from '../../../../components/TextField';
@@ -22,7 +22,7 @@ const AutoPlayAudioLangs: React.FC<AutoPlayAudioLangsProps> = ({ langs, onChange
     const [confirmClear, setConfirmClear] = useState(false);
 
     const checkedLangSet = useMemo(() => new Set(langs), [langs]);
-    const langI18n = useMemo(() => preferredLangCode[scOptions.getInit().userLanguage].reduce<{ [K: string]: string; }>((t, c) => ({ ...t, [c.code]: c.name }), {}), []);
+    const langI18n = useMemo(() => langCodeI18n[scOptions.getInit().userLanguage], []);
     const filtered = useMemo(() => preferredLangCode[scOptions.getInit().userLanguage].filter(({ name }) => (name.includes(search))), [search]);
 
     const editBoxElt = useRef<HTMLDivElement>(null);
