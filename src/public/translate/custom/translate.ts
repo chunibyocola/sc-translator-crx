@@ -27,14 +27,11 @@ type FetchCustomSourceJSON = {
 //     code: string;
 // };
 
-export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '' }: TranslateParams, source: string) => {
+export const translate = async ({ text, from, to, preferredLanguage, secondPreferredLanguage }: TranslateParams, source: string) => {
     const { customTranslateSourceList } = await scOptions.get(['customTranslateSourceList']);
     const customTranslateSource = customTranslateSourceList.find(value => value.source === source);
 
     if (!customTranslateSource) { throw getError(SOURCE_ERROR); }
-
-    preferredLanguage = preferredLanguage || 'en';
-    secondPreferredLanguage = secondPreferredLanguage || 'en';
 
     const originTo = to;
     const originFrom = from;

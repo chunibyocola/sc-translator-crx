@@ -7,13 +7,11 @@ import { fetchBing } from './fetch-bing';
 import { bingSupportedLangCodes } from '../../../constants/langCode';
 import { switchToBingLangCode, switchToGoogleLangCode } from './switch-lang-code';
 
-export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '', com = true }: TranslateParams) => {
+export const translate = async ({ text, from, to, preferredLanguage, secondPreferredLanguage, com = true }: TranslateParams) => {
     if (!bingSupportedLangCodes.has(from) || !bingSupportedLangCodes.has(to)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
 
     [from, to, preferredLanguage, secondPreferredLanguage] = [from, to, preferredLanguage, secondPreferredLanguage].map(switchToBingLangCode);
 
-    preferredLanguage = preferredLanguage || 'en';
-    secondPreferredLanguage = secondPreferredLanguage || 'en';
     const originTo = to;
     const originFrom = from;
     from = from || 'auto-detect';

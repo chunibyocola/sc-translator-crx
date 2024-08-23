@@ -1,9 +1,9 @@
 export type TranslateParams = {
     text: string;
-    from?: string;
-    to?: string;
-    preferredLanguage?: string;
-    secondPreferredLanguage?: string;
+    from: string;
+    to: string;
+    preferredLanguage: string;
+    secondPreferredLanguage: string;
     com?: boolean;
 };
 

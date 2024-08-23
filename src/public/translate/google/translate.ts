@@ -5,9 +5,7 @@ import { TranslateParams } from '../translate-types';
 import { TranslateResult } from '../../../types';
 import { getTk } from '../../web-page-translate/google/getTk';
 
-export const translate = async ({ text, from = '', to = '', preferredLanguage = '', secondPreferredLanguage = '' }: TranslateParams) => {
-    preferredLanguage = preferredLanguage || 'en';
-    secondPreferredLanguage = secondPreferredLanguage || 'en';
+export const translate = async ({ text, from, to, preferredLanguage, secondPreferredLanguage }: TranslateParams) => {
     const originTo = to;
     const originFrom = from;
     from = from || 'auto';
