@@ -11,9 +11,7 @@ export const translate = async ({ text, from, to, preferredLanguage, secondPrefe
     from = from || 'auto';
     to = to || (from === preferredLanguage ? secondPreferredLanguage : preferredLanguage);
 
-    if (!(from in langCode) || !(to in langCode)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
-
-    let params = {
+    let params: FetchParams = {
         client: 'webapp',
         sl: from,
         tl: to,
@@ -64,7 +62,22 @@ export const translate = async ({ text, from, to, preferredLanguage, secondPrefe
 
 let expiry = 0;
 
-const fetchGoogle = async (params: { [key: string]: string | number | (string | number)[]; }): Promise<Response> => {
+type FetchParams = {
+    client: string;
+    sl: string;
+    tl: string;
+    hl: string;
+    dt: string[];
+    ie: 'UTF-8';
+    oe: 'UTF-8';
+    dj: number;
+    q: string;
+    tk: string;
+};
+
+const fetchGoogle = async (params: FetchParams): Promise<Response> => {
+    if (!(params.sl in langCode) || !(params.tl in langCode)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
+
     const url = 'https://translate.googleapis.com/translate_a/single';
     const timpstamp = Number(new Date());
 

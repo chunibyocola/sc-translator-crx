@@ -4,12 +4,9 @@ import { TranslateParams } from '../translate-types';
 import { TranslateResult } from '../../../types';
 import { getTranslateParams } from './get-params';
 import { fetchBing } from './fetch-bing';
-import { bingSupportedLangCodes } from '../../../constants/langCode';
-import { switchToBingLangCode, switchToGoogleLangCode } from './switch-lang-code';
+import { isLangCodeSupported, switchToBingLangCode, switchToGoogleLangCode } from './switch-lang-code';
 
 export const translate = async ({ text, from, to, preferredLanguage, secondPreferredLanguage, com = true }: TranslateParams) => {
-    if (!bingSupportedLangCodes.has(from) || !bingSupportedLangCodes.has(to)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
-
     [from, to, preferredLanguage, secondPreferredLanguage] = [from, to, preferredLanguage, secondPreferredLanguage].map(switchToBingLangCode);
 
     const originTo = to;
@@ -127,6 +124,8 @@ const fetchDictFromBing = async ({ text, from, to, com }: FetchFromBingParams): 
 };
 
 const fetchResultFromBing = async ({ text, from, to, com }: FetchFromBingParams) => {
+    if (![from, to].every(isLangCodeSupported)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
+
     const { token, key, IG, IID } = await getTranslateParams(com);
 
     const url = `https://${com ? 'www' : 'cn'}.bing.com/ttranslatev3?isVertical=1&&IG=${IG}&IID=${IID}`;
