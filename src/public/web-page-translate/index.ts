@@ -1081,6 +1081,28 @@ const startProcessing = async (nextTranslateList: PageTranslateItemEnity[]) => {
 
     if (translateList.length === 0) { return; }
 
+    translateProcess({
+        translateList,
+        beforeTranslate: keys => keys.forEach(key => pendingMap.get(key)?.forEach(item => item.status = 'loading')),
+        onSuccess: (keys) => {
+            keys.forEach((key) => {
+                const translation = cacheMap.get(key);
+
+                translation && pendingMap.get(key)?.forEach(item => feedDataToPageTranslateItem(item, translation))
+            });
+        },
+        onError: keys => keys.forEach(key => pendingMap.get(key)?.forEach(item => item.status = 'error')),
+        onFinally: keys => keys.forEach(key => pendingMap.delete(key))
+    });
+};
+
+const translateProcess = ({ translateList, beforeTranslate, onSuccess, onError, onFinally }: {
+    translateList: { keys: string[]; paragraphs: string[][]; }[];
+    beforeTranslate?: (keys: string[]) => void;
+    onSuccess?: (keys: string[], result: WebpageTranslateResult[]) => void;
+    onError?: (keys: string[], reason: any) => void;
+    onFinally?: (keys: string[]) => void;
+}) => {
     let translate: WebpageTranslateFn;
     let targetLanguage = language;
 
@@ -1115,13 +1137,19 @@ const startProcessing = async (nextTranslateList: PageTranslateItemEnity[]) => {
             result.forEach((translation, index) => {
                 const key = keys[index];
                 cacheMap.set(key, translation);
-                pendingMap.get(key)?.forEach(item => feedDataToPageTranslateItem(item, translation));
             });
+
+            onSuccess?.(keys, result);
         }).catch((reason) => {
-            keys.forEach(key => pendingMap.get(key)?.forEach(item => item.status = 'error'));
+            if (tempCloseFlag !== closeFlag) { return; }
+
+            onError?.(keys, reason);
+
             errorCallback?.(reason.code ?? reason.message ?? 'Error: Unknown Error.');
         }).finally(() => {
-            keys.forEach(key => pendingMap.delete(key));
+            if (tempCloseFlag !== closeFlag) { return; }
+
+            onFinally?.(keys);
 
             requestingNum--;
             if (requestingNum === 0) {
@@ -1129,7 +1157,7 @@ const startProcessing = async (nextTranslateList: PageTranslateItemEnity[]) => {
             }
         });
 
-        keys.forEach(key => pendingMap.get(key)?.forEach(item => item.status = 'loading'));
+        beforeTranslate?.(keys);
     });
 };
 
