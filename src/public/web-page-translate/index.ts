@@ -315,6 +315,17 @@ let specifyConfig: SpecifyContentConfig = {
     excludeMachesSelectors: ''
 };
 
+type AttributeTranslation = {
+    element: HTMLElement;
+    attributeName: 'placeholder' | 'title' | 'value';
+    attributeText: string;
+    translation?: string;
+    status: 'init' | 'error' | 'loading' | 'finished';
+};
+let attributeWaitingSet = new Set<AttributeTranslation>();
+let attributeUpdatedSet = new Set<AttributeTranslation>();
+let attributePendingMap = new Map<string, AttributeTranslation[]>();
+
 const newPageTranslateItem = (text: string, textNodes: Text[], codeTexts: PageTranslateItemEnity['codeTexts'], pNode?: HTMLParagraphElement) => {
     const searchIndex = text.search(/[^\s]/);
 
@@ -402,6 +413,24 @@ const getAllParagraph = (element: HTMLElement) => {
             }
 
             checkedNodes.add(node);
+
+            if ((node.nodeName === 'TEXTAREA' || node.nodeName === 'INPUT') && (node as HTMLInputElement).placeholder?.replace?.(/[\P{L}]/ug, '')) {
+                attributeWaitingSet.add({
+                    element: node as HTMLElement,
+                    attributeName: 'placeholder',
+                    attributeText: (node as HTMLInputElement).placeholder,
+                    status: 'init'
+                });
+            }
+
+            if ((node as HTMLElement).title?.replace?.(/[\P{L}]/ug, '')) {
+                attributeWaitingSet.add({
+                    element: node as HTMLElement,
+                    attributeName: 'title',
+                    attributeText: (node as HTMLElement).title,
+                    status: 'init'
+                });
+            }
 
             if (ignoredTags.has(node.nodeName)) {
                 nextParagraph();
@@ -617,6 +646,10 @@ export const startWebPageTranslating = ({
     checkedNodes = new WeakSet();
 
     pendingMap = new Map();
+
+    attributeWaitingSet = new Set();
+    attributeUpdatedSet = new Set();
+    attributePendingMap = new Map();
 
     observeRootSet = new Set([document.body]);
 
@@ -861,6 +894,11 @@ export const closeWebPageTranslating = () => {
 
     pendingMap.clear();
 
+    attributeUpdatedSet.forEach(({ element, attributeName, attributeText }) => (element.setAttribute(attributeName, attributeText)));
+    attributeUpdatedSet.clear();
+    attributeUpdatedSet.clear();
+    attributePendingMap.clear();
+
     pageTranslateItemMap = {};
     itemMapIndex = 0;
 
@@ -922,6 +960,30 @@ const translateInViewPortParagraphs = delay(() => {
     });
 
     startProcessing(nextTranslateList);
+
+    const attributeList: AttributeTranslation[] = [];
+
+    attributeWaitingSet.forEach((item) => {
+        if (!item.element.isConnected) {
+            attributeWaitingSet.delete(item);
+            return;
+        }
+
+        let { top } = item.element.getBoundingClientRect();
+
+        const frameElement = item.element.ownerDocument.defaultView?.frameElement;
+        if (frameElement?.isConnected) {
+            top += frameElement.getBoundingClientRect().top;
+        }
+
+        if (top >= minViewPort && top <= maxViewPort) {
+            attributeUpdatedSet.add(item);
+            attributeWaitingSet.delete(item);
+            attributeList.push(item);
+        }
+    });
+
+    translateAttribute(attributeList);
 }, 500);
 
 const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, result: WebpageTranslateResult) => {
@@ -1161,12 +1223,84 @@ const translateProcess = ({ translateList, beforeTranslate, onSuccess, onError, 
     });
 };
 
+const translateAttribute = async (attributes: AttributeTranslation[]) => {
+    let translateList: Parameters<typeof translateProcess>[0]['translateList'] = [];
+    let keys: string[] = [];
+    let characterNum: number = 0;
+
+    const handleTranslation = (attribute: AttributeTranslation, translation: WebpageTranslateResult) => {
+        attribute.translation = translation.translations[0];
+        attribute.status = 'finished';
+        attribute.element.setAttribute(attribute.attributeName, attribute.translation);
+    };
+
+    attributes.filter((item) => {
+        const cacheResult = cacheMap.get(item.attributeText);
+
+        if (cacheResult) {
+            handleTranslation(item, cacheResult);
+            return false;
+        }
+
+        return true;
+    });
+
+    if (enablePageTranslationCache) {
+        const result = await sendGetPageTranslationCache(attributes.map(v => v.attributeText), source, '', language);
+
+        !('code' in result) && Object.entries(result).forEach(([key, translation]) => cacheMap.set(key, translation));
+    }
+
+    attributes.forEach((item) => {
+        const cacheResult = cacheMap.get(item.attributeText);
+        if (cacheResult) {
+            handleTranslation(item, cacheResult);
+            return;
+        }
+
+        attributePendingMap.get(item.attributeText)?.push(item) ?? attributePendingMap.set(item.attributeText, [item]);
+
+        if (characterNum + item.attributeText.length > 2048) {
+            translateList.push({ keys, paragraphs: keys.map(v => [v]) });
+            keys = [];
+            characterNum = 0;
+        }
+
+        keys.push(item.attributeText);
+        characterNum += item.attributeText.length;
+    });
+
+    if (keys.length > 0) {
+        translateList.push({ keys, paragraphs: keys.map(v => [v]) });
+    }
+
+    translateProcess({
+        translateList,
+        beforeTranslate: keys => keys.forEach(key => attributePendingMap.get(key)?.forEach(item => item.status = 'loading')),
+        onSuccess: (keys) => {
+            keys.forEach((key) => {
+                const result = cacheMap.get(key);
+
+                result && attributePendingMap.get(key)?.forEach(item => handleTranslation(item, result));
+            });
+        },
+        onError: keys => keys.forEach(key => attributePendingMap.get(key)?.forEach(item => item.status = 'error')),
+        onFinally: keys => keys.forEach(key => attributePendingMap.delete(key))
+    });
+};
+
 export const errorRetry = () => {
     const nextTranslateList = [...updatedList].filter(v => v.status === 'error');
 
-    if (nextTranslateList.length === 0) { return; }
+    if (nextTranslateList.length > 0) {
+        startProcessing(nextTranslateList);
+    }
 
-    startProcessing(nextTranslateList);
+    const attributeList = [...attributeUpdatedSet].filter(v => v.status === 'error');
+
+    if (attributeList.length > 0) {
+        translateAttribute(attributeList);
+    }
 };
 
 const preprocessComparisons = (webpageTranslateResult: WebpageTranslateResult, translation: string) => {
@@ -1239,6 +1373,10 @@ export const switchWayOfFontsDisplaying = (way?: number) => {
 
     updatedList.forEach((item) => {
         item.fontsNodes.forEach(dealWithFontsStyle);
+    });
+
+    attributeUpdatedSet.forEach(({ element, attributeName, attributeText, translation }) => {
+        translation && element.setAttribute(attributeName, wayOfFontsDisplaying === 0 ? attributeText : translation);
     });
 };
 
