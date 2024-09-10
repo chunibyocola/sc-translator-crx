@@ -1050,42 +1050,28 @@ const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, 
 
 type KeyFormat = (paragraph: string[]) => string;
 const getTranslateList = async (nextTranslateList: PageTranslateItemEnity[], keyFormat: KeyFormat, options = { maxParagraphCount: 100, maxTextLength: 2048 }) => {
-    const keyMap: Map<string, { paragraph: string[]; }> = new Map();
-
-    nextTranslateList.forEach((pageTranslateItem) => {
-        const paragraph = pageTranslateItem.textNodes.map(textNode => textNode.nodeValue ?? '');
+    let list = nextTranslateList.map((enity) => {
+        const paragraph = enity.textNodes.map(textNode => textNode.nodeValue ?? '');
         const key = keyFormat(paragraph);
+        
+        return { paragraph, key, enity };
+    });
 
+    list = list.filter(({ key, enity }) => {
         const cachedResult = cacheMap.get(key);
         if (cachedResult) {
-            feedDataToPageTranslateItem(pageTranslateItem, cachedResult);
-            return;
+            feedDataToPageTranslateItem(enity, cachedResult);
+            return false;
         }
 
-        const pendingItemSet = pendingMap.get(key);
-        if (pendingItemSet) {
-            pendingItemSet.add(pageTranslateItem);
-            return;
-        }
-        else {
-            pendingMap.set(key, new Set([pageTranslateItem]));
-        }
-
-        keyMap.set(key, { paragraph });
+        return true;
     });
 
     if (enablePageTranslationCache) {
-        const result = await sendGetPageTranslationCache([...keyMap.keys()], source, '', language);
-        if (!('code' in result)) {
-            const resultKeys = Object.keys(result);
+        const result = await sendGetPageTranslationCache(list.map(item => item.key), source, '', language);
 
-            resultKeys.forEach((key) => {
-                const pendingItemSet = pendingMap.get(key);
-                pendingItemSet?.forEach(item => feedDataToPageTranslateItem(item, result[key]));
-                cacheMap.set(key, result[key]);
-                keyMap.delete(key);
-                pendingMap.delete(key);
-            });
+        if (!('code' in result)) {
+            Object.entries(result).forEach(([key, translation]) => cacheMap.set(key, translation));
         }
     }
 
@@ -1095,10 +1081,18 @@ const getTranslateList = async (nextTranslateList: PageTranslateItemEnity[], key
     let paragraphs: string[][] = [];
     let totalKey: string = '';
 
-    keyMap.forEach(({ paragraph }, key) => {
-        if (!pendingMap.has(key)) {
+    list.forEach(({ paragraph, enity, key }) => {
+        const cacheResult = cacheMap.get(key);
+        if (cacheResult) {
+            feedDataToPageTranslateItem(enity, cacheResult);
             return;
         }
+
+        if (pendingMap.get(key)?.add(enity)) {
+            return;
+        }
+
+        pendingMap.set(key, new Set([enity]));
 
         if ((totalKey.length + key.length > options.maxTextLength) || (paragraphs.length + 1 > options.maxParagraphCount)) {
             translateList.push({ keys, paragraphs });
@@ -1234,7 +1228,7 @@ const translateAttribute = async (attributes: AttributeTranslation[]) => {
         attribute.element.setAttribute(attribute.attributeName, attribute.translation);
     };
 
-    attributes.filter((item) => {
+    attributes = attributes.filter((item) => {
         const cacheResult = cacheMap.get(item.attributeText);
 
         if (cacheResult) {
@@ -1258,7 +1252,11 @@ const translateAttribute = async (attributes: AttributeTranslation[]) => {
             return;
         }
 
-        attributePendingMap.get(item.attributeText)?.push(item) ?? attributePendingMap.set(item.attributeText, [item]);
+        if (attributePendingMap.get(item.attributeText)?.push(item)) {
+            return;
+        }
+
+        attributePendingMap.set(item.attributeText, [item]);
 
         if (characterNum + item.attributeText.length > 2048) {
             translateList.push({ keys, paragraphs: keys.map(v => [v]) });
