@@ -13,7 +13,7 @@ import { sendTabsAudioCommandKeyPressed, sendTabsContextMenusClicked, sendTabsTr
 import scOptions from '../../public/sc-options';
 
 // Google dosen't provide "chrome.i18n.getMessage" in service worker.
-type I18nLocaleCode = 'en' | 'ja' | 'zh_CN' | 'zh_TW';
+type I18nLocaleCode = 'en' | 'ja' | 'zh_CN' | 'zh_TW' | 'de';
 type I18nMessageKey =
     | 'contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER'
     | 'contextMenus_OPEN_SEPARATE_WINDOW'
@@ -53,6 +53,14 @@ const i18nMessage: { [P in I18nLocaleCode]: { [K in I18nMessageKey]: string; } }
         contextMenus_LISTEN_SELECTION_TEXT: '讀讀您選擇的文字',
         contextMenus_TRANSLATE_CURRENT_PAGE: '翻譯當前頁面',
         contextMenus_OPEN_COLLECTION_PAGE: '打開收藏頁面'
+    },
+    'de': {
+        contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER: 'Diese Seite mit dem PDF-Viewer öffnen',
+        contextMenus_OPEN_SEPARATE_WINDOW: 'Separates Übersetzungsfenster öffnen',
+        contextMenus_TRANSLATE_SELECTION_TEXT: 'Ausgewählten Text übersetzen',
+        contextMenus_LISTEN_SELECTION_TEXT: 'Ausgewählten Text anhören',
+        contextMenus_TRANSLATE_CURRENT_PAGE: 'Aktuelle Seite übersetzen',
+        contextMenus_OPEN_COLLECTION_PAGE: 'Übersetzungs-Sammlung öffnen'
     }
 };
 const getI18nMessage = (message: I18nMessageKey) => {
@@ -67,6 +75,9 @@ const getI18nMessage = (message: I18nMessageKey) => {
     }
     else if (language.includes('zh')) {
         localeCode = 'zh_CN';
+    }
+    else if (language.includes('de')) {
+        localeCode = 'de';
     }
 
     return i18nMessage[localeCode][message];
