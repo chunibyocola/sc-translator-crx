@@ -423,6 +423,15 @@ const getAllParagraph = (element: HTMLElement) => {
                 });
             }
 
+            if (node.nodeName === 'INPUT' && ['submit', 'reset', 'button'].includes((node as HTMLInputElement).type) && (node as HTMLInputElement).value?.replace?.(/[\P{L}]/ug, '')) {
+                attributeWaitingSet.add({
+                    element: node as HTMLElement,
+                    attributeName: 'value',
+                    attributeText: (node as HTMLInputElement).value,
+                    status: 'init'
+                });
+            }
+
             if ((node as HTMLElement).title?.replace?.(/[\P{L}]/ug, '')) {
                 attributeWaitingSet.add({
                     element: node as HTMLElement,
