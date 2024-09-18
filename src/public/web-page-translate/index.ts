@@ -357,6 +357,11 @@ const getAllParagraph = (element: HTMLElement) => {
     let texts: Text[] = [];
     let codeTexts: PageTranslateItemEnity['codeTexts'] = [];
     let nodeStack: { node: Node; index: number; isInline: boolean; }[] = [{ node: element, index: 0, isInline: getComputedStyle(element).display === 'inline' }];
+
+    if (element.shadowRoot) {
+        nodeStack.unshift({ node: element.shadowRoot, index: 0, isInline: false });
+    }
+
     let currentNode = nodeStack.shift();
 
     const nextParagraph = (pNode?: HTMLParagraphElement) => {
@@ -367,10 +372,6 @@ const getAllParagraph = (element: HTMLElement) => {
         texts = [];
         codeTexts = [];
     };
-
-    if (element.shadowRoot) {
-        currentNode = { node: element.shadowRoot, index: 0, isInline: false };
-    }
 
     if (element.nodeName === 'IFRAME' && translateIframeContent) {
         try {
