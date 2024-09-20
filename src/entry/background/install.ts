@@ -71,20 +71,20 @@ const initStorageOnInstalled = (userLang: string, update: boolean) => {
             data.displayModeEnhancement = { ...defaultSet.displayModeEnhancement, ...data.displayModeEnhancement };
         }
 
-        if (data.styleVarsList?.[0]?.styleVars) {
+        if (update && data.styleVarsList?.[0]?.styleVars) {
             (data.styleVarsList[0].styleVars = defaultStyleVars);
         }
 
         // Remove Baidu translation
-        if (data.defaultTranslateSource === 'baidu.com') {
+        if (update && data.defaultTranslateSource === 'baidu.com') {
             data.defaultTranslateSource = defaultSet.defaultTranslateSource;
             data.defaultTranslateFrom = '';
             data.defaultTranslateTo = '';
         }
-        if (data.multipleTranslateSourceList.includes('baidu.com')) {
+        if (update && data.multipleTranslateSourceList?.includes('baidu.com')) {
             data.multipleTranslateSourceList = data.multipleTranslateSourceList.filter(source => source !== 'baidu.com');
         }
-        if (data.defaultAudioSource === 'baidu.com') {
+        if (update && data.defaultAudioSource === 'baidu.com') {
             data.defaultAudioSource = defaultSet.defaultAudioSource;
         }
 
