@@ -1,3 +1,7 @@
+# 5.7.0 (2024-09-20)
+- Page translation is able to translate element attributes like "placeholder" and "title".
+- Remove Baidu translator.
+- Fix content that is inside dynamically generated element with shadow root attached doesn't get translated.
 # 5.6.0 (2024-07-01)
 - Add "Automatically play audio after translation is completed" option.
 - Able to export/import the rules of "Specify what to be translate or not translate".
