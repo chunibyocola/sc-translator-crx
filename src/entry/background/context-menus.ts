@@ -11,66 +11,7 @@ import {
 import { OptionsContextMenu } from '../../types';
 import { sendTabsAudioCommandKeyPressed, sendTabsContextMenusClicked, sendTabsTranslateCurrentPage } from '../../public/send';
 import scOptions from '../../public/sc-options';
-
-// Google dosen't provide "chrome.i18n.getMessage" in service worker.
-type I18nLocaleCode = 'en' | 'ja' | 'zh_CN' | 'zh_TW';
-type I18nMessageKey =
-    | 'contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER'
-    | 'contextMenus_OPEN_SEPARATE_WINDOW'
-    | 'contextMenus_TRANSLATE_SELECTION_TEXT'
-    | 'contextMenus_LISTEN_SELECTION_TEXT'
-    | 'contextMenus_TRANSLATE_CURRENT_PAGE'
-    | 'contextMenus_OPEN_COLLECTION_PAGE';
-const i18nMessage: { [P in I18nLocaleCode]: { [K in I18nMessageKey]: string; } } = {
-    'en': {
-        contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER: 'Open this page with PDF viewer',
-        contextMenus_OPEN_SEPARATE_WINDOW: 'Open separate translate window',
-        contextMenus_TRANSLATE_SELECTION_TEXT: 'Translate the text you select',
-        contextMenus_LISTEN_SELECTION_TEXT: 'Listen the text you select',
-        contextMenus_TRANSLATE_CURRENT_PAGE: 'Translate the current page',
-        contextMenus_OPEN_COLLECTION_PAGE: 'Open collection page'
-    },
-    'ja': {
-        contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER: 'PDFビューアでこのページを開く',
-        contextMenus_OPEN_SEPARATE_WINDOW: 'スタンドアロン翻訳ウィンドウを開く',
-        contextMenus_TRANSLATE_SELECTION_TEXT: '選択したテキストを翻訳する',
-        contextMenus_LISTEN_SELECTION_TEXT: '選択したテキストの音声を聞く',
-        contextMenus_TRANSLATE_CURRENT_PAGE: '現在のページを翻訳する',
-        contextMenus_OPEN_COLLECTION_PAGE: 'コレクションページを開く'
-    },
-    'zh_CN': {
-        contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER: '用 PDF 阅读器打开此页面',
-        contextMenus_OPEN_SEPARATE_WINDOW: '打开独立翻译窗口',
-        contextMenus_TRANSLATE_SELECTION_TEXT: '翻译您选择的文本',
-        contextMenus_LISTEN_SELECTION_TEXT: '朗读您选择的文本',
-        contextMenus_TRANSLATE_CURRENT_PAGE: '翻译当前页面',
-        contextMenus_OPEN_COLLECTION_PAGE: '打开收藏页面'
-    },
-    'zh_TW': {
-        contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER: '用 PDF 閱讀器打開此頁面',
-        contextMenus_OPEN_SEPARATE_WINDOW: '打開獨立翻譯視窗',
-        contextMenus_TRANSLATE_SELECTION_TEXT: '翻譯您選擇的文字',
-        contextMenus_LISTEN_SELECTION_TEXT: '讀讀您選擇的文字',
-        contextMenus_TRANSLATE_CURRENT_PAGE: '翻譯當前頁面',
-        contextMenus_OPEN_COLLECTION_PAGE: '打開收藏頁面'
-    }
-};
-const getI18nMessage = (message: I18nMessageKey) => {
-    const language = navigator.language;
-    let localeCode: I18nLocaleCode = 'en';
-
-    if (language === 'ja') {
-        localeCode = 'ja';
-    }
-    else if (language === 'zh-HK' || language === 'zh-TW') {
-        localeCode = 'zh_TW'
-    }
-    else if (language.includes('zh')) {
-        localeCode = 'zh_CN';
-    }
-
-    return i18nMessage[localeCode][message];
-};
+import { getMessage } from '../../public/i18n';
 
 type OnContextMenuClick = (info: chrome.contextMenus.OnClickData, tab?: chrome.tabs.Tab | undefined) => void;
 
@@ -127,7 +68,7 @@ const updateContextMenus = (contextMenus: OptionsContextMenu[]) => {
             if (contextMenu.enabled) {
                 chrome.contextMenus.create({
                     id: contextMenu.id,
-                    title: getI18nMessage(`contextMenus_${contextMenu.id}`),
+                    title: getMessage(`contextMenus_${contextMenu.id}`),
                     contexts: contextMenusContexts[contextMenu.id]
                 }, () => {
                     // Catch the "Cannot create item with duplicate id" error, and ignore it.
@@ -143,28 +84,28 @@ export const initContextMenus = () => {
         // open separate window
         chrome.contextMenus.create({
             id: 'action_separate_window',
-            title: getI18nMessage('contextMenus_OPEN_SEPARATE_WINDOW'),
+            title: getMessage('contextMenus_OPEN_SEPARATE_WINDOW'),
             contexts: ['action']
         }, () => { if (chrome.runtime.lastError) {} });
 
         // open this page with pdf viewer
         chrome.contextMenus.create({
             id: 'action_open_this_page_with_pdf_viewer',
-            title: getI18nMessage('contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER'),
+            title: getMessage('contextMenus_OPEN_THIS_PAGE_WITH_PDF_VIEWER'),
             contexts: ['action']
         }, () => { if (chrome.runtime.lastError) {} });
 
         // translate current page
         chrome.contextMenus.create({
             id: 'action_translate_current_page',
-            title: getI18nMessage('contextMenus_TRANSLATE_CURRENT_PAGE'),
+            title: getMessage('contextMenus_TRANSLATE_CURRENT_PAGE'),
             contexts: ['action']
         }, () => { if (chrome.runtime.lastError) {} });
 
         // open collection page
         chrome.contextMenus.create({
             id: 'action_open_collection_page',
-            title: getI18nMessage('contextMenus_OPEN_COLLECTION_PAGE'),
+            title: getMessage('popupOpenCollectionPage'),
             contexts: ['action']
         }, () => { if (chrome.runtime.lastError) {} });
 
