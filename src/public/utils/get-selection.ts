@@ -1,7 +1,7 @@
 export const getSelectedText = () => {
     let text = window.getSelection()?.toString() ?? '';
 
-    text = text.trimLeft().trimRight();
+    text = text.trimStart().trimEnd();
 
     return text;
 };

@@ -20,7 +20,7 @@ export const textPreprocessing = (text: string) => {
 
         textPreprocessingPreset.convertCamelCase && (text = convertCamelCase(text));
 
-        return text.trimLeft();
+        return text.trimStart();
     }
     catch {
         return tempText;

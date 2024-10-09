@@ -48,7 +48,7 @@ chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sen
         case types.SCTS_IS_COLLECTED: {
             let { text } = message.payload;
 
-            text = text.trimLeft().trimRight();
+            text = text.trimStart().trimEnd();
 
             if (text) {
                 scIndexedDB.get(DB_STORE_COLLECTION, text)
