@@ -1,3 +1,6 @@
+# 5.7.1 (2024-12-04)
+- Fix Mojidict unavailable.
+- Change extension icon and title.
 # 5.7.0 (2024-09-20)
 - Page translation is able to translate element attributes like "placeholder" and "title".
 - Remove Baidu translator.
