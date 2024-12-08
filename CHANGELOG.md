@@ -1,3 +1,6 @@
+# 5.7.2 (2024-12-08)
+- Fix old extension icon doesn't get replaced.
+- Add Baidu translation(selection version).
 # 5.7.1 (2024-12-04)
 - Fix Mojidict unavailable.
 - Change extension icon and title.
