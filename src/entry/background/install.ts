@@ -75,15 +75,7 @@ const initStorageOnInstalled = (userLang: string, update: boolean) => {
             (data.styleVarsList[0].styleVars = defaultStyleVars);
         }
 
-        // Remove Baidu translation
-        if (update && data.defaultTranslateSource === 'baidu.com') {
-            data.defaultTranslateSource = defaultSet.defaultTranslateSource;
-            data.defaultTranslateFrom = '';
-            data.defaultTranslateTo = '';
-        }
-        if (update && data.multipleTranslateSourceList?.includes('baidu.com')) {
-            data.multipleTranslateSourceList = data.multipleTranslateSourceList.filter(source => source !== 'baidu.com');
-        }
+        // Remove Baidu audio
         if (update && data.defaultAudioSource === 'baidu.com') {
             data.defaultAudioSource = defaultSet.defaultAudioSource;
         }

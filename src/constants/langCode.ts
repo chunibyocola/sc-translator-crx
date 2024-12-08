@@ -1,7 +1,8 @@
 import {
     GOOGLE_COM,
     BING_COM,
-    MOJIDICT_COM
+    MOJIDICT_COM,
+    BAIDU_COM
 } from './translateSource';
 
 export const LANG_ZH_CN = 'zh-CN';
@@ -161,6 +162,14 @@ export const bingLangCode: LocaleLangCodes = {
 
 export const bingSupportedLangCodes = new Set(['','af','ar','bn','bs','bg','yue','ca','zh-CN','zh-TW','hr','cs','da','nl','en','et','fj','tl','fi','fr','de','el','gu','ht','iw','hi','hmn','hu','is','id','ga','it','ja','kn','kk','sw','ko','lv','lt','mg','ms','ml','mt','mi','mr','no','fa','pl','pt','pt-PT','pa','ro','ru','sm','sr','sk','sl','es','sv','ty','ta','te','th','to','tr','uk','ur','vi','cy','yua']);
 
+export const baiduLangCode: LocaleLangCodes = {
+    [LANG_EN]: [{code:'',name:'auto'},{code:'zh-CN',name:'Chinese (Simplified)'},{code:'en',name:'English'},{code:'ja',name:'Japanese'},{code:'th',name:'Thai'},{code:'es',name:'Spanish'},{code:'ar',name:'Arabic'},{code:'fr',name:'French'},{code:'ko',name:'Korean'},{code:'ru',name:'Russian'},{code:'de',name:'German'},{code:'pt',name:'Portuguese'},{code:'it',name:'Italian'},{code:'el',name:'Greek'},{code:'eo',name:'Esperanto'},{code:'nl',name:'Dutch'},{code:'pl',name:'Polish'},{code:'fi',name:'Finnish'},{code:'cs',name:'Czech'},{code:'bg',name:'Bulgarian'},{code:'da',name:'Danish'},{code:'et',name:'Estonian'},{code:'hu',name:'Hungarian'},{code:'ro',name:'Romanian'},{code:'sv',name:'Swedish'},{code:'vi',name:'Vietname:se'},{code:'yue',name:'Cantonese (Traditional)'},{code:'zh-TW',name:'Chinese (Traditional)'},{code:'be',name:'Belarusian'},{code:'my',name:'Myanmar (Burmese)'},{code:'tl',name:'Filipino'},{code:'hi',name:'Hindi'},{code:'is',name:'Icelandic'},{code:'id',name:'Indonesian'},{code:'ga',name:'Irish'},{code:'kk',name:'Kazakh'},{code:'lo',name:'Lao'},{code:'la',name:'Latin'},{code:'lb',name:'Luxembourgish'},{code:'mk',name:'Macedonian'},{code:'ms',name:'Malay'},{code:'ne',name:'Nepali'},{code:'fa',name:'Persian'},{code:'sr',name:'Serbian'},{code:'sk',name:'Slovak'},{code:'tr',name:'Turkish'},{code:'uk',name:'Ukrainian'},{code:'uz',name:'Uzbek'},{code:'haw',name:'Hawaiian'},{code:'mi',name:'Maori'},{code:'no',name:'Norwegian'}],
+    [LANG_ZH_CN]: [{code:'',name:'自动选择'},{code:'zh-CN',name:'中文(简体)'},{code:'en',name:'英语'},{code:'ja',name:'日语'},{code:'th',name:'泰语'},{code:'es',name:'西班牙语'},{code:'ar',name:'阿拉伯语'},{code:'fr',name:'法语'},{code:'ko',name:'韩语'},{code:'ru',name:'俄语'},{code:'de',name:'德语'},{code:'pt',name:'葡萄牙语'},{code:'it',name:'意大利语'},{code:'el',name:'希腊语'},{code:'nl',name:'荷兰语'},{code:'eo',name:'世界语'},{code:'pl',name:'波兰语'},{code:'fi',name:'芬兰语'},{code:'cs',name:'捷克语'},{code:'bg',name:'保加利亚语'},{code:'da',name:'丹麦语'},{code:'et',name:'爱沙尼亚语'},{code:'hu',name:'匈牙利语'},{code:'ro',name:'罗马尼亚语'},{code:'sv',name:'瑞典语'},{code:'vi',name:'越南语'},{code:'yue',name:'中文(粤语)'},{code:'zh-TW',name:'中文(繁体)'},{code:'be',name:'白俄罗斯语'},{code:'my',name:'缅甸语'},{code:'tl',name:'菲律宾语'},{code:'hi',name:'印地语'},{code:'is',name:'冰岛语'},{code:'id',name:'印尼语'},{code:'ga',name:'爱尔兰语'},{code:'kk',name:'哈萨克语'},{code:'lo',name:'老挝语'},{code:'la',name:'拉丁语'},{code:'lb',name:'卢森堡语'},{code:'mk',name:'马其顿语'},{code:'ms',name:'马来语'},{code:'ne',name:'尼泊尔语'},{code:'fa',name:'波斯语'},{code:'sr',name:'塞尔维亚语(拉丁文)'},{code:'sk',name:'斯洛伐克语'},{code:'tr',name:'土耳其语'},{code:'uk',name:'乌克兰语'},{code:'uz',name:'乌兹别克语'},{code:'haw',name:'夏威夷语'},{code:'mi',name:'毛利语'},{code:'no',name:'挪威语'}],
+    [LANG_JA]: [{code:'',name:'自動選択'},{code:'ja',name:'日本語'},{code:'en',name:'英語'},{code:'ko',name:'韓国語'},{code:'zh-CN',name:'中国語（簡体）'},{code:'zh-TW',name:'中国語（繁体）'},{code:'yue',name:'広東語（繁体）'},{code:'th',name:'タイ語'},{code:'es',name:'スペイン語'},{code:'ar',name:'アラビア語'},{code:'fr',name:'フランス語'},{code:'ru',name:'ロシア語'},{code:'de',name:'ドイツ語'},{code:'eo',name:'エスペラント'},{code:'pt',name:'ポルトガル語'},{code:'it',name:'イタリア語'},{code:'el',name:'ギリシャ語'},{code:'nl',name:'オランダ語'},{code:'pl',name:'ポーランド語'},{code:'fi',name:'フィンランド語'},{code:'cs',name:'チェコ語'},{code:'bg',name:'ブルガリア語'},{code:'da',name:'デンマーク語'},{code:'et',name:'エストニア語'},{code:'hu',name:'ハンガリー語'},{code:'ro',name:'ルーマニア語'},{code:'sv',name:'スウェーデン語'},{code:'vi',name:'ベトナム語'},{code:'be',name:'ベラルーシ語'},{code:'my',name:'ミャンマー語'},{code:'tl',name:'タガログ語'},{code:'hi',name:'ヒンディー語'},{code:'is',name:'アイスランド語'},{code:'id',name:'インドネシア語'},{code:'ga',name:'アイルランド語'},{code:'kk',name:'カザフ語'},{code:'lo',name:'ラオ語'},{code:'la',name:'ラテン語'},{code:'lb',name:'ルクセンブルク語'},{code:'mk',name:'マケドニア語'},{code:'ms',name:'マレー語'},{code:'ne',name:'ネパール語'},{code:'fa',name:'ペルシャ語'},{code:'sr',name:'セルビア語'},{code:'sk',name:'スロバキア語'},{code:'tr',name:'トルコ語'},{code:'uk',name:'ウクライナ語'},{code:'uz',name:'ウズベク語'},{code:'haw',name:'ハワイ語'},{code:'mi',name:'マオリ語'},{code:'no',name:'ノルウェー語'}]
+};
+
+export const baiduSupportedLangCodes = new Set(['','zh-CN','en','ja','th','es','ar','fr','ko','ru','de','pt','it','el','eo','nl','pl','fi','cs','bg','da','et','hu','ro','sv','vi','yue','zh-TW','be','my','tl','hi','is','id','ga','kk','lo','la','lb','mk','ms','ne','fa','sr','sk','tr','uk','uz','haw','mi','no']);
+
 export const mojidictLangCode: LocaleLangCodes = {
     [LANG_EN]: [{code:'',name:'Chinese/Japanese'}],
     [LANG_ZH_CN]: [{code:'',name:'中文/日文'}],
@@ -170,7 +179,8 @@ export const mojidictLangCode: LocaleLangCodes = {
 export const langCode: SourceLocaleLangCodes = {
     [GOOGLE_COM]: googleLangCode,
     [BING_COM]: bingLangCode,
-    [MOJIDICT_COM]: mojidictLangCode
+    [MOJIDICT_COM]: mojidictLangCode,
+    [BAIDU_COM]: baiduLangCode
 };
 
 export const mtLangCode: LocaleLangCodes = googleLangCode;

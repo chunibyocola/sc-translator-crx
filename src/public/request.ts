@@ -1,12 +1,14 @@
 import {
 	GOOGLE_COM,
 	BING_COM,
-	MOJIDICT_COM
+	MOJIDICT_COM,
+	BAIDU_COM
 } from '../constants/translateSource';
 import google from '../public/translate/google';
 import bing from '../public/translate/bing';
 import mojidict from '../public/translate/mojidict';
 import custom from '../public/translate/custom';
+import baidu from '../public/translate/baidu';
 import { AudioResponse, DetectResponse, TranslateResponse } from './send';
 import { getError } from './translate/utils';
 
@@ -32,6 +34,9 @@ export const translate = async ({ source, ...requestParams }: TranslateRequestPa
 			break;
 		case MOJIDICT_COM:
 			translate = mojidict.translate;
+			break;
+		case BAIDU_COM:
+			translate = baidu.translate;
 			break;
 		default:
 			translate = custom.translate;
@@ -64,6 +69,9 @@ export const audio = async (requestParams: AudioRequestParams): Promise<AudioRes
 		case BING_COM:
 			audio = bing.audio;
 			break;
+		case BAIDU_COM:
+			audio = baidu.audio;
+			break;
 		default:
 			audio = google.audio;
 			break;
@@ -93,6 +101,9 @@ export const detect = async (requestParams: DetectRequestParams): Promise<Detect
 			break;
 		case BING_COM:
 			detect = bing.detect;
+			break;
+		case BAIDU_COM:
+			detect = baidu.detect;
 			break;
 		default:
 			detect = google.detect;
