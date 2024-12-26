@@ -36,7 +36,7 @@ export const translate = async ({ text, from, to, preferredLanguage, secondPrefe
             };
 
             try {
-                result.dict = r.content[0].mean.map((v: any) => `${v.pre} ${Object.keys(v.cont).join(', ')}`.trimStart().trimEnd());
+                result.dict = r.content[0].mean.map((v: any) => `${v.pre ?? ''} ${Object.keys(v.cont).join(', ')}`.trimStart().trimEnd());
             } catch {}
 
             try {
