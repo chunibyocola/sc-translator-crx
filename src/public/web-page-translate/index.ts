@@ -122,6 +122,10 @@ const observer = new MutationObserver((records) => {
             return true;
         }
 
+        if (!(element as HTMLElement).translate) {
+            return true;
+        }
+
         const root = element.getRootNode({ composed: true });
         if (root.nodeName !== '#document') {
             return true;
@@ -482,6 +486,11 @@ const getAllParagraph = (element: HTMLElement) => {
             }
 
             if ((node as HTMLElement).isContentEditable) {
+                nextParagraph();
+                continue;
+            }
+
+            if (!(node as HTMLElement).translate) {
                 nextParagraph();
                 continue;
             }
