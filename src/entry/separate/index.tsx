@@ -11,7 +11,7 @@ import { appendColorVarsStyle, appendCustomizeStyle, appendFontSizeStyle } from 
 import { getMessage } from '../../public/i18n';
 import scOptions from '../../public/sc-options';
 
-document.title = `${getMessage('titleSeparateWindow')} - ${getMessage('extName')}`;
+document.title = `${getMessage('extName')}`;
 
 scOptions.init().then((options) => {
     document.body.id = 'sc-translator-root';
