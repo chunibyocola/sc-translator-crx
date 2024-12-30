@@ -31,7 +31,7 @@
 .dividing-line {
     width: 100%;
     height: 1px;
-    background: var(--text-normal);
+    background-color: rgb(148, 163, 184);
     opacity: 0.7;
     display: block;
 }

@@ -1,12 +1,6 @@
 .popup-header {
     color: var(--text-icon);
-    height: 30px;
-}
-.popup-header__left {
-    margin-left: 5px;
-}
-.popup-header__icons {
-    margin-right: 5px;
+    padding: 2px 4px;
 }
 .popup-header__icons .iconfont, .popup-header__left .iconfont {
     font-size: 20px !important;

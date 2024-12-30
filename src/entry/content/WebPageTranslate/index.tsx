@@ -288,30 +288,22 @@ const WebPageTranslate: React.FC = () => {
                 {requesting ? <span className='spinner' /> : <Logo />}
             </div>
             <div className='web-page-translate__content__division' />
-            <SourceSelect
-                source={source}
-                sourceList={webPageTranslateSourceList.concat(scOptions.getInit().customWebpageTranslateSourceList)}
-                onChange={source => dispach({ type: 'change-source', source })}
-                faviconOnly
-            />
-            <LanguageSelect
-                className='web-page-translate__select'
-                value={targetLanguage}
-                langCodes={langCodes}
-                onChange={targetLanguage => dispach({ type: 'change-targer-language', targetLanguage })}
-                recentLangs={[]}
-            />
-            <PanelIconButtonWrapper
-                onClick={() => {
-                    if (!working) { return; }
-
-                    switchWayOfFontsDisplaying();
-                }}
-                disabled={!working}
-                title={wPTI18nCache.switchDisplayModeOfResult}
-            >
-                <IconFont iconName='#icon-switch' />
-            </PanelIconButtonWrapper>
+            <div className='page-translation__select-box'>
+                <SourceSelect
+                    source={source}
+                    className='border-bottom-select'
+                    sourceList={webPageTranslateSourceList.concat(scOptions.getInit().customWebpageTranslateSourceList)}
+                    onChange={source => dispach({ type: 'change-source', source })}
+                    faviconOnly
+                />
+                <LanguageSelect
+                    className='web-page-translate__select'
+                    value={targetLanguage}
+                    langCodes={langCodes}
+                    onChange={targetLanguage => dispach({ type: 'change-targer-language', targetLanguage })}
+                    recentLangs={[]}
+                />
+            </div>
             {!working ? <PanelIconButtonWrapper
                 onClick={() => {
                     startProcessing();
@@ -327,6 +319,18 @@ const WebPageTranslate: React.FC = () => {
             >
                 <IconFont iconName='#icon-refresh' />
             </PanelIconButtonWrapper>}
+            <div className='web-page-translate__content__division' />
+            <PanelIconButtonWrapper
+                onClick={() => {
+                    if (!working) { return; }
+
+                    switchWayOfFontsDisplaying();
+                }}
+                disabled={!working}
+                title={wPTI18nCache.switchDisplayModeOfResult}
+            >
+                <IconFont iconName='#icon-switch' />
+            </PanelIconButtonWrapper>
             {scOptions.getInit().translateDynamicContent && scOptions.getInit().enableAutoTranslateWebpage && <PanelIconButtonWrapper
                 onClick={() => {
                     const nextHostSet = new Set(hostSet);
@@ -338,6 +342,7 @@ const WebPageTranslate: React.FC = () => {
             >
                 <IconFont iconName='#icon-auto' />
             </PanelIconButtonWrapper>}
+            <div className='web-page-translate__content__division' />
             <PanelIconButtonWrapper
                 onClick={closePageTranslation}
                 title={wPTI18nCache.closeWebPageTranslating}

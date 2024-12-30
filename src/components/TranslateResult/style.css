@@ -1,12 +1,12 @@
 .translate-result {
-    padding: 10px 0;
+    padding: 10px 8px;
 }
 .translate-result__item .iconfont {
     position: relative;
     bottom: .125em;
 }
 .translate-result__item .iconfont:first-child {
-    margin-left: 5px;
+    margin-left: 4px;
 }
 .translate-result__item + .translate-result__item {
     margin-block-start: 0.8em;

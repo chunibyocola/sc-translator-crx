@@ -5,19 +5,17 @@
     z-index: 2147483647;
     width: 250px;
     background-color: var(--bg-total);
-    box-shadow: rgba(0, 0, 0, 0.8) 0px 0px 10px 0px;
+    box-shadow: rgba(0, 0, 0, 0.8) 0px 0px 5px 0px;
     min-width: 250px;
 }
 .panel__content {
-    margin: 0 5px 5px 5px;
+    margin: 0 4px 4px 4px;
 }
 .panel__header {
-    cursor: move;
+    cursor: grab;
     user-select: none;
-    width: 100%;
-    padding: 0 5px;
+    padding: 2px 4px;
     color: var(--text-icon);
-    height: 30px;
 }
 .panel__header-logo {
     font-weight: bold;

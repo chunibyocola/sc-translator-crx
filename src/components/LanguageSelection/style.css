@@ -1,10 +1,13 @@
 .language-selection {
-    margin: 5px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0 4px;
+    padding: 4px;
+    flex-wrap: wrap;
 }
 .language-selection>.iconfont {
     cursor: pointer;
-    margin: 0 5px;
 }
 .language-selection__select {
     width: 100px;

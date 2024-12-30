@@ -1,14 +1,12 @@
 .source-select {
     position: relative;
-    text-align: start;
     align-items: center;
     display: inline-flex;
-    cursor: default;
-    vertical-align: middle;
+    cursor: pointer;
     user-select: none;
     outline: 0;
     white-space: pre;
-    padding: 2px 3px;
+    padding: 2px;
     max-width: 150px;
 }
 .source-select .iconfont {
@@ -21,15 +19,15 @@
 .source-select__options {
     background: var(--bg-content);
     color: var(--text-normal);
-    border-radius: 5px;
 }
 .source-select__value {
     flex: 1;
     overflow: hidden;
 }
 .source-select__options__option {
-    padding: 6px;
+    padding: 4px;
     overflow: hidden;
+    cursor: pointer;
 }
 .source-select__options__option:hover {
     background: var(--bg-item-hover);

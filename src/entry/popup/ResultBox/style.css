@@ -1,12 +1,9 @@
 .popup-container {
-    transition: background 0.2s ease-in-out;
-    border-radius: 3px;
     width: 250px;
     height: fit-content;
     background: var(--bg-total);
-    padding-bottom: 2px;
     color: var(--text-normal) !important;
 }
 .popup-container__content {
-    margin: 0 5px 3px 5px;
+    margin: 0 4px;
 }

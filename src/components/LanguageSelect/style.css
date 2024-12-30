@@ -1,13 +1,11 @@
 .language-select {
     position: relative;
     text-align: start;
-    align-items: center;
-    cursor: default;
-    vertical-align: middle;
+    cursor: pointer;
     user-select: none;
     outline: 0;
     white-space: pre;
-    padding: 5px;
+    padding: 4px;
     width: 150px;
     display: inline-block;
 }
@@ -21,10 +19,10 @@
 }
 .language-select__search {
     display: flex;
-    margin: 5px;
+    margin: 4px;
     border-bottom: 1px solid currentColor;
     align-items: center;
-    padding: 5px;
+    padding: 4px;
 }
 .language-select__search-input {
     flex: 1;
@@ -35,7 +33,7 @@
     width: 100%;
 }
 .language-select__option, .language-select__no-result {
-    padding: 4px 6px;
+    padding: 4px;
     line-height: 1;
 }
 .language-select__option:hover {

@@ -1,9 +1,9 @@
 .via {
-    padding: 0 10px;
+    padding: 0;
 }
 .via__content {
     font-size: 14px !important;
-    padding: 2px 0;
+    padding: 2px;
     display: flex;
     align-items: center;
 }

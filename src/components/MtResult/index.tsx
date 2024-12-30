@@ -31,7 +31,7 @@ const MtResult: React.FC<MtResultProps> = ({ source, translateRequest, remove, r
                         <IconFont
                             className='iconbutton'
                             iconName='#icon-copy'
-                            style={{marginLeft: '5px'}}
+                            style={{marginLeft: '4px', cursor: 'pointer'}}
                             onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(translateRequest.result.text); }}
                         />
                         <ListenButton

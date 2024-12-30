@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { TranslateSource } from '../../constants/translateSource';
 import { cn } from '../../public/utils';
 import IconFont from '../IconFont';
@@ -6,6 +6,7 @@ import SelectOptions from '../SelectOptions';
 import SourceFavicon from '../SourceFavicon';
 import './style.css';
 import PanelIconButtonWrapper from '../PanelIconButtons/PanelIconButtonWrapper';
+import { useMouseEventOutside } from '../../public/react-use';
 
 type SourceSelectProps = {
     onChange: (value: string) => void;
@@ -18,6 +19,10 @@ type SourceSelectProps = {
 const SourceSelect: React.FC<SourceSelectProps> = ({ onChange, sourceList, source, className, disabled, faviconOnly }) => {
     const [showOptions, setShowOptions] = useState(false);
 
+    const sourceSelectEltRef = useRef<HTMLDivElement>(null);
+
+    useMouseEventOutside(() => setShowOptions(false), 'mousedown', sourceSelectEltRef.current, showOptions);
+
     const optionClick = useCallback((value: string) => {
         if (value === source) { return; }
 
@@ -29,9 +34,9 @@ const SourceSelect: React.FC<SourceSelectProps> = ({ onChange, sourceList, sourc
     return (
         <div
             tabIndex={-1}
+            ref={sourceSelectEltRef}
             className={cn('source-select', className, disabled && 'source-select--disabled')}
             onClick={() => !disabled && setShowOptions(!showOptions)}
-            onMouseLeave={() => !disabled && setShowOptions(false)}
             onMouseDown={e => disabled && e.preventDefault()}
         >
             {faviconOnly ? <PanelIconButtonWrapper>
