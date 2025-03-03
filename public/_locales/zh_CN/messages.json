@@ -554,6 +554,9 @@
     "optionsSelectAutoPlayLanguageClear": {
         "message": "所有已选择的语言将被清除。"
     },
+    "optionsSourceLanguage": {
+        "message": "源语言"
+    },
     "themePreset": {
         "message": "预设"
     },

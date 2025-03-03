@@ -554,6 +554,9 @@
     "optionsSelectAutoPlayLanguageClear": {
         "message": "選択された言語はすべて削除されます。"
     },
+    "optionsSourceLanguage": {
+        "message": "ソース言語"
+    },
     "themePreset": {
         "message": "プリセット"
     },

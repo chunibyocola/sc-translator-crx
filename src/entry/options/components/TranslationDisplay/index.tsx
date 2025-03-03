@@ -54,6 +54,11 @@ const TranslationDisplay: React.FC<TranslationDisplayProps> = ({ displayOfTransl
                     checked={displayOfTranslation.maintainParagraphStructure}
                     onChange={v => onChange({ ...displayOfTranslation, maintainParagraphStructure: v })}
                 />
+                <Checkbox
+                    label={getMessage('optionsSourceLanguage')}
+                    checked={displayOfTranslation.sourceLanguage}
+                    onChange={v => onChange({ ...displayOfTranslation, sourceLanguage: v })}
+                />
             </div>
             <div className='translation-display__preview'>
                 <div>

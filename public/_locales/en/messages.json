@@ -554,6 +554,9 @@
     "optionsSelectAutoPlayLanguageClear": {
         "message": "All selected languages will be cleared."
     },
+    "optionsSourceLanguage": {
+        "message": "Source language"
+    },
     "themePreset": {
         "message": "Preset"
     },
