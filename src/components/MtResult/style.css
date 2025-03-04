@@ -9,15 +9,24 @@
 .mt-result__head {
     padding: 4px;
     color: var(--text-normal);
-    font-size: 14px;
+    font-size: 12px;
 }
 .mt-result__head__left {
-    display: grid;
-    grid-template-columns: auto max-content max-content;
+    display: flex;
     align-items: center;
+    overflow: hidden;
+    gap: 4px;
 }
 .mt-result__head__badge {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+.mt-result__head__source-language {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

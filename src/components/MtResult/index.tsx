@@ -5,6 +5,8 @@ import SourceFavicon from '../SourceFavicon';
 import { TranslateRequest } from '../../types';
 import TranslateResult from '../TranslateResult';
 import ListenButton from '../ListenButton';
+import { langCodeI18n } from '../../constants/langCode';
+import scOptions from '../../public/sc-options';
 
 type MtResultProps = {
     source: string;
@@ -28,17 +30,20 @@ const MtResult: React.FC<MtResultProps> = ({ source, translateRequest, remove, r
                     <SourceFavicon source={source} className='mt-result__head__badge' />
                     {translateRequest.status === 'loading' && <IconsLoadingSkeleton />}
                     {translateRequest.status === 'finished' && <>
-                        <IconFont
-                            className='iconbutton'
-                            iconName='#icon-copy'
-                            style={{marginLeft: '4px', cursor: 'pointer'}}
-                            onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(translateRequest.result.text); }}
-                        />
-                        <ListenButton
-                            text={translateRequest.result.text}
-                            source={source}
-                            from={translateRequest.result.from}
-                        />
+                        <div>
+                            <IconFont
+                                className='iconbutton'
+                                iconName='#icon-copy'
+                                style={{cursor: 'pointer'}}
+                                onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(translateRequest.result.text); }}
+                            />
+                            <ListenButton
+                                text={translateRequest.result.text}
+                                source={source}
+                                from={translateRequest.result.from}
+                            />
+                        </div>
+                        <div className='mt-result__head__source-language'>{langCodeI18n[scOptions.getInit().userLanguage][translateRequest.result.from]}</div>
                     </>}
                 </span>
                 <span className='mt-result__head-icons flex-align-items-center'>
@@ -66,6 +71,6 @@ const MtResult: React.FC<MtResultProps> = ({ source, translateRequest, remove, r
     );
 };
 
-const IconsLoadingSkeleton: React.FC = () => (<div className='skeleton' style={{width: '2em', height: '1em', marginLeft: '5px'}}></div>);
+const IconsLoadingSkeleton: React.FC = () => (<div className='skeleton' style={{width: '2.6em', height: '1.3em', marginLeft: '5px'}}></div>);
 
 export default MtResult;
