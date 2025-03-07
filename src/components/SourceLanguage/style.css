@@ -1,0 +1,19 @@
+.source-language {
+    overflow: hidden;
+    flex: 1;
+}
+.source-language__list__item {
+    padding: 4px 0px 4px 24px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.source-language__list__item:hover {
+    background-color: var(--bg-item-hover);
+}
+.source-language .text-field input {
+    color: var(--text-normal);
+}
+.source-language .panel-icon-btn {
+    overflow: hidden;
+    white-space: nowrap;
+}

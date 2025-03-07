@@ -5,8 +5,8 @@ import SourceFavicon from '../SourceFavicon';
 import { TranslateRequest } from '../../types';
 import TranslateResult from '../TranslateResult';
 import ListenButton from '../ListenButton';
-import { langCodeI18n } from '../../constants/langCode';
 import scOptions from '../../public/sc-options';
+import SourceLanguage from '../SourceLanguage';
 
 type MtResultProps = {
     source: string;
@@ -43,7 +43,7 @@ const MtResult: React.FC<MtResultProps> = ({ source, translateRequest, remove, r
                                 from={translateRequest.result.from}
                             />
                         </div>
-                        <div className='mt-result__head__source-language'>{langCodeI18n[scOptions.getInit().userLanguage][translateRequest.result.from]}</div>
+                        {scOptions.getInit().displayOfTranslation?.sourceLanguage && <SourceLanguage lang={translateRequest.result.from} />}
                     </>}
                 </span>
                 <span className='mt-result__head-icons flex-align-items-center'>
