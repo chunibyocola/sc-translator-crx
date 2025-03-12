@@ -1,3 +1,4 @@
+import { getMessage } from '../i18n';
 import { CONNECTION_TIMED_OUT, BAD_REQUEST } from './error-codes';
 
 export const getQueryString = (params: { [key: string]: string | number | (string | number)[]; }) => {
@@ -35,7 +36,13 @@ export const getError = (code: string): Error & { code: string } => {
 };
 
 export const fetchData = async (url: string, init?: RequestInit) => {
-    const res = await fetch(url, init).catch(() => { throw getError(CONNECTION_TIMED_OUT) });
+    const res = await fetch(url, { signal: AbortSignal.timeout(8000), ...init }).catch((err) => {
+        if (err.name === 'TimeoutError') {
+            throw getError(`${getMessage('errorCode_' + CONNECTION_TIMED_OUT)}(${new URL(url).host})`);
+        }
+
+        throw getError(`${err.name}: ${err.message}`);
+    });
 
     if (!res.ok) { throw getError(`${BAD_REQUEST} (http ${res.status})`); }
 

@@ -1,6 +1,6 @@
-import { getQueryString, getError } from '../utils';
+import { getQueryString, getError, fetchData } from '../utils';
 import { langCode } from './lang-code';
-import { RESULT_ERROR, LANGUAGE_NOT_SOPPORTED, CONNECTION_TIMED_OUT, BAD_REQUEST } from '../error-codes';
+import { RESULT_ERROR, LANGUAGE_NOT_SOPPORTED } from '../error-codes';
 import { TranslateParams } from '../translate-types';
 import { TranslateResult } from '../../../types';
 import { getTk } from '../../web-page-translate/google/getTk';
@@ -60,8 +60,6 @@ export const translate = async ({ text, from, to, preferredLanguage, secondPrefe
     }
 };
 
-let expiry = 0;
-
 type FetchParams = {
     client: string;
     sl: string;
@@ -79,28 +77,8 @@ const fetchGoogle = async (params: FetchParams): Promise<Response> => {
     if (!(params.sl in langCode) || !(params.tl in langCode)) { throw getError(LANGUAGE_NOT_SOPPORTED); }
 
     const url = 'https://translate.googleapis.com/translate_a/single';
-    const timpstamp = Number(new Date());
 
-    if (expiry > timpstamp) {
-        params.client = 'gtx';
-    }
-
-    let res = await fetch(url + getQueryString(params)).catch(() => { throw getError(CONNECTION_TIMED_OUT) });
-
-    if (!res.ok) {
-        if (res.status === 429 && expiry < timpstamp) {
-            expiry = timpstamp + 600000;
-            params.client = 'gtx';
-
-            res = await fetch(url + getQueryString(params)).catch(() => { throw getError(CONNECTION_TIMED_OUT) });
-
-            if (res.ok) {
-                return res;
-            }
-        }
-
-        throw getError(`${BAD_REQUEST} (http ${res.status})`);
-    }
+    let res = await fetchData(url + getQueryString(params));
 
     return res;
 };
