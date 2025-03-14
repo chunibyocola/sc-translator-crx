@@ -33,7 +33,7 @@ const SourceLanguage: React.FC<SourceLanguageProps> = ({ lang }) => {
             <PanelIconButtonWrapper
                 onClick={() => setPicking(!picking)}
             >
-                {langCodeI18n[scOptions.getInit().userLanguage][lang]}
+                {langCodeI18n[scOptions.getInit().userLanguage][lang] ?? lang}
             </PanelIconButtonWrapper>
             <SelectOptions
                 show={picking}
