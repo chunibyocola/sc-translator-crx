@@ -2,6 +2,10 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useAppDispatch, useInsertResult, useTranslationActions } from '../../public/react-use';
 import { addHistory, updateHistoryError, updateHistoryFinish } from '../../redux/slice/translateHistorySlice';
 import { playAudio } from '../play-audio';
+import { TranslateResult } from '../../types';
+import { textPreprocessing } from '../text-preprocessing';
+
+const translateResultCacheMap = new Map<string, TranslateResult>();
 
 const useTranslation = (extra?: { recordTranslation?: boolean; insertTranslation?: boolean; }) => {
     const recordTranslation = extra?.recordTranslation;
@@ -9,11 +13,11 @@ const useTranslation = (extra?: { recordTranslation?: boolean; insertTranslation
 
     const { state, actions } = useTranslationActions();
 
-    const { fetchTranslationFromSource } = actions;
+    const { fetchTranslationFromSource, requestFinish } = actions;
 
     const dispatch = useAppDispatch();
 
-    const { text, translateId, translations } = state;
+    const { text, translateId, translations, from, to } = state;
 
     const lastTranslateIdRef = useRef(translateId);
     const firstFinished = useRef(false);
@@ -21,7 +25,14 @@ const useTranslation = (extra?: { recordTranslation?: boolean; insertTranslation
     const { insertable, confirmInsert, insertToggle: insertTranslationToggle, autoInsert } = useInsertResult();
 
     const translate = useCallback(async (source: string) => {
-        const response = await fetchTranslationFromSource(source);
+        const cacheKey = [textPreprocessing(text), source, from, to].join('&');
+        const cache = translateResultCacheMap.get(cacheKey);
+
+        if (cache) {
+            requestFinish(source, cache);
+        }
+
+        const response = cache ? { translateId, translation: cache } : await fetchTranslationFromSource(source);
 
         if (!response) { return; }
 
@@ -38,6 +49,8 @@ const useTranslation = (extra?: { recordTranslation?: boolean; insertTranslation
             dispatch(updateHistoryFinish({ translateId: response.translateId, source, result: response.translation }));
         }
 
+        translateResultCacheMap.set(cacheKey, response.translation);
+
         if (!firstFinished.current) {
             firstFinished.current = true;
 
@@ -49,7 +62,7 @@ const useTranslation = (extra?: { recordTranslation?: boolean; insertTranslation
                 autoInsert(response.translateId, source, response.translation.result);
             }
         }
-    }, [fetchTranslationFromSource, autoInsert, dispatch, insertTranslation, recordTranslation]);
+    }, [fetchTranslationFromSource, autoInsert, dispatch, insertTranslation, recordTranslation, from, to, text, translateId, requestFinish]);
 
     useEffect(() => {
         if (lastTranslateIdRef.current === translateId) { return; }
