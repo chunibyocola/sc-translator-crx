@@ -6,7 +6,8 @@ import {
     addSource as addSourceAction,
     singleChangeSource as singleChangeSourceAction,
     fetchTranslationFromSource as fetchTranslationFromSourceAction,
-    requestFinish as requestFinishAction
+    requestFinish as requestFinishAction,
+    replaceSource as replaceSourceAction
 } from '../../redux/slice/translationSlice';
 import { switchTranslateSource } from '../../public/switch-translate-source';
 import { TranslateResult } from '../../types';
@@ -54,8 +55,14 @@ const useTranslationActions = () => {
     }, [dispatch, translations, from, to]);
 
     const requestFinish = useCallback((source: string, result: TranslateResult) => {
-        dispatch(requestFinishAction({ source, result }))
+        dispatch(requestFinishAction({ source, result }));
     }, [dispatch]);
+
+    const replaceSource = useCallback((originalSource: string, nextSource: string) => {
+        dispatch(replaceSourceAction({ originalSource, nextSource }));
+
+        text && fetchTranslationFromSource(nextSource);
+    }, [dispatch, fetchTranslationFromSource, text]);
 
     return {
         state,
@@ -68,7 +75,8 @@ const useTranslationActions = () => {
             retry,
             addSource,
             changeSource,
-            requestFinish
+            requestFinish,
+            replaceSource
         }
     };
 };

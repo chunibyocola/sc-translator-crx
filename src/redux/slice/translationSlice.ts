@@ -110,6 +110,14 @@ export const translationSlice = createSlice({
             state.to = payload.to;
             state.translateId += 1;
         },
+        replaceSource: (state, { payload }: PayloadAction<{ originalSource: string; nextSource: string; }>) => {
+            state.translations = state.translations.map((translation) => {
+                if (translation.source === payload.originalSource) {
+                    return { source: payload.nextSource, translateRequest: { status: 'init' } }
+                }
+                return translation;
+            });
+        },
         init: (state, { payload }: PayloadAction<{ sourceList: string[]; from: string; to: string; }>) => {
             state.from = payload.from;
             state.to = payload.to;
@@ -129,6 +137,7 @@ export const {
     addSource,
     removeSource,
     singleChangeSource,
+    replaceSource,
     init,
 } = translationSlice.actions;
 
