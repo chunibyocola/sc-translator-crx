@@ -33,7 +33,13 @@ const getFavicon = (source: string) => {
         case MOJIDICT_COM: return FaviconImg(mojidict);
         case BAIDU_COM: return FaviconImg(baidu);
         case MICROSOFT_COM: return FaviconImg(microsoft);
-        default: return (<div className='favicon favicon--mock'>{getSourceNameFromCustomSources(source)[0]}</div>);
+        default: return (
+            <div className='favicon favicon--mock'>
+                <div className='favicon--mock-text'>
+                    {getSourceNameFromCustomSources(source)[0]}
+                </div>
+            </div>
+        );
     }
 };
 

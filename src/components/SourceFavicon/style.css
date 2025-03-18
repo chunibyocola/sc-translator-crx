@@ -1,20 +1,24 @@
 .favicon {
+    font-size: 20px;
     vertical-align: bottom;
     user-select: none;
     display: inline-block;
     padding: 0;
-    width: 20px;
-    height: 20px;
+    width: 1em;
+    height: 1em;
 }
 .favicon--mock {
+    display: inline-flex;
     justify-content: center;
-    text-align: center;
-    font-size: 14px;
-    border-radius: 5px;
+    align-items: center;
+    border-radius: 4px;
     color: #fff;
     background: #999;
     font-weight: bold;
 }
+.favicon--mock-text {
+    font-size: 0.7em;
+}
 .favicon + span {
-    margin-left: 5px;
+    margin-left: 4px;
 }
