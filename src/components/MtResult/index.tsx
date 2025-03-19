@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import './style.css';
 import IconFont from '../IconFont';
-import SourceFavicon from '../SourceFavicon';
 import { TranslateRequest } from '../../types';
 import TranslateResult from '../TranslateResult';
 import ListenButton from '../ListenButton';
 import scOptions from '../../public/sc-options';
 import SourceLanguage from '../SourceLanguage';
+import MtSourceSelect from '../MtSourceSelect';
 
 type MtResultProps = {
     source: string;
@@ -27,7 +27,7 @@ const MtResult: React.FC<MtResultProps> = ({ source, translateRequest, remove, r
                 onClick={() => setFold(!fold)}
             >
                 <span className='mt-result__head__left'>
-                    <SourceFavicon source={source} className='mt-result__head__badge' />
+                    <MtSourceSelect source={source} />
                     {translateRequest.status === 'loading' && <IconsLoadingSkeleton />}
                     {translateRequest.status === 'finished' && <>
                         <div>

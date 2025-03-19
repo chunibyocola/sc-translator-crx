@@ -1,0 +1,37 @@
+.mtss {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    max-width: 150px;
+}
+.mtss > .panel-icon-btn {
+    max-width: 70px;
+}
+.mtss__favicon .favicon {
+    font-size: 16px;
+}
+.mtss__options {
+    background: var(--bg-content);
+    color: var(--text-normal);
+}
+.mtss__options__option {
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+.mtss__options__option:hover {
+    background: var(--bg-item-hover);
+}
+.mtss__source {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.mtss__favicon {
+    pointer-events: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
