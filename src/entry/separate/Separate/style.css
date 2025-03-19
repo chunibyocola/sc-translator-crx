@@ -1,12 +1,11 @@
 .separate-container {
-    transition: background 0.2s ease-in-out;
     width: 100%;
     height: 100%;
     background: var(--bg-total);
     color: var(--text-normal) !important;
 }
 .separate-container__content {
-    padding: 0px 5px 5px 5px;
+    padding: 0px 4;
     background: var(--bg-total);
 }
 .separate-container__multiple-result {

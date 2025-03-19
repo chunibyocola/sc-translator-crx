@@ -9,7 +9,7 @@
     min-width: 250px;
 }
 .panel__content {
-    margin: 0 4px 4px 4px;
+    margin: 0 4px;
 }
 .panel__header {
     cursor: grab;

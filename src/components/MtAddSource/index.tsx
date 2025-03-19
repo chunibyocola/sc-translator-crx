@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useRef } from 'react';
 import { translateSource } from '../../constants/translateSource';
 import { Translation } from '../../types';
 import IconFont from '../IconFont';
@@ -7,6 +7,7 @@ import SelectOptions from '../SelectOptions';
 import SourceFavicon from '../SourceFavicon';
 import './style.css';
 import scOptions from '../../public/sc-options';
+import { useMouseEventOutside } from '../../public/react-use';
 
 type MtAddSourceProps = {
     translations: Translation[];
@@ -20,25 +21,20 @@ const MtAddSource: React.FC<MtAddSourceProps> = ({ translations, addSource }) =>
         return translateSource.concat(scOptions.getInit().customTranslateSourceList).filter(v => translations.findIndex(v1 => v1.source === v.source) < 0);
     }, [translations]);
 
-    const hideSelectOptions = useCallback(() => {
-        setShowSelectOptions(false);
-    }, []);
-
-    const onAddSourceUnshift = useCallback((source: string) => {
-        addSource(source, 1);
-        hideSelectOptions();
-    }, [addSource, hideSelectOptions]);
-
     const onAddSource = useCallback((source: string) => {
         addSource(source, 0);
-        hideSelectOptions();
-    }, [addSource, hideSelectOptions]);
+    }, [addSource]);
+
+    const addSourceEltRef = useRef<HTMLDivElement>(null);
+
+    useMouseEventOutside(() => setShowSelectOptions(false), 'mousedown', addSourceEltRef.current, showSelectOptions);
 
     return (
         <div className='add-source'>
             <div
+                ref={addSourceEltRef}
                 className='add-source__wrapper'
-                onMouseLeave={hideSelectOptions}
+                onClick={() => setShowSelectOptions(!showSelectOptions)}
             >
                 <PanelIconButtonWrapper
                     onClick={() => setShowSelectOptions(showSelectOptions => !showSelectOptions)}
@@ -52,7 +48,8 @@ const MtAddSource: React.FC<MtAddSourceProps> = ({ translations, addSource }) =>
                     className='scrollbar'
                     show={showSelectOptions}
                     maxHeight={150}
-                    cover
+                    maxWidth={150}
+                    fixed
                 >
                     {sourceList.map((v, i) => (<div
                         key={v.source + i}
@@ -61,16 +58,6 @@ const MtAddSource: React.FC<MtAddSourceProps> = ({ translations, addSource }) =>
                     >
                         <span className='source-selector__item-source'>
                             <SourceFavicon source={v.source} />
-                        </span>
-                        <span className='source-selector__item-icons'>
-                            <PanelIconButtonWrapper
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    onAddSourceUnshift(v.source);
-                                }}
-                            >
-                                <IconFont iconName='#icon-top' />
-                            </PanelIconButtonWrapper>
                         </span>
                     </div>))}
                     {sourceList.length === 0 && <div style={{padding: '6px', textAlign: 'center'}}>......</div>}

@@ -49,21 +49,25 @@ const MultipleTranslateResult: React.FC<MultipleTranslateResultProps> = React.me
                 />
             </div>
             <div className='multiple-result scrollbar' style={{maxHeight: `${resultMaxHeight}px`}} ref={resultContainerEle}>
-                {translations.length === 0 ? 
-                    <div className='multiple-result__add-source'>{getMessage('sentenceAddTranslateSource')}</div> :
-                translations.map(({ source, translateRequest }) => (
-                    <MtResult
-                        source={source}
-                        translateRequest={translateRequest}
-                        key={source}
-                        remove={() => removeSource(source)}
-                        retry={() => retry(source)}
-                        setText={setText}
-                        insertResult={insertToggle && (translation => insertToggle(source, translation))}
-                    />
-                ))}
+                {translations.length === 0 ? (
+                    <>
+                        <div className='multiple-result__add-source'>{getMessage('sentenceAddTranslateSource')}</div>
+                        <MtAddSource translations={translations} addSource={addSource} />
+                    </>
+                ) : (
+                    translations.map(({ source, translateRequest }) => (
+                        <MtResult
+                            source={source}
+                            translateRequest={translateRequest}
+                            key={source}
+                            remove={() => removeSource(source)}
+                            retry={() => retry(source)}
+                            setText={setText}
+                            insertResult={insertToggle && (translation => insertToggle(source, translation))}
+                        />
+                    ))
+                )}
             </div>
-            <MtAddSource translations={translations} addSource={addSource} />
         </>
     );
 });

@@ -89,20 +89,24 @@ const Separate: React.FC = () => {
                     languageCodes={mtLangCode}
                 />
                 <div className='separate-container__multiple-result scrollbar'>
-                    {translations.length === 0 ? 
-                        <div className='separate-container__add-source'>{getMessage('sentenceAddTranslateSource')}</div> :
-                    translations.map(({ source, translateRequest }) => (
-                        <MtResult
-                            source={source}
-                            translateRequest={translateRequest}
-                            key={source}
-                            remove={() => removeSource(source)}
-                            retry={() => retry(source)}
-                            setText={setText}
-                        />
-                    ))}
+                    {translations.length === 0 ? (
+                        <>
+                            <div className='separate-container__add-source'>{getMessage('sentenceAddTranslateSource')}</div>
+                            <MtAddSource translations={translations} addSource={addSource} />
+                        </>
+                    ) : (
+                        translations.map(({ source, translateRequest }) => (
+                            <MtResult
+                                source={source}
+                                translateRequest={translateRequest}
+                                key={source}
+                                remove={() => removeSource(source)}
+                                retry={() => retry(source)}
+                                setText={setText}
+                            />
+                        ))
+                    )}
                 </div>
-                <MtAddSource translations={translations} addSource={addSource} />
             </div>
         </div>
     );
