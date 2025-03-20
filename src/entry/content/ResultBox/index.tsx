@@ -5,7 +5,6 @@ import { useAppSelector, useOptions, useWindowSize } from '../../../public/react
 import { calculatePosition, drag } from '../../../public/utils';
 import { GetStorageKeys, Position } from '../../../types';
 import MultipleTranslateResult from '../MultipleTranslateResult';
-import SingleTranslateResult from '../SingleTranslateResult';
 import './style.css';
 import PinButton from '../../../components/PanelIconButtons/PinButton';
 import CloseButton from '../../../components/PanelIconButtons/CloseButton';
@@ -24,11 +23,7 @@ const useOptionsDependency: GetStorageKeys<
     'translatePanelWidth'
 ];
 
-type ResultBoxProps = {
-    multipleTranslateMode: boolean;
-};
-
-const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
+const ResultBox: React.FC = () => {
     const [panelPosition, setPanelPosition] = useState<Position>({ x: 5, y: 5 });
     const [maxHeightGap, setMaxHeightGap] = useState(600);
 
@@ -120,11 +115,9 @@ const ResultBox: React.FC<ResultBoxProps> = ({ multipleTranslateMode }) => {
                 </span>
             </div>
             <div className='panel__content'>
-                {multipleTranslateMode ? <MultipleTranslateResult
+                <MultipleTranslateResult
                     maxHeightGap={maxHeightGap}
-                /> : <SingleTranslateResult
-                    maxHeightGap={maxHeightGap}
-                />}
+                />
             </div>
         </div>
     );

@@ -17,7 +17,6 @@ const initStorageOnInstalled = (userLang: string, update: boolean) => {
         case LANG_ZH_CN:
             defaultSet.userLanguage = LANG_ZH_CN;
             defaultSet.useDotCn = true;
-            defaultSet.defaultTranslateSource = BING_COM;
             defaultSet.defaultAudioSource = BING_COM;
             defaultSet.webPageTranslateSource = MICROSOFT_COM;
             break;

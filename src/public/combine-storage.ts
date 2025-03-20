@@ -13,7 +13,6 @@ const { auto, ...preferredLangCode } = googleLangCode;
 type Addition = {
     availableSources: string[];
     wpAvailableSources: string[];
-    defaultSource: string;
 };
 
 const CheckData = (() => {
@@ -77,20 +76,9 @@ const reducerMap: [(keyof DefaultOptions)[], <S>(origin: S, next: any, addition:
         return CheckData.isArrayOf(comparison, next) ? (next as any[]).filter(v => !webPageTranslateSource.map(s => s.source).includes(v.source)) as any : origin;
     }
 ], [
-    ['defaultTranslateSource'],
-    (origin, next, { availableSources }) => {
-        return availableSources.includes(next) ? next : availableSources.includes(origin as any) ? origin : GOOGLE_COM;
-    }
-], [
     ['userLanguage'],
     (origin, next) => {
         return userLangs.map(v => v.code).includes(next) ? next : origin;
-    }
-], [
-    ['defaultTranslateFrom', 'defaultTranslateTo'],
-    (origin, next, { defaultSource }) => {
-        const code = (langCode[defaultSource] ?? langCode[GOOGLE_COM])[LANG_EN];
-        return code.find(v => v.code === next) ? next : code.find(v => v.code === origin as any as string) ? origin : '';
     }
 ], [
     ['translateHostList', 'historyHostList', 'autoTranslateWebpageHostList'],
@@ -216,15 +204,12 @@ export const combineStorage = async (newData: any) => {
     if (CheckData.getTypeOf(newData) !== 'object') { throw new Error('Error: Data is not an "object".'); }
     const { sourceParamsCache, ...data } = await scOptions.get(null);
     const oldData: SyncOptions = data;
-    const addition: Addition = { availableSources: [], wpAvailableSources: [], defaultSource: '' };
+    const addition: Addition = { availableSources: [], wpAvailableSources: [] };
     oldData.customTranslateSourceList = nextValue('customTranslateSourceList', oldData.customTranslateSourceList, newData.customTranslateSourceList, addition);
     addition.availableSources = translateSource.concat(oldData.customTranslateSourceList).map(v => v.source);
 
     oldData.customWebpageTranslateSourceList = nextValue('customWebpageTranslateSourceList', oldData.customWebpageTranslateSourceList, newData.customWebpageTranslateSourceList, addition);
     addition.wpAvailableSources = webPageTranslateSource.concat(oldData.customWebpageTranslateSourceList).map(v => v.source);
-
-    oldData.defaultTranslateSource = nextValue('defaultTranslateSource', oldData.defaultTranslateSource, newData.defaultTranslateSource, addition);
-    addition.defaultSource = oldData.defaultTranslateSource;
 
     delete newData.customTranslateSourceList;
     delete newData.customWebpageTranslateSourceList;

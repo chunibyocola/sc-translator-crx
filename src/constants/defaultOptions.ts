@@ -8,9 +8,6 @@ import { initSourceParams } from './sourceParams';
 
 const defaultOptions: DefaultOptions = {
     userLanguage: LANG_EN,
-    defaultTranslateSource: GOOGLE_COM,
-    defaultTranslateFrom: '',
-    defaultTranslateTo: '',
     translateDirectly: false,
     translateBlackListMode: true,
     translateHostList: [],
@@ -19,7 +16,6 @@ const defaultOptions: DefaultOptions = {
     defaultAudioSource: GOOGLE_COM,
     translateWithKeyPress: false,
     useDotCn: false,
-    multipleTranslateMode: false,
     multipleTranslateSourceList: [GOOGLE_COM, BING_COM],
     multipleTranslateFrom: '',
     multipleTranslateTo: '',

@@ -13,9 +13,9 @@ import scOptions from '../../public/sc-options';
 
 scOptions.init().then((options) => {
     initTranslation({
-        sourceList: options.multipleTranslateMode ? options.multipleTranslateSourceList : [options.defaultTranslateSource],
-        from: options.multipleTranslateMode ? options.multipleTranslateFrom : options.defaultTranslateFrom,
-        to: options.multipleTranslateMode ? options.multipleTranslateTo : options.defaultTranslateTo
+        sourceList: options.multipleTranslateSourceList,
+        from: options.multipleTranslateFrom,
+        to: options.multipleTranslateTo
     });
 
     const root = document.createElement('div');
@@ -48,7 +48,7 @@ scOptions.init().then((options) => {
         <Provider store={store}>
             <TsBtn />
             <TsHistory />
-            <ResultBox multipleTranslateMode={options.multipleTranslateMode} />
+            <ResultBox />
             {enableWebpageTranslation && <WebPageTranslate />}
         </Provider>
     );

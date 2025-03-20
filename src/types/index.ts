@@ -98,9 +98,6 @@ export type ComparisonCustomization = {
 
 export type DefaultOptions = {
     userLanguage: string;
-    defaultTranslateSource: string;
-    defaultTranslateFrom: string;
-    defaultTranslateTo: string;
     translateDirectly: boolean;
     translateBlackListMode: boolean;
     translateHostList: string[];
@@ -109,7 +106,6 @@ export type DefaultOptions = {
     defaultAudioSource: string;
     translateWithKeyPress: boolean;
     useDotCn: boolean;
-    multipleTranslateMode: boolean;
     multipleTranslateSourceList: string[];
     multipleTranslateFrom: string;
     multipleTranslateTo: string;
@@ -178,6 +174,10 @@ export type DeprecatedOptions = {
     showButtonAfterSelect: boolean;
     enableContextMenus: boolean;
     clipboardReadPermission: boolean;
+    multipleTranslateMode: boolean;
+    defaultTranslateSource: string;
+    defaultTranslateFrom: string;
+    defaultTranslateTo: string;
 };
 
 export type SyncOptions = Omit<DefaultOptions, 'sourceParamsCache'>;

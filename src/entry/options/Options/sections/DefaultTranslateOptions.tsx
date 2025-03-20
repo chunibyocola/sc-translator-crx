@@ -15,30 +15,22 @@ import scOptions from '../../../../public/sc-options';
 import LanguageSelect from '../../../../components/LanguageSelect';
 
 const useOptionsDependency: GetStorageKeys<
-    'multipleTranslateMode' |
     'userLanguage' |
     'preferredLanguage' |
     'secondPreferredLanguage' |
     'multipleTranslateSourceList' |
     'multipleTranslateFrom' |
     'multipleTranslateTo' |
-    'defaultTranslateSource' |
-    'defaultTranslateFrom' |
-    'defaultTranslateTo' |
     'useDotCn' |
     'customTranslateSourceList' |
     'displayOfTranslation'
 > = [
-    'multipleTranslateMode',
     'userLanguage',
     'preferredLanguage',
     'secondPreferredLanguage',
     'multipleTranslateSourceList',
     'multipleTranslateFrom',
     'multipleTranslateTo',
-    'defaultTranslateSource',
-    'defaultTranslateFrom',
-    'defaultTranslateTo',
     'useDotCn',
     'customTranslateSourceList',
     'displayOfTranslation'
@@ -46,16 +38,12 @@ const useOptionsDependency: GetStorageKeys<
 
 const DefaultTranslateOptions: React.FC = () => {
     const {
-        multipleTranslateMode,
         userLanguage,
         preferredLanguage,
         secondPreferredLanguage,
         multipleTranslateSourceList,
         multipleTranslateFrom,
         multipleTranslateTo,
-        defaultTranslateSource,
-        defaultTranslateFrom,
-        defaultTranslateTo,
         useDotCn,
         customTranslateSourceList,
         displayOfTranslation
@@ -115,7 +103,6 @@ const DefaultTranslateOptions: React.FC = () => {
                             const availableSources = translateSource.concat(value).map(v => v.source);
                             scOptions.set({
                                 multipleTranslateSourceList: multipleTranslateSourceList.filter(v => availableSources.includes(v)),
-                                defaultTranslateSource: availableSources.includes(defaultTranslateSource) ? defaultTranslateSource : GOOGLE_COM,
                                 customTranslateSourceList: value
                             });
                         }}
@@ -123,74 +110,32 @@ const DefaultTranslateOptions: React.FC = () => {
                 </div>
             </div>
             <div className='opt-section-row'>
-                <Switch
-                    label={getMessage('optionsMultipleTranslateMode')}
-                    checked={multipleTranslateMode}
-                    onChange={v => scOptions.set({ multipleTranslateMode: v })}
+                {getMessage('optionsSourceList')}
+                <div className='item-description'>{getMessage('optionsMultipleTranslateSourceListDescription')}</div>
+                <div className='mt10-ml30'>
+                    <MultipleSourcesDisplay
+                        enabledSources={multipleTranslateSourceList}
+                        sources={translateSource.concat(customTranslateSourceList)}
+                        onChange={value => scOptions.set({ multipleTranslateSourceList: value })}
+                    />
+                </div>
+            </div>
+            <div className='opt-section-row'>
+                {getMessage('optionsFrom')}
+                <LanguageSelect
+                    value={multipleTranslateFrom}
+                    onChange={value => scOptions.set({ multipleTranslateFrom: value })}
+                    langCodes={mtLangCode[userLanguage]}
                 />
             </div>
-            {multipleTranslateMode ? <>
-                <div className='opt-section-row'>
-                    {getMessage('optionsSourceList')}
-                    <div className='item-description'>{getMessage('optionsMultipleTranslateSourceListDescription')}</div>
-                    <div className='mt10-ml30'>
-                        <MultipleSourcesDisplay
-                            enabledSources={multipleTranslateSourceList}
-                            sources={translateSource.concat(customTranslateSourceList)}
-                            onChange={value => scOptions.set({ multipleTranslateSourceList: value })}
-                        />
-                    </div>
-                </div>
-                <div className='opt-section-row'>
-                    {getMessage('optionsFrom')}
-                    <LanguageSelect
-                        value={multipleTranslateFrom}
-                        onChange={value => scOptions.set({ multipleTranslateFrom: value })}
-                        langCodes={mtLangCode[userLanguage]}
-                    />
-                </div>
-                <div className='opt-section-row'>
-                    {getMessage('optionsTo')}
-                    <LanguageSelect
-                        value={multipleTranslateTo}
-                        onChange={value => scOptions.set({ multipleTranslateTo: value })}
-                        langCodes={mtLangCode[userLanguage]}
-                    />
-                </div>
-            </> : <>
-                <div className='opt-section-row'>
-                    {getMessage('optionsSource')}
-                    <SourceSelect
-                        className='border-bottom-select opt-source-select'
-                        sourceList={translateSource.concat(customTranslateSourceList)}
-                        source={defaultTranslateSource}
-                        onChange={value => {
-                            const { from, to } = switchTranslateSource(value, defaultTranslateFrom, defaultTranslateTo);
-                            scOptions.set({
-                                defaultTranslateSource: value,
-                                defaultTranslateFrom: from,
-                                defaultTranslateTo: to
-                            });
-                        }}
-                    />
-                </div>
-                <div className='opt-section-row'>
-                    {getMessage('optionsFrom')}
-                    <LanguageSelect
-                        value={defaultTranslateFrom}
-                        onChange={value => scOptions.set({ defaultTranslateFrom: value })}
-                        langCodes={(langCode[defaultTranslateSource] ?? googleLangCode)[userLanguage]}
-                    />
-                </div>
-                <div className='opt-section-row'>
-                    {getMessage('optionsTo')}
-                    <LanguageSelect
-                        value={defaultTranslateTo}
-                        onChange={value => scOptions.set({ defaultTranslateTo: value })}
-                        langCodes={(langCode[defaultTranslateSource] ?? googleLangCode)[userLanguage]}
-                    />
-                </div>
-            </>}
+            <div className='opt-section-row'>
+                {getMessage('optionsTo')}
+                <LanguageSelect
+                    value={multipleTranslateTo}
+                    onChange={value => scOptions.set({ multipleTranslateTo: value })}
+                    langCodes={mtLangCode[userLanguage]}
+                />
+            </div>
             <div className='opt-section-row'>
                 {getMessage('optionsDisplayOfTranslation')}
                 <div className='item-description'>{getMessage('optionsDisplayOfTranslationDescription')}</div>

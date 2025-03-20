@@ -15,16 +15,16 @@ scOptions.init().then((options) => {
     appendCustomizeStyle(document.head);
 
     initTranslation({
-        sourceList: options.multipleTranslateMode ? options.multipleTranslateSourceList : [options.defaultTranslateSource],
-        from: options.multipleTranslateMode ? options.multipleTranslateFrom : options.defaultTranslateFrom,
-        to: options.multipleTranslateMode ? options.multipleTranslateTo : options.defaultTranslateTo
+        sourceList: options.multipleTranslateSourceList,
+        from: options.multipleTranslateFrom,
+        to: options.multipleTranslateTo
     });
 
     const rootElement = document.getElementById('root');
 
     rootElement && ReactDOMClient.createRoot(rootElement).render(
         <Provider store={store}>
-            <ResultBox multipleTranslateMode={options.multipleTranslateMode} />
+            <ResultBox />
         </Provider>
     );
 });
