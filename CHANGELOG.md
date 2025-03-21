@@ -1,3 +1,13 @@
+# 5.8.0 (2025-03-21)
+- Remove single translation mode.
+- Remove "+" button on multiple translation panel and can swap and add source by clicking any source.
+- Change Google page translation source URL.
+- Add "source language" option and can change source language by clicking "source language".
+- Translation result will be cached on current page.
+- Set a timeout of 8s on fetching translation.
+- Page translation will skip element with `translate="no"`.
+- Fix can't listen audio through popup button in some cases.
+- Fix "undefined" might be displayed on translation panel.
 # 5.7.2 (2024-12-08)
 - Fix old extension icon doesn't get replaced.
 - Add Baidu translation(selection version).
