@@ -1,30 +1,44 @@
 import { unescapeText, WebpageTranslateFn } from '..';
 import { RESULT_ERROR } from '../../translate/error-codes';
 import { fetchData, getError } from '../../translate/utils';
-import { getTk } from './getTk';
+// import { getTk } from './getTk';
 
 export const translate: WebpageTranslateFn = async ({ keys, targetLanguage }) => {
-    const searchParams = new URLSearchParams();
-    keys.forEach(key => searchParams.append('q', key));
+    // const searchParams = new URLSearchParams();
+    // keys.forEach(key => searchParams.append('q', key));
 
-    const totalQText = keys.join('');
+    // const totalQText = keys.join('');
 
-    const url = `https://translate.googleapis.com/translate_a/t?anno=3&client=te_lib&format=html&v=1.0&key=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw&logld=vTE_20230724&sl=auto&tl=${targetLanguage}&tc=1&dom=1&sr=1&tk=${getTk(totalQText)}&mode=1`;
+    // const url = `https://translate.googleapis.com/translate_a/t?anno=3&client=te_lib&format=html&v=1.0&key=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw&logld=vTE_20230724&sl=auto&tl=${targetLanguage}&tc=1&dom=1&sr=1&tk=${getTk(totalQText)}&mode=1`;
+
+    // const res = await fetchData(url, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/x-www-form-urlencoded'
+    //     },
+    //     body: searchParams.toString()
+    // });
+
+    const url = 'https://translate-pa.googleapis.com/v1/translateHtml';
 
     const res = await fetchData(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json+protobuf',
+            'X-Goog-API-Key': 'AIzaSyATBXajvzQLTDHEQbcpq0Ihe0vWDHmO520'
         },
-        body: searchParams.toString()
+        body: JSON.stringify([
+            [keys, 'auto', targetLanguage],
+            'te_lib'
+        ])
     });
 
     try {
-        const data: string | string[] | [string, string][] = await res.json();
+        const data: [string[]] = await res.json();
 
         if (!Array.isArray(data)) { return []; }
 
-        return data.map((value) => {
+        return data[0].map((value) => {
             const language = Array.isArray(value) ? (value[1] ?? undefined) : undefined;
             value = Array.isArray(value) ? (value[0] ?? '') : value;
 
