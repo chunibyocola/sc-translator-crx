@@ -13,8 +13,8 @@ export type TranslateSource = {
 export const translateSource: TranslateSource[] = [
     { source: GOOGLE_COM, url: 'translate.google.com' },
     { source: BING_COM, url: 'www.bing.com/translator/' },
-    { source: MOJIDICT_COM, url: 'www.mojidict.com' },
-    { source: BAIDU_COM, url: 'fanyi.baidu.com' }
+    { source: BAIDU_COM, url: 'fanyi.baidu.com' },
+    { source: MOJIDICT_COM, url: 'www.mojidict.com' }
 ];
 
 export const audioSource: TranslateSource[] = [
