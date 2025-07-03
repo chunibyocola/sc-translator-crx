@@ -12,7 +12,6 @@ import '../../../../../components/MtAddSource/style.css';
 import '../../../../../components/MtResult/style.css';
 import '../../../../../components/LanguageSelect/style.css';
 import '../../../../../components/TranslateResult/style.css';
-import '../../../../content/SingleTranslateResult/style.css';
 import SourceFavicon from '../../../../../components/SourceFavicon';
 import IconFont from '../../../../../components/IconFont';
 import { StyleVars } from '../../../../../constants/defaultStyleVars';
@@ -25,81 +24,6 @@ type CustomizeBoardDisplayProps = {
 const CustomizeBoardDisplay: React.FC<CustomizeBoardDisplayProps> = ({ styleVars }) => {
     return (
         <div className='customize-board-display'>
-            {/* TsResult */}
-            <div
-                className="panel"
-                style={{
-                    background: styleVars['--bg-total'],
-                    position: 'unset',
-                    height: 'fit-content'
-                }}
-                ref={node => node && node.style.setProperty('color', styleVars['--text-normal'], 'important')}
-            >
-                <div
-                    className="panel__header flex-justify-content-space-between"
-                    style={{
-                        color: styleVars['--text-icon']
-                    }}
-                >
-                    <div className="panel__header-logo flex-align-items-center"></div>
-                    <span className="panel__header-icons flex-align-items-center">
-                        <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(180deg)', opacity: '1', color: styleVars['--text-icon']}} />
-                        <IconFont iconName='#icon-GoPin' style={{color: styleVars['--text-icon']}} />
-                    </span>
-                </div>
-                <div className="panel__content">
-                    <div style={{color: styleVars['--text-normal']}}>
-                        <div className="raw-text">
-                            <textarea placeholder="Input here" className="raw-text__textarea" defaultValue='welcome'></textarea>
-                        </div>
-                        <div className="language-selection">
-                            <div className="language-select language-selection__select border-bottom-select" style={{color: styleVars['--text-normal']}}>
-                                <span className="language-select__badge">
-                                    <span className="language-select__badge-text">自动选择</span>
-                                    <IconFont iconName='#icon-GoChevronDown' />
-                                </span>
-                            </div>
-                            <IconFont iconName='#icon-MdSwap' />
-                            <div className="language-select language-selection__select border-bottom-select" style={{color: styleVars['--text-normal'], background: styleVars['--bg-select-focus']}}>
-                                <span className="language-select__badge">
-                                    <span className="language-select__badge-text">自动选择</span>
-                                    <IconFont iconName='#icon-GoChevronDown' />
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='single-translation' style={{background: styleVars['--bg-content']}} >
-                        <div className="via">
-                            <div className="via__content">
-                                <div className="source-select via__content-select">
-                                    <span className="source-select__value">
-                                        <SourceFavicon source='google.com' />
-                                    </span>
-                                    <IconFont iconName='#icon-GoChevronDown' />
-                                </div>
-                                <IconFont iconName='#icon-copy' className='iconbutton button' />
-                                <IconFont iconName='#icon-GoUnmute' className='iconbutton button' />
-                            </div>
-                            <div className='dividing-line' style={{background: styleVars['--text-normal']}}></div>
-                        </div>
-                        <div className="single-translation__translation scrollbar">
-                            <div className='translate-result'>
-                                <div className="translate-result__item translate-result__phonetic">[ˈwelkəm]</div>
-                                <div className="translate-result__item translate-result__result">
-                                    <span>欢迎</span>
-                                    <IconFont iconName='#icon-copy' className='iconbutton button' />
-                                    <IconFont iconName='#icon-GoUnmute' className='iconbutton button' />
-                                </div>
-                                <div className="translate-result__item translate-result__dict">
-                                    <div>名词: 欢迎, 欢迎光临</div>
-                                    <div>动词: 欢迎, 迎, 迎接, 赞同, 赞成, 赞许, 揖, 迓, 赞, 接</div>
-                                    <div>形容词: 受欢迎, 爽快, 顗</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             {/* MultiplePopup */}
             <div 
                 className="popup-container"
