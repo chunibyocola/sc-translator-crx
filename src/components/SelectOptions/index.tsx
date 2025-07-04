@@ -105,13 +105,14 @@ type SelectOptionsProps = {
     fixed?: boolean;
     cover?: boolean;
     onShow?: () => void;
+    ref?: React.Ref<SelectOptionsForwardRef>;
 } & Pick<React.HTMLAttributes<HTMLDivElement>, 'children' | 'style' | 'className' | 'onMouseLeave' | 'onMouseDown' | 'onClick'>;
 
 export type SelectOptionsForwardRef = {
     scrollToTop: () => void;
 };
 
-const SelectOptions = React.forwardRef<SelectOptionsForwardRef, SelectOptionsProps>(({
+const SelectOptions: React.FC<SelectOptionsProps> = ({
     children,
     maxHeight = 300,
     maxWidth = 200,
@@ -123,15 +124,16 @@ const SelectOptions = React.forwardRef<SelectOptionsForwardRef, SelectOptionsPro
     onShow,
     onMouseLeave,
     onMouseDown,
-    onClick
-}, forwardedRef) => {
+    onClick,
+    ref
+}) => {
     const [optionsStyle, setOptionsStyle] = useState({});
 
     const windowSize = useWindowSize();
 
     const optionsElementRef = useRef<HTMLDivElement>(null);
 
-    useImperativeHandle(forwardedRef, () => ({
+    useImperativeHandle(ref, () => ({
         scrollToTop: () => optionsElementRef.current?.scrollTo({ top: 0 })
     }));
 
@@ -155,6 +157,6 @@ const SelectOptions = React.forwardRef<SelectOptionsForwardRef, SelectOptionsPro
             {children}
         </div>
     );
-});
+};
 
 export default SelectOptions;

@@ -14,6 +14,7 @@ type ColorSelectorProps = {
     initColor: string;
     save: (rgba: string) => void;
     update: (rgba: string) => void;
+    ref?: React.Ref<ColorSelectorForwardRef>;
 };
 
 export type ColorSelectorForwardRef = {
@@ -26,7 +27,7 @@ const getRGBAFromColor = (rgba: string) => {
     return [Number(sR), Number(sG), Number(sB), Number(sA)];
 };
 
-const ColorSelector = React.forwardRef<ColorSelectorForwardRef, ColorSelectorProps>(({ initColor, save, update }, forwardedRef) => {
+const ColorSelector: React.FC<ColorSelectorProps> = ({ initColor, save, update, ref }) => {
     const [mainColor, setMainColor] = useState<RGB>({ r: 255, g: 0, b: 0 });
     const [selectedColor, setSelectedColor] = useState({ r: 255, g: 0, b: 0 });
     const [platterPos, setPlatterPos] = useState({ x: platterRect.w, y: 0 });
@@ -80,7 +81,7 @@ const ColorSelector = React.forwardRef<ColorSelectorForwardRef, ColorSelectorPro
         handleUpdateColor({ r: aR, g: aG, b: aB }, opacity);
     }, [handleUpdateColor, opacity, updateStateByRgb]);
 
-    useImperativeHandle(forwardedRef, () => ({
+    useImperativeHandle(ref, () => ({
         setRGBA: (color) => {
             const [r, g, b, a] = getRGBAFromColor(color);
             updateStateByRgb(r, g, b);
@@ -112,6 +113,6 @@ const ColorSelector = React.forwardRef<ColorSelectorForwardRef, ColorSelectorPro
             />
         </div>
     );
-});
+};
 
 export default ColorSelector;
