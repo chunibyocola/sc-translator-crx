@@ -1,8 +1,8 @@
 import { DependencyList, useEffect, useRef } from 'react';
 
 const useDebounce = (fn: () => void, ms: number, deps: DependencyList) => {
-    const timerRef = useRef<ReturnType<typeof setTimeout>>();
-    const debounceRef = useRef<() => void>();
+    const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+    const debounceRef = useRef<() => void>(undefined);
     const callbackRef = useRef(fn);
 
     useEffect(() => {

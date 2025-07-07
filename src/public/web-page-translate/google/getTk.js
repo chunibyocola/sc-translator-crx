@@ -1,4 +1,3 @@
-/* eslint-disable */
 const TKK = '406398.2087938574';
 
 const b = (a, b) => {
@@ -24,4 +23,3 @@ export const getTk = (a) => {
     a %= 1E6;
     return a.toString() + "." + (a ^ h);
 };
-/* eslint-enable */

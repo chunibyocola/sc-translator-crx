@@ -28,7 +28,7 @@ const ResultBox: React.FC = () => {
     const [maxHeightGap, setMaxHeightGap] = useState(600);
 
     const mtEle = useRef<HTMLDivElement>(null);
-    const oldPositionRef = useRef<Position>();
+    const oldPositionRef = useRef<Position>(undefined);
     const lastStablePanelPositionRef = useRef<Position>({ x: 5, y: 5 });
 
     const { show, position, pinning, displayEditArea } = useAppSelector(state => state.panelStatus);

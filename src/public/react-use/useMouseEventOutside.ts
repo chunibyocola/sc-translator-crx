@@ -8,7 +8,7 @@ type PickedMouseEventType = keyof Pick<
 >;
 
 const useMouseEventOutside = (callback: () => void, mouseEvent: PickedMouseEventType, targetElement: HTMLElement | null | undefined, activate: boolean) => {
-    const callbackRef = useRef<() => void>();
+    const callbackRef = useRef<() => void>(undefined);
 
     useEffect(() => {
         callbackRef.current = callback;

@@ -21,7 +21,7 @@ const TranslationsContainer: React.FC<TranslationsContainerProps> = React.memo((
     const [deletedNote, setDeletedNote] = useState('');
     const [addingTag, setAddingTag] = useState(false);
 
-    const lastTextRef = useRef<string>();
+    const lastTextRef = useRef<string>(undefined);
 
     useLayoutEffect(() => {
         if (lastTextRef.current === collectionValue.text) { return; }

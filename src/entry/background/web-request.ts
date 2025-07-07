@@ -4,13 +4,13 @@ const viewerURL = chrome.runtime.getURL('/pdf-viewer/web/viewer.html');
 
 const getRedirectURL = (url: string) => (`${viewerURL}?file=${encodeURIComponent(url)}`);
 
-const onBeforeRequest: (details: chrome.webRequest.WebRequestBodyDetails) => void = ({ url, tabId }: chrome.webRequest.WebRequestBodyDetails) => {
+const onBeforeRequest: (details: chrome.webRequest.OnBeforeRequestDetails) => undefined = ({ url, tabId }) => {
     scOptions.get(['enablePdfViewer']).then(({ enablePdfViewer }) => {
         enablePdfViewer && chrome.tabs.update(tabId, { url: getRedirectURL(url) });
     });
 };
 
-const onHeadersReceived: (details: chrome.webRequest.WebResponseHeadersDetails) => void = ({ responseHeaders, url, method, tabId }) => {
+const onHeadersReceived: (details: chrome.webRequest.OnHeadersReceivedDetails) => undefined = ({ responseHeaders, url, method, tabId }) => {
     if (method.toLowerCase() !== 'get' || !responseHeaders) { return; }
 
     const contentType = responseHeaders.find(({ name }) => (name.toLowerCase() === 'content-type'));

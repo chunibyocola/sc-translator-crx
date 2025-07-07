@@ -28,7 +28,6 @@ const CustomizeBoardDisplay: React.FC<CustomizeBoardDisplayProps> = ({ styleVars
             <div 
                 className="popup-container"
                 style={{margin: '0 25px', transition: 'unset', background: styleVars['--bg-total']}}
-                ref={node => node && node.style.setProperty('color', styleVars['--text-normal'], 'important')}
             >
                 <div
                     className="popup-header flex-justify-content-space-between"

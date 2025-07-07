@@ -29,7 +29,7 @@ const TsHistory: React.FC = () => {
     const historyEnabled = useIsHistoryEnabled(window.location.host);
     const translateEnabled = useIsTranslateEnabled(window.location.host);
 
-    const foldTimeDelay = useRef<ReturnType<typeof setTimeout>>();
+    const foldTimeDelay = useRef<ReturnType<typeof setTimeout>>(undefined);
 
     const dispatch = useAppDispatch();
 

@@ -3,7 +3,7 @@ import { startTransition, useCallback, useRef, useState } from 'react';
 const useRippleActivationClassName = (activationClassName: string, deactivationClassName: string): [string, () => void] => {
     const [className, setClassName] = useState('');
 
-    const clearClassNameTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+    const clearClassNameTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
     const classNameRef = useRef('');
 
     const setClassNameWithRef = useCallback((className: string) => {

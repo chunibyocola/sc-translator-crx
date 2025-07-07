@@ -4,7 +4,7 @@ import { ChromeTabsMessage } from '../send';
 const useOnRuntimeMessage = (onMessageChange: (message: ChromeTabsMessage) => void) => {
     const [message, setMessage] = useState<ChromeTabsMessage>();
 
-    const onMessageChangeRef = useRef<typeof onMessageChange>();
+    const onMessageChangeRef = useRef<typeof onMessageChange>(undefined);
 
     useEffect(() => {
         onMessageChangeRef.current = onMessageChange;
