@@ -1,6 +1,29 @@
 import { StyleVarsList } from "../constants/defaultStyleVars";
 import { SourceParams } from "../constants/sourceParams";
 
+declare global {
+    interface Window {
+        Translator: Translator;
+        LanguageDetector: LanguageDetector;
+    }
+}
+
+interface Translator {
+    availability: (params: { sourceLanguage: string; targetLanguage: string; }) => Promise<'unavailable' | 'downloadable' | 'downloading' | 'available'>;
+    create: (params: { sourceLanguage: string; targetLanguage: string; monitor?: (monitor: EventTarget) => void; }) => Promise<Translator>;
+    translate: (input: string) => Promise<string>;
+    destroy: () => void;
+    ready: Promise<void>;
+};
+
+interface LanguageDetector {
+    availability: (expectedInputLanguages?: string[]) => Promise<'unavailable' | 'downloadable' | 'downloading' | 'available'>;
+    create: (params?: { monitor?: (monitor: EventTarget) => void; }) => Promise<LanguageDetector>;
+    detect: (input: string) => Promise<{ detectedLanguage: string; confidence: number; }[]>;
+    destroy: () => void;
+    ready: Promise<void>;
+}
+
 export type GetStorageKeys<T extends keyof DefaultOptions> = T[];
 
 export type TranslateResult = {
