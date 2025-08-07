@@ -189,6 +189,7 @@ export type DefaultOptions = {
     enablePageTranslationCache: boolean;
     autoPlayAudio: boolean;
     autoPlayAudioLangs: string[];
+    highlightCollectedText: boolean;
 };
 
 // Only work in "src/entry/background/install.ts".

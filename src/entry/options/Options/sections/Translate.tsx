@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Slider, { SliderFormat, SliderMarks } from '../../../../components/Slider';
 import Switch from '../../../../components/Switch';
 import { getMessage } from '../../../../public/i18n';
@@ -34,7 +34,8 @@ const useOptionsDependency: GetStorageKeys<
     'autoInsertResult' |
     'translateButtons' |
     'translateButtonsTL' |
-    'userLanguage'
+    'userLanguage' |
+    'highlightCollectedText'
 > = [
     'translateWithKeyPress',
     'translateDirectly',
@@ -50,7 +51,8 @@ const useOptionsDependency: GetStorageKeys<
     'autoInsertResult',
     'translateButtons',
     'translateButtonsTL',
-    'userLanguage'
+    'userLanguage',
+    'highlightCollectedText'
 ];
 
 const Translate: React.FC = () => {
@@ -69,8 +71,11 @@ const Translate: React.FC = () => {
         autoInsertResult,
         translateButtons,
         translateButtonsTL,
-        userLanguage
+        userLanguage,
+        highlightCollectedText
     } = useOptions(useOptionsDependency);
+
+    const [highlightMessage, setHighlightMessage] = useState('');
 
     return (
         <div className='opt-section'>
@@ -167,6 +172,26 @@ const Translate: React.FC = () => {
                     />
                     <div className='item-description'>{getMessage('optionsAutoInsertResultDescription')}</div>
                 </div>
+            </div>
+            <div className='opt-section-row'>
+                <div className='flex-align-items-center'>
+                    <Switch
+                        label={'Highlight collected text'}
+                        checked={highlightCollectedText}
+                        onChange={v => {
+                            try {
+                                new Highlight();
+                                scOptions.set({ highlightCollectedText: v });
+                                setHighlightMessage('');
+                            }
+                            catch {
+                                setHighlightMessage('Your browser does not support "Highlight" API.')
+                            }
+                        }}
+                    />
+                    <BetaIcon />
+                </div>
+                {highlightMessage && <div className='item-description'>{highlightMessage}</div>}
             </div>
             <div className='opt-section-row'>
                 <div className='options-mode'>

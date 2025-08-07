@@ -92,7 +92,8 @@ const defaultOptions: DefaultOptions = {
     translateRedirectedSameDomainPage: false,
     enablePageTranslationCache: false,
     autoPlayAudio: false,
-    autoPlayAudioLangs: []
+    autoPlayAudioLangs: [],
+    highlightCollectedText: false
 };
 
 export default defaultOptions;
