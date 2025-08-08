@@ -120,6 +120,15 @@ const scIndexedDB = (() => {
 
             return request.result;
         },
+        getAllKeys: async <T extends StoreName>(storeName: T): Promise<IDBValidKey[]> => {
+            const [store, done] = await withStore(storeName, 'readonly');
+
+            let request = store.getAllKeys();
+
+            await done;
+
+            return request.result;
+        },
         add: async <T extends StoreName>(storeName: T, value: StoreAddValue<T>, key?: IDBValidKey ) => {
             const [store] = await withStore(storeName, 'readwrite');
 
