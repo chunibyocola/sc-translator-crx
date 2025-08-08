@@ -3,12 +3,23 @@ import { translate, audio, detect } from '../../public/request';
 import { createSeparateWindow } from './separate-window';
 import { syncSettingsToOtherBrowsers } from './sync';
 import scIndexedDB, { DB_STORE_COLLECTION } from '../../public/sc-indexed-db';
-import { AudioResponse, ChromeRuntimeMessage, DetectResponse, GetCacheResponse, GetSelectorsResponse, IsCollectResponse, TranslateResponse } from '../../public/send';
+import {
+    AudioResponse,
+    ChromeRuntimeMessage,
+    DetectResponse,
+    GetAllCollectedTextResponse,
+    GetCacheResponse,
+    GetSelectorsResponse,
+    IsCollectResponse,
+    TranslateResponse
+} from '../../public/send';
 import { addCache, getCache } from './page-translation-cache';
 import { getSpecifySelectors } from './page-translation-rule';
 import scOptions from '../../public/sc-options';
 
-type TypedSendResponse = (response: TranslateResponse | AudioResponse | DetectResponse | IsCollectResponse | GetCacheResponse | GetSelectorsResponse) => void;
+type TypedSendResponse = (
+    response: TranslateResponse | AudioResponse | DetectResponse | IsCollectResponse | GetCacheResponse | GetSelectorsResponse | GetAllCollectedTextResponse
+) => void;
 
 chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sendResponse: TypedSendResponse) => {
     switch (message.type) {
@@ -108,6 +119,12 @@ chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sen
             const { hostAndPathname } = message.payload;
 
             getSpecifySelectors(hostAndPathname).then(data => sendResponse(data));
+
+            return true;
+        }
+        case types.SCTS_GET_ALL_COLLECTED_TEXT: {
+
+            scIndexedDB.getAllKeys('collection').then(data => sendResponse(data as string[]));
 
             return true;
         }
