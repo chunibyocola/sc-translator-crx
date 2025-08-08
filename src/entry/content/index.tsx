@@ -10,6 +10,7 @@ import '../../styles/global.css';
 import { appendColorVarsStyle, appendCustomizeStyle, appendFontSizeStyle } from '../../public/inject-style';
 import WebPageTranslate from './WebPageTranslate';
 import scOptions from '../../public/sc-options';
+import { initHighlight } from './highlight';
 
 scOptions.init().then((options) => {
     initTranslation({
@@ -33,6 +34,8 @@ scOptions.init().then((options) => {
     appendColorVarsStyle(shadowRoot);
     appendFontSizeStyle(shadowRoot);
     appendCustomizeStyle(shadowRoot);
+
+    initHighlight();
 
     const rootWrapper = document.createElement('div');
     rootWrapper.setAttribute('style', 'all: initial;');
