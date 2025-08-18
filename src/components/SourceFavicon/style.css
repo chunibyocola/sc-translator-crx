@@ -1,6 +1,9 @@
+.source-favicon {
+    display: inline-flex;
+    align-items: center;
+}
 .favicon {
     font-size: 20px;
-    vertical-align: bottom;
     user-select: none;
     display: inline-block;
     padding: 0;
@@ -15,6 +18,7 @@
     color: #fff;
     background: #999;
     font-weight: bold;
+    flex-shrink: 0;
 }
 .favicon--mock-text {
     font-size: 0.7em;

@@ -1,12 +1,15 @@
 import React from 'react';
-import { GOOGLE_COM, BING_COM, MOJIDICT_COM, BAIDU_COM, MICROSOFT_COM } from '../../constants/translateSource';
+import { GOOGLE_COM, BING_COM, MOJIDICT_COM, BAIDU_COM, MICROSOFT_COM, BROWSER_AI } from '../../constants/translateSource';
 import google from './favicons/google.png';
 import bing from './favicons/bing.png';
 import mojidict from './favicons/mojidict.png';
 import baidu from './favicons/baidu.png';
 import microsoft from './favicons/microsofttranslator.png';
+import browserAI from './favicons/browserAI.png';
+import gemini from './favicons/gemini.png';
 import './style.css';
 import scOptions from '../../public/sc-options';
+import { cn } from '../../public/utils';
 
 type SourceFaviconProps = {
     source: string;
@@ -15,7 +18,7 @@ type SourceFaviconProps = {
 
 const SourceFavicon: React.FC<SourceFaviconProps> = ({ source, className, faviconOnly }) => {
     return (
-        <span className={className}>
+        <span className={cn('source-favicon', className)}>
             {getFavicon(source)}
             {!faviconOnly && <span>{getName(source)}</span>}
         </span>
@@ -33,6 +36,8 @@ const getFavicon = (source: string) => {
         case MOJIDICT_COM: return FaviconImg(mojidict);
         case BAIDU_COM: return FaviconImg(baidu);
         case MICROSOFT_COM: return FaviconImg(microsoft);
+        case BROWSER_AI: return FaviconImg(browserAI);
+        case 'Gemini': return FaviconImg(gemini);
         default: return (
             <div className='favicon favicon--mock'>
                 <div className='favicon--mock-text'>
@@ -52,6 +57,8 @@ const getName = (source: string) => {
         case MOJIDICT_COM: return 'Mojidict';
         case BAIDU_COM: return 'Baidu';
         case MICROSOFT_COM: return 'Microsoft';
+        case BROWSER_AI: return 'Browser AI (Beta)';
+        case 'Gemini': return 'Gemini';
         default: return getSourceNameFromCustomSources(source);
     }
 };
