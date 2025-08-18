@@ -48,16 +48,29 @@
     width: 100%;
     color: rgba(0, 0, 0, 0.87);
 }
-.text-field input::placeholder {
+.text-field textarea {
+    font-size: inherit;
+    background: none;
+    border: 0;
+    outline: 0;
+    color: currentColor;
+    width: 100%;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.87);
+}
+.text-field input::placeholder, .text-field textarea::placeholder {
     color: currentColor;
     opacity: 0.5;
 }
-.text-field input.labeled-input::placeholder {
+.text-field input.labeled-input::placeholder, .text-field textarea.labeled-input::placeholder {
     opacity: 0;
     transition: opacity 200ms;
 }
-.text-field input.labeled-input:focus::placeholder {
+.text-field input.labeled-input:focus::placeholder, .text-field textarea.labeled-input:focus::placeholder {
     opacity: 0.5;
+}
+.text-field textarea {
+    resize: none;
 }
 .text-field__input-area::before, .text-field__input-area::after {
     left: 0;
