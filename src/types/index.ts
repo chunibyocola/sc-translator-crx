@@ -1,5 +1,6 @@
 import { StyleVarsList } from "../constants/defaultStyleVars";
 import { SourceParams } from "../constants/sourceParams";
+import { EnabledThirdPartyServices } from "./thirdPartyValue";
 
 declare global {
     interface Window {
@@ -190,6 +191,7 @@ export type DefaultOptions = {
     autoPlayAudio: boolean;
     autoPlayAudioLangs: string[];
     highlightCollectedText: boolean;
+    enabledThirdPartyServices: EnabledThirdPartyServices;
 };
 
 // Only work in "src/entry/background/install.ts".

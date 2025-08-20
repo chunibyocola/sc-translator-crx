@@ -93,7 +93,8 @@ const defaultOptions: DefaultOptions = {
     enablePageTranslationCache: false,
     autoPlayAudio: false,
     autoPlayAudioLangs: [],
-    highlightCollectedText: false
+    highlightCollectedText: false,
+    enabledThirdPartyServices: []
 };
 
 export default defaultOptions;
