@@ -1,0 +1,14 @@
+.third-party-service__list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+.service-panel {
+    display: flex;
+    flex-direction: column;
+}
+.service-panel__buttons {
+    display: flex;
+    justify-content: space-between;
+}
