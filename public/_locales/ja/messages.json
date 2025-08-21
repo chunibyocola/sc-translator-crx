@@ -805,5 +805,26 @@
     },
     "errorCode_SOURCE_ERROR": {
         "message": "エラー：翻訳ソースが見つかりません。"
+    },
+    "download": {
+        "message": "ダウンロード"
+    },
+    "unavailable": {
+        "message": "利用不可"
+    },
+    "downloadable": {
+        "message": "ダウンロード可能"
+    },
+    "downloading": {
+        "message": "ダウンロード中"
+    },
+    "available": {
+        "message": "利用可能"
+    },
+    "browserAIUnavailable": {
+        "message": "お使いのブラウザではブラウザAIをご利用いただけません。"
+    },
+    "commonPrompt": {
+        "message": "次のテキストを{target}に翻訳:\n\n{text}"
     }
 }

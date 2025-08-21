@@ -805,5 +805,26 @@
     },
     "errorCode_SOURCE_ERROR": {
         "message": "错误：未找到翻译源。"
+    },
+    "download": {
+        "message": "下载"
+    },
+    "unavailable": {
+        "message": "不可用"
+    },
+    "downloadable": {
+        "message": "可下载"
+    },
+    "downloading": {
+        "message": "正在下载"
+    },
+    "available": {
+        "message": "可用"
+    },
+    "browserAIUnavailable": {
+        "message": "你的浏览器不支持浏览器 AI。"
+    },
+    "commonPrompt": {
+        "message": "将下面的文本翻译成{target}:\n\n{text}"
     }
 }

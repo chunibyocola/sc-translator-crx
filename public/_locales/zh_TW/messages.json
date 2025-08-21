@@ -805,5 +805,26 @@
     },
     "errorCode_SOURCE_ERROR": {
         "message": "錯誤：未找到翻譯源。"
+    },
+    "download": {
+        "message": "下載"
+    },
+    "unavailable": {
+        "message": "不可用"
+    },
+    "downloadable": {
+        "message": "可下載"
+    },
+    "downloading": {
+        "message": "正在下載"
+    },
+    "available": {
+        "message": "可用"
+    },
+    "browserAIUnavailable": {
+        "message": "你的瀏覽器無法使用瀏覽器 AI。"
+    },
+    "commonPrompt": {
+        "message": "將下面的文字翻譯成{target}:\n\n{text}"
     }
 }

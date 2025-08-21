@@ -805,5 +805,26 @@
     },
     "errorCode_SOURCE_ERROR": {
         "message": "Error: Translate source not found."
+    },
+    "download": {
+        "message": "Download"
+    },
+    "unavailable": {
+        "message": "unavailable"
+    },
+    "downloadable": {
+        "message": "downloadable"
+    },
+    "downloading": {
+        "message": "downloading"
+    },
+    "available": {
+        "message": "available"
+    },
+    "browserAIUnavailable": {
+        "message": "Browser AI is unavailable for your browser."
+    },
+    "commonPrompt": {
+        "message": "Translate the following text into {target}:\n\n{text}"
     }
 }
