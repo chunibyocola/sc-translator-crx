@@ -36,6 +36,7 @@ export const langCodeI18n = Object.entries({
     'ny': { 'en': 'Chichewa', 'ja': 'チェワ語', 'zh-CN': '齐切瓦语' },
     'zh-CN': { 'en': 'Chinese (Simplified)', 'ja': '中国語（簡体）', 'zh-CN': '中文（简体）' },
     'zh-TW': { 'en': 'Chinese (Traditional)', 'ja': '中国語（繁体）', 'zh-CN': '中文（繁体）' },
+    'zh': { 'en': 'Chinese', 'ja': '中国語', 'zh-CN': '中文' },
     'co': { 'en': 'Corsican', 'ja': 'コルシカ語', 'zh-CN': '科西嘉语' },
     'hr': { 'en': 'Croatian', 'ja': 'クロアチア語', 'zh-CN': '克罗地亚语' },
     'cs': { 'en': 'Czech', 'ja': 'チェコ語', 'zh-CN': '捷克语' },
