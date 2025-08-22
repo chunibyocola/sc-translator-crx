@@ -826,5 +826,20 @@
     },
     "commonPrompt": {
         "message": "将下面的文本翻译成{target}:\n\n{text}"
+    },
+    "thirdPartyServices": {
+        "message": "第三方服务"
+    },
+    "delete": {
+        "message": "删除"
+    },
+    "promptHelperText": {
+        "message": "{target} -> 目标语言；{text} -> 需要翻译的文本；"
+    },
+    "apiKeyHelperText": {
+        "message": "API Key 不能为空"
+    },
+    "confirmDeleteService": {
+        "message": "已填写的数据不会被保留"
     }
 }

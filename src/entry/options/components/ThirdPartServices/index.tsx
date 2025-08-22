@@ -7,6 +7,8 @@ import './style.css';
 import SourceFavicon from '../../../../components/SourceFavicon';
 import scOptions from '../../../../public/sc-options';
 import { getMessage } from '../../../../public/i18n';
+import IconFont from '../../../../components/IconFont';
+import ConfirmDelete from '../../../collection/components/ConfirmDelete';
 
 const serviceNameSet = new Set(thirdPartyServiceNames);
 
@@ -128,6 +130,8 @@ const ServicePanel: React.FC<ServicePanelProps> = ({ serviceName, variant, servi
     const [promptText, setPromptText] = useState(serviceValue?.prompt ?? '');
     const [keyText, setKeyText] = useState(serviceValue?.key ?? '');
 
+    const [confirmDelete, setConfirmDelete] = useState(false);
+
     const [keyErr, setKeyErr] = useState('');
 
     const defaultValue = useMemo(() => serviceDefaultValueMap.get(serviceName), [serviceName]);
@@ -150,7 +154,7 @@ const ServicePanel: React.FC<ServicePanelProps> = ({ serviceName, variant, servi
             nextValue.key = keyText;
         }
         else {
-            setKeyErr('Key can not be empty');
+            setKeyErr(getMessage('apiKeyHelperText'));
             return;
         }
 
@@ -168,29 +172,35 @@ const ServicePanel: React.FC<ServicePanelProps> = ({ serviceName, variant, servi
 
     return (
         <div className='service-panel'>
-            <div><SourceFavicon source={serviceName} /></div>
+            <div className='service-panel__head'>
+                <SourceFavicon source={serviceName} />
+                <Button variant='icon' onClick={onCancel}>
+                    <IconFont iconName='#icon-GoX' style={{fontSize: '20px'}} />
+                </Button>
+            </div>
             {Object.hasOwn(defaultValue, 'url') && <TextField
-                label='url'
+                label='URL'
                 placeholder={defaultValue.url}
                 defaultValue={urlText}
                 onChange={setUrlText}
             />}
             {Object.hasOwn(defaultValue, 'model') && <TextField
-                label='model'
+                label='Model'
                 placeholder={defaultValue.model}
                 defaultValue={modelText}
                 onChange={setModelText}
             />}
             {Object.hasOwn(defaultValue, 'prompt') && <TextField
-                label='prompt'
+                label='Prompt'
                 placeholder={defaultValue.prompt || getMessage('commonPrompt')}
                 defaultValue={promptText}
                 multiline
                 rows={4}
                 onChange={setPromptText}
+                helperText={getMessage('promptHelperText')}
             />}
             {Object.hasOwn(defaultValue, 'key') && <TextField
-                label='key'
+                label='API Key'
                 placeholder={defaultValue.key}
                 defaultValue={keyText}
                 onChange={(key) => {
@@ -207,27 +217,31 @@ const ServicePanel: React.FC<ServicePanelProps> = ({ serviceName, variant, servi
             {variant === 'add' && <div className='service-panel__buttons'>
                 <div></div>
                 <div>
-                    <Button variant='text' onClick={onCancel}>Cancel</Button>
                     <Button
                         variant='contained'
                         onClick={() => {
                             collectServiceValue(onAdd)
                         }}
-                    >Add</Button>
+                    >{getMessage('wordAdd')}</Button>
                 </div>
             </div>}
             {variant === 'update' && <div className='service-panel__buttons'>
                 <div>
-                    <Button variant='contained' onClick={() => onDelete(serviceName)}>Delete</Button>
+                    <Button variant='outlined' onClick={() => setConfirmDelete(true)}>Delete</Button>
+                    {confirmDelete && <ConfirmDelete
+                        onConfirm={() => onDelete(serviceName)}
+                        onCancel={() => setConfirmDelete(false)}
+                        onClose={() => setConfirmDelete(false)}
+                        drawerTitle={getMessage('confirmDeleteService')}
+                    />}
                 </div>
                 <div>
-                    <Button variant='text' onClick={onCancel}>Cancel</Button>
                     <Button
                         variant='contained'
                         onClick={() => {
                             collectServiceValue(onUpdate)
                         }}
-                    >Update</Button>
+                    >{getMessage('wordSave')}</Button>
                 </div>
             </div>}
         </div>

@@ -826,5 +826,20 @@
     },
     "commonPrompt": {
         "message": "Translate the following text into {target}:\n\n{text}"
+    },
+    "thirdPartyServices": {
+        "message": "Third-party services"
+    },
+    "delete": {
+        "message": "Delete"
+    },
+    "promptHelperText": {
+        "message": "{target} -> Target language; {text} -> The text to be translated;"
+    },
+    "apiKeyHelperText": {
+        "message": "API Key cannot be empty"
+    },
+    "confirmDeleteService": {
+        "message": "The filled data will not be retained"
     }
 }

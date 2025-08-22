@@ -12,3 +12,8 @@
     display: flex;
     justify-content: space-between;
 }
+.service-panel__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

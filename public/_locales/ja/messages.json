@@ -826,5 +826,20 @@
     },
     "commonPrompt": {
         "message": "次のテキストを{target}に翻訳:\n\n{text}"
+    },
+    "thirdPartyServices": {
+        "message": "第三者サービス"
+    },
+    "delete": {
+        "message": "削除"
+    },
+    "promptHelperText": {
+        "message": "{target} -> 目標言語。{text} -> 翻訳するテキスト。"
+    },
+    "apiKeyHelperText": {
+        "message": "API Keyは空にできません"
+    },
+    "confirmDeleteService": {
+        "message": "入力されたデータは保持されません"
     }
 }
