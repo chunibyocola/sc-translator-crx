@@ -20,7 +20,8 @@ const MtSourceSelect: React.FC<SourceSelectProps> = ({ source }) => {
 
     const sources = useMemo(() => {
         const addedSourceSet = new Set(translations.map(translation => translation.source));
-        return translateSource.concat(scOptions.getInit().customTranslateSourceList).filter(v => !addedSourceSet.has(v.source));
+        const { customTranslateSourceList, enabledThirdPartyServices } = scOptions.getInit();
+        return translateSource.concat(customTranslateSourceList).map(v => v.source).concat(enabledThirdPartyServices.map(v => v.name)).filter(v => !addedSourceSet.has(v));
     }, [translations]);
 
     const sourceSelectEltRef = useRef<HTMLDivElement>(null);
@@ -48,19 +49,19 @@ const MtSourceSelect: React.FC<SourceSelectProps> = ({ source }) => {
             >
                 {sources.map((v) => (<div
                     className='mtss__options__option'
-                    key={v.source}
+                    key={v}
                     onClick={() => {
-                        replaceSource(source, v.source);
+                        replaceSource(source, v);
                     }}
                 >
                     <div className='mtss__source'>
-                        <SourceFavicon source={v.source} />
+                        <SourceFavicon source={v} />
                     </div>
                     <PanelIconButtonWrapper
                         onClick={(e) => {
                             e.stopPropagation();
                             setShowOptions(false);
-                            addSource(v.source, 0);
+                            addSource(v, 0);
                         }}
                     >
                         <IconFont iconName='#icon-MdAdd' style={{ fontSize: '16px' }} />

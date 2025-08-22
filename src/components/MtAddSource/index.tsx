@@ -17,8 +17,10 @@ type MtAddSourceProps = {
 const MtAddSource: React.FC<MtAddSourceProps> = ({ translations, addSource }) => {
     const [showSelectOptions, setShowSelectOptions] = useState(false);
 
-    const sourceList = useMemo(() => {
-        return translateSource.concat(scOptions.getInit().customTranslateSourceList).filter(v => translations.findIndex(v1 => v1.source === v.source) < 0);
+    const sources = useMemo(() => {
+        const addedSourceSet = new Set(translations.map(translation => translation.source));
+        const { customTranslateSourceList, enabledThirdPartyServices } = scOptions.getInit();
+        return translateSource.concat(customTranslateSourceList).map(v => v.source).concat(enabledThirdPartyServices.map(v => v.name)).filter(v => !addedSourceSet.has(v));
     }, [translations]);
 
     const onAddSource = useCallback((source: string) => {
@@ -51,16 +53,16 @@ const MtAddSource: React.FC<MtAddSourceProps> = ({ translations, addSource }) =>
                     maxWidth={150}
                     fixed
                 >
-                    {sourceList.map((v, i) => (<div
-                        key={v.source + i}
+                    {sources.map((v, i) => (<div
+                        key={v + i}
                         className='source-selector__item button'
-                        onClick={() => onAddSource(v.source)}
+                        onClick={() => onAddSource(v)}
                     >
                         <span className='source-selector__item-source'>
-                            <SourceFavicon source={v.source} />
+                            <SourceFavicon source={v} />
                         </span>
                     </div>))}
-                    {sourceList.length === 0 && <div style={{padding: '6px', textAlign: 'center'}}>......</div>}
+                    {sources.length === 0 && <div style={{padding: '6px', textAlign: 'center'}}>......</div>}
                 </SelectOptions>
             </div>
         </div>

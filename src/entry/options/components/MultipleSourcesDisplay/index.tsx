@@ -8,7 +8,7 @@ import './style.css';
 
 type MultipleSourcesDisplayProps = {
     enabledSources: string[];
-    sources: TranslateSource[];
+    sources: string[];
     onChange: (sources: string[]) => void;
 };
 
@@ -29,7 +29,7 @@ const MultipleSourcesDisplay: React.FC<MultipleSourcesDisplayProps> = ({ enabled
     return (
         <div className='multiple-sources-display'>
             <div className='multiple-sources-display__list'>
-                {sources.map(({ source }) => (<div className='multiple-sources-display__item' key={'msd_' + source}>
+                {sources.map((source) => (<div className='multiple-sources-display__item' key={'msd_' + source}>
                     <Checkbox
                         label={<SourceFavicon source={source} />}
                         checked={source in enabledSourcesMap}
@@ -41,9 +41,9 @@ const MultipleSourcesDisplay: React.FC<MultipleSourcesDisplayProps> = ({ enabled
                 <div>{getMessage('optionsPreview')}</div>
                 <div className='multiple-sources-display__preview__content'>
                     {enabledSources.length > 0 ? enabledSources.map((source, index) => (<div className='multiple-sources-display__item' key={'msd_p_' + source}>
-                        {index !== 0 &&  <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(-90deg)', marginRight: '5px'}} />}
+                        {index !== 0 &&  <IconFont iconName='#icon-GoChevronDown' style={{transform: 'rotate(-90deg)'}} />}
                         <SourceFavicon source={source} />
-                    </div>)) : <div style={{marginTop: '5px'}}>--</div>}
+                    </div>)) : <div>--</div>}
                 </div>
             </div>
         </div>

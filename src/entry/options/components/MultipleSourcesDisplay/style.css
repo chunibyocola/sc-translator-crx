@@ -14,3 +14,8 @@
     flex-wrap: wrap;
     gap: 4px 8px;
 }
+.multiple-sources-display__preview__content .multiple-sources-display__item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
