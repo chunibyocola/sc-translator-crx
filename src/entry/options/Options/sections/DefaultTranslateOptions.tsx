@@ -1,11 +1,9 @@
 import React from 'react';
-import SourceSelect from '../../../../components/SourceSelect';
 import Switch from '../../../../components/Switch';
-import { googleLangCode, langCode, mtLangCode, preferredLangCode, userLangs } from '../../../../constants/langCode';
-import { GOOGLE_COM, translateSource } from '../../../../constants/translateSource';
+import { mtLangCode, preferredLangCode, userLangs } from '../../../../constants/langCode';
+import { translateSource } from '../../../../constants/translateSource';
 import { getMessage } from '../../../../public/i18n';
 import { useOptions } from '../../../../public/react-use';
-import { switchTranslateSource } from '../../../../public/switch-translate-source';
 import { GetStorageKeys } from '../../../../types';
 import BetaIcon from '../../components/BetaIcon';
 import CustomTranslateSourceDisplay from '../../components/CustomTranslateSourceDisplay';
@@ -13,6 +11,7 @@ import MultipleSourcesDisplay from '../../components/MultipleSourcesDisplay';
 import TranslationDisplay from '../../components/TranslationDisplay';
 import scOptions from '../../../../public/sc-options';
 import LanguageSelect from '../../../../components/LanguageSelect';
+import ThirdPartyServices from '../../components/ThirdPartServices';
 
 const useOptionsDependency: GetStorageKeys<
     'userLanguage' |
@@ -23,7 +22,8 @@ const useOptionsDependency: GetStorageKeys<
     'multipleTranslateTo' |
     'useDotCn' |
     'customTranslateSourceList' |
-    'displayOfTranslation'
+    'displayOfTranslation' |
+    'enabledThirdPartyServices'
 > = [
     'userLanguage',
     'preferredLanguage',
@@ -33,7 +33,8 @@ const useOptionsDependency: GetStorageKeys<
     'multipleTranslateTo',
     'useDotCn',
     'customTranslateSourceList',
-    'displayOfTranslation'
+    'displayOfTranslation',
+    'enabledThirdPartyServices'
 ];
 
 const DefaultTranslateOptions: React.FC = () => {
@@ -46,7 +47,8 @@ const DefaultTranslateOptions: React.FC = () => {
         multipleTranslateTo,
         useDotCn,
         customTranslateSourceList,
-        displayOfTranslation
+        displayOfTranslation,
+        enabledThirdPartyServices
     } = useOptions(useOptionsDependency);
 
     return (
@@ -100,7 +102,7 @@ const DefaultTranslateOptions: React.FC = () => {
                         customTranslateSources={customTranslateSourceList}
                         onChange={(value) => {
                             // If user delete the using custom sources, remove them from options(multipleTranslateSourceList/defaultTranslateSource).
-                            const availableSources = translateSource.concat(value).map(v => v.source);
+                            const availableSources = translateSource.concat(value).map(v => v.source).concat(enabledThirdPartyServices.map(v => v.name));
                             scOptions.set({
                                 multipleTranslateSourceList: multipleTranslateSourceList.filter(v => availableSources.includes(v)),
                                 customTranslateSourceList: value
@@ -110,12 +112,21 @@ const DefaultTranslateOptions: React.FC = () => {
                 </div>
             </div>
             <div className='opt-section-row'>
+                {getMessage('thirdPartyServices')}
+                <div className='mt10-ml30'>
+                    <ThirdPartyServices
+                        enabledThirdPartyServices={enabledThirdPartyServices}
+                        enabledSources={multipleTranslateSourceList}
+                    />
+                </div>
+            </div>
+            <div className='opt-section-row'>
                 {getMessage('optionsSourceList')}
                 <div className='item-description'>{getMessage('optionsMultipleTranslateSourceListDescription')}</div>
                 <div className='mt10-ml30'>
                     <MultipleSourcesDisplay
                         enabledSources={multipleTranslateSourceList}
-                        sources={translateSource.concat(customTranslateSourceList)}
+                        sources={translateSource.map(v => v.source).concat(customTranslateSourceList.map(v => v.source)).concat(enabledThirdPartyServices.map(v => v.name))}
                         onChange={value => scOptions.set({ multipleTranslateSourceList: value })}
                     />
                 </div>
