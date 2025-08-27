@@ -1,5 +1,6 @@
 import { getMessage } from '../i18n';
 import { CONNECTION_TIMED_OUT, BAD_REQUEST } from './error-codes';
+import { TranslateParams } from './translate-types';
 
 export const getQueryString = (params: { [key: string]: string | number | (string | number)[]; }) => {
     let search = '';
@@ -49,6 +50,18 @@ export const fetchData = async (url: string, init?: RequestInit) => {
     return res;
 };
 
+export const fetchTPS = async (url: string, init?: RequestInit) => {
+    const res = await fetch(url, { signal: AbortSignal.timeout(8000), ...init }).catch((err) => {
+        if (err.name === 'TimeoutError') {
+            throw getError(`${getMessage('errorCode_' + CONNECTION_TIMED_OUT)}(${new URL(url).host})`);
+        }
+
+        throw getError(`${err.name}: ${err.message}`);
+    });
+
+    return res;
+};
+
 export const fetchStream = async (url: string, init?: RequestInit) => {
     const res = await fetchData(url, init);
 
@@ -80,4 +93,17 @@ export const fetchStream = async (url: string, init?: RequestInit) => {
     const re = result.split('\n\n').filter(v => v.indexOf('event: message\ndata: ') === 0).map(v => JSON.parse(v.replace('event: message\ndata: ', '')));
 
     return re;
+};
+
+export const determineFromAndTo: (params: TranslateParams) => Promise<{ from: string; to: string; }> = async ({ text, from, to, preferredLanguage, secondPreferredLanguage }) => {
+    if (from === '') {
+        const detection = await chrome.i18n.detectLanguage(text);
+        from = detection.languages[0]?.language ?? '';
+    }
+
+    if (to === '' && from !== '') {
+        to = preferredLanguage.startsWith(from) ? secondPreferredLanguage : preferredLanguage;
+    }
+
+    return { from, to };
 };

@@ -9,6 +9,7 @@ import bing from '../public/translate/bing';
 import mojidict from '../public/translate/mojidict';
 import custom from '../public/translate/custom';
 import baidu from '../public/translate/baidu';
+import { translate as geminiTranslate } from '../public/translate/gemini/translate';
 import { AudioResponse, DetectResponse, TranslateResponse } from './send';
 import { getError } from './translate/utils';
 
@@ -37,6 +38,9 @@ export const translate = async ({ source, ...requestParams }: TranslateRequestPa
 			break;
 		case BAIDU_COM:
 			translate = baidu.translate;
+			break;
+		case 'Gemini':
+			translate = geminiTranslate;
 			break;
 		default:
 			translate = custom.translate;
