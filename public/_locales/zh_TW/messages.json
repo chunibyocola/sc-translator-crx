@@ -841,5 +841,8 @@
     },
     "confirmDeleteService": {
         "message": "已填寫的資料不會被保留"
+    },
+    "thirdPartyServicesDescription": {
+        "message": "當你使用的第三方服務不提供語言偵測功能時會使用瀏覽器內建的語言偵測功能（準確率偏低）。"
     }
 }

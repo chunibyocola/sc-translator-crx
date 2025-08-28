@@ -112,11 +112,18 @@ const DefaultTranslateOptions: React.FC = () => {
                 </div>
             </div>
             <div className='opt-section-row'>
-                {getMessage('thirdPartyServices')}
+                {getMessage('thirdPartyServices')}<BetaIcon />
+                <div className='item-description'>{getMessage('thirdPartyServicesDescription')}</div>
                 <div className='mt10-ml30'>
                     <ThirdPartyServices
                         enabledThirdPartyServices={enabledThirdPartyServices}
-                        enabledSources={multipleTranslateSourceList}
+                        onUpdateServices={services => scOptions.set({ enabledThirdPartyServices: services })}
+                        onDeleteService={(serviceName) => {
+                            scOptions.set({
+                                enabledThirdPartyServices: enabledThirdPartyServices.filter(v => v.name !== serviceName),
+                                multipleTranslateSourceList: multipleTranslateSourceList.filter(v => v !== serviceName)
+                            });
+                        }}
                     />
                 </div>
             </div>

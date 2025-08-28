@@ -841,5 +841,8 @@
     },
     "confirmDeleteService": {
         "message": "已填写的数据不会被保留"
+    },
+    "thirdPartyServicesDescription": {
+        "message": "当你使用的第三方服务不提供语言检测功能时会使用浏览器内置的语言检测功能（准确率偏低）。"
     }
 }

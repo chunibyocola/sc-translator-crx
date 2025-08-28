@@ -841,5 +841,8 @@
     },
     "confirmDeleteService": {
         "message": "The filled data will not be retained"
+    },
+    "thirdPartyServicesDescription": {
+        "message": "When the third-party service you use does not provide language detection, the browser's built-in language detection will be used (with low accuracy)."
     }
 }

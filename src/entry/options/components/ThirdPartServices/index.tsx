@@ -5,7 +5,6 @@ import TextField from '../../../../components/TextField';
 import Button from '../../../../components/Button';
 import './style.css';
 import SourceFavicon from '../../../../components/SourceFavicon';
-import scOptions from '../../../../public/sc-options';
 import { getMessage } from '../../../../public/i18n';
 import IconFont from '../../../../components/IconFont';
 import ConfirmDelete from '../../../collection/components/ConfirmDelete';
@@ -14,10 +13,11 @@ const serviceNameSet = new Set(thirdPartyServiceNames);
 
 type ThirdPartyServicesProps = {
     enabledThirdPartyServices: EnabledThirdPartyServices;
-    enabledSources: string[];
+    onUpdateServices: (services: EnabledThirdPartyServices) => void;
+    onDeleteService: (serviceName: string) => void;
 };
 
-const ThirdPartyServices: React.FC<ThirdPartyServicesProps> = ({ enabledThirdPartyServices, enabledSources }) => {
+const ThirdPartyServices: React.FC<ThirdPartyServicesProps> = ({ enabledThirdPartyServices, onUpdateServices, onDeleteService }) => {
     const [adding, setAdding] = useState(false);
     const [addingService, setAddingService] = useState<typeof thirdPartyServiceNames[number] | null>(null);
     const [updatingService, setUpdatingService] = useState<EnabledThirdPartyServices[number] | null>(null);
@@ -28,15 +28,12 @@ const ThirdPartyServices: React.FC<ThirdPartyServicesProps> = ({ enabledThirdPar
     }, [enabledThirdPartyServices]);
 
     const deleteService = useCallback((serviceName: string) => {
-        scOptions.set({
-            enabledThirdPartyServices: enabledThirdPartyServices.filter(v => v.name !== serviceName),
-            multipleTranslateSourceList: enabledSources.filter(v => v !== serviceName)
-        });
-    }, [enabledThirdPartyServices]);
+        onDeleteService(serviceName);
+    }, [enabledThirdPartyServices, onDeleteService]);
 
     const addService = useCallback((serviceValue: ServiceValue) => {
-        scOptions.set({ enabledThirdPartyServices: enabledThirdPartyServices.concat(serviceValue) });
-    }, [enabledThirdPartyServices]);
+        onUpdateServices(enabledThirdPartyServices.concat(serviceValue));
+    }, [enabledThirdPartyServices, onUpdateServices]);
 
     const updateService = useCallback((serviceValue: ServiceValue) => {
         const nextServices = enabledThirdPartyServices.map((value) => {
@@ -47,8 +44,8 @@ const ThirdPartyServices: React.FC<ThirdPartyServicesProps> = ({ enabledThirdPar
             return serviceValue;
         });
 
-        scOptions.set({ enabledThirdPartyServices: nextServices });
-    }, [enabledThirdPartyServices]);
+        onUpdateServices(nextServices);
+    }, [enabledThirdPartyServices, onUpdateServices]);
 
     return (
         <div>
@@ -57,13 +54,13 @@ const ThirdPartyServices: React.FC<ThirdPartyServicesProps> = ({ enabledThirdPar
                     {enabledThirdPartyServices.map((item) => (<Button key={item.name} variant='text' onClick={() => setUpdatingService(item)}>
                         <SourceFavicon source={item.name} />
                     </Button>))}
-                    <Button onClick={() => setAdding(true)} variant='contained'>Add</Button>
+                    <Button onClick={() => setAdding(true)} variant='contained'>{getMessage('wordAdd')}</Button>
                 </div>}
                 {adding && <div className='third-party-service__list'>
                     {notAddedServiceNames.map((name) => (<Button key={name} variant='text' onClick={() => setAddingService(name)}>
                         <SourceFavicon source={name} />
                     </Button>))}
-                    <Button variant='contained' onClick={() => setAdding(false)}>Cancel</Button>
+                    <Button variant='contained' onClick={() => setAdding(false)}>{getMessage('wordCancel')}</Button>
                 </div>}
             </>}
             {addingService && <ServicePanel
@@ -227,7 +224,7 @@ const ServicePanel: React.FC<ServicePanelProps> = ({ serviceName, variant, servi
             </div>}
             {variant === 'update' && <div className='service-panel__buttons'>
                 <div>
-                    <Button variant='outlined' onClick={() => setConfirmDelete(true)}>Delete</Button>
+                    <Button variant='outlined' onClick={() => setConfirmDelete(true)}>{getMessage('delete')}</Button>
                     {confirmDelete && <ConfirmDelete
                         onConfirm={() => onDelete(serviceName)}
                         onCancel={() => setConfirmDelete(false)}
