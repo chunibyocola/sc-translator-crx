@@ -844,5 +844,8 @@
     },
     "thirdPartyServicesDescription": {
         "message": "使用する第三者サービスが言語検出機能を提供していない場合は、ブラウザに組み込まれている言語検出機能が使用されます（精度は低くなります）。"
+    },
+    "openaiDescription": {
+        "message": "このサービスはデフォルトではChatGPTと同一であり、OpenAI REST APIと互換性のあるAIサービスを追加するために使用できます。"
     }
 }

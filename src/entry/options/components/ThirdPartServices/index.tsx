@@ -175,6 +175,7 @@ const ServicePanel: React.FC<ServicePanelProps> = ({ serviceName, variant, servi
                     <IconFont iconName='#icon-GoX' style={{fontSize: '20px'}} />
                 </Button>
             </div>
+            {serviceName === 'OpenAI' && <div className='item-description'>{getMessage('openaiDescription')}</div>}
             {Object.hasOwn(defaultValue, 'url') && <TextField
                 label='URL'
                 placeholder={defaultValue.url}

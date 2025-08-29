@@ -844,5 +844,8 @@
     },
     "thirdPartyServicesDescription": {
         "message": "When the third-party service you use does not provide language detection, the browser's built-in language detection will be used (with low accuracy)."
+    },
+    "openaiDescription": {
+        "message": "This service is identical to ChatGPT by default and can be used to add AI services compatible with the OpenAI REST API."
     }
 }
