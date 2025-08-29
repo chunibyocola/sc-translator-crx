@@ -70,7 +70,7 @@ const defaultOptions: DefaultOptions = {
         related: true,
         example: true,
         phonetic_nonEnglish: false,
-        maintainParagraphStructure: false,
+        maintainParagraphStructure: true,
         sourceLanguage: true
     },
     displayModeEnhancement: {
