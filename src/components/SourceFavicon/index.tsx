@@ -7,6 +7,7 @@ import baidu from './favicons/baidu.png';
 import microsoft from './favicons/microsofttranslator.png';
 import browserAI from './favicons/browserAI.png';
 import gemini from './favicons/gemini.png';
+import chatgpt from './favicons/chatgpt.png';
 import './style.css';
 import scOptions from '../../public/sc-options';
 import { cn } from '../../public/utils';
@@ -38,6 +39,7 @@ const getFavicon = (source: string) => {
         case MICROSOFT_COM: return FaviconImg(microsoft);
         case BROWSER_AI: return FaviconImg(browserAI);
         case 'Gemini': return FaviconImg(gemini);
+        case 'ChatGPT': return FaviconImg(chatgpt);
         default: return (
             <div className='favicon favicon--mock'>
                 <div className='favicon--mock-text'>
@@ -59,6 +61,7 @@ const getName = (source: string) => {
         case MICROSOFT_COM: return 'Microsoft';
         case BROWSER_AI: return 'Browser AI (Beta)';
         case 'Gemini': return 'Gemini';
+        case 'ChatGPT': return 'ChatGPT';
         default: return getSourceNameFromCustomSources(source);
     }
 };
