@@ -1,4 +1,8 @@
-import { TPSChatGPTValue, TPSGeminiValue } from '../types/thirdPartyValue';
+import {
+    TPSChatGPTValue,
+    TPSGeminiValue,
+    TPSOpenAIValue
+} from '../types/thirdPartyValue';
 
 export const defaultGeminiValue: Required<TPSGeminiValue> = {
     name: 'Gemini',
@@ -16,9 +20,18 @@ export const defaultChatGPTValue: Required<TPSChatGPTValue> = {
     key: ''
 };
 
+export const defaultOpenAIValue: Required<TPSOpenAIValue> = {
+    name: 'OpenAI',
+    url: 'https://api.openai.com/v1/chat/completions',
+    model: 'gpt-5',
+    prompt: '',
+    key: ''
+};
+
 export const serviceDefaultValueMap = new Map<string, any>([
     [defaultGeminiValue.name, defaultGeminiValue],
-    [defaultChatGPTValue.name, defaultChatGPTValue]
+    [defaultChatGPTValue.name, defaultChatGPTValue],
+    [defaultOpenAIValue.name, defaultOpenAIValue]
 ]);
 
-export const thirdPartyServiceNames = ['Gemini', 'ChatGPT'] as const;
+export const thirdPartyServiceNames = ['Gemini', 'ChatGPT', 'OpenAI'] as const;

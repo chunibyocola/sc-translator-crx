@@ -14,4 +14,16 @@ export type TPSChatGPTValue = {
     key?: string;
 };
 
-export type EnabledThirdPartyServices = (TPSGeminiValue | TPSChatGPTValue)[];
+export type TPSOpenAIValue = {
+    name: 'OpenAI'
+    url?: string;
+    model?: string;
+    prompt?: string;
+    key?: string;
+};
+
+export type EnabledThirdPartyServices = (
+    TPSGeminiValue
+    | TPSChatGPTValue
+    | TPSOpenAIValue
+)[];
