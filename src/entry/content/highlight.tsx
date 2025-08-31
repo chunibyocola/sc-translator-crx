@@ -5,14 +5,25 @@ import { getIsEnabled } from '../../public/utils';
 let collectionTexts: string[] = [];
 let rangeSet: Set<Range> = new Set();
 
-const getTextNodes = (root: Element) => {
+const getTextNodes = (root: Element | ShadowRoot) => {
     const textNodes: Text[] = [];
 
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT + NodeFilter.SHOW_DOCUMENT_FRAGMENT);
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT + NodeFilter.SHOW_DOCUMENT_FRAGMENT + NodeFilter.SHOW_ELEMENT);
 
     for (let currentNode: Node | null = walker.currentNode; currentNode; currentNode = walker.nextNode()) {
         if (currentNode.nodeName === '#text') {
             textNodes.push(currentNode as Text);
+        }
+
+        const shadowRoot = (currentNode as Element).shadowRoot;
+        if (shadowRoot) {
+            highlight(getTextNodes(shadowRoot));
+
+            observer.observe(shadowRoot, {
+                characterData: true,
+                childList: true,
+                subtree: true
+            });
         }
     }
 
