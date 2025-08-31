@@ -35,16 +35,24 @@ const highlight = (textNodes: Text[]) => {
 
     textNodes.forEach((textNode) => {
         collectionTexts.forEach((text) => {
-            const index = textNode.nodeValue?.indexOf(text) ?? -1;
+            const nodeValue = textNode.nodeValue;
 
-            if (index === -1) { return; }
+            if (!nodeValue) { return; }
 
-            const range = new Range();
+            let position = 0;
+            let index = nodeValue.indexOf(text, position);
 
-            range.setStart(textNode, index);
-            range.setEnd(textNode, index + text.length);
+            while (index !== -1) {
+                const range = new Range();
 
-            nextRanges.push(range);
+                range.setStart(textNode, index);
+                range.setEnd(textNode, index + text.length);
+
+                nextRanges.push(range);
+
+                position += text.length;
+                index = nodeValue.indexOf(text, position);
+            }
         });
     });
 
