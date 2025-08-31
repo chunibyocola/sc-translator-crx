@@ -4,15 +4,20 @@ import { getIsEnabled } from '../../public/utils';
 
 let collectionTexts: string[] = [];
 let rangeSet: Set<Range> = new Set();
+const checkedTextNodeSet: WeakSet<Text> = new WeakSet();
+const ignoredTagSet = new Set(['canvas', 'br', 'hr', 'svg', 'img', 'script', 'link', 'style', 'input', 'textarea']);
 
 const getTextNodes = (root: Element | ShadowRoot) => {
-    const textNodes: Text[] = [];
+    const textNodeSet: Set<Text> = new Set();
 
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT + NodeFilter.SHOW_DOCUMENT_FRAGMENT + NodeFilter.SHOW_ELEMENT);
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT + NodeFilter.SHOW_ELEMENT, { acceptNode: (node) => {
+        if (ignoredTagSet.has(node.nodeName.toLowerCase())) { return NodeFilter.FILTER_REJECT; }
+        return NodeFilter.FILTER_ACCEPT;
+    } });
 
     for (let currentNode: Node | null = walker.currentNode; currentNode; currentNode = walker.nextNode()) {
         if (currentNode.nodeName === '#text') {
-            textNodes.push(currentNode as Text);
+            textNodeSet.add(currentNode as Text);
         }
 
         const shadowRoot = (currentNode as Element).shadowRoot;
@@ -27,13 +32,17 @@ const getTextNodes = (root: Element | ShadowRoot) => {
         }
     }
 
-    return textNodes;
+    return [...textNodeSet];
 };
 
 const highlight = (textNodes: Text[]) => {
-    const nextRanges: Range[] = [];
+    const nextRangeSet: Set<Range> = new Set();
 
     textNodes.forEach((textNode) => {
+        if (checkedTextNodeSet.has(textNode)) { return; }
+
+        checkedTextNodeSet.add(textNode);
+
         collectionTexts.forEach((text) => {
             const nodeValue = textNode.nodeValue?.toLowerCase();
 
@@ -48,21 +57,21 @@ const highlight = (textNodes: Text[]) => {
                 range.setStart(textNode, index);
                 range.setEnd(textNode, index + text.length);
 
-                nextRanges.push(range);
+                nextRangeSet.add(range);
 
-                position += text.length;
+                position += Math.max(text.length + index, 1);
                 index = nodeValue.indexOf(text, position);
             }
         });
     });
 
-    if (nextRanges.length === 0) { return; }
+    if (nextRangeSet.size === 0) { return; }
 
-    [...rangeSet.values()].forEach(range => range.collapsed && rangeSet.delete(range));
+    [...rangeSet].forEach(range => range.collapsed && rangeSet.delete(range));
 
-    nextRanges.forEach(range => rangeSet.add(range));
+    rangeSet = rangeSet.union(nextRangeSet);
 
-    const highlight = new Highlight(...rangeSet.values());
+    const highlight = new Highlight(...rangeSet);
     CSS.highlights.set('sc-highlight-text', highlight);
 };
 
