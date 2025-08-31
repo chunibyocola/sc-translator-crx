@@ -35,7 +35,7 @@ const highlight = (textNodes: Text[]) => {
 
     textNodes.forEach((textNode) => {
         collectionTexts.forEach((text) => {
-            const nodeValue = textNode.nodeValue;
+            const nodeValue = textNode.nodeValue?.toLowerCase();
 
             if (!nodeValue) { return; }
 
@@ -91,7 +91,7 @@ export const initHighlight = () => {
             subtree: true
         });
 
-        collectionTexts = texts;
+        collectionTexts = texts.map(text => text.toLowerCase());
 
         const style = document.createElement('style');
         document.head.appendChild(style);
