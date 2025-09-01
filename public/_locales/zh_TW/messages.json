@@ -847,5 +847,8 @@
     },
     "openaiDescription": {
         "message": "此服務在預設情況下與 ChatGPT 完全相同，可用於新增與 OpenAI REST API 相容的 AI 服務。"
+    },
+    "highlightCollectedText": {
+        "message": "高亮顯示收藏的文本"
     }
 }

@@ -176,7 +176,7 @@ const Translate: React.FC = () => {
             <div className='opt-section-row'>
                 <div className='flex-align-items-center'>
                     <Switch
-                        label={'Highlight collected text'}
+                        label={getMessage('highlightCollectedText')}
                         checked={highlightCollectedText}
                         onChange={v => {
                             try {

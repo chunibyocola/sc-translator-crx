@@ -847,5 +847,8 @@
     },
     "openaiDescription": {
         "message": "This service is identical to ChatGPT by default and can be used to add AI services compatible with the OpenAI REST API."
+    },
+    "highlightCollectedText": {
+        "message": "Highlight collected text"
     }
 }

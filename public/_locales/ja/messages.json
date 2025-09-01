@@ -847,5 +847,8 @@
     },
     "openaiDescription": {
         "message": "このサービスはデフォルトではChatGPTと同一であり、OpenAI REST APIと互換性のあるAIサービスを追加するために使用できます。"
+    },
+    "highlightCollectedText": {
+        "message": "収集したテキストをハイライトする"
     }
 }
