@@ -41,7 +41,8 @@ export const translate: (params: TranslateParams, serviceName: string) => Promis
         const result = await res.json();
 
         if (!res.ok) {
-            throw getError(`[Error Code] ${result[0].error.code} [Message] ${result[0].error.message}`);
+            const error = Array.isArray(result) ? result[0].error : result.error;
+            throw getError(`[Error Code] ${error.code} [Message] ${error.message}`);
         }
 
         const translation: string = result.choices[0].message.content;
