@@ -46,6 +46,9 @@ export const translate = async ({ source, ...requestParams }: TranslateRequestPa
 		case 'ChatGPT':
 			translate = openaiTranslate;
 			break;
+		case 'OpenAI':
+			translate = openaiTranslate;
+			break;
 		default:
 			translate = custom.translate;
 			break;
