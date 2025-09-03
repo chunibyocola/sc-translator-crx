@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TranslateResult, Translation } from '../../types';
 import { textPreprocessing } from '../../public/text-preprocessing';
 import { sendTranslate } from '../../public/send';
+import scBrowserAI from '../../public/sc-browser-ai';
+import { BROWSER_AI } from '../../constants/translateSource';
 
 type TranslationState = {
     text: string;
@@ -32,7 +34,19 @@ export const fetchTranslationFromSource = createAsyncThunk<
 
     dispatch(requestStart({ source }));
 
-    const response = await sendTranslate({ source, text: preprocessedText, from, to }, translateId);
+    let browserAIResponse: null | Awaited<ReturnType<typeof sendTranslate>> = null;
+    if (source === BROWSER_AI) {
+        browserAIResponse = await scBrowserAI.translate({
+            text: preprocessedText, sourceLanguage: from, targetLanguage: to
+        }).then(({ translation, from, to }) => {
+            const result: TranslateResult = { text, result: translation.split('\n').filter(Boolean), from, to };
+            return { translateId, translation: result };
+        }).catch((err: Error) => {
+            return { translateId, code: err.message ?? 'Unknown Error' };
+        });
+    }
+
+    const response = browserAIResponse || await sendTranslate({ source, text: preprocessedText, from, to }, translateId);
 
     const { translateId: currentTranslateId } = getState().translation;
 
