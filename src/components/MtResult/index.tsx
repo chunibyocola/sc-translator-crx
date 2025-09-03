@@ -7,6 +7,8 @@ import ListenButton from '../ListenButton';
 import scOptions from '../../public/sc-options';
 import SourceLanguage from '../SourceLanguage';
 import MtSourceSelect from '../MtSourceSelect';
+import { BROWSER_AI } from '../../constants/translateSource';
+import BrowserAIResult from '../BrowserAIResult';
 
 type MtResultProps = {
     source: string;
@@ -59,14 +61,20 @@ const MtResult: React.FC<MtResultProps> = ({ source, translateRequest, remove, r
                 </span>
             </div>
             <div className='dividing-line' style={fold ? {display: 'none'} : {}}></div>
-            <TranslateResult
+            {source === BROWSER_AI ? <BrowserAIResult
+                translateRequest={translateRequest}
+                source={source}
+                style={fold ? {display: 'none'} : {}}
+                retry={retry}
+                insertResult={insertResult}
+            /> : <TranslateResult
                 translateRequest={translateRequest}
                 source={source}
                 style={fold ? {display: 'none'} : {}}
                 retry={retry}
                 insertResult={insertResult}
                 setText={setText}
-            />
+            />}
         </div>
     );
 };
