@@ -1,4 +1,5 @@
-import { GOOGLE_COM } from '../constants/translateSource';
+import { serviceDefaultValueMap } from '../constants/thirdPartyServiceValues';
+import { BROWSER_AI, GOOGLE_COM } from '../constants/translateSource';
 import { GetStorageKeys } from '../types';
 import scOptions from './sc-options';
 import { sendDetect, sendAudio } from './send';
@@ -22,6 +23,7 @@ type AudioCache = {
     manuallyPaused: boolean;
     onPause?: () => void;
     id: number;
+    useUtter: boolean;
 };
 
 let audioCache: AudioCache = {
@@ -34,7 +36,8 @@ let audioCache: AudioCache = {
     index: 0,
     requesting: false,
     manuallyPaused: false,
-    id: 0
+    id: 0,
+    useUtter: false
 };
 
 let violateCSP = false;
@@ -48,8 +51,15 @@ export const playAudio = ({ text, source, from = '', auto }: { text: string; sou
 
     pauseAudio();
 
+    audioCache.useUtter = false;
+
+    if (source === BROWSER_AI || serviceDefaultValueMap.has(source ?? '')) {
+        audioCache.useUtter = true;
+    }
+
     if (!source || keepUsingDefaultAudioSource) {
         source = defaultAudioSource;
+        audioCache.useUtter = false;
     }
 
     if (audioCache.text === text && audioCache.source === source && audioCache.from === from && audioCache.detectedFrom) {
@@ -95,7 +105,7 @@ export const playAudio = ({ text, source, from = '', auto }: { text: string; sou
 };
 
 export const pauseAudio = () => {
-    if (violateCSP) {
+    if (violateCSP || audioCache.useUtter) {
         window.speechSynthesis.cancel();
     }
     else {
@@ -114,7 +124,7 @@ const startPlaying = () => {
         return;
     }
 
-    if (violateCSP) {
+    if (violateCSP || audioCache.useUtter) {
         play(textList[index]);
         return;
     }
@@ -156,7 +166,7 @@ utter.addEventListener('end', () => {
 });
 
 const play = (dataURL: string) => {
-    if (violateCSP) {
+    if (violateCSP || audioCache.useUtter) {
         utter.text = dataURL;
         utter.lang = audioCache.detectedFrom;
         window.speechSynthesis.speak(utter);
