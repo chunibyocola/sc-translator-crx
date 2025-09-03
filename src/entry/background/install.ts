@@ -6,7 +6,7 @@ import { DefaultOptions, DeprecatedOptions } from '../../types';
 import { TRANSLATE_BUTTON_TRANSLATE } from '../../constants/translateButtonTypes';
 import { initContextMenus } from './context-menus';
 import { initSourceParams } from '../../constants/sourceParams';
-import { BAIDU_COM, BING_COM, MICROSOFT_COM } from '../../constants/translateSource';
+import { BING_COM, MICROSOFT_COM } from '../../constants/translateSource';
 import scOptions from '../../public/sc-options';
 
 const initStorageOnInstalled = (userLang: string, update: boolean) => {
@@ -17,7 +17,6 @@ const initStorageOnInstalled = (userLang: string, update: boolean) => {
         case LANG_ZH_CN:
             defaultSet.userLanguage = LANG_ZH_CN;
             defaultSet.useDotCn = true;
-            defaultSet.multipleTranslateSourceList = [BING_COM, BAIDU_COM];
             defaultSet.defaultAudioSource = BING_COM;
             defaultSet.webPageTranslateSource = MICROSOFT_COM;
             break;
