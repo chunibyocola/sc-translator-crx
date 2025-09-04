@@ -1,3 +1,7 @@
+# 5.9.0 (2025-09-03)
+- Add Browser AI translation. (Chrome version >= 138)
+- Able to add third-party services.
+- Add "highlight collected text" option.
 # 5.8.0 (2025-03-21)
 - Remove single translation mode.
 - Remove "+" button on multiple translation panel and can swap and add source by clicking any source.
