@@ -2,7 +2,6 @@
     background: var(--bg-content);
     width: 100%;
     margin-bottom: 4px;
-    word-break: break-all;
     border-radius: 4px;
     box-shadow: rgb(60 64 67 / 30%) 0 1px 2px 0, rgb(60 64 67 / 15%) 0 1px 3px 1px;
 }
