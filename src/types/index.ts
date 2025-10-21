@@ -192,6 +192,7 @@ export type DefaultOptions = {
     autoPlayAudioLangs: string[];
     highlightCollectedText: boolean;
     enabledThirdPartyServices: EnabledThirdPartyServices;
+    hoverHighlighted: boolean;
 };
 
 // Only work in "src/entry/background/install.ts".

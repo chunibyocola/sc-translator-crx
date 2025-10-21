@@ -94,7 +94,8 @@ const defaultOptions: DefaultOptions = {
     autoPlayAudio: false,
     autoPlayAudioLangs: [],
     highlightCollectedText: false,
-    enabledThirdPartyServices: []
+    enabledThirdPartyServices: [],
+    hoverHighlighted: false
 };
 
 export default defaultOptions;

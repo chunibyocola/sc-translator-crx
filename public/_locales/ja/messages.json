@@ -850,5 +850,8 @@
     },
     "highlightCollectedText": {
         "message": "収集したテキストをハイライトする"
+    },
+    "hoverHighlighted": {
+        "message": "ハイライトされたテキストの上にマウスを置いたときに訳文を表示します"
     }
 }

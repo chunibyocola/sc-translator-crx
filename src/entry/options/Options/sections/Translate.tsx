@@ -35,7 +35,8 @@ const useOptionsDependency: GetStorageKeys<
     'translateButtons' |
     'translateButtonsTL' |
     'userLanguage' |
-    'highlightCollectedText'
+    'highlightCollectedText' |
+    'hoverHighlighted'
 > = [
     'translateWithKeyPress',
     'translateDirectly',
@@ -52,7 +53,8 @@ const useOptionsDependency: GetStorageKeys<
     'translateButtons',
     'translateButtonsTL',
     'userLanguage',
-    'highlightCollectedText'
+    'highlightCollectedText',
+    'hoverHighlighted'
 ];
 
 const Translate: React.FC = () => {
@@ -72,7 +74,8 @@ const Translate: React.FC = () => {
         translateButtons,
         translateButtonsTL,
         userLanguage,
-        highlightCollectedText
+        highlightCollectedText,
+        hoverHighlighted
     } = useOptions(useOptionsDependency);
 
     const [highlightMessage, setHighlightMessage] = useState('');
@@ -192,6 +195,14 @@ const Translate: React.FC = () => {
                     <BetaIcon />
                 </div>
                 {highlightMessage && <div className='item-description'>{highlightMessage}</div>}
+                <div className='mt10-ml30'>
+                    <Switch
+                        label={getMessage('hoverHighlighted')}
+                        checked={hoverHighlighted}
+                        onChange={v => scOptions.set({ hoverHighlighted: v })}
+                    />
+                    <BetaIcon />
+                </div>
             </div>
             <div className='opt-section-row'>
                 <div className='options-mode'>

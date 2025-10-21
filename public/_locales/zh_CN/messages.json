@@ -850,5 +850,8 @@
     },
     "highlightCollectedText": {
         "message": "高亮显示收藏的文本"
+    },
+    "hoverHighlighted": {
+        "message": "鼠标悬停在高亮文本上时显示译文"
     }
 }

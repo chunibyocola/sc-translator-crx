@@ -850,5 +850,8 @@
     },
     "highlightCollectedText": {
         "message": "Highlight collected text"
+    },
+    "hoverHighlighted": {
+        "message": "Display the translation when the mouse hovers over the highlighted text"
     }
 }
