@@ -47,7 +47,7 @@ let wayOfFontsDisplaying: number = 1;
 let waitingList: Set<PageTranslateItemEnity> = new Set();
 let updatedList: Set<PageTranslateItemEnity> = new Set();
 
-const ignoredTagsArr = ['canvas', 'br', 'hr', 'svg', 'img', 'script', 'link', 'style', 'input', 'textarea', 'font'];
+const ignoredTagsArr = ['canvas', 'br', 'hr', 'svg', 'img', 'script', 'link', 'style', 'input', 'textarea'];
 const skippedTagsArr = ['code', '#comment'];
 const ignoredTags = new Set(ignoredTagsArr.concat(ignoredTagsArr.map(v => v.toUpperCase())));
 const skippedTags = new Set(skippedTagsArr.concat(skippedTagsArr.map(v => v.toUpperCase())));
@@ -123,6 +123,10 @@ const observer = new MutationObserver((records) => {
         }
 
         if (!(element as HTMLElement).translate) {
+            return true;
+        }
+
+        if (Object.hasOwn(element as HTMLElement, '_ScWebpageTranslationKey')) {
             return true;
         }
 
@@ -491,6 +495,11 @@ const getAllParagraph = (element: HTMLElement) => {
             }
 
             if (!(node as HTMLElement).translate) {
+                nextParagraph();
+                continue;
+            }
+
+            if (Object.hasOwn(element as HTMLElement, '_ScWebpageTranslationKey')) {
                 nextParagraph();
                 continue;
             }
@@ -1034,10 +1043,12 @@ const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, 
             comparisonFont._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
             comparisonFont.appendChild(document.createTextNode(pageTranslateItem.translation));
             comparisonFont.setAttribute('style', getComparisonStyle());
+            comparisonFont.translate = false;
 
             paragraph.appendChild(comparisonFont);
             paragraph.className = pageTranslateItem.pNode.className;
             paragraph._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
+            paragraph.translate = false;
 
             pageTranslateItem.fontsNodes[pageTranslateItem.fontsNodes.length - 1][1] = paragraph;
 
@@ -1053,10 +1064,12 @@ const feedDataToPageTranslateItem = (pageTranslateItem: PageTranslateItemEnity, 
             comparisonFont._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
             comparisonFont.appendChild(document.createTextNode(pageTranslateItem.translation));
             comparisonFont.setAttribute('style', getComparisonStyle());
+            comparisonFont.translate = false;
 
             font.appendChild(document.createTextNode('\n'));
             font.appendChild(comparisonFont);
             font._ScWebpageTranslationKey = pageTranslateItem.mapIndex;
+            font.translate = false;
 
             pageTranslateItem.fontsNodes[pageTranslateItem.fontsNodes.length - 1][1] = font;
 
@@ -1348,6 +1361,10 @@ const insertResultAndWrapOriginalTextNode = (textNode: Text, mapIndex: number, t
     originalFont._ScWebpageTranslationKey = mapIndex;
     comparisonFont && (comparisonFont._ScWebpageTranslationKey = mapIndex);
     translationFont._ScWebpageTranslationKey = mapIndex;
+
+    originalFont.translate = false;
+    comparisonFont && (comparisonFont.translate = false);
+    translationFont.translate = false;
 
     textNode.parentElement.insertBefore(originalFont, textNode);
     comparisonFont && textNode.parentElement.insertBefore(comparisonFont, textNode);
