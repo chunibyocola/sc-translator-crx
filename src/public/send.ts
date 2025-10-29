@@ -28,6 +28,9 @@ export type GetSelectorsResponse = GenericResponse<{
     excludeSelectors: string;
 }>;
 export type GetAllCollectedTextResponse = GenericResponse<string[]>;
+export type GetCollectedByTextResponse = GenericResponse<{
+    translations: Translation[];
+}>
 
 type GenericMessage<ActionType, ActionPayload> = {
     type: ActionType;
@@ -113,6 +116,11 @@ export type ChromeRuntimeMessage = GenericMessage<
 > | GenericMessage<
     typeof types.SCTS_GET_ALL_COLLECTED_TEXT,
     Record<string, never>
+> | GenericMessage<
+    typeof types.SCTS_GET_COLLECTED_BY_TEXT,
+    {
+        text: string;
+    }
 >;
 
 export const sendTranslate = async (params: { text: string, source: string, from: string, to: string }, translateId: number) => {
@@ -171,6 +179,10 @@ export const sendGetSpecifySelectors = (hostAndPathname: string) => {
 
 export const sendGetAllCollectedText = () => {
     return chromeRuntimeSendMessage<GetAllCollectedTextResponse>({ type: types.SCTS_GET_ALL_COLLECTED_TEXT, payload: {} });
+};
+
+export const sendGetCollectedByText = (text: string) => {
+    return chromeRuntimeSendMessage<GetCollectedByTextResponse>({ type: types.SCTS_GET_COLLECTED_BY_TEXT, payload: { text } });
 };
 
 const chromeRuntimeSendMessage = <T = null>(message: ChromeRuntimeMessage): Promise<T | ErrorResponse> => {

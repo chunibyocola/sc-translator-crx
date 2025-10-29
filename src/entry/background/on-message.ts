@@ -9,6 +9,7 @@ import {
     DetectResponse,
     GetAllCollectedTextResponse,
     GetCacheResponse,
+    GetCollectedByTextResponse,
     GetSelectorsResponse,
     IsCollectResponse,
     TranslateResponse
@@ -18,7 +19,7 @@ import { getSpecifySelectors } from './page-translation-rule';
 import scOptions from '../../public/sc-options';
 
 type TypedSendResponse = (
-    response: TranslateResponse | AudioResponse | DetectResponse | IsCollectResponse | GetCacheResponse | GetSelectorsResponse | GetAllCollectedTextResponse
+    response: TranslateResponse | AudioResponse | DetectResponse | IsCollectResponse | GetCacheResponse | GetSelectorsResponse | GetAllCollectedTextResponse | GetCollectedByTextResponse
 ) => void;
 
 chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sendResponse: TypedSendResponse) => {
@@ -123,8 +124,21 @@ chrome.runtime.onMessage.addListener((message: ChromeRuntimeMessage, sender, sen
             return true;
         }
         case types.SCTS_GET_ALL_COLLECTED_TEXT: {
-
             scIndexedDB.getAllKeys('collection').then(data => sendResponse(data as string[]));
+
+            return true;
+        }
+        case types.SCTS_GET_COLLECTED_BY_TEXT: {
+            const { text } = message.payload;
+
+            scIndexedDB.get('collection', text).then((data) => {
+                if (data) {
+                    sendResponse({ translations: data.translations });
+                }
+                else {
+                    sendResponse({ code: 'NOT_COLLECTED' });
+                }
+            }).catch(() => sendResponse({ code: '' }));
 
             return true;
         }
