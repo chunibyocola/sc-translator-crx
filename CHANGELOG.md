@@ -1,3 +1,7 @@
+# 5.10.0 (2025-10-30)
+- Add "Display the translation when the mouse hovers over the highlighted text" option.
+- Remove "word-break: break-all".
+- Able to translate the content in "font" element on page translation.
 # 5.9.0 (2025-09-03)
 - Add Browser AI translation. (Chrome version >= 138)
 - Able to add third-party services.
