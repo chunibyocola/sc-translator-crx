@@ -44,7 +44,8 @@ const LanguageSelect: React.FC<LanguageSelectProps> = ({ value, onChange, classN
 
     useEffect(() => {
         startTransition(() => {
-            setSearchLangCodes(langCodes.filter(v => v.name.includes(searchText)));
+            const lowerCaseSearchText = searchText.toLowerCase();
+            setSearchLangCodes(langCodes.filter(v => v.name.toLowerCase().includes(lowerCaseSearchText)));
         });
     }, [langCodes, searchText]);
 
