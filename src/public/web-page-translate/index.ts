@@ -382,15 +382,6 @@ const getAllParagraph = (element: HTMLElement) => {
     };
 
     if (element.nodeName === 'IFRAME' && translateIframeContent) {
-        try {
-            if (new URL((element as HTMLIFrameElement).src).host !== location.host) {
-                return;
-            }
-        }
-        catch {
-            return;
-        }
-
         const contentBody = (element as HTMLIFrameElement).contentDocument?.body;
 
         if (contentBody) {
