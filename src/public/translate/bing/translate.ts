@@ -19,21 +19,25 @@ export const translate = async ({ text, from, to, preferredLanguage, secondPrefe
     try {
         let data = await res.json();
 
+        let detectedLanguage = data[0].detectedLanguage?.language ?? 'Unknown';
+
         // Re-request with second preferred language.
         // Triggered only in the situation of "'from' and 'to' are both empty('')" and
         // "source language is same as 'to'" (set as preferred language above).
-        if (!originFrom && !originTo && data[0].detectedLanguage.language === to && preferredLanguage !== secondPreferredLanguage) {
-            from = data[0].detectedLanguage.language;
+        if (!originFrom && !originTo && detectedLanguage === to && preferredLanguage !== secondPreferredLanguage) {
+            from = detectedLanguage;
             to = secondPreferredLanguage;
 
             const newRes = await fetchResultFromBing({ text, from, to, com });
 
             data = await newRes.json();
+
+            detectedLanguage = data[0].detectedLanguage?.language ?? 'Unknown';
         }
 
         let result: TranslateResult = {
             text,
-            from: switchToGoogleLangCode(data[0].detectedLanguage.language),
+            from: switchToGoogleLangCode(detectedLanguage),
             to: switchToGoogleLangCode(to),
             result: (data[0].translations[0].text as string).split('\n').filter(v => v.trim())
         };
