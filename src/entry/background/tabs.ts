@@ -1,13 +1,13 @@
 import scOptions from '../../public/sc-options';
 import { getIsEnabled, getCurrentTabHost } from '../../public/utils';
 
-const onTabsUpdated: (tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => void = async (tabId, changeInfo, tab) => {
+const onTabsUpdated: (tabId: number, changeInfo: chrome.tabs.OnUpdatedInfo, tab: chrome.tabs.Tab) => void = async (tabId, changeInfo, tab) => {
     if (!tab.active) { return; }
 
     updateBadge(tabId);
 };
 
-const onTabsActivated: (activeInfo: chrome.tabs.TabActiveInfo) => void = async ({ tabId }) => {
+const onTabsActivated: (activeInfo: chrome.tabs.OnActivatedInfo) => void = async ({ tabId }) => {
     updateBadge(tabId);
 };
 

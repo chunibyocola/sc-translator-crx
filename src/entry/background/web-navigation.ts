@@ -28,7 +28,7 @@ const onCommitted: (details: chrome.webNavigation.WebNavigationTransitionCallbac
     }
 };
 
-const tabsOnRemoved: (tabId: number, removeInfo: chrome.tabs.TabRemoveInfo) => void = (tabId) => {
+const tabsOnRemoved: (tabId: number, removeInfo: chrome.tabs.OnRemovedInfo) => void = (tabId) => {
     if (pageTranslatingTabMap.has(tabId)) {
         pageTranslatingTabMap.delete(tabId);
     }

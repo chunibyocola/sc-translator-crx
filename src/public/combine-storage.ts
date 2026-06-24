@@ -186,7 +186,7 @@ const reducerMap: [(keyof DefaultOptions)[], <S>(origin: S, next: any, addition:
     }
 ]];
 
-const nextValue = <S>(key: keyof DefaultOptions, origin: S, next: any, addition: Addition) => {
+const nextValue = <S,>(key: keyof DefaultOptions, origin: S, next: any, addition: Addition) => {
     const item = reducerMap.find(([keys]) => (keys.includes(key)));
     if (item) {
         try {

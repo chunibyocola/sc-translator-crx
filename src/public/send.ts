@@ -185,7 +185,7 @@ export const sendGetCollectedByText = (text: string) => {
     return chromeRuntimeSendMessage<GetCollectedByTextResponse>({ type: types.SCTS_GET_COLLECTED_BY_TEXT, payload: { text } });
 };
 
-const chromeRuntimeSendMessage = <T = null>(message: ChromeRuntimeMessage): Promise<T | ErrorResponse> => {
+const chromeRuntimeSendMessage = <T = null,>(message: ChromeRuntimeMessage): Promise<T | ErrorResponse> => {
     return new Promise((resolve) => {
         try {
             chrome.runtime.sendMessage(message, (response: T) => {
@@ -278,7 +278,7 @@ export const sendTabsTogglePageTranslationState = (tabId: number) => {
     return chromeTabsSendMessage(tabId, { type: types.SCTS_TOGGLE_PAGE_TRANSLATION_STATE, payload: {} });
 };
 
-export const chromeTabsSendMessage = <T = null>(tabId: number, message: ChromeTabsMessage): Promise<T | ErrorResponse> => {
+export const chromeTabsSendMessage = <T = null,>(tabId: number, message: ChromeTabsMessage): Promise<T | ErrorResponse> => {
     return new Promise((resolve) => {
         try {
             chrome.tabs.sendMessage(tabId, message, (response: T) => {

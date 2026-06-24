@@ -1,5 +1,4 @@
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const paths = require('./paths');
@@ -21,6 +20,9 @@ module.exports = (env) => {
 
     return {
         mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
+        experiments: {
+            css: true
+        },
         bail: true,
         devtool: false,
         optimization: {
@@ -63,11 +65,7 @@ module.exports = (env) => {
                             options: {
                                 compact: true,
                             },
-                        },
-                        {
-                            test: /\.css$/,
-                            use: [{ loader: MiniCssExtractPlugin.loader }, 'css-loader']
-                        },
+                        }
                     ],
                 },
             ],
@@ -107,9 +105,6 @@ module.exports = (env) => {
                 template: path.resolve(paths.appPublic, 'collection.html'),
                 chunks: ['collection'],
                 filename: 'collection.html',
-            }),
-            new MiniCssExtractPlugin({
-                filename: 'static/css/[name].css'
             }),
             new ESLintPlugin({
                 extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],

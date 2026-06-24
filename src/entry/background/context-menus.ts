@@ -146,7 +146,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     }
 });
 
-chrome.storage.onChanged.addListener((changes, areaName) => {
+chrome.storage.onChanged.addListener((changes: any, areaName) => {
     if (areaName !== 'local') { return; }
 
     if ('contextMenus' in changes) {

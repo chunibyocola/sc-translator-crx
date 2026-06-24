@@ -12,7 +12,7 @@ export const syncSettingsToOtherBrowsers = async () => {
     chrome.storage.sync.set({ settings, settingsSyncId });
 };
 
-chrome.storage.onChanged.addListener((changes, areaName) => {
+chrome.storage.onChanged.addListener((changes: any, areaName) => {
     if (areaName === 'sync') {
         if ('settings' in changes && 'settingsSyncId' in changes && changes.settingsSyncId.newValue !== settingsSyncId) {
             scOptions.get(null).then((options) => {
