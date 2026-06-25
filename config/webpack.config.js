@@ -47,6 +47,7 @@ module.exports = (env) => {
             path: paths.appBuild,
             filename: 'static/js/[name].js',
             chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
+            cssFilename: 'static/css/[name].css',
             clean: true
         },
         module: {
