@@ -109,6 +109,7 @@ const clearAllTimeout = () => {
 };
 
 let checkedNodes: WeakSet<Node> = new WeakSet();
+let checkedAttributeNodes: WeakSet<Node> = new WeakSet();
 
 let translateDynamicContent = false;
 
@@ -325,7 +326,7 @@ let specifyConfig: SpecifyContentConfig = {
 
 type AttributeTranslation = {
     element: HTMLElement;
-    attributeName: 'placeholder' | 'title' | 'value';
+    attributeName: 'placeholder' | 'title' | 'value' | 'label';
     attributeText: string;
     translation?: string;
     status: 'init' | 'error' | 'loading' | 'finished';
@@ -414,31 +415,35 @@ const getAllParagraph = (element: HTMLElement) => {
 
             checkedNodes.add(node);
 
-            if ((node.nodeName === 'TEXTAREA' || node.nodeName === 'INPUT') && (node as HTMLInputElement).placeholder?.replace?.(/[\P{L}]/ug, '')) {
-                attributeWaitingSet.add({
-                    element: node as HTMLElement,
-                    attributeName: 'placeholder',
-                    attributeText: (node as HTMLInputElement).placeholder,
-                    status: 'init'
-                });
-            }
+            if (!checkedAttributeNodes.has(node)) {
+                checkedAttributeNodes.add(node);
 
-            if (node.nodeName === 'INPUT' && ['submit', 'reset', 'button'].includes((node as HTMLInputElement).type) && (node as HTMLInputElement).value?.replace?.(/[\P{L}]/ug, '')) {
-                attributeWaitingSet.add({
-                    element: node as HTMLElement,
-                    attributeName: 'value',
-                    attributeText: (node as HTMLInputElement).value,
-                    status: 'init'
-                });
-            }
+                if ((node.nodeName === 'TEXTAREA' || node.nodeName === 'INPUT') && (node as HTMLInputElement).placeholder?.replace?.(/[\P{L}]/ug, '')) {
+                    attributeWaitingSet.add({
+                        element: node as HTMLElement,
+                        attributeName: 'placeholder',
+                        attributeText: (node as HTMLInputElement).placeholder,
+                        status: 'init'
+                    });
+                }
 
-            if ((node as HTMLElement).title?.replace?.(/[\P{L}]/ug, '')) {
-                attributeWaitingSet.add({
-                    element: node as HTMLElement,
-                    attributeName: 'title',
-                    attributeText: (node as HTMLElement).title,
-                    status: 'init'
-                });
+                if (node.nodeName === 'INPUT' && ['submit', 'reset', 'button'].includes((node as HTMLInputElement).type) && (node as HTMLInputElement).value?.replace?.(/[\P{L}]/ug, '')) {
+                    attributeWaitingSet.add({
+                        element: node as HTMLElement,
+                        attributeName: 'value',
+                        attributeText: (node as HTMLInputElement).value,
+                        status: 'init'
+                    });
+                }
+
+                if ((node as HTMLElement).title?.replace?.(/[\P{L}]/ug, '')) {
+                    attributeWaitingSet.add({
+                        element: node as HTMLElement,
+                        attributeName: 'title',
+                        attributeText: (node as HTMLElement).title,
+                        status: 'init'
+                    });
+                }
             }
 
             if (ignoredTags.has(node.nodeName)) {
@@ -559,7 +564,7 @@ const getAllParagraph = (element: HTMLElement) => {
 
             let isInline = nodeStyleDisplay === 'inline';
 
-            if (getComputedStyle(node as HTMLElement).whiteSpace.includes('pre') && node.parentElement && !getComputedStyle(node.parentElement).whiteSpace.includes('pre')) {
+            if (node.nodeName !== 'SELECT' && getComputedStyle(node as HTMLElement).whiteSpace.includes('pre') && node.parentElement && !getComputedStyle(node.parentElement).whiteSpace.includes('pre')) {
                 const textNodes: Text[] = [];
                 const treeWalker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
                 let nextText: Text | null = treeWalker.nextNode() as Text;
@@ -663,6 +668,7 @@ export const startWebPageTranslating = ({
     waitingList = new Set();
     updatedList = new Set();
     checkedNodes = new WeakSet();
+    checkedAttributeNodes = new WeakSet();
 
     pendingMap = new Map();
 
@@ -915,7 +921,7 @@ export const closeWebPageTranslating = () => {
 
     attributeUpdatedSet.forEach(({ element, attributeName, attributeText }) => (element.setAttribute(attributeName, attributeText)));
     attributeUpdatedSet.clear();
-    attributeUpdatedSet.clear();
+    attributeWaitingSet.clear();
     attributePendingMap.clear();
 
     pageTranslateItemMap = {};
