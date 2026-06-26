@@ -444,6 +444,22 @@ const getAllParagraph = (element: HTMLElement) => {
                         status: 'init'
                     });
                 }
+
+                // translate option label
+                if (node.nodeName === 'OPTION' && (node as HTMLOptionElement).label?.replace?.(/[\P{L}]/ug, '')) {
+                    attributeWaitingSet.add({
+                        element: node as HTMLOptionElement,
+                        attributeName: 'label',
+                        attributeText: (node as HTMLOptionElement).label,
+                        status: 'init'
+                    });
+                }
+            }
+
+            // option tag should not be ignored, but translate its label only
+            if (node.nodeName === 'OPTION') {
+                nextParagraph();
+                continue;
             }
 
             if (ignoredTags.has(node.nodeName)) {
