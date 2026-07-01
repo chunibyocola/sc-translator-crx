@@ -143,6 +143,7 @@ panel.style.zIndex = '2147483647';
 panel.style.whiteSpace = 'pre-wrap';
 panel.style.overflowY = 'auto';
 panel.style.borderRadius = '4px';
+panel.style.color = '#000000';
 document.documentElement.append(panel);
 
 const clearAllTimeout = () => {
