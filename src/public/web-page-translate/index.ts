@@ -388,6 +388,12 @@ const getAllParagraph = (element: HTMLElement) => {
         if (contentBody) {
             currentNode = { node: contentBody, index: 0, isInline: false };
 
+            const listener = () => {
+                getAllParagraph(element);
+                element.removeEventListener('load', listener);
+            };
+            element.addEventListener('load', listener);
+
             addObservationTarget(contentBody);
 
             if ((wayOfFontsDisplaying === 0 && displayModeEnhancement.o_Hovering) || (wayOfFontsDisplaying === 2 && displayModeEnhancement.t_Hovering)) {
