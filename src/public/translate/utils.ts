@@ -51,7 +51,7 @@ export const fetchData = async (url: string, init?: RequestInit) => {
 };
 
 export const fetchTPS = async (url: string, init?: RequestInit) => {
-    const res = await fetch(url, { signal: AbortSignal.timeout(8000), ...init }).catch((err) => {
+    const res = await fetch(url, { signal: AbortSignal.timeout(30000), ...init }).catch((err) => {
         if (err.name === 'TimeoutError') {
             throw getError(`${getMessage('errorCode_' + CONNECTION_TIMED_OUT)}(${new URL(url).host})`);
         }
