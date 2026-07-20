@@ -1,6 +1,5 @@
 import { LANGUAGE_NOT_SOPPORTED, RESULT_ERROR } from '../../translate/error-codes';
 import { getError } from '../../translate/utils';
-import { getAuthorization } from './getAuthorization';
 import { unescapeText, WebpageTranslateFn, WebpageTranslateResult } from '..';
 import { bingSupportedLangCodes } from '../../../constants/langCode';
 
@@ -19,23 +18,13 @@ export const translate: WebpageTranslateFn = async ({ keys, targetLanguage }) =>
 
     targetLanguage = switchToMicrosoftLangCode(targetLanguage);
 
-    const requestArray = keys.map((key) => ({ Text: key }));
+    const requestArray = [...keys];
 
     try {
         let data = await fetchFromMicrosoft(requestArray, targetLanguage);
 
         if (Array.isArray(data)) {
             return dealWithResult(data);
-        }
-        else if (data?.error?.code === 401000) {
-            await getAuthorization(true);
-            data = await fetchFromMicrosoft(requestArray, targetLanguage);
-            if (Array.isArray(data)) {
-                return dealWithResult(data);
-            }
-            else {
-                throw getError(`Error: ${data?.error?.code ?? 'Unknown'}`);
-            }
         }
         else {
             throw getError(`Error: ${data?.error?.code ?? 'Unknown'}`);
@@ -64,16 +53,13 @@ const dealWithResult = (result: MicrosoftPageTranslationResult): WebpageTranslat
     }));
 };
 
-const fetchFromMicrosoft = async (requestArray: { Text: string }[], targetLanguage: string) => {
-    const authorization = await getAuthorization();
-
-    const url = `https://api.cognitive.microsofttranslator.com/translate?to=${targetLanguage}&api-version=3.0`;
+const fetchFromMicrosoft = async (requestArray: string[], targetLanguage: string) => {
+    const url = `https://edge.microsoft.com/translate/translatetext?to=${targetLanguage}&isEnterpriseClient=false`;
 
     const res = await fetch(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${authorization}`
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(requestArray)
     });
