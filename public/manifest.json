@@ -1,13 +1,13 @@
 {
   "name": "__MSG_extName__",
   "default_locale": "en",
-  "version": "5.10.0",
+  "version": "5.11.0",
   "description": "__MSG_extDescription__",
   "icons": {
     "128": "image/icon-128.png"
   },
   "manifest_version": 3,
-  "minimum_chrome_version": "103",
+  "minimum_chrome_version": "122",
   "homepage_url": "https://github.com/chunibyocola/sc-translator-crx",
   "background": {
     "service_worker": "background.js"

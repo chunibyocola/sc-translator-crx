@@ -1,3 +1,11 @@
+# 5.11.0 (2026-07-21)
+- Extend the timeout of fetching translation from third-party service from 8s to 30s.
+- Able to translate the content inside iframe after changing src of the iframe.
+- Treat option content inside select box as attribute.
+- Fix microsoft page translation source unavailable.
+- Fix error get reported by mistake when there is no source language provided.
+- Fix content should be translated in iframe that is not translated.
+- Fix attribute might be translated multiple times on page translation.
 # 5.10.0 (2025-10-30)
 - Add "Display the translation when the mouse hovers over the highlighted text" option.
 - Remove "word-break: break-all".
