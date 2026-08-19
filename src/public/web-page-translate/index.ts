@@ -383,16 +383,16 @@ const getAllParagraph = (element: HTMLElement) => {
     };
 
     if (element.nodeName === 'IFRAME' && translateIframeContent) {
+        const listener = () => {
+            getAllParagraph(element);
+            element.removeEventListener('load', listener);
+        };
+        element.addEventListener('load', listener);
+
         const contentBody = (element as HTMLIFrameElement).contentDocument?.body;
 
         if (contentBody) {
             currentNode = { node: contentBody, index: 0, isInline: false };
-
-            const listener = () => {
-                getAllParagraph(element);
-                element.removeEventListener('load', listener);
-            };
-            element.addEventListener('load', listener);
 
             addObservationTarget(contentBody);
 
