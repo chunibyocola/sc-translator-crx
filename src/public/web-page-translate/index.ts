@@ -389,9 +389,10 @@ const getAllParagraph = (element: HTMLElement) => {
         };
         element.addEventListener('load', listener);
 
-        const contentBody = (element as HTMLIFrameElement).contentDocument?.body;
+        const contentDocument = (element as HTMLIFrameElement).contentDocument;
+        const contentBody = contentDocument?.body;
 
-        if (contentBody) {
+        if (contentBody && contentDocument.location.href !== 'about:blank') {
             currentNode = { node: contentBody, index: 0, isInline: false };
 
             addObservationTarget(contentBody);
